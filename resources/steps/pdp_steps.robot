@@ -58,16 +58,25 @@ Yves: add product to the shopping cart
             IF    'FAIL' in ${result}   
                 Sleep    ${delay}
                 Reload
+                Repeat Keyword    3    Wait For Load State
+                Wait For Load State    networkidle
                 Continue For Loop
             ELSE
+                Repeat Keyword    3    Wait For Load State
+                Wait For Load State    networkidle
                 Click    ${pdp_add_to_cart_button}
+                Repeat Keyword    3    Wait For Load State
+                Wait For Load State    networkidle
                 Exit For Loop
             END
         END
     ELSE
         Click    ${pdp_add_to_cart_button}
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
     END
-    Repeat Keyword    3    Wait For Load State
+    Repeat Keyword    5    Wait For Load State
+    Wait For Load State    networkidle
     Yves: remove flash messages
 
 Yves: change quantity on PDP:
@@ -92,11 +101,14 @@ Yves: change quantity using '+' or '-' button № times:
     [Arguments]    ${action}    ${clicksCount}
     FOR    ${index}    IN RANGE    0    ${clicksCount}
         Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
         IF    '${action}' == '+'
             Click    ${pdp_increase_quantity_button}[${env}]
         ELSE IF    '${action}' == '-'
             Click    ${pdp_decrease_quantity_button}[${env}]
         END
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
     END
 
 Yves: set quantity on PDP:
@@ -368,6 +380,8 @@ Yves: select xxx merchant's offer:
         Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
     END
     Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Yves: select xxx merchant's offer with price:
     [Arguments]    ${merchantName}    ${price}    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=3s
@@ -413,6 +427,8 @@ Yves: select xxx merchant's offer with price:
         END
     END    
     Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Yves: merchant's offer/product price should be:
     [Arguments]    ${merchantName}    ${expectedProductPrice}
@@ -430,7 +446,11 @@ Yves: select random varian if variant selector is available
 
 Yves: try add product to the cart from PDP and expect error:
     [Arguments]    ${expectedError}
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Click    ${pdp_add_to_cart_button}
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Yves: flash message should be shown:    error    ${expectedError}
 
 Yves: product name on PDP should be:

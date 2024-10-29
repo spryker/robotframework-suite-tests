@@ -9,6 +9,8 @@ Yves: change the product options in configurator to:
     [Documentation]    fill the fields for product configuration (it is possible to set price OR option name).
     [Arguments]    @{args}
     ${configurationData}=    Set Up Keyword Arguments    @{args}
+    Wait For Load State
+    Wait For Load State    networkidle
     Click    ${pdp_configure_button}
     FOR    ${key}    ${value}    IN    &{configurationData}
         ${key}=   Convert To Lower Case   ${key}
@@ -34,6 +36,7 @@ Yves: change the product options in configurator to:
    END
     ### sleep 1 seconds to process background event
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Sleep    1s
 
 Yves: change the product configuration to:

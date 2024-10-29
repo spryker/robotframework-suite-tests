@@ -35,6 +35,8 @@
       "yves_test_company_user_last_name":"Hopkin",
       "yves_test_company_user_password":"change123",
       "yves_test_company_user_reference":"DE--1",
+      "yves_default_user_email":"sonia@spryker.com",
+      "yves_default_user_address":"Ms Sonia Wagner, Kirncher Str. 7, 10247 Berlin",
       "zed_admin_email":"admin@spryker.com",
       "zed_admin_password":"change123",
       "zed_admin_email_de":"admin_de@spryker.com",

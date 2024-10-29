@@ -328,10 +328,7 @@ Reorder
     Yves: assert merchant of product in cart or list:    ${available_never_out_of_stock_concrete_sku}    Spryker
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | Guest     | User     | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
@@ -396,3 +393,15 @@ Shopping_List_Contains_Offers
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete 'Shopping List' with name:    shoppingListName${random}
+
+Email_Confirmation
+    [Tags]    skip-due-to-refactoring
+    [Documentation]    Check that a new user cannot login if the email is not verified
+    Register a new customer with data:
+    ...    || salutation | first name | last name | e-mail                             | password                                        ||
+    ...    || Mr.        | New        | User      | sonia+fails+${random}@spryker.com  | Ps${random_str_password}!5${random_id_password} ||
+    Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
+    Yves: login on Yves with provided credentials and expect error:     sonia+fails+${random}@spryker.com     Ps${random_str_password}!5${random_id_password}
+    [Teardown]    Zed: delete customer:
+    ...    || email                             ||
+    ...    || sonia+fails+${random}@spryker.com ||

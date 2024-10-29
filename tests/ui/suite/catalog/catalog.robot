@@ -199,10 +199,7 @@ Product_Bundles
     Yves: shopping cart contains the following products:    ${bundle_product_concrete_sku}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -397,100 +394,6 @@ Product_Original_Price
     Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
     Yves: product original price on the PDP should be:    €50.00
 
-Product_Availability_Calculation
-    [Documentation]    Check product availability + multistore
-    [Setup]    Repeat Keyword    3    Trigger multistore p&s
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: update warehouse:    
-    ...    || warehouse  | store || 
-    ...    || Warehouse1 | AT    ||
-    Repeat Keyword    3    Trigger multistore p&s
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: start new abstract product creation:
-    ...    || sku                      | store | store 2 | name en                      | name de                        | new from   | new to     ||
-    ...    || availabilitySKU${random} | DE    | AT      | availabilityProduct${random} | DEavailabilityProduct${random} | 01.01.2020 | 01.01.2030 ||
-    Zed: select abstract product variants:
-    ...    || attribute 1 | attribute value 1 ||
-    ...    || color       | grey              ||
-    Zed: update abstract product price on:
-    ...    || store | mode  | type    | currency | amount | tax set           ||
-    ...    || DE    | gross | default | €        | 100.00 | Smart Electronics ||
-    Zed: update abstract product price on:
-    ...    || store | mode  | type    | currency | amount | tax set           ||
-    ...    || AT    | gross | default | €        | 200.00 | Smart Electronics ||
-    Trigger multistore p&s
-    Zed: change concrete product data:
-    ...    || productAbstract          | productConcrete                     | active | searchable en | searchable de ||
-    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | true   | true          | true          ||
-    Zed: change concrete product price on:
-    ...    || productAbstract          | productConcrete                     | store | mode  | type    | currency | amount ||
-    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | DE    | gross | default | €        | 50.00  ||
-    Zed: change concrete product price on:
-    ...    || productAbstract          | productConcrete                     | store | mode  | type    | currency | amount ||
-    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | AT    | gross | default | €        | 75.00  ||
-    Zed: change concrete product stock:
-    ...    || productAbstract          | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
-    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | Warehouse1   | 5                | false                           ||
-    Trigger multistore p&s
-    Zed: go to second navigation item level:    Catalog    Products 
-    Zed: click Action Button in a table for row that contains:     availabilitySKU${random}     Approve
-    Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: check if cart is not empty and clear it
-    Yves: delete all user addresses
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: change quantity on PDP:    6
-    Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 5.
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}
-    Yves: change quantity on PDP:    3
-    Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to b2c shopping cart
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed    
-    Trigger oms
-    Yves: get the last placed order ID by current customer
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: change quantity on PDP:    6
-    Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 2.
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Cancel
-    Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: change quantity on PDP:    6
-    Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 5.
-    Yves: go to AT store 'Home' page if other store not specified:
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: update warehouse:    
-    ...    || warehouse  | unselect store || 
-    ...    || Warehouse1 | AT             ||
-    Repeat Keyword    3    Trigger multistore p&s
-    Yves: go to AT store 'Home' page if other store not specified:
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: update warehouse:    
-    ...    || warehouse  | unselect store || 
-    ...    || Warehouse1 | AT             ||
-    ...    AND    Repeat Keyword    3    Trigger multistore p&s
-
 Offer_Availability_Calculation
     [Documentation]    check offer availability
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
@@ -550,6 +453,7 @@ Offer_Availability_Calculation
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
+    Yves: delete all user addresses
     Yves: create new 'Shopping Cart' with name:    offAvailability${random}
     Yves: go to PDP of the product with sku:     offAvKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
@@ -566,10 +470,7 @@ Offer_Availability_Calculation
     Yves: assert merchant of product in cart or list:    offAvKU${random}-1    Spryker
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName               | lastName               | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_user_first_name} | ${yves_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method for the shipment:    1    Spryker Dummy Shipment    Standard
     Yves: submit form on the checkout
     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
@@ -607,6 +508,97 @@ Offer_Availability_Calculation
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:      offAvProduct${random}     Deny
     ...    AND    Trigger multistore p&s
+
+Product_Availability_Calculation
+    [Documentation]    Check product availability + multistore
+    [Setup]    Repeat Keyword    3    Trigger multistore p&s
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: update warehouse:    
+    ...    || warehouse  | store || 
+    ...    || Warehouse1 | AT    ||
+    Repeat Keyword    3    Trigger multistore p&s
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: start new abstract product creation:
+    ...    || sku                      | store | store 2 | name en                      | name de                        | new from   | new to     ||
+    ...    || availabilitySKU${random} | DE    | AT      | availabilityProduct${random} | DEavailabilityProduct${random} | 01.01.2020 | 01.01.2030 ||
+    Zed: select abstract product variants:
+    ...    || attribute 1 | attribute value 1 ||
+    ...    || color       | grey              ||
+    Zed: update abstract product price on:
+    ...    || store | mode  | type    | currency | amount | tax set           ||
+    ...    || DE    | gross | default | €        | 100.00 | Smart Electronics ||
+    Zed: update abstract product price on:
+    ...    || store | mode  | type    | currency | amount | tax set           ||
+    ...    || AT    | gross | default | €        | 200.00 | Smart Electronics ||
+    Trigger multistore p&s
+    Zed: change concrete product data:
+    ...    || productAbstract          | productConcrete                     | active | searchable en | searchable de ||
+    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | true   | true          | true          ||
+    Zed: change concrete product price on:
+    ...    || productAbstract          | productConcrete                     | store | mode  | type    | currency | amount ||
+    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | DE    | gross | default | €        | 50.00  ||
+    Zed: change concrete product price on:
+    ...    || productAbstract          | productConcrete                     | store | mode  | type    | currency | amount ||
+    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | AT    | gross | default | €        | 75.00  ||
+    Zed: change concrete product stock:
+    ...    || productAbstract          | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
+    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | Warehouse1   | 5                | false                           ||
+    Trigger multistore p&s
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     availabilitySKU${random}     Approve
+    Trigger multistore p&s
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: check if cart is not empty and clear it
+    Yves: delete all user addresses
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+    Yves: change quantity on PDP:    6
+    Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 5.
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}
+    Yves: change quantity on PDP:    3
+    Yves: add product to the shopping cart    wait_for_p&s=true
+    Yves: go to b2c shopping cart
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed    
+    Trigger oms
+    Yves: get the last placed order ID by current customer
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+    Yves: change quantity on PDP:    6
+    Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 2.
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Cancel
+    Trigger multistore p&s
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+    Yves: change quantity on PDP:    6
+    Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 5.
+    Yves: go to AT store 'Home' page if other store not specified:
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: update warehouse:    
+    ...    || warehouse  | unselect store || 
+    ...    || Warehouse1 | AT             ||
+    Repeat Keyword    3    Trigger multistore p&s
+    Yves: go to AT store 'Home' page if other store not specified:
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: update warehouse:    
+    ...    || warehouse  | unselect store || 
+    ...    || Warehouse1 | AT             ||
+    ...    AND    Repeat Keyword    3    Trigger multistore p&s
 
 Configurable_Product_PDP_Wishlist_Availability
     [Documentation]    Configure product from PDP and Wishlist + availability case.
@@ -733,6 +725,7 @@ Configurable_Product_RfQ_OMS
     ...    AND    Zed: deactivate all discounts from Overview page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
+    Yves: delete all user addresses
     Yves: create new 'Shopping Cart' with name:    confProductCart+${random}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: change the product options in configurator to:
@@ -787,6 +780,7 @@ Configurable_Product_RfQ_OMS
     Zed: trigger matching state of xxx order item inside xxx shipment:    Deliver    1
     Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    1
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu:    Order History

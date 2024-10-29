@@ -225,6 +225,7 @@ Product_PDP
 
 Catalog
     [Documentation]    Checks that catalog options and search work
+    Trigger product labels update
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: perform search by:    claire
     Yves: 'Catalog' page should show products:    15
@@ -270,6 +271,119 @@ Back_in_Stock_Notification
     Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    true
     [Teardown]    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}
 
+Offer_Availability_Calculation
+    [Documentation]    check offer availability
+    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    MP: open navigation menu tab:    Products    
+    MP: click on create new entity button:    Create Product
+    MP: create multi sku product with following data:
+    ...    || product sku      | product name          | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
+    ...    || offAvKU${random} | offAvProduct${random} | packaging_unit       | Item                        | Box                          | material              | Aluminium              ||
+    MP: perform search by:    offAvProduct${random}
+    MP: click on a table row that contains:     offAvProduct${random}
+    MP: fill abstract product required fields:
+    ...    || product name          | store | store 2 | tax set        ||
+    ...    || offAvProduct${random} | DE    | AT      | Standard Taxes ||
+    MP: fill product price values:
+    ...    || product type | row number  | store | currency | gross default | gross original ||
+    ...    || abstract     | 1           | DE    | EUR      | 100           | 90             ||
+    MP: fill product price values:
+    ...    || product type | row number  | store | currency | gross default | gross original ||
+    ...    || abstract     | 2           | AT    | EUR      | 200           | 90             ||
+    MP: save abstract product 
+    MP: click on a table row that contains:    offAvProduct${random}
+    MP: open concrete drawer by SKU:    offAvKU${random}-1
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 5              | true              | en_US         ||
+    MP: open concrete drawer by SKU:    offAvKU${random}-1
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default ||
+    ...    || concrete     | 1          | DE    | EUR      | 50            ||
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default ||
+    ...    || concrete     | 2          | AT    | EUR      | 50            || 
+    MP: save concrete product
+    Trigger multistore p&s
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     offAvProduct${random}     Approve
+    Trigger multistore p&s
+    MP: login on MP with provided credentials:    ${merchant_spryker_email}
+    MP: open navigation menu tab:    Offers
+    MP: click on create new entity button:    Add Offer
+    MP: perform search by:    offAvKU${random}-1
+    MP: click on a table row that contains:    offAvKU${random}-1
+    MP: fill offer fields:
+    ...    || is active | merchant sku      | store | stock quantity ||
+    ...    || true      | offAvMKU${random} | DE    | 5              ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default ||
+    ...    || 1          | DE    | CHF      | 100           ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default | quantity ||
+    ...    || 2          | DE    | EUR      | 200           | 1        ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default | quantity ||
+    ...    || 3          | AT    | EUR      | 10            | 1        ||
+    MP: save offer
+    Repeat Keyword    2    Trigger multistore p&s
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: delete all shopping carts
+    Yves: delete all user addresses
+    Yves: create new 'Shopping Cart' with name:    offAvailability${random}
+    Yves: go to PDP of the product with sku:     offAvKU${random}    wait_for_p&s=true
+    Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
+    Yves: merchant's offer/product price should be:    Spryker    €200.00
+    Yves: select xxx merchant's offer:    Spryker
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+    Yves: change quantity using '+' or '-' button № times:    +    5
+    Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 5.
+    Yves: change quantity using '+' or '-' button № times:    +    2
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    offAvailability${random}
+    Yves: assert merchant of product in cart or list:    offAvKU${random}-1    Spryker
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select the following shipping method for the shipment:    1    DHL    Express
+    Yves: submit form on the checkout
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Trigger oms
+    Yves: get the last placed order ID by current customer
+    Yves: go to PDP of the product with sku:     offAvKU${random}
+    Yves: select xxx merchant's offer:    Spryker
+    Yves: change quantity using '+' or '-' button № times:    +    5
+    Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 2.
+    Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: go to my order page:    ${lastPlacedOrder}
+    Zed: trigger matching state of xxx merchant's shipment:    1    Cancel
+    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: delete all shopping carts
+    Yves: create new 'Shopping Cart' with name:    offUpdatedAvailability${random}
+    Yves: go to PDP of the product with sku:     offAvKU${random}
+    Yves: select xxx merchant's offer:    Spryker
+    Yves: change quantity using '+' or '-' button № times:    +    5
+    Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 5.
+    Yves: change quantity using '+' or '-' button № times:    +    2
+    Yves: add product to the shopping cart
+    Yves: go to the shopping cart through the header with name:    offUpdatedAvailability${random}
+    Yves: assert merchant of product in cart or list:    offAvKU${random}-1    Spryker
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    ...    AND    Yves: delete all shopping carts
+    ...    AND    Yves: delete all user addresses
+    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    ...    AND    Zed: click Action Button in a table for row that contains:      offAvProduct${random}     Deny
+    ...    AND    Trigger multistore p&s
+
 Product_Availability_Calculation
     [Documentation]    Check product availability + multistore
     Repeat Keyword    3    Trigger multistore p&s
@@ -310,6 +424,7 @@ Product_Availability_Calculation
     Repeat Keyword    3    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email} 
     Yves: delete all shopping carts
+    Yves: delete all user addresses
     Yves: create new 'Shopping Cart' with name:    prodAvailCalculation+${random}
     Yves: go to PDP of the product with sku:     availabilitySKU${random}    wait_for_p&s=true
     Yves: change quantity using '+' or '-' button № times:    +    5
@@ -320,10 +435,7 @@ Product_Availability_Calculation
     Yves: assert merchant of product in cart or list:    availabilitySKU${random}-1    Spryker
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName               | lastName               | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_user_first_name} | ${yves_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
     Yves: select the following shipping method for the shipment:    1    DHL    Express
     Yves: submit form on the checkout
     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
@@ -372,124 +484,7 @@ Product_Availability_Calculation
     ...    AND    Zed: update warehouse:    
     ...    || warehouse                                         | store || 
     ...    || Spryker ${merchant_spryker_reference} Warehouse 1 | AT    ||
-    ...    AND    Trigger multistore p&s
-
-Offer_Availability_Calculation
-    [Documentation]    check offer availability
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
-    MP: open navigation menu tab:    Products    
-    MP: click on create new entity button:    Create Product
-    MP: create multi sku product with following data:
-    ...    || product sku      | product name          | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
-    ...    || offAvKU${random} | offAvProduct${random} | packaging_unit       | Item                        | Box                          | material              | Aluminium              ||
-    MP: perform search by:    offAvProduct${random}
-    MP: click on a table row that contains:     offAvProduct${random}
-    MP: fill abstract product required fields:
-    ...    || product name          | store | store 2 | tax set        ||
-    ...    || offAvProduct${random} | DE    | AT      | Standard Taxes ||
-    MP: fill product price values:
-    ...    || product type | row number  | store | currency | gross default | gross original ||
-    ...    || abstract     | 1           | DE    | EUR      | 100           | 90             ||
-    MP: fill product price values:
-    ...    || product type | row number  | store | currency | gross default | gross original ||
-    ...    || abstract     | 2           | AT    | EUR      | 200           | 90             ||
-    MP: save abstract product 
-    MP: click on a table row that contains:    offAvProduct${random}
-    MP: open concrete drawer by SKU:    offAvKU${random}-1
-    MP: fill concrete product fields:
-    ...    || is active | stock quantity | use abstract name | searchability ||
-    ...    || true      | 5              | true              | en_US         ||
-    MP: open concrete drawer by SKU:    offAvKU${random}-1
-    MP: fill product price values:
-    ...    || product type | row number | store | currency | gross default ||
-    ...    || concrete     | 1          | DE    | EUR      | 50            ||
-    MP: fill product price values:
-    ...    || product type | row number | store | currency | gross default ||
-    ...    || concrete     | 2          | AT    | EUR      | 50            || 
-    MP: save concrete product
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Catalog    Products 
-    Zed: click Action Button in a table for row that contains:     offAvProduct${random}     Approve
-    Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: delete all shopping carts
-    Yves: create new 'Shopping Cart' with name:    offAvailability${random}
-    MP: login on MP with provided credentials:    ${merchant_spryker_email}
-    MP: open navigation menu tab:    Offers
-    MP: click on create new entity button:    Add Offer
-    MP: perform search by:    offAvKU${random}-1
-    MP: click on a table row that contains:    offAvKU${random}-1
-    MP: fill offer fields:
-    ...    || is active | merchant sku      | store | stock quantity ||
-    ...    || true      | offAvMKU${random} | DE    | 5              ||
-    MP: add offer price:
-    ...    || row number | store | currency | gross default ||
-    ...    || 1          | DE    | CHF      | 100           ||
-    MP: add offer price:
-    ...    || row number | store | currency | gross default | quantity ||
-    ...    || 2          | DE    | EUR      | 200           | 1        ||
-    MP: add offer price:
-    ...    || row number | store | currency | gross default | quantity ||
-    ...    || 3          | AT    | EUR      | 10            | 1        ||
-    MP: save offer
-    Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: delete all shopping carts
-    Yves: create new 'Shopping Cart' with name:    offAvailability${random}
-    Yves: go to PDP of the product with sku:     offAvKU${random}    wait_for_p&s=true
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
-    Yves: merchant's offer/product price should be:    Spryker    €200.00
-    Yves: select xxx merchant's offer:    Spryker
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: change quantity using '+' or '-' button № times:    +    5
-    Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 5.
-    Yves: change quantity using '+' or '-' button № times:    +    2
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    offAvailability${random}
-    Yves: assert merchant of product in cart or list:    offAvKU${random}-1    Spryker
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName               | lastName               | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_user_first_name} | ${yves_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
-    Yves: select the following shipping method for the shipment:    1    DHL    Express
-    Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Trigger oms
-    Yves: get the last placed order ID by current customer
-    Yves: go to PDP of the product with sku:     offAvKU${random}
-    Yves: select xxx merchant's offer:    Spryker
-    Yves: change quantity using '+' or '-' button № times:    +    5
-    Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 2.
-    Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
-    Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
-    Zed: go to my order page:    ${lastPlacedOrder}
-    Zed: trigger matching state of xxx merchant's shipment:    1    Cancel
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: delete all shopping carts
-    Yves: create new 'Shopping Cart' with name:    offUpdatedAvailability${random}
-    Yves: go to PDP of the product with sku:     offAvKU${random}
-    Yves: select xxx merchant's offer:    Spryker
-    Yves: change quantity using '+' or '-' button № times:    +    5
-    Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 5.
-    Yves: change quantity using '+' or '-' button № times:    +    2
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    offUpdatedAvailability${random}
-    Yves: assert merchant of product in cart or list:    offAvKU${random}-1    Spryker
-    [Teardown]    Run Keywords    Should Test Run
-    ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: delete all shopping carts
-    ...    AND    Yves: delete all user addresses
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
-    ...    AND    Zed: click Action Button in a table for row that contains:      offAvProduct${random}     Deny
-    ...    AND    Trigger multistore p&s
-
+    ...    AND    Repeat Keyword    3    Trigger multistore p&s
 
 Configurable_Product_PDP_Shopping_List
     [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of 7 items. Ensure that products that have not been configured cannot be purchased. bug: https://spryker.atlassian.net/browse/CC-33647
@@ -563,6 +558,7 @@ Configurable_Product_RfQ_OMS
     ...    AND    Zed: deactivate all discounts from Overview page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
+    Yves: delete all user addresses
     Yves: create new 'Shopping Cart' with name:    confProductCart+${random}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: change the product options in configurator to:
@@ -614,6 +610,7 @@ Configurable_Product_RfQ_OMS
     Zed: trigger matching state of xxx order item inside xxx shipment:    Deliver    1
     Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    1
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00  
+    Repeat Keyword    3    Trigger multistore p&s
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to user menu:    Order History

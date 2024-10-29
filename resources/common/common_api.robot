@@ -1713,6 +1713,10 @@ Find or create customer cart
                         Set Test Variable    ${cart_id}    ${cart_id}
                         BREAK
                     END
+                    IF    '${env}' in ['api_b2c','api_mp_b2c']
+                        Set Test Variable    ${cart_id}    ${cart_id}
+                        BREAK
+                    END
                     IF    ${index} < ${carts_number}-1 and ${expected_cart_found} == 0
                         Continue For Loop
                     ELSE

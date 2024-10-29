@@ -107,6 +107,7 @@ Configurable_Bundle
 
 Product_labels
     [Documentation]    Checks that products have labels on PLP and PDP
+    Trigger product labels update
     Yves: go to first navigation item level:    Sale %
     Yves: 1st product card in catalog (not)contains:     Sale label    true
     Yves: go to the PDP of the first available product on open catalog page

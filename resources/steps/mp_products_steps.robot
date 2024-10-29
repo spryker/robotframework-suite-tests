@@ -65,7 +65,8 @@ MP: fill product price values:
             IF    '${key}'=='gross original' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[7]//input    ${value}
             IF    '${key}'=='quantity' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[8]//input    ${value}
         END
-    Repeat Keyword    2    Wait For Load State
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     END  
     
 MP: create multi sku product with following data:
@@ -81,30 +82,40 @@ MP: create multi sku product with following data:
             Type Text    ${new_product_name_field}    ${value}
             Click    ${new_product_multiple_concretes_option}
             MP: click submit button
+            ${is_form_submitted}=    Run Keyword And Ignore Error    Element Should Not Contain    ${mp_submit_button}    Next
+            IF    'FAIL' in ${is_form_submitted}   
+                Sleep    0.5s
+                MP: click submit button
+            END
             MP: remove notification wrapper
-            Wait For Load State
         END
-        ${attributeAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${new_product_super_attribute_first_row_name_selector}    timeout=400ms
-        IF    '${attributeAppears}'=='False'    Run Keywords    
-        ...    MP: click submit button
-        ...    AND    MP: remove notification wrapper
         IF    '${key}'=='first attribute name' and '${value}' != '${EMPTY}'    
         Run keywords    
             Click    ${new_product_super_attribute_first_row_name_selector}
+            Repeat Keyword    3    Wait For Load State
+            Wait For Load State    networkidle
             MP: select option in expanded dropdown:    ${value}
             Click    ${new_product_super_attribute_first_row_values_selector}
+            Repeat Keyword    3    Wait For Load State
+            Wait For Load State    networkidle
         END
         IF    '${key}'=='first attribute first value' and '${value}' != '${EMPTY}'    MP: select option in expanded dropdown:    ${value}
         IF    '${key}'=='first attribute second value' and '${value}' != '${EMPTY}'    
         Run Keywords
             MP: select option in expanded dropdown:    ${value}
-            Click    ${new_product_add_super_attribute_button}  
+            Click    ${new_product_add_super_attribute_button}
+            Repeat Keyword    3    Wait For Load State
+            Wait For Load State    networkidle
             Click    ${new_product_super_attribute_second_row_name_selector}
+            Repeat Keyword    3    Wait For Load State
+            Wait For Load State    networkidle
         END
         IF    '${key}'=='second attribute name' and '${value}' != '${EMPTY}'    
         Run Keywords
             MP: select option in expanded dropdown:    ${value}
             Click    ${new_product_super_attribute_second_row_values_selector}
+            Repeat Keyword    3    Wait For Load State
+            Wait For Load State    networkidle
         END
         IF    '${key}'=='second attribute value' and '${value}' != '${EMPTY}'    MP: select option in expanded dropdown:    ${value}
     END
@@ -155,6 +166,7 @@ MP: fill abstract product required fields:
         ...    Click    ${product_tax_selector}
         ...    AND    MP: select option in expanded dropdown:    ${value}
     Repeat Keyword    2    Wait For Load State
+    Wait For Load State    networkidle
     END  
 
 MP: save abstract product    
@@ -201,6 +213,7 @@ MP: save concrete product
     Wait Until Element Is Visible    ${product_updated_popup}
     MP: remove notification wrapper
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     MP: Wait until loader is no longer visible
 
 MP: delete product price row that contains text:
@@ -211,12 +224,14 @@ MP: delete product price row that contains text:
     Wait Until Element Is Visible    ${product_price_deleted_popup}
     MP: remove notification wrapper
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 MP: open concrete drawer by SKU:
     [Arguments]    ${concreteSKU}
     Click    ${product_drawer_concretes_tab}    
     MP: click on a table row that contains:    ${concreteSKU}
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     MP: Wait until loader is no longer visible
 
 MP: delete product price row that contains quantity:
@@ -227,6 +242,7 @@ MP: delete product price row that contains quantity:
         Click    ${product_delete_price_row_button}
         Wait Until Element Is Visible    ${product_price_deleted_popup}
         Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
         MP: remove notification wrapper
     END
     IF    '${env}' in ['ui_mp_b2c']
@@ -235,6 +251,7 @@ MP: delete product price row that contains quantity:
         Click    ${product_delete_price_row_button}
         Wait Until Element Is Visible    ${product_price_deleted_popup}
         Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
         MP: remove notification wrapper
     END
 
@@ -242,8 +259,10 @@ MP: add new concrete product:
     [Arguments]    @{args}
     Click    ${product_drawer_concretes_tab}
     Repeat Keyword    2    Wait For Load State
+    Wait For Load State    networkidle
     Click    ${mp_add_concrete_products_button}
     Repeat Keyword    2    Wait For Load State
+    Wait For Load State    networkidle
     ${productData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{productData}
         Log    Key is '${key}' and value is '${value}'.
@@ -254,9 +273,11 @@ MP: add new concrete product:
             Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
             Sleep    0.5s
             Repeat Keyword    2    Wait For Load State
+            Wait For Load State    networkidle
             MP: select option in expanded dropdown:    ${value}
             Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
             Repeat Keyword    2    Wait For Load State
+            Wait For Load State    networkidle
             Sleep    0.5s
         END
         IF    '${key}'=='second attribute' and '${value}' != '${EMPTY}'    
@@ -265,15 +286,18 @@ MP: add new concrete product:
         IF    '${key}'=='second attribute value' and '${value}' != '${EMPTY}'
             Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${secondAttributeName}')]/../..//spy-select
             Repeat Keyword    2    Wait For Load State
+            Wait For Load State    networkidle
             Sleep    0.5s
             MP: select option in expanded dropdown:    ${value}
             Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${secondAttributeName}')]/../..//spy-select
             Repeat Keyword    2    Wait For Load State
+            Wait For Load State    networkidle
             Sleep    0.5s
         END
     END
     Repeat Keyword    3    Wait For Load State
     Click    ${new_product_submit_create_button}
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Wait Until Element Is Visible    ${mp_add_concrete_products_button}
     MP: remove notification wrapper

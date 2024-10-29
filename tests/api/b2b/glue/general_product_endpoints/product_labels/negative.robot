@@ -10,10 +10,6 @@ Test Tags    glue
 *** Test Cases ***
 ENABLER
     API_test_setup
-######POST#####
-
-ENABLER
-    API_test_setup
 
 Get_a_label_without_label_id
     When I send a GET request:    /product-labels
