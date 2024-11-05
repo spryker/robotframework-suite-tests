@@ -52,14 +52,13 @@ Common_suite_setup
     Remove Files    ${OUTPUTDIR}/*.yml
     Load Variables    ${env}
     Overwrite env variables
-    ${random} =    Evaluate    random.randint(300, 99999)
+    Generate global random variable
     ${random_id}=    Generate Random String    5    [NUMBERS]
     ${random_str}=    Generate Random String    5    [LETTERS]
     ${random_str_store}=    Generate Random String    2    [UPPER]
     ${random_str_password}=    Generate Random String    2    [LETTERS]
     ${random_id_password}=    Generate Random String    2    [NUMBERS]
 
-    Set Global Variable    ${random}
     Set Global Variable    ${random_id}
     Set Global Variable    ${random_str}
     Set Global Variable    ${random_str_store}
@@ -72,6 +71,15 @@ Common_suite_setup
         Set Global Variable    ${db_host}    ${docker_db_host}
     END
     RETURN    ${random}
+
+Generate global random variable
+    ${excluded_ranges}=    Evaluate    [str(i).zfill(3) for i in list(range(1, 220)) + [666]]
+    Log Many    ${excluded_ranges}
+    ${random}    Evaluate    random.randint(300, 99999)
+    WHILE    any(ex in str(${random}) for ex in ${excluded_ranges})
+        ${random}    Evaluate    random.randint(300, 99999)
+    END
+    Set Global Variable    ${random}
 
 Should Test Run
     Log Many    @{Test Tags}
@@ -782,7 +790,7 @@ Trigger product labels update
     Repeat Keyword    3    Trigger multistore p&s
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
-Create new dynamic admin user in DB
+Create new dynamic root admin user in DB
     [Documentation]    This keyword creates a new admin user in the DB using data from an existing admin.
         ...    It works for both MariaDB and PostgreSQL.
     [Arguments]    ${first_name}=Dynamic    ${last_name}=Admin    ${user_name}=admin+robot${random}@spryker.com
@@ -827,7 +835,7 @@ Create new dynamic admin user in DB
     Disconnect From Database
     Reset Log Level
 
-Delete dynamic admin user from DB
+Delete dynamic root admin user from DB
     [Documentation]    This keyword deletes a dynamic admin user from the DB based on the provided username.
         ...           It works for both MariaDB and PostgreSQL.
     [Arguments]    ${user_name}=${dynamic_admin_user}

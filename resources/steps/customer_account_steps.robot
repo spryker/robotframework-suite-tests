@@ -43,6 +43,35 @@ Yves: create a new customer address in profile:
     Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
     Click    ${customer_account_add_new_address_button}[${env}]
     Wait Until Element Is Visible    ${customer_account_address_form}
+    Select From List By Value    ${customer_account_address_salutation_select}    ${salutation}
+    Type Text    ${customer_account_address_first_name_field}     ${firstName}
+    Type Text    ${customer_account_address_last_name_field}     ${lastName}
+    Type Text    ${customer_account_address_company_name_field}     ${company}
+    Type Text    ${customer_account_address_street_field}     ${street}
+    Type Text    ${customer_account_address_house_number_field}     ${houseNumber}
+    Type Text    ${customer_account_address_additional_address_field}     ${additionalAddress}
+    Type Text    ${customer_account_address_zip_code_field}     ${postCode}
+    Type Text    ${customer_account_address_city_field}     ${city}
+    Type Text    ${customer_account_address_phone_field}     ${phone}
+    Select From List By Text    ${customer_account_address_country}    ${country}
+    Click    ${customer_account_address_submit_button}
+    Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
+
+Yves: create new default customer address in profile
+    [Arguments]    ${salutation}=${default_address.salutation}    ${firstName}=${default_address.first_name}    ${lastName}=${default_address.last_name}    ${street}=${default_address.street}    ${houseNumber}=${default_address.house_number}    ${postCode}=${default_address.post_code}    ${city}=${default_address.city}    ${country}=${default_address.country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=${EMPTY}    ${phone}==${EMPTY}    ${additionalAddress}==${EMPTY}
+    Yves: remove flash messages
+    ${currentURL}=    Get Location
+    IF    'customer/address' not in '${currentURL}'    
+            IF    '.at.' in '${currentURL}'
+                Go To    ${yves_at_url}customer/address
+            ELSE
+                Go To    ${yves_url}customer/address
+            END    
+    END
+    Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
+    Click    ${customer_account_add_new_address_button}[${env}]
+    Wait Until Element Is Visible    ${customer_account_address_form}
+    Select From List By Value    ${customer_account_address_salutation_select}    ${salutation}
     Type Text    ${customer_account_address_first_name_field}     ${firstName}
     Type Text    ${customer_account_address_last_name_field}     ${lastName}
     Type Text    ${customer_account_address_company_name_field}     ${company}

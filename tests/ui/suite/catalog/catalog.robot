@@ -80,7 +80,8 @@ Catalog
 
 Catalog_Actions
     [Documentation]    Checks quick add to cart and product groups
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Setup]    Create new dynamic root admin user in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: change concrete product price on:
     ...    || productAbstract | productConcrete | store | mode  | type   | currency | amount ||
     ...    || 003             | 003_26138343    | DE    | gross | default| €        | 65.00  ||
@@ -99,13 +100,16 @@ Catalog_Actions
     Yves: go to b2c shopping cart
     Yves: shopping cart contains the following products:    150_29554292    003_26138343
     Yves: shopping cart contains product with unit price:    sku=003    productName=Canon IXUS 160    productPrice=65.00
-    [Teardown]    Yves: check if cart is not empty and clear it
+    [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
+    ...    AND    Delete dynamic root admin user from DB
 
 Volume_Prices
     [Documentation]    Checks that volume prices are applied in cart
-    [Setup]    Run keywords    Zed: check and restore product availability in Zed:    ${volume_prices_product_abstract_sku}    Available    ${volume_prices_product_concrete_sku}
+    [Setup]    Run keywords    Create new dynamic root admin user in DB
+    ...    AND    Create new approved dynamic customer in DB
+    ...    AND    Zed: check and restore product availability in Zed:    ${volume_prices_product_abstract_sku}    Available    ${volume_prices_product_concrete_sku}    ${dynamic_admin_user}
     ...    AND    Trigger p&s
-    ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     ...    AND    Yves: delete all shopping carts
     ...    AND    Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
     Yves: go to PDP of the product with sku:    ${volume_prices_product_abstract_sku}
@@ -115,7 +119,8 @@ Volume_Prices
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
     Yves: shopping cart contains product with unit price:    sku=${volume_prices_product_concrete_sku}    productName=${volume_prices_product_name}    productPrice=16.50
-    [Teardown]    Yves: delete 'Shopping Cart' with name:    VolumePriceCart+${random}
+    [Teardown]    Run Keywords    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic customer via API
 
 Discontinued_Alternative_Products
     [Documentation]    Checks discontinued and alternative products
@@ -145,7 +150,9 @@ Discontinued_Alternative_Products
 
 Measurement_Units
     [Documentation]    Checks checkout with Measurement Unit product
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    [Setup]    Run keywords    Create new approved dynamic customer in DB
+    ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    ...    AND    Yves: create new default customer address in profile
     ...    AND    Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
     Yves: go to PDP of the product with sku:    215
     Yves: change variant of the product on PDP on:    Ring (500m)
@@ -158,16 +165,19 @@ Measurement_Units
     Yves: shopping cart contains the following products:    215_124
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    [Teardown]    Delete dynamic customer via API
 
 Packaging_Units
     [Documentation]    Checks checkout with Packaging Unit product
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    [Setup]    Run keywords    Create new approved dynamic customer in DB
+    ...    AND    Yves: create new default customer address in profile
+    ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     ...    AND    Yves: create new 'Shopping Cart' with name:    packagingUnitsCart+${random}
     Yves: go to PDP of the product with sku:    218
     Yves: change variant of the product on PDP on:    Giftbox
@@ -179,37 +189,44 @@ Packaging_Units
     Yves: shopping cart contains the following products:    218_1234
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    [Teardown]    Delete dynamic customer via API
 
 Product_Bundles
     [Documentation]    Checks checkout with Bundle product
-    [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Setup]    Run keywords    Create new dynamic root admin user in DB
+    ...    AND    Create new approved dynamic customer in DB
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Yves: create new default customer address in profile
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
     Yves: add product to the shopping cart    wait_for_p&s=true
     Yves: shopping cart contains the following products:    ${bundle_product_concrete_sku}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    [Teardown]    Yves: check if cart is not empty and clear it
+    [Teardown]    Run Keywords    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic customer via API
 
 Back_in_Stock_Notification
+    [Setup]    Run Keywords    Create new dynamic root admin user in DB
+    ...    AND    Create new approved dynamic customer in DB
     [Documentation]    Back in stock notification is sent and availability check
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
     Zed: change product stock:    ${stock_product_abstract_sku}    ${stock_product_concrete_sku}    false    0
@@ -219,22 +236,26 @@ Back_in_Stock_Notification
     Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
     Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    false
-    Yves: submit back in stock notification request for email:    ${yves_second_user_email}
+    Yves: submit back in stock notification request for email:    ${dynamic_customer}
     Yves: unsubscribe from availability notifications
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: change product stock:    ${stock_product_abstract_sku}    ${stock_product_concrete_sku}    true    0
     Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    true
-    [Teardown]    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}
+    [Teardown]    Run Keywords    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}    ${dynamic_admin_user}
+    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic customer via API
 
 Manage_Product
+    [Setup]    Run Keywords    Create new dynamic root admin user in DB
+    ...    AND    Create new approved dynamic customer in DB
     [Documentation]    checks that BO user can manage abstract and concrete products + create new
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: start new abstract product creation:
     ...    || sku                   | store | name en                | name de                  | new from   | new to     ||
     ...    || zedManageSKU${random} | DE    | manageProduct${random} | DEmanageProduct${random} | 01.01.2020 | 01.01.2030 ||
@@ -268,7 +289,7 @@ Manage_Product
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     zedManageSKU${random}     Approve
     Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    zedManageSKU${random}    wait_for_p&s=true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
@@ -279,7 +300,7 @@ Manage_Product
     Yves: change variant of the product on PDP on:    blue
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: add new concrete product to abstract:
     ...    || productAbstract       | sku                               | autogenerate sku | attribute 1 | name en                  | name de                  | use prices from abstract ||
     ...    || zedManageSKU${random} | zedManageSKU${random}-color-black | false            | black       | ENaddedConcrete${random} | DEaddedConcrete${random} | true                     ||
@@ -306,7 +327,7 @@ Manage_Product
     ...    || productAbstract       | name en                         | name de                         ||
     ...    || zedManageSKU${random} | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} ||
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    zedManageSKU${random}    wait_for_p&s=true
     Yves: product name on PDP should be:    ENUpdatedmanageProduct${random}
@@ -329,19 +350,21 @@ Manage_Product
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:    zedManageSKU${random}-color-black    ENaddedConcrete${random}    25.00
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     manageProduct${random}     View
     Zed: view product page is displayed
     Zed: view abstract product page contains:
     ...    || store | sku                   | name                          | variants count ||
     ...    || DE AT | zedManageSKU${random} | UpdatedmanageProduct${random} | 3              ||
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: check if cart is not empty and clear it
+    [Teardown]    Run Keywords    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic customer via API
 
 Product_Original_Price
+    [Setup]    Run Keywords    Create new dynamic root admin user in DB
+    ...    AND    Create new approved dynamic customer in DB
     [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: start new abstract product creation:
     ...    || sku                     | store | name en                  | name de                    | new from   | new to     ||
     ...    || zedOriginalSKU${random} | DE    | originalProduct${random} | DEoriginalProduct${random} | 01.01.2020 | 01.01.2030 ||
@@ -381,7 +404,7 @@ Product_Original_Price
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     zedOriginalSKU${random}     Approve
     Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to URL:    en/search?q=zedOriginalSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: 1st product card in catalog (not)contains:     Price    €100.00
@@ -393,6 +416,8 @@ Product_Original_Price
     Yves: change variant of the product on PDP on:    blue
     Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
     Yves: product original price on the PDP should be:    €50.00
+    [Teardown]    Run Keywords    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic customer via API
 
 Offer_Availability_Calculation
     [Documentation]    check offer availability
@@ -511,13 +536,15 @@ Offer_Availability_Calculation
 
 Product_Availability_Calculation
     [Documentation]    Check product availability + multistore
-    [Setup]    Repeat Keyword    3    Trigger multistore p&s
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Setup]    Run Keywords    Repeat Keyword    3    Trigger multistore p&s
+    ...    AND    Create new dynamic root admin user in DB
+    ...    AND    Create new approved dynamic customer in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: update warehouse:    
     ...    || warehouse  | store || 
     ...    || Warehouse1 | AT    ||
     Repeat Keyword    3    Trigger multistore p&s
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: start new abstract product creation:
     ...    || sku                      | store | store 2 | name en                      | name de                        | new from   | new to     ||
     ...    || availabilitySKU${random} | DE    | AT      | availabilityProduct${random} | DEavailabilityProduct${random} | 01.01.2020 | 01.01.2030 ||
@@ -547,9 +574,8 @@ Product_Availability_Calculation
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     availabilitySKU${random}     Approve
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: check if cart is not empty and clear it
-    Yves: delete all user addresses
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Yves: create new default customer address in profile
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity on PDP:    6
@@ -560,7 +586,7 @@ Product_Availability_Calculation
     Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -572,42 +598,42 @@ Product_Availability_Calculation
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity on PDP:    6
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 2.
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Cancel
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity on PDP:    6
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 5.
     Yves: go to AT store 'Home' page if other store not specified:
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: update warehouse:    
     ...    || warehouse  | unselect store || 
     ...    || Warehouse1 | AT             ||
     Repeat Keyword    3    Trigger multistore p&s
     Yves: go to AT store 'Home' page if other store not specified:
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | unselect store || 
     ...    || Warehouse1 | AT             ||
     ...    AND    Repeat Keyword    3    Trigger multistore p&s
+    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic customer via API
 
 Configurable_Product_PDP_Wishlist_Availability
     [Documentation]    Configure product from PDP and Wishlist + availability case.
-    [Setup]    Run keywords   Delete All Cookies
-    ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    [Setup]    Run keywords   Create new dynamic root admin user in DB
+    ...    AND    Create new approved dynamic customer in DB
+    ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
-    ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: delete all user addresses
-    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${configureButton}
     Yves: product price on the PDP should be:    ${configurable_product_price_without_configurations}
@@ -650,10 +676,8 @@ Configurable_Product_PDP_Wishlist_Availability
     Yves: add all available products from wishlist to cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=${configurable_product_price_with_options}
-    [Teardown]    Run Keywords    Yves: delete all wishlists
-    ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: delete all user addresses  
-    ...    AND    Delete All Cookies
+    [Teardown]    Run Keywords    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic customer via API
 
 Configurable_Product_PDP_Shopping_List
     [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of five items. Ensure that products that have not been configured cannot be purchased.
@@ -850,5 +874,3 @@ Customer_Specific_Prices
     Yves: go to the shopping cart through the header with name:    customerPrices+${random}
     Yves: shopping cart contains product with unit price:    sku=${product_with_merchant_price_concrete_sku}    productName=${product_with_merchant_price_product_name}    productPrice=${product_with_merchant_price_merchant_price}
     [Teardown]    Yves: delete 'Shopping Cart' with name:    customerPrices+${random}
-
-
