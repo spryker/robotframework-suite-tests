@@ -74,11 +74,11 @@ Common_suite_setup
 
 Generate global random variable
     ${excluded_ranges}=    Evaluate    [str(i).zfill(3) for i in list(range(1, 220)) + [666]]
-    Log Many    ${excluded_ranges}
-    ${random}    Evaluate    random.randint(300, 99999)
+    ${random}=    Evaluate    random.randint(300, 99999)
     WHILE    any(ex in str(${random}) for ex in ${excluded_ranges})
-        ${random}    Evaluate    random.randint(300, 99999)
+        ${random}=    Evaluate    random.randint(300, 99999)
     END
+    ${random}=    Convert To String    ${random}
     Set Global Variable    ${random}
 
 Should Test Run
