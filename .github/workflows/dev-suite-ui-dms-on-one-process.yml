@@ -1,8 +1,6 @@
 name: "[dev][suite][UI][DMS-ON][one-process]"
 
 on:
-    schedule:
-        -   cron: '0 3 * * 1-5'
     workflow_dispatch:
 
 jobs:
