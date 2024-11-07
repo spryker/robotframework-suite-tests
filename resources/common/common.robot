@@ -817,9 +817,9 @@ Create new dynamic root admin user in DB
     
     # Step 4: Insert the new user into the spy_user table using correct variables
     IF    '${db_engine}' == 'pymysql'
-        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, '${first_name}', '${last_name}', '${existing_password}', ${existing_status}, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', ${existing_status}, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
     ELSE
-        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, '${first_name}', '${last_name}', '${existing_password}', ${existing_status}, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', ${existing_status}, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
     END
 
     # Step 5: Get the ACL group of the existing user from spy_acl_user_has_group

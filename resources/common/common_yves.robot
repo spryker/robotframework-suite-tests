@@ -61,12 +61,13 @@ Yves: login on Yves with provided credentials:
             Go To    ${yves_url}login
         END
     END
+    ${currentURL}=    Get Url
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
-    IF    'agent' in '${email}'    
-    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
-        ELSE    
+    IF    'agent' in '${currentURL}'
+        Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
+    ELSE    
         Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}[${env}]     Login Failed!
     END
     Yves: remove flash messages
