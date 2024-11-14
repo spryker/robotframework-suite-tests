@@ -140,6 +140,7 @@ Zed: delete dowloaded api specification
 
 Zed: wait until info box is not displayed
     [Arguments]    ${iterations}=20    ${delays}=10s
+    Set Browser Timeout    90
     Try reloading page until element is/not appear:    ${zed_info_flash_message}    false    tries=${iterations}    timeout=${delays}
 
 Find first available product via data exchange api
