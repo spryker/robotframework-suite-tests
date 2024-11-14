@@ -63,9 +63,8 @@ Login_during_checkout
     Yves: get the last placed order ID by current customer
 
 Register_during_checkout
-    [Tags]    smoke
     [Documentation]    Guest user email should be whitelisted from the AWS side before running the test
-    [Tags]    glue
+    [Tags]    glue    smoke
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
