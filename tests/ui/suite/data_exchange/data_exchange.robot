@@ -89,9 +89,8 @@ Data_exchange_API_download_specification
     ...    AND    Trigger API specification update
 
 Data_exchange_API_Configuration_in_Zed
-    [Tags]    smoke
     [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
-    [Tags]    bapi
+    [Tags]    bapi    smoke
     [Setup]    Trigger API specification update
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start creation of new data exchange api configuration for db table:    spy_mime_type
