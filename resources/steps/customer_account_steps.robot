@@ -58,7 +58,7 @@ Yves: create a new customer address in profile:
     Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
 
 Yves: create new default customer address in profile
-    [Arguments]    ${salutation}=${default_address.salutation}    ${firstName}=${default_address.first_name}    ${lastName}=${default_address.last_name}    ${street}=${default_address.street}    ${houseNumber}=${default_address.house_number}    ${postCode}=${default_address.post_code}    ${city}=${default_address.city}    ${country}=${default_address.country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=${EMPTY}    ${phone}==${EMPTY}    ${additionalAddress}==${EMPTY}
+    [Arguments]    ${salutation}=${default_address.salutation}    ${firstName}=${default_address.first_name}    ${lastName}=${default_address.last_name}    ${street}=${default_address.street}    ${houseNumber}=${default_address.house_number}    ${postCode}=${default_address.post_code}    ${city}=${default_address.city}    ${country}=${default_address.country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=${EMPTY}    ${phone}=${EMPTY}    ${additionalAddress}=${EMPTY}
     Yves: remove flash messages
     ${currentURL}=    Get Location
     IF    'customer/address' not in '${currentURL}'    

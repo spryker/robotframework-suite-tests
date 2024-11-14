@@ -88,9 +88,13 @@ Zed: click Action Button in a table for row that contains:
     Click    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
     Repeat Keyword    3    Wait For Load State
 
-Zed: save abstract product:  
-    [Arguments]    ${productAbstract}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+Zed: save abstract product:
+    [Arguments]    ${productAbstract}    ${admin_email}=${zed_admin_email}
+    ${dynamic_admin_user_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_admin_user}
+    IF    ${dynamic_admin_user_exists}
+        VAR    ${admin_email}    ${dynamic_admin_user}
+    END
+    Zed: login on Zed with provided credentials:    ${admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
     Wait until element is visible    ${zed_save_button}

@@ -20,7 +20,12 @@ Zed: update Zed user:
     ${newUserData}=    Set Up Keyword Arguments    @{args}
     ${currentURL}=    Get Location
     IF    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
-    Zed: click Action Button in a table for row that contains:    ${oldEmail}    Edit
+    ${variable_exists}=    Run Keyword And Return Status    Variable Should Exist    ${oldEmail}
+    IF    ${variable_exists}
+        Zed: click Action Button in a table for row that contains:    ${oldEmail}    Edit
+    ELSE
+        Zed: click Action Button in a table for row that contains:    ${email}    Edit
+    END
     Wait Until Element Is Visible    ${zed_user_email_field}
     FOR    ${key}    ${value}    IN    &{newUserData}
         Log    Key is '${key}' and value is '${value}'.
@@ -31,11 +36,20 @@ Zed: update Zed user:
         END
         IF    '${key}'=='firstName' and '${value}' != '${EMPTY}'    Type Text    ${zed_user_first_name_field}    ${value}
         IF    '${key}'=='lastName' and '${value}' != '${EMPTY}'    Type Text    ${zed_user_last_name_field}    ${value}
+        IF    '${key}'=='user_is_warehouse_user' and '${value}' != '${EMPTY}'
+            ${value}=    Convert To Lower Case    ${value}
+        END
         IF    '${key}'=='user_is_warehouse_user' and '${value}' == 'true'   
             Zed: Check checkbox by Label:     This user is a warehouse user
         END
         IF    '${key}'=='user_is_warehouse_user' and '${value}' == 'false'   
             Zed: Uncheck Checkbox by Label:    This user is a warehouse user
+        END
+        IF    '${key}'=='group' and '${value}' != '${EMPTY}'
+            Zed: Check checkbox by Label:    ${value}
+        END
+        IF    '${key}'=='remove group' and '${value}' != '${EMPTY}'
+            Zed: Uncheck Checkbox by Label:    ${value}
         END
     END
     Zed: submit the form

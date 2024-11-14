@@ -276,9 +276,8 @@ Register_during_checkout
     Yves: assert customer profile data:
     ...    || salutation    | first name               | last name               | email                            ||
     ...    || ${salutation} | ${guest_user_first_name} | ${guest_user_last_name} | sonia+guest${random}@spryker.com ||
-    [Teardown]    Zed: delete customer:
-    ...    || email                            ||
-    ...    || sonia+guest${random}@spryker.com ||
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: delete customer:    sonia+guest${random}@spryker.com
 
 Configurable_Product_Checkout
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}

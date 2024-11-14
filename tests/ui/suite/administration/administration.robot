@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_one
+Test Tags    robot:recursive-stop-on-failure    group_one    
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -46,13 +46,8 @@ Resource    ../../../../resources/steps/zed_payment_methods_steps.robot
 Minimum_Order_Value
     [Documentation]    checks that global minimum and maximun order thresholds can be applied
     [Setup]    Run Keywords    Create new dynamic root admin user in DB
-    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Create new approved dynamic customer in DB
-    ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: delete all user addresses
-    ...    AND    Yves: create new default customer address in profile
+    ...    AND    Deactivate all discounts in the database
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: change global threshold settings:
     ...    || store & currency | minimum hard value | minimum hard en message  | minimum hard de message  | maximun hard value | maximun hard en message | maximun hard de message | soft threshold                | soft threshold value | soft threshold fixed fee | soft threshold en message | soft threshold de message ||
@@ -90,11 +85,11 @@ Minimum_Order_Value
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €83.90
     [Teardown]    Run keywords    Delete dynamic customer via API
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: activate following discounts from Overview page:    	Free mobile phone    20% off cameras products    Free Acer M2610 product    Free delivery    10% off Intel products    5% off white products    Tuesday & Wednesday $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
     ...    AND    Zed: change global threshold settings:
     ...    || store & currency | minimum hard value | minimum hard en message | minimum hard de message | maximun hard value | maximun hard en message                                                                                   | maximun hard de message                                                                                                              | soft threshold | soft threshold value | soft threshold en message | soft threshold de message ||
     ...    || DE - Euro [EUR]  | ${SPACE}           | ${SPACE}                | ${SPACE}                | 10000.00           | The cart value cannot be higher than {{threshold}}. Please remove some items to proceed with the order    | Der Warenkorbwert darf nicht höher als {{threshold}} sein. Bitte entfernen Sie einige Artikel, um mit der Bestellung fortzufahren    | None           | ${EMPTY}             | ${EMPTY}                  | ${EMPTY}                  ||
     ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Restore all discounts in the database
 
 Zed_navigation_ordering_and_naming
     [Documentation]    Verifies each left navigation node can be opened.
@@ -152,10 +147,10 @@ Payment_method_update
     Yves: billing address same as shipping address:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
-    Yves: check that the payment method is/not present in the checkout process:    ${checkout_payment_invoice_locator}    true
+    Yves: check that the payment method is/not present in the checkout process:    ${checkout_payment_credit_card_locator}    true
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Administration    Payment Methods
-    Zed: activate/deactivate payment method:    Dummy Payment    Invoice    False
+    Zed: activate/deactivate payment method:    Dummy Payment    Credit Card    False
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to b2c shopping cart    
     Yves: click on the 'Checkout' button in the shopping cart
@@ -165,9 +160,9 @@ Payment_method_update
     Yves: billing address same as shipping address:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
-    Yves: check that the payment method is/not present in the checkout process:     ${checkout_payment_invoice_locator}    false
+    Yves: check that the payment method is/not present in the checkout process:     ${checkout_payment_credit_card_locator}    false
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Administration    Payment Methods
-    ...    AND    Zed: activate/deactivate payment method:    Dummy Payment    Invoice    True
+    ...    AND    Zed: activate/deactivate payment method:    Dummy Payment    Credit Card    True
     ...    AND    Delete dynamic root admin user from DB
     ...    AND    Delete dynamic customer via API

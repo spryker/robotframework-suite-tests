@@ -17,8 +17,12 @@ Zed: fill glossary form:
     END
 
 Zed: undo the changes in glossary translation:
-    [Arguments]    ${glossaryName}    ${original_DE}    ${original_EN}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Arguments]    ${glossaryName}    ${original_DE}    ${original_EN}    ${admin_email}=${zed_admin_email}
+    ${dynamic_admin_user_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_admin_user}
+    IF    ${dynamic_admin_user_exists}
+        VAR    ${admin_email}    ${dynamic_admin_user}
+    END
+    Zed: login on Zed with provided credentials:    ${admin_email}
     Zed: go to second navigation item level:    Administration    Glossary 
     Zed: click Action Button in a table for row that contains:    ${glossaryName}    Edit  
     Zed: fill glossary form:

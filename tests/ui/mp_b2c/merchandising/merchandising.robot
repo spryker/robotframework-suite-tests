@@ -95,7 +95,7 @@ Discounts
     Yves: select the following shipping method for the shipment:    2    DHL    Express
     Yves: select the following shipping method for the shipment:    3    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Credit Card
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed

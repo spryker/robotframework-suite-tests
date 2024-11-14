@@ -3,6 +3,7 @@ Resource    ../common/common_zed.robot
 Resource    ../common/common.robot
 Resource    ../pages/zed/zed_marketplace_offers_page.robot
 Resource    ../pages/zed/zed_create_merchant_page.robot
+Resource    zed_users_steps.robot
 
 *** Keywords ***
 Zed: select merchant in filter:
@@ -85,6 +86,50 @@ Zed: create new Merchant User with the following data:
     END  
     Zed: submit the form
     Wait Until Element Is Visible    ${zed_table_locator}
+
+Zed: create new approved merchant user:
+    [Arguments]    @{args}
+    ${merchantUerData}=    Set Up Keyword Arguments    @{args}
+    ${currentURL}=    Get Location
+    IF    '/list-merchant' not in '${currentURL}'    Go To    ${zed_url}merchant-gui/list-merchant
+    Wait For Load State
+    Wait For Load State    networkidle
+    Zed: click Action Button in a table for row that contains:     ${merchant}     Edit
+    Zed: go to tab:     Users
+    Click    ${zed_add_merchant_user_button}
+    Wait Until Element Is Visible    ${zed_create_merchant_user_email_field}
+    ${unique}=    Generate Random String    3    [NUMBERS]
+    FOR    ${key}    ${value}    IN    &{merchantUerData}
+        Log    Key is '${key}' and value is '${value}'.
+        IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_email_field}    ${value}
+        IF    '${key}'=='first_name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_first_name_field}    ${value}${unique}
+        IF    '${key}'=='last_name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_last_name_field}    ${value}${unique}
+    END  
+    Zed: submit the form
+    Wait Until Element Is Visible    ${zed_table_locator}
+    Zed: click Action Button in Merchant Users table for row that contains:    ${email}    Activate
+    Zed: table should contain non-searchable value:    Active
+    ${should_assign_group}=    Run Keyword And Return Status    Variable Should Exist    ${group}
+    IF    ${should_assign_group}
+        Zed: update Zed user:
+        ...    || email    | password    | group    ||
+        ...    || ${email} | ${password} | ${group} ||
+    ELSE
+        Zed: update Zed user:
+        ...    || email    | password    ||
+        ...    || ${email} | ${password} ||
+    END
+
+Zed: delete merchant user:
+    [Arguments]    ${merchant}    ${merchant_user}
+    ${currentURL}=    Get Location
+    IF    '/list-merchant' not in '${currentURL}'    Go To    ${zed_url}merchant-gui/list-merchant
+    Wait For Load State
+    Wait For Load State    networkidle
+    Zed: click Action Button in a table for row that contains:     ${merchant}     Edit
+    Zed: go to tab:     Users
+    Zed: click Action Button in Merchant Users table for row that contains:    ${merchant_user}    Delete
+    Zed: submit the form
 
 Zed: update Merchant User on edit page with the following data:
     [Arguments]    @{args}

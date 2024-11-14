@@ -14,38 +14,40 @@ Zed: change global threshold settings:
     ${thresholdData}=    Set Up Keyword Arguments    @{args}
     Zed: go to second navigation item level:    Administration    Global Threshold
     Wait Until Element Is Visible    ${zed_global_threshold_store_currency_span}
+    Wait For Load State
+    Wait For Load State    networkidle
     FOR    ${key}    ${value}    IN    &{thresholdData}
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='store & currency' and '${value}' != '${EMPTY}'    
             Select From List By Label    ${zed_global_threshold_store_currency_select}    ${value}
-            ${second_local_minimum_hard_section_expanded}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_global_threshold_minimum_hard_second_locale_collapce_section}    timeout=3s
+            ${second_local_minimum_hard_section_expanded}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_global_threshold_minimum_hard_second_locale_collapce_section}    timeout=500ms
             IF    '${second_local_minimum_hard_section_expanded}'=='False'
                 Scroll Element Into View    ${zed_global_threshold_minimum_hard_second_locale_collapce_section}
                 Click    ${zed_global_threshold_minimum_hard_second_locale_collapce_section}
             END
-            ${second_local_maximum_hard_section_expanded}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_global_threshold_maximum_hard_second_locale_collapce_section}    timeout=3s
+            ${second_local_maximum_hard_section_expanded}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_global_threshold_maximum_hard_second_locale_collapce_section}    timeout500ms
             IF    '${second_local_maximum_hard_section_expanded}'=='False'
                 Scroll Element Into View    ${zed_global_threshold_maximum_hard_second_locale_collapce_section}
                 Click    ${zed_global_threshold_maximum_hard_second_locale_collapce_section}
             END
-            ${second_local_soft_section_expanded}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_global_threshold_soft_second_locale_collapce_section}    timeout=3s
+            ${second_local_soft_section_expanded}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_global_threshold_soft_second_locale_collapce_section}    timeout=500ms
             IF    '${second_local_soft_section_expanded}'=='False'
                 Scroll Element Into View    ${zed_global_threshold_soft_second_locale_collapce_section}
                 Click    ${zed_global_threshold_soft_second_locale_collapce_section}
             END
         END
         IF    '${key}'=='store & currency' and '${value}' == '${EMPTY}'    
-            ${second_local_minimum_hard_section_expanded}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_global_threshold_minimum_hard_second_locale_collapce_section}    timeout=3s
+            ${second_local_minimum_hard_section_expanded}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_global_threshold_minimum_hard_second_locale_collapce_section}    timeout=500ms
             IF    '${second_local_minimum_hard_section_expanded}'=='False'
                 Scroll Element Into View    ${zed_global_threshold_minimum_hard_second_locale_collapce_section}
                 Click    ${zed_global_threshold_minimum_hard_second_locale_collapce_section}
             END
-            ${second_local_maximum_hard_section_expanded}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_global_threshold_maximum_hard_second_locale_collapce_section}    timeout=3s
+            ${second_local_maximum_hard_section_expanded}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_global_threshold_maximum_hard_second_locale_collapce_section}    timeout=500ms
             IF    '${second_local_maximum_hard_section_expanded}'=='False'
                 Scroll Element Into View    ${zed_global_threshold_maximum_hard_second_locale_collapce_section}
                 Click    ${zed_global_threshold_maximum_hard_second_locale_collapce_section}
             END
-            ${second_local_soft_section_expanded}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_global_threshold_soft_second_locale_collapce_section}    timeout=3s
+            ${second_local_soft_section_expanded}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_global_threshold_soft_second_locale_collapce_section}    timeout=500ms
             IF    '${second_local_soft_section_expanded}'=='False'
                 Scroll Element Into View    ${zed_global_threshold_soft_second_locale_collapce_section}
                 Click    ${zed_global_threshold_soft_second_locale_collapce_section}

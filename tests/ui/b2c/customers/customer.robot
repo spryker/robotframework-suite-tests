@@ -49,9 +49,8 @@ New_Customer_Registration
     ...    || salutation | first name | last name | e-mail                      | password                                        ||
     ...    || Mr.        | New        | User      | sonia+${random}@spryker.com | Gx${random_str_password}!2${random_id_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
-    [Teardown]    Zed: delete customer:
-    ...    || email                       ||
-    ...    || sonia+${random}@spryker.com ||
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: delete customer:    sonia+${random}@spryker.com
 
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users see products info and cart but not profile
@@ -209,6 +208,5 @@ Email_Confirmation
     ...    || Mr.        | New        | User      | sonia+fails+${random}@spryker.com  | Ps${random_str_password}!5${random_id_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     Yves: login on Yves with provided credentials and expect error:     sonia+fails+${random}@spryker.com     Ps${random_str_password}!5${random_id_password}
-    [Teardown]    Zed: delete customer:
-    ...    || email                             ||
-    ...    || sonia+fails+${random}@spryker.com ||
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: delete customer:    sonia+fails+${random}@spryker.com

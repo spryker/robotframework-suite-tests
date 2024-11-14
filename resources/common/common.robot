@@ -804,22 +804,30 @@ Create new dynamic root admin user in DB
     ${existing_id_user}=    Set Variable    ${existing_user_data[0][0]}
     ${existing_fk_locale}=    Set Variable    ${existing_user_data[0][1]}
     ${existing_password}=    Set Variable    ${existing_user_data[0][8]}
-    ${existing_status}=    Set Variable    ${existing_user_data[0][9]}
     ${existing_created_at}=    Set Variable    ${existing_user_data[0][12]}
     ${existing_updated_at}=    Set Variable    ${existing_user_data[0][13]}
     
     # Step 2: Get the maximum id_user and increment it
     ${max_id_user}=    Query    SELECT MAX(id_user) FROM spy_user
-    ${new_id_user}=    Evaluate    ${max_id_user[0][0]} + 1
+    IF    '${None}' in '${max_id_user}'    VAR    ${max_id_user}    0
+
+    IF    ${max_id_user[0][0]} > 5000
+        # new ID will be max +1 not to intersect with real IDs
+        ${new_id_user}=    Evaluate    ${max_id_user[0][0]} + 1
+    ELSE
+        # new ID will be max + 5001 not to intersect with real IDs
+        ${new_id_user}=    Evaluate    ${max_id_user[0][0]} + 5001
+    END
     
     # Step 3: Generate new UUID
-    ${new_uuid}=    Generate Random String    5    [NUMBERS]
+    ${new_uuid}=   Generate Random String	4	[UPPER]
+    VAR    ${new_uuid}    ${new_uuid}-${random}-${random_str}-${random_id}
     
     # Step 4: Insert the new user into the spy_user table using correct variables
     IF    '${db_engine}' == 'pymysql'
-        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', ${existing_status}, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
     ELSE
-        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', ${existing_status}, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
     END
 
     # Step 5: Get the ACL group of the existing user from spy_acl_user_has_group
@@ -833,7 +841,6 @@ Create new dynamic root admin user in DB
     END
 
     Disconnect From Database
-    Reset Log Level
 
 Delete dynamic root admin user from DB
     [Documentation]    This keyword deletes a dynamic admin user from the DB based on the provided username.
@@ -843,46 +850,50 @@ Delete dynamic root admin user from DB
     # Step 1: Fetch the ID of the user to be deleted
     Connect to Spryker DB
     ${user_data}=    Query    SELECT id_user FROM spy_user WHERE username = '${user_name}'
-    ${user_id}=    Set Variable    ${user_data[0][0]}
+    ${user_exists}=    Evaluate    len(${user_data}) > 0
+
+    IF    ${user_exists}
+        ${user_id}=    Set Variable    ${user_data[0][0]}
     
-    # Step 2: Delete entries in related tables
-    IF    '${db_engine}' == 'pymysql'
-        Execute Sql String    DELETE FROM spy_acl_user_has_group WHERE fk_user = ${user_id}
-    ELSE
-        Execute Sql String    DELETE FROM spy_acl_user_has_group WHERE fk_user = ${user_id}
-    END
-    
-    # Step 3: Delete the user from spy_user table
-    IF    '${db_engine}' == 'pymysql'
-        Execute Sql String    DELETE FROM spy_user WHERE id_user = ${user_id}
-    ELSE
-        Execute Sql String    DELETE FROM spy_user WHERE id_user = ${user_id}
+        # Step 2: Delete entries in related tables
+        IF    '${db_engine}' == 'pymysql'
+            Execute Sql String    DELETE FROM spy_acl_user_has_group WHERE fk_user = ${user_id}
+        ELSE
+            Execute Sql String    DELETE FROM spy_acl_user_has_group WHERE fk_user = ${user_id}
+        END
+        
+        # Step 3: Delete the user from spy_user table
+        IF    '${db_engine}' == 'pymysql'
+            Execute Sql String    DELETE FROM spy_user WHERE id_user = ${user_id}
+        ELSE
+            Execute Sql String    DELETE FROM spy_user WHERE id_user = ${user_id}
+        END
     END
     
     Disconnect From Database
-    Reset Log Level
 
 Create new approved dynamic customer in DB
-    [Documentation]    This keyword creates a new approved dynamic customer in the DB based on an existing customer (sonia@spryker.com).
+    [Documentation]    This keyword creates a new approved dynamic customer in the DB based on an existing customer (sonia@spryker.com) and assigns the customer to a company.
     ...               It works for both MariaDB and PostgreSQL.
-    [Arguments]    ${first_name}=Dynamic    ${last_name}=Customer    ${email}=sonia+robot${random}@spryker.com
+    [Arguments]    ${first_name}=Dynamic    ${last_name}=Customer    ${email}=sonia+robot${random}@spryker.com    ${based_on}=sonia@spryker.com
 
-    # Step 1: Fetch the existing customer data (sonia@spryker.com)
+    # Step 1: Fetch the existing customer data (${based_on})
     Connect to Spryker DB
-    ${existing_customer_data}=    Query    SELECT * FROM spy_customer WHERE email = 'sonia@spryker.com'
+    ${existing_customer_data}=    Query    SELECT * FROM spy_customer WHERE email = '${based_on}'
     
     # Extract all columns from the existing customer with Set Variable If for conditional handling of None values
+    VAR    ${existing_customer_id}    ${existing_customer_data[0][0]}
     ${existing_fk_locale}=                 Set Variable If    ${existing_customer_data[0][1]}    ${existing_customer_data[0][1]}    NULL
     ${existing_fk_user}=                   Set Variable If    ${existing_customer_data[0][2]}    ${existing_customer_data[0][2]}    NULL
     ${existing_anonymized_at}=             Set Variable If    ${existing_customer_data[0][3]}    ${existing_customer_data[0][3]}    NULL
     ${existing_company}=                   Set Variable If    '${existing_customer_data[0][4]}' != '${EMPTY}'    ${existing_customer_data[0][4]}    ${EMPTY}
     ${existing_date_of_birth}=             Set Variable If    ${existing_customer_data[0][6]}    ${existing_customer_data[0][6]}    NULL
-    ${existing_default_billing_address}=   Set Variable If    ${existing_customer_data[0][7]}    ${existing_customer_data[0][7]}    NULL
-    ${existing_default_shipping_address}=  Set Variable If    ${existing_customer_data[0][8]}    ${existing_customer_data[0][8]}    NULL
+    VAR    ${existing_default_billing_address}    NULL
+    VAR    ${existing_default_shipping_address}    NULL
     ${existing_gender}=                    Set Variable If    ${existing_customer_data[0][11]}   ${existing_customer_data[0][11]}   NULL
     ${existing_password}=                  Set Variable    ${existing_customer_data[0][13]}
     ${existing_phone}=                     Set Variable If    '${existing_customer_data[0][14]}' != '${EMPTY}'   ${existing_customer_data[0][14]}   ${EMPTY}
-    ${existing_registered}=                Set Variable If    ${existing_customer_data[0][15]}   ${existing_customer_data[0][15]}   '2020-06-24'  # Default to a valid date if missing
+    ${existing_registered}=                Set Variable If    ${existing_customer_data[0][15]}   ${existing_customer_data[0][15]}   '2020-06-24'
     ${existing_registration_key}=          Set Variable If    ${existing_customer_data[0][16]}   ${existing_customer_data[0][16]}   NULL
     ${existing_restore_password_date}=     Set Variable If    ${existing_customer_data[0][17]}   ${existing_customer_data[0][17]}   NULL
     ${existing_restore_password_key}=      Set Variable If    ${existing_customer_data[0][18]}   ${existing_customer_data[0][18]}   NULL
@@ -892,7 +903,15 @@ Create new approved dynamic customer in DB
     
     # Step 2: Get the maximum id_customer and increment it
     ${max_id_customer}=    Query    SELECT MAX(id_customer) FROM spy_customer
-    ${new_id_customer}=    Evaluate    ${max_id_customer[0][0]} + 1
+    IF    '${None}' in '${max_id_customer}'    VAR    ${max_id_customer}    0
+
+    IF    ${max_id_customer[0][0]} > 5000
+        # new ID will be max +1 not to intersect with real IDs
+        ${new_id_customer}=    Evaluate    ${max_id_customer[0][0]} + 1
+    ELSE
+        # new ID will be max + 5001 not to intersect with real IDs
+        ${new_id_customer}=    Evaluate    ${max_id_customer[0][0]} + 5001
+    END
     
     # Step 3: Generate new values for customer_reference
     ${new_customer_reference}=    Set Variable    dynamic--${new_id_customer}
@@ -907,5 +926,108 @@ Create new approved dynamic customer in DB
         Execute Sql String    INSERT INTO spy_customer (id_customer, fk_locale, fk_user, anonymized_at, company, customer_reference, date_of_birth, default_billing_address, default_shipping_address, email, first_name, gender, last_name, password, phone, registered, registration_key, restore_password_date, restore_password_key, salutation, created_at, updated_at) VALUES (${new_id_customer}, ${existing_fk_locale}, ${existing_fk_user}, ${existing_anonymized_at}, '${existing_company}', '${new_customer_reference}', ${existing_date_of_birth}, ${existing_default_billing_address}, ${existing_default_shipping_address}, '${email}', '${first_name}', ${existing_gender}, '${last_name}', '${existing_password}', '${existing_phone}', '${existing_registered}', ${existing_registration_key}, ${existing_restore_password_date}, ${existing_restore_password_key}, ${existing_salutation}, '${existing_created_at}', '${existing_updated_at}')
     END
 
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b','ui_suite']
+        # Step 5: Fetch the existing company user data associated with the existing customer
+        ${existing_company_user_data}=    Query    SELECT * FROM spy_company_user WHERE fk_customer = ${existing_customer_id}
+
+        # Extract the relevant fields for inserting a new company user
+        VAR    ${existing_fk_company}    ${existing_company_user_data[0][1]}
+        VAR    ${existing_fk_company_business_unit}    ${existing_company_user_data[0][2]}
+        VAR    ${existing_key}    ${existing_company_user_data[0][6]}
+
+        # Step 6: Get the maximum id_company_user and increment it
+        ${max_id_company_user}=    Query    SELECT MAX(id_company_user) FROM spy_company_user
+        IF    '${None}' in '${max_id_company_user}'    VAR    ${max_id_company_user}    0
+
+        IF    ${max_id_company_user[0][0]} > 5000
+            # new ID will be max +1 not to intersect with real IDs
+            ${new_id_company_user}=    Evaluate    ${max_id_company_user[0][0]} + 1
+        ELSE
+            # new ID will be max + 5001 not to intersect with real IDs
+            ${new_id_company_user}=    Evaluate    ${max_id_company_user[0][0]} + 5001
+        END
+
+        # Step 7: Generate unique values for `key` and `uuid`
+        VAR    ${new_key}    ${existing_key}--${new_id_company_user}
+        ${new_uuid}=   Generate Random String	4	[UPPER]
+        VAR    ${new_uuid}    ${new_uuid}-${random}-${random_str}-${random_id}
+
+        # Step 8: Insert the new company user entry in the spy_company_user table
+        IF    '${db_engine}' == 'pymysql'
+            Execute Sql String    INSERT INTO spy_company_user (id_company_user, fk_company, fk_company_business_unit, fk_customer, is_active, is_default, key, uuid) VALUES (${new_id_company_user}, ${existing_fk_company}, ${existing_fk_company_business_unit}, ${new_id_customer}, True, False, '${new_key}', '${new_uuid}')
+        ELSE
+            Execute Sql String    INSERT INTO spy_company_user (id_company_user, fk_company, fk_company_business_unit, fk_customer, is_active, is_default, key, uuid) VALUES (${new_id_company_user}, ${existing_fk_company}, ${existing_fk_company_business_unit}, ${new_id_customer}, True, False, '${new_key}', '${new_uuid}')
+        END
+    END
+
+    # Step 9: Check if an address exists for the new customer
+    ${address_exists}=    Query    SELECT COUNT(*) FROM spy_customer_address WHERE fk_customer = ${new_id_customer}
+
+    # Step 10: Handle address creation or update
+    IF    ${address_exists[0][0]} == 0
+        # No address exists, so create a new address
+        ${max_id_customer_address}=    Query    SELECT MAX(id_customer_address) FROM spy_customer_address
+        IF    '${None}' in '${max_id_customer_address}'    VAR    ${max_id_customer_address}    0
+        IF    ${max_id_customer_address[0][0]} > 5000
+            # new ID will be max +1 not to intersect with real IDs
+            ${new_id_customer_address}=    Evaluate    ${max_id_customer_address[0][0]} + 1
+        ELSE
+            # new ID will be max + 5001 not to intersect with real IDs
+            ${new_id_customer_address}=    Evaluate    ${max_id_customer_address[0][0]} + 5001
+        END
+        ${address_uuid}=   Generate Random String	4	[UPPER]
+        VAR    ${address_uuid}    ${address_uuid}-${random}-${random_str}-${random_id}
+
+        Execute Sql String    INSERT INTO spy_customer_address (id_customer_address, fk_country, fk_customer, fk_region, address1, address2, address3, anonymized_at, city, comment, company, deleted_at, first_name, last_name, phone, salutation, uuid, zip_code, created_at, updated_at) VALUES (${new_id_customer_address}, 60, ${new_id_customer}, NULL, '${default_address.street}', '${default_address.house_number}', NULL, NULL, '${default_address.city}', NULL, NULL, NULL, '${default_address.first_name}', '${default_address.last_name}', NULL, 0, '${address_uuid}', '${default_address.post_code}', NOW(), NOW())
+    ELSE
+        # Address exists, so update it
+        ${existing_address_id}=    Query    SELECT id_customer_address FROM spy_customer_address WHERE fk_customer = ${new_id_customer}
+        Execute Sql String    UPDATE spy_customer_address SET fk_country = 60, fk_region = NULL, address1 = '${default_address.street}', address2 = '${default_address.house_number}', address3 = NULL, anonymized_at = NULL, city = '${default_address.city}', first_name = '${default_address.first_name}', last_name = '${default_address.last_name}', phone = NULL, salutation = 0, zip_code = '${default_address.post_code}', updated_at = NOW() WHERE id_customer_address = ${existing_address_id[0][0]}
+    END
     Disconnect From Database
-    Reset Log Level
+
+Deactivate all discounts in the database
+    [Documentation]    This keyword retrieves all existing discounts in the database, saves their keys and activation status,
+    ...               and then sets each discount's `is_active` status to `False`.
+    
+    # Step 1: Fetch all existing discounts
+    Connect to Spryker DB
+    ${existing_discounts}=    Query    SELECT discount_key, is_active FROM spy_discount
+
+    # Step 2: Store the current discount states with scope TEST
+    VAR    ${discount_states}    ${existing_discounts}    scope=TEST
+
+    # Step 3: Deactivate all discounts
+    Execute Sql String    UPDATE spy_discount SET is_active = False
+
+    Disconnect From Database
+
+Restore all discounts in the database
+    [Documentation]    This keyword restores the activation status of all discounts based on the previously saved data.
+    ...               It must be called after `Deactivate all discounts in the database` to ensure data is available for restoration.
+    [Arguments]    ${enable_all_if_no_previous_state}=True
+
+    # Step 1: Check if discount states were saved
+    ${state_exists}=    Run Keyword And Return Status    Variable Should Exist    ${discount_states}
+
+    # Step 2: Decide action based on existence of discount states and the argument
+    IF    ${state_exists}
+        Log    Restoring each discount's original state based on saved data.
+        Connect to Spryker DB
+        FOR    ${discount_data}    IN    @{discount_states}
+            ${discount_key}=    Set Variable    ${discount_data[0]}
+            ${status}=    Set Variable    ${discount_data[1]}
+            Execute Sql String    UPDATE spy_discount SET is_active = ${status} WHERE discount_key = '${discount_key}'
+        END
+        Disconnect From Database
+    ELSE
+        Log    No saved discount state data available.
+        IF    ${enable_all_if_no_previous_state}
+            Log    Enabling all discounts as per the argument.
+            Connect to Spryker DB
+            Execute Sql String    UPDATE spy_discount SET is_active = True
+            Disconnect From Database
+        ELSE
+            Fail    No saved discount state data available and 'enable_all_if_no_previous_state' is set to False. Cannot proceed.
+        END
+    END

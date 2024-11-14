@@ -325,15 +325,6 @@ Yves: add product to wishlist:
             Select From List By Value    xpath=//select[contains(@name,'wishlist-name')]    ${wishlistName}
     END
     Click    ${pdp_add_to_wishlist_button}
-    Set Browser Timeout    3s
-    TRY
-        Yves: flash message should be shown:    success    Items added successfully
-        Yves: remove flash messages 
-    EXCEPT    
-        Set Browser Timeout    ${browser_timeout}
-        Log    flash message was not shown
-    END
-    Set Browser Timeout    ${browser_timeout}
 
 Yves: check if product is available on PDP:
     [Arguments]    ${abstractSku}    ${isAvailable}
