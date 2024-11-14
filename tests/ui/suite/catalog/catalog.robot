@@ -580,7 +580,6 @@ Product_Availability_Calculation
     Zed: click Action Button in a table for row that contains:     availabilitySKU${random}     Approve
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: create new default customer address in profile
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity on PDP:    6
@@ -686,7 +685,8 @@ Configurable_Product_PDP_Wishlist_Availability
 
 Configurable_Product_PDP_Shopping_List
     [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of five items. Ensure that products that have not been configured cannot be purchased.
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    [Setup]    Run keywords    Create new approved dynamic customer in DB
+    ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
@@ -744,17 +744,18 @@ Configurable_Product_PDP_Shopping_List
     ...    || option one                 | option two                     ||
     ...    || Option One: Option title 3 | Option Two: Option Two title 4 ||
     Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €882.00
-    [Teardown]    Run Keywords    Yves: delete 'Shopping List' with name:    configProduct+${random}
-    ...    AND    Yves: delete 'Shopping Cart' with name:    configProduct+${random}
+    [Teardown]    Delete dynamic customer via API
 
 Configurable_Product_RfQ_OMS
     [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder. 
     [Setup]    Run keywords    Create new dynamic root admin user in DB
+    ...    AND    Create new approved dynamic customer in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: deactivate all discounts from Overview page
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: delete all shopping carts
-    Yves: delete all user addresses
+    ...    AND    Zed: create new approved merchant user:
+    ...    || merchant | email                         | first_name | last_name | password      | group      ||
+    ...    || Spryker  | richard+${random}@spryker.com | Main       | Merchant  | Change123!321 | Root group ||
+    ...    AND    Deactivate all discounts in the database
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: create new 'Shopping Cart' with name:    confProductCart+${random}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: change the product options in configurator to:
@@ -781,24 +782,22 @@ Configurable_Product_RfQ_OMS
     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to user menu:    Quote Requests
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
     Yves: click 'Convert to Cart' button on the 'Quote Request Details' page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
+    Zed: login on Zed with provided credentials:    richard+${random}@spryker.com    Change123!321
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €771.90
-    Zed: go to order page:    ${lastPlacedOrder} 
-    Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder} 
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    skip picking
@@ -811,7 +810,7 @@ Configurable_Product_RfQ_OMS
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     Repeat Keyword    3    Trigger multistore p&s
     Yves: go to the 'Home' page
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to user menu:    Order History
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order
     Yves: 'Order Details' page is displayed
@@ -825,51 +824,62 @@ Configurable_Product_RfQ_OMS
     ...    || option one                 | option two                     ||
     ...    || Option One: Option title 2 | Option Two: Option Two title 3 ||
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: activate following discounts from Overview page:    	Free mobile phone    20% off cameras products    Free Acer M2610 product    Free delivery    10% off Intel products    5% off white products    Tuesday & Wednesday $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
+    ...    AND    Zed: delete merchant user:    merchant=Spryker    merchant_user=richard+${random}@spryker.com
     ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic customer via API
+    ...    AND    Restore all discounts in the database
 
 Product_Restrictions
     [Documentation]    Checks White and Black lists
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Setup]    Run keywords    Create new dynamic root admin user in DB
+    ...    AND    Create new approved dynamic customer in DB    based_on=${yves_test_company_user_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create product list with the following assigned category:    list_name=White${random}    list_type=white    category=Smartwatches
     Zed: create product list with the following assigned category:    list_name=Black${random}    list_type=black    category=Smartphones
     Zed: unassign all product lists from merchant relation:    business_unit_owner=Hotel Tommy Berlin    merchant_relation=Hotel Tommy Berlin,Hotel Tommy London
     Zed: assign product list to merchant relation:    business_unit_owner=Hotel Tommy Berlin    merchant_relation=Hotel Tommy Berlin,Hotel Tommy London    product_list=White${random}
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_test_company_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: at least one product is/not displayed on the search results page:    search_query=TomTom    expected_visibility=true    wait_for_p&s=true
     Yves: at least one product is/not displayed on the search results page:    search_query=Canon    expected_visibility=false
     Yves: at least one product is/not displayed on the search results page:    search_query=Lenovo    expected_visibility=false
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: unassign all product lists from merchant relation:    business_unit_owner=Hotel Tommy Berlin    merchant_relation=Hotel Tommy Berlin,Hotel Tommy London
     Zed: assign product list to merchant relation:    business_unit_owner=Hotel Tommy Berlin    merchant_relation=Hotel Tommy Berlin,Hotel Tommy London    product_list=Black${random}
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_test_company_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: at least one product is/not displayed on the search results page:    search_query=060    expected_visibility=false    wait_for_p&s=true
     Yves: at least one product is/not displayed on the search results page:    search_query=052    expected_visibility=false
     Yves: at least one product is/not displayed on the search results page:    search_query=Canon    expected_visibility=true
     Yves: at least one product is/not displayed on the search results page:    search_query=Lenovo    expected_visibility=true
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Delete dynamic customer via API
+    Create new approved dynamic customer in DB    based_on=${yves_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: at least one product is/not displayed on the search results page:    search_query=060    expected_visibility=true
     Yves: at least one product is/not displayed on the search results page:    search_query=052    expected_visibility=true
     Yves: at least one product is/not displayed on the search results page:    search_query=Canon    expected_visibility=true
     Yves: at least one product is/not displayed on the search results page:    search_query=Lenovo    expected_visibility=true
     Yves: at least one product is/not displayed on the search results page:    search_query=TomTom    expected_visibility=true
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: unassign all product lists from merchant relation:    business_unit_owner=Hotel Tommy Berlin    merchant_relation=Hotel Tommy Berlin,Hotel Tommy London
     ...    AND    Zed: remove product list with title:    White${random}
     ...    AND    Zed: remove product list with title:    Black${random}
     ...    AND    Trigger multistore p&s
+    ...    AND    Delete dynamic customer via API
+    ...    AND    Delete dynamic root admin user from DB
 
 Customer_Specific_Prices
     [Documentation]    Checks that product price can be different for different customers
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    [Setup]    Create new approved dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: perform search by:    ${product_with_merchant_price_abstract_sku}
     Yves: product with name in the catalog should have price:    ${product_with_merchant_price_product_name}    ${product_with_merchant_price_default_price}
     Yves: go to PDP of the product with sku:    ${product_with_merchant_price_abstract_sku}
     Yves: product price on the PDP should be:    ${product_with_merchant_price_default_price}
     Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    ${yves_test_company_user_email}
+    Delete dynamic customer via API
+    Create new approved dynamic customer in DB    based_on=${yves_test_company_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: create new 'Shopping Cart' with name:    customerPrices+${random}
     Yves: perform search by:    ${product_with_merchant_price_abstract_sku}
     Yves: product with name in the catalog should have price:    ${product_with_merchant_price_product_name}    ${product_with_merchant_price_merchant_price}
@@ -878,4 +888,4 @@ Customer_Specific_Prices
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    customerPrices+${random}
     Yves: shopping cart contains product with unit price:    sku=${product_with_merchant_price_concrete_sku}    productName=${product_with_merchant_price_product_name}    productPrice=${product_with_merchant_price_merchant_price}
-    [Teardown]    Yves: delete 'Shopping Cart' with name:    customerPrices+${random}
+    [Teardown]    Delete dynamic customer via API
