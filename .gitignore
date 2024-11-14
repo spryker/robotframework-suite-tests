@@ -14,3 +14,4 @@ playwright-log.txt
 !API_Keyword_Documentation.html
 interactive_console_output.xml
 .editorconfig
+keywordtimes.py

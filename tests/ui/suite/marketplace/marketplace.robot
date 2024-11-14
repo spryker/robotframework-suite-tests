@@ -252,6 +252,7 @@ Approve_Offer
     Yves: product price on the PDP should be:     ${second_product_with_multiple_offers_video_king_price}
 
 Fulfill_Order_from_Merchant_Portal
+    [Tags]    smoke
     [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
     [Setup]    Run Keywords    
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}

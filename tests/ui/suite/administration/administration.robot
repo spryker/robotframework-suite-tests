@@ -101,7 +101,6 @@ Zed_navigation_ordering_and_naming
     Zed: verify second navigation root menus
 
 Glossary
-    [Tags]    smoke
     [Documentation]    Create + edit glossary translation in BO
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Administration    Glossary  

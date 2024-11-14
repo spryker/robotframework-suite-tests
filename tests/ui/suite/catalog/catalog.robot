@@ -49,6 +49,7 @@ Resource    ../../../../resources/pages/zed/zed_order_details_page.robot
 *** Test Cases ***
 
 Product_PDP
+    [Tags]    smoke
     [Documentation]    Checks that PDP contains required elements
     Yves: go to PDP of the product with sku:    135
     Yves: change variant of the product on PDP on:    Flash
@@ -61,6 +62,7 @@ Product_PDP
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
 
 Catalog
+    [Tags]    smoke
     [Documentation]    Checks that catalog options and search work
     Yves: perform search by:    canon
     Yves: 'Catalog' page should show products:    29
@@ -144,6 +146,7 @@ Discontinued_Alternative_Products
     ...    AND    Trigger p&s
 
 Measurement_Units
+    [Tags]    smoke
     [Documentation]    Checks checkout with Measurement Unit product
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
@@ -166,6 +169,7 @@ Measurement_Units
     Yves: 'Thank you' page is displayed
 
 Packaging_Units
+    [Tags]    smoke
     [Documentation]    Checks checkout with Packaging Unit product
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    packagingUnitsCart+${random}
@@ -187,6 +191,7 @@ Packaging_Units
     Yves: 'Thank you' page is displayed
 
 Product_Bundles
+    [Tags]    smoke
     [Documentation]    Checks checkout with Bundle product
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
@@ -233,6 +238,7 @@ Back_in_Stock_Notification
     [Teardown]    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}
 
 Manage_Product
+    [Tags]    smoke
     [Documentation]    checks that BO user can manage abstract and concrete products + create new
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
@@ -395,6 +401,7 @@ Product_Original_Price
     Yves: product original price on the PDP should be:    €50.00
 
 Offer_Availability_Calculation
+    [Tags]    smoke
     [Documentation]    check offer availability
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -719,6 +726,7 @@ Configurable_Product_PDP_Shopping_List
     ...    AND    Yves: delete 'Shopping Cart' with name:    configProduct+${random}
 
 Configurable_Product_RfQ_OMS
+    [Tags]    smoke
     [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder. 
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com    change123${random}    Config    Product    Root group    This user is an agent in Storefront    en_US

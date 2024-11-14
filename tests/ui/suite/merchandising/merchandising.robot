@@ -44,6 +44,7 @@ Resource    ../../../../resources/steps/configurable_bundle_steps.robot
 
 *** Test Cases ***
 Product_labels
+    [Tags]    smoke
     [Documentation]    Checks that products have labels on PLP and PDP
     Trigger product labels update
     Yves: go to first navigation item level:    Sale
@@ -56,7 +57,7 @@ Product_labels
     Yves: PDP contains/doesn't contain:    true    ${pdp_new_label}[${env}]
     [Teardown]    Yves: check if cart is not empty and clear it
 
-Product_Sets   
+Product_Sets
     [Documentation]    Check the usage of product sets
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to URL:    en/product-sets
@@ -72,6 +73,7 @@ Product_Sets
     [Teardown]    Yves: check if cart is not empty and clear it
 
 CRUD_Product_Set
+    [Tags]    smoke
     [Documentation]    CRUD operations for product sets. DMS-ON: https://spryker.atlassian.net/browse/FRW-7393 
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new product set:
@@ -150,6 +152,7 @@ Product_Relations
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Discounts
+    [Tags]    smoke
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
