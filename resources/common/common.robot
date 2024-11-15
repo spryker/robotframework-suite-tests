@@ -793,8 +793,13 @@ Trigger product labels update
 Create new dynamic root admin user in DB
     [Documentation]    This keyword creates a new admin user in the DB using data from an existing admin.
         ...    It works for both MariaDB and PostgreSQL.
-    [Arguments]    ${first_name}=Dynamic    ${last_name}=Admin    ${user_name}=admin+robot${random}@spryker.com
-    VAR    ${dynamic_admin_user}    ${user_name}    scope=TEST
+    [Arguments]    ${first_name}=Dynamic    ${last_name}=Admin    ${user_name}=${EMPTY}
+
+    IF    '${user_name}' == '${EMPTY}'
+        ${unique}=    Generate Random String    5    [NUMBERS]
+        VAR    ${user_name}    admin+robot${unique}@spryker.com
+        VAR    ${dynamic_admin_user}    ${user_name}    scope=TEST
+    END
 
     # Step 1: Fetch the existing user data (admin@spryker.com)
     Connect to Spryker DB
@@ -845,8 +850,21 @@ Create new dynamic root admin user in DB
 Delete dynamic root admin user from DB
     [Documentation]    This keyword deletes a dynamic admin user from the DB based on the provided username.
         ...           It works for both MariaDB and PostgreSQL.
-    [Arguments]    ${user_name}=${dynamic_admin_user}
-    
+    [Arguments]    ${user_name}=${EMPTY}
+
+    ${dynamic_admin_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_admin_user}
+
+    # Step 2: Decide action based on existence of discount states and the argument
+
+    IF    '${user_name}' == '${EMPTY}'
+        IF    ${dynamic_admin_exists}
+            VAR    ${user_name}    ${dynamic_admin_user}
+        ELSE
+            Log    message=No dynamic (doesn't exist) or static user was provided for deletion    level=WARN
+            RETURN
+        END
+    END
+
     # Step 1: Fetch the ID of the user to be deleted
     Connect to Spryker DB
     ${user_data}=    Query    SELECT id_user FROM spy_user WHERE username = '${user_name}'
@@ -875,7 +893,17 @@ Delete dynamic root admin user from DB
 Create new approved dynamic customer in DB
     [Documentation]    This keyword creates a new approved dynamic customer in the DB based on an existing customer (sonia@spryker.com) and assigns the customer to a company.
     ...               It works for both MariaDB and PostgreSQL.
-    [Arguments]    ${first_name}=Dynamic    ${last_name}=Customer    ${email}=sonia+robot${random}@spryker.com    ${based_on}=sonia@spryker.com
+    [Arguments]    ${first_name}=Dynamic    ${last_name}=Customer    ${email}=${EMPTY}    ${based_on}=${EMPTY}
+
+    IF    '${email}' == '${EMPTY}'
+        ${unique}=    Generate Random String    5    [NUMBERS]
+        VAR    ${email}    sonia+robot${unique}@spryker.com
+        VAR    ${dynamic_customer}    ${email}    scope=TEST
+    END
+
+    IF    '${based_on}' == '${EMPTY}'
+        VAR    ${based_on}    sonia@spryker.com
+    END
 
     # Step 1: Fetch the existing customer data (${based_on})
     Connect to Spryker DB
@@ -915,8 +943,6 @@ Create new approved dynamic customer in DB
     
     # Step 3: Generate new values for customer_reference
     ${new_customer_reference}=    Set Variable    dynamic--${new_id_customer}
-    
-    VAR    ${dynamic_customer}    ${email}    scope=TEST
     VAR    ${dynamic_customer_id}    ${new_customer_reference}    scope=TEST
 
     # Step 4: Insert the new customer into the spy_customer table using all columns

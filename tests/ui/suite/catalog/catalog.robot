@@ -415,7 +415,6 @@ Product_Original_Price
     ...    AND    Delete dynamic customer via API
 
 Offer_Availability_Calculation
-    [Tags]    debug
     [Documentation]    check offer availability
     [Setup]    Run Keywords    Create new dynamic root admin user in DB
     ...    AND    Create new approved dynamic customer in DB
@@ -752,8 +751,8 @@ Configurable_Product_RfQ_OMS
     ...    AND    Create new approved dynamic customer in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: create new approved merchant user:
-    ...    || merchant | email                         | first_name | last_name | password      | group      ||
-    ...    || Spryker  | richard+${random}@spryker.com | Main       | Merchant  | Change123!321 | Root group ||
+    ...    || merchant | email                             | first_name | last_name | password      | group      ||
+    ...    || Spryker  | richard+frq+${random}@spryker.com | Main       | Merchant  | Change123!321 | Root group ||
     ...    AND    Deactivate all discounts in the database
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: create new 'Shopping Cart' with name:    confProductCart+${random}
@@ -796,7 +795,7 @@ Configurable_Product_RfQ_OMS
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    richard+${random}@spryker.com    Change123!321
+    Zed: login on Zed with provided credentials:    richard+frq+${random}@spryker.com    Change123!321
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €771.90
     Zed: go to order page:    ${lastPlacedOrder} 
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
@@ -824,7 +823,7 @@ Configurable_Product_RfQ_OMS
     ...    || option one                 | option two                     ||
     ...    || Option One: Option title 2 | Option Two: Option Two title 3 ||
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: delete merchant user:    merchant=Spryker    merchant_user=richard+${random}@spryker.com
+    ...    AND    Zed: delete merchant user:    merchant=Spryker    merchant_user=richard+frq+${random}@spryker.com
     ...    AND    Delete dynamic root admin user from DB
     ...    AND    Delete dynamic customer via API
     ...    AND    Restore all discounts in the database

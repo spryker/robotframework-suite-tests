@@ -2210,7 +2210,20 @@ I get access token by user credentials:
 Delete dynamic customer via API
     Set Tags    glue
     API_test_setup
-    [Arguments]    ${customer_email}=${dynamic_customer}    ${customer_id}=${dynamic_customer_id}
+    [Arguments]    ${customer_email}=${EMPTY}    ${customer_id}=${EMPTY}
+
+    ${dynamic_customer_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_customer}
+    ${dynamic_customer_id_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_customer_id}
+    IF    '${customer_email}' == '${EMPTY}'
+        IF    ${dynamic_customer_exists} and ${dynamic_customer_id_exists}
+            VAR    ${customer_email}    ${dynamic_customer}
+            VAR    ${customer_id}    ${dynamic_customer_id}
+        ELSE
+            Log    message=No dynamic (doesn't exist) or static customer was provided for deletion    level=WARN
+            RETURN
+        END
+    END
+    
     I get access token for the customer:    ${customer_email}
     I set Headers:    Authorization=${token}
     I send a DELETE request:    /customers/${customer_id}
