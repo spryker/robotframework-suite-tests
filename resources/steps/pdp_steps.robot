@@ -325,15 +325,6 @@ Yves: add product to wishlist:
             Select From List By Value    xpath=//select[contains(@name,'wishlist-name')]    ${wishlistName}
     END
     Click    ${pdp_add_to_wishlist_button}
-    Set Browser Timeout    3s
-    TRY
-        Yves: flash message should be shown:    success    Items added successfully
-        Yves: remove flash messages
-    EXCEPT
-        Set Browser Timeout    ${browser_timeout}
-        Log    flash message was not shown
-    END
-    Set Browser Timeout    ${browser_timeout}
 
 Yves: check if product is available on PDP:
     [Arguments]    ${abstractSku}    ${isAvailable}
@@ -458,15 +449,14 @@ Yves: product name on PDP should be:
     Yves: try reloading page if element is/not appear:    xpath=//h1[contains(@class,'title')][contains(.,'${expected_product_name}')]    True    15    3s
 
 Yves: try to add product to wishlist as guest user
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Wait Until Element Is Visible    ${pdp_add_to_wishlist_button}
-    Sleep    1s
+    SessionStorage Clear
+    LocalStorage Clear
+    Delete All Cookies
     Click    ${pdp_add_to_wishlist_button}
-    Sleep    1s
+    Wait For Response    timeout=10s
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Wait Until Element Is Visible    ${email_field}
-
-Yves: try to add product to wishlist as a guest user via glue
-    ${add_to_wishlist_url}=    Get Element Attribute    xpath=//form[contains(@action,'wishlist/add')]    action
-    &{res}=    Http    url=${yves_url}${add_to_wishlist_url}    method=POST
-    Should Be Equal     ${res.status}    ${200}
-    Reload
-    Should Contain     ${res.body}    Create account    msg=Guest customer is able to access wishlist page
