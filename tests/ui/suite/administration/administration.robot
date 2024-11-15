@@ -92,6 +92,7 @@ Minimum_Order_Value
     ...    AND    Restore all discounts in the database
 
 Zed_navigation_ordering_and_naming
+    [Tags]    smoke
     [Documentation]    Verifies each left navigation node can be opened.
     [Setup]    Create new dynamic root admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}

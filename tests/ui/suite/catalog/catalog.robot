@@ -49,6 +49,7 @@ Resource    ../../../../resources/pages/zed/zed_order_details_page.robot
 *** Test Cases ***
 
 Product_PDP
+    [Tags]    smoke
     [Documentation]    Checks that PDP contains required elements
     Yves: go to PDP of the product with sku:    135
     Yves: change variant of the product on PDP on:    Flash
@@ -61,6 +62,7 @@ Product_PDP
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
 
 Catalog
+    [Tags]    smoke
     [Documentation]    Checks that catalog options and search work
     Yves: perform search by:    canon
     Yves: 'Catalog' page should show products:    29
@@ -149,6 +151,7 @@ Discontinued_Alternative_Products
     ...    AND    Delete dynamic customer via API
 
 Measurement_Units
+    [Tags]    smoke
     [Documentation]    Checks checkout with Measurement Unit product
     [Setup]    Create new approved dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -172,6 +175,7 @@ Measurement_Units
     [Teardown]    Delete dynamic customer via API
 
 Packaging_Units
+    [Tags]    smoke
     [Documentation]    Checks checkout with Packaging Unit product
     [Setup]    Create new approved dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -194,6 +198,7 @@ Packaging_Units
     [Teardown]    Delete dynamic customer via API
 
 Product_Bundles
+    [Tags]    smoke
     [Documentation]    Checks checkout with Bundle product
     [Setup]    Run keywords    Create new dynamic root admin user in DB
     ...    AND    Create new approved dynamic customer in DB
@@ -247,6 +252,7 @@ Back_in_Stock_Notification
     ...    AND    Delete dynamic customer via API
 
 Manage_Product
+    [Tags]    smoke
     [Setup]    Run Keywords    Create new dynamic root admin user in DB
     ...    AND    Create new approved dynamic customer in DB
     [Documentation]    checks that BO user can manage abstract and concrete products + create new
@@ -415,6 +421,7 @@ Product_Original_Price
     ...    AND    Delete dynamic customer via API
 
 Offer_Availability_Calculation
+    [Tags]    smoke
     [Documentation]    check offer availability
     [Setup]    Run Keywords    Create new dynamic root admin user in DB
     ...    AND    Create new approved dynamic customer in DB
@@ -746,6 +753,7 @@ Configurable_Product_PDP_Shopping_List
     [Teardown]    Delete dynamic customer via API
 
 Configurable_Product_RfQ_OMS
+    [Tags]    smoke
     [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder. 
     [Setup]    Run keywords    Create new dynamic root admin user in DB
     ...    AND    Create new approved dynamic customer in DB

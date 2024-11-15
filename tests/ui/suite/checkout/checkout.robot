@@ -43,6 +43,7 @@ Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 
 *** Test Cases ***
 Login_during_checkout
+    [Tags]    smoke
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
@@ -63,7 +64,7 @@ Login_during_checkout
 
 Register_during_checkout
     [Documentation]    Guest user email should be whitelisted from the AWS side before running the test
-    [Tags]    glue
+    [Tags]    glue    smoke
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
@@ -96,6 +97,7 @@ Register_during_checkout
     ...    AND    Zed: delete customer:    sonia+guest${random}@spryker.com
 
 Guest_Checkout
+    [Tags]    smoke
     [Documentation]    Guest checkout with bundles, discounts and OMS
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
@@ -212,6 +214,7 @@ Business_Unit_Address_on_Checkout
     Yves: shipping address on the order details page is:    Mr. Armando Richi Spryker Systems GmbH Gurmont Str. 23 8002 Barcelona, Spain 3490284322
 
 Request_for_Quote
+    [Tags]    smoke
     [Documentation]    Checks user can request and receive quote.
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123${random}    Request    Quote    Root group    This user is an agent in Storefront    en_US
@@ -284,6 +287,7 @@ Request_for_Quote
     ...    AND    Zed: delete Zed user with the following email:    agent_quote+${random}@spryker.com
 
 Split_Delivery
+    [Tags]    smoke
     [Documentation]    Checks split delivery in checkout
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
@@ -371,6 +375,7 @@ Checkout_Address_Management
     ...    AND    Yves: delete all user addresses
 
 Click_and_collect
+    [Tags]    smoke
     [Documentation]    checks that product offer is successfully replaced with a target product offer
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page

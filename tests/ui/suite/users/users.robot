@@ -43,6 +43,7 @@ Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 
 *** Test Cases ***
 Agent_Assist
+    [Tags]    smoke
     [Documentation]    Checks customer data and checkout as an agent
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change${random}    Agent    Assist    Root group    This user is an agent in Storefront    en_US

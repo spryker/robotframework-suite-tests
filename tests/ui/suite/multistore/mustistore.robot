@@ -116,6 +116,7 @@ Multistore_Product
     ...    AND    Yves: check if cart is not empty and clear it
 
 Multistore_Product_Offer
+    [Tags]    smoke
     [Documentation]    check product and offer multistore functionality. DMS-ON: https://spryker.atlassian.net/browse/FRW-7484
     Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -242,7 +243,7 @@ Multistore_CMS
 
 Dynamic_multistore
     [Documentation]    This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
-    [Tags]    dms-on
+    [Tags]    dms-on    smoke
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Store:
     ...    || name                                    | locale_iso_code | currency_iso_code | currency_code | currency_iso_code2 | currency_code2 | store_delivery_region | store_context_timezone ||

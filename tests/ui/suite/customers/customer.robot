@@ -75,6 +75,7 @@ Authorized_User_Access
     [Teardown]    Yves: check if cart is not empty and clear it
 
 New_Customer_Registration
+    [Tags]    smoke
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                       | password                                        ||
@@ -84,6 +85,7 @@ New_Customer_Registration
     ...   AND    Zed: delete customer:    sonia+${random}@spryker.com
 
 User_Account
+    [Tags]    smoke
     [Documentation]    Checks user account pages work + address management
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to user menu:    Overview
@@ -157,6 +159,7 @@ Update_Customer_Data
     ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name} | ${yves_second_user_last_name} ||
 
 Add_to_Wishlist
+    [Tags]    smoke
     [Documentation]    Check creation of wishlist and adding to different wishlists
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: delete all wishlists
@@ -179,6 +182,7 @@ Add_to_Wishlist
     ...    AND    Yves: check if cart is not empty and clear it
 
 Share_Shopping_Lists
+    [Tags]    smoke
     [Documentation]    Checks that shopping list can be shared
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: go to 'Shopping Lists' page
@@ -258,6 +262,7 @@ Share_Shopping_Carts
     Yves: 'Order Details' page is displayed
 
 Quick_Order
+    [Tags]    smoke
     [Documentation]    Checks Quick Order, checkout and Reorder
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
@@ -394,7 +399,7 @@ Shopping_List_Contains_Offers
     ...    AND    Yves: delete 'Shopping List' with name:    shoppingListName${random}
 
 Email_Confirmation
-    [Tags]    skip-due-to-refactoring
+    [Tags]    smoke
     [Documentation]    Check that a new user cannot login if the email is not verified
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                             | password                                        ||

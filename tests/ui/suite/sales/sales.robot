@@ -123,6 +123,7 @@ Return_Management
     ...    AND    Zed: delete Zed user with the following email:    returnagent+${random}@spryker.com
 
 Refunds
+    [Tags]    smoke
     [Documentation]    Checks that refund can be created for one item and the whole order
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
