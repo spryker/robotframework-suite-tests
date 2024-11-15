@@ -140,31 +140,34 @@ Zed: submit the form
 
 Zed: perform search by:
     [Arguments]    ${search_key}
-    Clear Text    ${zed_search_field_locator}
+    Zed: clear search field
     Type Text    ${zed_search_field_locator}    ${search_key}
-    Keyboard Key    press    Enter
     TRY
         Wait For Response    timeout=10s
     EXCEPT    
         Log    Search event is not fired
     END
-    Repeat Keyword    2    Wait For Load State
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Zed: clear search field
     Clear Text    ${zed_search_field_locator}
-    Repeat Keyword    2    Wait For Load State
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Zed: perform variant search by:
     [Arguments]    ${search_key}
     Clear Text    ${zed_variant_search_field_locator}
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Type Text    ${zed_variant_search_field_locator}    ${search_key}
-    Keyboard Key    press    Enter
     TRY
         Wait For Response    timeout=10s
     EXCEPT    
         Log    Search event is not fired
     END
-    Repeat Keyword    2    Wait For Load State
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Zed: table should contain:
     [Arguments]    ${search_key}    ${error_message}=Table doesn't contain expected '${search_key}' record
