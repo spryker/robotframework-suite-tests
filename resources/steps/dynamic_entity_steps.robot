@@ -139,7 +139,7 @@ Zed: delete dowloaded api specification
     Remove File    ${specification_file_path}
 
 Zed: wait until info box is not displayed
-    [Arguments]    ${iterations}=20    ${delays}=10s
+    [Arguments]    ${iterations}=20    ${delays}=10s    ${browser_timeout}=90
     Set Browser Timeout    90
     Try reloading page until element is/not appear:    ${zed_info_flash_message}    false    tries=${iterations}    timeout=${delays}
 
