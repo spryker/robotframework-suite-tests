@@ -530,7 +530,7 @@ Helper: delete all items in cart
     END
 
 Yves: try reloading page if element is/not appear:
-    [Arguments]    ${element}    ${isDisplayed}    ${iterations}=26    ${sleep}=5s
+    [Arguments]    ${element}    ${isDisplayed}    ${iterations}=26    ${sleep}=5s    ${message}=expected element state is not reached
     ${isDisplayed}=    Convert To Lower Case    ${isDisplayed}
     FOR    ${index}    IN RANGE    1    ${iterations}
         ${elementAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
@@ -544,7 +544,7 @@ Yves: try reloading page if element is/not appear:
         
         IF    ${index} == ${iterations}-1
             Take Screenshot    EMBED    fullPage=True
-            Fail    expected element state is not reached
+            Fail    ${message}
         END
     END
 
@@ -564,9 +564,9 @@ Yves: page should contain script with id:
 Yves: validate the page title:
     [Arguments]    ${title}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-        Yves: try reloading page if element is/not appear:    xpath=//h3[contains(text(),'${title}')]     True
+        Yves: try reloading page if element is/not appear:    element=xpath=//h3[contains(text(),'${title}')]     isDisplayed=True    message=Updated Glossary value was not applied, check P&S
     ELSE
-        Yves: try reloading page if element is/not appear:    xpath=//h1[contains(@class,'title')][contains(text(),'${title}')]     True
+        Yves: try reloading page if element is/not appear:    element=xpath=//h1[contains(@class,'title')][contains(text(),'${title}')]     isDisplayed=True    message=Updated Glossary value was not applied, check P&S
     END
     
 Yves: login after signup during checkout:
