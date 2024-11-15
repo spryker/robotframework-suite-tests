@@ -178,7 +178,6 @@ Add_to_Wishlist
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Delete All Cookies
     Yves: try to add product to wishlist as a guest user via glue
-    Reload
     [Teardown]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all wishlists
     ...    AND    Yves: check if cart is not empty and clear it
