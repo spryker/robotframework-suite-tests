@@ -827,14 +827,10 @@ Configurable_Product_RfQ_OMS
     Yves: 'Shopping Cart' page is displayed
     # ### bug: https://spryker.atlassian.net/browse/CC-33647
     # Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €766.00
-    Yves: configuration should be equal:
-    ...    || option one                 | option two                     ||
-    ...    || Option One: Option title 2 | Option Two: Option Two title 3 ||
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: delete merchant user:    merchant=Spryker    merchant_user=richard+frq+${random}@spryker.com
-    ...    AND    Delete dynamic root admin user from DB
-    ...    AND    Delete dynamic customer via API
-    ...    AND    Restore all discounts in the database
+    Yves: product configuration status should be equal:       Configuration is not complete.
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: activate following discounts from Overview page:    	Free mobile phone    20% off cameras products    Free Acer M2610 product    Free delivery    10% off Intel products    5% off white products    Tuesday & Wednesday $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
+    ...    AND    Zed: delete Zed user with the following email:    agent_config+${random}@spryker.com
 
 Product_Restrictions
     [Documentation]    Checks White and Black lists
