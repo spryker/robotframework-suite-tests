@@ -34,7 +34,7 @@ Yves: shipping address on the order details page is:
 
 Yves: 'Order Details' page contains the following product title N times:
     [Arguments]    ${productTitle}    ${expectedQuantity}
-    Wait Until Page Contains Element    xpath=//customer-reorder-form[@data-qa='component customer-reorder-form']//div[@data-qa='component order-detail-table']
+    Wait Until Page Contains Element    xpath=//customer-reorder-form[@data-qa='component customer-reorder-form']//div[@data-qa='component order-detail-table'] | //div[@data-qa='component order-detail-table']
     IF    '${env}' in ['ui_suite']
         ${productTitleCount}=    Get Element Count    xpath=//div[@data-qa='component order-detail-table']//article//*[contains(.,'${productTitle}')]/ancestor::article
     ELSE
