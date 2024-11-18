@@ -140,7 +140,7 @@ Zed: delete dowloaded api specification
 
 Zed: wait until info box is not displayed
     [Arguments]    ${iterations}=20    ${delays}=10
-    Try reloading page until element is/not appear:    ${zed_info_flash_message}    false    tries=${iterations}    timeout=${delays}
+    Try reloading page until element is/not appear:    ${zed_info_flash_message}    false    tries=${iterations}    timeout=${delays}    message='Download API Specification' button is disabled. Check "Trigger API specification update" CLI command results
 
 Find first available product via data exchange api
     [Arguments]    ${start_from_index}=0    ${end_index}=100
