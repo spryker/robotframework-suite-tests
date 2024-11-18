@@ -308,7 +308,11 @@ Trigger p&s
 
 Trigger API specification update
     [Arguments]    ${timeout}=1s    ${storeName}=DE
-    Run console command    glue api:generate:documentation --invalidated-after-interval 90sec    ${storeName}
+    IF    ${docker}
+        Run console command    glue api:generate:documentation --invalidated-after-interval 90sec    ${storeName}
+    ELSE
+        Run console command    cli glue api:generate:documentation --invalidated-after-interval 90sec    ${storeName}
+    END
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger multistore p&s
