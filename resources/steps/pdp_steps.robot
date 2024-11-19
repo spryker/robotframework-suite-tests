@@ -456,7 +456,6 @@ Yves: try to add product to wishlist as guest user
     LocalStorage Clear
     Delete All Cookies
     Click    ${pdp_add_to_wishlist_button}
-    Wait For Response    timeout=10s
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
     Wait Until Element Is Visible    ${email_field}
