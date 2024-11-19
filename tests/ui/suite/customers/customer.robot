@@ -314,7 +314,7 @@ Quick_Order
     Yves: 'Order Details' page is displayed
     ### Reorder ###
     Yves: reorder all items from 'Order Details' page
-    Yves: go to the shopping cart through the header with name:    Reorder from Order ${lastPlacedOrder}
+    Yves: go to the shopping cart through the header with name:    ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:     202_5782479    056_31714843    ${product_with_multiple_offers_concrete_sku}
     Yves: assert merchant of product in cart or list:    202_5782479    Video King

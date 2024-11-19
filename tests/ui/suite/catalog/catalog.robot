@@ -663,6 +663,7 @@ Configurable_Product_PDP_Wishlist_Availability
     ...    AND    Delete All Cookies
 
 Configurable_Product_PDP_Shopping_List
+    [Tags]    smoke
     [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of five items. Ensure that products that have not been configured cannot be purchased.
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
@@ -726,7 +727,6 @@ Configurable_Product_PDP_Shopping_List
     ...    AND    Yves: delete 'Shopping Cart' with name:    configProduct+${random}
 
 Configurable_Product_RfQ_OMS
-    [Tags]    smoke
     [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder. 
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com    change123${random}    Config    Product    Root group    This user is an agent in Storefront    en_US
@@ -796,7 +796,7 @@ Configurable_Product_RfQ_OMS
     Yves: 'Order Details' page is displayed
     ### Reorder ###
     Yves: reorder all items from 'Order Details' page
-    Yves: go to the shopping cart through the header with name:    Reorder from Order ${lastPlacedOrder}
+    Yves: go to the shopping cart through the header with name:    ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
     # ### bug: https://spryker.atlassian.net/browse/CC-33647
     # Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €766.00
