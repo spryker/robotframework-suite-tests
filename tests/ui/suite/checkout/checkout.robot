@@ -330,6 +330,7 @@ Split_Delivery
     ...    AND    Yves: delete all user addresses
 
 Checkout_Address_Management
+    [Tags]    smoke
     [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
     [Setup]    Run Keywords    
     ...    Yves: login on Yves with provided credentials:    ${yves_user_email}

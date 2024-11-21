@@ -96,6 +96,7 @@ CRUD_Product_Set
     Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/test-set-${random}
 
 Configurable_Bundle
+    [Tags]    smoke
     [Documentation]    Check the usage of configurable bundles (includes authorized checkout)
     Yves: login on Yves with provided credentials:    ${yves_default_user_email}
     Yves: check if cart is not empty and clear it
