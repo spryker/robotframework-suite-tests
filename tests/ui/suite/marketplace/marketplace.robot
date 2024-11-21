@@ -866,8 +866,20 @@ Merchant_Product_Original_Price
 Offer_Availability_Calculation
     [Tags]    smoke
     [Documentation]    check offer availability
-    [Setup]    Repeat Keyword    3    Trigger multistore p&s
-    MP: login on MP with provided credentials:    ${merchant_video_king_email}
+    [Setup]    Run Keywords    Create new dynamic root admin user in DB
+    ...    AND    Create new approved dynamic customer in DB
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    ...    AND    Zed: create new approved merchant user:
+    ...    || merchant   | email                          | first_name | last_name | password       ||
+    ...    || Video King | sonia+vk+${random}@spryker.com | FirstRobot | LastRobot | Change123!321  ||
+    ...    AND    Zed: create new approved merchant user:
+    ...    || merchant | email                           | first_name | last_name | password      ||
+    ...    || Spryker  | sonia+spr+${random}@spryker.com | FirstRobot | LastRobot | Change123!321 ||
+    ...    AND    Zed: create new approved merchant user:
+    ...    || merchant | email                         | first_name | last_name | password      | group      ||
+    ...    || Spryker  | richard+${random}@spryker.com | Main       | Merchant  | Change123!321 | Root group ||
+    ...    AND    Repeat Keyword    3    Trigger multistore p&s
+    MP: login on MP with provided credentials:    sonia+vk+${random}@spryker.com    Change123!321
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
@@ -898,11 +910,11 @@ Offer_Availability_Calculation
     ...    || product type | row number | store | currency | gross default ||
     ...    || concrete     | 2          | AT    | EUR      | 50            || 
     MP: save concrete product
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     offAvProduct${random}     Approve
     Trigger p&s
-    MP: login on MP with provided credentials:    ${merchant_spryker_email}
+    MP: login on MP with provided credentials:    sonia+spr+${random}@spryker.com    Change123!321
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
     MP: perform search by:    offAvKU${random}-1
@@ -921,10 +933,7 @@ Offer_Availability_Calculation
     ...    || 3          | AT    | EUR      | 10            | 1        ||
     MP: save offer
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: delete all shopping carts
-    Yves: delete all user addresses
-    Yves: create new 'Shopping Cart' with name:    offAvailability${random}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     offAvKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: merchant's offer/product price should be:    Spryker    €200.00
@@ -936,11 +945,11 @@ Offer_Availability_Calculation
     Yves: select xxx merchant's offer:    Spryker
     Yves: change quantity on PDP:    3
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    offAvailability${random}
+    Yves: go to b2c shopping cart
     Yves: assert merchant of product in cart or list:    offAvKU${random}-1    Spryker
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: select the following shipping method for the shipment:    1    Spryker Dummy Shipment    Standard
     Yves: submit form on the checkout
     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
@@ -953,14 +962,12 @@ Offer_Availability_Calculation
     Yves: select xxx merchant's offer:    Spryker
     Yves: change quantity on PDP:    6
     Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 2.
-    Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
+    Zed: login on Zed with provided credentials:    richard+${random}@spryker.com    Change123!321
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Cancel
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: delete all shopping carts
-    Yves: create new 'Shopping Cart' with name:    offUpdatedAvailability${random}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     offAvKU${random}
     Yves: select xxx merchant's offer:    Spryker
     Yves: change quantity on PDP:    6
@@ -969,12 +976,14 @@ Offer_Availability_Calculation
     Yves: select xxx merchant's offer:    Spryker
     Yves: change quantity on PDP:    3
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    offUpdatedAvailability${random}
+    Yves: go to b2c shopping cart
     Yves: assert merchant of product in cart or list:    offAvKU${random}-1    Spryker
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: delete all shopping carts
-    ...    AND    Yves: delete all user addresses
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    ...    AND    Zed: delete merchant user:    merchant=Video King    merchant_user=sonia+vk+${random}@spryker.com
+    ...    AND    Zed: delete merchant user:    merchant=Spryker    merchant_user=sonia+spr+${random}@spryker.com
+    ...    AND    Zed: delete merchant user:    merchant=Spryker    merchant_user=richard+${random}@spryker.com
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:      offAvProduct${random}     Deny
     ...    AND    Trigger multistore p&s
+    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic customer via API
