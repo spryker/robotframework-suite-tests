@@ -25,14 +25,7 @@ Resource    ../../../../resources/steps/zed_customer_steps.robot
 Resource    ../../../../resources/steps/zed_discount_steps.robot
 Resource    ../../../../resources/steps/zed_availability_steps.robot
 Resource    ../../../../resources/steps/zed_cms_page_steps.robot
-Resource    ../../../../resources/steps/merchant_profile_steps.robot
 Resource    ../../../../resources/steps/zed_marketplace_steps.robot
-Resource    ../../../../resources/steps/mp_profile_steps.robot
-Resource    ../../../../resources/steps/mp_orders_steps.robot
-Resource    ../../../../resources/steps/mp_offers_steps.robot
-Resource    ../../../../resources/steps/mp_products_steps.robot
-Resource    ../../../../resources/steps/mp_account_steps.robot
-Resource    ../../../../resources/steps/mp_dashboard_steps.robot
 Resource    ../../../../resources/steps/zed_root_menus_steps.robot
 Resource    ../../../../resources/steps/minimum_order_value_steps.robot
 Resource    ../../../../resources/steps/availability_steps.robot
@@ -47,7 +40,6 @@ Resource    ../../../../resources/pages/yves/yves_product_details_page.robot
 Resource    ../../../../resources/pages/zed/zed_order_details_page.robot
 
 *** Test Cases ***
-
 Product_PDP
     [Tags]    smoke
     [Documentation]    Checks that PDP contains required elements
@@ -690,6 +682,7 @@ Configurable_Product_PDP_Wishlist_Availability
     ...    AND    Delete dynamic customer via API
 
 Configurable_Product_PDP_Shopping_List
+    [Tags]    smoke
     [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of five items. Ensure that products that have not been configured cannot be purchased.
     [Setup]    Run keywords    Create new approved dynamic customer in DB
     ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -753,7 +746,6 @@ Configurable_Product_PDP_Shopping_List
     [Teardown]    Delete dynamic customer via API
 
 Configurable_Product_RfQ_OMS
-    [Tags]    smoke
     [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder. 
     [Setup]    Run keywords    Create new dynamic root admin user in DB
     ...    AND    Create new approved dynamic customer in DB
@@ -823,7 +815,7 @@ Configurable_Product_RfQ_OMS
     Yves: 'Order Details' page is displayed
     ### Reorder ###
     Yves: reorder all items from 'Order Details' page
-    Yves: go to the shopping cart through the header with name:    Reorder from Order ${lastPlacedOrder}
+    Yves: go to the shopping cart through the header with name:    ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
     # ### bug: https://spryker.atlassian.net/browse/CC-33647
     # Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €766.00

@@ -121,7 +121,7 @@ User_Account
     Yves: check that user has address exists/doesn't exist:    true    ${yves_second_user_first_name}${random}    ${yves_second_user_last_name}${random}    address 1${random}    address 2 ${random}    ${random}    Berlin${random}    Austria
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     ...    AND     Yves: delete all user addresses
-    
+
 Update_Customer_Data
     [Documentation]    Checks customer data can be updated from Yves and Zed
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
@@ -175,10 +175,9 @@ Add_to_Wishlist
     Yves: go to wishlist with name:    Second wishlist
     Yves: wishlist contains product with sku:    004_30663302
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
-    Delete All Cookies
-    Yves: try to add product to wishlist as a guest user via glue
+    Yves: try to add product to wishlist as guest user
     [Teardown]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: delete all wishlists    
+    ...    AND    Yves: delete all wishlists
     ...    AND    Yves: check if cart is not empty and clear it
 
 Share_Shopping_Lists
@@ -204,7 +203,7 @@ Share_Shopping_Lists
     Yves: view shopping list with name:    shareShoppingList+${random}
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
-    Yves: add all available products from list to cart  
+    Yves: add all available products from list to cart
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
@@ -212,7 +211,7 @@ Share_Shopping_Lists
 
 Share_Shopping_Carts
     [Documentation]    Checks that cart can be shared and used for checkout
-    [Setup]    Run Keywords    
+    [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_sony_experts_email}
     ...    AND    MP: change offer stock:
     ...    || offer   | stock quantity | is never out of stock ||
@@ -272,7 +271,7 @@ Quick_Order
     Yves: 'Quick Order' page is displayed
     Yves: add the following articles into the form through quick order text area:     202_5782479,1\n056_31714843,3
     Yves: find and add new item in the quick order form:
-    ...    || searchQuery                                  | merchant       || 
+    ...    || searchQuery                                  | merchant       ||
     ...    || ${product_with_multiple_offers_concrete_sku} | Budget Cameras ||
     Yves: add products to the shopping cart from quick order page
     Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
@@ -284,7 +283,7 @@ Quick_Order
     Yves: go to 'Quick Order' page through the header
     Yves: add the following articles into the form through quick order text area:     202_5782479,1\n056_31714843,3
     Yves: find and add new item in the quick order form:
-    ...    || searchQuery                                  | merchant       || 
+    ...    || searchQuery                                  | merchant       ||
     ...    || ${product_with_multiple_offers_concrete_sku} | Budget Cameras ||
     Yves: add products to the shopping list from quick order page with name:    quickOrderList+${random}
     Yves: 'Shopping List' page is displayed
@@ -314,7 +313,7 @@ Quick_Order
     Yves: 'Order Details' page is displayed
     ### Reorder ###
     Yves: reorder all items from 'Order Details' page
-    Yves: go to the shopping cart through the header with name:    Reorder from Order ${lastPlacedOrder}
+    Yves: go to the shopping cart through the header with name:    ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:     202_5782479    056_31714843    ${product_with_multiple_offers_concrete_sku}
     Yves: assert merchant of product in cart or list:    202_5782479    Video King
@@ -390,7 +389,7 @@ Shopping_List_Contains_Offers
     Yves: add product to the shopping list:    shoppingListName${random}
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
-    Yves: add all available products from list to cart  
+    Yves: add all available products from list to cart
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras

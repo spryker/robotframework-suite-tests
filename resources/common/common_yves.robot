@@ -240,8 +240,8 @@ Yves: go to AT store 'Home' page if other store not specified:
     ELSE
         Go To    ${yves_url}
         Wait Until Element Is Visible    ${store_switcher_header_menu_item}
-        Select From List By Value    ${store_switcher_header_menu_item}    ${store}
-        Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
+        Select From List By Label Contains    ${store_switcher_header_menu_item}    ${store}
+        Wait Until Element Contains    ${store_switcher_selected_option}    ${store}
     END
 
 Yves: wait until store switcher contains:
@@ -307,8 +307,8 @@ Yves: go to AT store URL if other store not specified:
     ELSE
     Go To    ${yves_url}
         Wait Until Element Is Visible    ${store_switcher_header_menu_item}
-        Select From List By Value    ${store_switcher_header_menu_item}    ${store}
-        Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
+        Select From List By Label Contains    ${store_switcher_header_menu_item}    ${store}
+        Wait Until Element Contains    ${store_switcher_selected_option}    ${store}
     Go To    ${yves_url}${url}
     END
 
@@ -339,8 +339,8 @@ Yves: go to newly created page by URL on AT store if other store not specified:
         ELSE
             Go To    ${yves_url}
             Wait Until Element Is Visible    ${store_switcher_header_menu_item}
-            Select From List By Value    ${store_switcher_header_menu_item}    ${store}
-            Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
+            Select From List By Label Contains    ${store_switcher_header_menu_item}    ${store}
+            Wait Until Element Contains    ${store_switcher_selected_option}    ${store}
             Go To    ${yves_url}${url}?${index}
         END
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
@@ -366,8 +366,8 @@ Yves: navigate to specified AT store URL if no other store is specified and refr
         ELSE
             Go To    ${yves_url}
             Wait Until Element Is Visible    ${store_switcher_header_menu_item}
-            Select From List By Value    ${store_switcher_header_menu_item}    ${store}
-            Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
+            Select From List By Label Contains    ${store_switcher_header_menu_item}    ${store}
+            Wait Until Element Contains    ${store_switcher_selected_option}    ${store}
             Go To    ${url}
         END
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
