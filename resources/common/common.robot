@@ -797,11 +797,13 @@ Trigger product labels update
 Create new dynamic root admin user in DB
     [Documentation]    This keyword creates a new admin user in the DB using data from an existing admin.
         ...    It works for both MariaDB and PostgreSQL.
-    [Arguments]    ${first_name}=Dynamic    ${last_name}=Admin    ${user_name}=${EMPTY}
+    [Arguments]    ${user_name}=${EMPTY}    ${first_name}=Dynamic    ${last_name}=Admin
 
     IF    '${user_name}' == '${EMPTY}'
         ${unique}=    Generate Random String    5    [NUMBERS]
         VAR    ${user_name}    admin+robot${unique}@spryker.com
+        VAR    ${dynamic_admin_user}    ${user_name}    scope=TEST
+    ELSE
         VAR    ${dynamic_admin_user}    ${user_name}    scope=TEST
     END
 
