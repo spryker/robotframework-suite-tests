@@ -2210,7 +2210,7 @@ I get access token by user credentials:
 Delete dynamic customer via API
     Set Tags    glue
     API_test_setup
-    [Arguments]    ${customer_email}=${EMPTY}    ${customer_id}=${EMPTY}
+    [Arguments]    ${customer_email}=${EMPTY}
 
     ${dynamic_customer_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_customer}
     ${dynamic_customer_id_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_customer_id}
@@ -2226,6 +2226,8 @@ Delete dynamic customer via API
     
     I get access token for the customer:    ${customer_email}
     I set Headers:    Authorization=${token}
-    I send a DELETE request:    /customers/${customer_id}
+    I send a GET request:    /customers
+    Save value to a variable:    [data][0][id]    userId
+    I send a DELETE request:    /customers/${userId}
     Response status code should be:    204
     Remove Tags    glue

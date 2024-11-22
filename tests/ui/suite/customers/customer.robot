@@ -58,7 +58,8 @@ Guest_User_Access_Restrictions
 
 Authorized_User_Access
     [Documentation]    Checks that authorized users see products info, cart and profile
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    Create new approved dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: check if cart is not empty and clear it
     Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]    ${accountIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    002
@@ -72,22 +73,26 @@ Authorized_User_Access
     Yves: 'Order History' page is displayed
     Yves: go to 'Wishlist' page
     Yves: 'Wishlist' page is displayed
-    [Teardown]    Yves: check if cart is not empty and clear it
+    [Teardown]    Delete dynamic customer via API
 
 New_Customer_Registration
     [Tags]    smoke
     [Documentation]    Check that a new user can be registered in the system
+    Create new dynamic root admin user in DB
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                       | password                                        ||
     ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | Ps${random_str_password}!5${random_id_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...   AND    Zed: delete customer:    sonia+${random}@spryker.com
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    ...    AND    Zed: delete customer:    sonia+${random}@spryker.com
+    ...    AND    Delete dynamic root admin user from DB
 
 User_Account
     [Tags]    smoke
     [Documentation]    Checks user account pages work + address management
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    [Setup]    Run Keywords    Create new approved dynamic customer in DB
+    ...    AND    Create new dynamic root admin user in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu:    Orders History
@@ -111,57 +116,58 @@ User_Account
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
     Yves: check that user has address exists/doesn't exist:    false    ${yves_second_user_first_name} ${random}    ${yves_second_user_last_name} ${random}    Kirncher Str. ${random}    7    10247    Berlin${random}    Germany
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create a new customer address in profile:
-    ...    || email                     | salutation | first name                              | last name                              | address 1          | address 2           | address 3           | city            | zip code  | country | phone     | company          ||
-    ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name}${random} | ${yves_second_user_last_name}${random} | address 1${random} | address 2 ${random} | address 3 ${random} | Berlin${random} | ${random} | Austria | 123456789 | Spryker${random} ||
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    ...    || email               | salutation | first name                              | last name                              | address 1          | address 2           | address 3           | city            | zip code  | country | phone     | company          ||
+    ...    || ${dynamic_customer} | Mr         | ${yves_second_user_first_name}${random} | ${yves_second_user_last_name}${random} | address 1${random} | address 2 ${random} | address 3 ${random} | Berlin${random} | ${random} | Austria | 123456789 | Spryker${random} ||
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to user menu:    Overview
     Yves: go to user menu item in the left bar:    Addresses
     Yves: check that user has address exists/doesn't exist:    true    ${yves_second_user_first_name}${random}    ${yves_second_user_last_name}${random}    address 1${random}    address 2 ${random}    ${random}    Berlin${random}    Austria
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    ...    AND     Yves: delete all user addresses
+    [Teardown]    Run Keywords    Delete dynamic customer via API
+    ...    AND    Delete dynamic root admin user from DB
 
 Update_Customer_Data
     [Documentation]    Checks customer data can be updated from Yves and Zed
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    [Setup]    Run Keywords    Create new approved dynamic customer in DB
+    ...    AND    Create new dynamic root admin user in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu:    My Profile
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
-    ...    || salutation | first name                     | last name                     | email                     ||
-    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | ${yves_second_user_email} ||
+    ...    || salutation | first name | last name | email               ||
+    ...    || Ms.        | Dynamic    | Customer  | ${dynamic_customer} ||
     Yves: update customer profile data:
     ...    || salutation | first name                            | last name                            ||
     ...    || Dr.        | updated${yves_second_user_first_name} | updated${yves_second_user_last_name} ||
     Yves: assert customer profile data:
     ...    || salutation | first name                            | last name                            ||
     ...    || Dr.        | updated${yves_second_user_first_name} | updated${yves_second_user_last_name} ||
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: assert customer profile data:
-    ...    || email                     | salutation | first name                            | last name                            ||
-    ...    || ${yves_second_user_email} | Dr         | updated${yves_second_user_first_name} | updated${yves_second_user_last_name} ||
+    ...    || email               | salutation | first name                            | last name                            ||
+    ...    || ${dynamic_customer} | Dr         | updated${yves_second_user_first_name} | updated${yves_second_user_last_name} ||
     Zed: update customer profile data:
-    ...    || email                     | salutation | first name                     | last name                     ||
-    ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name} | ${yves_second_user_last_name} ||
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
+    ...    || email               | salutation | first name          | last name          ||
+    ...    || ${dynamic_customer} | Mr         | Dynamic${random}    | Customer${random}  ||
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
     Yves: go to user menu:    My Profile
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
-    ...    || salutation | first name                     | last name                     | email                     ||
-    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | ${yves_second_user_email} ||
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: update customer profile data:
-    ...    || email                     | salutation | first name                     | last name                     ||
-    ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name} | ${yves_second_user_last_name} ||
+    ...    || salutation | first name       | last name         | email               ||
+    ...    || Mr.        | Dynamic${random} | Customer${random} | ${dynamic_customer} ||
+    [Teardown]    Run Keywords    Delete dynamic customer via API
+    ...    AND    Delete dynamic root admin user from DB
 
 Add_to_Wishlist
     [Tags]    smoke
     [Documentation]    Check creation of wishlist and adding to different wishlists
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Create new approved dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: delete all wishlists
     Yves: go to PDP of the product with sku:  003
     Yves: add product to wishlist:    My wishlist
@@ -176,30 +182,30 @@ Add_to_Wishlist
     Yves: wishlist contains product with sku:    004_30663302
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: try to add product to wishlist as guest user
-    [Teardown]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: delete all wishlists
-    ...    AND    Yves: check if cart is not empty and clear it
+    [Teardown]    Delete dynamic customer via API
 
 Share_Shopping_Lists
     [Tags]    smoke
     [Documentation]    Checks that shopping list can be shared
-    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
+    [Setup]    Run Keywords    Create new approved dynamic customer in DB    based_on=${yves_company_user_shared_permission_owner_email}    email=sonia+sharelist${random}@spryker.com    first_name=Share${random}    last_name=List${random}
+    ...    AND    Create new approved dynamic customer in DB    based_on=${yves_company_user_shared_permission_receiver_email}    email=sonia+receivelist${random}@spryker.com    first_name=Receive${random}    last_name=List${random}
+    Yves: login on Yves with provided credentials:    sonia+sharelist${random}@spryker.com
     Yves: go to 'Shopping Lists' page
     Yves: 'Shopping Lists' page is displayed
     Yves: create new 'Shopping List' with name:    shareShoppingList+${random}
-    Yves: the following shopping list is shown:    shoppingListName=shareShoppingList+${random}    shoppingListOwner=${yves_company_user_shared_permission_owner_firstname} ${yves_company_user_shared_permission_owner_lastname}    shoppingListAccess=Full access
-    Yves: share shopping list with user:    shoppingListName=shareShoppingList+${random}    customer=${yves_company_user_shared_permission_receiver_firstname} ${yves_company_user_shared_permission_receiver_lastname}    accessLevel=Full access
+    Yves: the following shopping list is shown:    shoppingListName=shareShoppingList+${random}    shoppingListOwner=Share${random} List${random}    shoppingListAccess=Full access
+    Yves: share shopping list with user:    shoppingListName=shareShoppingList+${random}    customer=Receive${random} List${random}    accessLevel=Full access
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: add product to the shopping list:    shareShoppingList+${random}
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: select xxx merchant's offer:    Budget Cameras
     Yves: add product to the shopping list:    shareShoppingList+${random}
     Create New Context
-    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_receiver_email}
+    Yves: login on Yves with provided credentials:    sonia+receivelist${random}@spryker.com
     Yves: 'Shopping List' widget contains:    shoppingListName=shareShoppingList+${random}    accessLevel=Full access
     Yves: go to 'Shopping Lists' page
     Yves: 'Shopping Lists' page is displayed
-    Yves: the following shopping list is shown:    shoppingListName=shareShoppingList+${random}    shoppingListOwner=${yves_company_user_shared_permission_owner_firstname} ${yves_company_user_shared_permission_owner_lastname}    shoppingListAccess=Full access
+    Yves: the following shopping list is shown:    shoppingListName=shareShoppingList+${random}    shoppingListOwner=Share${random} List${random}    shoppingListAccess=Full access
     Yves: view shopping list with name:    shareShoppingList+${random}
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
@@ -207,17 +213,25 @@ Share_Shopping_Lists
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
-    [Teardown]    Run Keywords    Close Current Context    AND    Yves: delete 'Shopping List' with name:    shareShoppingList+${random}
+    [Teardown]    Run Keywords    Close Current Context    
+    ...    AND    Delete dynamic customer via API    sonia+sharelist${random}@spryker.com
+    ...    AND    Delete dynamic customer via API    sonia+receivelist${random}@spryker.com
 
 Share_Shopping_Carts
     [Documentation]    Checks that cart can be shared and used for checkout
-    [Setup]    Run Keywords
-    ...    MP: login on MP with provided credentials:    ${merchant_sony_experts_email}
+    [Setup]    Run Keywords    Create new dynamic root admin user in DB
+    ...    AND    Create new approved dynamic customer in DB    based_on=${yves_company_user_shared_permission_owner_email}    email=sonia+sharecart${random}@spryker.com    first_name=Share${random}    last_name=Cart${random}
+    ...    AND    Create new approved dynamic customer in DB    based_on=${yves_company_user_shared_permission_receiver_email}    email=sonia+receivecart${random}@spryker.com    first_name=Receive${random}    last_name=Cart${random}
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    ...    AND    Zed: create new approved merchant user:
+    ...    || merchant     | email                              | first_name | last_name | password       ||
+    ...    || Sony Experts | sonia+shc+se+${random}@spryker.com | FirstRobot | LastRobot | Change123!321  ||
+    ...    AND    MP: login on MP with provided credentials:    sonia+shc+se+${random}@spryker.com    Change123!321
     ...    AND    MP: change offer stock:
     ...    || offer   | stock quantity | is never out of stock ||
     ...    || offer97 | 10             | true                  ||
     Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
+    Yves: login on Yves with provided credentials:    sonia+sharecart${random}@spryker.com
     Yves: go to 'Shopping Carts' page through the header
     Yves: 'Shopping Carts' page is displayed
     Yves: delete all shopping carts
@@ -226,7 +240,7 @@ Share_Shopping_Carts
     Yves: go to 'Shopping Carts' page through the header
     Yves: 'Shopping Carts' page is displayed
     Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
-    Yves: share shopping cart with user:    shoppingCartName+${random}    ${yves_company_user_shared_permission_receiver_lastname} ${yves_company_user_shared_permission_receiver_firstname}    Full access
+    Yves: share shopping cart with user:    shoppingCartName+${random}    Cart${random} Receive${random}    Full access
     Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
     Yves: change quantity on PDP:    2
     Yves: add product to the shopping cart
@@ -234,7 +248,7 @@ Share_Shopping_Carts
     Yves: select xxx merchant's offer:    Sony Experts
     Yves: add product to the shopping cart
     Yves: logout on Yves as a customer
-    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_receiver_email}
+    Yves: login on Yves with provided credentials:    sonia+receivecart${random}@spryker.com
     Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Full access
     Yves: go to 'Shopping Carts' page through the header
     Yves: 'Shopping Carts' page is displayed
@@ -245,7 +259,7 @@ Share_Shopping_Carts
     Yves: assert merchant of product in cart or list:    ${second_product_with_multiple_offers_concrete_sku}    Sony Experts
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_shared_permission_receiver_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: select the following shipping method for the shipment:    1    Spryker Dummy Shipment    Express
     Yves: select the following shipping method for the shipment:    2    Spryker Dummy Shipment    Standard
     Yves: submit form on the checkout
@@ -259,12 +273,17 @@ Share_Shopping_Carts
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
+    [Teardown]    Run Keywords    Delete dynamic customer via API    sonia+sharecart${random}@spryker.com
+    ...    AND    Delete dynamic customer via API    sonia+receivecart${random}@spryker.com
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    ...    AND    Zed: delete merchant user:    merchant=Sony Experts    merchant_user=sonia+shc+se+${random}@spryker.com
+    ...    AND    Delete dynamic root admin user from DB
 
 Quick_Order
     [Tags]    smoke
     [Documentation]    Checks Quick Order, checkout and Reorder
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: delete all shopping carts
+    [Setup]    Run keywords    Create new approved dynamic customer in DB
+    ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     ...    AND    Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    quickOrderList+${random}
     Yves: go to 'Quick Order' page through the header
@@ -295,7 +314,7 @@ Quick_Order
     ### Order placement ###
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: select the following shipping method for the shipment:    1    Spryker Dummy Shipment    Standard
     Yves: select the following shipping method for the shipment:    2    Spryker Dummy Shipment    Express
     Yves: select the following shipping method for the shipment:    3    Spryker Drone Shipment    Air Light
@@ -319,11 +338,12 @@ Quick_Order
     Yves: assert merchant of product in cart or list:    202_5782479    Video King
     Yves: assert merchant of product in cart or list:    056_31714843    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
-    [Teardown]    Yves: delete 'Shopping List' with name:    quickOrderList+${random}
+    [Teardown]    Delete dynamic customer via API
 
 Reorder
     [Documentation]    Checks that merchant relation is saved with reorder
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Create new approved dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    ${available_never_out_of_stock_abstract_sku}
     Yves: add product to the shopping cart
@@ -331,7 +351,7 @@ Reorder
     Yves: assert merchant of product in cart or list:    ${available_never_out_of_stock_concrete_sku}    Spryker
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
@@ -340,24 +360,28 @@ Reorder
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    Reorder    ${lastPlacedOrder}
     Yves: assert merchant of product in cart or list:    ${available_never_out_of_stock_concrete_sku}    Spryker
-    [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: delete all user addresses
+    [Teardown]    Delete dynamic customer via API
 
 Business_on_Behalf
     [Documentation]    Check that BoB user has possibility to change the business unit
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Create new approved dynamic customer in DB    based_on=${yves_company_user_bob_email}    first_name=Oryx    last_name=Bob
+    Create new dynamic root admin user in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Customers    Company Users
-    Zed: click Action Button in a table for row that contains:    Donald    Attach to BU
+    Zed: click Action Button in a table for row that contains:    Oryx    Attach to BU
     Zed: attach company user to the following BU with role:    Spryker Systems Zurich    Admin
-    Yves: login on Yves with provided credentials:    ${yves_company_user_bob_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to URL:    en/company/user/select
     Yves: 'Select Business Unit' page is displayed
     Yves: 'Business Unit' dropdown contains:    Spryker Systems GmbH / Spryker Systems Berlin    Spryker Systems GmbH / Spryker Systems Zurich
-    [Teardown]    Zed: delete company user xxx withing xxx company business unit:    Donald    Spryker Systems Zurich
+    [Teardown]    Run Keywords    Zed: delete company user xxx withing xxx company business unit:    Donald    Spryker Systems Zurich    admin_email=${dynamic_admin_user}
+    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic customer via API
 
 Wishlist_List_Supports_Offers
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
-    [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    [Setup]    Run Keywords    Create new approved dynamic customer in DB
+    ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     ...    AND    Yves: delete all wishlists
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: go to 'Wishlist' page
@@ -375,12 +399,12 @@ Wishlist_List_Supports_Offers
     Yves: go to b2c shopping cart
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
-    [Teardown]    Run keywords    Yves: delete all wishlists    AND    Yves: check if cart is not empty and clear it
+    [Teardown]    Delete dynamic customer via API
 
 Shopping_List_Contains_Offers
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
-    [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: delete all shopping carts
+    [Setup]    Create new approved dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: create new 'Shopping List' with name:    shoppingListName${random}
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: add product to the shopping list:    shoppingListName${random}
@@ -393,9 +417,7 @@ Shopping_List_Contains_Offers
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: delete 'Shopping List' with name:    shoppingListName${random}
+    [Teardown]    Delete dynamic customer via API
 
 Email_Confirmation
     [Tags]    smoke
@@ -405,5 +427,7 @@ Email_Confirmation
     ...    || Mr.        | New        | User      | sonia+fails+${random}@spryker.com  | Ps${random_str_password}!5${random_id_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     Yves: login on Yves with provided credentials and expect error:     sonia+fails+${random}@spryker.com     Ps${random_str_password}!5${random_id_password}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Create new dynamic root admin user in DB
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: delete customer:    sonia+fails+${random}@spryker.com
+    ...    AND    Delete dynamic root admin user from DB
