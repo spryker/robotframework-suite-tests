@@ -273,7 +273,7 @@ Upsert_product_abstract_collection_with_missing_required_field:
     When Save value to a variable:    [data][0][robotTestsProductAbstractProducts][0][id_product]    id_product
     ### UPDATE PRODUCT ABSTRACT WITH INVALID CHILD CONTAINED INVALID FIELD ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a PUT request:   /dynamic-entity/robot-tests-product-abstracts?XDEBUG_SESSION_START=PHPSTORM  {"data": [{"id_product_abstract": ${id_product_abstract}, "fk_tax_set": 1, "attributes": "FOO", "sku": "FOO", "robotTestsProductAbstractProducts": [{"fk_product_abstract": ${id_product_abstract}, "attributes": "FOOBAR"}]}]}
+    And I send a PUT request:   /dynamic-entity/robot-tests-product-abstracts  {"data": [{"id_product_abstract": ${id_product_abstract}, "fk_tax_set": 1, "attributes": "FOO", "sku": "FOO", "robotTestsProductAbstractProducts": [{"fk_product_abstract": ${id_product_abstract}, "attributes": "FOOBAR"}]}]}
     Then Response status code should be:    400
     And Response body parameter should be:    [0][status]    400
     And Response body parameter should be:    [0][code]    1307
