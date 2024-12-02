@@ -62,7 +62,7 @@ jobs:
               continue-on-error: true
               run: |
                   cd robotframework-tests
-                  rfbrowser init
+                  rfbrowser init chromium
                   robot -v env:ui_mp_b2b -v db_engine:psycopg2 -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.mp_b2b .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Rerun Failed Tests

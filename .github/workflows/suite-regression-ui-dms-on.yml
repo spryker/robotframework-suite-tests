@@ -62,7 +62,7 @@ jobs:
               continue-on-error: true
               run: |
                   cd robotframework-tests
-                  rfbrowser init
+                  rfbrowser init chromium
                   robot -v env:ui_suite -v dms:true -v glue_env:http://glue.eu.spryker.local -v bapi_env:http://glue-backend.eu.spryker.local -v sapi_env:http://glue-storefront.eu.spryker.local -v yves_env:http://yves.eu.spryker.local -v zed_env:http://backoffice.eu.spryker.local -v mp_root_env:http://mp.eu.spryker.local/ -v mp_env:http://mp.eu.spryker.local/security-merchant-portal-gui/login/ -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.suite .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Rerun Failed Tests
