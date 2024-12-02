@@ -45,7 +45,7 @@ Resource    ../../../../resources/steps/picking_list_steps.robot
 
 *** Test Cases ***
 Fulfillment_app_e2e
-    [Tags]    skip-due-to-refactoring    smoke
+    [Tags]    skip-due-to-refactoring    smoke    static
     # #LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update Zed user:
