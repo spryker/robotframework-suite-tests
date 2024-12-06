@@ -22,7 +22,8 @@
          "email":"sonia@spryker.com",
          "first_name":"Sonia",
          "last_name":"Wagner",
-         "password":"change123",
+         "existing_password":"change123",
+         "password":"Change!23456",
          "password_new":"qweRTY_123456",
          "reference":"DE--21",
          "salutation":"Ms"
@@ -39,7 +40,8 @@
          "email":"maxmusterman@spryker.com",
          "first_name":"Max",
          "last_name":"Musterman",
-         "password":"change123",
+         "existing_password":"change123",
+         "password":"Change!23456",
          "salutation":"Mr"
       },
       "yves_fourth_user":{
