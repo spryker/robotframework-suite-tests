@@ -15,7 +15,7 @@ Get_acess_token_with_invalid_password
     And Response should return error message:    Failed to authenticate user.
 
 Get_acess_token_with_invalid_email
-    When I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"fake@spryker.com","password":"${yves_user.password}"}}}
+    When I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"fake@spryker.com","password":"${yves_user.existing_password}"}}}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    003

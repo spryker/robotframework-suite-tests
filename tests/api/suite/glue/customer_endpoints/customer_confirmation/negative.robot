@@ -47,7 +47,7 @@ Customer_confirmation_with_already_used_confirmation_key
     Then Response status code should be:    422
     And Response should return error code:    423
     And Response should return error message:    This email confirmation code is invalid or has been already used.
-    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_third_user.first_name}.${yves_third_user.last_name}${random}@spryker.com
+    [Teardown]    Run Keywords    I get access token for the customer:    ${yves_third_user.first_name}.${yves_third_user.last_name}${random}@spryker.com    ${yves_third_user.password}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a DELETE request:    /customers/${user_reference_id}
     ...    AND    Response status code should be:    204

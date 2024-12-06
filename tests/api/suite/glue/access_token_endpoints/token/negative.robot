@@ -9,7 +9,7 @@ ENABLER
     API_test_setup
 Get_token_for_customer_with_invalid_client_type
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
-    Then I send a POST request with data:    /token    {"grant_type": "invalid_client_type","username": "${yves_user.email}","password": "${yves_user.password}"}
+    Then I send a POST request with data:    /token    {"grant_type": "invalid_client_type","username": "${yves_user.email}","password": "${yves_user.existing_password}"}
     And Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response body parameter should be:    [error]    invalid_grant
@@ -18,7 +18,7 @@ Get_token_for_customer_with_invalid_client_type
 
 Get_token_for_customer_with_missing_grant_type
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
-    Then I send a POST request with data:    /token    {"username": "${yves_user.email}","password": "${yves_user.password}"}
+    Then I send a POST request with data:    /token    {"username": "${yves_user.email}","password": "${yves_user.existing_password}"}
     And Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response body parameter should be:    [error]    invalid_grant
@@ -45,7 +45,7 @@ Get_token_for_customer_with_missing_password
 
 Get_token_for_customer_with_invalid_email
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
-    Then I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "fake@spryker.com","password": "${yves_user.password}"}
+    Then I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "fake@spryker.com","password": "${yves_user.existing_password}"}
     And Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response body parameter should be:    [error]    invalid_grant
@@ -54,7 +54,7 @@ Get_token_for_customer_with_invalid_email
 
 Get_token_for_customer_with_missing_email
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
-    Then I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","password": "${yves_user.password}"}
+    Then I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","password": "${yves_user.existing_password}"}
     Then Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response body parameter should be:    [error]    invalid_request
@@ -64,7 +64,7 @@ Get_token_for_customer_with_missing_email
 
 Get_token_using_refresh_token_for_customer_with_missing_grant_type
     [Setup]    Run Keywords    I set Headers:    Content-Type=${urlencoded_header_content_type}
-    ...  AND    I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "${yves_user.email}","password": "${yves_user.password}"}
+    ...  AND    I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "${yves_user.email}","password": "${yves_user.existing_password}"}
     ...  AND    Response status code should be:    200
     ...  AND    Save value to a variable:    [refresh_token]    refresh_token
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
@@ -77,7 +77,7 @@ Get_token_using_refresh_token_for_customer_with_missing_grant_type
 
 Get_token_using_refresh_token_for_customer_with_invalid_client_type
     [Setup]    Run Keywords    I set Headers:    Content-Type=${urlencoded_header_content_type}
-    ...  AND    I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "${yves_user.email}","password": "${yves_user.password}"}
+    ...  AND    I send a POST request with data:    /token    {"grant_type": "${grant_type.password}","username": "${yves_user.email}","password": "${yves_user.existing_password}"}
     ...  AND    Response status code should be:    200
     ...  AND    Save value to a variable:    [refresh_token]    refresh_token
     When I set Headers:    Content-Type=${urlencoded_header_content_type}

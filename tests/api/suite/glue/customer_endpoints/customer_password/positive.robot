@@ -9,14 +9,14 @@ ENABLER
     API_test_setup
 
 Update_customer_password_with_all_required_fields_and_valid_data
-    [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.password}"}}}
+    [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.existing_password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    token
     When I set Headers:    Authorization=Bearer ${token}
-    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password}","newPassword":"${yves_user.password_new}","confirmPassword":"${yves_user.password_new}"}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.existing_password}","newPassword":"${yves_user.password_new}","confirmPassword":"${yves_user.password_new}"}}}
     Response status code should be:    204
     And Response reason should be:    No Content
-    And I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.password}"}}}
+    And I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.existing_password}"}}}
     Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error code:    003
