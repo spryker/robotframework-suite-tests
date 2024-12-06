@@ -87,43 +87,133 @@ Zed: create new Merchant User with the following data:
     Zed: submit the form
     Wait Until Element Is Visible    ${zed_table_locator}
 
-Zed: create new approved merchant user:
-    [Arguments]    @{args}
-    ${merchantUerData}=    Set Up Keyword Arguments    @{args}
+Zed: create dynamic merchant user:
+    [Arguments]    ${merchant}    ${merchant_user_email}=${EMPTY}    ${merchant_user_first_name}=FirstRobot    ${merchant_user_last_name}=LastRobot    ${merchant_user_password}=${default_secure_password}    ${merchant_user_group}=${EMPTY}    ${zed_admin_email}=${EMPTY}
+    ${dynamic_admin_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_admin_user}
+    ${unique}=    Generate Random String    5    [NUMBERS]
+    ${merchant_value}=    Convert To Lower Case   ${merchant}
+
+    IF    'spryker' in '${merchant_value}'    
+        VAR    ${merchant_key}    spryker
+    ELSE IF    'king' in '${merchant_value}'
+        VAR    ${merchant_key}    king
+    ELSE IF    'budget' in '${merchant_value}'
+        VAR    ${merchant_key}    budget
+    ELSE IF    'expert' in '${merchant_value}'
+        VAR    ${merchant_key}    expert
+    END
+
+    IF    '${zed_admin_email}' == '${EMPTY}'
+        IF    ${dynamic_admin_exists}
+            VAR    ${zed_admin_email}    ${dynamic_admin_user}
+        ELSE
+            VAR    ${zed_admin_email}    ${admin_email}
+        END
+    END
+
+    IF    '${merchant_user_email}' == '${EMPTY}'    
+        VAR    ${merchant_user_email}    sonia+merchant+${merchant_key}+${unique}@spryker.com    
+        VAR    ${dynamic_merchant_user}    ${merchant_user_email}    scope=TEST
+    ELSE
+        VAR    ${dynamic_merchant_user}    ${merchant_user_email}    scope=TEST
+    END
+
+    ${spryker_merchant_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_spryker_merchant}
+    ${king_merchant_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_king_merchant}
+    ${budget_merchant_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_budget_merchant}
+    ${expert_merchant_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_expert_merchant}
+
+    IF    'spryker' in '${merchant_value}'    
+        IF    ${spryker_merchant_exists}
+            VAR    ${dynamic_spryker_second_merchant}    ${merchant_user_email}    scope=TEST
+        ELSE
+            VAR    ${dynamic_spryker_merchant}    ${merchant_user_email}    scope=TEST
+        END
+    END
+    IF    'king' in '${merchant_value}'
+        IF    ${king_merchant_exists}
+            VAR   ${dynamic_king_second_merchant}    ${merchant_user_email}    scope=TEST
+        ELSE
+            VAR   ${dynamic_king_merchant}    ${merchant_user_email}    scope=TEST
+        END
+    END
+    IF    'budget' in '${merchant_value}'
+        IF    ${budget_merchant_exists}
+            VAR    ${dynamic_budget_second_merchant}    ${merchant_user_email}    scope=TEST
+        ELSE
+            VAR    ${dynamic_budget_merchant}    ${merchant_user_email}    scope=TEST
+        END
+    END
+    IF    'expert' in '${merchant_value}'
+        IF    ${expert_merchant_exists}
+            VAR    ${dynamic_expert_second_merchant}    ${merchant_user_email}    scope=TEST
+        ELSE
+            VAR    ${dynamic_expert_merchant}    ${merchant_user_email}    scope=TEST
+        END
+    END
+
     ${currentURL}=    Get Location
-    IF    '/list-merchant' not in '${currentURL}'    Go To    ${zed_url}merchant-gui/list-merchant
+    IF    '/list-merchant' not in '${currentURL}'    
+        ${adminIsLoggedIn}=    Zed: is admin user is logged in
+        IF    not ${adminIsLoggedIn}    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+        Go To    ${zed_url}merchant-gui/list-merchant
+    END
     Wait For Load State
     Wait For Load State    networkidle
     Zed: click Action Button in a table for row that contains:     ${merchant}     Edit
     Zed: go to tab:     Users
     Click    ${zed_add_merchant_user_button}
     Wait Until Element Is Visible    ${zed_create_merchant_user_email_field}
-    ${unique}=    Generate Random String    3    [NUMBERS]
-    FOR    ${key}    ${value}    IN    &{merchantUerData}
-        Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_email_field}    ${value}
-        IF    '${key}'=='first_name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_first_name_field}    ${value}${unique}
-        IF    '${key}'=='last_name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_last_name_field}    ${value}${unique}
-    END  
+    Type Text    ${zed_create_merchant_user_email_field}    ${merchant_user_email}
+    Type Text    ${zed_create_merchant_user_first_name_field}    ${merchant_user_first_name}${unique}
+    Type Text    ${zed_create_merchant_user_last_name_field}    ${merchant_user_last_name}${unique}
     Zed: submit the form
     Wait Until Element Is Visible    ${zed_table_locator}
-    Zed: click Action Button in Merchant Users table for row that contains:    ${email}    Activate
+    Zed: click Action Button in Merchant Users table for row that contains:    ${merchant_user_email}    Activate
     Zed: table should contain non-searchable value:    Active
-    ${should_assign_group}=    Run Keyword And Return Status    Variable Should Exist    ${group}
-    IF    ${should_assign_group}
+    IF    '${merchant_user_group}' != '${EMPTY}'
         Zed: update Zed user:
-        ...    || email    | password    | group    ||
-        ...    || ${email} | ${password} | ${group} ||
+        ...    || email                  | password                  | group                  ||
+        ...    || ${merchant_user_email} | ${merchant_user_password} | ${merchant_user_group} ||
     ELSE
         Zed: update Zed user:
-        ...    || email    | password    ||
-        ...    || ${email} | ${password} ||
+        ...    || email                  | password                  ||
+        ...    || ${merchant_user_email} | ${merchant_user_password} ||
     END
 
 Zed: delete merchant user:
-    [Arguments]    ${merchant}    ${merchant_user}
+    # TODO: get rid of merchant variable by b2c b2b mapping, like office kind -> video king
+    [Arguments]    ${merchant_user}    ${merchant}=${EMPTY}    ${zed_admin_email}=${EMPTY}
+    ${dynamic_admin_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_admin_user}
+    ${unique}=    Generate Random String    5    [NUMBERS]
+
+    IF    '${zed_admin_email}' == '${EMPTY}'
+        IF    ${dynamic_admin_exists}
+            VAR    ${zed_admin_email}    ${dynamic_admin_user}
+        ELSE
+            VAR    ${zed_admin_email}    ${admin_email}
+        END
+    END
+
+    IF    '${merchant}' == '${EMPTY}'
+        IF    '+spryker+' in '${merchant_user}'    
+            VAR    ${merchant}    Spryker
+        ELSE IF    '+king+' in '${merchant_user}'    
+            VAR    ${merchant}    King
+        ELSE IF    '+budget+' in '${merchant_user}'    
+            VAR    ${merchant}    Budget
+        ELSE IF    '+expert+' in '${merchant_user}'    
+            VAR    ${merchant}    Experts
+        END
+    END
+            
     ${currentURL}=    Get Location
-    IF    '/list-merchant' not in '${currentURL}'    Go To    ${zed_url}merchant-gui/list-merchant
+    
+    IF    '/list-merchant' not in '${currentURL}'
+        ${adminIsLoggedIn}=    Zed: is admin user is logged in
+        IF    not ${adminIsLoggedIn}    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+        Go To    ${zed_url}merchant-gui/list-merchant
+    END
     Wait For Load State
     Wait For Load State    networkidle
     Zed: click Action Button in a table for row that contains:     ${merchant}     Edit

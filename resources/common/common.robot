@@ -794,7 +794,7 @@ Trigger product labels update
     Repeat Keyword    3    Trigger multistore p&s
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
-Create new dynamic root admin user in DB
+Create dynamic admin user in DB
     [Documentation]    This keyword creates a new admin user in the DB using data from an existing admin.
         ...    It works for both MariaDB and PostgreSQL.
     [Arguments]    ${user_name}=${EMPTY}    ${first_name}=Dynamic    ${last_name}=Admin
@@ -896,7 +896,7 @@ Delete dynamic root admin user from DB
     
     Disconnect From Database
 
-Create new approved dynamic customer in DB
+Create dynamic customer in DB
     [Documentation]    This keyword creates a new approved dynamic customer in the DB based on an existing customer (sonia@spryker.com) and assigns the customer to a company.
     ...               It works for both MariaDB and PostgreSQL.
     [Arguments]    ${first_name}=Dynamic    ${last_name}=Customer    ${email}=${EMPTY}    ${based_on}=${EMPTY}

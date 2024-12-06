@@ -46,7 +46,7 @@ Data_exchange_API_download_specification
     [Tags]    smoke
     [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Setup]    Run Keywords    Trigger API specification update
-    ...    AND    Create new dynamic root admin user in DB
+    ...    AND    Create dynamic admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: download data exchange api specification should be active:    true
     Zed: download data exchange api specification
@@ -94,7 +94,7 @@ Data_exchange_API_Configuration_in_Zed
     [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Tags]    bapi    smoke
     [Setup]    Run Keywords    Trigger API specification update
-    ...    AND    Create new dynamic root admin user in DB
+    ...    AND    Create dynamic admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: start creation of new data exchange api configuration for db table:    spy_mime_type
     Zed: edit data exchange api configuration:

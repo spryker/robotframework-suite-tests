@@ -74,7 +74,7 @@ Catalog
 
 Catalog_Actions
     [Documentation]    Checks quick add to cart and product groups
-    [Setup]    Create new dynamic root admin user in DB
+    [Setup]    Create dynamic admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: change concrete product price on:
     ...    || productAbstract | productConcrete | store | mode  | type   | currency | amount ||
@@ -99,8 +99,8 @@ Catalog_Actions
 
 Volume_Prices
     [Documentation]    Checks that volume prices are applied in cart
-    [Setup]    Run keywords    Create new dynamic root admin user in DB
-    ...    AND    Create new approved dynamic customer in DB
+    [Setup]    Run keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
     ...    AND    Zed: check and restore product availability in Zed:    ${volume_prices_product_abstract_sku}    Available    ${volume_prices_product_concrete_sku}    ${dynamic_admin_user}
     ...    AND    Trigger p&s
     ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -117,8 +117,8 @@ Volume_Prices
 
 Discontinued_Alternative_Products
     [Documentation]    Checks discontinued and alternative products
-    [Setup]    Run keywords    Create new dynamic root admin user in DB
-    ...    AND    Create new approved dynamic customer in DB
+    [Setup]    Run keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
     Yves: go to PDP of the product with sku:    ${product_with_relations_alternative_products_sku}
     Yves: change variant of the product on PDP on:    2.3 GHz
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
@@ -145,7 +145,7 @@ Discontinued_Alternative_Products
 Measurement_Units
     [Tags]    smoke
     [Documentation]    Checks checkout with Measurement Unit product
-    [Setup]    Create new approved dynamic customer in DB
+    [Setup]    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    215
     Yves: change variant of the product on PDP on:    Ring (500m)
@@ -169,7 +169,7 @@ Measurement_Units
 Packaging_Units
     [Tags]    smoke
     [Documentation]    Checks checkout with Packaging Unit product
-    [Setup]    Create new approved dynamic customer in DB
+    [Setup]    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    218
     Yves: change variant of the product on PDP on:    Giftbox
@@ -192,8 +192,8 @@ Packaging_Units
 Product_Bundles
     [Tags]    smoke
     [Documentation]    Checks checkout with Bundle product
-    [Setup]    Run keywords    Create new dynamic root admin user in DB
-    ...    AND    Create new approved dynamic customer in DB
+    [Setup]    Run keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
@@ -215,8 +215,8 @@ Product_Bundles
     ...    AND    Delete dynamic customer via API
 
 Back_in_Stock_Notification
-    [Setup]    Run Keywords    Create new dynamic root admin user in DB
-    ...    AND    Create new approved dynamic customer in DB
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
     [Documentation]    Back in stock notification is sent and availability check
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Availability
@@ -245,8 +245,8 @@ Back_in_Stock_Notification
 
 Manage_Product
     [Tags]    smoke
-    [Setup]    Run Keywords    Create new dynamic root admin user in DB
-    ...    AND    Create new approved dynamic customer in DB
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
     [Documentation]    checks that BO user can manage abstract and concrete products + create new
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: start new abstract product creation:
@@ -354,8 +354,8 @@ Manage_Product
     ...    AND    Delete dynamic customer via API
 
 Product_Original_Price
-    [Setup]    Run Keywords    Create new dynamic root admin user in DB
-    ...    AND    Create new approved dynamic customer in DB
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
     [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: start new abstract product creation:
@@ -415,8 +415,8 @@ Product_Original_Price
 Product_Availability_Calculation
     [Documentation]    Check product availability + multistore
     [Setup]    Run Keywords    Repeat Keyword    3    Trigger multistore p&s
-    ...    AND    Create new dynamic root admin user in DB
-    ...    AND    Create new approved dynamic customer in DB
+    ...    AND    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: update warehouse:    
     ...    || warehouse  | store || 
@@ -507,8 +507,8 @@ Product_Availability_Calculation
 
 Configurable_Product_PDP_Wishlist_Availability
     [Documentation]    Configure product from PDP and Wishlist + availability case.
-    [Setup]    Run keywords   Create new dynamic root admin user in DB
-    ...    AND    Create new approved dynamic customer in DB
+    [Setup]    Run keywords   Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
     ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
@@ -559,7 +559,7 @@ Configurable_Product_PDP_Wishlist_Availability
 Configurable_Product_PDP_Shopping_List
     [Tags]    smoke
     [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of five items. Ensure that products that have not been configured cannot be purchased.
-    [Setup]    Run keywords    Create new approved dynamic customer in DB
+    [Setup]    Run keywords    Create dynamic customer in DB
     ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
@@ -622,12 +622,10 @@ Configurable_Product_PDP_Shopping_List
 
 Configurable_Product_RfQ_OMS
     [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder. 
-    [Setup]    Run keywords    Create new dynamic root admin user in DB
-    ...    AND    Create new approved dynamic customer in DB
+    [Setup]    Run keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: create new approved merchant user:
-    ...    || merchant | email                             | first_name | last_name | password      | group      ||
-    ...    || Spryker  | richard+frq+${random}@spryker.com | Main       | Merchant  | Change123!321 | Root group ||
+    ...    AND    Zed: create dynamic merchant user:    merchant=Spryker    merchant_user_group=Root group
     ...    AND    Deactivate all discounts in the database
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: create new 'Shopping Cart' with name:    confProductCart+${random}
@@ -670,7 +668,7 @@ Configurable_Product_RfQ_OMS
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    richard+frq+${random}@spryker.com    Change123!321
+    Zed: login on Zed with provided credentials:    ${dynamic_spryker_merchant}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €771.90
     Zed: go to order page:    ${lastPlacedOrder} 
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
@@ -701,8 +699,8 @@ Configurable_Product_RfQ_OMS
 
 Product_Restrictions
     [Documentation]    Checks White and Black lists
-    [Setup]    Run keywords    Create new dynamic root admin user in DB
-    ...    AND    Create new approved dynamic customer in DB    based_on=${yves_test_company_user_email}
+    [Setup]    Run keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB    based_on=${yves_test_company_user_email}
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create product list with the following assigned category:    list_name=White${random}    list_type=white    category=Smartwatches
     Zed: create product list with the following assigned category:    list_name=Black${random}    list_type=black    category=Smartphones
@@ -723,7 +721,7 @@ Product_Restrictions
     Yves: at least one product is/not displayed on the search results page:    search_query=Canon    expected_visibility=true
     Yves: at least one product is/not displayed on the search results page:    search_query=Lenovo    expected_visibility=true
     Delete dynamic customer via API
-    Create new approved dynamic customer in DB    based_on=${yves_user_email}
+    Create dynamic customer in DB    based_on=${yves_user_email}
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: at least one product is/not displayed on the search results page:    search_query=060    expected_visibility=true
     Yves: at least one product is/not displayed on the search results page:    search_query=052    expected_visibility=true
@@ -740,7 +738,7 @@ Product_Restrictions
 
 Customer_Specific_Prices
     [Documentation]    Checks that product price can be different for different customers
-    [Setup]    Create new approved dynamic customer in DB
+    [Setup]    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: perform search by:    ${product_with_merchant_price_abstract_sku}
     Yves: product with name in the catalog should have price:    ${product_with_merchant_price_product_name}    ${product_with_merchant_price_default_price}
@@ -748,7 +746,7 @@ Customer_Specific_Prices
     Yves: product price on the PDP should be:    ${product_with_merchant_price_default_price}
     Yves: logout on Yves as a customer
     Delete dynamic customer via API
-    Create new approved dynamic customer in DB    based_on=${yves_test_company_user_email}
+    Create dynamic customer in DB    based_on=${yves_test_company_user_email}
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: create new 'Shopping Cart' with name:    customerPrices+${random}
     Yves: perform search by:    ${product_with_merchant_price_abstract_sku}

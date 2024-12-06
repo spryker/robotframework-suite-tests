@@ -45,8 +45,8 @@ Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 Content_Management
     [Tags]    smoke
     [Documentation]    Checks cms content can be edited in zed and that correct cms elements are present on homepage
-    Create new dynamic root admin user in DB    user_name=admin+root+cm${random}@spryker.com
-    Create new dynamic root admin user in DB    user_name=admin+content${random}@spryker.com
+    Create dynamic admin user in DB    user_name=admin+root+cm${random}@spryker.com
+    Create dynamic admin user in DB    user_name=admin+content${random}@spryker.com
     Zed: login on Zed with provided credentials:    admin+content${random}@spryker.com
     Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Test Page${random}    test-page${random}    Page Title    Page text

@@ -25,6 +25,8 @@ Zed: login on Zed with provided credentials:
     Delete All Cookies
     Reload
     Wait Until Element Is Visible    ${zed_user_name_field}
+    ${email_value}=    Convert To Lower Case   ${email}
+    IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
     Type Text    ${zed_user_name_field}    ${email}
     Type Text    ${zed_password_field}    ${password}
     Click    ${zed_login_button}
@@ -213,3 +215,9 @@ Zed: filter by merchant:
     [Arguments]    ${merchant}
     Wait Until Element Is Visible    ${zed_merchants_dropdown_locator}
     Select From List By Label    ${zed_merchants_dropdown_locator}    ${merchant}
+
+Zed: is admin user is logged in
+    Wait For Load State
+    Wait For Load State    networkidle
+    ${adminIsLoggedIn}=    Run Keyword And Return Status    Page Should Contain Element    locator=${zed_log_out_button}    timeout=0.1s
+    RETURN    ${adminIsLoggedIn}

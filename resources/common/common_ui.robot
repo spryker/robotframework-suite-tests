@@ -12,6 +12,7 @@ ${browser}             chromium
 ${browser_timeout}     60 seconds
 ${email_domain}        @spryker.com
 ${default_password}    change123
+${default_secure_password}    Change123!321
 ${admin_email}         admin@spryker.com
 ${device}
 # ${device}              Desktop Chrome

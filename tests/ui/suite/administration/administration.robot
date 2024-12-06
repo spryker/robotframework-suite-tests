@@ -45,8 +45,8 @@ Resource    ../../../../resources/steps/zed_payment_methods_steps.robot
 *** Test Cases ***
 Minimum_Order_Value
     [Documentation]    checks that global minimum and maximun order thresholds can be applied
-    [Setup]    Run Keywords    Create new dynamic root admin user in DB
-    ...    AND    Create new approved dynamic customer in DB
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
     ...    AND    Deactivate all discounts in the database
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: change global threshold settings:
@@ -94,7 +94,7 @@ Minimum_Order_Value
 Zed_navigation_ordering_and_naming
     [Tags]    smoke
     [Documentation]    Verifies each left navigation node can be opened.
-    [Setup]    Create new dynamic root admin user in DB
+    [Setup]    Create dynamic admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: verify first navigation root menus
     Zed: verify root menu icons
@@ -103,8 +103,8 @@ Zed_navigation_ordering_and_naming
 
 Glossary
     [Documentation]    Create + edit glossary translation in BO
-    [Setup]    Run Keywords    Create new approved dynamic customer in DB
-    ...    AND    Create new dynamic root admin user in DB
+    [Setup]    Run Keywords    Create dynamic customer in DB
+    ...    AND    Create dynamic admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Administration    Glossary  
     Zed: click button in Header:    Create Translation
@@ -135,8 +135,8 @@ Glossary
 
 Payment_method_update
     [Documentation]    Deactivate payment method, unset payment method for stores in zed and check its impact on yves.
-    [Setup]    Run Keywords    Create new approved dynamic customer in DB
-    ...    AND    Create new dynamic root admin user in DB
+    [Setup]    Run Keywords    Create dynamic customer in DB
+    ...    AND    Create dynamic admin user in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    020
     Yves: add product to the shopping cart

@@ -22,6 +22,8 @@ MP: login on MP with provided credentials:
     Delete All Cookies
     Reload
     Wait Until Element Is Visible    ${mp_user_name_field}
+    ${email_value}=    Convert To Lower Case   ${email}
+    IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
     Type Text    ${mp_user_name_field}    ${email}
     Type Text    ${mp_password_field}    ${password}
     Click    ${mp_login_button}

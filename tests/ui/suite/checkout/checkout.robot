@@ -65,7 +65,7 @@ Login_during_checkout
 Register_during_checkout
     [Documentation]    Guest user email should be whitelisted from the AWS side before running the test
     [Tags]    glue    smoke
-    [Setup]    Create new dynamic root admin user in DB
+    [Setup]    Create dynamic admin user in DB
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
@@ -101,7 +101,7 @@ Register_during_checkout
 Guest_Checkout
     [Tags]    smoke
     [Documentation]    Guest checkout with bundles, discounts and OMS
-    [Setup]    Run keywords    Create new dynamic root admin user in DB
+    [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
@@ -145,7 +145,7 @@ Guest_Checkout
 
 Guest_Checkout_Addresses
     [Documentation]    Guest checkout with different addresses and OMS
-    [Setup]    Create new dynamic root admin user in DB
+    [Setup]    Create dynamic admin user in DB
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to PDP of the product with sku:    007
@@ -198,7 +198,7 @@ Guest_Checkout_Addresses
 
 Business_Unit_Address_on_Checkout
     [Documentation]    Checks that business unit address can be used during checkout
-    Create new approved dynamic customer in DB    based_on=${yves_company_user_buyer_email}
+    Create dynamic customer in DB    based_on=${yves_company_user_buyer_email}
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${available_never_out_of_stock_abstract_sku}
     Yves: add product to the shopping cart
@@ -222,8 +222,8 @@ Business_Unit_Address_on_Checkout
 Request_for_Quote
     [Tags]    smoke
     [Documentation]    Checks user can request and receive quote.
-    [Setup]    Run keywords    Create new dynamic root admin user in DB
-    ...    AND    Create new approved dynamic customer in DB    based_on=${yves_company_user_buyer_email}
+    [Setup]    Run keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB    based_on=${yves_company_user_buyer_email}
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: add product to the shopping cart
@@ -292,8 +292,8 @@ Request_for_Quote
 Split_Delivery
     [Tags]    smoke
     [Documentation]    Checks split delivery in checkout
-    [Setup]    Run Keywords    Create new approved dynamic customer in DB    based_on=${yves_user_email}
-    ...    AND    Create new dynamic root admin user in DB
+    [Setup]    Run Keywords    Create dynamic customer in DB    based_on=${yves_user_email}
+    ...    AND    Create dynamic admin user in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
@@ -335,8 +335,8 @@ Split_Delivery
 Checkout_Address_Management
     [Tags]    smoke
     [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
-    [Setup]    Run Keywords    Create new dynamic root admin user in DB
-    ...    AND    Create new approved dynamic customer in DB
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${available_never_out_of_stock_abstract_sku}
     Yves: add product to the shopping cart
@@ -381,16 +381,12 @@ Click_and_collect
     [Tags]    smoke
     [Documentation]    checks that product offer is successfully replaced with a target product offer
     [Setup]    Run keywords    Deactivate all discounts in the database
-    ...    AND    Create new dynamic root admin user in DB
-    ...    AND    Create new approved dynamic customer in DB
+    ...    AND    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: create new approved merchant user:
-    ...    || merchant | email                              | first_name | last_name | password       ||
-    ...    || Spryker  | sonia+cc+spr+${random}@spryker.com | FirstRobot | LastRobot | Change123!321  ||
-    ...    AND    Zed: create new approved merchant user:
-    ...    || merchant       | email                             | first_name | last_name | password       ||
-    ...    || Budget Cameras | sonia+bk+cc+${random}@spryker.com | FirstRobot | LastRobot | Change123!321  ||
-    MP: login on MP with provided credentials:    sonia+cc+spr+${random}@spryker.com     Change123!321
+    ...    AND    Zed: create dynamic merchant user:    Spryker
+    ...    AND    Zed: create dynamic merchant user:    Budget Cameras
+    MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
@@ -414,7 +410,7 @@ Click_and_collect
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Approve 
     Trigger p&s 
-    MP: login on MP with provided credentials:    sonia+bk+cc+${random}@spryker.com    Change123!321
+    MP: login on MP with provided credentials:    ${dynamic_budget_merchant}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
     MP: perform search by:    clickCollectSku${random}-2
@@ -515,21 +511,17 @@ Click_and_collect
 
 Multiple_Merchants_Order
     [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
-    [Setup]    Run Keywords    Create new dynamic root admin user in DB
-    ...    AND    Create new approved dynamic customer in DB
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: create new approved merchant user:
-    ...    || merchant    | email                              | first_name | last_name | password       ||
-    ...    || Video King  | sonia+mmo+vk+${random}@spryker.com | FirstRobot | LastRobot | Change123!321  ||
-    ...    AND    Zed: create new approved merchant user:
-    ...    || merchant       | email                              | first_name | last_name | password       ||
-    ...    || Budget Cameras | sonia+bk+mmo+${random}@spryker.com | FirstRobot | LastRobot | Change123!321  ||
+    ...    AND    Zed: create dynamic merchant user:    Video King
+    ...    AND    Zed: create dynamic merchant user:    Budget Cameras
     ...    AND    Zed: change product stock:    ${one_variant_product_of_main_merchant_abstract_sku}    ${one_variant_product_of_main_merchant_concrete_sku}    true    10    10
-    ...    AND    MP: login on MP with provided credentials:    sonia+mmo+vk+${random}@spryker.com    Change123!321
+    ...    AND    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     ...    AND    MP: change offer stock:
     ...    || offer   | stock quantity | is never out of stock ||
     ...    || offer30 | 10             | true                  ||
-    ...    AND    MP: login on MP with provided credentials:    sonia+bk+mmo+${random}@spryker.com    Change123!321
+    ...    AND    MP: login on MP with provided credentials:    ${dynamic_budget_merchant}
     ...    AND    MP: change offer stock:
     ...    || offer   | stock quantity | is never out of stock ||
     ...    || offer89 | 10             | true                  ||
@@ -571,7 +563,7 @@ Multiple_Merchants_Order
     
 Unique_URL
     [Documentation]    Fails due to Bug:CC-12380
-    Create new approved dynamic customer in DB
+    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
@@ -587,8 +579,8 @@ Unique_URL
 
 Comments_in_Cart
     [Documentation]    Add comments to cart and verify comments in Yves and Zed
-    Create new approved dynamic customer in DB
-    Create new dynamic root admin user in DB
+    Create dynamic customer in DB
+    Create dynamic admin user in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${bundled_product_3_abstract_sku}
     Yves: add product to the shopping cart
@@ -612,7 +604,7 @@ Comments_in_Cart
 
 Comment_Management_in_the_Cart
     [Documentation]    Editing and deleting comments in carts
-    Create new approved dynamic customer in DB
+    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: create new 'Shopping Cart' with name:    commentManagement+${random}
     Yves: go to PDP of the product with sku:    ${bundled_product_3_abstract_sku}
@@ -627,9 +619,9 @@ Comment_Management_in_the_Cart
     [Teardown]    Delete dynamic customer via API
 
 Configurable_Product_Checkout
-    [Setup]    Run keywords    Create new dynamic root admin user in DB
+    [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Deactivate all discounts in the database
-    ...    AND    Create new approved dynamic customer in DB
+    ...    AND    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${configureButton}
