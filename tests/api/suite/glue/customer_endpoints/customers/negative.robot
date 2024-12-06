@@ -9,7 +9,7 @@ ENABLER
     API_test_setup
 
 Create_a_customer_with_already_existing_email
-    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"${yves_user.password_new}","confirmPassword":"${yves_user.password_new}","acceptedTerms":True}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    400
@@ -42,7 +42,7 @@ Create_a_customer_with_too_weak_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_customer_with_not_equal_passwords
-    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"${yves_user.password}","confirmPassword":"1234567890123","acceptedTerms":True}}}
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"${yves_user.password_new}","confirmPassword":"1234567890123","acceptedTerms":True}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    406
@@ -50,7 +50,7 @@ Create_a_customer_with_not_equal_passwords
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_customer_with_not_accepted_terms_and_coditions
-    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":False}}}
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"${yves_user.password_new}","confirmPassword":"${yves_user.password_new}","acceptedTerms":False}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
@@ -150,7 +150,7 @@ Get_a_customer_with_access_token_from_another_user
 Update_a_customer_with_wrong_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    I send a PATCH request:    /customers/DE--30   {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_third_user.first_name}@spryker.com","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
+    I send a PATCH request:    /customers/DE--30   {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_third_user.first_name}@spryker.com","password":"${yves_user.password_new}","confirmPassword":"${yves_user.password_new}","acceptedTerms":True}}}
     Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411

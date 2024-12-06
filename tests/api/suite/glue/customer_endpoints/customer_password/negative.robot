@@ -11,7 +11,7 @@ ENABLER
 Update_customer_password_with_not_equal_new_password
     Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password}","newPassword":"${yves_user.password}","confirmPassword":"${yves_user.password_new}"}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password}","newPassword":"${yves_user.password_new_additional}","confirmPassword":"${yves_user.password_new}"}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    406
@@ -69,7 +69,7 @@ Update_customer_password_with_non_autorizated_user
 Update_customer_password_with_not_valid_user_password
     Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password_new}","newPassword":"${yves_user.password}","confirmPassword":"${yves_user.password}"}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password_new}","newPassword":"${yves_user.password_new_additional}","confirmPassword":"${yves_user.password_new_additional}"}}}
     Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error code:    408
@@ -132,7 +132,7 @@ Update_customer_password_with_missing_mandatory_fields
 Update_customer_password_with_invalid_access_token
     Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password}","newPassword":"${yves_user.password}","confirmPassword":"${yves_user.password_new}"}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password}","newPassword":"${yves_user.password_new_additional}","confirmPassword":"${yves_user.password_new}"}}}
     Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411

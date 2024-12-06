@@ -31,7 +31,7 @@ Refresh_token_with_empty_refresh_token
     And Response should return error message:    refreshToken => This value should not be blank.
 
 Refresh_token_with_invalid_type
-    [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.existing_password}"}}}
+    [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][refreshToken]    refresh_token
     When I send a POST request:    /refresh-tokens    {"data": {"type": "access-tokens","attributes": {"refreshToken": "${refresh_token}"}}}
@@ -40,7 +40,7 @@ Refresh_token_with_invalid_type
     And Response should return error message:    Invalid type.
 
 Refresh_token_with_deleted_refresh_token
-    [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.existing_password}"}}}
+    [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][refreshToken]    refresh_token
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    access_token
@@ -70,7 +70,7 @@ Delete_refresh_token_with_missing_refresh_token
     And Response should return error message:    Resource id is not specified.
 
 Delete_refresh_token_with_no_access_token
-    [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.existing_password}"}}}
+    [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][refreshToken]    refresh_token
     And I send a DELETE request:    /refresh-tokens/${refresh_token}
@@ -81,7 +81,7 @@ Delete_refresh_token_with_no_access_token
 
 # Spryker is designed so that deleting will return 204, but the token will not be removed and can be used (done for security reasons)
 Delete_refresh_token_for_another_user
-    [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.existing_password}"}}}
+    [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][refreshToken]    refresh_token
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    access_token

@@ -74,7 +74,7 @@ Restore_password_with_too_long_new_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Restore_password_with_not_equal_new_password_and_confirm_password
-    I send a PATCH request:    /customer-restore-password/${yves_user.reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"aa2fbd68447da919fcb7da1a8d2d3c7a","password":"${yves_user.password}","confirmPassword":"${yves_user.password_new}"}}}
+    I send a PATCH request:    /customer-restore-password/${yves_user.reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"aa2fbd68447da919fcb7da1a8d2d3c7a","password":"${yves_user.password_new_additional}","confirmPassword":"${yves_user.password_new}"}}}
     And Response status code should be:    422
     And Response should return error code:    406
     And Response reason should be:    Unprocessable Content
