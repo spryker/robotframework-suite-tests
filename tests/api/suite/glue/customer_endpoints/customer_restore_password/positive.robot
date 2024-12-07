@@ -20,7 +20,7 @@ Restore_password_with_all_required_fields_and_valid_data
     When I send a PATCH request:    /customer-restore-password/${user_reference_id}   {"data":{"type":"customer-restore-password","id":"${user_reference_id}","attributes":{"restorePasswordKey":"${restore_key}","password":"${yves_eighth_user.password_new_additional}","confirmPassword":"${yves_eighth_user.password_new_additional}"}}}
     Then Response status code should be:    204
     And Response reason should be:    No Content
-    [Teardown]    Run Keywords    I get access token for the customer:    ${user_email}
+    [Teardown]    Run Keywords    I get access token for the customer:    ${user_email}    ${yves_eighth_user.password_new}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a DELETE request:    /customers/${user_reference_id}
     ...    AND    Response status code should be:    204

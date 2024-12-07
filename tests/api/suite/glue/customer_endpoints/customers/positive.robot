@@ -14,7 +14,7 @@ Create_customer
     And Save value to a variable:    [data][attributes][email]    userEmail
     And Save the result of a SELECT DB query to a variable:  select registration_key from spy_customer where customer_reference = '${user_id}'    confirmation_key
     And I send a POST request:    /customer-confirmation    {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
-    And I get access token for the customer:    ${userEmail}
+    And I get access token for the customer:    ${userEmail}    ${yves_user.password_new}
     And I set Headers:    Authorization=${token}
     And I send a GET request:    /customers/${user_id}
     And Response reason should be:    OK
@@ -47,7 +47,7 @@ New_customer_can_login_after_confirmation
     And Save value to a variable:    [data][attributes][accessToken]    token
     And Response reason should be:    Created
     And Response body has correct self link internal
-    [Teardown]    Run Keywords    I get access token for the customer:    ${userEmail}
+    [Teardown]    Run Keywords    I get access token for the customer:    ${userEmail}    ${yves_user.password_new}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a DELETE request:    /customers/${userId}
     ...    AND    Response status code should be:    204
@@ -104,6 +104,7 @@ Get_customer_array_contains_all_available_fields
     And Response body parameter should be:    [data][0][attributes][salutation]    ${yves_user.salutation}
     And Response body parameter should not be EMPTY:    [data][0][attributes][createdAt]
     And Response body parameter should not be EMPTY:    [data][0][attributes][updatedAt]
+
 Delete_customer
     [Setup]    Run Keywords    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${email.name}+${random}${email.domain}","password":"${yves_user.password_new}","confirmPassword":"${yves_user.password_new}","acceptedTerms":True}}}
     ...    AND    Response status code should be:    201
@@ -111,7 +112,7 @@ Delete_customer
     ...    AND    Save value to a variable:    [data][attributes][email]    userEmail
     ...    AND     Save the result of a SELECT DB query to a variable:  select registration_key from spy_customer where customer_reference = '${userId}'    confirmation_key
     ...    AND    I send a POST request:    /customer-confirmation    {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
-    ...    AND    I get access token for the customer:    ${userEmail}
+    ...    AND    I get access token for the customer:    ${userEmail}    ${yves_user.password_new}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a DELETE request:    /customers/${userId}
     And Response status code should be:    204
