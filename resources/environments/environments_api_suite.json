@@ -67,13 +67,19 @@
       },
        "yves_eighth_user":{
          "email":"maria.williams@spryker.com",
-         "first_name":"Maria",
-         "last_name":"Williams",
          "password":"change123",
          "password_new":"Change!23456",
          "password_new_additional":"qweRTY_123456",
-         "reference":"DE--2",
-         "salutation":"Ms"
+         "reference":"DE--2"
+       },
+       "yves_ninth_user":{
+           "email":"maggie.may@spryker.com",
+           "first_name":"Maggie",
+           "last_name":"May",
+           "password":"Change!23456",
+           "password_new":"qweRTY_123456",
+           "reference":"DE--3",
+           "salutation":"Ms"
        },
       "zed_admin":{
          "email":"admin@spryker.com",
