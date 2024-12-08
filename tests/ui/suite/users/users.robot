@@ -45,7 +45,8 @@ Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 Agent_Assist
     [Tags]    smoke
     [Documentation]    Checks customer data and checkout as an agent
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Create dynamic admin user in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change${random}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
@@ -73,12 +74,14 @@ Agent_Assist
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
+    ...    AND    Delete dynamic admin user from DB
 
 User_Control
     [Documentation]    Create a user with limited access
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Create dynamic admin user in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create new role with name:    controlRole${random}
     Zed: apply access permissions for user role:    ${full_access}    ${full_access}    ${full_access}   ${permission_allow}
     Zed: apply access permissions for user role:    ${bundle_access}    ${controller_access}    ${action_access}    ${permission_deny}
@@ -88,9 +91,10 @@ User_Control
     Zed: go to second navigation item level:    Catalog    Attributes
     Zed: click button in Header:    Create Product Attribute
     Zed: validate the message when permission is restricted:    Access denied
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: deactivate the created user:    sonia+control${random}@spryker.com
     Zed: login with deactivated user/invalid data:    sonia+control${random}@spryker.com    change${random}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Users    User Roles
     ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete
+    ...    AND    Delete dynamic admin user from DB
