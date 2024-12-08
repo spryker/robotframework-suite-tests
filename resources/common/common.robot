@@ -319,17 +319,24 @@ Trigger API specification update
 
 Trigger multistore p&s
     [Arguments]    ${timeout}=1s
-    Trigger p&s    ${timeout}    DE
-    Trigger p&s    ${timeout}    AT
+    IF    ${dms}
+        Trigger p&s    ${timeout}    DE
+    ELSE
+        Trigger p&s    ${timeout}    DE
+        Trigger p&s    ${timeout}    AT
+    END
 
 Trigger oms
-    [Arguments]    ${timeout}=5s
-    Run console command    console order:invoice:send    DE
-    Run console command    console order:invoice:send    AT
-    Run console command    console oms:check-timeout    DE
-    Run console command    console oms:check-timeout    AT
-    Run console command    console oms:check-condition    DE
-    Run console command    console oms:check-condition    AT
+    [Arguments]    ${timeout}=1s
+    IF    ${dms}
+        Run console command    console oms:check-timeout    DE
+        Run console command    console oms:check-condition    DE
+    ELSE  
+        Run console command    console oms:check-timeout    DE
+        Run console command    console oms:check-timeout    AT
+        Run console command    console oms:check-condition    DE
+        Run console command    console oms:check-condition    AT
+    END
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger publish trigger-events
