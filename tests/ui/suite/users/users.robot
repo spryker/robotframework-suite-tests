@@ -79,6 +79,7 @@ Agent_Assist
     ...    AND    Delete dynamic admin user from DB
 
 User_Control
+    [Tags]    smoke
     [Documentation]    Create a user with limited access
     Create dynamic admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
