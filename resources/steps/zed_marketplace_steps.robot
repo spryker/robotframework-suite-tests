@@ -107,7 +107,8 @@ Zed: create dynamic merchant user:
         IF    ${dynamic_admin_exists}
             VAR    ${zed_admin_email}    ${dynamic_admin_user}
         ELSE
-            VAR    ${zed_admin_email}    ${admin_email}
+            Create dynamic admin user in DB
+            VAR    ${zed_admin_email}    ${dynamic_admin_user}
         END
     END
 

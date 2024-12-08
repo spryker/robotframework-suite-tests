@@ -88,7 +88,7 @@ Minimum_Order_Value
     ...    AND    Zed: change global threshold settings:
     ...    || store & currency | minimum hard value | minimum hard en message | minimum hard de message | maximun hard value | maximun hard en message                                                                                   | maximun hard de message                                                                                                              | soft threshold | soft threshold value | soft threshold en message | soft threshold de message ||
     ...    || DE - Euro [EUR]  | ${SPACE}           | ${SPACE}                | ${SPACE}                | 10000.00           | The cart value cannot be higher than {{threshold}}. Please remove some items to proceed with the order    | Der Warenkorbwert darf nicht höher als {{threshold}} sein. Bitte entfernen Sie einige Artikel, um mit der Bestellung fortzufahren    | None           | ${EMPTY}             | ${EMPTY}                  | ${EMPTY}                  ||
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
     ...    AND    Restore all discounts in the database
 
 Zed_navigation_ordering_and_naming
@@ -99,7 +99,7 @@ Zed_navigation_ordering_and_naming
     Zed: verify first navigation root menus
     Zed: verify root menu icons
     Zed: verify second navigation root menus
-    [Teardown]    Delete dynamic root admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 Glossary
     [Documentation]    Create + edit glossary translation in BO
@@ -130,7 +130,7 @@ Glossary
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
     ...    AND    Trigger p&s
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API
 
 Payment_method_update
@@ -165,5 +165,5 @@ Payment_method_update
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Administration    Payment Methods
     ...    AND    Zed: activate/deactivate payment method:    Dummy Payment    Credit Card    True
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API

@@ -95,7 +95,7 @@ Catalog_Actions
     Yves: shopping cart contains the following products:    150_29554292    003_26138343
     Yves: shopping cart contains product with unit price:    sku=003    productName=Canon IXUS 160    productPrice=65.00
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
 
 Volume_Prices
     [Documentation]    Checks that volume prices are applied in cart
@@ -112,7 +112,7 @@ Volume_Prices
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
     Yves: shopping cart contains product with unit price:    sku=${volume_prices_product_concrete_sku}    productName=${volume_prices_product_name}    productPrice=16.50
-    [Teardown]    Run Keywords    Delete dynamic root admin user from DB
+    [Teardown]    Run Keywords    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API
 
 Discontinued_Alternative_Products
@@ -139,7 +139,7 @@ Discontinued_Alternative_Products
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: undo discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
     ...    AND    Trigger p&s
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API
 
 Measurement_Units
@@ -211,7 +211,7 @@ Product_Bundles
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    [Teardown]    Run Keywords    Delete dynamic root admin user from DB
+    [Teardown]    Run Keywords    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API
 
 Back_in_Stock_Notification
@@ -240,7 +240,7 @@ Back_in_Stock_Notification
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    true
     [Teardown]    Run Keywords    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}    ${dynamic_admin_user}
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API
 
 Manage_Product
@@ -350,7 +350,7 @@ Manage_Product
     Zed: view abstract product page contains:
     ...    || store | sku                   | name                          | variants count ||
     ...    || DE AT | zedManageSKU${random} | UpdatedmanageProduct${random} | 3              ||
-    [Teardown]    Run Keywords    Delete dynamic root admin user from DB
+    [Teardown]    Run Keywords    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API
 
 Product_Original_Price
@@ -409,7 +409,7 @@ Product_Original_Price
     Yves: change variant of the product on PDP on:    blue
     Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
     Yves: product original price on the PDP should be:    €50.00
-    [Teardown]    Run Keywords    Delete dynamic root admin user from DB
+    [Teardown]    Run Keywords    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API
 
 Product_Availability_Calculation
@@ -502,7 +502,7 @@ Product_Availability_Calculation
     ...    || warehouse  | unselect store || 
     ...    || Warehouse1 | AT             ||
     ...    AND    Repeat Keyword    3    Trigger multistore p&s
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API
 
 Configurable_Product_PDP_Wishlist_Availability
@@ -553,7 +553,7 @@ Configurable_Product_PDP_Wishlist_Availability
     Yves: add all available products from wishlist to cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=${configurable_product_price_with_options}
-    [Teardown]    Run Keywords    Delete dynamic root admin user from DB
+    [Teardown]    Run Keywords    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API
 
 Configurable_Product_PDP_Shopping_List
@@ -695,7 +695,7 @@ Configurable_Product_RfQ_OMS
     Yves: product configuration status should be equal:       Configuration is not complete.
     [Teardown]    Run Keywords    Restore all discounts in the database
     ...    AND    Delete dynamic customer via API
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
 
 Product_Restrictions
     [Documentation]    Checks White and Black lists
@@ -734,7 +734,7 @@ Product_Restrictions
     ...    AND    Zed: remove product list with title:    Black${random}
     ...    AND    Trigger multistore p&s
     ...    AND    Delete dynamic customer via API
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
 
 Customer_Specific_Prices
     [Documentation]    Checks that product price can be different for different customers

@@ -85,7 +85,7 @@ New_Customer_Registration
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: delete customer:    sonia+${random}@spryker.com
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
 
 User_Account
     [Tags]    smoke
@@ -125,7 +125,7 @@ User_Account
     Yves: go to user menu item in the left bar:    Addresses
     Yves: check that user has address exists/doesn't exist:    true    ${yves_second_user_first_name}${random}    ${yves_second_user_last_name}${random}    address 1${random}    address 2 ${random}    ${random}    Berlin${random}    Austria
     [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
 
 Update_Customer_Data
     [Documentation]    Checks customer data can be updated from Yves and Zed
@@ -161,7 +161,7 @@ Update_Customer_Data
     ...    || salutation | first name       | last name         | email               ||
     ...    || Mr.        | Dynamic${random} | Customer${random} | ${dynamic_customer} ||
     [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
 
 Add_to_Wishlist
     [Tags]    smoke
@@ -274,7 +274,7 @@ Share_Shopping_Carts
     [Teardown]    Run Keywords    Delete dynamic customer via API    sonia+sharecart${random}@spryker.com
     ...    AND    Delete dynamic customer via API    sonia+receivecart${random}@spryker.com
     ...    AND    Zed: delete merchant user:    ${dynamic_expert_merchant}
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
 
 Quick_Order
     [Tags]    smoke
@@ -372,7 +372,7 @@ Business_on_Behalf
     Yves: 'Select Business Unit' page is displayed
     Yves: 'Business Unit' dropdown contains:    Spryker Systems GmbH / Spryker Systems Berlin    Spryker Systems GmbH / Spryker Systems Zurich
     [Teardown]    Run Keywords    Zed: delete company user xxx withing xxx company business unit:    Donald    Spryker Systems Zurich    admin_email=${dynamic_admin_user}
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API
 
 Wishlist_List_Supports_Offers
@@ -427,4 +427,4 @@ Email_Confirmation
     [Teardown]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: delete customer:    sonia+fails+${random}@spryker.com
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB

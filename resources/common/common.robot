@@ -853,7 +853,7 @@ Create dynamic admin user in DB
 
     Disconnect From Database
 
-Delete dynamic root admin user from DB
+Delete dynamic admin user from DB
     [Documentation]    This keyword deletes a dynamic admin user from the DB based on the provided username.
         ...           It works for both MariaDB and PostgreSQL.
     [Arguments]    ${user_name}=${EMPTY}
@@ -900,11 +900,17 @@ Create dynamic customer in DB
     [Documentation]    This keyword creates a new approved dynamic customer in the DB based on an existing customer (sonia@spryker.com) and assigns the customer to a company.
     ...               It works for both MariaDB and PostgreSQL.
     [Arguments]    ${first_name}=Dynamic    ${last_name}=Customer    ${email}=${EMPTY}    ${based_on}=${EMPTY}
+    ${dynamic_customer_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_customer}
 
     IF    '${email}' == '${EMPTY}'
         ${unique}=    Generate Random String    5    [NUMBERS]
-        VAR    ${email}    sonia+robot${unique}@spryker.com
-        VAR    ${dynamic_customer}    ${email}    scope=TEST
+        IF    ${dynamic_customer_exists}
+            VAR    ${email}    sonia+robot${unique}@spryker.com
+            VAR    ${dynamic_second_customer}    ${email}    scope=TEST
+        ELSE
+            VAR    ${email}    sonia+robot${unique}@spryker.com
+            VAR    ${dynamic_customer}    ${email}    scope=TEST
+        END
     END
 
     IF    '${based_on}' == '${EMPTY}'

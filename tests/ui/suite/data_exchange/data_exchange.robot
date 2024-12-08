@@ -88,7 +88,7 @@ Data_exchange_API_download_specification
     ...    AND    Zed: delete dowloaded api specification
     ...    AND    Delete dynamic entity configuration in Database:    mime-types
     ...    AND    Trigger API specification update
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
 
 Data_exchange_API_Configuration_in_Zed
     [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
@@ -153,4 +153,4 @@ Data_exchange_API_Configuration_in_Zed
     ...    AND    Delete dynamic entity configuration in Database:    mime-types
     ...    AND    Delete mime_type by id_mime_type in Database:    ${id_mime_type}
     ...    AND    Trigger API specification update
-    ...    AND    Delete dynamic root admin user from DB
+    ...    AND    Delete dynamic admin user from DB
