@@ -90,12 +90,12 @@ Update_customer_password_with_too_short_password
 Update_customer_password_with_too_long_password
     Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password_new}","newPassword":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890","confirmPassword":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890"}}}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password_new}","newPassword":"Change!23456pqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuioppqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwert","confirmPassword":"Change!23456pqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuioppqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwert"}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
-    And Array in response should contain property with value:    [errors]    detail    newPassword => This value is too long. It should have 72 characters or less.
-    And Array in response should contain property with value:    [errors]    detail    confirmPassword => This value is too long. It should have 72 characters or less.
+    And Array in response should contain property with value:    [errors]    detail    newPassword => This value is too long. It should have 128 characters or less.
+    And Array in response should contain property with value:    [errors]    detail    confirmPassword => This value is too long. It should have 128 characters or less.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_too_weak_password

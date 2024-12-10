@@ -65,12 +65,12 @@ Restore_password_with_too_short_new_password
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Restore_password_with_too_long_new_password
-    I send a PATCH request:    /customer-restore-password/${yves_user.reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"a46b40a8e1befff4cf0df9c7c2ace5f2","password":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890","confirmPassword":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890"}}}
+    I send a PATCH request:    /customer-restore-password/${yves_user.reference}   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"a46b40a8e1befff4cf0df9c7c2ace5f2","password":"Change!23456pqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuioppqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwert","confirmPassword":"Change!23456pqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuioppqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwert"}}}
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
-    And Array in response should contain property with value:    [errors]    detail    password => This value is too long. It should have 72 characters or less.
-    And Array in response should contain property with value:    [errors]    detail    confirmPassword => This value is too long. It should have 72 characters or less.
+    And Array in response should contain property with value:    [errors]    detail    password => This value is too long. It should have 128 characters or less.
+    And Array in response should contain property with value:    [errors]    detail    confirmPassword => This value is too long. It should have 128 characters or less.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Restore_password_with_not_equal_new_password_and_confirm_password
