@@ -47,7 +47,7 @@ Login_during_checkout
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart  
+    Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
     Yves: fill in the following new shipping address:
@@ -69,7 +69,7 @@ Register_during_checkout
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
     Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
-    Yves: go to b2c shopping cart  
+    Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Kj${random_str_password}!0${random_id_password}
     Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
@@ -181,9 +181,9 @@ Guest_Checkout_Addresses
     Zed: get the last placed order ID of the customer by email:    sonia+guest+new${random}@spryker.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
-    Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany 
-    Zed: shipping address inside xxx shipment should be:    2    Dr First, Last, Second Street, 2, Additional street, Spryker, 10247, Berlin, Germany 
-    Zed: shipping address inside xxx shipment should be:    3    Dr First, Last, Third Street, 3, Additional street, Spryker, 10247, Berlin, Germany 
+    Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany
+    Zed: shipping address inside xxx shipment should be:    2    Dr First, Last, Second Street, 2, Additional street, Spryker, 10247, Berlin, Germany
+    Zed: shipping address inside xxx shipment should be:    3    Dr First, Last, Third Street, 3, Additional street, Spryker, 10247, Berlin, Germany
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    skip picking
     Zed: trigger all matching states inside this order:    Ship
@@ -218,7 +218,7 @@ Request_for_Quote
     [Tags]    smoke
     [Documentation]    Checks user can request and receive quote.
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123${random}    Request    Quote    Root group    This user is an agent in Storefront    en_US
+    ...    AND    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com   Kj${random_str_password}!0${random_id_password}   Request    Quote    Root group    This user is an agent in Storefront    en_US
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
     Yves: delete all user addresses
@@ -232,7 +232,7 @@ Request_for_Quote
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    change123${random}
+    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
     Yves: header contains/doesn't contain:    true    ${quoteRequestsWidget}
     Yves: go to 'Agent Quote Requests' page through the header
     Yves: 'Quote Requests' page is displayed
@@ -257,7 +257,7 @@ Request_for_Quote
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    change123${random}
+    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
     Yves: move mouse over header menu item:     ${quoteRequestsWidget}
     Yves: 'Quote Requests' widget is shown
     Yves: go to the quote request through the header with reference:    ${lastCreatedRfQ}
@@ -332,7 +332,7 @@ Split_Delivery
 Checkout_Address_Management
     [Tags]    smoke
     [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
-    [Setup]    Run Keywords    
+    [Setup]    Run Keywords
     ...    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
     ...    AND    Yves: check if cart is not empty and clear it
@@ -382,12 +382,12 @@ Click_and_collect
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
-    MP: open navigation menu tab:    Products    
+    MP: open navigation menu tab:    Products
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
     ...    || product sku              | product name                 | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
     ...    || clickCollectSku${random} | clickCollectProduct${random} | color                | white                       | black                        | series                | Ace Plus               ||
-    MP: perform search by:    clickCollectProduct${random} 
+    MP: perform search by:    clickCollectProduct${random}
     MP: click on a table row that contains:     clickCollectSku${random}
     MP: fill abstract product required fields:
     ...    || product name                 | store | tax set           ||
@@ -402,9 +402,9 @@ Click_and_collect
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Catalog    Products 
-    Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Approve 
-    Trigger p&s 
+    Zed: go to second navigation item level:    Catalog    Products
+    Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Approve
+    Trigger p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
@@ -501,7 +501,7 @@ Click_and_collect
     ...    || 1          | Pickup          | Free Pickup     | €0.00          | ASAP                    ||
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    	Free mobile phone    20% off cameras products    Free Acer M2610 product    Free delivery    10% off Intel products    5% off white products    Tuesday & Wednesday $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
-    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    ...    AND    Zed: go to second navigation item level:    Catalog    Products
     ...    AND    Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Deny
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
@@ -509,7 +509,7 @@ Click_and_collect
 
 Multiple_Merchants_Order
     [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
-    [Setup]    Run Keywords    
+    [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
     ...    AND    MP: change offer stock:
     ...    || offer   | stock quantity | is never out of stock ||
@@ -595,7 +595,7 @@ Comments_in_Cart
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: go to order details page to check comment:    abc${random}    ${lastPlacedOrder}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}    
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: check comment appears at order detailed page in zed:    abc${random}    ${lastPlacedOrder}
 
 Comment_Management_in_the_Cart
@@ -606,9 +606,9 @@ Comment_Management_in_the_Cart
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    commentManagement+${random}
     Yves: add comment on cart:    abc${random}
-    Yves: check comments are visible or not in cart:    true    abc${random}    
+    Yves: check comments are visible or not in cart:    true    abc${random}
     Yves: edit comment on cart:    xyz${random}
-    Yves: check comments are visible or not in cart:    true    xyz${random}    
+    Yves: check comments are visible or not in cart:    true    xyz${random}
     Yves: delete comment on cart
     Yves: check comments are visible or not in cart:    false    xyz${random}
     [Teardown]    Run Keyword    Yves: delete 'Shopping Cart' with name:    commentManagement+${random}
@@ -634,7 +634,7 @@ Configurable_Product_Checkout
     ...    || option one | option two ||
     ...    || 389.50     | 249        ||
     Yves: save product configuration
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=638.50 
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=638.50
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
