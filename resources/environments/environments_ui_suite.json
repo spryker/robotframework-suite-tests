@@ -7,8 +7,16 @@
       "mp_url":"http://mp.de.spryker.local/security-merchant-portal-gui/login/",
       "mp_root_url":"http://mp.de.spryker.local/",
       "glue_url":"http://glue.de.spryker.local",
-      "bapi_url":"http://glue-backend.de.spryker.local",
-      "sapi_url":"http://glue-storefront.de.spryker.local"
+      "bapi_url":"http://glue-backend.de.spryker.local"
+   },
+   "dms_env":{
+       "yves_dms_url":"http://yves.eu.spryker.local/",
+       "zed_dms_url":"http://backoffice.eu.spryker.local/",
+       "mp_dms_url":"http://mp.eu.spryker.local/security-merchant-portal-gui/login/",
+       "mp_root_dms_url":"http://mp.eu.spryker.local/",
+       "glue_dms_url":"http://glue.eu.spryker.local",
+       "bapi_dms_url":"http://glue-backend.eu.spryker.local",
+       "sapi_dms_url":"http://glue-storefront.eu.spryker.local"
    },
    "database":{
       "db_host":"127.0.0.1",

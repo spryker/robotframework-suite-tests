@@ -37,7 +37,11 @@ Overwrite api variables
         IF    '${tag}' == 'dms-on'    CONTINUE
         IF    '${glue_env}' == '${EMPTY}'
             IF    '${tag}' == 'glue'
-                Set Suite Variable    ${current_url}    ${glue_url}
+                IF    ${dms}
+                    Set Suite Variable    ${current_url}    ${glue_dms_url}
+                ELSE
+                    Set Suite Variable    ${current_url}    ${glue_url}
+                END
                 Set Suite Variable    ${tag}    glue
             END
         ELSE
@@ -48,7 +52,11 @@ Overwrite api variables
         END
         IF    '${bapi_env}' == '${EMPTY}'
             IF    '${tag}'=='bapi'
-                Set Suite Variable    ${current_url}    ${bapi_url}
+                IF    ${dms}
+                    Set Suite Variable    ${current_url}    ${bapi_dms_url}
+                ELSE
+                    Set Suite Variable    ${current_url}    ${bapi_url}
+                END
                 Set Suite Variable    ${tag}    bapi
             END
         ELSE
@@ -59,7 +67,11 @@ Overwrite api variables
         END
         IF    '${sapi_env}' == '${EMPTY}'
             IF    '${tag}' == 'sapi'
-                Set Suite Variable    ${current_url}    ${sapi_url}
+                IF    ${dms}
+                    Set Suite Variable    ${current_url}    ${sapi_dms_url}
+                ELSE
+                    Set Suite Variable    ${current_url}    ${sapi_url}
+                END
                 Set Suite Variable    ${tag}    sapi
             END
         ELSE

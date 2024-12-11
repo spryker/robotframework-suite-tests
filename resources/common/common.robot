@@ -115,22 +115,22 @@ Load Variables
 
 Overwrite env variables
     IF    '${project_location}' == '${EMPTY}'
-            Set Suite Variable    ${cli_path}    ${cli_path}
+        Set Suite Variable    ${cli_path}    ${cli_path}
     ELSE
-            Set Suite Variable    ${cli_path}    ${project_location}
+        Set Suite Variable    ${cli_path}    ${project_location}
     END
     IF    '${ignore_console}' == '${EMPTY}'
-            Set Suite Variable    ${ignore_console}    ${default_ignore_console}
+        Set Suite Variable    ${ignore_console}    ${default_ignore_console}
     ELSE
-            Set Suite Variable    ${ignore_console}    ${ignore_console}
+        Set Suite Variable    ${ignore_console}    ${ignore_console}
     END
     IF    '${docker}' == '${EMPTY}'
-            Set Suite Variable    ${docker}    ${default_docker}
+        Set Suite Variable    ${docker}    ${default_docker}
     ELSE
-            Set Suite Variable    ${docker}    ${docker}
+        Set Suite Variable    ${docker}    ${docker}
     END
     IF    '${dms}' == '${EMPTY}'
-            Set Suite Variable    ${dms}    ${default_dms}
+        Set Suite Variable    ${dms}    ${default_dms}
     ELSE
         Set Suite Variable    ${dms}    ${dms}
     END

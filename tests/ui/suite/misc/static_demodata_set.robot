@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure
+Test Tags    robot:recursive-stop-on-failure    pabot_skip
 Resource    ../../../../resources/common/common_zed.robot
 Resource    ../../../../resources/steps/minimum_order_value_steps.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
@@ -20,7 +20,6 @@ Resource    ../../../../resources/steps/zed_discount_steps.robot
 
 *** Test Cases ***
 Minimum_Order_Value
-    [Tags]    static
     [Documentation]    checks that global minimum and maximun order thresholds can be applied
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
@@ -67,9 +66,8 @@ Minimum_Order_Value
     ...    || DE - Euro [EUR]  | ${SPACE}           | ${SPACE}                | ${SPACE}                | 10000.00           | The cart value cannot be higher than {{threshold}}. Please remove some items to proceed with the order    | Der Warenkorbwert darf nicht höher als {{threshold}} sein. Bitte entfernen Sie einige Artikel, um mit der Bestellung fortzufahren    | None           | ${EMPTY}             | ${EMPTY}                  | ${EMPTY}                  ||
     ...    AND    Delete dynamic admin user from DB
     ...    AND    Restore all discounts in the database
-    
+
 Configurable_Product_RfQ_OMS
-    [Tags]    static
     [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder. 
     [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
@@ -147,7 +145,7 @@ Configurable_Product_RfQ_OMS
     ...    AND    Delete dynamic admin user from DB
 
 Click_and_collect
-    [Tags]    smoke    static    group_one
+    [Tags]    smoke    group_one
     [Documentation]    checks that product offer is successfully replaced with a target product offer
     [Setup]    Run keywords    Deactivate all discounts in the database
     ...    AND    Create dynamic admin user in DB
@@ -279,7 +277,6 @@ Click_and_collect
     ...    AND    Delete dynamic customer via API
 
 Configurable_Product_Checkout
-    [Tags]    static
     [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Deactivate all discounts in the database
     ...    AND    Create dynamic customer in DB
@@ -316,7 +313,7 @@ Configurable_Product_Checkout
     ...    AND    Delete dynamic admin user from DB
 
 Fulfill_Order_from_Merchant_Portal
-    [Tags]    smoke    static    group_two
+    [Tags]    smoke    group_two
     [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
@@ -397,7 +394,7 @@ Fulfill_Order_from_Merchant_Portal
     ...    AND    Delete dynamic admin user from DB
 
 Discounts
-    [Tags]    smoke    static    group_tree
+    [Tags]    smoke    group_tree
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
     [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
@@ -450,7 +447,7 @@ Discounts
     ...    AND    Delete dynamic customer via API
 
 Refunds
-    [Tags]    smoke    static    group_tree
+    [Tags]    smoke    group_tree
     [Documentation]    Checks that refund can be created for one item and the whole order
     [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Deactivate all discounts in the database
@@ -490,9 +487,8 @@ Refunds
     [Teardown]    Run keywords    Restore all discounts in the database
     ...    AND    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API
-    
+
 Manage_Shipments
-    [Tags]    static
     [Documentation]    Checks create/edit shipment functions from backoffice
     [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB    based_on=${yves_user_email}    create_default_address=False

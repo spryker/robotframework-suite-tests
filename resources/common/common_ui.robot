@@ -28,7 +28,11 @@ ${glue_env}
 *** Keywords ***
 Overwrite pyz variables
     IF    '${yves_env}' == '${EMPTY}'
+        IF    ${dms}
+            Set Suite Variable    ${yves_url}    ${yves_dms_url}
+        ELSE
             Set Suite Variable    ${yves_url}    ${yves_url}
+        END
     ELSE
             Set Suite Variable    ${yves_url}    ${yves_env}
     END
@@ -38,22 +42,38 @@ Overwrite pyz variables
             Set Suite Variable    ${yves_at_url}    ${yves_at_env}
     END
     IF    '${zed_env}' == '${EMPTY}'
+        IF    ${dms}
+            Set Suite Variable    ${zed_url}   ${zed_dms_url}
+        ELSE
             Set Suite Variable    ${zed_url}   ${zed_url}
+        END
     ELSE
             Set Suite Variable    ${zed_url}   ${zed_env}
     END
     IF    '${mp_env}' == '${EMPTY}'
+        IF    ${dms}
+            Set Suite Variable    ${mp_url}    ${mp_dms_url}
+        ELSE
             Set Suite Variable    ${mp_url}    ${mp_url}
+        END
     ELSE
             Set Suite Variable    ${mp_url}   ${mp_env}
     END
     IF    '${mp_root_env}' == '${EMPTY}'
+        IF    ${dms}
+            Set Suite Variable    ${mp_root_url}    ${mp_root_dms_url}
+        ELSE
             Set Suite Variable    ${mp_root_url}    ${mp_root_url}
+        END
     ELSE
             Set Suite Variable    ${mp_root_url}   ${mp_root_env}
     END
     IF    '${glue_env}' == '${EMPTY}'
+        IF    ${dms}
+            Set Suite Variable    ${glue_url}    ${glue_dms_url}
+        ELSE
             Set Suite Variable    ${glue_url}    ${glue_url}
+        END
     ELSE
             Set Suite Variable    ${glue_url}   ${glue_env}
     END
