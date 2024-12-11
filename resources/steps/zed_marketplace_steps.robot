@@ -20,9 +20,13 @@ Zed: create new Merchant with the following data:
     END    
     Zed: click button in Header:    Add Merchant
     Wait Until Element Is Visible    ${zed_create_merchant_name_field}
+    VAR    ${approve}    False
     FOR    ${key}    ${value}    IN    &{merchantData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='merchant name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_name_field}    ${value}
+        IF    '${key}'=='merchant name' and '${value}' != '${EMPTY}'    
+            Type Text    ${zed_create_merchant_name_field}    ${value}
+            VAR    ${merchant_name}    ${value}
+        END
         IF    '${key}'=='merchant reference' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_reference_field}    ${value}
         IF    '${key}'=='e-mail' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_email_field}    ${value}
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'    Zed: Check checkbox by Label:    ${value}
@@ -30,10 +34,38 @@ Zed: create new Merchant with the following data:
         IF    '${key}'=='store 3' and '${value}' != '${EMPTY}'    Zed: Check checkbox by Label:    ${value}
         IF    '${key}'=='en url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_en_locale_field}    ${value}
         IF    '${key}'=='de url' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_url_de_locale_field}    ${value}
+        IF    '${key}'=='approved'    
+            ${approve}=    Convert To Lower Case    ${value}
+            IF    '${approve}' == 'true'    
+                VAR    ${approve}    True
+            ELSE
+                VAR    ${approve}    False
+            END
+        END
+        IF    '${key}'=='contact_first_name' and '${value}' != '${EMPTY}'
+            ${currentURL}=    Get Location
+            IF    '#tab-content-contact-person' not in '${currentURL}'    Zed: go to tab:     Contact Person Details
+            Type Text    ${zed_create_merchant_contact_first_name}    ${value}
+        END
+        IF    '${key}'=='contact_last_name' and '${value}' != '${EMPTY}'
+            ${currentURL}=    Get Location
+            IF    '#tab-content-contact-person' not in '${currentURL}'    Zed: go to tab:     Contact Person Details
+            Type Text    ${zed_create_merchant_contact_last_name}    ${value}
+        END
     END  
     Zed: submit the form
     Zed: wait for button in Header to be visible:    Add Merchant    ${browser_timeout}
     Zed: table should contain:    ${MerchantName}
+    IF    ${approve}
+        IF    '${env}' in ['ui_suite','ui_mp_b2b','ui_mp_b2c','ui_b2c']
+            Zed: go to second navigation item level:    Marketplace    Merchants
+        ELSE
+            Zed: go to second navigation item level:    B2B Contracts    Merchants
+        END
+        Zed: perform search by:    ${merchant_name}
+        Zed: click Action Button in a table for row that contains:    ${merchant_name}    Activate
+        Zed: click Action Button in a table for row that contains:    ${merchant_name}    Approve Access
+    END
 
 Zed: update Merchant on edit page with the following data:
     [Arguments]    @{args}
@@ -153,6 +185,7 @@ Zed: create dynamic merchant user:
         END
     END
 
+    Reload
     ${currentURL}=    Get Location
     IF    '/list-merchant' not in '${currentURL}'    
         ${adminIsLoggedIn}=    Zed: is admin user is logged in
@@ -207,7 +240,8 @@ Zed: delete merchant user:
             VAR    ${merchant}    Experts
         END
     END
-            
+    
+    Reload
     ${currentURL}=    Get Location
     
     IF    '/list-merchant' not in '${currentURL}'

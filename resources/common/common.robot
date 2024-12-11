@@ -906,7 +906,7 @@ Delete dynamic admin user from DB
 Create dynamic customer in DB
     [Documentation]    This keyword creates a new approved dynamic customer in the DB based on an existing customer (sonia@spryker.com) and assigns the customer to a company.
     ...               It works for both MariaDB and PostgreSQL.
-    [Arguments]    ${first_name}=Dynamic    ${last_name}=Customer    ${email}=${EMPTY}    ${based_on}=${EMPTY}
+    [Arguments]    ${first_name}=Dynamic    ${last_name}=Customer    ${email}=${EMPTY}    ${based_on}=${EMPTY}    ${create_default_address}=True
     ${dynamic_customer_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_customer}
 
     IF    '${email}' == '${EMPTY}'
@@ -1004,30 +1004,32 @@ Create dynamic customer in DB
             Execute Sql String    INSERT INTO spy_company_user (id_company_user, fk_company, fk_company_business_unit, fk_customer, is_active, is_default, key, uuid) VALUES (${new_id_company_user}, ${existing_fk_company}, ${existing_fk_company_business_unit}, ${new_id_customer}, True, False, '${new_key}', '${new_uuid}')
         END
     END
+    
+    IF    ${create_default_address}
+        # Step 9: Check if an address exists for the new customer
+        ${address_exists}=    Query    SELECT COUNT(*) FROM spy_customer_address WHERE fk_customer = ${new_id_customer}
 
-    # Step 9: Check if an address exists for the new customer
-    ${address_exists}=    Query    SELECT COUNT(*) FROM spy_customer_address WHERE fk_customer = ${new_id_customer}
+        # Step 10: Handle address creation or update
+        IF    ${address_exists[0][0]} == 0
+            # No address exists, so create a new address
+            ${max_id_customer_address}=    Query    SELECT MAX(id_customer_address) FROM spy_customer_address
+            IF    '${None}' in '${max_id_customer_address}'    VAR    ${max_id_customer_address}    0
+            IF    ${max_id_customer_address[0][0]} > 5000
+                # new ID will be max +1 not to intersect with real IDs
+                ${new_id_customer_address}=    Evaluate    ${max_id_customer_address[0][0]} + 1
+            ELSE
+                # new ID will be max + 5001 not to intersect with real IDs
+                ${new_id_customer_address}=    Evaluate    ${max_id_customer_address[0][0]} + 5001
+            END
+            ${address_uuid}=   Generate Random String	4	[UPPER]
+            VAR    ${address_uuid}    ${address_uuid}-${random}-${random_str}-${random_id}
 
-    # Step 10: Handle address creation or update
-    IF    ${address_exists[0][0]} == 0
-        # No address exists, so create a new address
-        ${max_id_customer_address}=    Query    SELECT MAX(id_customer_address) FROM spy_customer_address
-        IF    '${None}' in '${max_id_customer_address}'    VAR    ${max_id_customer_address}    0
-        IF    ${max_id_customer_address[0][0]} > 5000
-            # new ID will be max +1 not to intersect with real IDs
-            ${new_id_customer_address}=    Evaluate    ${max_id_customer_address[0][0]} + 1
+            Execute Sql String    INSERT INTO spy_customer_address (id_customer_address, fk_country, fk_customer, fk_region, address1, address2, address3, anonymized_at, city, comment, company, deleted_at, first_name, last_name, phone, salutation, uuid, zip_code, created_at, updated_at) VALUES (${new_id_customer_address}, 60, ${new_id_customer}, NULL, '${default_address.street}', '${default_address.house_number}', NULL, NULL, '${default_address.city}', NULL, NULL, NULL, '${default_address.first_name}', '${default_address.last_name}', NULL, 0, '${address_uuid}', '${default_address.post_code}', NOW(), NOW())
         ELSE
-            # new ID will be max + 5001 not to intersect with real IDs
-            ${new_id_customer_address}=    Evaluate    ${max_id_customer_address[0][0]} + 5001
+            # Address exists, so update it
+            ${existing_address_id}=    Query    SELECT id_customer_address FROM spy_customer_address WHERE fk_customer = ${new_id_customer}
+            Execute Sql String    UPDATE spy_customer_address SET fk_country = 60, fk_region = NULL, address1 = '${default_address.street}', address2 = '${default_address.house_number}', address3 = NULL, anonymized_at = NULL, city = '${default_address.city}', first_name = '${default_address.first_name}', last_name = '${default_address.last_name}', phone = NULL, salutation = 0, zip_code = '${default_address.post_code}', updated_at = NOW() WHERE id_customer_address = ${existing_address_id[0][0]}
         END
-        ${address_uuid}=   Generate Random String	4	[UPPER]
-        VAR    ${address_uuid}    ${address_uuid}-${random}-${random_str}-${random_id}
-
-        Execute Sql String    INSERT INTO spy_customer_address (id_customer_address, fk_country, fk_customer, fk_region, address1, address2, address3, anonymized_at, city, comment, company, deleted_at, first_name, last_name, phone, salutation, uuid, zip_code, created_at, updated_at) VALUES (${new_id_customer_address}, 60, ${new_id_customer}, NULL, '${default_address.street}', '${default_address.house_number}', NULL, NULL, '${default_address.city}', NULL, NULL, NULL, '${default_address.first_name}', '${default_address.last_name}', NULL, 0, '${address_uuid}', '${default_address.post_code}', NOW(), NOW())
-    ELSE
-        # Address exists, so update it
-        ${existing_address_id}=    Query    SELECT id_customer_address FROM spy_customer_address WHERE fk_customer = ${new_id_customer}
-        Execute Sql String    UPDATE spy_customer_address SET fk_country = 60, fk_region = NULL, address1 = '${default_address.street}', address2 = '${default_address.house_number}', address3 = NULL, anonymized_at = NULL, city = '${default_address.city}', first_name = '${default_address.first_name}', last_name = '${default_address.last_name}', phone = NULL, salutation = 0, zip_code = '${default_address.post_code}', updated_at = NOW() WHERE id_customer_address = ${existing_address_id[0][0]}
     END
     Disconnect From Database
 

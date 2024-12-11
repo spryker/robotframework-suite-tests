@@ -93,72 +93,152 @@ Merchant_Profile_Update
     ...    AND    Delete dynamic admin user from DB
 
 Merchant_Profile_Set_to_Offline_from_MP
-    [Tags]    static
     [Documentation]    Checks that merchant is able to set store offline and then his profile, products and offers won't be displayed on Yves
-    [Setup]    Run Keywords    
-    ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
-    ...    AND    MP: change offer stock:
-    ...    || offer   | stock quantity | is never out of stock ||
-    ...    || offer30 | 10             | true                  ||
-    MP: login on MP with provided credentials:    ${merchant_video_king_email}
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: create new Merchant with the following data:
+    ...    || merchant name            | merchant reference                 | e-mail                             | store | store 2 | en url                   | de url                   | approved | contact_first_name  | contact_last_name  ||
+    ...    || offline_from_MP${random} | offline_from_MP_reference${random} | offline_from_MP+${random}@test.com | DE    | AT      | offline-from-mp${random} | offline-from-mp${random} | true     | FirstOffMP${random} | LastOffMP${random} ||
+    Zed: create dynamic merchant user:    offline_from_MP${random}    merchant_user_email=sonia+offline+mp${random}@spryker.com
+    Zed: create dynamic merchant user:    Spryker
+    MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
+    MP: open navigation menu tab:    Products    
+    MP: click on create new entity button:    Create Product
+    MP: create multi sku product with following data:
+    ...    || product sku        | product name       | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
+    ...    || offlineMP${random} | offlineMP${random} | color                | white                       | black                        | series                | Ace Plus               ||
+    MP: perform search by:    offlineMP${random}
+    MP: click on a table row that contains:     offlineMP${random}
+    MP: fill abstract product required fields:
+    ...    || product name       | store | tax set           ||
+    ...    || offlineMP${random} | DE    | Smart Electronics ||
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default ||
+    ...    || abstract     | 1          | DE    | EUR      | 100           ||
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default | quantity ||
+    ...    || abstract     | 2          | DE    | EUR      | 10            | 2        ||
+    MP: save abstract product 
+    Trigger multistore p&s
+    MP: click on a table row that contains:    offlineMP${random}
+    MP: open concrete drawer by SKU:    offlineMP${random}-2
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 100            | true              | en_US         ||
+    MP: login on MP with provided credentials:    sonia+offline+mp${random}@spryker.com    ${default_secure_password}
+    MP: open navigation menu tab:    Offers
+    MP: click on create new entity button:    Add Offer
+    MP: perform search by:    offlineMP${random}-2
+    MP: click on a table row that contains:    offlineMP${random}-2
+    MP: fill offer fields:
+    ...    || is active | merchant sku            | store | stock quantity ||
+    ...    || true      | offlineMPoffer${random} | DE    | 100            ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default ||
+    ...    || 1          | DE    | CHF      | 100           ||
+    MP: save offer
+    MP: perform search by:    offlineMPoffer${random}
+    MP: click on a table row that contains:    offlineMPoffer${random}
+    MP: add offer price:
+    ...    || row number | store | currency | gross default ||
+    ...    || 1          | DE    | EUR      | 200           ||
+    MP: save offer
+    Repeat Keyword    3    Trigger multistore p&s
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     offlineMP${random}     Approve
+    Repeat Keyword    3    Trigger multistore p&s
+    Yves: go to newly created page by URL:    url=en/merchant/offline-from-mp${random}    delay=5s    iterations=26
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Yves: go to PDP of the product with sku:    offlineMP${random}
+    Yves: merchant is (not) displaying in Sold By section of PDP:    offline_from_MP${random}    true
+    MP: login on MP with provided credentials:    sonia+offline+mp${random}@spryker.com    ${default_secure_password}
     MP: open navigation menu tab:    Profile
     MP: open profile tab:    Online Profile
     MP: change store status to:    offline
-    Yves: go to URL:    en/merchant/video-king
+    Repeat Keyword    3    Trigger multistore p&s
+    Yves: go to URL:    en/merchant/offline-from-mp${random}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
-    Yves: perform search by:    Video King
-    Yves: go to the PDP of the first available product on open catalog page
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
-    Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
-    Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
-    [Teardown]    Run Keywords    MP: login on MP with provided credentials:    ${merchant_video_king_email}
-    ...    AND    MP: open navigation menu tab:    Profile
-    ...    AND    MP: open profile tab:    Online Profile
-    ...    AND    MP: change store status to:    online
-    ...    AND    Repeat Keyword    5    Trigger multistore p&s
-    ...    AND    Yves: go to the 'Home' page
-    ...    AND    Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
-    ...    AND    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
-    ...    AND    Yves: go to URL:    en/merchant/video-king
-    ...    AND    Yves: go to newly created page by URL:    url=en/merchant/video-king    delay=5s    iterations=26
+    Yves: go to PDP of the product with sku:    offlineMP${random}
+    Yves: merchant is (not) displaying in Sold By section of PDP:    offline_from_MP${random}    false
+    [Teardown]    Run Keywords    Delete dynamic admin user from DB
+    ...    AND    Delete dynamic customer via API
 
 Merchant_Profile_Set_to_Inactive_from_Backoffice
-    [Tags]    static
     [Documentation]    Checks that backoffice admin is able to deactivate merchant and then it's profile, products and offers won't be displayed on Yves
-    [Setup]    Run Keywords    
-    ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
-    ...    AND    MP: change offer stock:
-    ...    || offer   | stock quantity | is never out of stock ||
-    ...    || offer30 | 10             | true                  ||
-    ...    AND    Trigger oms
-    Yves: go to the 'Home' page
-    Yves: perform search by:    Video King
-    Yves: go to the PDP of the first available product on open catalog page
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
-    Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
-    Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: create new Merchant with the following data:
+    ...    || merchant name            | merchant reference                 | e-mail                             | store | store 2 | en url                   | de url                   | approved | contact_first_name  | contact_last_name  ||
+    ...    || offline_from_BO${random} | offline_from_BO_reference${random} | offline_from_BO+${random}@test.com | DE    | AT      | offline-from-bo${random} | offline-from-bo${random} | true     | FirstOffBO${random} | LastOffBO${random} ||
+    Zed: create dynamic merchant user:    offline_from_BO${random}    merchant_user_email=sonia+offline+bo${random}@spryker.com
+    Zed: create dynamic merchant user:    Spryker
+    MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
+    MP: open navigation menu tab:    Products    
+    MP: click on create new entity button:    Create Product
+    MP: create multi sku product with following data:
+    ...    || product sku        | product name       | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
+    ...    || offlineBO${random} | offlineBO${random} | color                | white                       | black                        | series                | Ace Plus               ||
+    MP: perform search by:    offlineBO${random}
+    MP: click on a table row that contains:     offlineBO${random}
+    MP: fill abstract product required fields:
+    ...    || product name       | store | tax set           ||
+    ...    || offlineBO${random} | DE    | Smart Electronics ||
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default ||
+    ...    || abstract     | 1          | DE    | EUR      | 100           ||
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default | quantity ||
+    ...    || abstract     | 2          | DE    | EUR      | 10            | 2        ||
+    MP: save abstract product 
+    Trigger multistore p&s
+    MP: click on a table row that contains:    offlineBO${random}
+    MP: open concrete drawer by SKU:    offlineBO${random}-2
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 100            | true              | en_US         ||
+    MP: login on MP with provided credentials:    sonia+offline+bo${random}@spryker.com    ${default_secure_password}
+    MP: open navigation menu tab:    Offers
+    MP: click on create new entity button:    Add Offer
+    MP: perform search by:    offlineBO${random}-2
+    MP: click on a table row that contains:    offlineBO${random}-2
+    MP: fill offer fields:
+    ...    || is active | merchant sku            | store | stock quantity ||
+    ...    || true      | offlineBOoffer${random} | DE    | 100            ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default ||
+    ...    || 1          | DE    | CHF      | 100           ||
+    MP: save offer
+    MP: perform search by:    offlineBOoffer${random}
+    MP: click on a table row that contains:    offlineBOoffer${random}
+    MP: add offer price:
+    ...    || row number | store | currency | gross default ||
+    ...    || 1          | DE    | EUR      | 200           ||
+    MP: save offer
+    Repeat Keyword    3    Trigger multistore p&s
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     offlineBO${random}     Approve
+    Repeat Keyword    3    Trigger multistore p&s
+    Yves: go to newly created page by URL:    url=en/merchant/offline-from-bo${random}    delay=5s    iterations=26
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Yves: go to PDP of the product with sku:    offlineBO${random}
+    Yves: merchant is (not) displaying in Sold By section of PDP:    offline_from_BO${random}    true
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Merchants  
-    Zed: click Action Button in a table for row that contains:     Video King     Deactivate
-    Repeat Keyword    5    Trigger multistore p&s
-    Yves: go to the 'Home' page
-    Yves: go to URL:    en/merchant/video-king
+    Zed: click Action Button in a table for row that contains:     offline_from_BO${random}     Deactivate
+    Repeat Keyword    3    Trigger multistore p&s
+    Yves: go to URL:    en/merchant/offline-from-mp${random}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
-    Yves: perform search by:    Video King
-    Yves: go to the PDP of the first available product on open catalog page
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
-    Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
-    Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants  
-    ...    AND    Zed: click Action Button in a table for row that contains:     Video King     Activate
-    ...    AND    Repeat Keyword    5    Trigger multistore p&s
+    Yves: go to PDP of the product with sku:    offlineBO${random}
+    Yves: merchant is (not) displaying in Sold By section of PDP:    offline_from_BO${random}    false
+    [Teardown]    Run Keywords    Delete dynamic admin user from DB
+    ...    AND    Delete dynamic customer via API
+
 
 Manage_Merchants_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to create, approve, edit merchants
@@ -270,86 +350,7 @@ Approve_Offer
     ...    AND    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API
 
-Fulfill_Order_from_Merchant_Portal
-    [Tags]    smoke
-    [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
-    [Setup]    Run Keywords    Create dynamic admin user in DB
-    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: create dynamic merchant user:    Video King
-    ...    AND    Zed: create dynamic merchant user:    Budget Cameras
-    ...    AND    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
-    ...    AND    MP: change offer stock:
-    ...    || offer    | stock quantity | is never out of stock ||
-    ...    || offer30  | 10             | true                  ||
-    ...    AND    MP: login on MP with provided credentials:    ${dynamic_budget_merchant}
-    ...    AND    MP: change offer stock:
-    ...    || offer   | stock quantity | is never out of stock ||
-    ...    || offer89 | 10             | true                  ||
-    ...    AND    MP: change offer stock:
-    ...    || offer    | stock quantity | is never out of stock ||
-    ...    || offer410 | 10             | true                  ||
-    ...    AND    Trigger p&s
-    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: change product stock:    ${one_variant_product_of_main_merchant_abstract_sku}    ${one_variant_product_of_main_merchant_concrete_sku}    true    10    10
-    ...    AND    Deactivate all discounts in the database
-    ...    AND    Create dynamic customer in DB
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
-    Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to PDP of the product with sku:     ${product_with_multiple_offers_abstract_sku}
-    Yves: merchant's offer/product price should be:    Budget Cameras    ${product_with_multiple_offers_budget_cameras_price}
-    Yves: merchant's offer/product price should be:    Video King    ${product_with_multiple_offers_video_king_price}
-    Yves: select xxx merchant's offer:    Budget Cameras
-    Yves: product price on the PDP should be:    ${product_with_multiple_offers_budget_cameras_price}
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:     ${second_product_with_multiple_offers_abstract_sku}
-    Yves: select xxx merchant's offer:    Video King
-    Yves: product price on the PDP should be:    ${second_product_with_multiple_offers_video_king_price}
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:     ${product_with_budget_cameras_offer_abstract_sku}
-    Yves: select xxx merchant's offer:    Budget Cameras
-    Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
-    Yves: assert merchant of product in cart or list:    ${one_variant_product_of_main_merchant_concrete_sku}    Spryker
-    Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
-    Yves: assert merchant of product in cart or list:    ${product_with_budget_cameras_offer_concrete_sku}    Budget Cameras
-    Yves: assert merchant of product in cart or list:    ${second_product_with_multiple_offers_concrete_sku}    Video King
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
-    Yves: submit form on the checkout
-    Yves: select the following shipping method for the shipment:    1    Spryker Dummy Shipment    Standard
-    Yves: select the following shipping method for the shipment:    2    Spryker Drone Shipment    Air Light
-    Yves: select the following shipping method for the shipment:    3    Spryker Dummy Shipment    Express
-    Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice Marketplace
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
-    Zed: wait for order item to be in state:    ${product_with_multiple_offers_concrete_sku}    sent to merchant    2
-    MP: login on MP with provided credentials:    ${dynamic_budget_merchant}
-    MP: open navigation menu tab:    Orders    
-    MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_budget_cameras_reference}
-    MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_budget_cameras_reference}
-    MP: order grand total should be:    €171.42
-    MP: update order state using header button:    Ship
-    MP: order states on drawer should contain:    Shipped 
-    MP: switch to the tab:    Items
-    MP: change order item state on:    ${product_with_multiple_offers_concrete_sku}    Deliver
-    MP: switch to the tab:    Items
-    MP: order item state should be:    ${product_with_budget_cameras_offer_concrete_sku}    shipped
-    MP: order item state should be:    ${product_with_multiple_offers_concrete_sku}    delivered
-    MP: update order state using header button:    Deliver
-    MP: order states on drawer should contain:    Delivered
-    MP: switch to the tab:    Items
-    MP: order item state should be:    ${product_with_budget_cameras_offer_concrete_sku}    delivered
-    MP: order item state should be:    ${product_with_multiple_offers_concrete_sku}    delivered
-    [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic admin user from DB
-    ...    AND    Restore all discounts in the database
+
 
 Search_for_Merchant_Offers_and_Products
     [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers
@@ -417,7 +418,7 @@ Merchant_Portal_Product_Volume_Prices
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:    sku=VPSKU${random}-2    productName=VPNewProduct${random}    productPrice=10.00
     Yves: assert merchant of product in cart or list:    VPSKU${random}-2    Video King
-    MP: login on MP with provided credentials:    sonia+vp+vk+${random}@spryker.com    Change123!321
+    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Products
     MP: perform search by:    VPNewProduct${random}
     MP: click on a table row that contains:    VPNewProduct${random}

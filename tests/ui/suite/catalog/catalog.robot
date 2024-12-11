@@ -43,15 +43,17 @@ Resource    ../../../../resources/pages/zed/zed_order_details_page.robot
 Product_PDP
     [Tags]    smoke
     [Documentation]    Checks that PDP contains required elements
+    Create dynamic customer in DB
     Yves: go to PDP of the product with sku:    135
     Yves: change variant of the product on PDP on:    Flash
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]    ${relatedProducts}
     Yves: PDP contains/doesn't contain:    false    ${pdp_add_to_wishlist_button}
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    135
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
     Yves: change variant of the product on PDP on:    Flash
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
+    [Teardown]    Delete dynamic customer via API
 
 Catalog
     [Tags]    smoke
@@ -620,87 +622,11 @@ Configurable_Product_PDP_Shopping_List
     Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €882.00
     [Teardown]    Delete dynamic customer via API
 
-Configurable_Product_RfQ_OMS
-    [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder. 
-    [Setup]    Run keywords    Create dynamic admin user in DB
-    ...    AND    Create dynamic customer in DB
-    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: create dynamic merchant user:    merchant=Spryker    merchant_user_group=Root group
-    ...    AND    Deactivate all discounts in the database
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: create new 'Shopping Cart' with name:    confProductCart+${random}
-    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
-    Yves: change the product options in configurator to:
-    ...    || option one | option two ||
-    ...    || 607        | 275        ||
-    Yves: save product configuration    
-    Yves: add product to the shopping cart
-    Yves: submit new request for quote
-    Yves: click 'Send to Agent' button on the 'Quote Request Details' page   
-    Yves: logout on Yves as a customer
-    Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    ${dynamic_admin_user}
-    Yves: go to 'Agent Quote Requests' page through the header
-    Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
-    Yves: view quote request with reference:    ${lastCreatedRfQ}
-    Yves: 'Quote Request Details' page is displayed
-    Yves: click 'Revise' button on the 'Quote Request Details' page
-    Yves: click 'Edit Items' button on the 'Quote Request Details' page
-    Yves: change the product options in configurator to:
-    ...    || option one | option two ||
-    ...    || 517        | 249        ||
-    Yves: save product configuration    
-    Yves: click 'Save and Back to Edit' button on the 'Quote Request Details' page
-    Yves: click 'Send to Customer' button on the 'Quote Request Details' page
-    Yves: logout on Yves as a customer
-    Yves: go to the 'Home' page
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to user menu:    Quote Requests
-    Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
-    Yves: view quote request with reference:    ${lastCreatedRfQ}
-    Yves: click 'Convert to Cart' button on the 'Quote Request Details' page
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${dynamic_spryker_merchant}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €771.90
-    Zed: go to order page:    ${lastPlacedOrder} 
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
-    Zed: trigger all matching states inside this order:    skip picking
-    Zed: go to my order page:    ${lastPlacedOrder}
-    Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
-    Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
-    Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    1
-    Zed: trigger matching state of xxx order item inside xxx shipment:    Deliver    1
-    Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    1
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
-    Repeat Keyword    3    Trigger multistore p&s
-    Yves: go to the 'Home' page
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to user menu:    Order History
-    Yves: 'View Order/Reorder/Return' on the order history page:     View Order
-    Yves: 'Order Details' page is displayed
-    ### Reorder ###
-    Yves: reorder all items from 'Order Details' page
-    Yves: go to the shopping cart through the header with name:    ${lastPlacedOrder}
-    Yves: 'Shopping Cart' page is displayed
-    # ### bug: https://spryker.atlassian.net/browse/CC-33647
-    # Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €766.00
-    Yves: product configuration status should be equal:       Configuration is not complete.
-    [Teardown]    Run Keywords    Restore all discounts in the database
-    ...    AND    Delete dynamic customer via API
-    ...    AND    Delete dynamic admin user from DB
-
 Product_Restrictions
     [Documentation]    Checks White and Black lists
     [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB    based_on=${yves_test_company_user_email}
+    ...    AND    Create dynamic customer in DB    based_on=${yves_user_email}
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create product list with the following assigned category:    list_name=White${random}    list_type=white    category=Smartwatches
     Zed: create product list with the following assigned category:    list_name=Black${random}    list_type=black    category=Smartphones
@@ -720,9 +646,7 @@ Product_Restrictions
     Yves: at least one product is/not displayed on the search results page:    search_query=052    expected_visibility=false
     Yves: at least one product is/not displayed on the search results page:    search_query=Canon    expected_visibility=true
     Yves: at least one product is/not displayed on the search results page:    search_query=Lenovo    expected_visibility=true
-    Delete dynamic customer via API
-    Create dynamic customer in DB    based_on=${yves_user_email}
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Yves: login on Yves with provided credentials:    ${dynamic_second_customer}
     Yves: at least one product is/not displayed on the search results page:    search_query=060    expected_visibility=true
     Yves: at least one product is/not displayed on the search results page:    search_query=052    expected_visibility=true
     Yves: at least one product is/not displayed on the search results page:    search_query=Canon    expected_visibility=true
@@ -733,21 +657,21 @@ Product_Restrictions
     ...    AND    Zed: remove product list with title:    White${random}
     ...    AND    Zed: remove product list with title:    Black${random}
     ...    AND    Trigger multistore p&s
-    ...    AND    Delete dynamic customer via API
+    ...    AND    Delete dynamic customer via API    ${dynamic_customer}
+    ...    AND    Delete dynamic customer via API    ${dynamic_second_customer}
     ...    AND    Delete dynamic admin user from DB
 
 Customer_Specific_Prices
     [Documentation]    Checks that product price can be different for different customers
-    [Setup]    Create dynamic customer in DB
+    [Setup]    Run Keywords    Create dynamic customer in DB
+    ...    AND    Create dynamic customer in DB    based_on=${yves_test_company_user_email}
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: perform search by:    ${product_with_merchant_price_abstract_sku}
     Yves: product with name in the catalog should have price:    ${product_with_merchant_price_product_name}    ${product_with_merchant_price_default_price}
     Yves: go to PDP of the product with sku:    ${product_with_merchant_price_abstract_sku}
     Yves: product price on the PDP should be:    ${product_with_merchant_price_default_price}
     Yves: logout on Yves as a customer
-    Delete dynamic customer via API
-    Create dynamic customer in DB    based_on=${yves_test_company_user_email}
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Yves: login on Yves with provided credentials:    ${dynamic_second_customer}
     Yves: create new 'Shopping Cart' with name:    customerPrices+${random}
     Yves: perform search by:    ${product_with_merchant_price_abstract_sku}
     Yves: product with name in the catalog should have price:    ${product_with_merchant_price_product_name}    ${product_with_merchant_price_merchant_price}
@@ -756,4 +680,4 @@ Customer_Specific_Prices
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    customerPrices+${random}
     Yves: shopping cart contains product with unit price:    sku=${product_with_merchant_price_concrete_sku}    productName=${product_with_merchant_price_product_name}    productPrice=${product_with_merchant_price_merchant_price}
-    [Teardown]    Delete dynamic customer via API
+    [Teardown]    Run Keywords    Delete dynamic customer via API    ${dynamic_customer}    AND    Delete dynamic customer via API    ${dynamic_second_customer}

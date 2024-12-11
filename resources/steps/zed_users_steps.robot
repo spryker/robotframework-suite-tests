@@ -9,6 +9,7 @@ Resource    ../pages/zed/zed_user_group_page.robot
 *** Keywords ***
 Zed: delete Zed user with the following email:
     [Arguments]    ${zed_email}
+    Reload
     ${currentURL}=    Get Location
     IF    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
     Zed: click Action Button in a table for row that contains:    ${zed_email}    Delete
@@ -18,6 +19,7 @@ Zed: delete Zed user with the following email:
 Zed: update Zed user:
     [Arguments]    @{args}
     ${newUserData}=    Set Up Keyword Arguments    @{args}
+    Reload
     ${currentURL}=    Get Location
     IF    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
     ${variable_exists}=    Run Keyword And Return Status    Variable Should Exist    ${oldEmail}

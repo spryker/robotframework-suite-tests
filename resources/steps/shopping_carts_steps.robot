@@ -127,6 +127,7 @@ Yves: click on the '${buttonName}' button in the shopping cart
         Wait Until Page Does Not Contain Element    ${shopping_cart_request_quote_button}
     END
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Yves: shopping cart contains product with unit price:
     [Arguments]    ${sku}    ${productName}    ${productPrice}
