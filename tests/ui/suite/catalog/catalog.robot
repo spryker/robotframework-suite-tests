@@ -131,7 +131,7 @@ Discontinued_Alternative_Products
     Yves: go to wishlist with name:    My wishlist
     Yves: product with sku is marked as discountinued in wishlist:    ${discontinued_product_concrete_sku}
     Yves: product with sku is marked as alternative in wishlist:    012
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}    
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: undo discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
@@ -263,7 +263,7 @@ Manage_Product
     ...    || productAbstract       | name de                        ||
     ...    || zedManageSKU${random} | DEmanageProduct${random} force ||
     Trigger multistore p&s
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to second navigation item level:    Catalog    Products
     Zed: click Action Button in a table for row that contains:     zedManageSKU${random}     Approve
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -328,7 +328,7 @@ Manage_Product
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:    zedManageSKU${random}-color-black    ENaddedConcrete${random}    25.00
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to second navigation item level:    Catalog    Products
     Zed: click Action Button in a table for row that contains:     manageProduct${random}     View
     Zed: view product page is displayed
     Zed: view abstract product page contains:
@@ -376,7 +376,7 @@ Product_Original_Price
     ...    || productAbstract         | name de                        ||
     ...    || zedOriginalSKU${random} | zedOriginalSKU${random} forced ||
     Trigger multistore p&s
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to second navigation item level:    Catalog    Products
     Zed: click Action Button in a table for row that contains:     zedOriginalSKU${random}     Approve
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -396,8 +396,8 @@ Product_Availability_Calculation
     [Documentation]    Check product availability + multistore
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: update warehouse:    
-    ...    || warehouse  | store || 
+    Zed: update warehouse:
+    ...    || warehouse  | store ||
     ...    || Warehouse1 | AT    ||
     Repeat Keyword    3    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -427,7 +427,7 @@ Product_Availability_Calculation
     ...    || productAbstract          | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
     ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | Warehouse1   | 5                | false                           ||
     Trigger multistore p&s
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to second navigation item level:    Catalog    Products
     Zed: click Action Button in a table for row that contains:     availabilitySKU${random}     Approve
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -448,7 +448,7 @@ Product_Availability_Calculation
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed    
+    Yves: 'Thank you' page is displayed
     Trigger oms
     Yves: get the last placed order ID by current customer
     Yves: go to PDP of the product with sku:    availabilitySKU${random}
@@ -469,8 +469,8 @@ Product_Availability_Calculation
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: update warehouse:    
-    ...    || warehouse  | unselect store || 
+    Zed: update warehouse:
+    ...    || warehouse  | unselect store ||
     ...    || Warehouse1 | AT             ||
     Repeat Keyword    3    Trigger multistore p&s
     Yves: go to AT store 'Home' page if other store not specified:
@@ -478,8 +478,8 @@ Product_Availability_Calculation
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: update warehouse:    
-    ...    || warehouse  | unselect store || 
+    ...    AND    Zed: update warehouse:
+    ...    || warehouse  | unselect store ||
     ...    || Warehouse1 | AT             ||
     ...    AND    Repeat Keyword    3    Trigger multistore p&s
 
@@ -528,14 +528,14 @@ Configurable_Product_PDP_Wishlist_Availability
     Yves: change the product options in configurator to:
     ...    || option one    | option two ||
     ...    || 389.50        | 275        ||
-    Yves: product configuration price should be:    ${configurable_product_price_with_options} 
+    Yves: product configuration price should be:    ${configurable_product_price_with_options}
     Yves: save product configuration
     Yves: add all available products from wishlist to cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=${configurable_product_price_with_options}
     [Teardown]    Run Keywords    Yves: delete all wishlists
     ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: delete all user addresses  
+    ...    AND    Yves: delete all user addresses
     ...    AND    Delete All Cookies
 
 Configurable_Product_PDP_Shopping_List
@@ -563,13 +563,13 @@ Configurable_Product_PDP_Shopping_List
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
     ...    || 517        | 167        ||
-    Yves: product configuration notification is:     Only 5 items available 
+    Yves: product configuration notification is:     Only 5 items available
     Yves: save product configuration
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: configuration should be equal:
     ...    || option one                 | option two                     ||
     ...    || Option One: Option title 2 | Option Two: Option Two title 1 ||
-    Yves: product configuration status should be equal:      Configuration complete! 
+    Yves: product configuration status should be equal:      Configuration complete!
     Yves: change quantity on PDP:    6
     Yves: try add product to the cart from PDP and expect error:    Item ${configurable_product_concrete_sku} only has availability of 5.
     Yves: go to PDP of the product with sku:   ${configurable_product_abstract_sku}
@@ -603,9 +603,9 @@ Configurable_Product_PDP_Shopping_List
     ...    AND    Yves: delete 'Shopping Cart' with name:    configProduct+${random}
 
 Configurable_Product_RfQ_OMS
-    [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder. 
+    [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder.
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com    change123${random}    Config    Product    Root group    This user is an agent in Storefront    en_US
+    ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com   Kj${random_str_password}!0${random_id_password}   Config    Product    Root group    This user is an agent in Storefront    en_US
     ...    AND    Zed: deactivate all discounts from Overview page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
@@ -615,13 +615,13 @@ Configurable_Product_RfQ_OMS
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
     ...    || 607        | 275        ||
-    Yves: save product configuration    
+    Yves: save product configuration
     Yves: add product to the shopping cart
     Yves: submit new request for quote
-    Yves: click 'Send to Agent' button on the 'Quote Request Details' page   
+    Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent_config+${random}@spryker.com    change123${random}
+    Yves: login on Yves with provided credentials:    agent_config+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
     Yves: go to 'Agent Quote Requests' page through the header
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
     Yves: view quote request with reference:    ${lastCreatedRfQ}
@@ -631,7 +631,7 @@ Configurable_Product_RfQ_OMS
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
     ...    || 517        | 249        ||
-    Yves: save product configuration    
+    Yves: save product configuration
     Yves: click 'Save and Back to Edit' button on the 'Quote Request Details' page
     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
@@ -652,9 +652,9 @@ Configurable_Product_RfQ_OMS
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €771.90
-    Zed: go to order page:    ${lastPlacedOrder} 
+    Zed: go to order page:    ${lastPlacedOrder}
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
-    Zed: go to order page:    ${lastPlacedOrder} 
+    Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}
