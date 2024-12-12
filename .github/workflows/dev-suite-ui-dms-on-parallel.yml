@@ -20,11 +20,11 @@ jobs:
               with:
                   python-version: '3.9'
 
-            # - name: Clone project (suite)
-            #   run: |
-            #       git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            #       git config --global user.name "github-actions[bot]"
-            #       git clone -b master --single-branch https://github.com/spryker-shop/suite.git .
+            - name: Clone project (suite)
+              run: |
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                  git config --global user.name "github-actions[bot]"
+                  git clone -b master --single-branch https://github.com/spryker-shop/suite.git .
             - name: Install packages
               run: |
                   sudo apt-get install apache2-utils
@@ -37,27 +37,27 @@ jobs:
                   python3 -m pip install -U robotframework-databaselibrary
                   python3 -m pip install -U robotframework-browser
                   python3 -m pip install PyMySQL
-            # - name: Install docker-compose
-            #   run: |
-            #       sudo curl -L "https://github.com/docker/compose/releases/download/2.12.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-            #       sudo chmod +x /usr/local/bin/docker-compose
+            - name: Install docker-compose
+              run: |
+                  sudo curl -L "https://github.com/docker/compose/releases/download/2.12.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+                  sudo chmod +x /usr/local/bin/docker-compose
             - name: Install Robot tests
               run: |
                   git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch enable-parallel-test-execution robotframework-tests
                   cd robotframework-tests
                   rfbrowser init
-            # - name: Install Project
-            #   continue-on-error: false
-            #   run: |
-            #       git clone https://github.com/spryker/docker-sdk.git ./docker
-            #       docker/sdk boot -v deploy.ci.acceptance.mariadb.robot.yml
-            #       sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local scheduler.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local date-time-configurator-example.spryker.local' >> /etc/hosts"
-            #       docker/sdk up -t -v
-            # - name: Custom commands
-            #   continue-on-error: false
-            #   run: |
-            #       docker/sdk cli composer dump-autoload -o -a --apcu
-            #       SPRYKER_CURRENT_REGION=EU docker/sdk console queue:worker:start --stop-when-empty
+            - name: Install Project
+              continue-on-error: false
+              run: |
+                  git clone https://github.com/spryker/docker-sdk.git ./docker
+                  docker/sdk boot -v deploy.ci.acceptance.mariadb.robot.yml
+                  sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local scheduler.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local date-time-configurator-example.spryker.local' >> /etc/hosts"
+                  docker/sdk up -t -v
+            - name: Custom commands
+              continue-on-error: false
+              run: |
+                  docker/sdk cli composer dump-autoload -o -a --apcu
+                  SPRYKER_CURRENT_REGION=EU docker/sdk console queue:worker:start --stop-when-empty
             - name: Run Dynamic Test Set
               id: run_dynamic_tests
               continue-on-error: true
