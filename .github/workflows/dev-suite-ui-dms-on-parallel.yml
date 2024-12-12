@@ -63,14 +63,14 @@ jobs:
               continue-on-error: true
               run: |
                   cd robotframework-tests
-                  pabot --processes 3 -v headless:true -v ignore_console:false -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic_set --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.suite .
+                  pabot --processes 3 -v dms:true -v headless:true -v ignore_console:false -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic_set --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.suite .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Run Static Test Set
               id: run_static_tests
               continue-on-error: true
               run: |
                   cd robotframework-tests
-                  robot -v headless:true -v ignore_console:false -d results/static_set --exclude skip-due-to-issueORskip-due-to-refactoring --include static_set -s '*'.tests.ui.suite .
+                  robot -v dms:true -v headless:true -v ignore_console:false -d results/static_set --exclude skip-due-to-issueORskip-due-to-refactoring --include static_set -s '*'.tests.ui.suite .
             - name: Merge Initial Test Results
               id: merge_initial_results
               continue-on-error: true
