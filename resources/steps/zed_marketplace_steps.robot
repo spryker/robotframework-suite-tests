@@ -44,12 +44,12 @@ Zed: create new Merchant with the following data:
         END
         IF    '${key}'=='contact_first_name' and '${value}' != '${EMPTY}'
             ${currentURL}=    Get Location
-            IF    '#tab-content-contact-person' not in '${currentURL}'    Zed: go to tab:     Contact Person Details
+            IF    '#tab-content-contact-person' not in '${currentURL}'    Zed: go to tab by link href that contains:     contact-person
             Type Text    ${zed_create_merchant_contact_first_name}    ${value}
         END
         IF    '${key}'=='contact_last_name' and '${value}' != '${EMPTY}'
             ${currentURL}=    Get Location
-            IF    '#tab-content-contact-person' not in '${currentURL}'    Zed: go to tab:     Contact Person Details
+            IF    '#tab-content-contact-person' not in '${currentURL}'    Zed: go to tab by link href that contains:     contact-person
             Type Text    ${zed_create_merchant_contact_last_name}    ${value}
         END
     END  
@@ -107,7 +107,8 @@ Zed: update Merchant name on edit page:
 Zed: create new Merchant User with the following data:
     [Arguments]    @{args}
     ${merchantUerData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to tab:     Users
+    Zed: go to tab by link href that contains:    merchant-user
+    
     Click    ${zed_add_merchant_user_button}
     Wait Until Element Is Visible    ${zed_create_merchant_user_email_field}
     FOR    ${key}    ${value}    IN    &{merchantUerData}
@@ -195,7 +196,7 @@ Zed: create dynamic merchant user:
     Wait For Load State
     Wait For Load State    networkidle
     Zed: click Action Button in a table for row that contains:     ${merchant}     Edit
-    Zed: go to tab:     Users
+    Zed: go to tab by link href that contains:    merchant-user
     Click    ${zed_add_merchant_user_button}
     Wait Until Element Is Visible    ${zed_create_merchant_user_email_field}
     Type Text    ${zed_create_merchant_user_email_field}    ${merchant_user_email}
@@ -252,7 +253,7 @@ Zed: delete merchant user:
     Wait For Load State
     Wait For Load State    networkidle
     Zed: click Action Button in a table for row that contains:     ${merchant}     Edit
-    Zed: go to tab:     Users
+    Zed: go to tab by link href that contains:    merchant-user
     Zed: click Action Button in Merchant Users table for row that contains:    ${merchant_user}    Delete
     Zed: submit the form
 

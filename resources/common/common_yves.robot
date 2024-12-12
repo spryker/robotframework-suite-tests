@@ -574,6 +574,7 @@ Yves: login after signup during checkout:
     Type Text    ${email_field}     ${email}
     Type Text    ${password_field}     ${password}
     Click    ${form_login_button}
+    Page Should Not Contain Element    locator=${form_login_button}    timeout=10s
 
 Yves: checkout is blocked with the following message:
     [Arguments]    ${expectedMessage}

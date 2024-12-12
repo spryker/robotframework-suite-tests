@@ -50,14 +50,15 @@ Common_suite_setup
     Remove Files    resources/libraries/__pycache__/*
     Remove Files    ${OUTPUTDIR}/*.png
     Remove Files    ${OUTPUTDIR}/*.yml
+    Remove Files    ${OUTPUTDIR}/*.out
     Load Variables    ${env}
     Overwrite env variables
     Generate global random variable
     ${random_id}=    Generate Random String    5    [NUMBERS]
     ${random_str}=    Generate Random String    5    [LETTERS]
     ${random_str_store}=    Generate Random String    2    [UPPER]
-    ${random_str_password}=    Generate Random String    2    [LETTERS]
-    ${random_id_password}=    Generate Random String    2    [NUMBERS]
+    ${random_str_password}=    Generate Random String    5    [LETTERS]
+    ${random_id_password}=    Generate Random String    5    [NUMBERS]
 
     Set Global Variable    ${random_id}
     Set Global Variable    ${random_str}

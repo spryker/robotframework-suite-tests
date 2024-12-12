@@ -196,6 +196,10 @@ Zed: go to tab:
     [Arguments]    ${tabName}
     Click    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
 
+Zed: go to tab by link href that contains:
+    [Arguments]    ${href}
+    Click    xpath=//a[contains(@data-toggle,'tab')][contains(@href,'${href}')]
+
 Zed: message should be shown:
     [Arguments]    ${text}
     Wait Until Element Is Visible    xpath=//div[contains(@class,'alert alert-success')]//*[contains(text(),'${text}')]    message=Success message is not shown

@@ -21,7 +21,7 @@ Zed: create a discount and activate it:
     Evaluate Javascript    ${None}  document.getElementById("discount_discountGeneral_valid_from").setAttribute("value", "01.01.2021 01:00")
     Evaluate JavaScript    ${None}   document.getElementById("discount_discountGeneral_valid_to").setAttribute("value", "01.01.2025 01:00")
     ### Discount calculation
-    Zed: go to tab:    Discount calculation
+    Zed: go to tab by link href that contains:    discount
     Wait For Load State
     Wait For Elements State    ${zed_discount_query_builder_first_calculation_group}    visible    ${browser_timeout}
     IF    '${valueType}'=='Percentage'    Run Keywords    Select From List By Label    ${zed_discount_calculator_type_drop_down}    Percentage
@@ -41,7 +41,7 @@ Zed: create a discount and activate it:
     ...    AND    Type Text    ${zed_discount_promotional_product_abstract_quantity_field}     ${promotionalProductQuantity}
     END
     ### Discount condition
-    Zed: go to tab:    Conditions
+    Zed: go to tab by link href that contains:    conditions
     Wait For Load State
     Wait For Elements State    ${zed_discount_query_builder_first_condition_group}    visible    ${browser_timeout}
     Click    ${zed_discount_plain_query_apply_when__button}
@@ -62,7 +62,7 @@ Zed: create a discount and activate it:
 Zed: generate vouchers:
     [Arguments]    ${quantity}    ${customCode}    ${addRandomLength}=    ${maxNumberOfUsages}=0
     ${currentURL}=    Get Location
-    IF    'tab-content-general' not in '${currentURL}'  Zed: go to tab:    Voucher codes
+    IF    'tab-content-general' not in '${currentURL}'  Zed: go to tab by link href that contains:    voucher
     Type Text    ${zed_discount_voucher_quantity_field}     ${quantity}
     Type Text    ${zed_discount_voucher_custom_code_field}     ${customCode}
     Type Text    ${zed_discount_voucher_max_usages_field}     ${maxNumberOfUsages}
