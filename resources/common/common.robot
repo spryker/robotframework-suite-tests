@@ -836,16 +836,24 @@ Create dynamic admin user in DB
         # new ID will be max + 5001 not to intersect with real IDs
         ${new_id_user}=    Evaluate    ${max_id_user[0][0]} + 5001
     END
-    
     # Step 3: Generate new UUID
     ${new_uuid}=   Generate Random String	4	[UPPER]
     VAR    ${new_uuid}    ${new_uuid}-${random}-${random_str}-${random_id}
     
     # Step 4: Insert the new user into the spy_user table using correct variables
-    IF    '${db_engine}' == 'pymysql'
-        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
-    ELSE
-        Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+    TRY
+        IF    '${db_engine}' == 'pymysql'
+            Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+        ELSE
+            Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+        END
+    EXCEPT
+        ${new_id_user}=    Evaluate    ${new_id_user} + 1
+        IF    '${db_engine}' == 'pymysql'
+            Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+        ELSE
+            Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+        END
     END
 
     # Step 5: Get the ACL group of the existing user from spy_acl_user_has_group
@@ -962,13 +970,21 @@ Create dynamic customer in DB
     
     # Step 3: Generate new values for customer_reference
     ${new_customer_reference}=    Set Variable    dynamic--${new_id_customer}
-    VAR    ${dynamic_customer_id}    ${new_customer_reference}    scope=TEST
 
     # Step 4: Insert the new customer into the spy_customer table using all columns
-    IF    '${db_engine}' == 'pymysql'
-        Execute Sql String    INSERT INTO spy_customer (id_customer, fk_locale, fk_user, anonymized_at, company, customer_reference, date_of_birth, default_billing_address, default_shipping_address, email, first_name, gender, last_name, password, phone, registered, registration_key, restore_password_date, restore_password_key, salutation, created_at, updated_at) VALUES (${new_id_customer}, ${existing_fk_locale}, ${existing_fk_user}, ${existing_anonymized_at}, '${existing_company}', '${new_customer_reference}', ${existing_date_of_birth}, ${existing_default_billing_address}, ${existing_default_shipping_address}, '${email}', '${first_name}', ${existing_gender}, '${last_name}', '${existing_password}', '${existing_phone}', '${existing_registered}', ${existing_registration_key}, ${existing_restore_password_date}, ${existing_restore_password_key}, ${existing_salutation}, '${existing_created_at}', '${existing_updated_at}')
-    ELSE
-        Execute Sql String    INSERT INTO spy_customer (id_customer, fk_locale, fk_user, anonymized_at, company, customer_reference, date_of_birth, default_billing_address, default_shipping_address, email, first_name, gender, last_name, password, phone, registered, registration_key, restore_password_date, restore_password_key, salutation, created_at, updated_at) VALUES (${new_id_customer}, ${existing_fk_locale}, ${existing_fk_user}, ${existing_anonymized_at}, '${existing_company}', '${new_customer_reference}', ${existing_date_of_birth}, ${existing_default_billing_address}, ${existing_default_shipping_address}, '${email}', '${first_name}', ${existing_gender}, '${last_name}', '${existing_password}', '${existing_phone}', '${existing_registered}', ${existing_registration_key}, ${existing_restore_password_date}, ${existing_restore_password_key}, ${existing_salutation}, '${existing_created_at}', '${existing_updated_at}')
+    TRY
+        IF    '${db_engine}' == 'pymysql'
+            Execute Sql String    INSERT INTO spy_customer (id_customer, fk_locale, fk_user, anonymized_at, company, customer_reference, date_of_birth, default_billing_address, default_shipping_address, email, first_name, gender, last_name, password, phone, registered, registration_key, restore_password_date, restore_password_key, salutation, created_at, updated_at) VALUES (${new_id_customer}, ${existing_fk_locale}, ${existing_fk_user}, ${existing_anonymized_at}, '${existing_company}', '${new_customer_reference}', ${existing_date_of_birth}, ${existing_default_billing_address}, ${existing_default_shipping_address}, '${email}', '${first_name}', ${existing_gender}, '${last_name}', '${existing_password}', '${existing_phone}', '${existing_registered}', ${existing_registration_key}, ${existing_restore_password_date}, ${existing_restore_password_key}, ${existing_salutation}, '${existing_created_at}', '${existing_updated_at}')
+        ELSE
+            Execute Sql String    INSERT INTO spy_customer (id_customer, fk_locale, fk_user, anonymized_at, company, customer_reference, date_of_birth, default_billing_address, default_shipping_address, email, first_name, gender, last_name, password, phone, registered, registration_key, restore_password_date, restore_password_key, salutation, created_at, updated_at) VALUES (${new_id_customer}, ${existing_fk_locale}, ${existing_fk_user}, ${existing_anonymized_at}, '${existing_company}', '${new_customer_reference}', ${existing_date_of_birth}, ${existing_default_billing_address}, ${existing_default_shipping_address}, '${email}', '${first_name}', ${existing_gender}, '${last_name}', '${existing_password}', '${existing_phone}', '${existing_registered}', ${existing_registration_key}, ${existing_restore_password_date}, ${existing_restore_password_key}, ${existing_salutation}, '${existing_created_at}', '${existing_updated_at}')
+        END
+    EXCEPT
+        ${new_id_customer}=    Evaluate    ${new_id_customer} + 1
+        IF    '${db_engine}' == 'pymysql'
+            Execute Sql String    INSERT INTO spy_customer (id_customer, fk_locale, fk_user, anonymized_at, company, customer_reference, date_of_birth, default_billing_address, default_shipping_address, email, first_name, gender, last_name, password, phone, registered, registration_key, restore_password_date, restore_password_key, salutation, created_at, updated_at) VALUES (${new_id_customer}, ${existing_fk_locale}, ${existing_fk_user}, ${existing_anonymized_at}, '${existing_company}', '${new_customer_reference}', ${existing_date_of_birth}, ${existing_default_billing_address}, ${existing_default_shipping_address}, '${email}', '${first_name}', ${existing_gender}, '${last_name}', '${existing_password}', '${existing_phone}', '${existing_registered}', ${existing_registration_key}, ${existing_restore_password_date}, ${existing_restore_password_key}, ${existing_salutation}, '${existing_created_at}', '${existing_updated_at}')
+        ELSE
+            Execute Sql String    INSERT INTO spy_customer (id_customer, fk_locale, fk_user, anonymized_at, company, customer_reference, date_of_birth, default_billing_address, default_shipping_address, email, first_name, gender, last_name, password, phone, registered, registration_key, restore_password_date, restore_password_key, salutation, created_at, updated_at) VALUES (${new_id_customer}, ${existing_fk_locale}, ${existing_fk_user}, ${existing_anonymized_at}, '${existing_company}', '${new_customer_reference}', ${existing_date_of_birth}, ${existing_default_billing_address}, ${existing_default_shipping_address}, '${email}', '${first_name}', ${existing_gender}, '${last_name}', '${existing_password}', '${existing_phone}', '${existing_registered}', ${existing_registration_key}, ${existing_restore_password_date}, ${existing_restore_password_key}, ${existing_salutation}, '${existing_created_at}', '${existing_updated_at}')
+        END
     END
 
     IF    '${env}' in ['ui_b2b','ui_mp_b2b','ui_suite']

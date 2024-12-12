@@ -43,8 +43,6 @@ Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 Resource    ../../../../resources/steps/zed_payment_methods_steps.robot
 
 *** Test Cases ***
-
-
 Zed_navigation_ordering_and_naming
     [Tags]    smoke
     [Documentation]    Verifies each left navigation node can be opened.

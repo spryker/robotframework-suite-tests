@@ -7,6 +7,7 @@ Resource    common.robot
 # *** API SUITE VARIABLES ***
 ${api_timeout}    60
 ${default_password}    change123
+${default_secure_password}    Change123!321
 ${default_allow_redirects}     true
 ${default_auth}    ${NONE}
 &{default_headers}
@@ -2225,11 +2226,10 @@ Delete dynamic customer via API
     [Arguments]    ${customer_email}=${EMPTY}
 
     ${dynamic_customer_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_customer}
-    ${dynamic_customer_id_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_customer_id}
+
     IF    '${customer_email}' == '${EMPTY}'
-        IF    ${dynamic_customer_exists} and ${dynamic_customer_id_exists}
+        IF    ${dynamic_customer_exists}
             VAR    ${customer_email}    ${dynamic_customer}
-            VAR    ${customer_id}    ${dynamic_customer_id}
         ELSE
             Log    message=No dynamic (doesn't exist) or static customer was provided for deletion    level=WARN
             RETURN

@@ -47,10 +47,10 @@ Agent_Assist
     [Documentation]    Checks customer data and checkout as an agent
     Create dynamic admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change${random}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
+    Zed: create new Zed user with the following data:    agent+${random}@spryker.com    ${default_secure_password}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    change${random}
+    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    ${default_secure_password}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_second_user_first_name}
     Yves: agent widget contains:    ${yves_second_user_email}
@@ -87,14 +87,14 @@ User_Control
     Zed: apply access permissions for user role:    ${full_access}    ${full_access}    ${full_access}   ${permission_allow}
     Zed: apply access permissions for user role:    ${bundle_access}    ${controller_access}    ${action_access}    ${permission_deny}
     Zed: create new group with role assigned:   controlGroup${random}    controlRole${random}
-    Zed: create new Zed user with the following data:    sonia+control${random}@spryker.com   change${random}    First Control    Last Control    ControlGroup${random}    This user is an agent in Storefront    en_US    
-    Zed: login on Zed with provided credentials:   sonia+control${random}@spryker.com    change${random}
+    Zed: create new Zed user with the following data:    sonia+control${random}@spryker.com   ${default_secure_password}    First Control    Last Control    ControlGroup${random}    This user is an agent in Storefront    en_US    
+    Zed: login on Zed with provided credentials:   sonia+control${random}@spryker.com    ${default_secure_password}
     Zed: go to second navigation item level:    Catalog    Attributes
     Zed: click button in Header:    Create Product Attribute
     Zed: validate the message when permission is restricted:    Access denied
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: deactivate the created user:    sonia+control${random}@spryker.com
-    Zed: login with deactivated user/invalid data:    sonia+control${random}@spryker.com    change${random}
+    Zed: login with deactivated user/invalid data:    sonia+control${random}@spryker.com    ${default_secure_password}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Users    User Roles
     ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete

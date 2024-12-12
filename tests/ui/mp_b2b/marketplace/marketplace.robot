@@ -209,15 +209,15 @@ Manage_Merchant_Users
     Zed: table should contain non-searchable value:    UpdatedName${random}
     Zed: update Zed user:
     ...    || oldEmail                       | newEmail | password      | firstName | lastName ||
-    ...    || sonia+mu+${random}@spryker.com |          | Change123!321 |           |          ||
-    MP: login on MP with provided credentials:    sonia+mu+${random}@spryker.com    Change123!321
+    ...    || sonia+mu+${random}@spryker.com |          | ${default_secure_password} |           |          ||
+    MP: login on MP with provided credentials:    sonia+mu+${random}@spryker.com    ${default_secure_password}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Office King     Edit
     Zed: go to tab:     Users
     Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Deactivate
     Zed: table should contain non-searchable value:    Deactivated
-    MP: login on MP with provided credentials and expect error:    sonia+mu+${random}@spryker.com    Change123!321
+    MP: login on MP with provided credentials and expect error:    sonia+mu+${random}@spryker.com    ${default_secure_password}
     [Teardown]    Run Keywords     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants
     ...    AND    Zed: click Action Button in a table for row that contains:     Office King     Edit
@@ -644,13 +644,13 @@ Merchant_Portal_My_Account
     Zed: table should contain non-searchable value:    Active
     Zed: update Zed user:
     ...    || oldEmail                           | newEmail | password      | firstName | lastName ||
-    ...    || sonia+editmu+${random}@spryker.com |          | Change123!321 |           |          ||
-    MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    Change123!321
+    ...    || sonia+editmu+${random}@spryker.com |          | ${default_secure_password} |           |          ||
+    MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    ${default_secure_password}
     MP: update merchant personal details with data:
     ...    || firstName               | lastName                | email | currentPassword | newPassword          ||
-    ...    || MPUpdatedFName${random} | MPUpdatedLName${random} |       | Change123!321   | UpdatedChange123!321 ||
+    ...    || MPUpdatedFName${random} | MPUpdatedLName${random} |       | ${default_secure_password}   | Updated${default_secure_password} ||
     MP: click submit button
-    MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    UpdatedChange123!321
+    MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    Updated${default_secure_password}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Users    Users
     Zed: table should contain:    MPUpdatedFName${random}
@@ -672,9 +672,9 @@ Merchant_Portal_Dashboard
     Zed: table should contain non-searchable value:    Active
     Zed: update Zed user:
     ...    || oldEmail                             | newEmail | password      | firstName | lastName ||
-    ...    || sonia+dahboard+${random}@spryker.com |          | Change123!321 |           |          ||
+    ...    || sonia+dahboard+${random}@spryker.com |          | ${default_secure_password} |           |          ||
     Trigger multistore p&s
-    MP: login on MP with provided credentials:    sonia+dahboard+${random}@spryker.com    Change123!321
+    MP: login on MP with provided credentials:    sonia+dahboard+${random}@spryker.com    ${default_secure_password}
     MP: click button on dashboard page and check url:    Manage Offers    /product-offers
     MP: click button on dashboard page and check url:    Add Offer    /product-list
     MP: click button on dashboard page and check url:    Manage Orders    /orders
