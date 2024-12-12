@@ -37,10 +37,10 @@ jobs:
                   python3 -m pip install -U robotframework-databaselibrary
                   python3 -m pip install -U robotframework-browser
                   python3 -m pip install PyMySQL
-            - name: Install docker-compose
-              run: |
-                  sudo curl -L "https://github.com/docker/compose/releases/download/2.12.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                  sudo chmod +x /usr/local/bin/docker-compose
+            # - name: Install docker-compose
+            #   run: |
+            #       sudo curl -L "https://github.com/docker/compose/releases/download/2.12.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            #       sudo chmod +x /usr/local/bin/docker-compose
             - name: Install Robot tests
               run: |
                   git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch enable-parallel-test-execution robotframework-tests
@@ -79,7 +79,7 @@ jobs:
                   rebot -d results --merge results/dynamic_set/output.xml results/static_set/output.xml
             - name: Rerun Failed Tests
               id: rerun_failed_tests
-              if: failure()
+              if: always() && steps.merge_initial_results.outcome != 'success'
               continue-on-error: true
               run: |
                   cd robotframework-tests
