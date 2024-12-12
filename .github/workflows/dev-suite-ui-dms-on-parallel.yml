@@ -63,7 +63,7 @@ jobs:
               continue-on-error: true
               run: |
                   cd robotframework-tests
-                  pabot --processes 2 -v dms:true -v headless:true -v ignore_console:false -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic_set --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.suite .
+                  pabot --processes 4 -v dms:true -v headless:true -v ignore_console:false -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic_set --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.suite .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Run Static Test Set
               id: run_static_tests
