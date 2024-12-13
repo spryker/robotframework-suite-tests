@@ -349,8 +349,6 @@ Approve_Offer
     ...    AND    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API
 
-
-
 Search_for_Merchant_Offers_and_Products
     [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers
     Yves: go to the 'Home' page

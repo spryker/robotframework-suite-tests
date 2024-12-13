@@ -278,28 +278,56 @@ Run console command
         ${consoleCommand}=    Set Variable    cd ${cli_path} && SPRYKER_CURRENT_REGION=${storeName} docker/sdk ${command}
         IF    ${docker}
             ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "SPRYKER_CURRENT_REGION='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
-            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-            Log   ${output}
-            Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
+            TRY
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
+            EXCEPT
+                Sleep    1s
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
+            END
         END
         Log    ${ignore_console}
         IF    ${ignore_console} != True
-            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-            Log   ${output}
-            Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+            TRY
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+            EXCEPT
+                Sleep    1s
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+            END
         END
     ELSE
         ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
         IF    ${docker}
             ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
-            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-            Log   ${output}
-            Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
+            TRY
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
+            EXCEPT
+                Sleep    1s
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
+            END
         END
         IF    ${ignore_console} != True
-            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-            Log   ${output}
-            Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+            TRY
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+            EXCEPT
+                Sleep    200ms
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+            END
         END
     END
 
