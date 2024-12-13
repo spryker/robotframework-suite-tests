@@ -849,6 +849,8 @@ Create dynamic admin user in DB
         EXCEPT
             Log    Attempt ${attempt} failed due to duplicate entry in spy_user. Retrying...
             ${unique_id}=    Generate Random String    3    [NUMBERS]
+            ${unique_id}=    Replace String    ${unique_id}    0    9
+            ${unique_id}=    Convert To Integer    ${unique_id}
             ${new_id_user}=    Evaluate    ${new_id_user} + ${unique_id}
             ${unique}=    Generate Random String    5    [NUMBERS]
             VAR    ${new_uuid}    ${unique}-${random}-${random_str}-${random_id}
@@ -977,6 +979,8 @@ Create dynamic customer in DB
         EXCEPT
             Log    Attempt ${attempt} failed due to duplicate entry in spy_customer. Retrying...
             ${unique_id}=    Generate Random String    3    [NUMBERS]
+            ${unique_id}=    Replace String    ${unique_id}    0    9
+            ${unique_id}=    Convert To Integer    ${unique_id}
             ${new_id_customer}=    Evaluate    ${new_id_customer} + ${unique_id}
             ${new_customer_reference}=    Set Variable    dynamic--${new_id_customer}
             ${attempt}=    Evaluate    ${attempt} + 1
@@ -1019,6 +1023,8 @@ Create dynamic customer in DB
             EXCEPT
                 Log    Attempt ${attempt} failed due to duplicate entry in spy_company_user. Retrying...
                 ${unique_id}=    Generate Random String    3    [NUMBERS]
+                ${unique_id}=    Replace String    ${unique_id}    0    9
+                ${unique_id}=    Convert To Integer    ${unique_id}
                 ${new_id_company_user}=    Evaluate    ${new_id_company_user} + ${unique_id}
                 ${new_key}=    Set Variable    ${existing_key}--${new_id_company_user}
                 ${unique}=    Generate Random String    5    [NUMBERS]
@@ -1055,6 +1061,8 @@ Create dynamic customer in DB
                 EXCEPT
                     Log    Attempt ${attempt} failed due to duplicate entry in spy_customer_address. Retrying...
                     ${unique_id}=    Generate Random String    3    [NUMBERS]
+                    ${unique_id}=    Replace String    ${unique_id}    0    9
+                    ${unique_id}=    Convert To Integer    ${unique_id}
                     ${new_id_customer_address}=    Evaluate    ${new_id_customer_address} + ${unique_id}
                     ${unique}=    Generate Random String    5    [NUMBERS]
                     VAR    ${address_uuid}    ${unique}-${random}-${random_str}-${random_id}
