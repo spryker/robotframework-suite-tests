@@ -63,7 +63,7 @@ jobs:
               continue-on-error: true
               run: |
                   cd robotframework-tests
-                  pabot --processes 4 -v dms:true -v headless:true -v ignore_console:false -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic_set --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.suite .
+                  pabot --processes 2 -v dms:true -v headless:true -v ignore_console:false -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic_set --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.suite .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Run Static Test Set
               id: run_static_tests
@@ -85,7 +85,7 @@ jobs:
                   cd robotframework-tests
                   robot -v env:ui_suite -v dms:true -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.ui.suite .
             - name: Merge Final Test Results
-              if: always() && steps.rerun_failed_tests.outcome != 'success'
+              if: always() && steps.merge_initial_results.outcome != 'success'
               run: |
                   cd robotframework-tests
                   rebot -d results --merge results/output.xml results/rerun/rerun.xml
