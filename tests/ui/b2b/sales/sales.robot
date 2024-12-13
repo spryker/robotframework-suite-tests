@@ -209,7 +209,7 @@ Manage_Shipments
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all user addresses
 
-Order_Cancelation
+Order_Cancellation
     [Documentation]    Check that customer is able to cancel order
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts

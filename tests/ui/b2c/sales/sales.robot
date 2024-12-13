@@ -218,7 +218,7 @@ Manage_Shipments
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
 
-Order_Cancelation
+Order_Cancellation
     [Documentation]    Check that customer is able to cancel order.
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: check if cart is not empty and clear it
