@@ -50,7 +50,6 @@ Common_suite_setup
     Remove Files    resources/libraries/__pycache__/*
     Remove Files    ${OUTPUTDIR}/*.png
     Remove Files    ${OUTPUTDIR}/*.yml
-    Remove Files    ${OUTPUTDIR}/*.out
     Load Variables    ${env}
     Overwrite env variables
     Generate global random variable
