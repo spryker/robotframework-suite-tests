@@ -841,30 +841,27 @@ Create dynamic admin user in DB
     VAR    ${new_uuid}    ${new_uuid}-${random}-${random_str}-${random_id}
     
     # Step 4: Insert the new user into the spy_user table using correct variables
-    TRY
-        IF    '${db_engine}' == 'pymysql'
+    ${attempt}=    Set Variable    1
+    WHILE    ${attempt} <= 3
+        TRY
             Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
-        ELSE
-            Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
-        END
-    EXCEPT
-        ${new_id_user}=    Evaluate    ${new_id_user} + 1
-        IF    '${db_engine}' == 'pymysql'
-            Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
-        ELSE
-            Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+            Exit For Loop
+        EXCEPT
+            Log    Attempt ${attempt} failed due to duplicate entry in spy_user. Retrying...
+            ${unique_id}=    Generate Random String    3    [NUMBERS]
+            ${new_id_user}=    Evaluate    ${new_id_user} + ${unique_id}
+            ${unique}=    Generate Random String    5    [NUMBERS]
+            VAR    ${new_uuid}    ${unique}-${random}-${random_str}-${random_id}
+            ${attempt}=    Evaluate    ${attempt} + 1
         END
     END
+    IF    ${attempt} > 3    Fail    Unable to insert user into spy_users after 3 attempts.
 
     # Step 5: Get the ACL group of the existing user from spy_acl_user_has_group
     ${existing_acl_group}=    Query    SELECT fk_acl_group FROM spy_acl_user_has_group WHERE fk_user = ${existing_id_user}
     
     # Step 6: Insert the new user’s ID and the same ACL group into spy_acl_user_has_group
-    IF    '${db_engine}' == 'pymysql'
-        Execute Sql String    INSERT INTO spy_acl_user_has_group (fk_user, fk_acl_group) VALUES (${new_id_user}, ${existing_acl_group[0][0]})
-    ELSE
-        Execute Sql String    INSERT INTO spy_acl_user_has_group (fk_user, fk_acl_group) VALUES (${new_id_user}, ${existing_acl_group[0][0]})
-    END
+    Execute Sql String    INSERT INTO spy_acl_user_has_group (fk_user, fk_acl_group) VALUES (${new_id_user}, ${existing_acl_group[0][0]})
 
     Disconnect From Database
 
@@ -972,20 +969,20 @@ Create dynamic customer in DB
     ${new_customer_reference}=    Set Variable    dynamic--${new_id_customer}
 
     # Step 4: Insert the new customer into the spy_customer table using all columns
-    TRY
-        IF    '${db_engine}' == 'pymysql'
+    ${attempt}=    Set Variable    1
+    WHILE    ${attempt} <= 3
+        TRY
             Execute Sql String    INSERT INTO spy_customer (id_customer, fk_locale, fk_user, anonymized_at, company, customer_reference, date_of_birth, default_billing_address, default_shipping_address, email, first_name, gender, last_name, password, phone, registered, registration_key, restore_password_date, restore_password_key, salutation, created_at, updated_at) VALUES (${new_id_customer}, ${existing_fk_locale}, ${existing_fk_user}, ${existing_anonymized_at}, '${existing_company}', '${new_customer_reference}', ${existing_date_of_birth}, ${existing_default_billing_address}, ${existing_default_shipping_address}, '${email}', '${first_name}', ${existing_gender}, '${last_name}', '${existing_password}', '${existing_phone}', '${existing_registered}', ${existing_registration_key}, ${existing_restore_password_date}, ${existing_restore_password_key}, ${existing_salutation}, '${existing_created_at}', '${existing_updated_at}')
-        ELSE
-            Execute Sql String    INSERT INTO spy_customer (id_customer, fk_locale, fk_user, anonymized_at, company, customer_reference, date_of_birth, default_billing_address, default_shipping_address, email, first_name, gender, last_name, password, phone, registered, registration_key, restore_password_date, restore_password_key, salutation, created_at, updated_at) VALUES (${new_id_customer}, ${existing_fk_locale}, ${existing_fk_user}, ${existing_anonymized_at}, '${existing_company}', '${new_customer_reference}', ${existing_date_of_birth}, ${existing_default_billing_address}, ${existing_default_shipping_address}, '${email}', '${first_name}', ${existing_gender}, '${last_name}', '${existing_password}', '${existing_phone}', '${existing_registered}', ${existing_registration_key}, ${existing_restore_password_date}, ${existing_restore_password_key}, ${existing_salutation}, '${existing_created_at}', '${existing_updated_at}')
-        END
-    EXCEPT
-        ${new_id_customer}=    Evaluate    ${new_id_customer} + 1
-        IF    '${db_engine}' == 'pymysql'
-            Execute Sql String    INSERT INTO spy_customer (id_customer, fk_locale, fk_user, anonymized_at, company, customer_reference, date_of_birth, default_billing_address, default_shipping_address, email, first_name, gender, last_name, password, phone, registered, registration_key, restore_password_date, restore_password_key, salutation, created_at, updated_at) VALUES (${new_id_customer}, ${existing_fk_locale}, ${existing_fk_user}, ${existing_anonymized_at}, '${existing_company}', '${new_customer_reference}', ${existing_date_of_birth}, ${existing_default_billing_address}, ${existing_default_shipping_address}, '${email}', '${first_name}', ${existing_gender}, '${last_name}', '${existing_password}', '${existing_phone}', '${existing_registered}', ${existing_registration_key}, ${existing_restore_password_date}, ${existing_restore_password_key}, ${existing_salutation}, '${existing_created_at}', '${existing_updated_at}')
-        ELSE
-            Execute Sql String    INSERT INTO spy_customer (id_customer, fk_locale, fk_user, anonymized_at, company, customer_reference, date_of_birth, default_billing_address, default_shipping_address, email, first_name, gender, last_name, password, phone, registered, registration_key, restore_password_date, restore_password_key, salutation, created_at, updated_at) VALUES (${new_id_customer}, ${existing_fk_locale}, ${existing_fk_user}, ${existing_anonymized_at}, '${existing_company}', '${new_customer_reference}', ${existing_date_of_birth}, ${existing_default_billing_address}, ${existing_default_shipping_address}, '${email}', '${first_name}', ${existing_gender}, '${last_name}', '${existing_password}', '${existing_phone}', '${existing_registered}', ${existing_registration_key}, ${existing_restore_password_date}, ${existing_restore_password_key}, ${existing_salutation}, '${existing_created_at}', '${existing_updated_at}')
+            Exit For Loop
+        EXCEPT
+            Log    Attempt ${attempt} failed due to duplicate entry in spy_customer. Retrying...
+            ${unique_id}=    Generate Random String    3    [NUMBERS]
+            ${new_id_customer}=    Evaluate    ${new_id_customer} + ${unique_id}
+            ${new_customer_reference}=    Set Variable    dynamic--${new_id_customer}
+            ${attempt}=    Evaluate    ${attempt} + 1
         END
     END
+    IF    ${attempt} > 3    Fail    Unable to insert customer into spy_customer after 3 attempts.
 
     IF    '${env}' in ['ui_b2b','ui_mp_b2b','ui_suite']
         # Step 5: Fetch the existing company user data associated with the existing customer
@@ -1014,11 +1011,22 @@ Create dynamic customer in DB
         VAR    ${new_uuid}    ${new_uuid}-${random}-${random_str}-${random_id}
 
         # Step 8: Insert the new company user entry in the spy_company_user table
-        IF    '${db_engine}' == 'pymysql'
-            Execute Sql String    INSERT INTO spy_company_user (id_company_user, fk_company, fk_company_business_unit, fk_customer, is_active, is_default, \`key\`, uuid) VALUES (${new_id_company_user}, ${existing_fk_company}, ${existing_fk_company_business_unit}, ${new_id_customer}, True, False, '${new_key}', '${new_uuid}')
-        ELSE
-            Execute Sql String    INSERT INTO spy_company_user (id_company_user, fk_company, fk_company_business_unit, fk_customer, is_active, is_default, key, uuid) VALUES (${new_id_company_user}, ${existing_fk_company}, ${existing_fk_company_business_unit}, ${new_id_customer}, True, False, '${new_key}', '${new_uuid}')
+        ${attempt}=    Set Variable    1
+        WHILE    ${attempt} <= 3
+            TRY
+                Execute Sql String    INSERT INTO spy_company_user (id_company_user, fk_company, fk_company_business_unit, fk_customer, is_active, is_default, \`key\`, uuid) VALUES (${new_id_company_user}, ${existing_fk_company}, ${existing_fk_company_business_unit}, ${new_id_customer}, True, False, '${new_key}', '${new_uuid}')
+                Exit For Loop
+            EXCEPT
+                Log    Attempt ${attempt} failed due to duplicate entry in spy_company_user. Retrying...
+                ${unique_id}=    Generate Random String    3    [NUMBERS]
+                ${new_id_company_user}=    Evaluate    ${new_id_company_user} + ${unique_id}
+                ${new_key}=    Set Variable    ${existing_key}--${new_id_company_user}
+                ${unique}=    Generate Random String    5    [NUMBERS]
+                VAR    ${new_uuid}    ${unique}-${random}-${random_str}-${random_id}
+                ${attempt}=    Evaluate    ${attempt} + 1
+            END
         END
+        IF    ${attempt} > 3    Fail    Unable to insert company user into spy_company_user after 3 attempts.
     END
     
     IF    ${create_default_address}
@@ -1039,8 +1047,21 @@ Create dynamic customer in DB
             END
             ${address_uuid}=   Generate Random String	4	[UPPER]
             VAR    ${address_uuid}    ${address_uuid}-${random}-${random_str}-${random_id}
-
-            Execute Sql String    INSERT INTO spy_customer_address (id_customer_address, fk_country, fk_customer, fk_region, address1, address2, address3, anonymized_at, city, comment, company, deleted_at, first_name, last_name, phone, salutation, uuid, zip_code, created_at, updated_at) VALUES (${new_id_customer_address}, 60, ${new_id_customer}, NULL, '${default_address.street}', '${default_address.house_number}', NULL, NULL, '${default_address.city}', NULL, NULL, NULL, '${default_address.first_name}', '${default_address.last_name}', NULL, 0, '${address_uuid}', '${default_address.post_code}', NOW(), NOW())
+            ${attempt}=    Set Variable    1
+            WHILE    ${attempt} <= 3
+                TRY
+                    Execute Sql String    INSERT INTO spy_customer_address (id_customer_address, fk_country, fk_customer, fk_region, address1, address2, address3, anonymized_at, city, comment, company, deleted_at, first_name, last_name, phone, salutation, uuid, zip_code, created_at, updated_at) VALUES (${new_id_customer_address}, 60, ${new_id_customer}, NULL, '${default_address.street}', '${default_address.house_number}', NULL, NULL, '${default_address.city}', NULL, NULL, NULL, '${default_address.first_name}', '${default_address.last_name}', NULL, 0, '${address_uuid}', '${default_address.post_code}', NOW(), NOW())
+                    Exit For Loop
+                EXCEPT
+                    Log    Attempt ${attempt} failed due to duplicate entry in spy_customer_address. Retrying...
+                    ${unique_id}=    Generate Random String    3    [NUMBERS]
+                    ${new_id_customer_address}=    Evaluate    ${new_id_customer_address} + ${unique_id}
+                    ${unique}=    Generate Random String    5    [NUMBERS]
+                    VAR    ${address_uuid}    ${unique}-${random}-${random_str}-${random_id}
+                    ${attempt}=    Evaluate    ${attempt} + 1
+                END
+            END
+            IF    ${attempt} > 3    Fail    Unable to insert customer address into spy_customer_address after 3 attempts.
         ELSE
             # Address exists, so update it
             ${existing_address_id}=    Query    SELECT id_customer_address FROM spy_customer_address WHERE fk_customer = ${new_id_customer}
