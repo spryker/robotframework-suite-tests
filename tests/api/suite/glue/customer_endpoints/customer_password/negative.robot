@@ -112,7 +112,7 @@ Update_customer_password_with_too_weak_password
 Update_customer_password_with_missing_customer_reference
     Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
-    AND I send a PATCH request:    /customer-password/   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password_new}","newPassword":"12345678","confirmPassword":"12345678"}}}
+    AND I send a PATCH request:    /customer-password/   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password_new}","newPassword":"1234567890123","confirmPassword":"1234567890123"}}}
     Response status code should be:    400
     And Response reason should be:    Bad Request
     And Response should return error message:    Resource id is not specified.

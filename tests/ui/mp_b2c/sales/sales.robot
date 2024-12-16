@@ -75,7 +75,7 @@ Return_Management
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
-    Zed: trigger matching state of xxx merchant's shipment:    1    Ship   
+    Zed: trigger matching state of xxx merchant's shipment:    1    Ship
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
@@ -86,19 +86,19 @@ Return_Management
     Yves: 'Return Details' page is displayed
     Yves: check that 'Print Slip' contains the following products:    010_30692994    007_30691822
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
-    MP: open navigation menu tab:    Orders    
+    MP: open navigation menu tab:    Orders
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_spryker_reference}
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_spryker_reference}
     MP: update order state using header button:    Execute return
     MP: order states on drawer should contain:    Returned
-    MP: order states on drawer should contain:    Shipped   
+    MP: order states on drawer should contain:    Shipped
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    012_25904598
-    Zed: create new Zed user with the following data:    returnagent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
+    Zed: create new Zed user with the following data:    returnagent+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    returnagent+${random}@spryker.com    change123${random}
+    Yves: login on Yves with provided credentials:    returnagent+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_email}
     Yves: agent widget contains:    ${yves_user_email}
@@ -154,7 +154,7 @@ Refunds
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €394.41
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay   
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
@@ -170,7 +170,7 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Tu & Wed $5 off 5 or more    10% off $100+    20% off cameras    Tu & Wed €5 off 5 or more    10% off minimum order
-    
+
 Manage_Shipments
     [Documentation]    Checks create/edit shipment functions from backoffice
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -258,7 +258,7 @@ Order_Cancellation
     Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed    
+    Yves: 'Thank you' page is displayed
     Trigger oms
     Yves: go to 'Order History' page
     Yves: get the last placed order ID by current customer
@@ -284,7 +284,7 @@ Order_Cancellation
     # Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     # Yves: 'submit the order' on the summary page
     # Yves: accept the terms and conditions:    true
-    # Yves: 'Thank you' page is displayed    
+    # Yves: 'Thank you' page is displayed
     # Yves: go to 'Order History' page
     # Yves: get the last placed order ID by current customer
     # ### change the order state of one product ###
@@ -297,7 +297,7 @@ Order_Cancellation
     # Yves: 'Order Details' page contains the cancel order button:    true
     # Zed: login on Zed with provided credentials:    ${zed_admin_email}
     # Zed: go to order page:    ${lastPlacedOrder}
-    # Zed: trigger matching state of order item inside xxx shipment:    005_30663301    Skip timeout 
+    # Zed: trigger matching state of order item inside xxx shipment:    005_30663301    Skip timeout
     # Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     # Yves: go to 'Order History' page
     # Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
@@ -359,7 +359,7 @@ Configurable_Product_OMS
     Zed: product configuration should be equal:
     ...    || shipment | position | sku                                      | date       | date_time ||
     ...    || 1        | 2        | ${configurable_product_concrete_two_sku} | 01.01.2055 | Afternoon ||
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay   
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
@@ -379,12 +379,12 @@ Configurable_Product_OMS
     Yves: 'Return Details' page is displayed
     Yves: check that 'Print Slip' contains the following products:    ${configurable_product_concrete_one_sku}
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
-    MP: open navigation menu tab:    Orders    
+    MP: open navigation menu tab:    Orders
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_spryker_reference}
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_spryker_reference}
     MP: update order state using header button:    Execute return
     MP: order states on drawer should contain:    Returned
-    MP: order states on drawer should contain:    Refunded  
+    MP: order states on drawer should contain:    Refunded
     Yves: go to the 'Home' page
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to user menu:    Orders History
@@ -396,4 +396,3 @@ Configurable_Product_OMS
     ...    || date       | date_time ||
     ...    || 12.12.2030 | Evening   ||
     [Teardown]    Yves: check if cart is not empty and clear it
-    
