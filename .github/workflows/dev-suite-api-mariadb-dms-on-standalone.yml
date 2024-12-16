@@ -61,7 +61,7 @@ jobs:
                   robot -v env:api_suite -v dms:true -v glue_env:http://glue.eu.spryker.local -v bapi_env:http://glue-backend.eu.spryker.local -v sapi_env:http://glue-storefront.eu.spryker.local -v yves_env:http://yves.eu.spryker.local -v zed_env:http://backoffice.eu.spryker.local -v mp_root_env:http://mp.eu.spryker.local/ -v mp_env:http://mp.eu.spryker.local/security-merchant-portal-gui/login/ -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring -s '*'.tests.api.suite .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Upload artifacts
-              if: failure()
+              if: always()
               run: |
                   AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/debug/suite-robot-api-ci-standalone/dms-on/${GITHUB_RUN_ID}/PHP8.3MariaDBRobotAPI/ \
                     --recursive \
