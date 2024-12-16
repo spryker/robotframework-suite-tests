@@ -19,7 +19,8 @@
          "first_name":"Sonia",
          "last_name":"Wagner",
          "password":"change123",
-         "password_new":"Change@123",
+         "password_new":"qweRTY_123456",
+         "password_new_additional":"Change!23456",
          "reference":"DE--21",
          "salutation":"Ms"
       },
@@ -32,11 +33,11 @@
          "salutation":"Mr"
       },
       "yves_third_user":{
-         "first_name":"Jackie",
-         "last_name":"Chan",
+         "email":"maxmusterman@spryker.com",
+         "first_name":"Max",
+         "last_name":"Musterman",
          "password":"change123",
          "password_new":"Change!23456",
-         "gender_male":"Male",
          "salutation":"Mr"
       },
       "yves_eighth_user":{

@@ -13,15 +13,12 @@ ENABLER
 
 Update_customer_password_with_not_equal_new_password
     Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Authorization=${token}
-    AND I send a PATCH request:
-    ...    /customer-password/${yves_user.reference}
-    ...    {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password}","newPassword":"${yves_user.password_new_additional}","confirmPassword":"${yves_user.password_new}"}}}
+    ...  AND    I set Headers:    Authorization=${token}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password}","newPassword":"${yves_user.password_new_additional}","confirmPassword":"${yves_user.password_new}"}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    406
-    And Response should return error message:
-    ...    Value in field newPassword should be identical to value in the confirmPassword field.
+    And Response should return error message:    Value in field newPassword should be identical to value in the confirmPassword field.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_empty_data_type
@@ -61,21 +58,13 @@ Update_customer_password_with_empty_new_password
 
 Update_customer_password_with_empty_new_password_confirmation
     Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Authorization=${token}
-    AND I send a PATCH request:
-    ...    /customer-password/${yves_user.reference}
-    ...    {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password}","newPassword":"${yves_user.password_new}","confirmPassword":""}}}
+    ...  AND    I set Headers:    Authorization=${token}
+    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password}","newPassword":"${yves_user.password_new}","confirmPassword":""}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
-    And Array in response should contain property with value:
-    ...    [errors]
-    ...    detail
-    ...    confirmPassword => This value is too short. It should have 12 characters or more.
-    And Array in response should contain property with value:
-    ...    [errors]
-    ...    detail
-    ...    confirmPassword => This value should not be blank.
+    And Array in response should contain property with value:    [errors]    detail    confirmPassword => This value is too short. It should have 12 characters or more.
+    And Array in response should contain property with value:    [errors]    detail    confirmPassword => This value should not be blank.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_customer_password_with_non_autorizated_user

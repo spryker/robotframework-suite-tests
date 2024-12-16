@@ -24,7 +24,8 @@
          "first_name":"Sonia",
          "last_name":"Wagner",
          "password":"change123",
-         "password_new":"Change@123",
+         "password_new":"qweRTY_123456",
+         "password_new_additional":"Change!23456",
          "reference":"DE--21",
          "salutation":"Ms"
       },
