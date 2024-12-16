@@ -32,7 +32,7 @@ Restore_password_with_empty_type
 Restore_password_with_incorrect_restorePasswordKey
     I send a PATCH request:
     ...    /customer-restore-password/${yves_user.reference}
-    ...    {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"5ec608df9c0dd57c3dd08b540d4a68da","password":"${yves_user.password}","confirmPassword":"${yves_user.password}"}}}
+    ...    {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"5ec608df9c0dd57c3dd08b540d4a68da","password":"${yves_user.password_new}","confirmPassword":"${yves_user.password_new}"}}}
     And Response status code should be:    422
     And Response should return error code:    415
     And Response reason should be:    Unprocessable Content
