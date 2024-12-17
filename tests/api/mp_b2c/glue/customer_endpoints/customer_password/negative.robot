@@ -145,6 +145,6 @@ Update_customer_password_with_value_not_matching_password_policy
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    token
     When I set Headers:    Authorization=Bearer ${token}
     AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password}","newPassword":"change1234","confirmPassword":"change1234"}}}
-    Response status code should be:    400
-    Response should return error code:    420
-    And Response reason should be:    Bad Request
+    Response status code should be:    422
+    Response should return error code:    901
+    And Response reason should be:    Unprocessable Content
