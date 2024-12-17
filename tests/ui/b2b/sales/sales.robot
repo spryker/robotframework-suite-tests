@@ -130,7 +130,7 @@ Refunds
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger matching state of order item inside xxx shipment:    107254    Ship
-    Zed: trigger matching state of order item inside xxx shipment:    107254    Stock update
+    Zed: trigger matching state of order item inside xxx shipment:    107254    Stock
     Zed: trigger matching state of order item inside xxx shipment:    107254    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,162.87
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Ship
