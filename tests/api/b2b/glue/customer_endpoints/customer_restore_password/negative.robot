@@ -32,7 +32,7 @@ Restore_password_with_empty_type
 Restore_password_with_incorrect_restorePasswordKey
     I send a PATCH request:
     ...    /customer-restore-password/${yves_user.reference}
-    ...    {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"5ec608df9c0dd57c3dd08b540d4a68da","password":"${yves_user.password}","confirmPassword":"${yves_user.password}"}}}
+    ...    {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"5ec608df9c0dd57c3dd08b540d4a68da","password":"${yves_user.password_new}","confirmPassword":"${yves_user.password_new}"}}}
     And Response status code should be:    422
     And Response should return error code:    415
     And Response reason should be:    Unprocessable Content
@@ -63,7 +63,7 @@ Restore_password_with_empty_new_password_value
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
-    ...    password => This value is too short. It should have 8 characters or more.
+    ...    password => This value is too short. It should have 12 characters or more.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Restore_password_with_empty_new_confirmation_password_value
@@ -80,7 +80,7 @@ Restore_password_with_empty_new_confirmation_password_value
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
-    ...    confirmPassword => This value is too short. It should have 8 characters or more.
+    ...    confirmPassword => This value is too short. It should have 12 characters or more.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Restore_password_with_too_short_new_password
@@ -93,34 +93,34 @@ Restore_password_with_too_short_new_password
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
-    ...    password => This value is too short. It should have 8 characters or more.
+    ...    password => This value is too short. It should have 12 characters or more.
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
-    ...    confirmPassword => This value is too short. It should have 8 characters or more.
+    ...    confirmPassword => This value is too short. It should have 12 characters or more.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Restore_password_with_too_long_new_password
     I send a PATCH request:
     ...    /customer-restore-password/${yves_user.reference}
-    ...    {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"a46b40a8e1befff4cf0df9c7c2ace5f2","password":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890","confirmPassword":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890"}}}
+    ...    {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"a46b40a8e1befff4cf0df9c7c2ace5f2","password":"Change!23456pqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuioppqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwert","confirmPassword":"Change!23456pqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuioppqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwert"}}}
     And Response status code should be:    422
     And Response should return error code:    901
     And Response reason should be:    Unprocessable Content
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
-    ...    password => This value is too long. It should have 64 characters or less.
+    ...    password => This value is too long. It should have 128 characters or less.
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
-    ...    confirmPassword => This value is too long. It should have 64 characters or less.
+    ...    confirmPassword => This value is too long. It should have 128 characters or less.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Restore_password_with_not_equal_new_password_and_confirm_password
     I send a PATCH request:
     ...    /customer-restore-password/${yves_user.reference}
-    ...    {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"aa2fbd68447da919fcb7da1a8d2d3c7a","password":"${yves_user.password}","confirmPassword":"${yves_user.password_new}"}}}
+    ...    {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"aa2fbd68447da919fcb7da1a8d2d3c7a","password":"${yves_user.password_new_additional}","confirmPassword":"${yves_user.password_new}"}}}
     And Response status code should be:    422
     And Response should return error code:    406
     And Response reason should be:    Unprocessable Content

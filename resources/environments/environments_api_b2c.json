@@ -19,7 +19,8 @@
          "first_name":"Sonia",
          "last_name":"Wagner",
          "password":"change123",
-         "password_new":"Change@123",
+         "password_new":"qweRTY_123456",
+         "password_new_additional":"Change!23456",
          "reference":"DE--21",
          "salutation":"Ms"
       },
@@ -32,11 +33,28 @@
          "salutation":"Mr"
       },
       "yves_third_user":{
-         "first_name":"Jackie",
-         "last_name":"Chan",
+         "email":"maxmusterman@spryker.com",
+         "first_name":"Max",
+         "last_name":"Musterman",
          "password":"change123",
-         "gender_male":"Male",
+         "password_new":"Change!23456",
          "salutation":"Mr"
+      },
+      "yves_eighth_user":{
+         "email":"maria.williams@spryker.com",
+         "password":"change123",
+         "password_new":"Change!23456",
+         "password_new_additional":"qweRTY_123456",
+         "reference":"DE--2"
+      },
+      "yves_ninth_user":{
+         "email":"maggie.may@spryker.com",
+         "first_name":"Maggie",
+         "last_name":"May",
+         "password":"Change!23456",
+         "password_new":"qweRTY_123456",
+         "reference":"DE--3",
+         "salutation":"Ms"
       },
       "gender":{
          "female":"Female",
@@ -601,7 +619,7 @@
      },
      "dummy_api_key":"eba8110c9f9bf5685e8b5f4eba9b17c2",
      "dummy_key_hash":"f683f48de788d57cd396fc212ef33fd146e1ff0b51cde37ecb4ddd77eeed1706",
- 
+
   "servicePoints": {
       "servicePoints":[
           {
@@ -640,13 +658,13 @@
       ]
   },
   "warehouses":{
-      "warehouses": 
+      "warehouses":
           {
               "uuid": "test-warehouse",
               "is_active": true,
               "name": "Test warehouse"
           }
-      
+
   },
   "push_notifications": {
      "push_notification_subscriptions": [
@@ -654,7 +672,7 @@
               "providerName": "web-push-php",
               "group": {
                   "name": "warehouse",
-                  "identifier": ""               
+                  "identifier": ""
                  },
               "payload": {
                   "endpoint": "endpoint",
@@ -684,7 +702,7 @@
          "user_name_1":"admin@spryker.com",
          "user_first_name_1":"Admin",
          "user_last_name_1":"Spryker"
-     }, 
+     },
   "warehouse": {
       "warehouse_uuid": "8e5f7bf2-ab97-595c-9b42-487392e2af9b",
       "warehouse_uuid_budget_cameras": "86496ec7-0d44-518c-81e4-f472b9e8547d",

@@ -45,10 +45,10 @@ Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 Agent_Assist
     [Documentation]    Checks Agent creation and that it can login under customer.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: create new Zed user with the following data:    agent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
+    Zed: create new Zed user with the following data:    agent+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    change123${random}
+    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_company_user_special_prices_customer_firstname}
     Yves: agent widget contains:    ${yves_company_user_special_prices_customer_email}
@@ -67,14 +67,14 @@ User_Control
     Zed: apply access permissions for user role:    ${full_access}    ${full_access}    ${full_access}   ${permission_allow}
     Zed: apply access permissions for user role:    ${bundle_access}    ${controller_access}    ${action_access}    ${permission_deny}
     Zed: create new group with role assigned:   controlGroup${random}    controlRole${random}
-    Zed: create new Zed user with the following data:    sonia+control${random}@spryker.com   change${random}    First Control    Last Control    ControlGroup${random}    This user is an agent    en_US    
-    Zed: login on Zed with provided credentials:   sonia+control${random}@spryker.com    change${random}
+    Zed: create new Zed user with the following data:    sonia+control${random}@spryker.com   Kj${random_str_password}!0${random_id_password}    First Control    Last Control    ControlGroup${random}    This user is an agent    en_US
+    Zed: login on Zed with provided credentials:   sonia+control${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
     Zed: go to second navigation item level:    Catalog    Attributes
     Zed: click button in Header:    Create Product Attribute
     Zed: validate the message when permission is restricted:    Access denied
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: deactivate the created user:    sonia+control${random}@spryker.com
-    Zed: login with deactivated user/invalid data:    sonia+control${random}@spryker.com    change${random}
+    Zed: login with deactivated user/invalid data:    sonia+control${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Users    User Roles
-    ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete    
+    ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete

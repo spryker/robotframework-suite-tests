@@ -82,11 +82,11 @@ Return_Management
     Yves: check that 'Print Slip' contains the following products:    010_30692994
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    007_30691822
-    Zed: create new Zed user with the following data:    returnagent+${random}@spryker.com    change123${random}    Agent    Assist    Root group    This user is an agent    en_US
+    Zed: create new Zed user with the following data:    returnagent+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Agent    Assist    Root group    This user is an agent    en_US
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    returnagent+${random}@spryker.com    change123${random}
+    Yves: login on Yves with provided credentials:    returnagent+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_email}
     Yves: agent widget contains:    ${yves_user_email}
@@ -237,7 +237,7 @@ Order_Cancellation
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed    
+    Yves: 'Thank you' page is displayed
     Yves: go to 'Order History' page
     Yves: get the last placed order ID by current customer
     Yves: cancel the order:    ${lastPlacedOrder}
@@ -262,14 +262,14 @@ Order_Cancellation
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Trigger oms  
+    Trigger oms
     Yves: go to 'Order History' page
     Yves: get the last placed order ID by current customer
     ### change the order state of one product ###
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger matching state of order item inside xxx shipment:    005_30663301    Pay
-    Zed: trigger matching state of order item inside xxx shipment:    005_30663301    Skip timeout 
+    Zed: trigger matching state of order item inside xxx shipment:    005_30663301    Skip timeout
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to 'Order History' page
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
@@ -289,7 +289,7 @@ Order_Cancellation
 
 Configurable_Product_OMS
     [Documentation]    Conf Product OMS check and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
-    [Tags]    robot:skip    
+    [Tags]    robot:skip
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
