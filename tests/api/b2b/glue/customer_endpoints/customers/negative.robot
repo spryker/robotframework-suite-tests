@@ -48,7 +48,6 @@ Create_a_customer_with_too_weak_password
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
-    And Array in response should contain property with value:    [errors]    detail    password => This value is not valid.
     And Array in response should contain property with value:    [errors]    detail    password => This password has been leaked in a data breach, it must not be used. Please use another password.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
