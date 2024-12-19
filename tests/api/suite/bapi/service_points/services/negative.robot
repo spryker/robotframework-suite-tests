@@ -6,9 +6,6 @@ Resource    ../../../../../../resources/steps/service_point_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Create_Service_No_Auth
     And Create service point in DB    uuid=262feb9d-33a7${random}    name=TestSP${random}    key=sp11${random}    isActive=true    storeName=DE
     Then Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType${random}    key=sp11${random}

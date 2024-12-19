@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/steps/service_point_steps.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Retrieves_list_of_service_point_addresses
     When I send a GET request:    /service-points/${servicePoints[0].uuid}/service-point-addresses
     Then Response status code should be:    404

@@ -5,13 +5,6 @@ Test Setup    API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
-
-# SEARCH PARAMETERS #
-
-
 Search_by_abstract_sku_per_store
     [Tags]    dms-on
     When I set Headers:    store=DE

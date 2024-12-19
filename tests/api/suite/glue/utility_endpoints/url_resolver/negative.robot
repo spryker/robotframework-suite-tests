@@ -5,9 +5,6 @@ Test Setup        API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-        
 Get_url_collection_by_empty_url
     When I send a GET request:    /url-resolver
     Then Response status code should be:    422

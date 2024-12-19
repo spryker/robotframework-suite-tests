@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Product_has_abstract_alternative
     When I send a GET request:    /concrete-products/${product_with_alternative.concrete_sku}/abstract-alternative-products
     Then Response status code should be:    200

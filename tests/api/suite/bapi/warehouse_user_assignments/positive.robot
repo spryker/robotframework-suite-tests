@@ -6,9 +6,6 @@ Resource    ../../../../../resources/steps/warehouse_user_assigment_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Assign_user_to_warehouse
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}

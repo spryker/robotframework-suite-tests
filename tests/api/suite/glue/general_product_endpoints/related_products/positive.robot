@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Product_has_related_products
     When I send a GET request:    /abstract-products/${product_with_relations.has_related_products.sku}/related-products
     Then Response status code should be:    200

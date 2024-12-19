@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Retrieves_merchant_addresses
     When I send a GET request:  /merchants/${merchants.sony_experts.merchant_reference}/merchant-addresses
     Then Response status code should be:    200
