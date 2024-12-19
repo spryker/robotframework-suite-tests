@@ -755,7 +755,7 @@ Response body has correct self link
     ${actual_self_link}=    Replace String    ${actual_self_link}    [    ${EMPTY}
     ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
     ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
-    Should Be Equal    ${actual_self_link}    ${expected_self_link}    Expected self link: '${expected_self_link}' does not match: '${actual_self_link}'.
+    Should Be Equal    ${actual_self_link}    ${expected_self_link}    Expected self link: '${expected_self_link}' does not match actual link: '${actual_self_link}'.
 
 Response body has correct self link internal
     [Documentation]    This keyword checks that the actual selflink retrieved from the test variable ``${response_body}`` matches the self link recorded into the ``${expected_self_link}`` test variable on endpoint call.
@@ -769,7 +769,7 @@ Response body has correct self link internal
     ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
     ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
     Log    ${response_body}
-    Should Be Equal    ${actual_self_link}    ${expected_self_link}    Expected internal selft link: '${expected_self_link}' does not match the actual link: '${actual_self_link}'.
+    Should Be Equal    ${actual_self_link}    ${expected_self_link}    Expected internal self link: '${expected_self_link}' does not match the actual link: '${actual_self_link}'.
 
 Response body has correct self link for created entity:
     [Documentation]    This keyword checks that the actual selflink retrieved from the test variable ``${response_body}`` plus the UID of the entity that was created and matches the self link recorded into the ``${expected_self_link}`` test variable on endpoint call.
