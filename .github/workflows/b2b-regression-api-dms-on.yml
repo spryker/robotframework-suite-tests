@@ -43,7 +43,7 @@ jobs:
                   sudo chmod +x /usr/local/bin/docker-compose
             - name: Install Robot tests
               run: |
-                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch master robotframework-tests
+                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch bugfix/frw-9023-wrong-available-locales-expander robotframework-tests
             - name: Install Project
               continue-on-error: false
               run: |
