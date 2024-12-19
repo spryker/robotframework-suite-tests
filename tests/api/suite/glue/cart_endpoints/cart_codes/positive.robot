@@ -5,9 +5,6 @@ Test Tags    glue
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Add_gift_card_code_to_cart
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}

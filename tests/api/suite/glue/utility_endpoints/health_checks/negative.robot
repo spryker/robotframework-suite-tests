@@ -5,9 +5,6 @@ Test Setup      API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-    
 #GET requests
 
 ### Precondition: To run commented tests need to enable service endpoints and uncomment tests

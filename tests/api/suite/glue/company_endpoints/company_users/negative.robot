@@ -5,9 +5,6 @@ Test Setup    API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Retrieve_list_of_company_users_without_access_token
     When I send a GET request:    /company-users
     Then Response status code should be:    403

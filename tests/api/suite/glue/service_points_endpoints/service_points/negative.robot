@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/steps/service_point_steps.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Retrieves_list_of_service_points_by_incorrect_url
     When I send a GET request:    /service-point
     Then Response status code should be:    404

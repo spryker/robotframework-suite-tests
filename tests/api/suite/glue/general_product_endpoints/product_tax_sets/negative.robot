@@ -5,8 +5,6 @@ Test Setup        API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 Get_a_tax_set_with_invalid_concrete_sku
     When I send a GET request:    /abstract-products/test123/product-tax-sets
     Then Response status code should be:    404

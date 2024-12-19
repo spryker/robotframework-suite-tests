@@ -5,9 +5,6 @@ Resource    ../../../../../resources/common/common_api.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 New_warehouse_token_without_autorization
     And I send a POST request:    /warehouse-tokens   {}
     Then Response status code should be:    403

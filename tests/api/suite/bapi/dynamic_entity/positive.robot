@@ -6,9 +6,6 @@ Resource    ../../../../../resources/steps/dynamic_entity_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_country_collection
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
     Delete dynamic entity configuration in Database:    robot-test-countries

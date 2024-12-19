@@ -6,10 +6,6 @@ Resource    ../../../../../resources/steps/warehouse_user_assigment_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
-*** Test Cases ***
 Create_warehouse_user_assigment_with_invalid_token
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}

@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_abstract_availability_by_concrete_SKU
     When I send a GET request:    /abstract-products/${product_with_alternative.concrete_sku}/abstract-product-availabilities
     Then Response status code should be:    404

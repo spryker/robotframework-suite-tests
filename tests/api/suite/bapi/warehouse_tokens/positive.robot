@@ -5,9 +5,6 @@ Resource    ../../../../../resources/common/common_api.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Generate_new_user_token
     When I set Headers:    Content-Type=application/x-www-form-urlencoded
     When I send a POST request:    /token  {"grantType": "${grant_type.password}","username": "${zed_admin.email}","password": "${zed_admin.password}"}

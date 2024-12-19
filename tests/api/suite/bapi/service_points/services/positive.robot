@@ -6,9 +6,6 @@ Resource    ../../../../../../resources/steps/service_point_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_Services_List
     [Setup]
     Run Keywords    I get access token by user credentials:   ${zed_admin.email}

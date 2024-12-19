@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 ### POST ###
 Add_configured_bundle_with_nonexistent_guest_cart_id
     [Setup]    I set Headers:   Content-Type=${default_header_content_type}     X-Anonymous-Customer-Unique-Id=${random}

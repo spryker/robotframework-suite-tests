@@ -6,7 +6,6 @@ Test Tags    glue
 
 *** Test Cases ***
 ENABLER
-    API_test_setup
     Deactivate service points
 
 Retrieves_list_of_service_points

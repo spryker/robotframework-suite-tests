@@ -5,9 +5,6 @@ Test Setup    API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Adding_item_in_wishlist_by_invalid_Access_Token
     [Setup]    I set Headers:    Authorization=3485h7
     When I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${random}"} }}

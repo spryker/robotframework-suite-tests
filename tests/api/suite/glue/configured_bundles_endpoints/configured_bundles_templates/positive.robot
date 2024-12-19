@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_configurable_bundle_templates
     When I send a GET request:    /configurable-bundle-templates
     Then Response status code should be:    200

@@ -5,8 +5,6 @@ Test Setup    API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 Get_a_measurement_unit_with_non_existent_unit_id
     When I send a GET request:    /product-measurement-units/fake
     Then Response status code should be:    404

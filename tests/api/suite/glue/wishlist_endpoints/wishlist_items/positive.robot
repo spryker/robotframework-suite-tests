@@ -5,9 +5,6 @@ Test Setup    API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Adding_item_in_wishlist 
     [Documentation]    CC-16555 API: JSON response is missing product availability and price
     [Tags]    skip-due-to-issue

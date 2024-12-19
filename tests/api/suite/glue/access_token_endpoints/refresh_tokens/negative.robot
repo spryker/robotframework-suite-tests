@@ -5,8 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 #######POST#######
 Refresh_token_with_access_token
     [Setup]    I get access token for the customer:    ${yves_user.email}

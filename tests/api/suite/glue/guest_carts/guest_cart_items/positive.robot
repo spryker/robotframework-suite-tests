@@ -5,8 +5,6 @@ Test Setup        API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 ### Important CHECKOUT and CHECKOUT-DATA endpoints require Item ID and NOT intem sku. To get item id and include to the cart endpoint.
 ### Example:  
 ### I send a GET request:    /guest-carts/${guestCartId}?include=guest-cart-items

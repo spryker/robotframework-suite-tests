@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_configurable_bundle_templates_by_invalid_configurable_bundle_template_id
     When I send a GET request:    /configurable-bundle-templates/fake
     Then Response status code should be:    404

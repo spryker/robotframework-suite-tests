@@ -5,9 +5,6 @@ Test Setup    API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Create_a_shopping_list_with_empty_type
     I send a POST request:    /shopping-lists    {"data":{"type":"","attributes":{"name":"${shopping_list_name}${random}"}}}
     Response status code should be:    400

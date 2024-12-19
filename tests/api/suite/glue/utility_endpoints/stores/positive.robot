@@ -5,9 +5,6 @@ Test Setup     API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-
-ENABLER
-    API_test_setup
 Get_all_availiable_stores
     [Tags]    dms-off
     And I set Headers:    Content-Type=${default_header_content_type}

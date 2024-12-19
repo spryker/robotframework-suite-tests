@@ -4,10 +4,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-
-ENABLER
-    API_test_setup
-
 Customer_confirmation_with_wrong_confirmation_key
     And I send a POST request:    /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"39085d16b04b34265910c7ea2a35367ggh"}}}
     Response status code should be:    422

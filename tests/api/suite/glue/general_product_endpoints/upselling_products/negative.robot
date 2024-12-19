@@ -5,10 +5,6 @@ Test Setup    API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
-
 #Logged in customer's cart
 Get_upselling_products_with_missing_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

@@ -7,9 +7,6 @@ Test Tags    bapi
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_Service_Types_List
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}

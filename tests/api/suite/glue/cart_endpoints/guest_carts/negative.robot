@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_guest_cart_without_anonymous_customer_unique_id
     When I send a GET request:    /guest-carts
     Then Response status code should be:    400

@@ -7,9 +7,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Search_without_query_parameter
     [Documentation]    bug https://spryker.atlassian.net/browse/CC-15983
     [Tags]    skip-due-to-issue

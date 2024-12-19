@@ -5,9 +5,6 @@ Test Setup    API_test_setup
 Test Tags    sapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_store_by_non_exist_id
     And I set Headers:    Content-Type=${default_header_content_type}
     When I send a GET request:    /stores/NON_EXIST_STORE

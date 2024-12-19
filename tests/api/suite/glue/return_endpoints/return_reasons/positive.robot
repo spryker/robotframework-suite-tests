@@ -6,8 +6,6 @@ Test Tags    glue
 
 *** Test Cases ***
 #GET requests
-ENABLER
-    API_test_setup
 Get_return_reason
     When I send a GET request:    /return-reasons
     Then Response status code should be:    200

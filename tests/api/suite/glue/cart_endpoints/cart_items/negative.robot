@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 # POST #
 Add_item_to_cart_non_existing_sku
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

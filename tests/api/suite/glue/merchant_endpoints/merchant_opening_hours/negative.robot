@@ -6,9 +6,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Retrieves_merchant_opening_hours_by_non_exist_merchant_id
     When I send a GET request:    /merchants/NonExistId/merchant-opening-hours
     Then Response status code should be:    404

@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Retrieves_list_of_merchants
     When I send a GET request:  /merchants
     Then Response status code should be:    200
