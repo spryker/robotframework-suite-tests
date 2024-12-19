@@ -13,7 +13,7 @@ ENABLER
 Create_a_customer_with_already_existing_email
     When I send a POST request:
     ...    /customers/
-    ...    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"${yves_user.email}","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
+    ...    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"${yves_user.email}","password":"${yves_user.password_new}","confirmPassword":"${yves_user.password_new}","acceptedTerms":True}}}
     Then Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    400
@@ -29,34 +29,32 @@ Create_a_customer_with_too_short_password
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Response should return error message:
-    ...    password => This value is too short. It should have 8 characters or more.
+    ...    password => This value is too short. It should have 12 characters or more.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_customer_with_too_long_password
     I send a POST request:
     ...    /customers/
-    ...    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"${yves_user.first_name}+${random}@spryker.com","password":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890","confirmPassword":"tests1234567890tests1234567890tests1234567890tests1234567890tests1234567890","acceptedTerms":True}}}
+    ...    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"${yves_user.first_name}+${random}@spryker.com","password":"Change!23456pqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuioppqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwert","confirmPassword":"Change!23456pqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuioppqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwert","acceptedTerms":True}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
     And Response should return error message:
-    ...    password => This value is too long. It should have 64 characters or less.
+    ...    password => This value is too long. It should have 128 characters or less.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_customer_with_too_weak_password
-    I send a POST request:
-    ...    /customers/
-    ...    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"${yves_user.first_name}+${random}@spryker.com","password":"12345678","confirmPassword":"12345678","acceptedTerms":True}}}
-    Response status code should be:    400
-    And Response reason should be:    Bad Request
-    And Response should return error code:    420
-    And Response should return error message:    The password character set is invalid.
+    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"1234567890123","confirmPassword":"1234567890123","acceptedTerms":True}}}
+    Response status code should be:    422
+    And Response reason should be:    Unprocessable Content
+    And Response should return error code:    901
+    And Array in response should contain property with value:    [errors]    detail    password => This password has been leaked in a data breach, it must not be used. Please use another password.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Create_a_customer_with_not_equal_passwords
     I send a POST request:
     ...    /customers/
-    ...    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"${yves_user.first_name}+${random}@spryker.com","password":"${yves_user.password}","confirmPassword":"12345678","acceptedTerms":True}}}
+    ...    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"${yves_user.first_name}+${random}@spryker.com","password":"${yves_user.password_new}","confirmPassword":"1234567890123","acceptedTerms":True}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    406
@@ -67,7 +65,7 @@ Create_a_customer_with_not_equal_passwords
 Create_a_customer_with_not_accepted_terms_and_coditions
     I send a POST request:
     ...    /customers/
-    ...    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"${yves_user.first_name}+${random}@spryker.com","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":False}}}
+    ...    {"data":{"type":"customers","attributes":{"firstName":"${yves_user.first_name}","lastName":"${yves_user.last_name}","gender":"${gender.female}","salutation":"${yves_user.salutation}","email":"${yves_user.first_name}+${random}@spryker.com","password":"${yves_user.password_new}","confirmPassword":"${yves_user.password_new}","acceptedTerms":False}}}
     Response status code should be:    422
     And Response reason should be:    Unprocessable Content
     And Response should return error code:    901
@@ -121,11 +119,11 @@ Create_a_customer_with_empty_values_for_required_fields
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
-    ...    password => This value is too short. It should have 8 characters or more.
+    ...    password => This value is too short. It should have 12 characters or more.
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
-    ...    confirmPassword => This value is too short. It should have 8 characters or more.
+    ...    confirmPassword => This value is too short. It should have 12 characters or more.
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
@@ -234,7 +232,7 @@ Update_a_customer_with_wrong_id
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a PATCH request:
     ...    /customers/${customer_reference.de_1}
-    ...    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_third_user.first_name}@spryker.com","password":"${yves_user.password}","confirmPassword":"${yves_user.password}","acceptedTerms":True}}}
+    ...    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_third_user.first_name}@spryker.com","password":"${yves_user.password_new}","confirmPassword":"${yves_user.password_new}","acceptedTerms":True}}}
     Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error code:    411
@@ -292,11 +290,11 @@ Update_a_customer_with_empty_values_for_required_fields
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
-    ...    password => This value is too short. It should have 8 characters or more.
+    ...    password => This value is too short. It should have 12 characters or more.
     And Array in response should contain property with value:
     ...    [errors]
     ...    detail
-    ...    confirmPassword => This value is too short. It should have 8 characters or more.
+    ...    confirmPassword => This value is too short. It should have 12 characters or more.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
 Update_a_customer_with_absent_type

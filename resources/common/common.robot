@@ -52,14 +52,13 @@ Common_suite_setup
     Remove Files    ${OUTPUTDIR}/*.yml
     Load Variables    ${env}
     Overwrite env variables
-    ${random}=    Generate Random String    5    [NUMBERS]
+    Generate global random variable
     ${random_id}=    Generate Random String    5    [NUMBERS]
     ${random_str}=    Generate Random String    5    [LETTERS]
     ${random_str_store}=    Generate Random String    2    [UPPER]
-    ${random_str_password}=    Generate Random String    2    [LETTERS]
-    ${random_id_password}=    Generate Random String    2    [NUMBERS]
+    ${random_str_password}=    Generate Random String    5    [LETTERS]
+    ${random_id_password}=    Generate Random String    5    [NUMBERS]
 
-    Set Global Variable    ${random}
     Set Global Variable    ${random_id}
     Set Global Variable    ${random_str}
     Set Global Variable    ${random_str_store}
@@ -72,6 +71,15 @@ Common_suite_setup
         Set Global Variable    ${db_host}    ${docker_db_host}
     END
     RETURN    ${random}
+
+Generate global random variable
+    ${excluded_ranges}=    Evaluate    [str(i).zfill(3) for i in list(range(1, 220)) + [666]]
+    ${random}=    Evaluate    random.randint(300, 99999)
+    WHILE    any(ex in str(${random}) for ex in ${excluded_ranges})
+        ${random}=    Evaluate    random.randint(300, 99999)
+    END
+    ${random}=    Convert To String    ${random}
+    Set Global Variable    ${random}
 
 Should Test Run
     Log Many    @{Test Tags}
@@ -294,17 +302,21 @@ Run console command
     END
 
 Trigger p&s
-    [Arguments]    ${timeout}=5s    ${storeName}=DE
+    [Arguments]    ${timeout}=1s    ${storeName}=DE
     Run console command    console queue:worker:start --stop-when-empty    ${storeName}
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger API specification update
-    [Arguments]    ${timeout}=5s    ${storeName}=DE
-    Run console command    cli glue api:generate:documentation --invalidated-after-interval 90sec    ${storeName}
+    [Arguments]    ${timeout}=1s    ${storeName}=DE
+    IF    ${docker}
+        Run console command    glue api:generate:documentation --invalidated-after-interval 90sec    ${storeName}
+    ELSE
+        Run console command    cli glue api:generate:documentation --invalidated-after-interval 90sec    ${storeName}
+    END
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger multistore p&s
-    [Arguments]    ${timeout}=5s
+    [Arguments]    ${timeout}=1s
     Trigger p&s    ${timeout}    DE
     Trigger p&s    ${timeout}    AT
 
@@ -770,7 +782,7 @@ Delete product_price by id_price_product in Database:
     Disconnect From Database
 
 Trigger product labels update
-    [Arguments]    ${timeout}=5s
+    [Arguments]    ${timeout}=1s
     Run console command    console product-label:relations:update -vvv --no-touch    DE
     Run console command    console product-label:validity    DE
     Run console command    console product-label:relations:update -vvv --no-touch    AT

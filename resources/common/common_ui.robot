@@ -278,7 +278,25 @@ Select From List By Text
     [Arguments]    ${locator}    ${value}
     Select Options By    ${locator}    text    ${value}
 
-###
+Select From List By Value Contains
+    [Arguments]    ${selector}    ${substring}
+    ${options}=    Get Select Options    ${selector}
+    ${matching_values}=    Evaluate    [option["value"] for option in ${options} if "${substring}" in option["value"]]
+    IF    ${matching_values}    
+        Select Options By    ${selector}    value    ${matching_values}[0]
+    ELSE    
+        Fail    No option with substring '${substring}' found in ${selector}
+    END
+
+Select From List By Label Contains
+    [Arguments]    ${selector}    ${substring}
+    ${options}=    Get Select Options    ${selector}
+    ${matching_values}=    Evaluate    [option["label"] for option in ${options} if "${substring}" in option["label"]]
+    IF    ${matching_values}    
+        Select Options By    ${selector}    label    ${matching_values}[0]
+    ELSE    
+        Fail    No option with substring '${substring}' found in ${selector}
+    END
 
 Create New Context
     ${new_context}=    New Context

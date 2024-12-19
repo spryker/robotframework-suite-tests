@@ -23,7 +23,8 @@
          "first_name":"Sonia",
          "last_name":"Wagner",
          "password":"change123",
-         "password_new":"qweRTY_123",
+         "password_new":"qweRTY_123456",
+         "password_new_additional":"Change!23456",
          "reference":"DE--21",
          "salutation":"Ms"
       },
@@ -40,6 +41,7 @@
          "first_name":"Max",
          "last_name":"Musterman",
          "password":"change123",
+         "password_new":"Change!23456",
          "salutation":"Mr"
       },
       "yves_fourth_user":{
@@ -63,6 +65,22 @@
          "email":"andrew@ottom.de",
          "password":"change123"
       },
+       "yves_eighth_user":{
+         "email":"maria.williams@spryker.com",
+         "password":"change123",
+         "password_new":"Change!23456",
+         "password_new_additional":"qweRTY_123456",
+         "reference":"DE--2"
+       },
+       "yves_ninth_user":{
+           "email":"maggie.may@spryker.com",
+           "first_name":"Maggie",
+           "last_name":"May",
+           "password":"Change!23456",
+           "password_new":"qweRTY_123456",
+           "reference":"DE--3",
+           "salutation":"Ms"
+       },
       "zed_admin":{
          "email":"admin@spryker.com",
          "email_de":"admin_de@spryker.com",

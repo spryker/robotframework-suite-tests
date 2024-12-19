@@ -1,17 +1,15 @@
-name: "[b2c-mp][master][UI][DMS-ON]"
+name: "[dev][suite][api][standalone][maria][dms-on]"
 
 on:
-    schedule:
-        -   cron: '0 1 * * 1-5'
     workflow_dispatch:
 
 jobs:
-    docker-alpine-php-8-2-mariadb-robot-ui:
-        name: "Docker / Alpine / PHP 8.2 / MariaDB / Robot / UI / DMS ON"
-        runs-on: ubuntu-20.04
+    docker-alpine-php-8-2-mariadb-robot-api:
+        name: "PHP 8.3 / Dev / MariaDB / Robot / Standalone / API / DMS ON"
+        runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:8.2
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
             TRAVIS: 1
             ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
         steps:
@@ -22,11 +20,11 @@ jobs:
               with:
                   python-version: '3.9'
 
-            - name: Clone project (master)
+            - name: Clone project (suite)
               run: |
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
-                  git clone -b master --single-branch https://github.com/spryker-shop/b2c-demo-marketplace.git .
+                  git clone -b feature/frw-9601/dev-optimize-ci-test-execution --single-branch https://github.com/spryker-shop/suite.git .
             - name: Install packages
               run: |
                   sudo apt-get install apache2-utils
@@ -36,7 +34,6 @@ jobs:
                   python3 -m pip install -U robotframework-requests
                   python3 -m pip install -U robotframework-jsonlibrary
                   python3 -m pip install -U robotframework-databaselibrary
-                  python3 -m pip install -U robotframework-browser
                   python3 -m pip install PyMySQL
             - name: Install docker-compose
               run: |
@@ -49,9 +46,9 @@ jobs:
               continue-on-error: false
               run: |
                   git clone https://github.com/spryker/docker-sdk.git ./docker
-                  docker/sdk boot -v deploy.ci.acceptance.mariadb.robot.yml
+                  docker/sdk boot -v deploy.ci.api.mariadb.robot.yml
                   sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local scheduler.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local date-time-configurator-example.spryker.local' >> /etc/hosts"
-                  docker/sdk up -t -v
+                  docker/sdk up -t
             - name: Custom commands
               continue-on-error: false
               run: |
@@ -59,25 +56,13 @@ jobs:
                   SPRYKER_CURRENT_REGION=EU docker/sdk console queue:worker:start --stop-when-empty
             - name: Run Tests
               id: run_tests
-              continue-on-error: true
               run: |
                   cd robotframework-tests
-                  rfbrowser init chromium
-                  robot -v env:ui_mp_b2c -v dms:true -v headless:true -v glue_env:http://glue.eu.spryker.local -v bapi_env:http://glue-backend.eu.spryker.local -v sapi_env:http://glue-storefront.eu.spryker.local -v yves_env:http://yves.eu.spryker.local -v zed_env:http://backoffice.eu.spryker.local -v mp_root_env:http://mp.eu.spryker.local/ -v mp_env:http://mp.eu.spryker.local/security-merchant-portal-gui/login/ -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.mp_b2c .
+                  robot -v env:api_suite -v dms:true -v glue_env:http://glue.eu.spryker.local -v bapi_env:http://glue-backend.eu.spryker.local -v sapi_env:http://glue-storefront.eu.spryker.local -v yves_env:http://yves.eu.spryker.local -v zed_env:http://backoffice.eu.spryker.local -v mp_root_env:http://mp.eu.spryker.local/ -v mp_env:http://mp.eu.spryker.local/security-merchant-portal-gui/login/ -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring -s '*'.tests.api.suite .
                   touch results/time.txt && echo $(date) > results/time.txt
-            - name: Rerun Failed Tests
-              if: steps.run_tests.outcome != 'success'
-              run: |
-                  cd robotframework-tests
-                  robot -v env:ui_mp_b2c -v dms:true -v headless:true -v glue_env:http://glue.eu.spryker.local -v bapi_env:http://glue-backend.eu.spryker.local -v sapi_env:http://glue-storefront.eu.spryker.local -v yves_env:http://yves.eu.spryker.local -v zed_env:http://backoffice.eu.spryker.local -v mp_root_env:http://mp.eu.spryker.local/ -v mp_env:http://mp.eu.spryker.local/security-merchant-portal-gui/login/ -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.ui.mp_b2c .
-            - name: Merge Test Results
-              if: always() && steps.run_tests.outcome != 'success'
-              run: |
-                  cd robotframework-tests
-                  rebot -d results --merge results/output.xml results/rerun/rerun.xml
             - name: Upload artifacts
-              if: failure()
+              if: always()
               run: |
-                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/night-robot-ui-ci/mp_b2c_regression-dms-on/${GITHUB_RUN_ID}/PHP8.2MariaDBRobotUi/ \
+                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/debug/suite-robot-api-ci-standalone/dms-on/${GITHUB_RUN_ID}/PHP8.3MariaDBRobotAPI/ \
                     --recursive \
                     --expires "$(date -d '+4 days' --utc +'%Y-%m-%dT%H:%M:%SZ')"

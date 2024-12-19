@@ -46,6 +46,7 @@ Business_Unit_Address_on_Checkout
     [Documentation]    Checks that business unit address can be used during checkout
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    businessAddressCart+${random}
+    ...    AND    Yves: delete all user addresses
     Yves: go to PDP of the product with sku:    M64933
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    businessAddressCart+${random}
@@ -68,6 +69,7 @@ Approval_Process
     [Documentation]    Checks role permissions on checkout and Approval process
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_with_limit_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    approvalCart+${random}
+    ...    AND    Yves: delete all user addresses
     Yves: go to PDP of the product with sku:    M49320
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    approvalCart+${random}
@@ -148,9 +150,10 @@ Approval_Process
 Request_for_Quote
     [Documentation]    Checks user can request and receive quote
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    change123${random}    Request    Quote    Root group    This user is an agent in Storefront    en_US
+    ...    AND    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Request    Quote    Root group    This user is an agent in Storefront    en_US
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
+    Yves: delete all user addresses
     Yves: create new 'Shopping Cart' with name:    RfQCart+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: add product to the shopping cart
@@ -161,7 +164,7 @@ Request_for_Quote
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    change123${random}
+    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
     Yves: header contains/doesn't contain:    true    ${quoteRequestsWidget}
     Yves: go to 'Agent Quote Requests' page through the header
     Yves: 'Quote Requests' page is displayed
@@ -186,7 +189,7 @@ Request_for_Quote
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    change123${random}
+    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
     Yves: move mouse over header menu item:     ${quoteRequestsWidget}
     Yves: 'Quote Requests' widget is shown
     Yves: go to the quote request through the header with reference:    ${lastCreatedRfQ}
@@ -279,7 +282,7 @@ Split_Delivery
 
 Multiple_Merchants_Order
     [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
-    [Setup]    Run Keywords    
+    [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_computer_experts_email}
     ...    AND    MP: change offer stock:
     ...    || offer    | stock quantity | is never out of stock ||
@@ -325,7 +328,7 @@ Multiple_Merchants_Order
 
 Checkout_Address_Management
     [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
-    [Setup]    Run Keywords    
+    [Setup]    Run Keywords
     ...    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all user addresses
     ...    AND    Yves: delete all shopping carts
@@ -389,7 +392,7 @@ Comments_in_Cart
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: go to order details page to check comment:    abc${random}    ${lastPlacedOrder}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}    
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: check comment appears at order detailed page in zed:    abc${random}    ${lastPlacedOrder}
 
 Comment_Management_in_the_Cart
@@ -400,9 +403,9 @@ Comment_Management_in_the_Cart
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    commentManagement+${random}
     Yves: add comment on cart:    abc${random}
-    Yves: check comments are visible or not in cart:    true    abc${random}    
+    Yves: check comments are visible or not in cart:    true    abc${random}
     Yves: edit comment on cart:    xyz${random}
-    Yves: check comments are visible or not in cart:    true    xyz${random}    
+    Yves: check comments are visible or not in cart:    true    xyz${random}
     Yves: delete comment on cart
     Yves: check comments are visible or not in cart:    false    xyz${random}
     [Teardown]    Run Keyword    Yves: delete 'Shopping Cart' with name:    commentManagement+${random}
@@ -429,7 +432,7 @@ Configurable_Product_Checkout
     ...    || option one | option two ||
     ...    || 420        | 240        ||
     Yves: save product configuration
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=2,486.54 
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=2,486.54
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true

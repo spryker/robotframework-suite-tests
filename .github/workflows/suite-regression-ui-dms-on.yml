@@ -62,7 +62,7 @@ jobs:
               continue-on-error: true
               run: |
                   cd robotframework-tests
-                  rfbrowser init
+                  rfbrowser init chromium
                   robot -v env:ui_suite -v dms:true -v glue_env:http://glue.eu.spryker.local -v bapi_env:http://glue-backend.eu.spryker.local -v sapi_env:http://glue-storefront.eu.spryker.local -v yves_env:http://yves.eu.spryker.local -v zed_env:http://backoffice.eu.spryker.local -v mp_root_env:http://mp.eu.spryker.local/ -v mp_env:http://mp.eu.spryker.local/security-merchant-portal-gui/login/ -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.suite .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Rerun Failed Tests
@@ -80,4 +80,4 @@ jobs:
               run: |
                   AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/night-robot-ui-ci/suite_regression-dms-on/${GITHUB_RUN_ID}/PHP8.3MariaDBRobotUi/ \
                     --recursive \
-                    --expires "$(date -d '+7 days' --utc +'%Y-%m-%dT%H:%M:%SZ')"
+                    --expires "$(date -d '+4 days' --utc +'%Y-%m-%dT%H:%M:%SZ')"

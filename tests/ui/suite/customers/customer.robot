@@ -75,6 +75,7 @@ Authorized_User_Access
     [Teardown]    Yves: check if cart is not empty and clear it
 
 New_Customer_Registration
+    [Tags]    smoke
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                       | password                                        ||
@@ -85,6 +86,7 @@ New_Customer_Registration
     ...    || sonia+${random}@spryker.com ||
 
 User_Account
+    [Tags]    smoke
     [Documentation]    Checks user account pages work + address management
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to user menu:    Overview
@@ -120,7 +122,7 @@ User_Account
     Yves: check that user has address exists/doesn't exist:    true    ${yves_second_user_first_name}${random}    ${yves_second_user_last_name}${random}    address 1${random}    address 2 ${random}    ${random}    Berlin${random}    Austria
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     ...    AND     Yves: delete all user addresses
-    
+
 Update_Customer_Data
     [Documentation]    Checks customer data can be updated from Yves and Zed
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
@@ -158,6 +160,7 @@ Update_Customer_Data
     ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name} | ${yves_second_user_last_name} ||
 
 Add_to_Wishlist
+    [Tags]    smoke
     [Documentation]    Check creation of wishlist and adding to different wishlists
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: delete all wishlists
@@ -173,13 +176,13 @@ Add_to_Wishlist
     Yves: go to wishlist with name:    Second wishlist
     Yves: wishlist contains product with sku:    004_30663302
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
-    Delete All Cookies
-    Yves: try to add product to wishlist as a guest user via glue
+    Yves: try to add product to wishlist as guest user
     [Teardown]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: delete all wishlists    
+    ...    AND    Yves: delete all wishlists
     ...    AND    Yves: check if cart is not empty and clear it
 
 Share_Shopping_Lists
+    [Tags]    smoke
     [Documentation]    Checks that shopping list can be shared
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: go to 'Shopping Lists' page
@@ -201,7 +204,7 @@ Share_Shopping_Lists
     Yves: view shopping list with name:    shareShoppingList+${random}
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
-    Yves: add all available products from list to cart  
+    Yves: add all available products from list to cart
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
@@ -209,7 +212,7 @@ Share_Shopping_Lists
 
 Share_Shopping_Carts
     [Documentation]    Checks that cart can be shared and used for checkout
-    [Setup]    Run Keywords    
+    [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_sony_experts_email}
     ...    AND    MP: change offer stock:
     ...    || offer   | stock quantity | is never out of stock ||
@@ -259,6 +262,7 @@ Share_Shopping_Carts
     Yves: 'Order Details' page is displayed
 
 Quick_Order
+    [Tags]    smoke
     [Documentation]    Checks Quick Order, checkout and Reorder
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
@@ -268,7 +272,7 @@ Quick_Order
     Yves: 'Quick Order' page is displayed
     Yves: add the following articles into the form through quick order text area:     202_5782479,1\n056_31714843,3
     Yves: find and add new item in the quick order form:
-    ...    || searchQuery                                  | merchant       || 
+    ...    || searchQuery                                  | merchant       ||
     ...    || ${product_with_multiple_offers_concrete_sku} | Budget Cameras ||
     Yves: add products to the shopping cart from quick order page
     Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
@@ -280,7 +284,7 @@ Quick_Order
     Yves: go to 'Quick Order' page through the header
     Yves: add the following articles into the form through quick order text area:     202_5782479,1\n056_31714843,3
     Yves: find and add new item in the quick order form:
-    ...    || searchQuery                                  | merchant       || 
+    ...    || searchQuery                                  | merchant       ||
     ...    || ${product_with_multiple_offers_concrete_sku} | Budget Cameras ||
     Yves: add products to the shopping list from quick order page with name:    quickOrderList+${random}
     Yves: 'Shopping List' page is displayed
@@ -310,7 +314,7 @@ Quick_Order
     Yves: 'Order Details' page is displayed
     ### Reorder ###
     Yves: reorder all items from 'Order Details' page
-    Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
+    Yves: go to the shopping cart through the header with name:    ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:     202_5782479    056_31714843    ${product_with_multiple_offers_concrete_sku}
     Yves: assert merchant of product in cart or list:    202_5782479    Video King
@@ -328,10 +332,7 @@ Reorder
     Yves: assert merchant of product in cart or list:    ${available_never_out_of_stock_concrete_sku}    Spryker
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | Guest     | User     | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
@@ -389,10 +390,22 @@ Shopping_List_Contains_Offers
     Yves: add product to the shopping list:    shoppingListName${random}
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
-    Yves: add all available products from list to cart  
+    Yves: add all available products from list to cart
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete 'Shopping List' with name:    shoppingListName${random}
+
+Email_Confirmation
+    [Tags]    smoke
+    [Documentation]    Check that a new user cannot login if the email is not verified
+    Register a new customer with data:
+    ...    || salutation | first name | last name | e-mail                             | password                                        ||
+    ...    || Mr.        | New        | User      | sonia+fails+${random}@spryker.com  | Ps${random_str_password}!5${random_id_password} ||
+    Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
+    Yves: login on Yves with provided credentials and expect error:     sonia+fails+${random}@spryker.com     Ps${random_str_password}!5${random_id_password}
+    [Teardown]    Zed: delete customer:
+    ...    || email                             ||
+    ...    || sonia+fails+${random}@spryker.com ||

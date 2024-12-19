@@ -34,6 +34,7 @@ Yves: perform search by:
     Keyboard Key    press    Enter
     Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Yves: go to company menu item:
     [Arguments]    ${company_menu_item}

@@ -51,9 +51,9 @@ Zed: create new role with name:
 
 Zed: apply access permissions for user role:
     [Arguments]    ${zed_user_role_bundle_access}    ${zed_user_role_controller_access}    ${zed_user_role_action_access}    ${permission_access}
-    Type Text    ${zed_user_role_bundle_locator}     ${zed_user_role_bundle_access}
-    Type Text    ${zed_user_role_controller_locator}    ${zed_user_role_controller_access}
-    Type Text    ${zed_user_role_action_locator}    ${zed_user_role_action_access}
+    Select From List By Value    ${zed_user_role_bundle_locator}     ${zed_user_role_bundle_access}
+    Select From List By Value    ${zed_user_role_controller_locator}    ${zed_user_role_controller_access}
+    Select From List By Value    ${zed_user_role_action_locator}    ${zed_user_role_action_access}
     Select From List By Label    ${zed_user_role_permission}    ${permission_access}
     Click    ${zed_user_add_rule_button}
 

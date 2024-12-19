@@ -77,7 +77,7 @@ Multistore_Product
     ...    || productAbstract   | name de                        ||
     ...    || multiSKU${random} | DEmultiProduct${random} forced ||
     Trigger multistore p&s
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to second navigation item level:    Catalog    Products
     Zed: click Action Button in a table for row that contains:     multiSKU${random}     Approve
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
@@ -116,10 +116,11 @@ Multistore_Product
     ...    AND    Yves: check if cart is not empty and clear it
 
 Multistore_Product_Offer
+    [Tags]    smoke
     [Documentation]    check product and offer multistore functionality. DMS-ON: https://spryker.atlassian.net/browse/FRW-7484
     Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
-    MP: open navigation menu tab:    Products    
+    MP: open navigation menu tab:    Products
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
     ...    || product sku            | product name               | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
@@ -135,7 +136,7 @@ Multistore_Product_Offer
     MP: fill product price values:
     ...    || product type | row number  | store | currency | gross default | gross original ||
     ...    || abstract     | 2           | AT    | EUR      | 300           | 90             ||
-    MP: save abstract product 
+    MP: save abstract product
     Trigger multistore p&s
     MP: click on a table row that contains:    multistoreProduct${random}
     MP: open concrete drawer by SKU:    multistoreSKU${random}-1
@@ -152,10 +153,10 @@ Multistore_Product_Offer
     MP: save concrete product
     Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to second navigation item level:    Catalog    Products
     Zed: click Action Button in a table for row that contains:     multistoreProduct${random}     Approve
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_user_email}  
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
@@ -197,7 +198,7 @@ Multistore_Product_Offer
     MP: click on a table row that contains:    multistoreSKU${random}-1
     MP: fill offer fields:
     ...    || is active | unselect store ||
-    ...    || true      | AT             ||         
+    ...    || true      | AT             ||
     MP: save offer
     Repeat Keyword    3    Trigger multistore p&s
     Yves: go to AT store 'Home' page if other store not specified:
@@ -217,9 +218,9 @@ Multistore_Product_Offer
     Repeat Keyword    3    Trigger multistore p&s
     Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    ...    AND    Zed: go to second navigation item level:    Catalog    Products
     ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
-    ...    AND    Trigger multistore p&s   
+    ...    AND    Trigger multistore p&s
 
 Multistore_CMS
     [Documentation]    check CMS multistore functionality
@@ -242,7 +243,7 @@ Multistore_CMS
 
 Dynamic_multistore
     [Documentation]    This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
-    [Tags]    dms-on
+    [Tags]    dms-on    smoke
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Store:
     ...    || name                                    | locale_iso_code | currency_iso_code | currency_code | currency_iso_code2 | currency_code2 | store_delivery_region | store_context_timezone ||
@@ -257,7 +258,7 @@ Dynamic_multistore
     ...    ||  ${random_str_store}_${random_str_store} | ${one_variant_product_abstract_sku} ||
     Zed: update abstract product price on:
     ...    || productAbstract                      | store                                   | mode  | type    | currency | amount | tax set            ||
-    ...    || ${one_variant_product_abstract_sku}  | ${random_str_store}_${random_str_store} | gross | default | €        | 160.00 | Smart Electronics  ||   
+    ...    || ${one_variant_product_abstract_sku}  | ${random_str_store}_${random_str_store} | gross | default | €        | 160.00 | Smart Electronics  ||
     Trigger multistore p&s
     Zed: change concrete product data:
     ...    || productAbstract                     | productConcrete                     | active | searchable en | searchable de ||
@@ -266,7 +267,7 @@ Dynamic_multistore
     ...    || productAbstract                     | productConcrete                     | store                                   | mode  | type    | currency | amount ||
     ...    || ${one_variant_product_abstract_sku} | ${one_variant_product_concrete_sku} | ${random_str_store}_${random_str_store} | gross | default | €        | 15.00  ||
     Zed: update warehouse:
-    ...    || warehouse  | store                                   || 
+    ...    || warehouse  | store                                   ||
     ...    || Warehouse1 | ${random_str_store}_${random_str_store} ||
     Zed: change concrete product stock:
     ...    || productAbstract                     | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
@@ -300,7 +301,7 @@ Dynamic_multistore
     Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                       | password                      ||
-    ...    || Mr.        | New        | User      | sonia+dms${random}@spryker.com  | P${random_str}s#!#${random_id} ||
+    ...    || Mr.        | New        | User      | sonia+dms${random}@spryker.com  | P${random_str_password}s#!#${random_id_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Run Keywords    Should Test Run
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}

@@ -71,6 +71,41 @@ Yves: login on Yves with provided credentials:
     END
     Yves: remove flash messages
 
+Yves: login on Yves with provided credentials and expect error:
+    [Arguments]    ${email}    ${password}=${default_password}
+    Set Browser Timeout    ${browser_timeout}
+    ${currentURL}=    Get Url
+    IF    '/login' not in '${currentURL}'
+        IF    '.at.' in '${currentURL}'
+            Delete All Cookies
+            Reload
+            Go To    ${yves_at_url}login
+        ELSE
+            Delete All Cookies
+            Reload
+            Go To    ${yves_url}login
+        END
+    END
+    ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    locator=${email_field}    message=Login page is not displayed
+    IF    'FAIL' in ${is_login_page}
+        Delete All Cookies
+        Yves: go to the 'Home' page
+        IF    '.at.' in '${currentURL}'
+            Go To    ${yves_at_url}login
+        ELSE
+            Go To    ${yves_url}login
+        END
+    END
+    Type Text    ${email_field}    ${email}
+    Type Text    ${password_field}    ${password}
+    Click    ${form_login_button}
+
+    Page Should Not Contain Element    ${user_navigation_icon_header_menu_item}[${env}]
+
+    Yves: flash message should be shown:    error    Please check that your E-mail address and password are correct and that you have confirmed your E-mail address by clicking the link in the registration message
+
+    Yves: remove flash messages
+
 Yves: go to PDP of the product with sku:
     [Arguments]    ${sku}    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=5s
     Yves: go to URL:    /search?q=${sku}
@@ -175,11 +210,11 @@ Yves: flash message '${condition}' be shown
 
 Yves: flash message should be shown:
     [Documentation]    ${type} can be: error, success
-    [Arguments]    ${type}    ${text}
+    [Arguments]    ${type}    ${text}    ${timeout}=${browser_timeout}
     IF    '${type}' == 'error'
-        Element Should Be Visible    locator=xpath=//flash-message[contains(@class,'alert')]//div[contains(text(),'${text}')]    timeout=${browser_timeout}
+        Element Should Be Visible    locator=xpath=//flash-message[contains(@class,'alert')]//div[contains(text(),'${text}')]    timeout=${timeout}
     ELSE
-        IF  '${type}' == 'success'  Element Should Be Visible    locator=xpath=//flash-message[contains(@class,'success')]//div[contains(text(),'${text}')]    timeout=${browser_timeout}
+        IF  '${type}' == 'success'  Element Should Be Visible    locator=xpath=//flash-message[contains(@class,'success')]//div[contains(text(),'${text}')]    timeout=${timeout}
     END
 
 Yves: logout on Yves as a customer
@@ -204,8 +239,8 @@ Yves: go to AT store 'Home' page if other store not specified:
     ELSE
         Go To    ${yves_url}
         Wait Until Element Is Visible    ${store_switcher_header_menu_item}
-        Select From List By Value    ${store_switcher_header_menu_item}    ${store}
-        Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
+        Select From List By Label Contains    ${store_switcher_header_menu_item}    ${store}
+        Wait Until Element Contains    ${store_switcher_selected_option}    ${store}
     END
 
 Yves: wait until store switcher contains:
@@ -271,8 +306,8 @@ Yves: go to AT store URL if other store not specified:
     ELSE
     Go To    ${yves_url}
         Wait Until Element Is Visible    ${store_switcher_header_menu_item}
-        Select From List By Value    ${store_switcher_header_menu_item}    ${store}
-        Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
+        Select From List By Label Contains    ${store_switcher_header_menu_item}    ${store}
+        Wait Until Element Contains    ${store_switcher_selected_option}    ${store}
     Go To    ${yves_url}${url}
     END
 
@@ -303,8 +338,8 @@ Yves: go to newly created page by URL on AT store if other store not specified:
         ELSE
             Go To    ${yves_url}
             Wait Until Element Is Visible    ${store_switcher_header_menu_item}
-            Select From List By Value    ${store_switcher_header_menu_item}    ${store}
-            Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
+            Select From List By Label Contains    ${store_switcher_header_menu_item}    ${store}
+            Wait Until Element Contains    ${store_switcher_selected_option}    ${store}
             Go To    ${yves_url}${url}?${index}
         END
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
@@ -330,8 +365,8 @@ Yves: navigate to specified AT store URL if no other store is specified and refr
         ELSE
             Go To    ${yves_url}
             Wait Until Element Is Visible    ${store_switcher_header_menu_item}
-            Select From List By Value    ${store_switcher_header_menu_item}    ${store}
-            Wait Until Element Contains    //*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']    ${store}
+            Select From List By Label Contains    ${store_switcher_header_menu_item}    ${store}
+            Wait Until Element Contains    ${store_switcher_selected_option}    ${store}
             Go To    ${url}
         END
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
@@ -480,32 +515,17 @@ Yves: go to the PDP of the first available product on open catalog page
 Yves: check if cart is not empty and clear it
     Yves: go to the 'Home' page
     Yves: go to b2c shopping cart
-    ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
-    ${cartIsEmpty}=    Run Keyword And Return Status    Element should be visible    xpath=//*[contains(@class,'spacing-top') and text()='Your shopping cart is empty!']    timeout=1s
-    IF    '${cartIsEmpty}'=='False'    Helper: delete all items in cart
+    ${productsInCart}=    Get Element Count    xpath=//main//form[contains(@name,'removeFromCartForm')]//button | //main//form[contains(@action,'bundle/async/remove')]//button
+    IF    ${productsInCart} > 0    Helper: delete all items in cart
 
 Helper: delete all items in cart
-
-    IF    '${env}' in ['ui_suite']
-        ${productsInCart}=    Get Element Count    xpath=//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]
-        FOR    ${index}    IN RANGE    0    ${productsInCart}
-            TRY
-                Click    xpath=(//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//form[contains(@name,'removeFromCart')]//button)[1]
-                Yves: remove flash messages
-            EXCEPT    
-                Log    Shopping cart is empty now
-            END
-        END
-    ELSE
-        ${productsInCart}=    Get Element Count    xpath=//article[@class='product-card-item']//div[contains(@class,'product-card-item__box')]
-        FOR    ${index}    IN RANGE    0    ${productsInCart}
-            TRY
-                Click    xpath=(//div[@class='page-layout-cart__items-wrap']//ancestor::div/following-sibling::div//form[contains(@name,'removeFromCart')]//button[text()='Remove'])[1]
-                Yves: remove flash messages
-            EXCEPT    
-                Log    Shopping cart is empty now
-            END
-        END
+    ${productsInCart}=    Get Element Count    xpath=//main//form[contains(@name,'removeFromCartForm')]//button | //main//form[contains(@action,'bundle/async/remove')]//button
+    IF    ${productsInCart} == 0    Log    Shopping cart is empty
+    FOR    ${index}    IN RANGE    0    ${productsInCart}
+        Click    xpath=(//main//form[contains(@name,'removeFromCartForm')]//button | //main//form[contains(@action,'bundle/async/remove')]//button)[1]
+        Yves: remove flash messages     
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
     END
 
 Yves: try reloading page if element is/not appear:

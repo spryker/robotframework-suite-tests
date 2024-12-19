@@ -43,12 +43,12 @@ jobs:
                   sudo chmod +x /usr/local/bin/docker-compose
             - name: Install Robot tests
               run: |
-                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch master robotframework-tests
+                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch bugfix/frw-9023-wrong-available-locales-expander robotframework-tests
             - name: Install Project
               continue-on-error: false
               run: |
                   git clone https://github.com/spryker/docker-sdk.git ./docker
-                  docker/sdk boot -v deploy.ci.acceptance.mariadb.dynamic-store.robot.yml
+                  docker/sdk boot -v deploy.ci.acceptance.mariadb.robot.yml
                   sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local scheduler.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                   docker/sdk up -t -v
             - name: Custom commands
@@ -78,4 +78,4 @@ jobs:
               run: |
                   AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/night-robot-api-ci/b2b_mp_regression-dms-on/${GITHUB_RUN_ID}/PHP8.2MariaDBRobotAPI/ \
                     --recursive \
-                    --expires "$(date -d '+7 days' --utc +'%Y-%m-%dT%H:%M:%SZ')"
+                    --expires "$(date -d '+4 days' --utc +'%Y-%m-%dT%H:%M:%SZ')"

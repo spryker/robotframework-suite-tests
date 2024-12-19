@@ -44,7 +44,9 @@ Resource    ../../../../resources/steps/configurable_bundle_steps.robot
 
 *** Test Cases ***
 Product_labels
+    [Tags]    smoke
     [Documentation]    Checks that products have labels on PLP and PDP
+    Trigger product labels update
     Yves: go to first navigation item level:    Sale
     Yves: 1st product card in catalog (not)contains:     Sale label    true
     Yves: go to the PDP of the first available product on open catalog page
@@ -55,7 +57,7 @@ Product_labels
     Yves: PDP contains/doesn't contain:    true    ${pdp_new_label}[${env}]
     [Teardown]    Yves: check if cart is not empty and clear it
 
-Product_Sets   
+Product_Sets
     [Documentation]    Check the usage of product sets
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to URL:    en/product-sets
@@ -71,6 +73,7 @@ Product_Sets
     [Teardown]    Yves: check if cart is not empty and clear it
 
 CRUD_Product_Set
+    [Tags]    smoke
     [Documentation]    CRUD operations for product sets. DMS-ON: https://spryker.atlassian.net/browse/FRW-7393 
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new product set:
@@ -93,8 +96,9 @@ CRUD_Product_Set
     Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/test-set-${random}
 
 Configurable_Bundle
+    [Tags]    smoke
     [Documentation]    Check the usage of configurable bundles (includes authorized checkout)
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with provided credentials:    ${yves_default_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to URL:    en/configurable-bundle/configurator/template-selection
     Yves: 'Choose Bundle to configure' page is displayed
@@ -114,10 +118,7 @@ Configurable_Bundle
     Yves: change quantity of the configurable bundle in the shopping cart on:    Smartstation Kit    2
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_default_user_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -137,7 +138,7 @@ Configurable_Bundle
     Zed: trigger all matching states inside this order:    Ship
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Close
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_default_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
 
 Product_Relations
@@ -152,6 +153,7 @@ Product_Relations
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Discounts
+    [Tags]    smoke
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
@@ -166,6 +168,8 @@ Discounts
     Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=002    promotionalProductQuantity=2
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: delete all user addresses
+    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    190
     Yves: add product to the shopping cart    wait_for_p&s=true
@@ -183,10 +187,7 @@ Discounts
     Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €75.00
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
     Yves: select the following shipping method for the shipment:    1    Spryker Dummy Shipment    Standard
     Yves: select the following shipping method for the shipment:    2    Spryker Dummy Shipment    Express
     Yves: select the following shipping method for the shipment:    3    Spryker Drone Shipment    Air Light
@@ -198,7 +199,9 @@ Discounts
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €773.45
-    [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
+    [Teardown]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Yves: check if cart is not empty and clear it
+    ...    AND    Yves: delete all user addresses
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
     ...    AND    Zed: activate following discounts from Overview page:    	Free mobile phone    20% off cameras products    Free Acer M2610 product    Free delivery    10% off Intel products    5% off white products    Tuesday & Wednesday $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order

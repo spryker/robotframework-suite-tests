@@ -56,6 +56,8 @@ Yves: share shopping cart with user:
 
 Yves: go to the shopping cart through the header with name:
     [Arguments]    ${shoppingCartName}
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
     Yves: remove flash messages
     Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}]
     Mouse Over    ${shopping_car_icon_header_menu_item}[${env}]
@@ -66,17 +68,22 @@ Yves: go to the shopping cart through the header with name:
         Click    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
     END
     Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
-Yves: go to b2c shopping cart
+Yves: go to b2c shopping cart through the header
     Yves: remove flash messages
     Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}]
     Click     ${shopping_car_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${shopping_cart_main_content_locator}[${env}]
-    Mouse Over    ${footer_section}
     Reload
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
     Wait Until Element Is Visible    ${shopping_cart_main_content_locator}[${env}]
+
+Yves: go to b2c shopping cart
+    Yves: go to URL:    /cart
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
 
 Yves: shopping cart contains the following products:
     [Documentation]    For item listing you can use sku or name of the product
