@@ -4,7 +4,9 @@ Test Setup    API_test_setup
 Resource    ../../../../../../resources/steps/service_point_steps.robot
 Test Tags    glue
 
-*** Test Cases ***    Deactivate service points
+*** Test Cases ***    
+ENABLED
+    Deactivate service points
 
 Retrieves_a_service_point_address_by_id
     [Setup]    Run Keywords    Create service point in DB    ${servicePoints[0].uuid}
