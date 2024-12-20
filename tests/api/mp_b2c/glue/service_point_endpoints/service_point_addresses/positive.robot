@@ -5,7 +5,7 @@ Resource    ../../../../../../resources/steps/service_point_steps.robot
 Test Tags    glue
 
 *** Test Cases ***    
-ENABLED
+ENABLER
     Deactivate service points
 
 Retrieves_a_service_point_address_by_id
