@@ -40,6 +40,7 @@ Resource    ../../../../resources/steps/glossary_steps.robot
 Resource    ../../../../resources/steps/order_comments_steps.robot
 Resource    ../../../../resources/steps/configurable_product_steps.robot
 Resource    ../../../../resources/steps/dynamic_entity_steps.robot
+Resource    ../../../../resources/steps/api_dynamic_entity_steps.robot
 
 *** Test Cases ***
 Data_exchange_API_download_specification
@@ -51,7 +52,7 @@ Data_exchange_API_download_specification
     Zed: download data exchange api specification
     Zed: check that downloaded api specification contains:    /dynamic-entity/product-abstracts
     Zed: check that downloaded api specification does not contain:    /dynamic-entity/mime-types
-    Zed: delete dowloaded api specification
+    Zed: delete downloaded api specification
     Zed: start creation of new data exchange api configuration for db table:    spy_mime_type
     Zed: edit data exchange api configuration:
     ...    || table_name  | is_enabled ||
@@ -84,7 +85,7 @@ Data_exchange_API_download_specification
     ...    AND    Zed: save data exchange api configuration
     ...    AND    Trigger API specification update
     ...    AND    Zed: wait until info box is not displayed
-    ...    AND    Zed: delete dowloaded api specification
+    ...    AND    Zed: delete downloaded api specification
     ...    AND    Delete dynamic entity configuration in Database:    mime-types
     ...    AND    Trigger API specification update
 

@@ -2,7 +2,6 @@
 Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Resource    ../../../../../../resources/steps/dynamic_entity_steps.robot
 
 Test Tags    bapi
 
