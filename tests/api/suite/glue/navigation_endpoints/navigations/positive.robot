@@ -5,8 +5,6 @@ Test Tags    glue
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 To_retrieve_a_navigation_tree
     When I send a GET request:    /navigations/MAIN_NAVIGATION
     Then Response status code should be:    200

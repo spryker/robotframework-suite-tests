@@ -5,9 +5,6 @@ Test Setup        API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Retrieves_merchant_opening_hours
     When I send a GET request:  /merchants/${merchant.sony_experts.merchant_id}/merchant-opening-hours
     Then Response status code should be:    200

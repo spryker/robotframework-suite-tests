@@ -4,10 +4,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-
-ENABLER
-    API_test_setup
-
 Restore_password_without_customer_id
     I send a PATCH request:    /customer-restore-password/   {"data":{"type":"customer-restore-password","attributes":{"restorePasswordKey":"5ec608df9c0dd57c3dd08b540d4a68da","password":"${yves_user.password}","confirmPassword":"${yves_user.password}"}}}
     And Response status code should be:    400

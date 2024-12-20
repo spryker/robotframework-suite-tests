@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_agent_token_for_user_who_is_not_agent
     When I send a POST request:
     ...    /agent-access-tokens

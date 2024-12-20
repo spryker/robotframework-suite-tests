@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_all_product_management_attributes
     When I send a GET request:    /product-management-attributes
     Then Response status code should be:    200

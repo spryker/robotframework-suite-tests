@@ -6,9 +6,6 @@ Resource    ../../../../../../resources/steps/push_notifications_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-   API_test_setup
-
 Creates_push_notification_subscription_with_correct_locale
     [Setup]    Run Keywords    Create warehouse in DB:    ${warehouses.name}     ${True}     ${warehouses.uuid}
     ...    AND    Assign user to Warehouse in DB:    admin@spryker.com    ${warehouses.uuid}

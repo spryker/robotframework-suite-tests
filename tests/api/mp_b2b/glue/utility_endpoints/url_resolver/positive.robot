@@ -6,9 +6,6 @@ Test Tags    glue
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_url_collections_by_url_paramater_of_category_nodes
     When I send a GET request:    /url-resolver?url=${url_resolver.category_nodes}
     Then Response status code should be:    200

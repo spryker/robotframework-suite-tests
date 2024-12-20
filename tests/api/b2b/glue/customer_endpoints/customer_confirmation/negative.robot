@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Customer_confirmation_with_wrong_confirmation_key
     And I send a POST request:
     ...    /customer-confirmation

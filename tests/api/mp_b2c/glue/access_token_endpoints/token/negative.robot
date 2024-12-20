@@ -5,9 +5,6 @@ Test Setup        API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_token_for_customer_with_invalid_grant_type
     When I set Headers:    Content-Type=${urlencoded_header_content_type}
     Then I send a POST request with data:    /token    {"grant_type": "invalid_grant_type","username": "${yves_user.email}","password": "${yves_user.password}"}

@@ -6,9 +6,6 @@ Test Tags    glue
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_url_collections_by_url_paramater_of_category_nodes
     [Documentation]   #CC-16595 API: ID is missing from url resolver.
     [Tags]    skip-due-to-issue 

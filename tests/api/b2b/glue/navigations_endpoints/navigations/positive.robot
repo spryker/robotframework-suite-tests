@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_navigation_tree_using_valid_navigation_key
     When I send a GET request:    /navigations/MAIN_NAVIGATION
     Then Response status code should be:    200

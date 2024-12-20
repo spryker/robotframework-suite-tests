@@ -4,8 +4,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 Customer_confirmation
    [Setup]    Run Keywords    I send a POST request:    /customers    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.female}","salutation":"${yves_third_user.salutation}","email":"${yves_third_user.first_name}+${random}@spryker.com","password":"${yves_third_user.password_new}","confirmPassword":"${yves_third_user.password_new}","acceptedTerms":True}}}
     ...    AND    Response status code should be:    201

@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Add_a_concrete_product_to_the_shopping_list_without_access_token
     I send a POST request:    /shopping-lists/${1st_shopping_list.id}/shopping-list-items    {"data":{"type":"shopping-list-items","attributes":{"sku":"${abstract_available_product_with_stock.concrete_available_product.sku}","quantity":1}}}
     And Response status code should be:    403

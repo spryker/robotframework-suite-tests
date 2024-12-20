@@ -4,10 +4,7 @@ Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases ***    
 Get_a_measurement_unit_with_non_existent_sku
     When I send a GET request:    /concrete-products/fake/sales-units
     Then Response status code should be:    404

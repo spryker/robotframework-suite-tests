@@ -8,10 +8,7 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 #####POST#####
-
 Get_manual_product_label_by_id
     When I send a GET request:    /product-labels/${labels.id_manual}
     Then Response status code should be:    200

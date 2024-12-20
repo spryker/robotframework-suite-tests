@@ -5,8 +5,6 @@ Test Setup        API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 Get_product_offer_without_volume_price
      I send a GET request:    /concrete-products/${concrete_of_alternative_product_with_relations_upselling.sku}/product-offers
     AND Save value to a variable:    [data][0][id]    offerId

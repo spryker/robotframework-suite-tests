@@ -6,10 +6,7 @@ Test Tags    glue
 
 
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases ***    
 Retrieves_merchant_by_non_exist_id
     When I send a GET request:    /merchants/NonExistId
     Then Response status code should be:    404

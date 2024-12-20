@@ -4,10 +4,7 @@ Test Setup    API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases ***    
 Get_an_attribute_with_non_existent_attribute_id
     When I send a GET request:    /product-management-attributes/fake
     Then Response status code should be:    404

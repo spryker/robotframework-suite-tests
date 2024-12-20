@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_banner_without_id
     When I send a GET request:    /content-banners
     Then Response status code should be:    400

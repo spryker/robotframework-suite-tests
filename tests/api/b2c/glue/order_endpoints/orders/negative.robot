@@ -5,8 +5,6 @@ Test Tags    glue
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 #GET requests
 Get_order_by_order_id_with_invalid_access_token
     [Setup]    I set Headers:    Authorization=fake_token

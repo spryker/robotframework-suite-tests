@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_all_availiable_stores
     [Tags]    dms-off
     [Documentation]    https://spryker.atlassian.net/browse/FRW-7430 Test has been skipped for dms-on shop. discussed with Platform team. Bug has low priority can be not fixed soon.

@@ -4,10 +4,7 @@ Test Setup     API_test_setup
 Resource       ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases ***    
 #GET requests
 Get_availability_notifications_for_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

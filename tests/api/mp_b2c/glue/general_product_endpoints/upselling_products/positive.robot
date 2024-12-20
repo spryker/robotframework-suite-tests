@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 #Logged in customer's cart
 #bug: https://spryker.atlassian.net/browse/CC-17008
 Get_upselling_products

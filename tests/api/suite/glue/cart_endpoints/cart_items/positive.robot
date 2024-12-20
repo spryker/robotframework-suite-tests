@@ -5,8 +5,6 @@ Resource          ../../../../../../resources/common/common_api.robot
 Test Tags      glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 ###POST#####
 
 Add_one_item_to_cart

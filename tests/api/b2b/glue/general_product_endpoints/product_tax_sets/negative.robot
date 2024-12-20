@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 
 Get_a_tax_set_with_concrete_sku
     When I send a GET request:

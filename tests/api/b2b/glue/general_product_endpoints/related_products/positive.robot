@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Product_has_related_products
     When I send a GET request:
     ...    /abstract-products/${abstract.product_with_relations.has_related_products.product_1.sku}/related-products

@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Update_customer_password_with_all_required_fields_and_valid_data
     [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_eighth_user.email}","password":"${yves_eighth_user.password}"}}}
     ...    AND    Response status code should be:    201

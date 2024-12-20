@@ -4,10 +4,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-
-ENABLER
-    API_test_setup
-
 #####POST#####
 Create_customer_address_with_all_fields
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

@@ -4,10 +4,7 @@ Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases ***    
 Get_sales_units_for_product_without_sales_units
     When I send a GET request:    /concrete-products/${abstract_available_product_with_stock.concrete_available_product.sku}/sales-units
     Then Response status code should be:    200

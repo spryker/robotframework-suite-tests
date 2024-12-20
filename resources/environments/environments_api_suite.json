@@ -3,11 +3,12 @@
    "env":{
       "glue_url":"http://glue.de.spryker.local",
       "bapi_url":"http://glue-backend.de.spryker.local",
-      "sapi_url":"http://glue-storefront.de.spryker.local",
-      "yves_url":"http://yves.de.spryker.local/",
-      "zed_url":"http://backoffice.de.spryker.local/",
-      "yves_at_url":"http://yves.at.spryker.local/",
-      "mp_url":"http://mp.de.spryker.local/security-merchant-portal-gui/login/"
+      "sapi_url":"http://glue-storefront.de.spryker.local"
+   },
+   "dms_env":{
+      "glue_dms_url":"http://glue.eu.spryker.local",
+      "bapi_dms_url":"http://glue-backend.eu.spryker.local",
+      "sapi_dms_url":"http://glue-storefront.eu.spryker.local"
    },
    "database":{
       "db_host":"127.0.0.1",
@@ -361,7 +362,9 @@
          },
          "product_with_label":{
             "sku":"001",
-            "name":"Canon IXUS 160"
+            "name":"Canon IXUS 160",
+            "description_de":"Beeindruckende Aufnahmen",
+            "description_en":"Add a personal touch"
          },
          "product_with_reviews":{
             "sku":"093",

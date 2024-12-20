@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Restore_password_without_customer_id
     I send a PATCH request:
     ...    /customer-restore-password/

@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_product_reviews
     When I send a GET request:    /abstract-products/${abstract.with_review.sku}/product-reviews
     Then Response status code should be:    200

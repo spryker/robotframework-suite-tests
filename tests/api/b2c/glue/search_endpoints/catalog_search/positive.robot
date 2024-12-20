@@ -5,11 +5,7 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-
 ##### SEARCH PARAMETERS #####
-ENABLER
-    API_test_setup
-
 Search_with_empty_search_criteria_all_default_values_check
     When I send a GET request:    /catalog-search?q=
     Then Response status code should be:    200

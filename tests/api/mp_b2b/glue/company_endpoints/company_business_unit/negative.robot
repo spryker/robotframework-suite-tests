@@ -4,10 +4,7 @@ Test Setup    API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases ***    
 Request_business_unit_with_empty_access_token
     [Setup]    I set Headers:    Authorization=
     When I send a GET request:    /company-business-units/456789

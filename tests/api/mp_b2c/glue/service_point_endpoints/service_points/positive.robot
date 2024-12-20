@@ -4,9 +4,8 @@ Test Setup    API_test_setup
 Resource    ../../../../../../resources/steps/service_point_steps.robot
 Test Tags    glue
 
-*** Test Cases ***
+*** Test Cases ***    
 ENABLER
-    API_test_setup
     Deactivate service points
 
 Retrieves_list_of_service_points

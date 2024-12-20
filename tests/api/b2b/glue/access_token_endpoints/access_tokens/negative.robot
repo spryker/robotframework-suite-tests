@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_acess_token_with_invalid_password
     When I send a POST request:
     ...    /access-tokens

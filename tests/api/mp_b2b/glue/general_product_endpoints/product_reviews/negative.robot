@@ -5,9 +5,6 @@ Test Setup    API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_a_review_with_non_existent_review_id
     When I send a GET request:    /abstract-products/${abstract_product.product_with_reviews.sku}/product-reviews/fake
     Then Response status code should be:    404

@@ -5,9 +5,6 @@ Test Tags    glue
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Create_git_card_code_with_invalid_access_token
      [Setup]    Run Keyword   I set Headers:    Authorization=345A9
     When I send a POST request:    /carts/cart_id/cart-codes   {"data": {"type": "cart-codes","attributes": {"code": "${random}"}}}

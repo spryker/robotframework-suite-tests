@@ -4,10 +4,7 @@ Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases ***    
 Get_concrete_bundled_products_inside_concrete_bundle
     When I send a GET request:    /concrete-products/${bundle_product.concrete.product_1_sku}/bundled-products
     Then Response status code should be:    200

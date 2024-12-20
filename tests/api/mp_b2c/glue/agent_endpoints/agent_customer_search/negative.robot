@@ -5,8 +5,6 @@ Test Setup        API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 Agent_searches_for_customers_with_no_token
     When I send a GET request:    /agent-customer-search
     Then Response status code should be:    401

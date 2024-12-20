@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 ####### GET #######
 
 Get_configurable_bundle_templates_by_invalid_configurable_bundle.template_id

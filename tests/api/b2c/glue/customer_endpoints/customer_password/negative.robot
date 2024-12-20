@@ -5,9 +5,6 @@ Suite Setup    API_suite_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Update_customer_password_with_not_equal_new_password
     Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
