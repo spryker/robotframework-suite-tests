@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 ###### POST #######
 
 Add_item_to_cart_non_existing_sku

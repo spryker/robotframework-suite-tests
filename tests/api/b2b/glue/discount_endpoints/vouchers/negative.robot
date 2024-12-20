@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 ####### POST #######
 
 Adding_not_existing_voucher_code_to_cart_of_logged_in_customer

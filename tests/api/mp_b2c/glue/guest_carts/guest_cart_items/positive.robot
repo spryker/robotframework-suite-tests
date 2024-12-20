@@ -5,9 +5,6 @@ Test Setup        API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Add_an_item_to_the_guest_cart
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    X-Anonymous-Customer-Unique-Id=${random}
     Run Keywords    Create a guest cart:    ${random}    ${concrete_available_product.with_offer}    1

@@ -5,8 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 Get_cart_by_cart_id_with_invalid_access_token
    [Setup]    I set Headers:    Authorization=3485h7
     When I send a GET request:    /carts/not-existing-cart

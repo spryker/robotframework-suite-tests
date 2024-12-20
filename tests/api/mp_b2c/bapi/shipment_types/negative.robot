@@ -6,9 +6,6 @@ Resource    ../../../../../resources/steps/shipment_type_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 *** Test Cases ***
 Create_shipment_type_with_incorrect_type_in_body
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5845

@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_product_offer_availabilities
     When I send a GET request:    /product-offers/${second_offer_with_volume_price}/product-offer-availabilities
     Then Response status code should be:    200

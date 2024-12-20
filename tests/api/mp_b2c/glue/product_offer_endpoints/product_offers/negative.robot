@@ -5,8 +5,6 @@ Test Setup    API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 Get_product_offers_without_product_offer_id
     When I send a GET request:    /product-offers/
     Then Response status code should be:    400
@@ -41,7 +39,7 @@ Get_product_offer_with_volume_prices_included_for_denied_product_offer
     And Response reason should be:    Not Found
     And Response should return error message:    Product offer not found.
 
-Get_product_offer_with_invaild_offer_id
+Get_product_offer_with_invalid_offer_id
     When I send a GET request:    /product-offers/test
     Then Response status code should be:    404
     And Response reason should be:    Not Found

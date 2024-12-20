@@ -4,10 +4,7 @@ Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases ***    
 #GET requests
 Get_cart_by_cart_id
     [Documentation]    bug https://spryker.atlassian.net/browse/CC-26179

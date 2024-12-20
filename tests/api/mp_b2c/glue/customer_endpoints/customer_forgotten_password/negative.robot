@@ -5,9 +5,6 @@ Test Setup        API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Forgot_password_wrong_email_format
     I send a POST request:    /customer-forgotten-password    {"data":{"type":"customer-forgotten-password","attributes":{"email":"xyz"}}}
     Response status code should be:    422

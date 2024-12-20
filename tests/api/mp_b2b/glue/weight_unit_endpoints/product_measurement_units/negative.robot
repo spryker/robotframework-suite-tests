@@ -4,10 +4,8 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Setup        API_test_setup
 Test Tags    glue
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
- Get_a_measurement_unit_with_non_existent_unit_id
+*** Test Cases *** 
+Get_a_measurement_unit_with_non_existent_unit_id
     When I send a GET request:    /product-measurement-units/notexist
     Then Response status code should be:    404
     And Response reason should be:    Not Found

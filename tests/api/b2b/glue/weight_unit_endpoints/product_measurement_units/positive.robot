@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_product_measurement_unit_by_id
     When I send a GET request:    /product-measurement-units/${measurement_unit.m}
     Then Response status code should be:    200

@@ -6,9 +6,6 @@ Test Tags    glue
 
 *** Test Cases ***
 #GET requests
-
-ENABLER
-    API_test_setup
 ### Precondition: To run commented tests need to enable service endpoints and uncomment tests
 ### To enable the endpoints, add the following to /config/Shared/config_default.php:
 ### Spryker\Shared\HealthCheck\HealthCheckConstants;$config[HealthCheckConstants::HEALTH_CHECK_ENABLED] = true;

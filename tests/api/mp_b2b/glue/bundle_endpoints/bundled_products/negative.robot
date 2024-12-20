@@ -4,10 +4,7 @@ Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases ***    
 Get_bundled_products_with_nonexisting_concrete_sku
     [Documentation]   there is a bug - https://spryker.atlassian.net/browse/CC-15994
     [Tags]    skip-due-to-issue 

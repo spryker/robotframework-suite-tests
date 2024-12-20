@@ -5,9 +5,6 @@ Test Setup        API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_category_node_is_root_by_id
    [Documentation]     https://spryker.atlassian.net/browse/CC-25961
    [Tags]    skip-due-to-issue

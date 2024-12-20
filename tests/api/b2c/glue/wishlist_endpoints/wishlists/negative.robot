@@ -5,8 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 #Get_request
 Getting_wishlist_by_invalid_Access_Token
     [Setup]    I set Headers:    Authorization=3485h7

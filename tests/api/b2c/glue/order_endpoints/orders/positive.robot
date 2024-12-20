@@ -5,10 +5,7 @@ Test Tags    glue
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 # #GET requests
-
 Get_order_by_order_id
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}

@@ -5,9 +5,6 @@ Test Setup        API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 
 Get_product_offer_availabilities
     I send a GET request:    /concrete-products/${merchant.spryker.concrete_product_with_offer_sku}/product-offers

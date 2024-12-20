@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Abstract_product_with_one_concrete
     #Bug - CC-16551
     When I send a GET request:    /abstract-products/${abstract.available_products.with_stock.sku}

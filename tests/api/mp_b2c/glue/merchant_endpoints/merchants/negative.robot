@@ -5,10 +5,7 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Setup        API_test_setup
 Test Tags    glue
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases ***    
 Retrieves_merchant_with_non_existent_id
     When I send a GET request:    /merchants/NonExistId
     Then Response status code should be:    404

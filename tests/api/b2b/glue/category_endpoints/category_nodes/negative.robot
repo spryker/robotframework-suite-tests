@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 # endpoint receive category_node_id as int
 # here I use str type of the id and test response body
 

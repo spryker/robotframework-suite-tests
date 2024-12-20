@@ -8,10 +8,7 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 #POST requests
-
 Provide_checkout_data_with_invalid_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}

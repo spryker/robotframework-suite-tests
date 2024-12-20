@@ -6,9 +6,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_product_reviews
     When I send a GET request:    /abstract-products/${abstract_product.with_reviews.sku}/product-reviews
     Then Response status code should be:    200

@@ -6,10 +6,6 @@ Resource    ../../../../../../resources/steps/push_notifications_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-   API_test_setup
-
-*** Test Cases ***
 Create_push_notification_provider
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}

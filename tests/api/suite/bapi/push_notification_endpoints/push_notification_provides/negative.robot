@@ -7,10 +7,6 @@ Resource    ../../../../../../resources/steps/push_notifications_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-   API_test_setup
-
-*** Test Cases ***
 Retrieve_push_notification_providers_without_authorization
     When I set Headers:    Content-Type=application/vnd.api+json
     When I send a GET request:    /push-notification-providers

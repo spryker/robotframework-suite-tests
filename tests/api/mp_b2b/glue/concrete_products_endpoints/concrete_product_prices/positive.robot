@@ -5,9 +5,6 @@ Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 ####GET####
 Get_concrete_product_with_only_default_price
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

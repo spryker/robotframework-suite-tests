@@ -6,9 +6,6 @@ Resource    ../../../../../../resources/steps/push_notifications_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 *** Test Cases ***
 Retrieve_push_notification_providers_without_authorization
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850

@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_concrete_bundled_products_inside_concrete_bundle
     [Documentation]   no demo data - https://spryker.atlassian.net/browse/MP-6888; product bundles aren`t supported on b2b-mp for now
     [Tags]    skip-due-to-issue 

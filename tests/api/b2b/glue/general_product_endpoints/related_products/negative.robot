@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_related_products_without_abstract_SKU
     When I send a GET request:    /abstract-products//related-products
     Then Response status code should be:    400

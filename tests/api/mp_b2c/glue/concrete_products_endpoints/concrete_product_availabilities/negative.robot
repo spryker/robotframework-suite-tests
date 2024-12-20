@@ -5,8 +5,6 @@ Test Setup    API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 Request_concrete_availability_by_abstract_SKU
     When I send a GET request:    /concrete-products/${abstract_product_with_alternative.sku}/concrete-product-availabilities
     Then Response status code should be:    404

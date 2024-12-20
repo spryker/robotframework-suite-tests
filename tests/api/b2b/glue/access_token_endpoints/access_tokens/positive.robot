@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_access_token_for_customer
     When I send a POST request:
     ...    /access-tokens

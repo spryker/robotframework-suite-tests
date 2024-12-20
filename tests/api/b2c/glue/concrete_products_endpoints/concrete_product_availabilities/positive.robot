@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Request_concrete_availability_by_concrete_SKU_with_stock
     When I send a GET request:    /concrete-products/${product_availability.concrete_available_product_with_stock2}/concrete-product-availabilities
     Then Response status code should be:    200

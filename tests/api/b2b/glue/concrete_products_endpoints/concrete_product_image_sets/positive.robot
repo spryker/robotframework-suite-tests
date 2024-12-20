@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Request_concrete_product_with_one_image_set
     When I send a GET request:    /concrete-products/${concrete.one_image_set.sku}/concrete-product-image-sets
     Then Response status code should be:    200

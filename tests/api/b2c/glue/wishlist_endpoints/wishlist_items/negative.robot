@@ -5,10 +5,7 @@ Test Setup     API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 #Post
-
 Adding_item_in_wishlist_by_invalid_Access_Token
     [Setup]    I set Headers:    Authorization=3485h7
     When I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "${wishlist_name}"} }}
@@ -85,7 +82,7 @@ Adding_item_after_enter_space_in_sku
     [Teardown]    Run Keywords    I send a DELETE request:    /wishlists/${wishlist_reference_id}
     ...    AND    Response status code should be:    204
 
-Adding_item_with_invalid_wishilist_id
+Adding_item_with_invalid_wishlist_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:   /wishlists/Mywishlist/wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${product_availability.concrete_available_product_with_stock}"}}}
@@ -94,7 +91,7 @@ Adding_item_with_invalid_wishilist_id
     And Response should return error code:    206
     And Response should return error message:        "Cant add an item."
 
-Adding_item_without_wishilist_id
+Adding_item_without_wishlist_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:   /wishlists//wishlist-items    {"data": {"type": "wishlist-items","attributes": {"sku": "${product_availability.concrete_available_product_with_stock}"}}}
@@ -218,7 +215,7 @@ Delete_wishlist_item_from_already_deleted_wishlist
     And Response should return error code:    201
     And Response should return error message:    "Cant find wishlist."
 
-Deleting_item_with_invalid_wishilist_id
+Deleting_item_with_invalid_wishlist_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a DELETE request:   /wishlists/Mywishlist/wishlist-items/${product_availability.concrete_available_product_with_stock}
@@ -227,7 +224,7 @@ Deleting_item_with_invalid_wishilist_id
     And Response should return error code:    201
     And Response should return error message:        "Cant find wishlist."
 
-Deleting_item_without_wishilist_id
+Deleting_item_without_wishlist_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     When I send a DELETE request:   /wishlists//wishlist-items/${product_availability.concrete_available_product_with_stock}
@@ -349,7 +346,7 @@ Add_a_configurable_product_with_empty_availableQuantity_value_of_to_the_wishlist
     ...    AND    Response reason should be:    No Content
 
 
-Add_aconfigurable_product_with_missing_availableQuantity_value_of_to_the_wishlist
+Add_configurable_product_with_missing_availableQuantity_value_of_to_the_wishlist
     [Documentation]   https://spryker.atlassian.net/browse/CC-25381
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

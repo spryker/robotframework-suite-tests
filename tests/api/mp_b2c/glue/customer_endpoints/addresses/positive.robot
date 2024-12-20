@@ -5,9 +5,6 @@ Test Setup        API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 #####POST#####
 Create_customer_address_with_all_fields
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

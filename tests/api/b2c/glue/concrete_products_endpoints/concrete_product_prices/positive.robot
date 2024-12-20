@@ -5,8 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 Request_concrete_product_with_only_default_price
     When I send a GET request:    /concrete-products/${concrete_product.one_image_set.sku}/concrete-product-prices
     Then Response status code should be:    200

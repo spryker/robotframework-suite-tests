@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_not_existing_product_offer_availabilities
     When I send a GET request:    /product-offers/test/product-offer-availabilities
     Then Response status code should be:    404

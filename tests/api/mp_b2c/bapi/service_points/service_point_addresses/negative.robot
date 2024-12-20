@@ -6,9 +6,6 @@ Resource    ../../../../../../resources/steps/service_point_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Create_Service_Point_Address_Without_Authentication
     [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
     [Tags]    skip-due-to-issue

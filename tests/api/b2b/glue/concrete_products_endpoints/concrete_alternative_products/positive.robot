@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_concrete_alternative_product_for_a_product_that_has_none
     When I send a GET request:
     ...    /concrete-products/${bundle_product.product_2.concrete_sku}/concrete-alternative-products

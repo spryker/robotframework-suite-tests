@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Abstract_image_sets_with_1_concrete
     When I send a GET request:
     ...    /abstract-products/${abstract.available_products.with_stock_and_never_out_of_stock_sku}/abstract-product-image-sets

@@ -5,9 +5,6 @@ Test Setup        API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Resources_list_which_customer_can_access
     I send a GET request:    /customer-access
     Response status code should be:    200

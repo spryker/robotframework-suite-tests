@@ -5,8 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 Product_is_available_with_stock_and_never_out_of_stock
     When I send a GET request:    /abstract-products/${product_availability.abstract_available_with_stock_and_never_out_of_stock}/abstract-product-availabilities
     Then Response status code should be:    200
@@ -41,7 +39,7 @@ Product_is_available_never_out_of_stock
     And Response body has correct self link   
 
 # No demo data for B2C BUG CC-16485
-# Bug is resolved and unavailble product SKU is updated in test data
+# Bug is resolved and unavailable product SKU is updated in test data
 Product_is_unavailable
     When I send a GET request:    /abstract-products/${product_availability.abstract_unavailable_product}/abstract-product-availabilities
     Then Response status code should be:    200

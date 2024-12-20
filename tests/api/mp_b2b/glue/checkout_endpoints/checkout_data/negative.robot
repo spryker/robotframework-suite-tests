@@ -4,10 +4,7 @@ Test Setup    API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases ***    
 #POST requests
 Provide_checkout_data_with_invalid_access_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

@@ -4,10 +4,7 @@ Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases ***    
 Product_is_available_with_stock_and_never_out_of_stock
     When I send a GET request:    /abstract-products/${abstract_product.product_availability.product_3.abstract_available_with_stock_and_never_out_of_stock}/abstract-product-availabilities
     Then Response status code should be:    200
