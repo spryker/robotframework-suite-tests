@@ -5,10 +5,6 @@ Resource    ../../../../../../resources/steps/api_service_point_steps.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    Create dynamic service with all data via BAPI if doesn't exist
-    Switch to Glue
-
 Retrieves_list_of_service_points
     Create dynamic service with all data via BAPI if doesn't exist
     Switch to Glue

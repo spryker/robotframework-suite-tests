@@ -2,7 +2,7 @@
 Suite Setup    API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../../resources/steps/api_service_point_steps.robot
-Test Tags    glue    debug
+Test Tags    glue
 
 *** Test Cases ***
 Retrieves_list_of_service_points_by_incorrect_url
