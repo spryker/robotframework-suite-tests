@@ -37,7 +37,11 @@ Overwrite pyz variables
             Set Suite Variable    ${yves_url}    ${yves_env}
     END
     IF    '${yves_at_env}' == '${EMPTY}'
+        IF    ${dms}
+            Set Suite Variable    ${yves_at_url}    ${yves_dms_url}
+        ELSE
             Set Suite Variable    ${yves_at_url}    ${yves_at_url}
+        END
     ELSE
             Set Suite Variable    ${yves_at_url}    ${yves_at_env}
     END
