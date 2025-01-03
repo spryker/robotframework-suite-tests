@@ -74,7 +74,7 @@ jobs:
                   cd robotframework-tests
                   rebot -d results --merge results/output.xml results/rerun/rerun.xml
             - name: Upload artifacts
-              if: failure()
+              if: always()
               run: |
                   AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/night-robot-api-ci/suite_regression-dms-on/${GITHUB_RUN_ID}/PHP8.3MariaDBRobotAPI/ \
                     --recursive \
