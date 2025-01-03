@@ -1490,10 +1490,13 @@ Response should return error message:
     ...
     ...    ``Response should return error message:    Can`t find abstract product image sets.``
     [Arguments]    ${error_message}
-    IF    '${tag}'=='bapi' or '${tag}'=='sapi'
-        ${data}=    Get Value From Json    ${response_body}    [errors][0][message]
-    ELSE
-        ${data}=    Get Value From Json    ${response_body}    [errors][0][detail]
+    FOR  ${tag}  IN  @{Test Tags}
+        IF    '${tag}'=='bapi' or '${tag}'=='sapi'
+            ${data}=    Get Value From Json    ${response_body}    [errors][0][message]
+        END
+        IF    '${tag}'=='glue'
+            ${data}=    Get Value From Json    ${response_body}    [errors][0][detail]
+        END
     END
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}

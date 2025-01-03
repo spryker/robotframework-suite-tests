@@ -202,10 +202,13 @@ Delete service point in DB
     [Documentation]    This keyword deletes the entry from the DB table `spy_service_point`. If `withRelations=true`, deletes with relations.
         ...    *Example:*
         ...
+        ...    ``Get service point uuid by key:    ${service_point_key}``
+        ...    `` Delete service point in DB    ${servicePointUuid}``
+        ...     OR
         ...    ``Delete service point in DB    uuid=262feb9d-33a7-5c55-9b04-45b1fd22067e    withRelations=true``
         ...
     [Arguments]    ${uuid}    ${withRelations}=${True}
-    Deactivate service points    ${uuid}
+    Deactivate service points in DB    ${uuid}
     IF    ${withRelations}
         ${idServicePoint}=    Get id service point by uuid    ${uuid}
         Connect to Spryker DB
@@ -217,7 +220,6 @@ Delete service point in DB
     Connect to Spryker DB
     Execute Sql String    DELETE FROM spy_service_point WHERE uuid = '${uuid}';
     Disconnect From Database
-    Trigger publish trigger-events    service_point    timeout=1s
 
 Delete service point address in DB
     [Documentation]    This keyword deletes the entry from the DB table `spy_service_point_address`. 
@@ -230,7 +232,6 @@ Delete service point address in DB
     Execute Sql String    DELETE FROM spy_service_point_address WHERE uuid = '${uuid}';
     Disconnect From Database
 
-  
 Delete service type in DB
     [Documentation]    This keyword deletes the entry from the DB table `spy_service_type`.
         ...    *Example:*
@@ -242,7 +243,7 @@ Delete service type in DB
     Execute Sql String    DELETE FROM spy_service_type WHERE uuid = '${uuid}';
     Disconnect From Database
 
-Deactivate service points
+Deactivate service points in DB
     [Documentation]    This keyword deactivates service points. If `uuid` is provided, deactivates service point by uuid.
         ...    *Example:*
         ...
@@ -257,8 +258,26 @@ Deactivate service points
     Connect to Spryker DB
     Execute Sql String    ${query};
     Disconnect From Database
-    Trigger publish trigger-events    service_point    timeout=1s
 
+Deactivate service point via BAPI
+    [Arguments]    ${service_point_uuid}
+    ${have_access_token}    Run Keyword and return status     Should Contain    ${headers}    Authorization
+    IF    not ${have_access_token}
+        I get access token by user credentials:   ${zed_admin.email}
+        I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    END
+    I send a PATCH request:    /service-points/${service_point_uuid}    {"data": {"type": "service-points","attributes": {"isActive": "false"}}}
+    Response status code should be:    200
+
+Deactivate service via BAPI
+    [Arguments]    ${service_uuid}
+    ${have_access_token}    Run Keyword and return status     Should Contain    ${headers}    Authorization
+    IF    not ${have_access_token}
+        I get access token by user credentials:   ${zed_admin.email}
+        I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    END
+    I send a PATCH request:    When I send a PATCH request:    /services/${service_uuid}    {"data": {"type": "services", "attributes": {"isActive": "false"}}}
+    Response status code should be:    200
 
 Create dynamic service with all data via BAPI if doesn't exist
     Connect to Spryker DB
@@ -298,6 +317,9 @@ Create dynamic service with all data via BAPI if doesn't exist
 
     IF    not ${dynamic_service_point_exists}
         # Create Service Point
+        Switch to BAPI
+        I get access token by user credentials:   ${zed_admin.email}
+        I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
         I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "${dynamic_service.service_point_name}","key": "${dynamic_service.service_point_key}","isActive": "true","stores": ["DE"]}}}
         Response status code should be:    201
         Save value to a variable:    [data][id]    service_point_id
@@ -328,3 +350,32 @@ Create dynamic service with all data via BAPI if doesn't exist
         # Publish to Redis and ES
         Trigger p&s
     END
+
+Delete all non-default service points from DB with p&s
+    [Documentation]    This keyword deletes all non-default service points from the `spy_service_point` table.
+    ...    It also deletes related entries from `spy_service_point_store`, `spy_service_point_address`, and `spy_service`.
+    ...    It processes all service points where `id_service_point > 3`.
+    ...
+    [Tags]    Database    Cleanup
+
+    Connect to Spryker DB
+    ${service_point_uuids}=    Query    SELECT uuid FROM spy_service_point WHERE id_service_point > 2;
+
+    FOR    ${row}    IN    @{service_point_uuids}
+        ${uuid}=    Set Variable    ${row}[0]
+        ${idServicePoint}=    Get id service point by uuid    ${uuid}
+        Connect to Spryker DB
+        Execute Sql String    DELETE FROM spy_service_point_store WHERE fk_service_point = ${idServicePoint};
+        Execute Sql String    DELETE FROM spy_service_point_address WHERE fk_service_point = ${idServicePoint};
+        Execute Sql String    DELETE FROM spy_service WHERE fk_service_point = ${idServicePoint};
+        Execute Sql String    DELETE FROM spy_service_point WHERE uuid = '${uuid}';
+    END
+    
+    ${service_types_uuids}=    Query    SELECT uuid FROM spy_service_type WHERE id_service_type > 2;
+    FOR    ${row}    IN    @{service_types_uuids}
+        ${uuid}=    Set Variable    ${row}[0]
+        Execute Sql String    DELETE FROM spy_service_type WHERE uuid = '${uuid}';
+    END
+
+    Disconnect From Database
+    Trigger publish trigger-events    service_point    timeout=1s

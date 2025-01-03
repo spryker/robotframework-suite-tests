@@ -787,5 +787,5 @@ Trigger product labels update
     Run console command    console product-label:validity    DE
     Run console command    console product-label:relations:update -vvv --no-touch    AT
     Run console command    console product-label:validity    AT
-    Repeat Keyword    3    Trigger multistore p&s
+    Repeat Keyword    2    Trigger multistore p&s
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
