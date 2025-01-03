@@ -802,6 +802,28 @@
       ]
    },
    "servicePoints":{
+      "default_service_points":{
+      "sp1":{
+         "key":"sp1",
+         "name":"Spryker Main Store"
+      },
+      "sp2":{
+         "key":"sp2",
+         "name":"Spryker Berlin Store"
+      }
+      },
+      "dynamic_service":{
+         "service_point_name":"robot",
+         "service_point_key":"robot",
+         "service_point_address_line_1":"Park Avenue",
+         "service_point_address_line_2":"Building 22",
+         "service_point_address_city":"robot",
+         "service_point_address_zip_code":"12345",
+         "service_point_address_country":"DE",
+         "service_type_name":"robot",
+         "service_type_key":"robot",
+         "service_key":"robot"
+      },
       "servicePoints":[
          {
             "uuid":"test-service-point",

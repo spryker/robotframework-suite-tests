@@ -67,7 +67,7 @@ Create_shipment_type_with_already_used_key
     And Response should return error message:    A delivery type with the same key already exists.
     [Teardown]     Delete shipment type in DB:    existing-shipment-type-key
 
-Update_sipment_type_without_token
+Update_shipment_type_without_token
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer wrong_token
     When I send a PATCH request:    /shipment-types/${shipment_type_uuid}
     ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}}
@@ -75,14 +75,14 @@ Update_sipment_type_without_token
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
 
-Update_sipment_type_with_incorrect_token
+Update_shipment_type_with_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a PATCH request:    /shipment-types/${shipment_type_uuid}
     ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}}
      Then Response status code should be:    403
      And Response reason should be:    Forbidden
 
-Update_sipment_type_without_key
+Update_shipment_type_without_key
     [Documentation]    FRW-1597: Attribute validation in Glue Requests
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -93,7 +93,7 @@ Update_sipment_type_without_key
     And Response should return error code:    5501
     And Response should return error message:    A delivery type entity was not found.
 
-Update_sipment_type_with_empty_key
+Update_shipment_type_with_empty_key
     [Documentation]    FRW-1597: Attribute validation in Glue Requests
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -104,7 +104,7 @@ Update_sipment_type_with_empty_key
     And Response should return error code:    5501
     And Response should return error message:    A delivery type entity was not found.
 
-Update_sipment_type_with_not_existing_key
+Update_shipment_type_with_not_existing_key
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a PATCH request:    /shipment-types/not-existing-key
@@ -113,20 +113,20 @@ Update_sipment_type_with_not_existing_key
     And Response should return error code:    5501
     And Response should return error message:    A delivery type entity was not found.
 
-Retrive_single_shipment_type_without_auth
+Retrieve_single_shipment_type_without_auth
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer wrong_token
     When I send a GET request:    /shipment-types/${shipment_type_uuid}
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
     And Response should return error message:    Invalid access token.
 
-Retrive_single_shipment_type_with_incorrect_token
+Retrieve_single_shipment_type_with_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a GET request:    /shipment-types/${shipment_type_uuid}
      Then Response status code should be:    403
      And Response reason should be:    Forbidden
 
-Retrive_single_shipment_type_with_incorrect_id
+Retrieve_single_shipment_type_with_incorrect_id
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a GET request:    /shipment-types/incorrect_id
@@ -134,14 +134,14 @@ Retrive_single_shipment_type_with_incorrect_id
     And Response should return error code:    5501
     And Response should return error message:    A delivery type entity was not found.
 
-Retrive_list_of_shipment_types_without_auth
+Retrieve_list_of_shipment_types_without_auth
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}
     When I send a GET request:    /shipment-types/
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error message:    Unauthorized request.
 
-Retrive_list_of_shipment_types_witt_incorrect_token
+Retrieve_list_of_shipment_types_witt_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a GET request:    /shipment-types/${shipment_type_uuid}
      Then Response status code should be:    403

@@ -140,6 +140,25 @@ I set Headers:
     Set Test Variable    &{headers}
     RETURN    &{headers}
 
+Reset API Headers
+    [Documentation]    This keyword resets all previously set headers to their default values.
+    ...    It can be used to ensure that no unwanted headers persist between API requests.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``I Reset Headers``
+
+    # Clear previously set headers
+    ${headers}=    Create Dictionary
+
+    # Reapply default headers if needed
+    Set To Dictionary    ${headers}    &{default_headers}
+    Log    Default headers have been restored.
+
+    # Re-register headers as a test variable
+    Set Test Variable    &{headers}
+    RETURN    &{headers}
+
 I set default Headers:
     [Arguments]    &{headers}
     Log Dictionary    ${headers}
@@ -1122,6 +1141,31 @@ Each array element of array in response should contain property with value NOT i
         END
     END
 
+Each array element of array in response should NOT be empty:
+    [Documentation]    This keyword checks that each array element of array contsains the speficied parameter ``${expected_property}`` with the value that does not empty.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should NOT be empty:    [data]    id``
+    [Arguments]    ${json_path}    ${expected_property}
+
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+        ${list_element}=    Convert To String    ${list_element}
+        ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
+        TRY
+            Should Not Be Empty    ${list_element}
+        EXCEPT
+            Fail    Array element: '${expected_property}' of array: '${json_path}' is empty but SHOULD NOT
+        END
+    END
+
 Each array element of nested array should contain property with value in:
     [Documentation]    This keyword checks that each array element of ``${nested_array} that is inside the parent array ``${json_path}`` contains the speficied parameter ``${expected_property}`` with the value that matches any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
     ...
@@ -1446,10 +1490,13 @@ Response should return error message:
     ...
     ...    ``Response should return error message:    Can`t find abstract product image sets.``
     [Arguments]    ${error_message}
-    IF    '${tag}'=='bapi' or '${tag}'=='sapi'
-        ${data}=    Get Value From Json    ${response_body}    [errors][0][message]
-    ELSE
-        ${data}=    Get Value From Json    ${response_body}    [errors][0][detail]
+    FOR  ${tag}  IN  @{Test Tags}
+        IF    '${tag}'=='bapi' or '${tag}'=='sapi'
+            ${data}=    Get Value From Json    ${response_body}    [errors][0][message]
+        END
+        IF    '${tag}'=='glue'
+            ${data}=    Get Value From Json    ${response_body}    [errors][0][detail]
+        END
     END
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
@@ -2238,3 +2285,24 @@ I get access token by user credentials:
     Save value to a variable:    [access_token]    token
     Log    ${token}
     RETURN    ${token}
+
+Switch to Glue
+    Remove Tags    *
+    Set Tags    glue
+    Overwrite api variables
+    Reset API Headers
+
+Switch to BAPI
+    Remove Tags    *
+    Set Tags    bapi
+    Overwrite api variables
+    Reset API Headers
+
+*** Keywords ***
+Array Element Should Contain Nested Property With Value At Least Once
+    [Arguments]    ${json_path}    ${nested_path}    ${property}    ${expected_value}
+    ${matches}=    Get Value From Json     ${response_body}    ${json_path}
+    ${exists}=    Evaluate
+    ...    any(item.get('${nested_path}', {}).get('${property}', None) == ${expected_value} for item in ${matches})
+    Should Be True    ${exists}    Expected property '${property}' with value '${expected_value}' not found in any array element.
+
