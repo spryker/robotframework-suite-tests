@@ -47,11 +47,11 @@ Login_during_checkout
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to b2c shopping cart  
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
     Yves: fill in the following new shipping address:
-    ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone           | additionalAddress     ||
+    ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone     | additionalAddress     ||
     ...    || ${Salutation}  | ${Guest_user_first_name}     | ${Guest_user_last_name}     | ${random}     | ${random}         | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address} ||
     Yves: billing address same as shipping address:    true
     Yves: submit form on the checkout
@@ -65,11 +65,12 @@ Login_during_checkout
 Register_during_checkout
     [Documentation]    Guest user email should be whitelisted from the AWS side before running the test
     [Tags]    glue    smoke
+    [Setup]    Create dynamic admin user in DB
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
     Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
-    Yves: go to b2c shopping cart
+    Yves: go to b2c shopping cart  
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Kj${random_str_password}!0${random_id_password}
     Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
@@ -93,14 +94,15 @@ Register_during_checkout
     Yves: assert customer profile data:
     ...    || salutation    | first name               | last name               | email                            ||
     ...    || ${salutation} | ${guest_user_first_name} | ${guest_user_last_name} | sonia+guest${random}@spryker.com ||
-    [Teardown]    Zed: delete customer:
-    ...    || email                            ||
-    ...    || sonia+guest${random}@spryker.com ||
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    ...    AND    Zed: delete customer:    sonia+guest${random}@spryker.com
+    ...    AND    Delete dynamic admin user from DB
 
 Guest_Checkout
     [Tags]    smoke
     [Documentation]    Guest checkout with bundles, discounts and OMS
-    [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Setup]    Run keywords    Create dynamic admin user in DB
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
@@ -128,7 +130,7 @@ Guest_Checkout
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Trigger oms
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
@@ -137,11 +139,13 @@ Guest_Checkout
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Close
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
+    ...    AND    Delete dynamic admin user from DB
 
 Guest_Checkout_Addresses
     [Documentation]    Guest checkout with different addresses and OMS
+    [Setup]    Create dynamic admin user in DB
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to PDP of the product with sku:    007
@@ -177,31 +181,31 @@ Guest_Checkout_Addresses
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Trigger oms
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: get the last placed order ID of the customer by email:    sonia+guest+new${random}@spryker.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
-    Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany
-    Zed: shipping address inside xxx shipment should be:    2    Dr First, Last, Second Street, 2, Additional street, Spryker, 10247, Berlin, Germany
-    Zed: shipping address inside xxx shipment should be:    3    Dr First, Last, Third Street, 3, Additional street, Spryker, 10247, Berlin, Germany
+    Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany 
+    Zed: shipping address inside xxx shipment should be:    2    Dr First, Last, Second Street, 2, Additional street, Spryker, 10247, Berlin, Germany 
+    Zed: shipping address inside xxx shipment should be:    3    Dr First, Last, Third Street, 3, Additional street, Spryker, 10247, Berlin, Germany 
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    skip picking
     Zed: trigger all matching states inside this order:    Ship
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Close
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
+    ...    AND    Delete dynamic admin user from DB
 
 Business_Unit_Address_on_Checkout
     [Documentation]    Checks that business unit address can be used during checkout
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: create new 'Shopping Cart' with name:    businessAddressCart+${random}
-    ...    AND    Yves: delete all user addresses
+    Create dynamic customer in DB    based_on=${yves_company_user_buyer_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${available_never_out_of_stock_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    businessAddressCart+${random}
+    Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    Mr Dynamic Customer, Gurmont Str. 23, 8002 Barcelona
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -212,27 +216,25 @@ Business_Unit_Address_on_Checkout
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
-    Yves: shipping address on the order details page is:    Mr. Armando Richi Spryker Systems GmbH Gurmont Str. 23 8002 Barcelona, Spain 3490284322
+    Yves: shipping address on the order details page is:    Mr. Dynamic Customer Spryker Systems GmbH Gurmont Str. 23 8002 Barcelona, Spain 3490284322
+    [Teardown]    Delete dynamic customer via API
 
 Request_for_Quote
     [Tags]    smoke
     [Documentation]    Checks user can request and receive quote.
-    [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com   Kj${random_str_password}!0${random_id_password}   Request    Quote    Root group    This user is an agent in Storefront    en_US
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: delete all shopping carts
-    Yves: delete all user addresses
-    Yves: create new 'Shopping Cart' with name:    RfQCart+${random}
+    [Setup]    Run keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB    based_on=${yves_company_user_buyer_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    ${product_with_sale_price_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    RfQCart+${random}
+    Yves: go to b2c shopping cart
     Yves: submit new request for quote
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
+    Yves: login on Yves with provided credentials:    ${dynamic_admin_user}
     Yves: header contains/doesn't contain:    true    ${quoteRequestsWidget}
     Yves: go to 'Agent Quote Requests' page through the header
     Yves: 'Quote Requests' page is displayed
@@ -244,7 +246,7 @@ Request_for_Quote
     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to user menu:    Quote Requests
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
@@ -257,7 +259,7 @@ Request_for_Quote
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
+    Yves: login on Yves with provided credentials:    ${dynamic_admin_user}
     Yves: move mouse over header menu item:     ${quoteRequestsWidget}
     Yves: 'Quote Requests' widget is shown
     Yves: go to the quote request through the header with reference:    ${lastCreatedRfQ}
@@ -268,7 +270,7 @@ Request_for_Quote
     Yves: click 'Send to Customer' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to user menu:    Quote Requests
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Ready
     Yves: view quote request with reference:    ${lastCreatedRfQ}
@@ -277,20 +279,22 @@ Request_for_Quote
     Yves: shopping cart doesn't contain the following products:    ${one_variant_product_concrete_sku}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: checkout summary step contains product with unit price:    productName=${product_with_sale_price_abstract_name}    productPrice=500
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: delete Zed user with the following email:    agent_quote+${random}@spryker.com
+    [Teardown]    Run Keywords    Delete dynamic customer via API
+    ...    AND    Delete dynamic admin user from DB
 
 Split_Delivery
     [Tags]    smoke
     [Documentation]    Checks split delivery in checkout
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    [Setup]    Run Keywords    Create dynamic customer in DB    based_on=${yves_user_email}
+    ...    AND    Create dynamic admin user in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
@@ -323,20 +327,17 @@ Split_Delivery
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: delete all user addresses
+    [Teardown]    Run Keywords    Delete dynamic customer via API
+    ...    AND    Delete dynamic admin user from DB
 
 Checkout_Address_Management
     [Tags]    smoke
     [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
-    [Setup]    Run Keywords
-    ...    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: delete all user addresses
-    ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${available_never_out_of_stock_abstract_sku}
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
@@ -346,7 +347,7 @@ Checkout_Address_Management
     ...    || salutation | firstName | lastName | street         | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Mr.        | First     | Last     | Billing Street | 123         | 10247    | Berlin | Germany | Spryker | 987654321 | Additional street ||
     Yves: save new billing address to address book:    false
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
@@ -369,163 +370,32 @@ Checkout_Address_Management
     Yves: get the last placed order ID by current customer
     Yves: check that user has address exists/doesn't exist:    true    First    Last    Shipping Street    7    10247    Geneva    Switzerland
     Yves: check that user has address exists/doesn't exist:    false    New    Billing    Changed Street    098    09876    Berlin    Germany
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: billing address for the order should be:    New Billing, Changed Street 098, 09876 Berlin, Germany
     Zed: shipping address inside xxx shipment should be:    1    Mr First, Last, Shipping Street, 7, Additional street, Spryker, 10247, Geneva, Switzerland
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: delete all user addresses
+    [Teardown]    Run Keywords    Delete dynamic customer via API
+    ...    AND    Delete dynamic admin user from DB
 
-Click_and_collect
-    [Tags]    smoke
-    [Documentation]    checks that product offer is successfully replaced with a target product offer
-    [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate all discounts from Overview page
-    MP: login on MP with provided credentials:    ${merchant_spryker_email}
-    MP: open navigation menu tab:    Products
-    MP: click on create new entity button:    Create Product
-    MP: create multi sku product with following data:
-    ...    || product sku              | product name                 | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
-    ...    || clickCollectSku${random} | clickCollectProduct${random} | color                | white                       | black                        | series                | Ace Plus               ||
-    MP: perform search by:    clickCollectProduct${random}
-    MP: click on a table row that contains:     clickCollectSku${random}
-    MP: fill abstract product required fields:
-    ...    || product name                 | store | tax set           ||
-    ...    || clickCollectProduct${random} | DE    | Smart Electronics ||
-    MP: fill product price values:
-    ...    || product type | row number | store | currency | gross default ||
-    ...    || abstract     | 1          | DE    | EUR      | 50            ||
-    MP: save abstract product
-    MP: click on a table row that contains:    clickCollectSku${random}
-    MP: open concrete drawer by SKU:    clickCollectSku${random}-2
-    MP: fill concrete product fields:
-    ...    || is active | stock quantity | use abstract name | searchability ||
-    ...    || true      | 100            | true              | en_US         ||
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Catalog    Products
-    Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Approve
-    Trigger p&s
-    MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
-    MP: open navigation menu tab:    Offers
-    MP: click on create new entity button:    Add Offer
-    MP: perform search by:    clickCollectSku${random}-2
-    MP: click on a table row that contains:    clickCollectSku${random}-2
-    MP: fill offer fields:
-    ...    || is active | merchant sku                           | store | stock quantity | service point      | services | shipment types  ||
-    ...    || true      | clickCollectFirstSku${random}${random} | DE    | 100            | Spryker Main Store | Pickup   | pickup - Pickup ||
-    MP: add offer price:
-    ...    || row number | store | currency | gross default ||
-    ...    || 1          | DE    | EUR      | 100           ||
-    MP: save offer
-    MP: click on create new entity button:    Add Offer
-    MP: perform search by:    clickCollectSku${random}-2
-    MP: click on a table row that contains:    clickCollectSku${random}-2
-    MP: fill offer fields:
-    ...    || is active | merchant sku                            | store | stock quantity | shipment types      ||
-    ...    || true      | clickCollectSecondSku${random}${random} | DE    | 100            | delivery - Delivery ||
-    MP: add offer price:
-    ...    || row number | store | currency | gross default ||
-    ...    || 1          | DE    | EUR      | 150           ||
-    MP: save offer
-    MP: click on create new entity button:    Add Offer
-    MP: perform search by:    clickCollectSku${random}-2
-    MP: click on a table row that contains:    clickCollectSku${random}-2
-    MP: fill offer fields:
-    ...    || is active | merchant sku                  | store | stock quantity | service point        | services | shipment types  ||
-    ...    || true      | clickCollectThirdSku${random} | DE    | 100            | Spryker Berlin Store | Pickup   | pickup - Pickup ||
-    MP: add offer price:
-    ...    || row number | store | currency | gross default ||
-    ...    || 1          | DE    | EUR      | 200           ||
-    MP: save offer
-    Trigger p&s
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Marketplace    Offers
-    Zed: filter by merchant:    Budget Cameras
-    Zed: table should contain:    clickCollectSku${random}-2
-    Zed: click Action Button in a table for row that contains:     clickCollectSku${random}-2     View
-    Zed: view offer page is displayed
-    Zed: view offer product page contains:
-    ...    || approval status | status | store | sku                        | merchant       | merchant sku                  | services                      | shipment types  ||
-    ...    || Approved        | Active | DE    | clickCollectSku${random}-2 | Budget Cameras | clickCollectThirdSku${random} | Spryker Berlin Store - Pickup | pickup - Pickup ||
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: check if cart is not empty and clear it
-    Yves: go to PDP of the product with sku:     clickCollectSku${random}    wait_for_p&s=true
-    Yves: select xxx merchant's offer with price:    Budget Cameras    €100.00    wait_for_p&s=true
-    Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to PDP of the product with sku:     clickCollectSku${random}
-    Yves: select xxx merchant's offer with price:    Budget Cameras    €150.00
-    Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to b2c shopping cart
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: select multiple addresses from toggler
-    Yves: select xxx shipment type for item number xxx:    shipment_type=Pickup    item_number=1
-    Yves: select xxx shipment type for item number xxx:    shipment_type=Pickup    item_number=2
-    Yves: check store availabiity for item number xxx:
-    ...    || item_number | store              | availability ||
-    ...    || 1           | Spryker Main Store | green        ||
-    Yves: check store availabiity for item number xxx:
-    ...    || item_number | store                | availability ||
-    ...    || 1           | Spryker Berlin Store | green        ||
-    Yves: check store availabiity for item number xxx:
-    ...    || item_number | store              | availability ||
-    ...    || 2           | Spryker Main Store | green        ||
-    Yves: check store availabiity for item number xxx:
-    ...    || item_number | store                | availability ||
-    ...    || 2           | Spryker Berlin Store | green        ||
-    Yves: select pickup service point store for item number xxx:
-    ...    || item_number | store                ||
-    ...    || 1           | Spryker Berlin Store ||
-    Yves: select pickup service point store for item number xxx:
-    ...    || item_number | store                ||
-    ...    || 2           | Spryker Berlin Store ||
-    Yves: 'billing same as shipping' checkbox should be displayed:    false
-    Yves: fill in the following new billing address:
-    ...    || salutation | firstName | lastName | street         | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | First     | Last     | Billing Street | 123         | 10247    | Berlin | Germany | Spryker | 987654321 | Additional street ||
-    Yves: submit form on the checkout
-    Yves: select the following shipping method for the shipment:    1    Pickup    Free Pickup
-    Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
-    Yves: checkout summary step contains product with unit price:    productName=clickCollectProduct${random}    productPrice=200.00
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €400.00
-    Zed: order has the following number of shipments:    ${lastPlacedOrder}    1
-    Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
-    Zed: shipping address inside xxx shipment should be:    1    Spryker Berlin Store, Mr ${yves_user_first_name}, ${yves_user_last_name}, Julie-Wolfthorn-Straße, 1, 10115, Berlin, Germany
-    Zed: shipment data inside xxx shipment should be:
-    ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
-    ...    || 1          | Pickup          | Free Pickup     | €0.00          | ASAP                    ||
-    [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: activate following discounts from Overview page:    	Free mobile phone    20% off cameras products    Free Acer M2610 product    Free delivery    10% off Intel products    5% off white products    Tuesday & Wednesday $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
-    ...    AND    Zed: go to second navigation item level:    Catalog    Products
-    ...    AND    Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Deny
-    ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: delete all user addresses
-    ...    AND    Trigger p&s
 
 Multiple_Merchants_Order
     [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
-    [Setup]    Run Keywords
-    ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    ...    AND    Zed: create dynamic merchant user:    Video King
+    ...    AND    Zed: create dynamic merchant user:    Budget Cameras
+    ...    AND    Zed: change product stock:    ${one_variant_product_of_main_merchant_abstract_sku}    ${one_variant_product_of_main_merchant_concrete_sku}    true    10    10
+    ...    AND    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     ...    AND    MP: change offer stock:
     ...    || offer   | stock quantity | is never out of stock ||
     ...    || offer30 | 10             | true                  ||
-    ...    AND    MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
+    ...    AND    MP: login on MP with provided credentials:    ${dynamic_budget_merchant}
     ...    AND    MP: change offer stock:
     ...    || offer   | stock quantity | is never out of stock ||
     ...    || offer89 | 10             | true                  ||
-    ...    AND    Trigger p&s
-    ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: delete all user addresses
-    ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: change product stock:    ${one_variant_product_of_main_merchant_abstract_sku}    ${one_variant_product_of_main_merchant_concrete_sku}    true    10    10
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    ...    AND    Repeat Keyword    3    Trigger p&s
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
     Yves: add product to the shopping cart    wait_for_p&s=true
     Yves: go to PDP of the product with sku:     ${product_with_multiple_offers_abstract_sku}
@@ -544,7 +414,7 @@ Multiple_Merchants_Order
     Yves: assert merchant of product in cart or list:    ${second_product_with_multiple_offers_concrete_sku}    Video King
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    Spryker Dummy Shipment    Standard
     Yves: select the following shipping method for the shipment:    2    Spryker Drone Shipment    Air Light
@@ -555,14 +425,15 @@ Multiple_Merchants_Order
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    ...    AND    Yves: delete all user addresses
-
+    [Teardown]    Run Keywords    Delete dynamic customer via API
+    ...    AND    Delete dynamic admin user from DB
+    
 Unique_URL
     [Documentation]    Fails due to Bug:CC-12380
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Create dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: add product to the shopping cart
@@ -573,21 +444,21 @@ Unique_URL
     Yves: go to external URL:    ${externalURL}
     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
     Yves: preview shopping cart contains the following products:    ${one_variant_product_abstract_sku}
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
+    [Teardown]    Delete dynamic customer via API
 
 Comments_in_Cart
     [Documentation]    Add comments to cart and verify comments in Yves and Zed
-    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
-    Yves: create new 'Shopping Cart' with name:    commentCart+${random}
+    Create dynamic customer in DB
+    Create dynamic admin user in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${bundled_product_3_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    commentCart+${random}
+    Yves: go to b2c shopping cart
     Yves: add comment on cart:    abc${random}
     Yves: check comments are visible or not in cart:    true    abc${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_shared_permission_owner_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
@@ -595,60 +466,28 @@ Comments_in_Cart
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: go to order details page to check comment:    abc${random}    ${lastPlacedOrder}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}    
     Zed: check comment appears at order detailed page in zed:    abc${random}    ${lastPlacedOrder}
+    [Teardown]    Run Keywords    Delete dynamic customer via API
+    ...    AND    Delete dynamic admin user from DB
 
 Comment_Management_in_the_Cart
     [Documentation]    Editing and deleting comments in carts
-    Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
+    Create dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: create new 'Shopping Cart' with name:    commentManagement+${random}
     Yves: go to PDP of the product with sku:    ${bundled_product_3_abstract_sku}
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    commentManagement+${random}
     Yves: add comment on cart:    abc${random}
-    Yves: check comments are visible or not in cart:    true    abc${random}
+    Yves: check comments are visible or not in cart:    true    abc${random}    
     Yves: edit comment on cart:    xyz${random}
-    Yves: check comments are visible or not in cart:    true    xyz${random}
+    Yves: check comments are visible or not in cart:    true    xyz${random}    
     Yves: delete comment on cart
     Yves: check comments are visible or not in cart:    false    xyz${random}
-    [Teardown]    Run Keyword    Yves: delete 'Shopping Cart' with name:    commentManagement+${random}
+    [Teardown]    Delete dynamic customer via API
 
-Configurable_Product_Checkout
-    [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate all discounts from Overview page
-    ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: delete all user addresses
-    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
-    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
-    Yves: PDP contains/doesn't contain:    true    ${configureButton}
-    Yves: product configuration status should be equal:       Configuration is not complete.
-    Yves: change the product options in configurator to:
-    ...    || option one | option two ||
-    ...    || 517        | 167        ||
-    Yves: save product configuration
-    Yves: product configuration status should be equal:      Configuration complete!
-    Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
-    Yves: change the product options in configurator to:
-    ...    || option one | option two ||
-    ...    || 389.50     | 249        ||
-    Yves: save product configuration
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=638.50
-    Yves: product configuration status should be equal:      Configuration complete!
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €644.40
-    [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: activate following discounts from Overview page:    	Free mobile phone    20% off cameras products    Free Acer M2610 product    Free delivery    10% off Intel products    5% off white products    Tuesday & Wednesday $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
+
 
 # Approval_Process
 #     ### *** DEMODATA - NO OOT LIMITS AND CAN'T SET THEM IN SUITE *** ###
