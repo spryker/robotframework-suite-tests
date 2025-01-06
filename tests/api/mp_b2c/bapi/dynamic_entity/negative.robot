@@ -5,9 +5,6 @@ Resource    ../../../../../resources/common/common_api.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_list_of_country_with_invalid_token
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
     Delete dynamic entity configuration in Database:    robot-test-countries

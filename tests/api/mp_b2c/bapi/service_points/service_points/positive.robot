@@ -2,12 +2,28 @@
 Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Resource    ../../../../../../resources/steps/service_point_steps.robot
+Resource    ../../../../../../resources/steps/api_service_point_steps.robot
 Test Tags    bapi
-
 *** Test Cases ***
-ENABLER
-    API_test_setup
+Get_All_Service_Points
+    [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
+    When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Service Point 1","key": "some-service-point1-${random}","isActive": "true","stores": ["DE", "AT"]}}}
+    Then Save value to a variable:    [data][attributes][key]    service_point_key1
+    And Save value to a variable:    [data][id]    service_point_id1
+    When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Service Point 2","key": "some-service-point2-${random}","isActive": "false","stores": ["AT"]}}}
+    Then Save value to a variable:    [data][attributes][key]    service_point_key2
+    And Save value to a variable:    [data][id]    service_point_id2
+    When I send a GET request:    /service-points
+    Then Response status code should be:    200
+    And Response body parameter should be:    [data][0][type]    service-points
+    And Each array in response should contain property with NOT EMPTY value:    [data]    [id]
+    And Each array in response should contain property with NOT EMPTY value:    [data]    [attributes][name]
+    And Each array in response should contain property with NOT EMPTY value:    [data]    [attributes][key]
+    And Each array in response should contain property with NOT EMPTY value:    [data]    [attributes][isActive]
+    And Each array element of array in response should contain property with value in:    [data]    [attributes][stores]    DE    AT
+    [Teardown]     Run Keywords    Deactivate service point via BAPI    ${service_point_id1}
+    ...    AND    Deactivate service point via BAPI    ${service_point_id1}
 
 Get_Services_List
     [Setup]

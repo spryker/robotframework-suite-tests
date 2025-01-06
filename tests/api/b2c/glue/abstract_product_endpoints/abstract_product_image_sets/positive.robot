@@ -5,8 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 Abstract_image_sets_with_1_concrete
     When I send a GET request:    /abstract-products/${product_availability.abstract_available_with_stock_and_never_out_of_stock}/abstract-product-image-sets
     Then Response status code should be:    200

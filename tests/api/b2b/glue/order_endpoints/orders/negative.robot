@@ -8,10 +8,7 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 #GET requests
-
 Get_order_by_order_id_with_invalid_access_token
     [Setup]    I set Headers:    Authorization=fake_token
     When I send a GET request:    /orders/order_id

@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_abstract_product_list_by_fake_id
     When I send a GET request:    /content-product-abstract-lists/fake
     Then Response status code should be:    404

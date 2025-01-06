@@ -5,8 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
     
 Get_cart_permission_group_with_unauthenicated_user
     When I send a GET request:    /cart-permission-groups/1

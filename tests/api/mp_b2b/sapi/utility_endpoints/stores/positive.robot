@@ -5,10 +5,7 @@ Test Setup     API_test_setup
 Test Tags    sapi
 
 *** Test Cases ***
-
-ENABLER
-    API_test_setup
-Get_all_availiable_stores
+Get_all_available_stores
     And I set Headers:    Content-Type=${default_header_content_type}
     When I send a GET request:    /stores
     Then Response status code should be:    200

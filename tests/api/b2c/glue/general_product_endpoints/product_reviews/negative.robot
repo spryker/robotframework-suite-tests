@@ -5,10 +5,6 @@ Test Tags    glue
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
-
-ENABLER
-    API_test_setup
-
 Get_a_review_with_non_existent_review_id
     When I send a GET request:    /abstract-products/${abstract_product.with_reviews.sku}/product-reviews/fake
     Then Response status code should be:    404

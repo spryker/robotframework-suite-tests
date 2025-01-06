@@ -4,7 +4,6 @@ Resource    ../common/common.robot
 Resource    ../pages/zed/zed_edit_product_page.robot
 Resource    ../pages/zed/zed_view_abstract_product_page.robot
 Resource    ../pages/zed/zed_view_concrete_product_page.robot
-Resource    aop_catalog_steps.robot
 
 *** Keywords ***
 Zed: discontinue the following product:

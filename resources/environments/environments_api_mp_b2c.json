@@ -20,7 +20,7 @@
    },
    "dataType":{
       "array":[
-         
+
       ]
    },
    "users":{
@@ -29,7 +29,8 @@
          "first_name":"Sonia",
          "last_name":"Wagner",
          "password":"change123",
-         "password_new":"Change@123",
+         "password_new":"qweRTY_123456",
+         "password_new_additional":"Change!23456",
          "reference":"DE--21",
          "salutation":"Ms"
       },
@@ -40,6 +41,30 @@
          "password":"change123",
          "reference":"DE--4",
          "salutation":"Mr"
+      },
+      "yves_third_user":{
+         "email":"maxmusterman@spryker.com",
+         "first_name":"Max",
+         "last_name":"Musterman",
+         "password":"change123",
+         "password_new":"Change!23456",
+         "salutation":"Mr"
+      },
+      "yves_eighth_user":{
+         "email":"maria.williams@spryker.com",
+         "password":"change123",
+         "password_new":"Change!23456",
+         "password_new_additional":"qweRTY_123456",
+         "reference":"DE--2"
+      },
+      "yves_ninth_user":{
+         "email":"maggie.may@spryker.com",
+         "first_name":"Maggie",
+         "last_name":"May",
+         "password":"Change!23456",
+         "password_new":"qweRTY_123456",
+         "reference":"DE--3",
+         "salutation":"Ms"
       },
       "zed_admin":{
          "email":"admin@spryker.com",
@@ -390,6 +415,12 @@
          "product_with_options":{
             "sku":"012",
             "name":"Canon IXUS 165"
+         },
+         "product_in_different_locales":{
+            "sku":"001",
+            "name":"Canon IXUS 160",
+            "description_de":"Beeindruckende Aufnahmen",
+            "description_en":"Add a personal touch"
          }
       },
       "products_in_bundle":{
@@ -592,6 +623,28 @@
    "dummy_api_key":"eba8110c9f9bf5685e8b5f4eba9b17c2",
    "dummy_key_hash":"f683f48de788d57cd396fc212ef33fd146e1ff0b51cde37ecb4ddd77eeed1706",
    "servicePoints":{
+      "default_service_points":{
+      "sp1":{
+         "key":"sp1",
+         "name":"Spryker Main Store"
+      },
+      "sp2":{
+         "key":"sp2",
+         "name":"Spryker Berlin Store"
+      }
+      },
+      "dynamic_service":{
+         "service_point_name":"robot",
+         "service_point_key":"robot",
+         "service_point_address_line_1":"Park Avenue",
+         "service_point_address_line_2":"Building 22",
+         "service_point_address_city":"robot",
+         "service_point_address_zip_code":"12345",
+         "service_point_address_country":"DE",
+         "service_type_name":"robot",
+         "service_type_key":"robot",
+         "service_key":"robot"
+      },
       "servicePoints":[
          {
             "uuid":"test-service-point",

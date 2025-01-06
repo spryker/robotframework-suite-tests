@@ -5,9 +5,6 @@ Test Setup    API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Retrieve_prices_of_a_product_offer
     When I send a GET request:    /product-offers/${active_offer}/product-offer-prices
     Then Response reason should be:    OK

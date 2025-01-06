@@ -77,4 +77,4 @@ User_Control
     Zed: login with deactivated user/invalid data:    sonia+control${random}@spryker.com    ${default_secure_password}
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Users    User Roles
-    ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete    
+    ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete

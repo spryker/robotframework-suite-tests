@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Abstract_prices_detault_only
     When I send a GET request:    /abstract-products/${abstract_product_with_variants.concretes_3}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
     Then Response status code should be:    200

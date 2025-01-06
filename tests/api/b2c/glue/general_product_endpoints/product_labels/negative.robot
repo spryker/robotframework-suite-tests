@@ -5,10 +5,7 @@ Test Tags    glue
 Resource    ../../../../../../resources/common/common_api.robot
 
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases ***    
 Get_product_label_with_invalid_label_id
     When I send a GET request:    /product-labels/fake
     Then Response status code should be:    404

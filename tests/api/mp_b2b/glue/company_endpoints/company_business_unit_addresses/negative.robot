@@ -5,8 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 Get_business_unit_address_with_empty_access_token
     [Setup]    I set Headers:    Authorization=
     When I send a GET request:    /company-business-unit-addresses/${business_unit.address_id}

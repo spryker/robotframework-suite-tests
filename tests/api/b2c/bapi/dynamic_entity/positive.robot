@@ -2,13 +2,10 @@
 Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../resources/common/common_api.robot
-Resource    ../../../../../resources/steps/dynamic_entity_steps.robot
+Resource    ../../../../../resources/steps/api_dynamic_entity_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_country_collection
     ### SETUP DYNAMIC ENTITY CONFIGURATION ###
     Delete dynamic entity configuration in Database:    robot-test-countries

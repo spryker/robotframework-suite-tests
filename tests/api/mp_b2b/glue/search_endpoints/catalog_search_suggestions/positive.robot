@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 #GET requests
 Get_search_suggestions_without_query_parameter
     When I send a GET request:    /catalog-search-suggestions

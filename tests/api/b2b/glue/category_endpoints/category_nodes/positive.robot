@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_category_node_is_root_by_id
     [Documentation]    Step skip due to isse https://spryker.atlassian.net/browse/CC-25961
     When I send a GET request:    /category-nodes/${category_node.root_id}

@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Abstract_product_with_one_concrete
     #Bug - CC-16551
     When I send a GET request:    /abstract-products/${abstract.available_products.with_stock.sku}
@@ -190,3 +187,15 @@ Abstract_product_with_3_concrete_and_concrete_nested_includes
     And Response include element has self link:    concrete-product-prices
     And Response include element has self link:    concrete-product-image-sets
     And Response include element has self link:    concrete-product-availabilities
+
+Abstract_product_in_different_locales_languages
+    When I set Headers:    Accept-Language=de-DE
+    And I send a GET request:    /abstract-products/${abstract.product_in_different_locales.sku}
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response body parameter should contain:    [data][attributes][description]    ${abstract.product_in_different_locales.description_de}
+    When I set Headers:    Accept-Language=en-US
+    And I send a GET request:    /abstract-products/${abstract.product_in_different_locales.sku}
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response body parameter should contain:    [data][attributes][description]    ${abstract.product_in_different_locales.description_en}

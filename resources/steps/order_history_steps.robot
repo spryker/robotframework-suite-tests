@@ -61,7 +61,12 @@ Yves: 'Order Details' page contains the cancel order button:
 Yves: filter order history by business unit:
     [Arguments]    ${business_unit}
     Wait Until Element Is Visible    ${order_history_search_filter_button}
-    Click    ${order_history_search_filter_button}
+    ${is_form_open}=    Run Keyword And Ignore Error    Page Should Contain Element    ${order_history_apply_filter_button}    timeout=1s
+    IF    'PASS' in ${is_form_open}    
+        Log    Form is active
+    ELSE
+        Click    ${order_history_search_filter_button}
+    END
     Wait Until Element Is Visible    ${order_history_apply_filter_button}
     Click    ${order_history_search_filter_business_unit_dropdown}
     Wait Until Element Is Visible    xpath=//li[contains(@id,'select2-orderSearchForm_filters_companyBusinessUnit-result')][contains(.,'${business_unit}')]

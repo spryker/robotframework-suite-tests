@@ -6,9 +6,6 @@ Resource    ../../../../../resources/steps/warehouse_user_assigment_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 New_warehouse_token_without_autorization
     [Tags]    skip-due-to-issue
     [Documentation]    https://spryker.atlassian.net/browse/FRW-2142

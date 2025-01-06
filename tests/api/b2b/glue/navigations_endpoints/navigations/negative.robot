@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_navigations_by_non_exist_id
     When I send a GET request:    /navigations/testNonExistNavigations
     Then Response status code should be:    404

@@ -2,12 +2,8 @@
 Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Resource    ../../../../../../resources/steps/service_point_steps.robot
+Resource    ../../../../../../resources/steps/api_service_point_steps.robot
 Test Tags    bapi
-
-*** Test Cases ***
-ENABLER
-    API_test_setup
 
 *** Test Cases ***
 Create_Service_Point_With_Existing_Key
@@ -16,12 +12,12 @@ Create_Service_Point_With_Existing_Key
     When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Service Point Name1","key": "service-point${random}","isActive": "true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    201
     Then Save value to a variable:    [data][attributes][key]    service_point_key
+    And Save value to a variable:    [data][id]    service_point_id
     When I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Service Point Name2","key": "service-point${random}","isActive": "true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    400
     And Response should return error code:    5404
     And Response should return error message:    A service point with the same key already exists.
-    [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
-    ...    AND    Delete service point in DB    ${servicePointUuid}
+    [Teardown]    Deactivate service point via BAPI    ${service_point_id}
 
 Create_Service_Point_With_Invalid_Key_Length
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -111,8 +107,7 @@ Update_Service_Point_With_Wrong_type
     Then Response status code should be:    400
     And Response should return error code:    5401
     And Response should return error message:    Wrong request body
-    [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
-    ...    AND    Delete service point in DB    ${service_point_id}
+    [Teardown]    Deactivate service point via BAPI    ${service_point_id}
 
 Update_Service_Point_Without_Authorization
     [Setup]    I set Headers:    Authorization=
@@ -142,13 +137,12 @@ Update_Service_Point_With_Empty_Name
     Then Response status code should be:    400
     And Response should return error code:    5407
     And Response should return error message:    A service point name must have length from 1 to 255 characters.
-    [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
-    ...    AND    Delete service point in DB    ${service_point_id}
+    [Teardown]    Deactivate service point via BAPI    ${service_point_id}
 
 Update_Service_Point_With_not_existing_key
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    ...    AND    I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Initial Service Point ${random}","key": "initial-service-point-${random}","isActive": "true","stores": ["DE", "AT"]}}}
+    ...    AND    I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Non Existing Initial Service Point ${random}","key": "non-existing-initial-service-point-${random}","isActive": "true","stores": ["DE", "AT"]}}}
     ...    AND    Save value to a variable:    [data][id]    service_point_id
     When I send a PATCH request:    /service-points/${service_point_id}    {"data": {"type": "service-points","attributes": {"key": "not-existing-key${random}","stores": ["DE"],"isActive": "true","name": "test"}}}
     Then Response status code should be:    200
@@ -156,8 +150,7 @@ Update_Service_Point_With_not_existing_key
     # duplicate key is not possible
     Then I send a POST request:    /service-points    {"data": {"type": "service-points","attributes": {"name": "Initial Service Point ${random}","key": "not-existing-key${random}","isActive": "true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    400
-    [Teardown]     Run Keywords    Get service point uuid by key:    ${service_point_key}
-    ...    AND    Delete service point in DB    ${service_point_id}
+    [Teardown]    Deactivate service point via BAPI    ${service_point_id}
 
 Get_Service_Points_Without_Authentication
     [Setup]    I set Headers:    Authorization=

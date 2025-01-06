@@ -66,7 +66,7 @@ Agent_Assist
     Yves: go to PDP of the product with sku:    020
     Yves: product price on the PDP should be:    €105.80
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart    
+    Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: fill in the following new shipping address:
     ...    || firstName                         |     lastName                          |    street          |    houseNumber      |    city                |    postCode     |    phone         ||

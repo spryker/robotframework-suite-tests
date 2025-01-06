@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 # POST requests
 # bug CC-16699
 Create_order_with_invalid_access_token

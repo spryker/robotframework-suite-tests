@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_url_collection_by_non_exist_url
     When I send a GET request:    /url-resolver?url=/non/exists/url
     Then Response status code should be:    404

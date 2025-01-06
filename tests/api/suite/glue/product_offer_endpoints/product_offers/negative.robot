@@ -5,8 +5,6 @@ Test Setup    API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 Get_product_offers_without_product_offer_id
     When I send a GET request:    /product-offers/
     Then Response status code should be:    400

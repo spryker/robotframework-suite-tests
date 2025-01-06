@@ -5,8 +5,6 @@ Test Setup    API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 Request_product_image_with_abstract_SKU
     When I send a GET request:    /concrete-products/${bundle_product.abstract.product_2_sku}/concrete-product-image-sets
     Then Response status code should be:    404

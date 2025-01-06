@@ -6,9 +6,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 
 # SEARCH PARAMETERS #
 

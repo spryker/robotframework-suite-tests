@@ -5,9 +5,6 @@ Test Setup        API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_banner
     When I send a GET request:    /content-banners/${banner.id_1}
     Then Response status code should be:    200

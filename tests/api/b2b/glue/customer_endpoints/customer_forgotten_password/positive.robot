@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Forgot_password_with_all_required_fields_and_valid_data
     I send a POST request:
     ...    /customer-forgotten-password

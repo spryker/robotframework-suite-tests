@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Add_a_concrete_product_to_the_shopping_list_without_access_token
     I send a POST request:
     ...    /shopping-lists/${shopping_list_1st.id}/shopping-list-items

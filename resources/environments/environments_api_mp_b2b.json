@@ -4,12 +4,12 @@
        "glue_url":"http://glue.de.spryker.local",
        "bapi_url":"http://glue-backend.de.spryker.local",
        "sapi_url":"http://glue-storefront.de.spryker.local"
-      },
-      "dms_env":{
-         "glue_dms_url":"http://glue.eu.spryker.local",
-         "bapi_dms_url":"http://glue-backend.eu.spryker.local",
-         "sapi_dms_url":"http://glue-storefront.eu.spryker.local"
-      },
+    },
+    "dms_env":{
+      "glue_dms_url":"http://glue.eu.spryker.local",
+      "bapi_dms_url":"http://glue-backend.eu.spryker.local",
+      "sapi_dms_url":"http://glue-storefront.eu.spryker.local"
+   },
     "dataType": {
       "array": []
    },
@@ -27,7 +27,8 @@
           "first_name":"Sonia",
           "last_name":"Wagner",
           "password":"change123",
-          "password_new":"qweRTY_123",
+          "password_new":"qweRTY_123456",
+          "password_new_additional":"Change!23456",
           "reference":"DE--21",
           "salutation":"Ms"
        },
@@ -44,6 +45,7 @@
           "first_name":"Max",
           "last_name":"Musterman",
           "password":"change123",
+          "password_new":"Change!23456",
           "salutation":"Mr"
        },
        "yves_fourth_user":{
@@ -52,6 +54,22 @@
           "last_name":"Dallas",
           "password":"change123",
           "reference":"DE-30",
+          "salutation":"Ms"
+       },
+       "yves_eighth_user":{
+          "email":"maria.williams@spryker.com",
+          "password":"change123",
+          "password_new":"Change!23456",
+          "password_new_additional":"qweRTY_123456",
+          "reference":"DE--2"
+       },
+       "yves_ninth_user":{
+          "email":"maggie.may@spryker.com",
+          "first_name":"Maggie",
+          "last_name":"May",
+          "password":"Change!23456",
+          "password_new":"qweRTY_123456",
+          "reference":"DE--3",
           "salutation":"Ms"
        },
        "yves_ottom_admin_user":{
@@ -530,7 +548,12 @@
              "concretes_3":"M29456",
              "concretes_name_3":"Gmöhling aluminum data removal container - Exterior - LxWxH 435 x 385 x 650 mm",
              "concretes_superattribute_3":"material"
-          }
+          },
+          "product_in_different_locales":{
+            "sku":"M29455",
+            "description_de":"Alu-Datenentsorgungsbehälter",
+            "description_en":"Aluminum data disposal container"
+         }
        },
        "concrete_available_product_with_stock":"420566",
        "concrete_available_product_without_stock":"422780",

@@ -5,9 +5,6 @@ Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 ####GET####
 Get_concrete_product_with_only_default_price
     When I send a GET request:    /concrete-products/${concrete_product.product_with_original_prices.concrete_sku}/concrete-product-prices

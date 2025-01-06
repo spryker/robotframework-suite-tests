@@ -5,8 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 #GET Request
 Retrieves_all_customer_wishlists
     [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
@@ -67,7 +65,7 @@ Retrieves_wishlist_with_items
     ...  AND    Response status code should be:    204
 
 #Get Request
-Retrieves_wishlist_with_items_in_concreate
+Retrieves_wishlist_with_items_in_concrete
     [Setup]    Run Keywords    I GET access token for the customer:    ${yves_user.email}
     ...    AND    I set headers:    authorization=${token}
     ...    AND    I send a Post request:    /wishlists    {"data": {"type": "wishlists","attributes": {"name": "${wishlist_name}"}}}

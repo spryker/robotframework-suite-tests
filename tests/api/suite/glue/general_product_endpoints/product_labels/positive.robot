@@ -4,10 +4,7 @@ Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases *** 
 Get_manual_product_label_by_id
     [Documentation]   https://spryker.atlassian.net/browse/CC-25716
     [Tags]    skip-due-to-issue  

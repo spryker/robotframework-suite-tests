@@ -6,10 +6,6 @@ Resource    ../../../../../resources/steps/shipment_type_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
-*** Test Cases ***
 Create_shipment_type
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
@@ -54,7 +50,7 @@ Create_new_shipment_type_with_existing_name
     [Teardown]     Run Keywords    Delete shipment type in DB:    new-shipment-type-${random}
     ...    AND    Delete shipment type in DB:    second-shipment-type-${random}
 
-Update_sipment_type_change_name_store_relation_and_deactivate
+Update_shipment_type_change_name_store_relation_and_deactivate
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types
@@ -73,7 +69,7 @@ Update_sipment_type_change_name_store_relation_and_deactivate
     And Response body has correct self link internal
     [Teardown]     Delete shipment type in DB:    update-shipment-type-key${random}
 
-Retrive_single_shipment_type_with_valid_token
+Retrieve_single_shipment_type_with_valid_token
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a POST request:    /shipment-types
@@ -92,7 +88,7 @@ Retrive_single_shipment_type_with_valid_token
     And Response body has correct self link internal
     [Teardown]     Delete shipment type in DB:    shipment-key${random}
 
-Retrive_list_of_shipment_types_with_valid_token_and_pagination
+Retrieve_list_of_shipment_types_with_valid_token_and_pagination
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     #prepare test data
@@ -115,7 +111,7 @@ Retrive_list_of_shipment_types_with_valid_token_and_pagination
     [Teardown]     Run Keywords    Delete shipment type in DB:    shipment-key1${random}
     ...    AND    Delete shipment type in DB:    shipment-key2${random}
 
-Retrive_list_of_shipment_types_with_filtering
+Retrieve_list_of_shipment_types_with_filtering
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     #prepare test data
@@ -134,7 +130,7 @@ Retrive_list_of_shipment_types_with_filtering
     ...    AND    Delete shipment type in DB:    shipment-key2${random}
     ...    AND    Delete shipment type in DB:    shipment-key3${random}
 
-Retrive_list_of_shipment_types_with_sorting_by_key_ASC
+Retrieve_list_of_shipment_types_with_sorting_by_key_ASC
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     #prepare test data
@@ -151,8 +147,7 @@ Retrive_list_of_shipment_types_with_sorting_by_key_ASC
     [Teardown]     Run Keywords    Delete shipment type in DB:    aaa_shipment-key1
     ...    AND    Delete shipment type in DB:    www_shipment-key2
 
-
-Retrive_list_of_shipment_types_with_sorting_by_key_DESC
+Retrieve_list_of_shipment_types_with_sorting_by_key_DESC
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     #prepare test data

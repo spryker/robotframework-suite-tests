@@ -4,10 +4,7 @@ Test Setup    API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases ***    
 No_cart_is_passing_to_upselling_products_request
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}

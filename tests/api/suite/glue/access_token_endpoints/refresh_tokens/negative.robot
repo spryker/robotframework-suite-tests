@@ -5,8 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
 #######POST#######
 Refresh_token_with_access_token
     [Setup]    I get access token for the customer:    ${yves_user.email}
@@ -53,7 +51,7 @@ Refresh_token_with_deleted_refresh_token
     And Response should return error message:    Failed to refresh token.
 
 #######DELETE#######
-# Spryker is designed so removing non-existent refresh token will return 204 for security reasons   
+# Spryker is designed so removing non-existent refresh token will return 204 for security reasons
 Delete_refresh_token_with_invalid_refresh_token
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}

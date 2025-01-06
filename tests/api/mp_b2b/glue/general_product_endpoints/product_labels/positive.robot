@@ -4,10 +4,7 @@ Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
-*** Test Cases ***
-ENABLER
-    API_test_setup
-    
+*** Test Cases ***    
 Get_manual_product_label_by_id
     When I send a GET request:    /product-labels/${label_manual.id}
     Then Response status code should be:    200

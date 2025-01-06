@@ -5,9 +5,7 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-Abstract_prices_detault_only
+Abstract_prices_default_only
     When I send a GET request:    /abstract-products/${multivariant.abstract_product.concretes_3}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -25,7 +23,7 @@ Abstract_prices_detault_only
     And Response should contain the array of a certain size:    [data][0][attributes][prices][0][volumePrices]   0
     And Response body has correct self link
 
-Abstract_prices_detault_only_CHF
+Abstract_prices_default_only_CHF
     When I send a GET request:    /abstract-products/${multivariant.abstract_product.concretes_3}/abstract-product-prices?currency=CHF&priceMode=GROSS_MODE
     Then Response status code should be:    200
     And Response reason should be:    OK

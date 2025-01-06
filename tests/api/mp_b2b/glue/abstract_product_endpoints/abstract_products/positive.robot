@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_abstract_product_with_one_concrete
     When I send a GET request:    /abstract-products/${abstract_available_product_with_stock.sku}
     Then Response status code should be:    200
@@ -209,3 +206,15 @@ Get_abstract_product_with_merchants_included
     And Response body parameter should be:    [included][0][attributes][publicEmail]    ${merchants.spryker_public_email}
     And Response body parameter should be:    [included][0][attributes][publicPhone]    ${merchants.spryker_public_phone}
     And Response body parameter should be:    [included][0][attributes][description]    ${merchants.description_spryker}
+
+Abstract_product_in_different_locales_languages
+    When I set Headers:    Accept-Language=de-DE
+    And I send a GET request:    /abstract-products/${abstract_product.product_in_different_locales.sku}
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response body parameter should contain:    [data][attributes][description]    ${abstract_product.product_in_different_locales.description_de}
+    When I set Headers:    Accept-Language=en-US
+    And I send a GET request:    /abstract-products/${abstract_product.product_in_different_locales.sku}
+    Then Response status code should be:    200
+    And Response reason should be:    OK
+    And Response body parameter should contain:    [data][attributes][description]    ${abstract_product.product_in_different_locales.description_en}

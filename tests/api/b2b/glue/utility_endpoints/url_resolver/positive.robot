@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_url_collections_by_url_paramater
     When I send a GET request:    /url-resolver?url=${url_resolver.example}
     Then Response status code should be:    200

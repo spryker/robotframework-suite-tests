@@ -6,9 +6,6 @@ Resource    ../../../../../../resources/steps/push_notifications_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Creates_push_notification_subscription_with_incorrect_locale
     [Setup]    Run Keywords    Create warehouse in DB:    ${warehouses[0].name}     ${True}     ${warehouses[0].uuid}
     ...    AND    Assign user to Warehouse in DB:    ${zed_admin.email}    ${warehouses[0].uuid}

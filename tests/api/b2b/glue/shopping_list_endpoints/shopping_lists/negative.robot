@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Create_a_shopping_list_with_empty_type
     I send a POST request:
     ...    /shopping-lists

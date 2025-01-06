@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_cms_page_list_by_fake_id
     When I send a GET request:    /cms-pages/:cms
     Then Response status code should be:    404

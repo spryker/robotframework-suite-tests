@@ -92,6 +92,10 @@ Overwrite api variables
         END
     END
 
+Setup_api_host_if_undefined
+    ${api_host_is_undefined}=    Run Keyword And Return Status    Variable Should Not Exist    ${current_url}
+    IF    ${api_host_is_undefined}    Overwrite api variables
+
 API_test_setup
     [Documentation]   This setup should be called in Settings of every test suite. It defines which url variable will be used in the test suite.
     ...
@@ -137,6 +141,25 @@ I set Headers:
     Set Test Variable    &{headers}
     RETURN    &{headers}
 
+Reset API Headers
+    [Documentation]    This keyword resets all previously set headers to their default values.
+    ...    It can be used to ensure that no unwanted headers persist between API requests.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``I Reset Headers``
+
+    # Clear previously set headers
+    ${headers}=    Create Dictionary
+
+    # Reapply default headers if needed
+    Set To Dictionary    ${headers}    &{default_headers}
+    Log    Default headers have been restored.
+
+    # Re-register headers as a test variable
+    Set Test Variable    &{headers}
+    RETURN    &{headers}
+
 I set default Headers:
     [Arguments]    &{headers}
     Log Dictionary    ${headers}
@@ -155,6 +178,7 @@ I get access token for the customer:
     ...
     ...    ``I get access token for the customer:    ${yves_user.email}``
     [Arguments]    ${email}    ${password}=${default_password}
+    Setup_api_host_if_undefined
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
     ${data}=    Evaluate    {"data":{"type":"access-tokens","attributes":{"username":"${email}","password":"${password}"}}}
     ${response}=    IF    ${headers_not_empty}       run keyword    POST    ${current_url}/access-tokens    json=${data}    headers=${headers}    verify=${verify_ssl}
@@ -188,6 +212,7 @@ I get access token for the company user by uuid:
     ...
     ...    ``I get access token for the company user by uuid:    ${company_user_uuid}``
     [Arguments]    ${company_user_uuid}
+    Setup_api_host_if_undefined
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
     ${data}=    Evaluate    {"data":{"type":"company-user-access-tokens","attributes":{"idCompanyUser":"${company_user_uuid}"}}}
     ${response}=    IF    ${headers_not_empty}       run keyword    POST    ${current_url}/company-user-access-tokens    json=${data}    headers=${headers}    verify=${verify_ssl}
@@ -223,6 +248,7 @@ I send a POST request:
     ...
     ...    ``I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}``
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
+    Setup_api_host_if_undefined
     ${data}=    Evaluate    ${json}
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    IF    ${headers_not_empty}   run keyword    POST    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
@@ -258,6 +284,7 @@ I send a POST request with data:
     ...
     ...    ``I send a POST request:    /agent-access-tokens    This is plain text body``
     [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
+    Setup_api_host_if_undefined
     ${data}=    Evaluate    ${data}
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    IF    ${headers_not_empty}   run keyword    POST    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
@@ -293,6 +320,7 @@ I send a PUT request:
     ...
     ...    ``I send a PUT request:    /some-endpoint/${someID}    {"data": {"type": "some-type"}}``
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
+    Setup_api_host_if_undefined
     ${data}=    Evaluate    ${json}
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    IF    ${headers_not_empty}   run keyword    PUT    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
@@ -328,6 +356,7 @@ I send a PUT request with data:
     ...
     ...    ``I send a PUT request:    /some-endpoint/${someID}    This is plain text body``
     [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
+    Setup_api_host_if_undefined
     ${data}=    Evaluate    ${data}
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    IF    ${headers_not_empty}   run keyword    PUT    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
@@ -368,6 +397,7 @@ I send a PATCH request:
     ...    ``I send a PATCH request:    /carts/${cartUID}/items/${itemUID}    {"data": {"type": "items","attributes": {"quantity": 5}}}``
 
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
+    Setup_api_host_if_undefined
     ${data}=    Evaluate    ${json}
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    IF    ${headers_not_empty}   run keyword    PATCH   ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
@@ -409,6 +439,7 @@ I send a PATCH request with data:
     ...
     ...    ``I send a PATCH request:    /some-endpoint/${someID}   This is plain text body``
     [Arguments]   ${path}    ${data}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
+    Setup_api_host_if_undefined
     ${data}=    Evaluate    ${data}
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    IF    ${headers_not_empty}   run keyword    PATCH    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
@@ -448,6 +479,7 @@ I send a GET request:
     ...
     ...    ``I send a GET request:    /abstract-products/${abstract_sku}``
     [Arguments]   ${path}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
+    Setup_api_host_if_undefined
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    IF    ${headers_not_empty}   run keyword    GET    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ...    ELSE    GET    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
@@ -489,6 +521,7 @@ I send a DELETE request:
     ...
     ...    ``I send a DELETE request:    /customers/${customer_reference}/addresses/addressUID``
     [Arguments]   ${path}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
+    Setup_api_host_if_undefined
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
     ${response}=    IF    ${headers_not_empty}   run keyword    DELETE    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ...    ELSE    DELETE    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
@@ -754,7 +787,7 @@ Response body has correct self link
     ${actual_self_link}=    Replace String    ${actual_self_link}    [    ${EMPTY}
     ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
     ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
-    Should Be Equal    ${actual_self_link}    ${expected_self_link}    Expected self link: '${expected_self_link}' does not match: '${actual_self_link}'.
+    Should Be Equal    ${actual_self_link}    ${expected_self_link}    Expected self link: '${expected_self_link}' does not match actual link: '${actual_self_link}'.
 
 Response body has correct self link internal
     [Documentation]    This keyword checks that the actual selflink retrieved from the test variable ``${response_body}`` matches the self link recorded into the ``${expected_self_link}`` test variable on endpoint call.
@@ -768,7 +801,7 @@ Response body has correct self link internal
     ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
     ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
     Log    ${response_body}
-    Should Be Equal    ${actual_self_link}    ${expected_self_link}    Expected internal selft link: '${expected_self_link}' does not match the actual link: '${actual_self_link}'.
+    Should Be Equal    ${actual_self_link}    ${expected_self_link}    Expected internal self link: '${expected_self_link}' does not match the actual link: '${actual_self_link}'.
 
 Response body has correct self link for created entity:
     [Documentation]    This keyword checks that the actual selflink retrieved from the test variable ``${response_body}`` plus the UID of the entity that was created and matches the self link recorded into the ``${expected_self_link}`` test variable on endpoint call.
@@ -1109,6 +1142,31 @@ Each array element of array in response should contain property with value NOT i
         END
     END
 
+Each array element of array in response should NOT be empty:
+    [Documentation]    This keyword checks that each array element of array contsains the speficied parameter ``${expected_property}`` with the value that does not empty.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Each array element of array in response should NOT be empty:    [data]    id``
+    [Arguments]    ${json_path}    ${expected_property}
+
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${log_list}=    Log List    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+        ${list_element}=    Convert To String    ${list_element}
+        ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
+        ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
+        TRY
+            Should Not Be Empty    ${list_element}
+        EXCEPT
+            Fail    Array element: '${expected_property}' of array: '${json_path}' is empty but SHOULD NOT
+        END
+    END
+
 Each array element of nested array should contain property with value in:
     [Documentation]    This keyword checks that each array element of ``${nested_array} that is inside the parent array ``${json_path}`` contains the speficied parameter ``${expected_property}`` with the value that matches any of the parameters ``${expected_value1}``, ``${expected_value2}``, etc..
     ...
@@ -1433,10 +1491,13 @@ Response should return error message:
     ...
     ...    ``Response should return error message:    Can`t find abstract product image sets.``
     [Arguments]    ${error_message}
-    IF    '${tag}'=='bapi' or '${tag}'=='sapi'
-        ${data}=    Get Value From Json    ${response_body}    [errors][0][message]
-    ELSE
-        ${data}=    Get Value From Json    ${response_body}    [errors][0][detail]
+    FOR  ${tag}  IN  @{Test Tags}
+        IF    '${tag}'=='bapi' or '${tag}'=='sapi'
+            ${data}=    Get Value From Json    ${response_body}    [errors][0][message]
+        END
+        IF    '${tag}'=='glue'
+            ${data}=    Get Value From Json    ${response_body}    [errors][0][detail]
+        END
     END
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
@@ -1637,6 +1698,7 @@ Cleanup existing customer addresses:
     ...
     ...    ``Cleanup existing customer addresses:    ${yves_user.reference}``
     [Arguments]    ${customer_reference}
+    Setup_api_host_if_undefined
     ${response}=    GET    ${current_url}/customers/${customer_reference}/addresses    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200    verify=${verify_ssl}
     IF    ${response.status_code} != 204
         TRY
@@ -1684,6 +1746,7 @@ Find or create customer cart
         ...
         ...     This keyword does not accept any arguments. Makes GET request in order to fetch cart for the customer or creates it otherwise.
         ...
+        Setup_api_host_if_undefined
         ${response}=    GET    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
         IF    ${response.status_code} != 204
@@ -1762,7 +1825,6 @@ Get ETag header value from cart
         ...
         ...    and it can be re-used by the keywords that follow this keyword in the test
         ...    This keyword does not accept any arguments. This keyword is used for removing unused/unwanted (ex. W/"") characters from ETag header value.
-        ...
         ${response}=    I send a GET request:    /carts
         ${Etag}=    Get Value From Json   ${response_headers}    [ETag]
         ${Etag}=    Convert To String    ${Etag}
@@ -1801,6 +1863,7 @@ Cleanup all items in the cart:
         ...
         ...    ``Cleanup items in the cart:    ${cart_id}``
         [Arguments]    ${cart_id}
+        Setup_api_host_if_undefined
         ${response}=    GET    ${current_url}/carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
         IF    ${response.status_code} != 204
@@ -1852,6 +1915,7 @@ Cleanup all customer carts
             I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "dummyCart-${{random.randint(0, 100)}}${random}"}}}
             Save value to a variable:    [data][id]    cart_id
         END
+        Setup_api_host_if_undefined
         ${response}=    GET    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
         IF    ${response.status_code} != 204
@@ -1898,6 +1962,7 @@ Cleanup all items in the guest cart:
         ...
         ...    ``Cleanup all items in the guest cart:    ${cart_id}``
         [Arguments]    ${cart_id}
+        Setup_api_host_if_undefined
         ${response}=    GET    ${current_url}/guest-carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=guest-cart-items,bundle-items    expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
         IF    ${response.status_code} != 204
@@ -1935,6 +2000,7 @@ Cleanup all availability notifications:
         ...
         ...    ``Cleanup all availability notifications in the guest cart:    ${yves_user.reference}``
         [Arguments]    ${yves_user.reference}
+        Setup_api_host_if_undefined
         ${response}=    GET    ${current_url}/customers/${yves_user.reference}/availability-notifications    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}   expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
         IF    ${response.status_code} != 204
@@ -2173,6 +2239,7 @@ Cleanup all existing shopping lists
         ...    *Example:*
         ...
         ...    ``Cleanup all existing shopping lists``
+        Setup_api_host_if_undefined
         ${response}=    GET    ${current_url}/shopping-lists    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
         IF    ${response.status_code} != 204
@@ -2219,6 +2286,26 @@ I get access token by user credentials:
     Save value to a variable:    [access_token]    token
     Log    ${token}
     RETURN    ${token}
+
+Switch to Glue
+    Remove Tags    *
+    Set Tags    glue
+    Overwrite api variables
+    Reset API Headers
+
+Switch to BAPI
+    Remove Tags    *
+    Set Tags    bapi
+    Overwrite api variables
+    Reset API Headers
+
+*** Keywords ***
+Array Element Should Contain Nested Property With Value At Least Once
+    [Arguments]    ${json_path}    ${nested_path}    ${property}    ${expected_value}
+    ${matches}=    Get Value From Json     ${response_body}    ${json_path}
+    ${exists}=    Evaluate
+    ...    any(item.get('${nested_path}', {}).get('${property}', None) == ${expected_value} for item in ${matches})
+    Should Be True    ${exists}    Expected property '${property}' with value '${expected_value}' not found in any array element.
 
 Delete dynamic customer via API
     Set Tags    glue

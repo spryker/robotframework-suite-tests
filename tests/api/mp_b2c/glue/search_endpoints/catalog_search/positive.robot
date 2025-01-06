@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 ##### SEARCH PARAMETERS #####
 Search_with_empty_search_criteria_all_default_values_check
     When I send a GET request:    /catalog-search?q=

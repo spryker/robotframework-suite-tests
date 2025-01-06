@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Get_abstract_availability_by_concrete_SKU
     When I send a GET request:
     ...    /abstract-products/${concrete.alternative_products.product_1.sku}/abstract-product-availabilities

@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Agent_cannot_impersonate_customer_with_no_agent_token
     When I send a POST request:
     ...    /agent-customer-impersonation-access-tokens

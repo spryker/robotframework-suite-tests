@@ -5,9 +5,6 @@ Resource    ../../../../../../resources/common/common_api.robot
 Test Tags    glue
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 #####POST#####
 Adding_voucher_code_to_cart_of_logged_in_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}

@@ -150,7 +150,7 @@ Dynamic_multistore
     ...    ||  ${random_str_store}_${random_str_store} | ${one_variant_product_abstract_sku} ||
     Zed: update abstract product price on:
     ...    || productAbstract                      | store                                   | mode  | type    | currency | amount | tax set            ||
-    ...    || ${one_variant_product_abstract_sku}  | ${random_str_store}_${random_str_store} | gross | default | €        | 160.00 | Smart Electronics  ||   
+    ...    || ${one_variant_product_abstract_sku}  | ${random_str_store}_${random_str_store} | gross | default | €        | 160.00 | Smart Electronics  ||
     Trigger multistore p&s
     Zed: change concrete product data:
     ...    || productAbstract                     | productConcrete                     | active | searchable en | searchable de ||
@@ -159,7 +159,7 @@ Dynamic_multistore
     ...    || productAbstract                     | productConcrete                     | store                                   | mode  | type    | currency | amount ||
     ...    || ${one_variant_product_abstract_sku} | ${one_variant_product_concrete_sku} | ${random_str_store}_${random_str_store} | gross | default | €        | 15.00  ||
     Zed: update warehouse:
-    ...    || warehouse  | store                                   || 
+    ...    || warehouse  | store                                   ||
     ...    || Warehouse1 | ${random_str_store}_${random_str_store} ||
     Zed: change concrete product stock:
     ...    || productAbstract                     | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
@@ -193,7 +193,7 @@ Dynamic_multistore
     Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                       | password                      ||
-    ...    || Mr.        | New        | User      | sonia+dms${random}@spryker.com  | P${random_str}s#!#${random_id} ||
+    ...    || Mr.        | New        | User      | sonia+dms${random}@spryker.com  | P${random_str_password}s#!#${random_id_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Run Keywords    Should Test Run
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -201,3 +201,6 @@ Dynamic_multistore
     ...    AND    Zed: click Action Button in a table for row that contains:    New Page Store${random}   Deactivate
     ...    AND    Zed: delete customer:    sonia+dms${random}@spryker.com
     ...    AND    Trigger multistore p&s
+    Zed: delete customer:
+    ...    || email                          ||
+    ...    || sonia+dms${random}@spryker.com ||

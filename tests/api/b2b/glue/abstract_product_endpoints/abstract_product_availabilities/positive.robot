@@ -8,9 +8,6 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-
 Product_is_available_with_stock_and_never_out_of_stock
     When I send a GET request:
     ...    /abstract-products/${abstract.available_products.with_stock_and_never_out_of_stock_sku_2}/abstract-product-availabilities

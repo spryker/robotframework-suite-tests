@@ -8,10 +8,7 @@ Test Tags    glue
 
 
 *** Test Cases ***
-ENABLER
-    API_test_setup
-##### all negative and positive tests for this endpoint are already covered with other tests (e.g. abstract-product-prices checks that without token proces are not accessible)
-
+##### all negative and positive tests for this endpoint are already covered with other tests (e.g. abstract-product-prices checks that without token process are not accessible)
 Get_resources_customer_can_access
     When I send a GET request:    /customer-access
     Then Response status code should be:    200
