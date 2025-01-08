@@ -190,12 +190,12 @@ Dynamic_multistore
     ## register new customer in the new store on YVES
     Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
     Register a new customer with data:
-    ...    || salutation | first name | last name | e-mail                       | password                      ||
-    ...    || Mr.        | New        | User      | sonia+dms${random}@spryker.com  | P${random_str_password}s#!#${random_id_password} ||
+    ...    || salutation | first name | last name | e-mail                             | password                                          ||
+    ...    || Mr.        | New        | User      | sonia+ui+dms${random}@spryker.com  | ${default_secure_password}!5${random_id_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Run Keywords    Should Test Run
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    New Page Store${random}   Deactivate
-    ...    AND    Zed: delete customer:    sonia+dms${random}@spryker.com
+    ...    AND    Zed: delete customer:    sonia+ui+dms${random}@spryker.com
     ...    AND    Trigger multistore p&s
