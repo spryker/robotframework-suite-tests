@@ -6,7 +6,7 @@ on:
 jobs:
     docker-alpine-php-8-2-mariadb-robot-ui:
         name: "[dev][suite][UI][DMS-ON][parallel]"
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
             SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
@@ -28,6 +28,7 @@ jobs:
             - name: Install packages
               run: |
                   sudo apt-get install apache2-utils
+                  sudo apt install awscli -q
                   python3 -m pip install --upgrade pip
                   python3 -m pip install -U robotframework
                   python3 -m pip install -U robotframework-pabot

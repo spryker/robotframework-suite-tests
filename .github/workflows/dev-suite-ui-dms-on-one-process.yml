@@ -6,7 +6,7 @@ on:
 jobs:
     docker-alpine-php-8-2-mariadb-robot-ui:
         name: "[dev][suite][UI][DMS-ON][one-process]"
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
             SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
