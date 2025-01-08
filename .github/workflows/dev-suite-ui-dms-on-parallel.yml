@@ -64,7 +64,7 @@ jobs:
               run: |
                   cd robotframework-tests
                   rfbrowser init chromium
-                  pabot --processes 4 -v env:ui_suite -v dms:true -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoringORstatic_set -s '*'.tests.parallel_ui .
+                  pabot --processes 4 -v env:ui_suite -v dms:true -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoringORstatic_set --include debug -s '*'.tests.parallel_ui .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Run Static Test Set
               id: run_static_tests
