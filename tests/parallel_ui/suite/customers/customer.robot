@@ -76,7 +76,7 @@ Authorized_User_Access
     [Teardown]    Delete dynamic customer via API
 
 New_Customer_Registration
-    [Tags]    smoke
+    [Tags]    smoke    debug
     [Documentation]    Check that a new user can be registered in the system
     Create dynamic admin user in DB
     Register a new customer with data:
@@ -417,7 +417,7 @@ Shopping_List_Contains_Offers
     [Teardown]    Delete dynamic customer via API
 
 Email_Confirmation
-    [Tags]    smoke
+    [Tags]    smoke    debug
     [Documentation]    Check that a new user cannot login if the email is not verified
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                             | password                                        ||
