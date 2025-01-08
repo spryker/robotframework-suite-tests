@@ -201,6 +201,3 @@ Dynamic_multistore
     ...    AND    Zed: click Action Button in a table for row that contains:    New Page Store${random}   Deactivate
     ...    AND    Zed: delete customer:    sonia+dms${random}@spryker.com
     ...    AND    Trigger multistore p&s
-    Zed: delete customer:
-    ...    || email                          ||
-    ...    || sonia+dms${random}@spryker.com ||

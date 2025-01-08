@@ -93,9 +93,7 @@ Register_during_checkout
     Yves: assert customer profile data:
     ...    || salutation    | first name               | last name               | email                            ||
     ...    || ${salutation} | ${guest_user_first_name} | ${guest_user_last_name} | sonia+guest${random}@spryker.com ||
-    [Teardown]    Zed: delete customer:
-    ...    || email                            ||
-    ...    || sonia+guest${random}@spryker.com ||
+    [Teardown]    Zed: delete customer:    sonia+guest${random}@spryker.com
 
 Guest_Checkout
     [Tags]    smoke
