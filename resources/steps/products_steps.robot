@@ -9,7 +9,7 @@ Resource    ../pages/zed/zed_view_concrete_product_page.robot
 Zed: discontinue the following product:
     [Arguments]    ${productAbstract}    ${productConcrete}
     Wait Until Element Is Visible    ${zed_log_out_button}
-    Zed: go to second navigation item level:    Catalog    Products
+    Zed: go to URL:    /product-management
     Zed: perform search by:    ${productAbstract}
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
@@ -22,7 +22,7 @@ Zed: discontinue the following product:
 
 Zed: undo discontinue the following product:
     [Arguments]    ${productAbstract}    ${productConcrete}
-    Zed: go to second navigation item level:    Catalog    Products
+    Zed: go to URL:    /product-management
     Zed: perform search by:    ${productAbstract}
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
@@ -44,7 +44,7 @@ Zed: check if at least one price exists for concrete and add if doesn't:
 Zed: change concrete product price on:
     [Arguments]    @{args}
     ${priceData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Catalog    Products
+    Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
     Zed: switch to the tab on 'Edit product' page:    Variants
@@ -164,7 +164,7 @@ Zed: view abstract product page contains:
 Zed: update abstract product data:
     [Arguments]    @{args}
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to URL:    /product-management 
     Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${${zed_product_general_second_locale_expanded_section}}    3s
     IF    '${second_locale_section_expanded}'=='False'
@@ -213,7 +213,7 @@ Zed: update abstract product price on:
     FOR    ${key}    ${value}    IN    &{priceData}
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='productAbstract' and '${value}' != '${EMPTY}'
-            Zed: go to second navigation item level:    Catalog    Products
+            Zed: go to URL:    /product-management
             Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
             Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
             Zed: switch to the tab on 'Edit product' page:    Price & Tax
@@ -246,7 +246,7 @@ Zed: update abstract product price on:
 Zed: start new abstract product creation:
     [Arguments]    @{args}
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Catalog    Products
+    Zed: go to URL:    /product-management
     Zed: click button in Header:    Create Product
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=1s
     IF    '${second_locale_section_expanded}'=='False'
@@ -321,7 +321,7 @@ Zed: select abstract product variants:
 Zed: change concrete product data:
     [Arguments]    @{args}
     ${priceData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Catalog    Products
+    Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
     Zed: switch to the tab on 'Edit product' page:    Variants
@@ -383,7 +383,7 @@ Zed: change concrete product data:
 Zed: change concrete product stock:
     [Arguments]    @{args}
     ${stockData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Catalog    Products
+    Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
     Zed: switch to the tab on 'Edit product' page:    Variants
@@ -458,7 +458,7 @@ Zed: change concrete product stock:
 Zed: add new concrete product to abstract:
     [Arguments]    @{args}
     ${productData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Catalog    Products
+    Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
     Zed: click button in Header:    Add Variant

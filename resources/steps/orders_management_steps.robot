@@ -10,13 +10,13 @@ Resource    ../pages/zed/zed_order_details_page.robot
 *** Keywords ***
 Zed: go to order page:
     [Arguments]    ${orderID}
-    Zed: go to second navigation item level:    Sales    Orders
+    Zed: go to URL:    /sales
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
 
 Zed: go to my order page:
     [Documentation]    Marketplace specific method, to see this page you should be logged in as zed_spryker_merchant_admin_email
     [Arguments]    ${orderID}
-    Zed: go to second navigation item level:    Sales    My Orders
+    Zed: go to URL:    /merchant-sales-order-merchant-user-gui
     Zed: perform search by:    ${orderID}
     Try reloading page until element is/not appear:    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${orderID}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]    true    15    10s
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
@@ -221,7 +221,7 @@ Yves: check that 'Print Slip' contains the following products:
 
 Zed: create a return for the following order and product in it:
     [Arguments]    ${orderID}    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
-    Zed: go to second navigation item level:    Sales    Orders
+    Zed: go to URL:    /sales
     Zed: perform search by:    ${orderID}
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
     Wait Until Page Contains Element    xpath=//div[@class='title-action']/a[contains(.,'Return')]
@@ -238,14 +238,14 @@ Zed: create a return for the following order and product in it:
 
 Zed: grand total for the order equals:
     [Arguments]    ${orderID}    ${grandTotal}
-    Zed: go to second navigation item level:    Sales    Orders
+    Zed: go to URL:    /sales
     Zed: perform search by:    ${orderID}
     Table Should Contain    ${zed_table_locator}  ${grandTotal}
 
 Zed: get the last placed order ID of the customer by email:
     [Documentation]    Returns orderID of the last order from the Backoffice by email
     [Arguments]    ${email}
-    Zed: go to second navigation item level:    Sales    Orders
+    Zed: go to URL:    /sales
     Zed: perform search by:    ${email}
     ${zedLastPlacedOrder}=    Get Text    xpath=//table[contains(@data-ajax,'sales')][contains(@class,'dataTable')]/tbody/tr[1]/td[2]
     Set Suite Variable    ${zedLastPlacedOrder}    ${zedLastPlacedOrder}
@@ -253,7 +253,7 @@ Zed: get the last placed order ID of the customer by email:
 
 Zed: order has the following number of shipments:
     [Arguments]    ${orderID}    ${expectedShipments}
-    Zed: go to second navigation item level:    Sales    Orders
+    Zed: go to URL:    /sales
     Zed: perform search by:    ${orderID}
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
     Wait Until Element Is Visible    xpath=//table[@data-qa='order-item-list'][1]

@@ -48,7 +48,6 @@ Content_Management
     Create dynamic admin user in DB    user_name=admin+root+cm${random}@spryker.com
     Create dynamic admin user in DB    user_name=admin+content${random}@spryker.com
     Zed: login on Zed with provided credentials:    admin+content${random}@spryker.com
-    Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Test Page${random}    test-page${random}    Page Title    Page text
     Yves: go to newly created page by URL:    en/test-page${random}
     Yves: page contains CMS element:    CMS Page Title    Page Title

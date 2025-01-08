@@ -13,11 +13,7 @@ Zed: select merchant in filter:
 Zed: create new Merchant with the following data:
     [Arguments]    @{args}
     ${merchantData}=    Set Up Keyword Arguments    @{args}
-    IF    '${env}' in ['ui_suite','ui_mp_b2b','ui_mp_b2c','ui_b2c']
-        Zed: go to second navigation item level:    Marketplace    Merchants
-    ELSE
-        Zed: go to second navigation item level:    B2B Contracts    Merchants
-    END    
+    Zed: go to URL:    /merchant-gui/list-merchant
     Zed: click button in Header:    Add Merchant
     Wait Until Element Is Visible    ${zed_create_merchant_name_field}
     VAR    ${approve}    False
@@ -57,11 +53,7 @@ Zed: create new Merchant with the following data:
     Zed: wait for button in Header to be visible:    Add Merchant    ${browser_timeout}
     Zed: table should contain:    ${MerchantName}
     IF    ${approve}
-        IF    '${env}' in ['ui_suite','ui_mp_b2b','ui_mp_b2c','ui_b2c']
-            Zed: go to second navigation item level:    Marketplace    Merchants
-        ELSE
-            Zed: go to second navigation item level:    B2B Contracts    Merchants
-        END
+        Zed: go to URL:    /merchant-gui/list-merchant
         Zed: perform search by:    ${merchant_name}
         Zed: click Action Button in a table for row that contains:    ${merchant_name}    Activate
         Zed: click Action Button in a table for row that contains:    ${merchant_name}    Approve Access

@@ -11,7 +11,7 @@ Zed: delete Zed user with the following email:
     [Arguments]    ${zed_email}
     Reload
     ${currentURL}=    Get Location
-    IF    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
+    IF    '/user' not in '${currentURL}'    Zed: go to URL:    /user
     Zed: click Action Button in a table for row that contains:    ${zed_email}    Delete
     Wait Until Page Contains Element    ${zed_confirm_delete_user_button}
     Click    ${zed_confirm_delete_user_button}
@@ -21,7 +21,7 @@ Zed: update Zed user:
     ${newUserData}=    Set Up Keyword Arguments    @{args}
     Reload
     ${currentURL}=    Get Location
-    IF    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
+    IF    '/user' not in '${currentURL}'    Zed: go to URL:    /user
     ${variable_exists}=    Run Keyword And Return Status    Variable Should Exist    ${oldEmail}
     IF    ${variable_exists}
         Zed: click Action Button in a table for row that contains:    ${oldEmail}    Edit
@@ -59,7 +59,7 @@ Zed: update Zed user:
 Zed: create new role with name:
     [Documentation]    Create a new role.
     [Arguments]    ${name}
-    Zed: go to second navigation item level:    Users    User Roles
+    Zed: go to URL:    /acl/role
     Zed: click button in Header:    Add new Role
     Type Text    ${zed_user_role_name}      ${name}
     Zed: submit the form
@@ -75,7 +75,7 @@ Zed: apply access permissions for user role:
 
 Zed: create new group with role assigned:
     [Arguments]    ${group_name}    ${role_name}
-    Zed: go to second navigation item level:    Users    User Groups
+    Zed: go to URL:    /acl/group
     Zed: click button in Header:    Create Group
     Type Text   ${zed_user_group_title}      ${group_name}
     Type Text     ${zed_user_group_assigned_role_textbox}      ${role_name}
@@ -89,10 +89,10 @@ Zed: validate the message when permission is restricted:
 
 Zed: deactivate the created user:
     [Arguments]    ${email}
-    Zed: go to second navigation item level:    Users    Users
+    Zed: go to URL:    /user
     Zed: click Action Button in a table for row that contains:    ${email}    Deactivate
     Wait Until Element Is Visible    ${zed_success_flash_message}
 
  Zed: assign warehouse to user:
     [Arguments]    ${email}
-    Zed: go to second navigation item level:    Users    Users   
+    Zed: go to URL:    /user   

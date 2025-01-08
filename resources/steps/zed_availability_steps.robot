@@ -6,6 +6,9 @@ Resource    ../common/common.robot
 *** Keywords ***
 Zed: check if product is/not in stock:
     [Arguments]    ${sku}    ${isInStock}
+    ${currentURL}=    Get Location
+    IF    '/availability-gui' not in '${currentURL}'    Zed: go to URL:    /availability-gui
+    IF    '/availability-gui/index/edit' in '${currentURL}'    Zed: go to URL:    /availability-gui
     ${isInStock}=    Convert To Lower Case    ${isInStock}
     Zed: perform search by:    ${sku}
     IF    '${isInStock}'=='true'
@@ -18,8 +21,8 @@ Zed: change product stock:
     [Arguments]    ${skuORnameAbstract}    ${skuConcrete}    ${isNeverOutOfStock}    ${quantityWarehouse1}    ${quantityWarehouse2}=0
     ${isNeverOutOfStock}=    Convert To Lower Case    ${isNeverOutOfStock}
     ${currentURL}=    Get Location
-    IF    '/availability-gui' not in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
-    IF    '/availability-gui/index/edit' in '${currentURL}'    Zed: go to second navigation item level:    Catalog    Availability
+    IF    '/availability-gui' not in '${currentURL}'    Zed: go to URL:    /availability-gui
+    IF    '/availability-gui/index/edit' in '${currentURL}'    Zed: go to URL:    /availability-gui
     Zed: perform search by:    ${skuORnameAbstract}
     TRY
         Set Browser Timeout    5s
@@ -61,7 +64,7 @@ Zed: check and restore product availability in Zed:
     [Arguments]    ${skuAbstract}    ${expectedStatus}    ${skuConcrete}    ${admin_user_email}=${zed_admin_email}
     ${expectedStatus}=    Convert To Lower Case    ${expectedStatus}
     Zed: login on Zed with provided credentials:    ${admin_user_email}
-    Zed: go to second navigation item level:    Catalog    Availability
+    Zed: go to URL:    /availability-gui
     Zed: perform search by:    ${skuAbstract}
     ${isProductAvailable}=    Run Keyword And Return Status    Element Text Should Be    ${zed_availability_product_availability_label}     Available
     IF    '${expectedStatus}'=='available' and '${isProductAvailable}'=='False'

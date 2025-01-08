@@ -8,7 +8,7 @@ Zed: delete customer:
     [Documentation]    Possible argument names: email
         [Arguments]    ${email}
         ${currentURL}=    Get Location
-        IF    '/customer' not in '${currentURL}'    Zed: go to second navigation item level:    Customers    Customers
+        IF    '/customer' not in '${currentURL}'    Zed: go to URL:    /customer
         Zed: perform search by:    ${email}
         ${customerExists}=    Run Keyword And Return Status    Element Text Should Be    xpath=//tbody//td[contains(@class,' column-email') and contains(text(),'${email}')]     ${email}
         IF    '${customerExists}'=='True'

@@ -23,7 +23,7 @@ Zed: undo the changes in glossary translation:
         VAR    ${admin_email}    ${dynamic_admin_user}
     END
     Zed: login on Zed with provided credentials:    ${admin_email}
-    Zed: go to second navigation item level:    Administration    Glossary 
+    Zed: go to URL:    /glossary
     Zed: click Action Button in a table for row that contains:    ${glossaryName}    Edit  
     Zed: fill glossary form:
     ...    || DE_DE          | EN_US          ||

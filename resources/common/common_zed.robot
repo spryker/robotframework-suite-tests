@@ -97,7 +97,7 @@ Zed: save abstract product:
         VAR    ${admin_email}    ${dynamic_admin_user}
     END
     Zed: login on Zed with provided credentials:    ${admin_email}
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
     Wait until element is visible    ${zed_save_button}
     Zed: submit the form
@@ -225,3 +225,9 @@ Zed: is admin user is logged in
     Wait For Load State    networkidle
     ${adminIsLoggedIn}=    Run Keyword And Return Status    Page Should Contain Element    locator=${zed_log_out_button}    timeout=0.1s
     RETURN    ${adminIsLoggedIn}
+
+Zed: go to URL:
+    [Arguments]    ${url}
+    ${url}=    Get URL Without Starting Slash    ${url}
+    Set Browser Timeout    ${browser_timeout}
+    Go To    ${zed_url}${url}

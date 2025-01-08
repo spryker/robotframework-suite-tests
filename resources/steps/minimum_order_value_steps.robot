@@ -12,7 +12,7 @@ Resource    ../../resources/steps/checkout_steps.robot
 Zed: change global threshold settings:
     [Arguments]    @{args}
     ${thresholdData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Administration    Global Threshold
+    Zed: go to URL:    /sales-order-threshold-gui/global
     Wait Until Element Is Visible    ${zed_global_threshold_store_currency_span}
     Wait For Load State
     Wait For Load State    networkidle

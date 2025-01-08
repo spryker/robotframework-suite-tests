@@ -10,7 +10,7 @@ Resource    ../pages/zed/zed_delete_company_user_page.robot
 Zed: create new Company Business Unit with provided name and company:
     [Documentation]     Creates new company BU with provided BU Name and for provided company.
     [Arguments]    ${bu_name_to_set}    ${company_business_unit}
-    Zed: go to second navigation item level:    Company Account    Company Units
+    Zed: go to URL:    /company-business-unit-gui/list-company-business-unit
     Zed: click button in Header:    Create Company Business Unit
     select from list by label    ${zed_bu_company_dropdown_locator}    ${company_business_unit}
     Type Text    ${zed_bu_name_field}    ${bu_name_to_set}
@@ -27,7 +27,7 @@ Zed: create new Company Business Unit with provided name and company:
 
 Zed: create new Company with provided name:
     [Arguments]    ${company_name}
-    Zed: go to second navigation item level:    Company Account    Companies
+    Zed: go to URL:    /company-gui/list-company
     Zed: click button in Header:    Create Company
     wait until element is visible    id=company_name
     Type Text    ${zed_company_name_input_field}    ${company_name}
@@ -39,7 +39,7 @@ Zed: create new Company with provided name:
 Zed: create new Company Role with provided permissions:
     [Documentation]     Creates new company role with provided permission. Permissions are optional
     [Arguments]     ${select_company_for_role}     ${new_role_name}    ${is_default}      @{permissions_list}    ${permission1}=${EMPTY}     ${permission2}=${EMPTY}     ${permission3}=${EMPTY}     ${permission4}=${EMPTY}     ${permission5}=${EMPTY}     ${permission6}=${EMPTY}     ${permission7}=${EMPTY}     ${permission8}=${EMPTY}     ${permission9}=${EMPTY}     ${permission10}=${EMPTY}     ${permission11}=${EMPTY}     ${permission12}=${EMPTY}     ${permission13}=${EMPTY}     ${permission14}=${EMPTY}     ${permission15}=${EMPTY}
-    Zed: go to second navigation item level:     Company Account    Company Roles
+    Zed: go to URL:    /company-role-gui/list-company-role
     Zed: click button in Header:    Add company user role
     ${new_list_of_permissions}=    get length    ${permissions_list}
     log    ${new_list_of_permissions}
@@ -57,7 +57,7 @@ Zed: create new Company Role with provided permissions:
 
 Zed: Create new Company User with provided email/company/business unit and role(s):
     [Arguments]    ${email}    ${company}    ${business_unit}    ${role}
-    Zed: go to second navigation item level:    Company Account    Company Users
+    Zed: go to URL:    /company-user-gui/list-company-user
     wait until element is visible    ${zed_table_locator}
     Zed: click button in Header:    Add User
     Type Text    ${zed_create_company_user_email_field}  ${email}
@@ -110,7 +110,7 @@ Zed: delete company user xxx withing xxx company business unit:
     END
     Zed: login on Zed with provided credentials:    ${admin_email}
     ${currentURL}=    Get Location
-    IF    '/customer' not in '${currentURL}'    Zed: go to second navigation item level:    Customers    Company Users
+    IF    '/customer' not in '${currentURL}'    Zed: go to URL:    /company-user-gui/list-company-user
     Zed: perform search by:    ${companyUserName}
     ${customerExists}=    Run Keyword And Return Status    Table should contain    ${zed_table_locator}    ${companyBusinessUnit}
     IF    '${customerExists}'=='True'

@@ -24,3 +24,4 @@ Register a new customer with data:
     END
     Click Element by id with JavaScript    registerForm_accept_terms
     Click    ${registration_submit_button}
+    Take Screenshot    EMBED    fullPage=True
