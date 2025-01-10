@@ -195,7 +195,12 @@ Zed: create dynamic merchant user:
     Type Text    ${zed_create_merchant_user_first_name_field}    ${merchant_user_first_name}${unique}
     Type Text    ${zed_create_merchant_user_last_name_field}    ${merchant_user_last_name}${unique}
     Zed: submit the form
-    Wait Until Element Is Visible    ${zed_table_locator}
+    TRY
+        Wait Until Element Is Visible    ${zed_table_locator}
+    EXCEPT
+        Zed: submit the form
+        Wait Until Element Is Visible    ${zed_table_locator}
+    END
     Zed: click Action Button in Merchant Users table for row that contains:    ${merchant_user_email}    Activate
     Zed: table should contain non-searchable value:    Active
     IF    '${merchant_user_group}' != '${EMPTY}'
