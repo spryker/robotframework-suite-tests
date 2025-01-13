@@ -7,7 +7,7 @@ Resource    common.robot
 # *** API SUITE VARIABLES ***
 ${api_timeout}    60
 ${default_password}    change123
-${default_secure_password}    Change123!321
+${default_secure_password}    qweRTY_123456
 ${default_allow_redirects}     true
 ${default_auth}    ${NONE}
 &{default_headers}

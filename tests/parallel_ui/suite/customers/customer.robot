@@ -80,8 +80,8 @@ New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
     Create dynamic admin user in DB
     Register a new customer with data:
-    ...    || salutation | first name | last name | e-mail                            | password                                          ||
-    ...    || Mr.        | New        | User      | sonia+ui+new${random}@spryker.com | ${default_secure_password}!5${random_id_password} ||
+    ...    || salutation | first name | last name | e-mail                            | password                   ||
+    ...    || Mr.        | New        | User      | sonia+ui+new${random}@spryker.com | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: delete customer:    sonia+ui+new${random}@spryker.com
@@ -420,10 +420,10 @@ Email_Confirmation
     [Tags]    smoke
     [Documentation]    Check that a new user cannot login if the email is not verified
     Register a new customer with data:
-    ...    || salutation | first name | last name | e-mail                                | password                                          ||
-    ...    || Mr.        | New        | User      | sonia+ui+fails+${random}@spryker.com  | ${default_secure_password}!5${random_id_password} ||
+    ...    || salutation | first name | last name | e-mail                                | password                   ||
+    ...    || Mr.        | New        | User      | sonia+ui+fails+${random}@spryker.com  | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
-    Yves: login on Yves with provided credentials and expect error:     sonia+ui+fails+${random}@spryker.com     ${default_secure_password}!5${random_id_password}
+    Yves: login on Yves with provided credentials and expect error:     sonia+ui+fails+${random}@spryker.com     ${default_secure_password}
     [Teardown]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: delete customer:    sonia+ui+fails+${random}@spryker.com

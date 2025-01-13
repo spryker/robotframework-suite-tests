@@ -23,6 +23,4 @@ Register a new customer with data:
 #        Run keyword if    '${key}'=='salutation'    Type Text    ${checkout_shipping_address_company_name_field}     ${company}
     END
     Click Element by id with JavaScript    registerForm_accept_terms
-    Take Screenshot    EMBED    fullPage=True
     Click    ${registration_submit_button}
-    Take Screenshot    EMBED    fullPage=True
