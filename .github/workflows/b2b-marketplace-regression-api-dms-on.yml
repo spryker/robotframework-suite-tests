@@ -1,8 +1,8 @@
 name: "[b2b-mp][master][API][DMS-ON]"
 
 on:
-    schedule:
-        -   cron: '0 23 * * 0-4'
+    # schedule:
+    #     -   cron: '0 23 * * 0-4'
     workflow_dispatch:
 
 jobs:
