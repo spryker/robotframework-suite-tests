@@ -457,7 +457,8 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 2.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Cancel
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
+    Zed: trigger all matching states inside this order:    Cancel
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}
@@ -655,7 +656,6 @@ Configurable_Product_RfQ_OMS
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}

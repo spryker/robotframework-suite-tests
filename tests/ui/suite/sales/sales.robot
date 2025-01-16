@@ -67,7 +67,6 @@ Return_Management
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}
@@ -191,6 +190,10 @@ Order_Cancellation
     Yves: 'Thank you' page is displayed
     Yves: go to 'Order History' page
     Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: cancel the order:    ${lastPlacedOrder}
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -220,8 +223,8 @@ Order_Cancellation
     Yves: 'Order Details' page contains the cancel order button:    true
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     ### change the order state of one product ###
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
     Zed: trigger matching state of order item inside xxx shipment:    005_30663301    Pay
     Zed: trigger matching state of order item inside xxx shipment:    005_30663301    Skip timeout
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
