@@ -955,7 +955,7 @@ Offer_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 2.
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Cancel
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
