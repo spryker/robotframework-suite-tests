@@ -131,7 +131,8 @@ Guest_Checkout
     Trigger oms
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
-    Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
+    Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    skip grace period
+    Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    skip picking
     Zed: trigger all matching states inside this order:    Ship
@@ -182,7 +183,8 @@ Guest_Checkout_Addresses
     Trigger oms
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: get the last placed order ID of the customer by email:    sonia+guest+new${random}@spryker.com
-    Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
+    Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    skip grace period
+    Zed: trigger all matching states inside this order:    Pay
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
     Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany 
     Zed: shipping address inside xxx shipment should be:    2    Dr First, Last, Second Street, 2, Additional street, Spryker, 10247, Berlin, Germany 

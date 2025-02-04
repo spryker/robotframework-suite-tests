@@ -143,6 +143,10 @@ Order_Cancelation
     Yves: 'Thank you' page is displayed    
     Yves: go to 'Order History' page
     Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: cancel the order:    ${lastPlacedOrder}
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
@@ -172,6 +176,7 @@ Order_Cancelation
     Yves: 'Order Details' page contains the cancel order button:    true
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     ### change the order state of one product ###
     Zed: trigger matching state of order item inside xxx shipment:    005_30663301    Pay
     Zed: trigger matching state of order item inside xxx shipment:    005_30663301    Skip timeout 
