@@ -515,7 +515,7 @@ Yves: go to the PDP of the first available product on open catalog page
 
 Yves: check if cart is not empty and clear it
     Yves: go to the 'Home' page
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     ${productsInCart}=    Get Element Count    xpath=//main//form[contains(@name,'removeFromCartForm')]//button | //main//form[contains(@action,'bundle/async/remove')]//button
     IF    ${productsInCart} > 0    Helper: delete all items in cart
 

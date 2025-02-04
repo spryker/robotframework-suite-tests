@@ -3,6 +3,7 @@ Library    Browser    run_on_failure=Take Screenshot \ EMBED \ fullPage=True
 Resource    common.robot
 Resource    ../pages/yves/yves_header_section.robot
 Resource    ../pages/yves/yves_login_page.robot
+Resource    common_api.robot
 
 *** Variables ***
 # *** UI SUITE VARIABLES ***
@@ -132,6 +133,8 @@ UI_test_setup
 UI_test_teardown
     # Run Keyword If Test Failed    Pause Execution
     Delete All Cookies
+    Delete dynamic admin user from DB
+    Delete dynamic customer via API
     Set Browser Timeout    ${browser_timeout}
 
 Select Random Option From List

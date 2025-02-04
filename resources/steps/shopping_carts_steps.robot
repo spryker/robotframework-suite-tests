@@ -70,7 +70,7 @@ Yves: go to the shopping cart through the header with name:
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
 
-Yves: go to b2c shopping cart through the header
+Yves: go to shopping cart page through the header
     Yves: remove flash messages
     Wait Until Element Is Visible    ${shopping_car_icon_header_menu_item}[${env}]
     Click     ${shopping_car_icon_header_menu_item}[${env}]
@@ -80,7 +80,7 @@ Yves: go to b2c shopping cart through the header
     Wait For Load State    networkidle
     Wait Until Element Is Visible    ${shopping_cart_main_content_locator}[${env}]
 
-Yves: go to b2c shopping cart
+Yves: go to shopping cart page
     Yves: go to URL:    /cart
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle

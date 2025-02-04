@@ -54,7 +54,7 @@ Return_Management
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
@@ -137,7 +137,7 @@ Refunds
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    010
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
@@ -182,7 +182,7 @@ Manage_Shipments
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select delivery to multiple addresses
     Yves: fill in new delivery address for a product:
@@ -247,7 +247,7 @@ Order_Cancellation
     Yves: delete all user addresses
     Yves: go to PDP of the product with sku:    005
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
@@ -273,7 +273,7 @@ Order_Cancellation
     # Yves: add product to the shopping cart
     # Yves: go to PDP of the product with sku:    007_30691822
     # Yves: add product to the shopping cart
-    # Yves: go to b2c shopping cart
+    # Yves: go to shopping cart page
     # Yves: click on the 'Checkout' button in the shopping cart
     # Yves: billing address same as shipping address:    true
     # Yves: fill in the following new shipping address:
@@ -334,7 +334,7 @@ Configurable_Product_OMS
     ...    || date       | date_time ||
     ...    || 01.01.2055 | Afternoon ||
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: configuration should be equal:
     ...    || date       | date_time ||
     ...    || 12.12.2030 | Evening   ||
@@ -390,7 +390,7 @@ Configurable_Product_OMS
     Yves: go to user menu:    Orders History
     ### Reorder ###
     Yves: 'View Order/Reorder/Return' on the order history page:    Reorder    ${lastPlacedOrder}
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains the following products:     ${configurable_product_name}
     Yves: configuration should be equal:
     ...    || date       | date_time ||

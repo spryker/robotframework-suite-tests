@@ -289,7 +289,7 @@ Fulfill_Order_from_Merchant_Portal
     Yves: go to PDP of the product with sku:     ${product_with_budget_cameras_offer_abstract_sku}
     Yves: select xxx merchant's offer:    Budget Cameras
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in cart or list:    ${one_variant_product_of_main_merchant_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
     Yves: assert merchant of product in cart or list:    ${product_with_budget_cameras_offer_concrete_sku}    Budget Cameras
@@ -392,7 +392,7 @@ Merchant_Portal_Product_Volume_Prices
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Video King     €10.00
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=VPSKU${random}-2    productName=VPNewProduct${random}    productPrice=10.00
     Yves: assert merchant of product in cart or list:    VPSKU${random}-2    Video King
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -407,7 +407,7 @@ Merchant_Portal_Product_Volume_Prices
     Yves: change quantity on PDP:    4
     Yves: product price on the PDP should be:    €100.00
     Yves: merchant's offer/product price should be:    Video King     €100.00
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=VPSKU${random}-2    productName=VPNewProduct${random}    productPrice=100.00
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
@@ -479,7 +479,7 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Video King     €10.00
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in cart or list:    OfferSKU${random}-2    Video King
     Yves: shopping cart contains product with unit price:    sku=OfferSKU${random}-2    productName=OfferNewProduct${random}    productPrice=10.00
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -496,7 +496,7 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: change quantity on PDP:    4
     Yves: product price on the PDP should be:    €200.00
     Yves: merchant's offer/product price should be:    Video King     €200.00
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=OfferSKU${random}-2    productName=OfferNewProduct${random}    productPrice=200.00
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
@@ -749,7 +749,7 @@ Manage_Merchant_Product
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Budget Cameras     €10.00
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=manageSKU${random}-2    productName=manageProduct${random}    productPrice=10.00
     Yves: assert merchant of product in cart or list:    manageSKU${random}-2    Budget Cameras
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}

@@ -52,7 +52,7 @@ Split_Delivery
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select delivery to multiple addresses
     Yves: fill in new delivery address for a product:
@@ -96,7 +96,7 @@ Guest_Checkout_and_Addresses
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: apply discount voucher to cart:    guestTest${random}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest${random}@spryker.com
@@ -169,7 +169,7 @@ Multiple_Merchants_Order
     Yves: select xxx merchant's offer:    Video King
     Yves: product price on the PDP should be:    ${second_product_with_multiple_offers_video_king_price}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in b2c cart:    ${one_variant_product_of_main_merchant_abstract_name}    Spryker
     Yves: assert merchant of product in b2c cart:    ${product_with_multiple_offers_abstract_name}    Budget Cameras
     Yves: assert merchant of product in b2c cart:    ${second_product_with_multiple_offers_abstract_name}    Video King
@@ -200,7 +200,7 @@ Checkout_Address_Management
     ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    false
     Yves: fill in the following new billing address:
@@ -314,7 +314,7 @@ Click_and_collect
     Yves: add product to the shopping cart    wait_for_p&s=true
     Yves: select xxx merchant's offer with price:    Budget Cameras    €150.00
     Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select multiple addresses from toggler
     Yves: select xxx shipment type for item number xxx:    shipment_type=Pickup    item_number=1
@@ -383,7 +383,7 @@ Configurable_Product_Checkout
     Yves: save product configuration
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_attribute}   productName=${configurable_product_name}    productPrice=1,599.00
     Yves: change the product options in configurator to:
     ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten      ||

@@ -99,7 +99,7 @@ Multistore_Product
     Yves: product price on the PDP should be:    €25.00    wait_for_p&s=true
     Save current URL
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    multiSKU${random}-color-grey    multiProduct${random}    25.00
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update abstract product data:

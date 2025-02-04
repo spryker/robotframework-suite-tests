@@ -61,7 +61,7 @@ Minimum_Order_Value
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    ${available_never_out_of_stock_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: soft threshold surcharge is added in the cart:    €9.00
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -73,7 +73,7 @@ Minimum_Order_Value
     Yves: soft threshold surcharge is added on summary page:    €9.00
     Yves: hard threshold is applied with the following message:    €150.00
     Yves: go to the 'Home' page
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: delete product from the shopping cart with sku:    ${available_never_out_of_stock_concrete_sku}
     Yves: soft threshold surcharge is added in the cart:    €9.00
     Yves: click on the 'Checkout' button in the shopping cart
@@ -133,7 +133,7 @@ Payment_method_update
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:    020
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart    
+    Yves: go to shopping cart page    
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: fill in the following new shipping address:
     ...    ||      firstName                    |           lastName                  |    street           |    houseNumber     |    city      |    postCode    |    phone        ||
@@ -146,7 +146,7 @@ Payment_method_update
     Zed: go to second navigation item level:    Administration    Payment Methods
     Zed: activate/deactivate payment method:    Dummy Payment    Invoice    False
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: go to b2c shopping cart    
+    Yves: go to shopping cart page    
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: fill in the following new shipping address:
     ...    ||      firstName                    |           lastName                  |    street           |    houseNumber     |    city     |    postCode    |    phone        ||

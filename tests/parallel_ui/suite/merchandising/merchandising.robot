@@ -67,7 +67,7 @@ Product_Sets
     Yves: 'Product Set' page contains the following products:    TomTom Golf    Samsung Galaxy S6 edge
     Yves: change variant of the product on CMS page on:    Samsung Galaxy S6 edge    128 GB
     Yves: add all products to the shopping cart from Product Set
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains the following products:     052_30614390    096_30856274
     Yves: delete product from the shopping cart with sku:    052_30614390
     Yves: delete product from the shopping cart with sku:    096_30856274
@@ -119,7 +119,7 @@ Configurable_Bundle
     Yves: select product in the bundle slot:    Slot 6    043_31040074
     Yves: go to 'Summary' step in the bundle configurator
     Yves: add products to the shopping cart in the bundle configurator
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: change quantity of the configurable bundle in the shopping cart on:    Smartstation Kit    2
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true

@@ -34,7 +34,7 @@ Minimum_Order_Value
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    ${available_never_out_of_stock_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: soft threshold surcharge is added in the cart:    €9.00
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -45,8 +45,7 @@ Minimum_Order_Value
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: soft threshold surcharge is added on summary page:    €9.00
     Yves: hard threshold is applied with the following message:    €150.00
-    Yves: go to the 'Home' page
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: delete product from the shopping cart with sku:    ${available_never_out_of_stock_concrete_sku}
     Yves: soft threshold surcharge is added in the cart:    €9.00
     Yves: click on the 'Checkout' button in the shopping cart
@@ -59,13 +58,13 @@ Minimum_Order_Value
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €83.90
-    [Teardown]    Run keywords    Delete dynamic customer via API
+    [Teardown]    Run keywords    Restore all discounts in the database
+    ...    AND    Delete dynamic customer via API
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: change global threshold settings:
     ...    || store & currency | minimum hard value | minimum hard en message | minimum hard de message | maximun hard value | maximun hard en message                                                                                   | maximun hard de message                                                                                                              | soft threshold | soft threshold value | soft threshold en message | soft threshold de message ||
     ...    || DE - Euro [EUR]  | ${SPACE}           | ${SPACE}                | ${SPACE}                | 10000.00           | The cart value cannot be higher than {{threshold}}. Please remove some items to proceed with the order    | Der Warenkorbwert darf nicht höher als {{threshold}} sein. Bitte entfernen Sie einige Artikel, um mit der Bestellung fortzufahren    | None           | ${EMPTY}             | ${EMPTY}                  | ${EMPTY}                  ||
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Restore all discounts in the database
 
 Configurable_Product_RfQ_OMS
     [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder. 
@@ -226,7 +225,7 @@ Click_and_collect
     Yves: go to PDP of the product with sku:     clickCollectSku${random}
     Yves: select xxx merchant's offer with price:    Budget Cameras    €150.00
     Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select multiple addresses from toggler
     Yves: select xxx shipment type for item number xxx:    shipment_type=Pickup    item_number=1
@@ -290,7 +289,7 @@ Configurable_Product_Checkout
     Yves: save product configuration
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
     ...    || 389.50     | 249        ||
@@ -351,7 +350,7 @@ Fulfill_Order_from_Merchant_Portal
     Yves: go to PDP of the product with sku:     ${product_with_budget_cameras_offer_abstract_sku}
     Yves: select xxx merchant's offer:    Budget Cameras
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in cart or list:    ${one_variant_product_of_main_merchant_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
     Yves: assert merchant of product in cart or list:    ${product_with_budget_cameras_offer_concrete_sku}    Budget Cameras
@@ -412,13 +411,13 @@ Discounts
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    190
     Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: apply discount voucher to cart:    test${random}
     Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €8.73
     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €17.46
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €87.96
     Yves: promotional product offer is/not shown in cart:    true
     Yves: add promotional product to the cart
@@ -458,7 +457,7 @@ Refunds
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    010
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
@@ -500,7 +499,7 @@ Manage_Shipments
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select delivery to multiple addresses
     Yves: fill in new delivery address for a product:

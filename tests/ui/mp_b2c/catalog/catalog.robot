@@ -75,7 +75,7 @@ Catalog
 #     Yves: 1st product card in catalog (not)contains:      Color selector   true
 #     Yves: mouse over color on product card:    black
 #     Yves: quick add to cart for first item in catalog
-#     Yves: go to b2c shopping cart
+#     Yves: go to shopping cart page
 #     Yves: shopping cart contains the following products:    NEX-VG20EH    Canon IXUS 160
 #     [Teardown]    Yves: check if cart is not empty and clear it
 
@@ -98,7 +98,7 @@ Volume_Prices
     Yves: change quantity using '+' or '-' button № times:    +    4
     Yves: product price on the PDP should be:    €165.00
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    193    Sony FDR-AX40    825.00
     Yves: delete from b2c cart products with name:    Sony FDR-AX40
     [Teardown]    Yves: check if cart is not empty and clear it
@@ -168,7 +168,7 @@ Product_Bundles
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
     Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains the following products:    ${bundle_product_product_name}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -251,7 +251,7 @@ Offer_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 5.
     Yves: change quantity using '+' or '-' button № times:    +    2
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in b2c cart:    offAvProduct${random}    Spryker
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -284,7 +284,7 @@ Offer_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 5.
     Yves: change quantity using '+' or '-' button № times:    +    2
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in b2c cart:    offAvProduct${random}    Spryker
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
@@ -341,7 +341,7 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-1 only has availability of 5.
     Yves: change quantity using '+' or '-' button № times:    +    2
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in b2c cart:    availabilityProduct${random}    Spryker
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -372,7 +372,7 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-1 only has availability of 5.
     Yves: change quantity using '+' or '-' button № times:    +    2
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in b2c cart:    availabilityProduct${random}    Spryker
     Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
@@ -440,7 +440,7 @@ Product_Availability_Calculation
     Yves: product configuration price should be:    €1,247.00 
     Yves: save product configuration
     Yves: add all available products from wishlist to cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=€1,347.00
     [Teardown]    Run Keywords    Yves: delete all wishlists
     ...    AND    Yves: check if cart is not empty and clear it

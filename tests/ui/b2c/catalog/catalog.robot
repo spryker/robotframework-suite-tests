@@ -80,7 +80,7 @@ Catalog_Actions
     Yves: 1st product card in catalog (not)contains:      Color selector   true
     Yves: mouse over color on product card:    silver
     Yves: quick add to cart for first item in catalog
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains the following products:    NEX-VG20EH    Canon IXUS 160
     Yves: shopping cart contains product with unit price:    002    Canon IXUS 160    65.00
     [Teardown]    Yves: check if cart is not empty and clear it
@@ -107,7 +107,7 @@ Volume_Prices
     Yves: change quantity using '+' or '-' button № times:    +    4
     Yves: product price on the PDP should be:    €165.00
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    193    Sony FDR-AX40    825.00
     Yves: delete from b2c cart products with name:    Sony FDR-AX40
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
@@ -172,7 +172,7 @@ Product_Bundles
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains the following products:    ${bundle_product_product_name}
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -277,7 +277,7 @@ Manage_Product
     Yves: try add product to the cart from PDP and expect error:    Item manageSKU${random}-color-black only has availability of 5.
     Yves: change quantity using '+' or '-' button № times:    +    2
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    manageSKU${random}-color-black    ENaddedConcrete${random}    75.00
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products 
@@ -385,7 +385,7 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 5.
     Yves: change quantity using '+' or '-' button № times:    +    2
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
@@ -478,7 +478,7 @@ Configurable_Product_PDP_Wishlist_Availability
     Yves: product configuration price should be:    €1,346.00 
     Yves: save product configuration
     Yves: add all available products from wishlist to cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=€1,347.00
     [Teardown]    Run Keywords    Yves: delete all wishlists
     ...    AND    Yves: check if cart is not empty and clear it

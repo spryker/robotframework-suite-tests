@@ -844,14 +844,18 @@ Create dynamic admin user in DB
 
     # Step 1: Fetch the existing user data (admin@spryker.com)
     Connect to Spryker DB
-    ${existing_user_data}=    Query    SELECT * FROM spy_user WHERE username = 'admin@spryker.com'
+    ${existing_user_data_id}=    Query    SELECT spy_user.id_user FROM spy_user WHERE username = 'admin@spryker.com'
+    ${existing_user_data_locale}=    Query    SELECT spy_user.fk_locale FROM spy_user WHERE username = 'admin@spryker.com'
+    ${existing_user_data_password}=    Query    SELECT spy_user.password FROM spy_user WHERE username = 'admin@spryker.com'
+    ${existing_user_data_created_at}=    Query    SELECT spy_user.created_at FROM spy_user WHERE username = 'admin@spryker.com'
+    ${existing_user_data_updated_at}=    Query    SELECT spy_user.updated_at FROM spy_user WHERE username = 'admin@spryker.com'
     
     # Step 1: Extract fields from the existing user
-    ${existing_id_user}=    Set Variable    ${existing_user_data[0][0]}
-    ${existing_fk_locale}=    Set Variable    ${existing_user_data[0][1]}
-    ${existing_password}=    Set Variable    ${existing_user_data[0][8]}
-    ${existing_created_at}=    Set Variable    ${existing_user_data[0][12]}
-    ${existing_updated_at}=    Set Variable    ${existing_user_data[0][13]}
+    ${existing_id_user}=    Set Variable    ${existing_user_data_id[0][0]}
+    ${existing_fk_locale}=    Set Variable    ${existing_user_data_locale[0][0]}
+    ${existing_password}=    Set Variable    ${existing_user_data_password[0][0]}
+    ${existing_created_at}=    Set Variable    ${existing_user_data_created_at[0][0]}
+    ${existing_updated_at}=    Set Variable    ${existing_user_data_updated_at[0][0]}
     
     # Step 2: Get the maximum id_user and increment it
     ${max_id_user}=    Query    SELECT MAX(id_user) FROM spy_user
@@ -867,12 +871,30 @@ Create dynamic admin user in DB
     # Step 3: Generate new UUID
     ${new_uuid}=   Generate Random String	4	[UPPER]
     VAR    ${new_uuid}    ${new_uuid}-${random}-${random_str}-${random_id}
+
+    # Step 4: Check table structure before the insert
+
+    IF    '${db_engine}' == 'pymysql'
+        ${spy_user_column_names}=    Query    SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spy_user' AND TABLE_SCHEMA = DATABASE()
+        ${spy_user_column_names}=    Convert To String    ${spy_user_column_names}
+        ${is_uuid_present}=    Run Keyword And Return Status    Should Contain    ${spy_user_column_names}    uuid
+        VAR    ${is_uuid_present}    ${is_uuid_present}
+    ELSE
+        ${spy_user_column_names}=    Query    SELECT column_name FROM information_schema.columns WHERE table_name = 'spy_user' AND table_schema = current_schema
+        ${spy_user_column_names}=    Convert To String    ${spy_user_column_names}
+        ${is_uuid_present}=    Run Keyword And Return Status    Should Contain    ${spy_user_column_names}    uuid
+        VAR    ${is_uuid_present}    ${is_uuid_present}
+    END
     
-    # Step 4: Insert the new user into the spy_user table using correct variables
+    # Step 5: Insert the new user into the spy_user table using correct variables
     ${attempt}=    Set Variable    1
     WHILE    ${attempt} <= 3
         TRY
-            Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+            IF    ${is_uuid_present}
+                Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+            ELSE
+                Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${existing_created_at}', '${existing_updated_at}')
+            END
             Exit For Loop
         EXCEPT
             Log    Attempt ${attempt} failed due to duplicate entry in spy_user. Retrying...
@@ -887,10 +909,10 @@ Create dynamic admin user in DB
     END
     IF    ${attempt} > 3    Fail    Unable to insert user into spy_users after 3 attempts.
 
-    # Step 5: Get the ACL group of the existing user from spy_acl_user_has_group
+    # Step 6: Get the ACL group of the existing user from spy_acl_user_has_group
     ${existing_acl_group}=    Query    SELECT fk_acl_group FROM spy_acl_user_has_group WHERE fk_user = ${existing_id_user}
     
-    # Step 6: Insert the new user’s ID and the same ACL group into spy_acl_user_has_group
+    # Step 7: Insert the new user’s ID and the same ACL group into spy_acl_user_has_group
     Execute Sql String    INSERT INTO spy_acl_user_has_group (fk_user, fk_acl_group) VALUES (${new_id_user}, ${existing_acl_group[0][0]})
 
     Disconnect From Database
@@ -1021,6 +1043,7 @@ Create dynamic customer in DB
         ${existing_company_user_data}=    Query    SELECT * FROM spy_company_user WHERE fk_customer = ${existing_customer_id}
 
         # Extract the relevant fields for inserting a new company user
+        VAR    ${existing_id_company_user}    ${existing_company_user_data[0][0]}
         VAR    ${existing_fk_company}    ${existing_company_user_data[0][1]}
         VAR    ${existing_fk_company_business_unit}    ${existing_company_user_data[0][2]}
         VAR    ${existing_key}    ${existing_company_user_data[0][6]}
@@ -1061,6 +1084,43 @@ Create dynamic customer in DB
             END
         END
         IF    ${attempt} > 3    Fail    Unable to insert company user into spy_company_user after 3 attempts.
+
+        # Insert the new company role to company iser entry in the spy_company_role_to_company_user table
+        ${existing_company_role_to_user_data}=    Query    SELECT * FROM spy_company_role_to_company_user WHERE fk_company_user = ${existing_id_company_user}
+
+         # Extract the relevant fields for inserting a new company user role relation
+        VAR    ${existing_fk_company_role}    ${existing_company_role_to_user_data[0][1]}
+        VAR    ${existing_created_at}    ${existing_company_role_to_user_data[0][3]}
+        VAR    ${existing_updated_at}    ${existing_company_role_to_user_data[0][4]}
+
+        # Get the maximum id_company_role_to_company_user and increment it
+        ${max_id_company_role_to_company_user}=    Query    SELECT MAX(id_company_role_to_company_user) FROM spy_company_role_to_company_user
+        IF    '${None}' in '${max_id_company_role_to_company_user}'    VAR    ${max_id_company_role_to_company_user}    0
+
+        IF    ${max_id_company_role_to_company_user[0][0]} > 5000
+            # new ID will be max +1 not to intersect with real IDs
+            ${new_id_company_role_to_company_user}=    Evaluate    ${max_id_company_role_to_company_user[0][0]} + 1
+        ELSE
+            # new ID will be max + 5001 not to intersect with real IDs
+            ${new_id_company_role_to_company_user}=    Evaluate    ${max_id_company_role_to_company_user[0][0]} + 5001
+        END
+
+        # Insert the new company role to company user entry in the spy_company_role_to_company_user table
+        ${attempt}=    Set Variable    1
+        WHILE    ${attempt} <= 3
+            TRY
+                Execute Sql String    INSERT INTO spy_company_role_to_company_user (id_company_role_to_company_user, fk_company_role, fk_company_user, created_at, updated_at) VALUES (${new_id_company_role_to_company_user}, ${existing_fk_company_role}, ${new_id_company_user}, '${existing_created_at}', '${existing_updated_at}')
+                Exit For Loop
+            EXCEPT
+                Log    Attempt ${attempt} failed due to duplicate entry in spy_company_role_to_company_user. Retrying...
+                ${unique_id}=    Generate Random String    3    [NUMBERS]
+                ${unique_id}=    Replace String    ${unique_id}    0    9
+                ${unique_id}=    Convert To Integer    ${unique_id}
+                ${new_id_company_role_to_company_user}=    Evaluate    ${max_id_company_role_to_company_user} + ${unique_id}
+                ${attempt}=    Evaluate    ${attempt} + 1
+            END
+        END
+        IF    ${attempt} > 3    Fail    Unable to insert company role to company user into spy_company_role_to_company_user after 3 attempts.
     END
     
     IF    ${create_default_address}

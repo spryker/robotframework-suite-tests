@@ -2308,8 +2308,6 @@ Array Element Should Contain Nested Property With Value At Least Once
     Should Be True    ${exists}    Expected property '${property}' with value '${expected_value}' not found in any array element.
 
 Delete dynamic customer via API
-    Set Tags    glue
-    API_test_setup
     [Arguments]    ${customer_email}=${EMPTY}
 
     ${dynamic_customer_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_customer}
@@ -2322,7 +2320,8 @@ Delete dynamic customer via API
             RETURN
         END
     END
-    
+    Set Tags    glue
+    API_test_setup
     I get access token for the customer:    ${customer_email}
     I set Headers:    Authorization=${token}
     I send a GET request:    /customers

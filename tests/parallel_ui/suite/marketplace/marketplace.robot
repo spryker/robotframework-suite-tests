@@ -412,7 +412,7 @@ Merchant_Portal_Product_Volume_Prices
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Video King     €10.00
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=VPSKU${random}-2    productName=VPNewProduct${random}    productPrice=10.00
     Yves: assert merchant of product in cart or list:    VPSKU${random}-2    Video King
     MP: login on MP with provided credentials:    ${dynamic_king_merchant}
@@ -427,7 +427,7 @@ Merchant_Portal_Product_Volume_Prices
     Yves: change quantity on PDP:    4
     Yves: product price on the PDP should be:    €100.00
     Yves: merchant's offer/product price should be:    Video King     €100.00
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=VPSKU${random}-2    productName=VPNewProduct${random}    productPrice=100.00
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
@@ -504,7 +504,7 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Video King     €10.00
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in cart or list:    OfferSKU${random}-2    Video King
     Yves: shopping cart contains product with unit price:    sku=OfferSKU${random}-2    productName=OfferNewProduct${random}    productPrice=10.00
     MP: login on MP with provided credentials:    ${dynamic_king_merchant}
@@ -521,7 +521,7 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: change quantity on PDP:    4
     Yves: product price on the PDP should be:    €200.00
     Yves: merchant's offer/product price should be:    Video King     €200.00
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=OfferSKU${random}-2    productName=OfferNewProduct${random}    productPrice=200.00
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
@@ -793,7 +793,7 @@ Manage_Merchant_Product
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Budget Cameras     €10.00
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=manageSKU${random}-2    productName=manageProduct${random}    productPrice=10.00
     Yves: assert merchant of product in cart or list:    manageSKU${random}-2    Budget Cameras
     MP: login on MP with provided credentials:    ${dynamic_budget_merchant}
@@ -987,7 +987,7 @@ Offer_Availability_Calculation
     Yves: select xxx merchant's offer:    Spryker
     Yves: change quantity on PDP:    3
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in cart or list:    offAvKU${random}-1    Spryker
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -1018,7 +1018,7 @@ Offer_Availability_Calculation
     Yves: select xxx merchant's offer:    Spryker
     Yves: change quantity on PDP:    3
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in cart or list:    offAvKU${random}-1    Spryker
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: delete merchant user:    ${dynamic_spryker_merchant}

@@ -58,7 +58,7 @@ Guest_User_Access_Restrictions
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:   002    Canon IXUS 160    37.50
     Yves: go to user menu:    Overview
     Yves: 'Login' page is displayed
@@ -72,7 +72,7 @@ Authorized_User_Access
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}     ${addToCartButton}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    002    Canon IXUS 160    37.50
     Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
@@ -145,7 +145,7 @@ Reorder
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains the following products:    Canon IXUS 285
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
