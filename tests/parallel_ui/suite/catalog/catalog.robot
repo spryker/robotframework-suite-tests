@@ -44,6 +44,7 @@ Product_PDP
     [Tags]    smoke
     [Documentation]    Checks that PDP contains required elements
     Create dynamic customer in DB
+    Delete All Cookies
     Yves: go to PDP of the product with sku:    135
     Yves: change variant of the product on PDP on:    Flash
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]    ${relatedProducts}
@@ -105,14 +106,13 @@ Volume_Prices
     ...    AND    Create dynamic customer in DB
     ...    AND    Zed: check and restore product availability in Zed:    ${volume_prices_product_abstract_sku}    Available    ${volume_prices_product_concrete_sku}    ${dynamic_admin_user}
     ...    AND    Trigger p&s
-    ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    ...    AND    Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${volume_prices_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity on PDP:    5
     Yves: product price on the PDP should be:    €16.50
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    VolumePriceCart+${random}
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=${volume_prices_product_concrete_sku}    productName=${volume_prices_product_name}    productPrice=16.50
     [Teardown]    Run Keywords    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API
@@ -475,7 +475,7 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 2.
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Cancel
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -560,7 +560,6 @@ Configurable_Product_PDP_Shopping_List
     [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of five items. Ensure that products that have not been configured cannot be purchased.
     [Setup]    Run keywords    Create dynamic customer in DB
     ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${configureButton}
@@ -593,7 +592,7 @@ Configurable_Product_PDP_Shopping_List
     Yves: go to PDP of the product with sku:   ${configurable_product_abstract_sku}
     Yves: change quantity on PDP:    5
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    configProduct+${random}
+    Yves: go to shopping cart page
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
     ...    || 517        | 249        ||

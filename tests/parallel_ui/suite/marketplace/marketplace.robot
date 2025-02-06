@@ -916,7 +916,6 @@ Offer_Availability_Calculation
     [Documentation]    check offer availability
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
-    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: create dynamic merchant user:    Video King
     ...    AND    Zed: create dynamic merchant user:    Spryker
     ...    AND    Zed: create dynamic merchant user:    merchant=Spryker    merchant_user_group=Root group
@@ -1006,7 +1005,7 @@ Offer_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 2.
     Zed: login on Zed with provided credentials:    ${dynamic_spryker_second_merchant}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Cancel
     Yves: login on Yves with provided credentials:    ${dynamic_customer}

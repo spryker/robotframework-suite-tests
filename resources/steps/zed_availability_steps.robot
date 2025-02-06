@@ -63,6 +63,10 @@ Zed: change product stock:
 Zed: check and restore product availability in Zed:
     [Arguments]    ${skuAbstract}    ${expectedStatus}    ${skuConcrete}    ${admin_user_email}=${zed_admin_email}
     ${expectedStatus}=    Convert To Lower Case    ${expectedStatus}
+    ${dynamic_admin_user_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_admin_user}
+    IF    ${dynamic_admin_user_exists}
+        VAR    ${admin_user_email}    ${dynamic_admin_user}
+    END
     Zed: login on Zed with provided credentials:    ${admin_user_email}
     Zed: go to URL:    /availability-gui
     Zed: perform search by:    ${skuAbstract}

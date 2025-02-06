@@ -87,6 +87,7 @@ Catalog_Actions
 
 Product_PDP
     [Documentation]    Checks that PDP contains required elements
+    Delete All Cookies
     Yves: go to PDP of the product with sku:    135
     Yves: change variant of the product on PDP on:    Flash
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${addToCartButton}    ${pdp_warranty_option}    ${pdp_gift_wrapping_option}[${env}]    ${relatedProducts}

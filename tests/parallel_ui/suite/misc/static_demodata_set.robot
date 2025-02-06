@@ -74,13 +74,13 @@ Configurable_Product_RfQ_OMS
     ...    AND    Zed: create dynamic merchant user:    merchant=Spryker    merchant_user_group=Root group
     ...    AND    Deactivate all discounts in the database
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: create new 'Shopping Cart' with name:    confProductCart+${random}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
     ...    || 607        | 275        ||
     Yves: save product configuration    
     Yves: add product to the shopping cart
+    Yves: go to shopping cart page
     Yves: submit new request for quote
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page   
     Yves: logout on Yves as a customer
@@ -117,7 +117,7 @@ Configurable_Product_RfQ_OMS
     Zed: login on Zed with provided credentials:    ${dynamic_spryker_merchant}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €771.90
     Zed: go to order page:    ${lastPlacedOrder} 
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution

@@ -118,8 +118,6 @@ UI_suite_setup
     Set Browser Timeout    ${browser_timeout}
     Create default Main Context
     New Page    ${yves_url}
-    ### Executed only in CI env ###
-    Trigger multistore p&s    timeout=1s
 
 UI_suite_teardown
     Close Browser    ALL
@@ -133,8 +131,6 @@ UI_test_setup
 UI_test_teardown
     # Run Keyword If Test Failed    Pause Execution
     Delete All Cookies
-    Delete dynamic admin user from DB
-    Delete dynamic customer via API
     Set Browser Timeout    ${browser_timeout}
 
 Select Random Option From List

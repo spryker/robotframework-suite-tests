@@ -930,7 +930,7 @@ Delete dynamic admin user from DB
         IF    ${dynamic_admin_exists}
             VAR    ${user_name}    ${dynamic_admin_user}
         ELSE
-            Log    message=No dynamic (doesn't exist) or static user was provided for deletion    level=WARN
+            Log    message=No dynamic (doesn't exist) or static user was provided for deletion    level=INFO
             RETURN
         END
     END
@@ -965,10 +965,14 @@ Create dynamic customer in DB
     ...               It works for both MariaDB and PostgreSQL.
     [Arguments]    ${first_name}=Dynamic    ${last_name}=Customer    ${email}=${EMPTY}    ${based_on}=${EMPTY}    ${create_default_address}=True
     ${dynamic_customer_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_customer}
+    ${dynamic_second_customer_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_second_customer}
 
     IF    '${email}' == '${EMPTY}'
         ${unique}=    Generate Random String    5    [NUMBERS]
-        IF    ${dynamic_customer_exists}
+        IF    ${dynamic_second_customer_exists}
+            VAR    ${email}    sonia+robot${unique}@spryker.com
+            VAR    ${dynamic_third_customer}    ${email}    scope=TEST
+        ELSE IF    ${dynamic_customer_exists}
             VAR    ${email}    sonia+robot${unique}@spryker.com
             VAR    ${dynamic_second_customer}    ${email}    scope=TEST
         ELSE

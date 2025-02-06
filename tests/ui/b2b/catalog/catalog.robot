@@ -229,6 +229,7 @@ Customer_Specific_Prices
 
 Product_PDP
     [Documentation]    Checks that PDP contains required elements
+    Delete All Cookies
     Yves: go to PDP of the product with sku:    ${multi_variant_product_abstract_sku}
     Yves: change variant of the product on PDP on:    500 x 930 x 400
     Yves: PDP contains/doesn't contain:    true    ${pdp_warranty_option}    ${pdp_insurance_option}

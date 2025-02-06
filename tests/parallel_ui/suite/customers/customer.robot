@@ -280,9 +280,10 @@ Quick_Order
     [Tags]    smoke
     [Documentation]    Checks Quick Order, checkout and Reorder
     [Setup]    Run keywords    Create dynamic customer in DB
-    ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    ...    AND    Yves: create new 'Shopping Cart' with name:    quickOrderCart+${random}
-    ...    AND    Yves: create new 'Shopping List' with name:    quickOrderList+${random}
+    ...    AND    Create dynamic admin user in DB
+    ...    AND    Zed: check and restore product availability in Zed:    ${product_with_multiple_offers_abstract_sku}    Available    ${product_with_multiple_offers_concrete_sku}    ${dynamic_admin_user}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Yves: create new 'Shopping List' with name:    quickOrderList+${random}
     Yves: go to 'Quick Order' page through the header
     Yves: 'Quick Order' page is displayed
     Yves: add the following articles into the form through quick order text area:     202_5782479,1\n056_31714843,3
@@ -290,7 +291,7 @@ Quick_Order
     ...    || searchQuery                                  | merchant       ||
     ...    || ${product_with_multiple_offers_concrete_sku} | Budget Cameras ||
     Yves: add products to the shopping cart from quick order page
-    Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
+    Yves: go to shopping cart page
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:     202_5782479    056_31714843    ${product_with_multiple_offers_concrete_sku}
     Yves: assert merchant of product in cart or list:    202_5782479    Video King
@@ -307,7 +308,7 @@ Quick_Order
     Yves: assert merchant of product in cart or list:    202_5782479    Video King
     Yves: assert merchant of product in cart or list:    056_31714843    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
-    Yves: go to the shopping cart through the header with name:    quickOrderCart+${random}
+    Yves: go to shopping cart page
     ### Order placement ###
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true

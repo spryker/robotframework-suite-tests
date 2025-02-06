@@ -2316,7 +2316,7 @@ Delete dynamic customer via API
         IF    ${dynamic_customer_exists}
             VAR    ${customer_email}    ${dynamic_customer}
         ELSE
-            Log    message=No dynamic (doesn't exist) or static customer was provided for deletion    level=WARN
+            Log    message=No dynamic (doesn't exist) or static customer was provided for deletion    level=INFO
             RETURN
         END
     END
