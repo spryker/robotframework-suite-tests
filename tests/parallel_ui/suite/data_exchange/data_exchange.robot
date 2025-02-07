@@ -92,7 +92,6 @@ Data_exchange_API_download_specification
     ...    AND    Delete dynamic admin user from DB
 
 Data_exchange_API_Configuration_in_Zed
-    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Tags]    bapi    smoke
     [Setup]    Run Keywords    Trigger API specification update
     ...    AND    Create dynamic admin user in DB
