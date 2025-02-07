@@ -44,7 +44,9 @@ Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 *** Test Cases ***
 Content_Management
     [Documentation]    Checks cms content can be edited in zed and that correct cms elements are present on homepage   
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Create dynamic admin user in DB    user_name=admin+root+cm${random}@spryker.com
+    Create dynamic admin user in DB    user_name=admin+content${random}@spryker.com
+    Zed: login on Zed with provided credentials:    admin+content${random}@spryker.com
     Zed: create a cms page and publish it:    Test Page${random}    test-page${random}    Page Title    Page text
     Yves: go to the 'Home' page
     Yves: page contains CMS element:    Homepage Banners
@@ -54,6 +56,9 @@ Content_Management
     Yves: go to newly created page by URL:    en/test-page${random}
     Yves: page contains CMS element:    CMS Page Title    Page Title
     Yves: page contains CMS element:    CMS Page Content    Page text
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    admin+root+cm${random}@spryker.com
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
+    ...    AND    Zed: delete Zed user with the following email:    admin+content${random}@spryker.com
+    ...    AND    Trigger multistore p&s
+    ...    AND    Delete dynamic admin user from DB    admin+root+cm${random}@spryker.com

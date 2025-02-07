@@ -232,7 +232,6 @@ Share_Shopping_Carts
     Yves: login on Yves with provided credentials:    sonia+sharecart${random}@spryker.com
     Yves: go to 'Shopping Carts' page through the header
     Yves: 'Shopping Carts' page is displayed
-    Yves: delete all shopping carts
     Yves: create new 'Shopping Cart' with name:    shoppingCartName+${random}
     Yves: 'Shopping Carts' widget contains:    shoppingCartName+${random}    Owner access
     Yves: go to 'Shopping Carts' page through the header
@@ -372,8 +371,7 @@ Business_on_Behalf
     Yves: go to URL:    en/company/user/select
     Yves: 'Select Business Unit' page is displayed
     Yves: 'Business Unit' dropdown contains:    Spryker Systems GmbH / Spryker Systems Berlin    Spryker Systems GmbH / Spryker Systems Zurich
-    [Teardown]    Run Keywords    Zed: delete company user xxx withing xxx company business unit:    Donald    Spryker Systems Zurich    admin_email=${dynamic_admin_user}
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Run Keywords    Delete dynamic admin user from DB
     ...    AND    Delete dynamic customer via API
 
 Wishlist_List_Supports_Offers
