@@ -54,7 +54,6 @@ Product_PDP
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
     Yves: change variant of the product on PDP on:    Flash
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
-    [Teardown]    Delete dynamic customer via API
 
 Catalog
     [Tags]    smoke
@@ -114,8 +113,7 @@ Volume_Prices
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=${volume_prices_product_concrete_sku}    productName=${volume_prices_product_name}    productPrice=16.50
-    [Teardown]    Run Keywords    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
 
 Discontinued_Alternative_Products
     [Documentation]    Checks discontinued and alternative products
@@ -142,7 +140,6 @@ Discontinued_Alternative_Products
     ...    AND    Zed: undo discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
     ...    AND    Trigger p&s
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
 
 Measurement_Units
     [Tags]    smoke
@@ -166,7 +163,6 @@ Measurement_Units
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    [Teardown]    Delete dynamic customer via API
 
 Packaging_Units
     [Tags]    smoke
@@ -189,7 +185,6 @@ Packaging_Units
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    [Teardown]    Delete dynamic customer via API
 
 Product_Bundles
     [Tags]    smoke
@@ -213,8 +208,7 @@ Product_Bundles
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    [Teardown]    Run Keywords    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
 
 Back_in_Stock_Notification
     [Setup]    Run Keywords    Create dynamic admin user in DB
@@ -239,7 +233,6 @@ Back_in_Stock_Notification
     Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    true
     [Teardown]    Run Keywords    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}    ${dynamic_admin_user}
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
 
 Manage_Product
     [Tags]    smoke
@@ -348,8 +341,7 @@ Manage_Product
     Zed: view abstract product page contains:
     ...    || store | sku                   | name                          | variants count ||
     ...    || DE AT | zedManageSKU${random} | UpdatedmanageProduct${random} | 3              ||
-    [Teardown]    Run Keywords    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
 
 Product_Original_Price
     [Setup]    Run Keywords    Create dynamic admin user in DB
@@ -407,8 +399,7 @@ Product_Original_Price
     Yves: change variant of the product on PDP on:    blue
     Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
     Yves: product original price on the PDP should be:    €50.00
-    [Teardown]    Run Keywords    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
 
 Product_Availability_Calculation
     [Documentation]    Check product availability + multistore
@@ -502,7 +493,6 @@ Product_Availability_Calculation
     ...    || Warehouse1 | AT             ||
     ...    AND    Repeat Keyword    3    Trigger multistore p&s
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
 
 Configurable_Product_PDP_Wishlist_Availability
     [Documentation]    Configure product from PDP and Wishlist + availability case.
@@ -552,8 +542,7 @@ Configurable_Product_PDP_Wishlist_Availability
     Yves: add all available products from wishlist to cart
     Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=${configurable_product_price_with_options}
-    [Teardown]    Run Keywords    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
 
 Configurable_Product_PDP_Shopping_List
     [Tags]    smoke
@@ -616,7 +605,6 @@ Configurable_Product_PDP_Shopping_List
     ...    || option one                 | option two                     ||
     ...    || Option One: Option title 3 | Option Two: Option Two title 4 ||
     Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €882.00
-    [Teardown]    Delete dynamic customer via API
 
 Product_Restrictions
     [Documentation]    Checks White and Black lists
@@ -653,8 +641,6 @@ Product_Restrictions
     ...    AND    Zed: remove product list with title:    White${random}
     ...    AND    Zed: remove product list with title:    Black${random}
     ...    AND    Trigger multistore p&s
-    ...    AND    Delete dynamic customer via API    ${dynamic_customer}
-    ...    AND    Delete dynamic customer via API    ${dynamic_second_customer}
     ...    AND    Delete dynamic admin user from DB
 
 Customer_Specific_Prices
@@ -676,4 +662,3 @@ Customer_Specific_Prices
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    customerPrices+${random}
     Yves: shopping cart contains product with unit price:    sku=${product_with_merchant_price_concrete_sku}    productName=${product_with_merchant_price_product_name}    productPrice=${product_with_merchant_price_merchant_price}
-    [Teardown]    Run Keywords    Delete dynamic customer via API    ${dynamic_customer}    AND    Delete dynamic customer via API    ${dynamic_second_customer}

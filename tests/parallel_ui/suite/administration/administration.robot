@@ -83,7 +83,6 @@ Glossary
     ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
     ...    AND    Trigger p&s
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
 
 Payment_method_update
     [Documentation]    Deactivate payment method, unset payment method for stores in zed and check its impact on yves.
@@ -118,4 +117,3 @@ Payment_method_update
     ...    AND    Zed: go to second navigation item level:    Administration    Payment Methods
     ...    AND    Zed: activate/deactivate payment method:    Dummy Payment    Credit Card    True
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API

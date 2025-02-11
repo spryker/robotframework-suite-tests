@@ -71,7 +71,6 @@ Product_Sets
     Yves: shopping cart contains the following products:     052_30614390    096_30856274
     Yves: delete product from the shopping cart with sku:    052_30614390
     Yves: delete product from the shopping cart with sku:    096_30856274
-    [Teardown]    Delete dynamic customer via API
 
 CRUD_Product_Set
     [Tags]    smoke
@@ -97,7 +96,7 @@ CRUD_Product_Set
     Zed: delete product set:    test set ${random}
     Trigger multistore p&s
     Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/test-set-${random}
-    [Teardown]    Run Keywords    Delete dynamic admin user from DB    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
 
 Configurable_Bundle
     [Tags]    smoke
@@ -144,8 +143,7 @@ Configurable_Bundle
     Zed: trigger all matching states inside this order:    Ship
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Close
-    [Teardown]    Run Keywords    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
 
 Product_Relations
     [Documentation]    Checks related product on PDP and upsell products in cart
@@ -157,4 +155,3 @@ Product_Relations
     Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
     Yves: add product to the shopping cart
     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
-    [Teardown]    Delete dynamic customer via API

@@ -89,7 +89,6 @@ Merchant_Profile_Update
     ...    || hi@video-king.nl | +31 123 345 777 | 2-4 days      | Video King values the privacy of your personal data. ||
     ...    AND    MP: click submit button
     ...    AND    Trigger multistore p&s
-    ...    AND    Zed: delete merchant user:    ${dynamic_king_merchant}
     ...    AND    Delete dynamic admin user from DB
 
 Merchant_Profile_Set_to_Offline_from_MP
@@ -154,8 +153,7 @@ Merchant_Profile_Set_to_Offline_from_MP
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
     Yves: go to PDP of the product with sku:    offlineMP${random}
     Yves: merchant is (not) displaying in Sold By section of PDP:    offline_from_MP${random}    false
-    [Teardown]    Run Keywords    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
 
 Merchant_Profile_Set_to_Inactive_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to deactivate merchant and then it's profile, products and offers won't be displayed on Yves
@@ -218,8 +216,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
     Yves: go to PDP of the product with sku:    offlineBO${random}
     Yves: merchant is (not) displaying in Sold By section of PDP:    offline_from_BO${random}    false
-    [Teardown]    Run Keywords    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
 
 Manage_Merchants_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to create, approve, edit merchants
@@ -327,9 +324,7 @@ Approve_Offer
     Yves: merchant's offer/product price should be:    Video King    ${second_product_with_multiple_offers_video_king_price}
     Yves: select xxx merchant's offer:    Video King
     Yves: product price on the PDP should be:     ${second_product_with_multiple_offers_video_king_price}
-    [Teardown]    Run Keywords    Zed: delete merchant user:    ${dynamic_king_merchant}
-    ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
 
 Search_for_Merchant_Offers_and_Products
     [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers
@@ -415,7 +410,6 @@ Merchant_Portal_Product_Volume_Prices
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Deny
     ...    AND    Trigger p&s
-    ...    AND    Delete dynamic customer via API
     ...    AND    Delete dynamic admin user from DB
 
 Merchant_Portal_Offer_Volume_Prices
@@ -508,7 +502,6 @@ Merchant_Portal_Offer_Volume_Prices
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Deny
     ...    AND    Trigger p&s
-    ...    AND    Delete dynamic customer via API
     ...    AND    Delete dynamic admin user from DB
 
 Merchant_Portal_Customer_Specific_Prices
@@ -572,9 +565,7 @@ Merchant_Portal_Customer_Specific_Prices
     Yves: login on Yves with provided credentials:     ${dynamic_second_customer}
     Yves: go to PDP of the product with sku:    PriceSKU${random}
     Yves: merchant's offer/product price should be:    Budget Cameras     €500.00
-    [Teardown]    Run Keywords    Delete dynamic customer via API    ${dynamic_second_customer}    
-    ...    AND    Delete dynamic customer via API    ${dynamic_customer}    
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 Merchant_Portal_My_Account
     [Documentation]    Checks that MU can edit personal data in MP. DMS-ON: https://spryker.atlassian.net/browse/FRW-7395
@@ -813,7 +804,6 @@ Manage_Merchant_Product
     ...    AND    Zed: click Action Button in a table for row that contains:     manageSKU${random}     Deny
     ...    AND    Trigger multistore p&s
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
 
 Merchant_Product_Original_Price
     [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
@@ -871,7 +861,6 @@ Merchant_Product_Original_Price
     ...    AND    Zed: click Action Button in a table for row that contains:     originalSKU${random}     Deny
     ...    AND    Trigger p&s
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
 
 Offer_Availability_Calculation
     [Tags]    smoke
@@ -982,11 +971,7 @@ Offer_Availability_Calculation
     Yves: go to shopping cart page
     Yves: assert merchant of product in cart or list:    offAvKU${random}-1    Spryker
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: delete merchant user:    ${dynamic_spryker_merchant}
-    ...    AND    Zed: delete merchant user:    ${dynamic_king_merchant}
-    ...    AND    Zed: delete merchant user:    ${dynamic_spryker_second_merchant}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:      offAvProduct${random}     Deny
     ...    AND    Trigger multistore p&s
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API

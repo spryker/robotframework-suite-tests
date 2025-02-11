@@ -218,7 +218,6 @@ Business_Unit_Address_on_Checkout
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
     Yves: shipping address on the order details page is:    Mr. Dynamic Customer Spryker Systems GmbH Gurmont Str. 23 8002 Barcelona, Spain 3490284322
-    [Teardown]    Delete dynamic customer via API
 
 Request_for_Quote
     [Tags]    smoke
@@ -287,8 +286,7 @@ Request_for_Quote
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 Split_Delivery
     [Tags]    smoke
@@ -330,8 +328,7 @@ Split_Delivery
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
-    [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 Checkout_Address_Management
     [Tags]    smoke
@@ -375,8 +372,7 @@ Checkout_Address_Management
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: billing address for the order should be:    New Billing, Changed Street 098, 09876 Berlin, Germany
     Zed: shipping address inside xxx shipment should be:    1    Mr First, Last, Shipping Street, 7, Additional street, Spryker, 10247, Geneva, Switzerland
-    [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 
 Multiple_Merchants_Order
@@ -428,8 +424,7 @@ Multiple_Merchants_Order
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
-    [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
     
 Unique_URL
     [Documentation]    Fails due to Bug:CC-12380
@@ -445,7 +440,6 @@ Unique_URL
     Yves: go to external URL:    ${externalURL}
     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
     Yves: preview shopping cart contains the following products:    ${one_variant_product_abstract_sku}
-    [Teardown]    Delete dynamic customer via API
 
 Comments_in_Cart
     [Documentation]    Add comments to cart and verify comments in Yves and Zed
@@ -469,8 +463,7 @@ Comments_in_Cart
     Yves: go to order details page to check comment:    abc${random}    ${lastPlacedOrder}
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}    
     Zed: check comment appears at order detailed page in zed:    abc${random}    ${lastPlacedOrder}
-    [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 Comment_Management_in_the_Cart
     [Documentation]    Editing and deleting comments in carts
@@ -486,9 +479,6 @@ Comment_Management_in_the_Cart
     Yves: check comments are visible or not in cart:    true    xyz${random}    
     Yves: delete comment on cart
     Yves: check comments are visible or not in cart:    false    xyz${random}
-    [Teardown]    Delete dynamic customer via API
-
-
 
 # Approval_Process
 #     ### *** DEMODATA - NO OOT LIMITS AND CAN'T SET THEM IN SUITE *** ###

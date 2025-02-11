@@ -59,7 +59,6 @@ Minimum_Order_Value
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €83.90
     [Teardown]    Run keywords    Restore all discounts in the database
-    ...    AND    Delete dynamic customer via API
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: change global threshold settings:
     ...    || store & currency | minimum hard value | minimum hard en message | minimum hard de message | maximun hard value | maximun hard en message                                                                                   | maximun hard de message                                                                                                              | soft threshold | soft threshold value | soft threshold en message | soft threshold de message ||
@@ -140,7 +139,6 @@ Configurable_Product_RfQ_OMS
     # Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €766.00
     Yves: product configuration status should be equal:       Configuration is not complete.
     [Teardown]    Run Keywords    Restore all discounts in the database
-    ...    AND    Delete dynamic customer via API
     ...    AND    Delete dynamic admin user from DB
 
 Click_and_collect
@@ -273,7 +271,6 @@ Click_and_collect
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Deny
-    ...    AND    Delete dynamic customer via API
 
 Configurable_Product_Checkout
     [Setup]    Run keywords    Create dynamic admin user in DB
@@ -308,7 +305,6 @@ Configurable_Product_Checkout
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €644.40
     [Teardown]    Run keywords    Restore all discounts in the database
-    ...    AND    Delete dynamic customer via API
     ...    AND    Delete dynamic admin user from DB
 
 Fulfill_Order_from_Merchant_Portal
@@ -389,7 +385,6 @@ Fulfill_Order_from_Merchant_Portal
     MP: order item state should be:    ${product_with_budget_cameras_offer_concrete_sku}    delivered
     MP: order item state should be:    ${product_with_multiple_offers_concrete_sku}    delivered
     [Teardown]    Run Keywords    Restore all discounts in the database
-    ...    AND    Delete dynamic customer via API
     ...    AND    Delete dynamic admin user from DB
 
 Discounts
@@ -403,11 +398,11 @@ Discounts
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
+    ...    AND    Trigger p&s
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=002    promotionalProductQuantity=2
-    Trigger p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    190
     Yves: add product to the shopping cart    wait_for_p&s=true
@@ -440,9 +435,7 @@ Discounts
     [Teardown]    Run keywords    Restore all discounts in the database
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
-    ...    AND    Trigger p&s
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
 
 Refunds
     [Tags]    smoke    group_tree
@@ -485,7 +478,6 @@ Refunds
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Restore all discounts in the database
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
 
 Manage_Shipments
     [Documentation]    Checks create/edit shipment functions from backoffice
@@ -555,4 +547,3 @@ Manage_Shipments
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €785.90
     [Teardown]    Run Keywords    Restore all discounts in the database
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API

@@ -97,8 +97,7 @@ Quick_Order
     Yves: shopping cart contains the following products:     213103    520561    421340    419871    419869    425073    425084
     Yves: assert merchant of product in cart or list:    213103    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
-    [Teardown]    Run Keywords    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
 
 Volume_Prices
     [Documentation]    Checks that volume prices are applied in cart
@@ -114,8 +113,7 @@ Volume_Prices
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    420685    Post-it stick note Super Sticky Meeting Notes 6445-4SS 4 pieces/pack    4.20
-    [Teardown]    Run Keywords    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
 
 Discontinued_Alternative_Products
     [Documentation]    Checks that product can be discontinued in Zed
@@ -153,7 +151,6 @@ Measurement_Units
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    [Teardown]    Delete dynamic customer via API
 
 Packaging_Units
     [Documentation]    Checks checkout with Packaging Unit product
@@ -177,7 +174,6 @@ Packaging_Units
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    [Teardown]    Delete dynamic customer via API
 
 Product_Restrictions
     [Setup]    Run keywords    Create dynamic admin user in DB
@@ -202,9 +198,6 @@ Product_Restrictions
     Yves: 'Catalog' page should show products:    16
     Yves: go to URL:    en/transport/sack-trucks
     Yves: 'Catalog' page should show products:    10
-    [Teardown]    Run Keywords    Delete dynamic customer via API    ${dynamic_customer}
-    ...    AND    Delete dynamic customer via API    ${dynamic_second_customer}
-    ...    AND    Delete dynamic customer via API    ${dynamic_third_customer}
 
 Customer_Specific_Prices
     [Documentation]    Checks that product price can be different for different customers
@@ -224,8 +217,6 @@ Customer_Specific_Prices
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    403125    EUROKRAFT hand truck - with open shovel - load capacity 400 kg    188.34
-    [Teardown]    Run Keywords    Delete dynamic customer via API    ${dynamic_customer}
-    ...    AND    Delete dynamic customer via API    ${dynamic_second_customer}
 
 Product_PDP
     [Documentation]    Checks that PDP contains required elements
@@ -240,7 +231,6 @@ Product_PDP
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_limited_warranty_option}[${env}]    ${pdp_insurance_coverage_option}
     Yves: change variant of the product on PDP on:    500 x 930 x 400
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]     ${pdp_insurance_coverage_option}
-    [Teardown]    Delete dynamic customer via API
 
 Catalog
     [Documentation]    Checks that catalog options and search work
@@ -265,7 +255,6 @@ Catalog
     Yves: catalog page contains filter:    Product Ratings     Product Labels     Brand    Color
     Yves: select filter value:    Color    blue
     Yves: 'Catalog' page should show products:    3
-    [Teardown]    Delete dynamic customer via API
 
 Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
@@ -290,7 +279,6 @@ Back_in_Stock_Notification
     Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    true
     [Teardown]    Run keywords    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}    ${dynamic_admin_user}
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
 
 Offer_Availability_Calculation
     [Documentation]    check offer availability
@@ -398,14 +386,10 @@ Offer_Availability_Calculation
     Yves: assert merchant of product in cart or list:    offAvKU${random}-1    Spryker
     [Teardown]    Run Keywords    Should Test Run
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: delete merchant user:    ${dynamic_spryker_merchant}
-    ...    AND    Zed: delete merchant user:    ${dynamic_king_merchant}
-    ...    AND    Zed: delete merchant user:    ${dynamic_spryker_second_merchant}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products
     ...    AND    Zed: click Action Button in a table for row that contains:      offAvProduct${random}     Deny
     ...    AND    Trigger multistore p&s
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
 
 Product_Availability_Calculation
     [Documentation]    Check product availability + multistore
@@ -506,7 +490,6 @@ Product_Availability_Calculation
     ...    || Spryker ${merchant_spryker_reference} Warehouse 1 | AT    ||
     ...    AND    Repeat Keyword    3    Trigger multistore p&s
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
 
 Configurable_Product_PDP_Shopping_List
     [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of 7 items. Ensure that products that have not been configured cannot be purchased.
@@ -568,7 +551,6 @@ Configurable_Product_PDP_Shopping_List
     ...    || option one | option two ||
     ...    || 6 shelves  | 2 lockers  ||
     Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €2,486.54
-    [Teardown]    Delete dynamic customer via API
 
 #### Product Bundles feature is not present in marketplace for now ####
 # Product_Bundles

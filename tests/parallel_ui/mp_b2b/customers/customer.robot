@@ -84,9 +84,7 @@ Share_Shopping_Lists
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
-    [Teardown]    Run Keywords    Close Current Context    
-    ...    AND    Delete dynamic customer via API    sonia+sharelist${random}@spryker.com
-    ...    AND    Delete dynamic customer via API    sonia+receivelist${random}@spryker.com
+    [Teardown]    Run Keywords    Close Current Context
 
 Share_Shopping_Carts
     [Documentation]    Checks that cart can be shared and used for checkout
@@ -140,10 +138,7 @@ Share_Shopping_Carts
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:     View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
-    [Teardown]    Run Keywords    Delete dynamic customer via API    sonia+sharecart${random}@spryker.com
-    ...    AND    Delete dynamic customer via API    sonia+receivecart${random}@spryker.com
-    ...    AND    Zed: delete merchant user:    ${dynamic_expert_merchant}
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 Business_on_Behalf
     [Documentation]    Check that BoB user has possibility to change the business unit
@@ -157,8 +152,7 @@ Business_on_Behalf
     Yves: go to URL:    en/company/user/select
     Yves: 'Select Business Unit' page is displayed
     Yves: 'Business Unit' dropdown contains:    Spryker Systems GmbH / Spryker Systems Berlin    Spryker Systems GmbH / Spryker Systems Zurich
-    [Teardown]    Run Keywords    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
 
 User_Account
     [Documentation]    Checks user account pages work + address management
@@ -193,8 +187,7 @@ User_Account
     Yves: go to user menu:    Overview
     Yves: go to user menu item in the left bar:    Addresses
     Yves: check that user has address exists/doesn't exist:    true    ${yves_user_first_name}${random}    ${yves_user_last_name}${random}    address 1${random}    address 2 ${random}    ${random}    Berlin${random}    Austria
-    [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 Update_Customer_Data
     [Documentation]    Checks customer data can be updated from Yves and Zed
@@ -229,5 +222,4 @@ Update_Customer_Data
     Yves: assert customer profile data:
     ...    || salutation | first name       | last name         | email               ||
     ...    || Mr.        | Dynamic${random} | Customer${random} | ${dynamic_customer} ||
-    [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB

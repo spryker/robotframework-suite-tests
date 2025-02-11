@@ -54,55 +54,17 @@ Product_labels
     Yves: go to the PDP of the first available product on open catalog page
     Yves: PDP contains/doesn't contain:    true    ${pdp_new_label}[${env}] 
 
-Discounts
-    [Documentation]    Discounts, Promo Products, and Coupon Codes
-    [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate all discounts from Overview page
-    ...    AND    Zed: change product stock:    M21777    421538    true    10
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
-    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
-    Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=M29503    promotionalProductQuantity=2
-    Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: create new 'Shopping Cart' with name:    discounts+${random}
-    Yves: go to PDP of the product with sku:    M21777
-    Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    discounts+${random}
-    Yves: apply discount voucher to cart:    test${random}
-    Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €0.72
-    Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €1.44
-    Yves: promotional product offer is/not shown in cart:    true
-    Yves: change quantity of promotional product and add to cart:    +    1
-    Yves: shopping cart contains the following products:    419873    421538
-    Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €123.10
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €18.11
-    [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
-    ...    AND    Zed: activate following discounts from Overview page:    Free chair    Tu & Wed $5 off 5 or more    10% off $100+    Free marker    20% off storage    Free office chair    Free standard delivery    10% off Safescan    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
-
 Product_Relations
     [Documentation]    Checks related product on PDP and upsell products in cart
-    [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: create new 'Shopping Cart' with name:    productRelationCart+${random}
+    [Setup]    Create dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${product_with_relations_related_products_sku}
     Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
     Yves: go to PDP of the product with sku:    ${product_with_relations_upselling_sku}
     Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    productRelationCart+${random}
+    Yves: go to shopping cart page
     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
-    [Teardown]    Yves: delete 'Shopping Cart' with name:    productRelationCart+${random}
 
 #### Product Sets feature is not present in marketplace for now ####
 # Product_Sets

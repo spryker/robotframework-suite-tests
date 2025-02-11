@@ -13,6 +13,7 @@ Resource    ../../../../resources/common/common_api.robot
 Resource    ../../../../resources/steps/configurable_product_steps.robot
 Resource    ../../../../resources/steps/users_steps.robot
 Resource    ../../../../resources/steps/zed_marketplace_steps.robot
+Resource    ../../../../resources/steps/zed_availability_steps.robot
 
 *** Test Cases ***
 Minimum_Order_Value
@@ -54,10 +55,9 @@ Minimum_Order_Value
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €227.29
     [Teardown]    Run keywords    Restore all discounts in the database
-    # ...    AND    Delete dynamic customer via API
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: change global threshold settings:
     ...    || store & currency | minimum hard value | minimum hard en message | minimum hard de message | maximun hard value | maximun hard en message                                                                                   | maximun hard de message                                                                                                              | soft threshold | soft threshold value | soft threshold en message | soft threshold de message ||
@@ -137,7 +137,6 @@ Configurable_Product_RfQ_OMS
 
     # Yves: product configuration status should be equal:       Configuration is not complete.
     [Teardown]    Run Keywords    Restore all discounts in the database
-    ...    AND    Delete dynamic customer via API
     ...    AND    Delete dynamic admin user from DB
 
 Configurable_Product_Checkout
@@ -184,5 +183,43 @@ Configurable_Product_Checkout
     Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    1
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.0
     [Teardown]    Run keywords    Restore all discounts in the database
-    ...    AND    Delete dynamic customer via API
+    ...    AND    Delete dynamic admin user from DB
+    
+Discounts
+    [Documentation]    Discounts, Promo Products, and Coupon Codes
+    [Setup]    Run keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    ...    AND    Deactivate all discounts in the database
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    ...    AND    Zed: change product stock:    M21777    421538    true    10
+    ...    AND    Trigger p&s
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
+    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
+    Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=M29503    promotionalProductQuantity=2
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Yves: go to PDP of the product with sku:    M21777
+    Yves: add product to the shopping cart
+    Yves: go to shopping cart page
+    Yves: apply discount voucher to cart:    test${random}
+    Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €0.72
+    Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €1.44
+    Yves: promotional product offer is/not shown in cart:    true
+    Yves: change quantity of promotional product and add to cart:    +    1
+    Yves: shopping cart contains the following products:    419873    421538
+    Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €123.10
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: billing address same as shipping address:    true
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
+    Yves: select the following shipping method on the checkout and go next:    Express
+    Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
+    Yves: accept the terms and conditions:    true
+    Yves: 'submit the order' on the summary page
+    Yves: 'Thank you' page is displayed
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €18.11
+    [Teardown]    Run keywords    Restore all discounts in the database
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
     ...    AND    Delete dynamic admin user from DB

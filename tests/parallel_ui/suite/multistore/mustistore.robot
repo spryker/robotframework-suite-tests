@@ -112,8 +112,7 @@ Multistore_Product
     ...    || multiSKU${random} | AT             ||
     Repeat Keyword    3    Trigger multistore p&s
     Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 Multistore_Product_Offer
     [Tags]    smoke
@@ -225,7 +224,6 @@ Multistore_Product_Offer
     ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
     ...    AND    Trigger multistore p&s
     ...    AND    Delete dynamic admin user from DB
-    ...    AND    Delete dynamic customer via API
 
 Multistore_CMS
     [Documentation]    check CMS multistore functionality
@@ -321,4 +319,3 @@ Dynamic_multistore
     ...    AND    Zed: delete Zed user with the following email:    admin+dms+content${random}@spryker.com
     ...    AND    Trigger multistore p&s
     ...    AND    Delete dynamic admin user from DB    admin+dms+root${random}@spryker.com
-    ...    AND    Delete dynamic customer via API

@@ -63,7 +63,6 @@ Business_Unit_Address_on_Checkout
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
     Yves: shipping address on the order details page is:    Mr. Dynamic Customer Spryker Systems GmbH Gurmont Str. 23 8002 Barcelona, Spain 3490284322
-    [Teardown]    Delete dynamic customer via API
 
 Approval_Process
     [Documentation]    Checks role permissions on checkout and Approval process
@@ -147,8 +146,6 @@ Approval_Process
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic customer via API    ${dynamic_second_customer}
 
 Request_for_Quote
     [Documentation]    Checks user can request and receive quote
@@ -217,8 +214,7 @@ Request_for_Quote
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 Unique_URL
     [Documentation]    Bug: CC-12380.
@@ -235,7 +231,6 @@ Unique_URL
     Yves: 'Shopping Cart' page is displayed
     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
     Yves: shopping cart contains the following products:    108302
-    [Teardown]    Delete dynamic customer via API
 
 Split_Delivery
     [Documentation]    Checks split delivery in checkout with new addresses
@@ -276,8 +271,7 @@ Split_Delivery
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
-    [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 Multiple_Merchants_Order
     [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
@@ -324,8 +318,7 @@ Multiple_Merchants_Order
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
-    [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 Checkout_Address_Management
     [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
@@ -368,8 +361,7 @@ Checkout_Address_Management
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: billing address for the order should be:    New Billing, Changed Street 098, 09876 Berlin, Germany
     Zed: shipping address inside xxx shipment should be:    1    Mr First, Last, Shipping Street, 7, Additional street, Spryker, 10247, Geneva, Switzerland
-    [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 Comments_in_Cart
     [Documentation]    Add comments to cart and verify comments in Yves and Zed
@@ -393,8 +385,7 @@ Comments_in_Cart
     Yves: go to order details page to check comment:    abc${random}    ${lastPlacedOrder}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: check comment appears at order detailed page in zed:    abc${random}    ${lastPlacedOrder}
-    [Teardown]    Run Keywords    Delete dynamic customer via API
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 Comment_Management_in_the_Cart
     [Documentation]    Editing and deleting comments in carts
@@ -409,4 +400,3 @@ Comment_Management_in_the_Cart
     Yves: check comments are visible or not in cart:    true    xyz${random}
     Yves: delete comment on cart
     Yves: check comments are visible or not in cart:    false    xyz${random}
-    [Teardown]    Delete dynamic customer via API

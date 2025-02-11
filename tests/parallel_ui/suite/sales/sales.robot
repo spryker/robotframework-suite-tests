@@ -119,7 +119,7 @@ Return_Management
     Yves: go to user menu:    Orders History
     Yves: 'Order History' page is displayed
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
-    [Teardown]    Run Keywords    Delete dynamic admin user from DB    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
 
 Order_Cancelation
     [Documentation]    Check that customer is able to cancel order.
@@ -193,7 +193,7 @@ Order_Cancelation
     Yves: go to 'Order History' page
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page contains the cancel order button:    false
-    [Teardown]    Run keywords    Delete dynamic admin user from DB    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
 
 Comment_Management_in_Order
     [Documentation]    Add comments in Yves and check in Zed. 
@@ -219,4 +219,4 @@ Comment_Management_in_Order
     Yves: check comments is visible or not in order:    true    abc${random}
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}    
     Zed: check comment appears at order detailed page in zed:    abc${random}    ${lastPlacedOrder}
-    [Teardown]    Run Keywords    Delete dynamic admin user from DB    AND    Delete dynamic customer via API
+    [Teardown]    Delete dynamic admin user from DB
