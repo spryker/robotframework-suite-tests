@@ -73,6 +73,7 @@ Agent_Assist
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
+    [Teardown]    Delete dynamic admin user from DB
 
 User_Control
     [Tags]    smoke

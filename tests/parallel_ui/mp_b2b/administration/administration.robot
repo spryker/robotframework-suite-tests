@@ -45,7 +45,7 @@ Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 Zed_navigation_ordering_and_naming
     [Documentation]    Verifies each left navigation node can be opened
     [Setup]    Create dynamic admin user in DB
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: verify first navigation root menus
     Zed: verify root menu icons
     Zed: verify second navigation root menus
