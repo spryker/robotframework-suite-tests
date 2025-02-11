@@ -46,8 +46,11 @@ Resource    ../../../../resources/steps/zed_cms_block_steps.robot
 *** Test Cases ***
 Multistore_Product_Offer
     [Documentation]    check product and offer multistore functionality
-    Repeat Keyword    3    Trigger multistore p&s
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    ...    AND    Zed: create dynamic merchant user:    Office King
+    ...    AND    Zed: create dynamic merchant user:    Spryker
+    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
@@ -80,16 +83,15 @@ Multistore_Product_Offer
     ...    || concrete     | 2          | AT    | EUR      | 55            ||
     MP: save concrete product
     Trigger multistore p&s
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Approve
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_user_email}  
-    Yves: check if cart is not empty and clear it
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: product price on the PDP should be:    €50.00    wait_for_p&s=true
-    MP: login on MP with provided credentials:    ${merchant_spryker_email}
+    MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
     MP: perform search by:    multistoreSKU${random}-1
@@ -108,19 +110,19 @@ Multistore_Product_Offer
     ...    || 3          | AT    | EUR      | 10            | 1        ||
     MP: save offer
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: merchant's offer/product price should be:    Spryker    €200.00
     Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: product price on the PDP should be:    €55.00    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: merchant's offer/product price should be:    Spryker    €10.00
-    MP: login on MP with provided credentials:    ${merchant_spryker_email}
+    MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
     MP: open navigation menu tab:    Offers
     MP: perform search by:    multistoreSKU${random}-1
     MP: click on a table row that contains:    multistoreSKU${random}-1
@@ -131,11 +133,11 @@ Multistore_Product_Offer
     Repeat Keyword    3    Trigger multistore p&s
     Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    false
     Save current URL
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: update abstract product data:
     ...    || productAbstract        | unselect store ||
     ...    || multistoreSKU${random} | AT             ||
@@ -146,26 +148,28 @@ Multistore_Product_Offer
     Repeat Keyword    3    Trigger multistore p&s
     Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
     [Teardown]    Run Keywords    Should Test Run
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
     ...    AND    Trigger multistore p&s
+    ...    AND    Delete dynamic admin user from DB
 
 Multistore_CMS
     [Documentation]    Check CMS multistore functionality
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Create dynamic admin user in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
     Trigger multistore p&s
     Yves: go to newly created page by URL on AT store if other store not specified:    en/multistore-page${random}
     Save current URL
     Yves: page contains CMS element:    CMS Page Title    Multistore Page
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: update cms page and publish it:
     ...    || cmsPage                  | unselect store ||
     ...    || Multistore Page${random} | AT             ||
     Trigger multistore p&s
     Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
     ...    AND    Trigger multistore p&s
@@ -173,15 +177,17 @@ Multistore_CMS
 Dynamic_multistore
     [Documentation]    This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
     [Tags]    dms-on
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Create dynamic admin user in DB
+    Create dynamic customer in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create new Store:
     ...    || name                                    | locale_iso_code | currency_iso_code | currency_code | currency_iso_code2 | currency_code2 | store_delivery_region | store_context_timezone ||
     ...    || ${random_str_store}_${random_str_store} | en_US           | Euro              | EUR           | Swiss Franc        | CHF            | AT                    | Europe/Berlin          ||
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: wait until store switcher contains:     store=${random_str_store}_${random_str_store}
     Yves: go to AT store 'Home' page if other store not specified:     ${random_str_store}_${random_str_store}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: update abstract product data:
     ...    || store                                    | productAbstract                     ||
     ...    ||  ${random_str_store}_${random_str_store} | ${one_variant_product_abstract_sku} ||
@@ -206,14 +212,13 @@ Dynamic_multistore
     ...    || productAbstract                     | name de                        ||
     ...    || ${one_variant_product_abstract_sku} | DEmanageProduct${random} force ||
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
     Yves: select currency Euro if other currency not specified
-    Yves: create new 'Shopping Cart' with name:    storeCart+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_concrete_sku}
     Yves: product price on the PDP should be:    €15.00
     #### create new cms page and check it in new store on YVES
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create a cms page and publish it:    New Page Store${random}    store-page${random}    Page Title    Page text
     Trigger multistore p&s
     Yves: go to newly created page by URL:    en/store-page${random}
@@ -223,11 +228,11 @@ Dynamic_multistore
     Yves: go to newly created page by URL:   en/store-page${random}
     Yves: page contains CMS element:    CMS Page Content    Page text
     ## assigned CMS BLocks to new store
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--html
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--text
     [Teardown]    Run Keywords    Should Test Run
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    New Page Store${random}   Deactivate
     ...    AND    Trigger multistore p&s

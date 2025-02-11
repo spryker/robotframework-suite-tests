@@ -120,7 +120,6 @@ Multistore_Product_Offer
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Zed: create dynamic merchant user:    Spryker
     ...    AND    Zed: create dynamic merchant user:    Video King
-    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -159,7 +158,6 @@ Multistore_Product_Offer
     Zed: click Action Button in a table for row that contains:     multistoreProduct${random}     Approve
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}  
-    Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: product price on the PDP should be:    €50.00    wait_for_p&s=true
@@ -243,17 +241,14 @@ Multistore_CMS
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    admin+multi+root${random}@spryker.com
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
-    ...    AND    Zed: delete Zed user with the following email:    admin+multi+content${random}@spryker.com
     ...    AND    Trigger multistore p&s
-    ...    AND    Delete dynamic admin user from DB    admin+multi+root${random}@spryker.com
 
 Dynamic_multistore
     [Documentation]    This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
     [Tags]    dms-on    smoke
-    Create dynamic admin user in DB    user_name=admin+dms+root${random}@spryker.com
-    Create dynamic admin user in DB    user_name=admin+dms+content${random}@spryker.com
+    Create dynamic admin user in DB
     Create dynamic customer in DB
-    Zed: login on Zed with provided credentials:    admin+dms+content${random}@spryker.com
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create new Store:
     ...    || name                                    | locale_iso_code | currency_iso_code | currency_code | currency_iso_code2 | currency_code2 | store_delivery_region | store_context_timezone ||
     ...    || ${random_str_store}_${random_str_store} | en_US           | Euro              | EUR           | Swiss Franc        | CHF            | AT                    | Europe/Berlin          ||
@@ -261,7 +256,7 @@ Dynamic_multistore
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: wait until store switcher contains:     store=${random_str_store}_${random_str_store}
     Yves: go to AT store 'Home' page if other store not specified:     ${random_str_store}_${random_str_store}
-    Zed: login on Zed with provided credentials:    admin+dms+content${random}@spryker.com
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: update abstract product data:
     ...    || store                                    | productAbstract                     ||
     ...    ||  ${random_str_store}_${random_str_store} | ${one_variant_product_abstract_sku} ||
@@ -292,7 +287,7 @@ Dynamic_multistore
     Yves: go to PDP of the product with sku:    ${one_variant_product_concrete_sku}
     Yves: product price on the PDP should be:    €15.00
     #### create new cms page and check it in new store on YVES
-    Zed: login on Zed with provided credentials:    admin+dms+content${random}@spryker.com
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create a cms page and publish it:    New Page Store${random}    store-page${random}    Page Title    Page text
     Trigger multistore p&s
     Yves: go to newly created page by URL:    en/store-page${random}
@@ -302,7 +297,7 @@ Dynamic_multistore
     Yves: go to newly created page by URL:   en/store-page${random}
     Yves: page contains CMS element:    CMS Page Content    Page text
     ## assigned CMS BLocks to new store
-    Zed: login on Zed with provided credentials:    admin+dms+content${random}@spryker.com
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--html
     Zed: assigned store to cms block:    ${random_str_store}_${random_str_store}    customer-registration_token--text
     ## register new customer in the new store on YVES
@@ -312,10 +307,7 @@ Dynamic_multistore
     ...    || Mr.        | New        | User      | sonia+ui+dms${random}@spryker.com  | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Run Keywords    Should Test Run
-    ...    AND    Zed: login on Zed with provided credentials:    admin+dms+root${random}@spryker.com
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    New Page Store${random}   Deactivate
-    ...    AND    Zed: delete customer:    sonia+ui+dms${random}@spryker.com
-    ...    AND    Zed: delete Zed user with the following email:    admin+dms+content${random}@spryker.com
     ...    AND    Trigger multistore p&s
-    ...    AND    Delete dynamic admin user from DB    admin+dms+root${random}@spryker.com

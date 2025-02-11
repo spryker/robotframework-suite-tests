@@ -55,6 +55,4 @@ Content_Management
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    admin+root+cm${random}@spryker.com
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
-    ...    AND    Zed: delete Zed user with the following email:    admin+content${random}@spryker.com
     ...    AND    Trigger multistore p&s
-    ...    AND    Delete dynamic admin user from DB    admin+root+cm${random}@spryker.com

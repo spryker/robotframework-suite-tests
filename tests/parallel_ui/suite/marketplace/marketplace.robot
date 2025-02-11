@@ -593,9 +593,6 @@ Merchant_Portal_My_Account
     Zed: go to second navigation item level:    Users    Users
     Zed: table should contain:    MPUpdatedFName${random}
     Zed: table should contain:    MPUpdatedLName${random}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: delete Zed user with the following email:    sonia+editmu+${random}@spryker.com
-    ...    AND    Delete dynamic admin user from DB
     
 Merchant_Portal_Dashboard
     [Documentation]    Checks that merchant user is able to access the dashboard page. DMS-ON: https://spryker.atlassian.net/browse/FRW-7395
@@ -618,9 +615,6 @@ Merchant_Portal_Dashboard
     MP: click button on dashboard page and check url:    Manage Offers    /product-offers
     MP: click button on dashboard page and check url:    Add Offer    /product-list
     MP: click button on dashboard page and check url:    Manage Orders    /orders
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: delete Zed user with the following email:    sonia+dahboard+${random}@spryker.com
-    ...    AND    Delete dynamic admin user from DB
 
 Merchant_Product_Offer_in_Backoffice
     [Documentation]    Check View action and filtration for Mproduct and Moffer in backoffice

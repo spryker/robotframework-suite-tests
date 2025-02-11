@@ -73,10 +73,6 @@ Agent_Assist
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
-    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: delete Zed user with the following email:    agent+${random}@spryker.com
-    ...    AND    Delete dynamic admin user from DB
 
 User_Control
     [Tags]    smoke
