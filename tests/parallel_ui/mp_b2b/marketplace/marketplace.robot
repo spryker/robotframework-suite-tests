@@ -52,19 +52,24 @@ Merchant_Portal_Unauthorized_Access_Redirects_To_Login_Page
 
 Default_Merchants
     [Documentation]    Checks that default merchants are present in Zed
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Create dynamic admin user in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: table should contain:    Restrictions Merchant
     Zed: table should contain:    Prices Merchant
     Zed: table should contain:    Products Restrictions Merchant
+    [Teardown]    Delete dynamic admin user from DB
 
 Merchant_Profile_Update
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    ...    AND    Zed: create dynamic merchant user:    Office King
     [Documentation]    Checks that merchant profile could be updated from merchant portal and that changes will be displayed on Yves
     Yves: go to URL:    en/merchant/office-king
     Yves: assert merchant profile fields:
     ...    || name | email             | phone           | delivery time | data privacy                                          ||
     ...    ||      | hi@office-king.nl | +31 123 345 777 | 2-4 days      | Office King values the privacy of your personal data. ||
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Profile  
     MP: open profile tab:    Online Profile
     MP: update profile fields with following data:
@@ -76,7 +81,7 @@ Merchant_Profile_Update
     Yves: assert merchant profile fields:
     ...    || name | email                  | phone           | delivery time | data privacy              ||
     ...    ||      | updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text ||
-    [Teardown]    Run Keywords    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    [Teardown]    Run Keywords    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     ...    AND    MP: open navigation menu tab:    Profile
     ...    AND    MP: open profile tab:    Online Profile  
     ...    AND    MP: update profile fields with following data:
@@ -84,77 +89,139 @@ Merchant_Profile_Update
     ...    || hi@office-king.nl | +31 123 345 777 | 2-4 days      | Office King values the privacy of your personal data. ||
     ...    AND    MP: click submit button
     ...    AND    Trigger p&s
+    ...    AND    Delete dynamic admin user from DB
 
 Merchant_Profile_Set_to_Offline_from_MP
     [Documentation]    Checks that merchant is able to set store offline and then his profile, products and offers won't be displayed on Yves
-    [Setup]    Run Keywords    
-    ...    MP: login on MP with provided credentials:    ${merchant_computer_experts_email}
-    ...    AND    MP: change offer stock:
-    ...    || offer    | stock quantity | is never out of stock ||
-    ...    || offer395 | 10             | true                  ||
-    ...    AND    MP: login on MP with provided credentials:    ${merchant_office_king_email}
-    ...    AND    MP: change offer stock:
-    ...    || offer    | stock quantity | is never out of stock ||
-    ...    || offer193 | 10             | true                  ||
-    ...    AND    Trigger p&s
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: create new Merchant with the following data:
+    ...    || merchant name            | merchant reference                 | e-mail                             | store | store 2 | en url                   | de url                   | approved | contact_first_name  | contact_last_name  ||
+    ...    || offline_from_MP${random} | offline_from_MP_reference${random} | offline_from_MP+${random}@test.com | DE    | AT      | offline-from-mp${random} | offline-from-mp${random} | true     | FirstOffMP${random} | LastOffMP${random} ||
+    Zed: create dynamic merchant user:    offline_from_MP${random}    merchant_user_email=sonia+offline+mp${random}@spryker.com
+    Zed: create dynamic merchant user:    Spryker
+    MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
+    MP: open navigation menu tab:    Products    
+    MP: click on create new entity button:    Create Product
+    MP: create multi sku product with following data:
+    ...    || product sku        | product name       | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
+    ...    || offlineMP${random} | offlineMP${random} | packaging_unit       | Item                        | Box                          | material              | Aluminium              ||
+    MP: perform search by:    offlineMP${random}
+    MP: click on a table row that contains:     offlineMP${random}
+    MP: fill abstract product required fields:
+    ...    || product name       | store | tax set        ||
+    ...    || offlineMP${random} | DE    | Standard Taxes ||
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default ||
+    ...    || abstract     | 1          | DE    | EUR      | 100           ||
+    MP: save abstract product 
+    Trigger multistore p&s
+    MP: click on a table row that contains:    offlineMP${random}
+    MP: open concrete drawer by SKU:    offlineMP${random}-2
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 100            | true              | en_US         ||
+    MP: login on MP with provided credentials:    sonia+offline+mp${random}@spryker.com    ${default_secure_password}
+    MP: open navigation menu tab:    Offers
+    MP: click on create new entity button:    Add Offer
+    MP: perform search by:    offlineMP${random}-2
+    MP: click on a table row that contains:    offlineMP${random}-2
+    MP: fill offer fields:
+    ...    || is active | merchant sku            | store | stock quantity ||
+    ...    || true      | offlineMPoffer${random} | DE    | 100            ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default ||
+    ...    || 1          | DE    | EUR      | 200           ||
+    MP: save offer
+    Repeat Keyword    3    Trigger multistore p&s
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     offlineMP${random}     Approve
+    Repeat Keyword    3    Trigger multistore p&s
+    Yves: go to newly created page by URL:    url=en/merchant/offline-from-mp${random}    delay=5s    iterations=26
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Yves: go to PDP of the product with sku:    offlineMP${random}
+    Yves: merchant is (not) displaying in Sold By section of PDP:    offline_from_MP${random}    true
+    MP: login on MP with provided credentials:    sonia+offline+mp${random}@spryker.com    ${default_secure_password}
     MP: open navigation menu tab:    Profile
     MP: open profile tab:    Online Profile
     MP: change store status to:    offline
-    Yves: go to URL:    en/merchant/office-king
+    Repeat Keyword    3    Trigger multistore p&s
+    Yves: go to URL:    en/merchant/offline-from-mp${random}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
-    Yves: perform search by:    Office King
-    Yves: go to the PDP of the first available product on open catalog page
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    false
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    false
-    Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    false
-    [Teardown]    Run Keywords    MP: login on MP with provided credentials:    ${merchant_office_king_email}
-    ...    AND    MP: open navigation menu tab:    Profile
-    ...    AND    MP: open profile tab:    Online Profile
-    ...    AND    MP: change store status to:    online
-    ...    AND    Repeat Keyword    3    Trigger multistore p&s
-    ...    AND    Yves: go to the 'Home' page
-    ...    AND    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
-    ...    AND    Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
-    ...    AND    Yves: go to URL:    en/merchant/office-king
-    ...    AND    Yves: go to newly created page by URL:    url=en/merchant/office-king    delay=5s    iterations=26
+    Yves: go to PDP of the product with sku:    offlineMP${random}
+    Yves: merchant is (not) displaying in Sold By section of PDP:    offline_from_MP${random}    false
+    [Teardown]    Delete dynamic admin user from DB
 
 Merchant_Profile_Set_to_Inactive_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to deactivate merchant and then it's profile, products and offers won't be displayed on Yves
-    [Setup]    Run Keywords    
-    ...    MP: login on MP with provided credentials:    ${merchant_computer_experts_email}
-    ...    AND    MP: change offer stock:
-    ...    || offer    | stock quantity | is never out of stock ||
-    ...    || offer395 | 10             | true                  ||
-    ...    AND    MP: login on MP with provided credentials:    ${merchant_office_king_email}
-    ...    AND    MP: change offer stock:
-    ...    || offer    | stock quantity | is never out of stock ||
-    ...    || offer193 | 10             | true                  ||
-    ...    AND    Trigger p&s
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Marketplace    Merchants  
-    Zed: click Action Button in a table for row that contains:     Office King     Deactivate
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: create new Merchant with the following data:
+    ...    || merchant name            | merchant reference                 | e-mail                             | store | store 2 | en url                   | de url                   | approved | contact_first_name  | contact_last_name  ||
+    ...    || offline_from_BO${random} | offline_from_BO_reference${random} | offline_from_BO+${random}@test.com | DE    | AT      | offline-from-bo${random} | offline-from-bo${random} | true     | FirstOffBO${random} | LastOffBO${random} ||
+    Zed: create dynamic merchant user:    offline_from_BO${random}    merchant_user_email=sonia+offline+bo${random}@spryker.com
+    Zed: create dynamic merchant user:    Spryker
+    MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
+    MP: open navigation menu tab:    Products    
+    MP: click on create new entity button:    Create Product
+    MP: create multi sku product with following data:
+    ...    || product sku        | product name       | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
+    ...    || offlineBO${random} | offlineBO${random} | packaging_unit       | Item                        | Box                          | material              | Aluminium              ||
+    MP: perform search by:    offlineBO${random}
+    MP: click on a table row that contains:     offlineBO${random}
+    MP: fill abstract product required fields:
+    ...    || product name       | store | tax set        ||
+    ...    || offlineBO${random} | DE    | Standard Taxes ||
+    MP: fill product price values:
+    ...    || product type | row number | store | currency | gross default ||
+    ...    || abstract     | 1          | DE    | EUR      | 100           ||
+    MP: save abstract product 
+    Trigger multistore p&s
+    MP: click on a table row that contains:    offlineBO${random}
+    MP: open concrete drawer by SKU:    offlineBO${random}-2
+    MP: fill concrete product fields:
+    ...    || is active | stock quantity | use abstract name | searchability ||
+    ...    || true      | 100            | true              | en_US         ||
+    MP: login on MP with provided credentials:    sonia+offline+bo${random}@spryker.com    ${default_secure_password}
+    MP: open navigation menu tab:    Offers
+    MP: click on create new entity button:    Add Offer
+    MP: perform search by:    offlineBO${random}-2
+    MP: click on a table row that contains:    offlineBO${random}-2
+    MP: fill offer fields:
+    ...    || is active | merchant sku            | store | stock quantity ||
+    ...    || true      | offlineBOoffer${random} | DE    | 100            ||
+    MP: add offer price:
+    ...    || row number | store | currency | gross default ||
+    ...    || 1          | DE    | EUR      | 200           ||
+    MP: save offer
     Repeat Keyword    3    Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: go to URL:    en/merchant/office-king
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: click Action Button in a table for row that contains:     offlineBO${random}     Approve
+    Repeat Keyword    3    Trigger multistore p&s
+    Yves: go to newly created page by URL:    url=en/merchant/offline-from-bo${random}    delay=5s    iterations=26
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Yves: go to PDP of the product with sku:    offlineBO${random}
+    Yves: merchant is (not) displaying in Sold By section of PDP:    offline_from_BO${random}    true
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: go to second navigation item level:    Marketplace    Merchants  
+    Zed: click Action Button in a table for row that contains:     offline_from_BO${random}     Deactivate
+    Repeat Keyword    3    Trigger multistore p&s
+    Yves: go to URL:    en/merchant/offline-from-mp${random}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
-    Yves: perform search by:    Office King
-    Yves: go to the PDP of the first available product on open catalog page
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    false
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    false
-    Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    false
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants  
-    ...    AND    Zed: click Action Button in a table for row that contains:     Office King     Activate
-    ...    AND    Repeat Keyword    3    Trigger multistore p&s
+    Yves: go to PDP of the product with sku:    offlineBO${random}
+    Yves: merchant is (not) displaying in Sold By section of PDP:    offline_from_BO${random}    false
+    [Teardown]    Delete dynamic admin user from DB
 
 Manage_Merchants_from_Backoffice
     [Documentation]    Checks that backoffice admin is able to create, approve, edit merchants
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Setup]    Create dynamic admin user in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create new Merchant with the following data:
     ...    || merchant name          | merchant reference              | e-mail                           | store | store 2 | en url                    | de url                    ||
     ...    || RobotMerchant${random} | RobotMerchantReference${random} | robotMerchant+${random}@test.com | DE    | AT      | RobotMerchantURL${random} | RobotMerchantURL${random} ||
@@ -176,7 +243,7 @@ Manage_Merchants_from_Backoffice
     Yves: assert merchant profile fields:
     ...    || name                          | email | phone | delivery time | data privacy ||
     ...    || RobotMerchantUpdated${random} |       |       |               |              ||
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:    RobotMerchantUpdated${random}    Edit
     Zed: update Merchant on edit page with the following data:
@@ -184,14 +251,16 @@ Manage_Merchants_from_Backoffice
     ...    || Deactivated${random} |                    |         | DE            | AT              |        |        ||
     Trigger multistore p&s
     Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/merchant/RobotMerchantURL${random}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants  
     ...    AND    Zed: click Action Button in a table for row that contains:     Deactivated${random}     Deactivate
     ...    AND    Trigger multistore p&s
+    ...    AND    Delete dynamic admin user from DB
 
 Manage_Merchant_Users
     [Documentation]    Checks that backoffice admin is able to create, activate, edit and delete merchant users
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Create dynamic admin user in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Office King     Edit
     Zed: create new Merchant User with the following data:
@@ -208,27 +277,30 @@ Manage_Merchant_Users
     Zed: perform merchant user search by:    sonia+mu+${random}@spryker.com
     Zed: table should contain non-searchable value:    UpdatedName${random}
     Zed: update Zed user:
-    ...    || oldEmail                       | newEmail | password      | firstName | lastName ||
+    ...    || oldEmail                       | newEmail | password                   | firstName | lastName ||
     ...    || sonia+mu+${random}@spryker.com |          | ${default_secure_password} |           |          ||
     MP: login on MP with provided credentials:    sonia+mu+${random}@spryker.com    ${default_secure_password}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Office King     Edit
     Zed: go to tab by link href that contains:    merchant-user
     Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Deactivate
     Zed: table should contain non-searchable value:    Deactivated
     MP: login on MP with provided credentials and expect error:    sonia+mu+${random}@spryker.com    ${default_secure_password}
-    [Teardown]    Run Keywords     Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants
     ...    AND    Zed: click Action Button in a table for row that contains:     Office King     Edit
     ...    AND    Zed: go to tab by link href that contains:    merchant-user
     ...    AND    Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Delete
     ...    AND    Zed: submit the form
-    ...    AND    Trigger p&s
+    ...    AND    Delete dynamic admin user from DB
 
 Create_and_Approve_New_Merchant_Product
     [Documentation]    Checks that merchant is able to create new multi-SKU product and marketplace operator is able to approve it in BO
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    ...    AND    Zed: create dynamic merchant user:    Office King
+    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
@@ -250,25 +322,30 @@ Create_and_Approve_New_Merchant_Product
     ...    || true      | 100            | true              | en_US         ||
     MP: save abstract product 
     Trigger p&s
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     NewProduct${random}     Approve
     Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}   
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}   
     Yves: go to PDP of the product with sku:     SKU${random}    wait_for_p&s=true
     Save current URL
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     NewProduct${random}     Deny
     Trigger p&s
     Yves: go to the 'Home' page
     Yves: go to URL and refresh until 404 occurs:    ${url}
+    [Teardown]    Delete dynamic admin user from DB
 
 Create_New_Offer
     [Documentation]    Checks that merchant is able to create new offer and it will be displayed on Yves
-    MP: login on MP with provided credentials:    ${merchant_spryker_email}
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    ...    AND    Zed: create dynamic merchant user:    Office King
+    ...    AND    Zed: create dynamic merchant user:    Spryker
+    MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
@@ -288,11 +365,11 @@ Create_New_Offer
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     SprykerSKU${random}     Approve
     Trigger p&s
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
     MP: perform search by:    SprykerSKU${random}-2
@@ -302,36 +379,30 @@ Create_New_Offer
     ...    || true      | merchantSKU${random} | DE    | 100            ||
     MP: add offer price:
     ...    || row number | store | currency | gross default ||
-    ...    || 1          | DE    | CHF      | 100           ||
-    MP: save offer
-    MP: perform search by:    merchantSKU${random}
-    MP: click on a table row that contains:    merchantSKU${random} 
-    MP: add offer price:
-    ...    || row number | store | currency | gross default ||
     ...    || 1          | DE    | EUR      | 200           ||
     MP: save offer
     Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: create new 'Shopping Cart' with name:    newOfferCart${random}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     SprykerSKU${random}-2    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: merchant's offer/product price should be:    Office King    €200.00
     Yves: select xxx merchant's offer:    Office King
     Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to the shopping cart through the header with name:    newOfferCart${random}
+    Yves: go to shopping cart page
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    SprykerSKU${random}-2    Office King
     Yves: shopping cart contains product with unit price:    SprykerSKU${random}-2    SprykerProduct${random}    200
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: delete 'Shopping Cart' with name:    newOfferCart${random}
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     SprykerProduct${random}     Deny
     ...    AND    Trigger p&s
+    ...    AND    Delete dynamic admin user from DB
 
 Approve_Offer
     [Documentation]    Checks that marketplace operator is able to approve or deny merchant's offer and it will be available or not in store due to this status
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Offers
     Zed: select merchant in filter:    Office King
     Zed: click Action Button in a table for row that contains:     ${product_with_multiple_offers_concrete_sku}     Deny
@@ -339,36 +410,38 @@ Approve_Offer
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:     ${product_with_multiple_offers_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    false
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Offers
     Zed: select merchant in filter:    Office King
     Zed: click Action Button in a table for row that contains:     ${product_with_multiple_offers_concrete_sku}    Approve
     Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: merchant's offer/product price should be:    Office King    ${product_with_multiple_offers_office_king_price}
     Yves: select xxx merchant's offer:    Office King
     Yves: product price on the PDP should be:     ${product_with_multiple_offers_office_king_price}
+    [Teardown]    Delete dynamic admin user from DB
 
 Fulfill_Order_from_Merchant_Portal
     [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
-    [Setup]    Run Keywords    
-    ...    MP: login on MP with provided credentials:    ${merchant_computer_experts_email}
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Zed: create dynamic merchant user:    Computer Experts
+    ...    AND    Zed: create dynamic merchant user:    Office King
+    ...    AND    MP: login on MP with provided credentials:    ${dynamic_expert_merchant}
     ...    AND    MP: change offer stock:
     ...    || offer    | stock quantity | is never out of stock ||
     ...    || offer395 | 10             | true                  ||
-    ...    AND    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    ...    AND    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     ...    AND    MP: change offer stock:
     ...    || offer    | stock quantity | is never out of stock ||
     ...    || offer193 | 10             | true                  ||
     ...    AND    MP: change offer stock:
     ...    || offer    | stock quantity | is never out of stock ||
     ...    || offer220 | 10             | true                  ||
-    ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: delete all shopping carts
-    ...    AND    Yves: create new 'Shopping Cart' with name:    MerchantOrder${random}
+    ...    AND    Create dynamic customer in DB
     ...    AND    Trigger p&s
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     ${product_with_multiple_offers_abstract_sku}
     Yves: add product to the shopping cart
     Yves: select xxx merchant's offer:    Computer Experts
@@ -378,12 +451,12 @@ Fulfill_Order_from_Merchant_Portal
     Yves: go to PDP of the product with sku:     M22660
     Yves: select xxx merchant's offer:    Office King
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    MerchantOrder${random}
+    Yves: go to shopping cart page
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}     Office King
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}     Computer Experts
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: select the following shipping method for the shipment:    1    DHL    Standard    
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: select the following shipping method for the shipment:    3    Hermes    Next Day
@@ -393,10 +466,10 @@ Fulfill_Order_from_Merchant_Portal
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay 
     Zed: wait for order item to be in state:    ${product_with_multiple_offers_concrete_sku}    sent to merchant    2
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Orders    
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_office_king_reference}
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_office_king_reference}
@@ -413,13 +486,12 @@ Fulfill_Order_from_Merchant_Portal
     MP: switch to the tab:    Items
     MP: order item state should be:    427915    delivered
     MP: order item state should be:    423172    delivered
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: delete all user addresses
+    [Teardown]    Delete dynamic admin user from DB
 
 Shopping_List_Contains_Offers
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
-    [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    ...    AND    Yves: delete all shopping carts
+    [Setup]    Create dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: create new 'Shopping List' with name:    shoppingListName${random}
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: add product to the shopping list:    shoppingListName${random}
@@ -432,11 +504,13 @@ Shopping_List_Contains_Offers
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
-    [Teardown]    Yves: delete 'Shopping List' with name:    shoppingListName${random}
 
 Merchant_Portal_Customer_Specific_Prices
     [Documentation]    Checks that customer will see product/offer prices specified by merchant for his business unit
-    MP: login on MP with provided credentials:    ${merchant_spryker_email}
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB    based_on=${yves_company_user_custom_merchant_prices_email}
+    ...    AND    Zed: create dynamic merchant user:    Spryker
+    MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
     MP: open navigation menu tab:    Products
     MP: perform search by:    ${one_variant_product_of_main_merchant_abstract_sku}
     MP: click on a table row that contains:    ${one_variant_product_of_main_merchant_abstract_sku}
@@ -446,7 +520,7 @@ Merchant_Portal_Customer_Specific_Prices
     ...    || concrete     | 1          | 5 - Spryker Systems GmbH  | DE    | EUR      | 100           ||
     MP: save concrete product
     Trigger p&s
-    Yves: login on Yves with provided credentials:     ${yves_company_user_custom_merchant_prices_email}
+    Yves: login on Yves with provided credentials:     ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
     Yves: merchant's offer/product price should be:    Spryker     €100.00
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
@@ -457,13 +531,15 @@ Merchant_Portal_Customer_Specific_Prices
     MP: delete product price row that contains text:    5 - Spryker Systems GmbH
     MP: save concrete product
     Trigger p&s
-    Yves: login on Yves with provided credentials:     ${yves_company_user_custom_merchant_prices_email}
+    Yves: login on Yves with provided credentials:     ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
     Yves: merchant's offer/product price should be:    Spryker     €632.12
+    [Teardown]    Delete dynamic admin user from DB
 
 Search_for_Merchant_Offers_and_Products
     [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Create dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: perform search by:    Office King
     Yves: go to the PDP of the first available product on open catalog page
     Yves: select random varian if variant selector is available
@@ -481,7 +557,10 @@ Search_for_Merchant_Offers_and_Products
 
 Merchant_Portal_Product_Volume_Prices
     [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete.
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    ...    AND    Zed: create dynamic merchant user:    Office King
+    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
@@ -504,14 +583,12 @@ Merchant_Portal_Product_Volume_Prices
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Approve
     Zed: save abstract product:    VPNewProduct${random}
     Repeat Keyword   3    Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}  
-    Yves: delete all shopping carts
-    Yves: create new 'Shopping Cart' with name:    MPVolumePriceCart+${random}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}  
     Yves: go to PDP of the product with sku:     VPSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
@@ -520,31 +597,35 @@ Merchant_Portal_Product_Volume_Prices
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Office King     €10.00
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    MPVolumePriceCart+${random}
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    VPSKU${random}-2    VPNewProduct${random}    10.00
     Yves: assert merchant of product in cart or list:    VPSKU${random}-2    Office King
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Products
     MP: perform search by:    VPNewProduct${random}
     MP: click on a table row that contains:    VPNewProduct${random}
     MP: delete product price row that contains quantity:    2
     MP: save abstract product
     Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     VPSKU${random}
     Yves: change quantity on PDP:    2
     Yves: product price on the PDP should be:    €100.00
     Yves: merchant's offer/product price should be:    Office King     €100.00
-    Yves: go to the shopping cart through the header with name:    MPVolumePriceCart+${random}
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    VPSKU${random}-2    VPNewProduct${random}    100.00
-    [Teardown]    Run Keywords    Yves: delete 'Shopping Cart' with name:    MPVolumePriceCart+${random}
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Deny
+    ...    AND    Delete dynamic admin user from DB
 
 Merchant_Portal_Offer_Volume_Prices
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    ...    AND    Zed: create dynamic merchant user:    Office King
+    ...    AND    Zed: create dynamic merchant user:    Spryker
     [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Falback to default price after delete
-    MP: login on MP with provided credentials:    ${merchant_spryker_email}
+    MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
@@ -566,16 +647,14 @@ Merchant_Portal_Offer_Volume_Prices
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
     Trigger multistore p&s
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Approve
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}  
-    Yves: delete all shopping carts
-    Yves: create new 'Shopping Cart' with name:    MPVolumePriceCart+${random}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}  
     Yves: go to PDP of the product with sku:     OfferSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
     MP: perform search by:    OfferSKU${random}-2
@@ -584,18 +663,14 @@ Merchant_Portal_Offer_Volume_Prices
     ...    || is active | merchant sku               | store | stock quantity ||
     ...    || true      | volumeMerchantSKU${random} | DE    | 100            ||
     MP: add offer price:
-    ...    || row number | store | currency | gross default ||
-    ...    || 1          | DE    | CHF      | 100           ||
+    ...    || row number | store | currency | gross default | quantity ||
+    ...    || 1          | DE    | EUR      | 200           | 1        ||
     MP: add offer price:
     ...    || row number | store | currency | gross default | quantity ||
-    ...    || 2          | DE    | EUR      | 200           | 1        ||
-    MP: add offer price:
-    ...    || row number | store | currency | gross default | quantity ||
-    ...    || 3          | DE    | EUR      | 10            | 2        ||
+    ...    || 2          | DE    | EUR      | 10            | 2        ||
     MP: save offer
     Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
-    Yves: create new 'Shopping Cart' with name:    volumeOfferCart${random}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     OfferSKU${random}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: merchant's offer/product price should be:    Office King    €200.00
@@ -605,34 +680,35 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Office King     €10.00
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    volumeOfferCart${random}
+    Yves: go to shopping cart page
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    OfferSKU${random}-2    Office King
     Yves: shopping cart contains product with unit price:    OfferSKU${random}-2    OfferNewProduct${random}    10
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Offers
     MP: perform search by:    OfferSKU${random}-2
     MP: click on a table row that contains:    volumeMerchantSKU${random}
     MP: delete offer price row that contains quantity:    2
     MP: save offer
     Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     OfferSKU${random}
     Yves: select xxx merchant's offer:    Office King
     Yves: change quantity on PDP:    2
     Yves: product price on the PDP should be:    €200.00
     Yves: merchant's offer/product price should be:    Office King     €200.00
-    Yves: go to the shopping cart through the header with name:    volumeOfferCart${random}
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    OfferSKU${random}-2    OfferNewProduct${random}    200
-    [Teardown]    Run Keywords    Yves: delete 'Shopping Cart' with name:    volumeOfferCart${random}
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Deny
     ...    AND    Trigger p&s
+    ...    AND    Delete dynamic admin user from DB
 
 Merchant_Portal_My_Account
     [Documentation]    Checks that MU can edit personal data in MP
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Create dynamic admin user in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
     Zed: create new Merchant User with the following data:
@@ -643,7 +719,7 @@ Merchant_Portal_My_Account
     Zed: click Action Button in Merchant Users table for row that contains:    sonia+editmu+${random}@spryker.com    Activate
     Zed: table should contain non-searchable value:    Active
     Zed: update Zed user:
-    ...    || oldEmail                           | newEmail | password      | firstName | lastName ||
+    ...    || oldEmail                           | newEmail | password                   | firstName | lastName ||
     ...    || sonia+editmu+${random}@spryker.com |          | ${default_secure_password} |           |          ||
     MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    ${default_secure_password}
     MP: update merchant personal details with data:
@@ -651,16 +727,18 @@ Merchant_Portal_My_Account
     ...    || MPUpdatedFName${random} | MPUpdatedLName${random} |       | ${default_secure_password}   | Updated${default_secure_password} ||
     MP: click submit button
     MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    Updated${default_secure_password}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Users    Users
     Zed: table should contain:    MPUpdatedFName${random}
     Zed: table should contain:    MPUpdatedLName${random}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: delete Zed user with the following email:    sonia+editmu+${random}@spryker.com
+    ...    AND    Delete dynamic admin user from DB
     
 Merchant_Portal_Dashboard
     [Documentation]    Checks that merchant user is able to access the dashboard page
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Create dynamic admin user in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Oryx Merchant     Edit
     Zed: create new Merchant User with the following data:
@@ -671,19 +749,23 @@ Merchant_Portal_Dashboard
     Zed: click Action Button in Merchant Users table for row that contains:    sonia+dahboard+${random}@spryker.com    Activate
     Zed: table should contain non-searchable value:    Active
     Zed: update Zed user:
-    ...    || oldEmail                             | newEmail | password      | firstName | lastName ||
+    ...    || oldEmail                             | newEmail | password                   | firstName | lastName ||
     ...    || sonia+dahboard+${random}@spryker.com |          | ${default_secure_password} |           |          ||
     Trigger multistore p&s
     MP: login on MP with provided credentials:    sonia+dahboard+${random}@spryker.com    ${default_secure_password}
     MP: click button on dashboard page and check url:    Manage Offers    /product-offers
     MP: click button on dashboard page and check url:    Add Offer    /product-list
     MP: click button on dashboard page and check url:    Manage Orders    /orders
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: delete Zed user with the following email:    sonia+dahboard+${random}@spryker.com
+    ...    AND    Delete dynamic admin user from DB
 
 Merchant_Product_Offer_in_Backoffice
     [Documentation]    Check View action and filtration for Mproduct and Moffer in backoffice
-    MP: login on MP with provided credentials:    ${merchant_spryker_email}
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Zed: create dynamic merchant user:    Spryker
+    ...    AND    Zed: create dynamic merchant user:    Office King
+    MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
@@ -697,19 +779,16 @@ Merchant_Product_Offer_in_Backoffice
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
     ...    || abstract     | 1          | DE    | EUR      | 100           ||
-    MP: fill product price values:
-    ...    || product type | row number | store | currency | gross default | quantity ||
-    ...    || abstract     | 2          | DE    | EUR      | 10            | 2        ||
     MP: save abstract product 
     MP: click on a table row that contains:    ViewProduct${random}
     MP: open concrete drawer by SKU:    ViewSKU${random}-2
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Approve
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
     MP: perform search by:    ViewSKU${random}-2
@@ -720,14 +799,8 @@ Merchant_Product_Offer_in_Backoffice
     MP: add offer price:
     ...    || row number | store | currency | gross default ||
     ...    || 1          | DE    | CHF      | 100           ||
-    MP: add offer price:
-    ...    || row number | store | currency | gross default | quantity ||
-    ...    || 2          | DE    | EUR      | 200           | 1        ||
-    MP: add offer price:
-    ...    || row number | store | currency | gross default | quantity ||
-    ...    || 3          | DE    | EUR      | 10            | 2        ||
     MP: save offer
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products
     Zed: filter by merchant:    Spryker
     Zed: table should contain:    ViewSKU${random}
@@ -744,14 +817,18 @@ Merchant_Product_Offer_in_Backoffice
     Zed: view offer product page contains:
     ...    || approval status | status | store | sku                | name                 | merchant    | merchant sku             ||
     ...    || Approved        | Active | DE    | ViewSKU${random}-2 | ViewProduct${random} | Office King | viewMerchantSKU${random} ||
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Deny
+    ...    AND    Delete dynamic admin user from DB
 
 Manage_Merchant_Product
     [Documentation]    Checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product
-    Repeat Keyword    3    Trigger multistore p&s
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    ...    AND    Zed: create dynamic merchant user:    Office King
+    ...    AND    Repeat Keyword    3    Trigger multistore p&s
+    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
@@ -788,13 +865,11 @@ Manage_Merchant_Product
     ...    || product type | row number | store | currency | gross default | quantity ||
     ...    || concrete     | 2          | DE    | EUR      | 10            | 2        ||
     MP: save concrete product
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     manageProduct${random}     Approve
     Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}   
-    Yves: delete all shopping carts
-    Yves: create new 'Shopping Cart' with name:    manageMProduct+${random}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     manageSKU${random}    wait_for_p&s=true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Yves: change variant of the product on PDP on:    Item
@@ -811,10 +886,10 @@ Manage_Merchant_Product
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Office King     €10.00
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    manageMProduct+${random}
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    manageSKU${random}-2    manageProduct${random}    10.00
     Yves: assert merchant of product in cart or list:    manageSKU${random}-2    Office King
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Products    
     MP: perform search by:    manageProduct${random}
     MP: click on a table row that contains:     manageProduct${random}
@@ -829,7 +904,7 @@ Manage_Merchant_Product
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 3              | true              | en_US         ||
     Trigger multistore p&s
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     manageProduct${random}     View
     Zed: view product page is displayed
@@ -840,7 +915,6 @@ Manage_Merchant_Product
     Zed: update abstract product price on:
     ...    || productAbstract    | store | mode  | type    | currency | amount ||
     ...    || manageSKU${random} | DE    | gross | default | €        | 110.00 ||
-    Repeat Keyword    3    Trigger multistore p&s
     Zed: update abstract product data:
     ...    || productAbstract    | store | name en                         | name de                         | new from   | new to     ||
     ...    || manageSKU${random} | AT    | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} | 01.01.2020 | 01.01.2030 ||
@@ -854,20 +928,24 @@ Manage_Merchant_Product
     Repeat Keyword    3    Trigger multistore p&s
     Zed: go to second navigation item level:    Catalog    Products
     Zed: table should contain:    ENUpdatedmanageProduct${random}
-    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     manageSKU${random}
     Yves: product name on PDP should be:    ENUpdatedmanageProduct${random}
     Yves: product price on the PDP should be:    €110.00    wait_for_p&s=true
     Yves: change variant of the product on PDP on:    5-pack
     Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     manageSKU${random}     Deny
     ...    AND    Trigger multistore p&s
-
+    ...    AND    Delete dynamic admin user from DB
+    
 Merchant_Product_Original_Price
     [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
-    MP: login on MP with provided credentials:    ${merchant_office_king_email}
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    ...    AND    Zed: create dynamic merchant user:    Office King
+    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
@@ -900,16 +978,13 @@ Merchant_Product_Original_Price
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
     ...    || concrete     | 1          | DE    | EUR      | 20            ||
-    MP: fill product price values:
-    ...    || product type | row number | store | currency | gross default | quantity ||
-    ...    || concrete     | 2          | DE    | EUR      | 10            | 2        ||
     MP: save concrete product
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     originalProduct${random}     Approve
     Zed: save abstract product:    originalProduct${random}
     Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_user_email}   
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}   
     Yves: go to URL:    en/search?q=originalSKU${random}
     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    21    5s
     Yves: 1st product card in catalog (not)contains:     Price    €100.00
@@ -917,8 +992,8 @@ Merchant_Product_Original_Price
     Yves: go to PDP of the product with sku:     originalSKU${random}    wait_for_p&s=true
     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
     Yves: product original price on the PDP should be:    €150.00
-    [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     originalSKU${random}     Deny
     ...    AND    Trigger p&s
+    ...    AND    Delete dynamic admin user from DB

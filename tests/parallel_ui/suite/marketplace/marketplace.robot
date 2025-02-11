@@ -116,9 +116,6 @@ Merchant_Profile_Set_to_Offline_from_MP
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
     ...    || abstract     | 1          | DE    | EUR      | 100           ||
-    MP: fill product price values:
-    ...    || product type | row number | store | currency | gross default | quantity ||
-    ...    || abstract     | 2          | DE    | EUR      | 10            | 2        ||
     MP: save abstract product 
     Trigger multistore p&s
     MP: click on a table row that contains:    offlineMP${random}
@@ -134,12 +131,6 @@ Merchant_Profile_Set_to_Offline_from_MP
     MP: fill offer fields:
     ...    || is active | merchant sku            | store | stock quantity ||
     ...    || true      | offlineMPoffer${random} | DE    | 100            ||
-    MP: add offer price:
-    ...    || row number | store | currency | gross default ||
-    ...    || 1          | DE    | CHF      | 100           ||
-    MP: save offer
-    MP: perform search by:    offlineMPoffer${random}
-    MP: click on a table row that contains:    offlineMPoffer${random}
     MP: add offer price:
     ...    || row number | store | currency | gross default ||
     ...    || 1          | DE    | EUR      | 200           ||
@@ -190,9 +181,6 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
     ...    || abstract     | 1          | DE    | EUR      | 100           ||
-    MP: fill product price values:
-    ...    || product type | row number | store | currency | gross default | quantity ||
-    ...    || abstract     | 2          | DE    | EUR      | 10            | 2        ||
     MP: save abstract product 
     Trigger multistore p&s
     MP: click on a table row that contains:    offlineBO${random}
@@ -208,12 +196,6 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     MP: fill offer fields:
     ...    || is active | merchant sku            | store | stock quantity ||
     ...    || true      | offlineBOoffer${random} | DE    | 100            ||
-    MP: add offer price:
-    ...    || row number | store | currency | gross default ||
-    ...    || 1          | DE    | CHF      | 100           ||
-    MP: save offer
-    MP: perform search by:    offlineBOoffer${random}
-    MP: click on a table row that contains:    offlineBOoffer${random}
     MP: add offer price:
     ...    || row number | store | currency | gross default ||
     ...    || 1          | DE    | EUR      | 200           ||
@@ -298,7 +280,7 @@ Manage_Merchant_Users
     Zed: perform merchant user search by:    sonia+mu+${random}@spryker.com
     Zed: table should contain non-searchable value:    UpdatedName${random}
     Zed: update Zed user:
-    ...    || oldEmail                       | newEmail | password      | firstName | lastName ||
+    ...    || oldEmail                       | newEmail | password                   | firstName | lastName ||
     ...    || sonia+mu+${random}@spryker.com |          | ${default_secure_password} |           |          ||
     MP: login on MP with provided credentials:    sonia+mu+${random}@spryker.com    ${default_secure_password}
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
@@ -471,7 +453,6 @@ Merchant_Portal_Offer_Volume_Prices
     Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Approve
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}  
-    Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:     OfferSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     MP: login on MP with provided credentials:    ${dynamic_king_merchant}
@@ -533,8 +514,8 @@ Merchant_Portal_Offer_Volume_Prices
 Merchant_Portal_Customer_Specific_Prices
     [Documentation]    Checks that customer will see product/offer prices specified by merchant for his business unit
     [Setup]    Run Keywords    Repeat Keyword    3    Trigger multistore p&s
-    ...    AND    Zed: create dynamic merchant user:    Budget Cameras
     ...    AND    Create dynamic admin user in DB
+    ...    AND    Zed: create dynamic merchant user:    Budget Cameras
     ...    AND    Create dynamic customer in DB
     ...    AND    Create dynamic customer in DB    based_on=${yves_test_company_user_email}
     MP: login on MP with provided credentials:    ${dynamic_budget_merchant}
@@ -655,7 +636,6 @@ Merchant_Product_Offer_in_Backoffice
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Zed: create dynamic merchant user:    Spryker
     ...    AND    Zed: create dynamic merchant user:    Video King
-    ...    AND    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -670,9 +650,6 @@ Merchant_Product_Offer_in_Backoffice
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
     ...    || abstract     | 1          | DE    | EUR      | 100           ||
-    MP: fill product price values:
-    ...    || product type | row number | store | currency | gross default | quantity ||
-    ...    || abstract     | 2          | DE    | EUR      | 10            | 2        ||
     MP: save abstract product 
     MP: click on a table row that contains:    ViewProduct${random}
     MP: open concrete drawer by SKU:    ViewSKU${random}-2
@@ -682,7 +659,6 @@ Merchant_Product_Offer_in_Backoffice
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Approve
-    Trigger p&s
     MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
@@ -692,14 +668,8 @@ Merchant_Product_Offer_in_Backoffice
     ...    || is active | merchant sku             | store | stock quantity ||
     ...    || true      | viewMerchantSKU${random} | DE    | 100            ||
     MP: add offer price:
-    ...    || row number | store | currency | gross default ||
-    ...    || 1          | DE    | CHF      | 100           ||
-    MP: add offer price:
     ...    || row number | store | currency | gross default | quantity ||
-    ...    || 2          | DE    | EUR      | 200           | 1        ||
-    MP: add offer price:
-    ...    || row number | store | currency | gross default | quantity ||
-    ...    || 3          | DE    | EUR      | 10            | 2        ||
+    ...    || 1          | DE    | EUR      | 200           | 1        ||
     MP: save offer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products
@@ -721,9 +691,6 @@ Merchant_Product_Offer_in_Backoffice
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Deny
-    ...    AND    Trigger p&s
-    ...    AND    Zed: delete merchant user:    ${dynamic_spryker_merchant}
-    ...    AND    Zed: delete merchant user:    ${dynamic_king_merchant}
     ...    AND    Delete dynamic admin user from DB
 
 Manage_Merchant_Product
@@ -825,7 +792,6 @@ Manage_Merchant_Product
     Zed: update abstract product data:
     ...    || productAbstract    | store | name en                         | name de                         | new from   | new to     ||
     ...    || manageSKU${random} | AT    | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} | 01.01.2020 | 01.01.2030 ||
-    Repeat Keyword    3    Trigger multistore p&s
     Zed: update abstract product price on:
     ...    || productAbstract    | store | mode  | type    | currency | amount ||
     ...    || manageSKU${random} | DE    | gross | default | €        | 110.00 ||
@@ -851,8 +817,7 @@ Manage_Merchant_Product
 
 Merchant_Product_Original_Price
     [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
-    [Setup]    Run Keywords    Repeat Keyword    3    Trigger multistore p&s
-    ...    AND    Zed: create dynamic merchant user:    Budget Cameras
+    [Setup]    Run Keywords    Zed: create dynamic merchant user:    Budget Cameras
     ...    AND    Create dynamic customer in DB
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    
@@ -887,9 +852,6 @@ Merchant_Product_Original_Price
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
     ...    || concrete     | 1          | DE    | EUR      | 20            ||
-    MP: fill product price values:
-    ...    || product type | row number | store | currency | gross default | quantity ||
-    ...    || concrete     | 2          | DE    | EUR      | 10            | 2        ||
     MP: save concrete product
     Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}

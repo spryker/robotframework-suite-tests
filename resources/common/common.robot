@@ -332,7 +332,7 @@ Run console command
     END
 
 Trigger p&s
-    [Arguments]    ${timeout}=1s    ${storeName}=DE
+    [Arguments]    ${timeout}=0.5s    ${storeName}=DE
     Run console command    console queue:worker:start --stop-when-empty    ${storeName}
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
@@ -346,7 +346,7 @@ Trigger API specification update
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger multistore p&s
-    [Arguments]    ${timeout}=1s
+    [Arguments]    ${timeout}=0.5s
     IF    ${dms}
         Trigger p&s    ${timeout}    DE
     ELSE
@@ -355,7 +355,7 @@ Trigger multistore p&s
     END
 
 Trigger oms
-    [Arguments]    ${timeout}=1s
+    [Arguments]    ${timeout}=0.5s
     IF    ${dms}
         Run console command    console oms:check-timeout    DE
         Run console command    console oms:check-condition    DE
