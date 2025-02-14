@@ -447,7 +447,11 @@ Update order status in Database:
     IF    ${expected_state_id_length} > 0
         ${state_id}=    Set Variable    ${expected_state_id[0][0]}
     ELSE
-        ${new_id}=    Evaluate    ${last_id[0][0]} + 1
+        IF    ${last_id_length} > 0
+            ${new_id}=    Evaluate    ${last_id[0][0]} + 1
+        ELSE
+            ${new_id}=    Evaluate    1
+        END
         Execute Sql String    INSERT INTO spy_oms_order_item_state (id_oms_order_item_state, name) VALUES (${new_id}, '${order_item_status_name}');
         ${state_id}=    Set Variable    ${new_id}
     END
@@ -476,7 +480,11 @@ Create merchant order for the item in DB and change status:
     IF    ${expected_state_id_length} > 0
         ${state_id}=    Set Variable    ${expected_state_id[0][0]}
     ELSE
-        ${state_id}=    Set Variable    ${state_id}
+        IF    ${last_id_length} > 0
+            ${state_id}=    Evaluate    ${last_id[0][0]} + 1
+        ELSE
+            ${state_id}=    Evaluate    1
+        END
         Execute Sql String    INSERT INTO spy_state_machine_item_state (id_state_machine_item_state, fk_state_machine_process, name) VALUES (${state_id}, 2, '${order_item_status_name}');
     END
     ${last_order_item_id}=    Query    SELECT id_merchant_sales_order_item from spy_merchant_sales_order_item order by id_merchant_sales_order_item desc limit 1;
