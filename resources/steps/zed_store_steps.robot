@@ -8,7 +8,7 @@ Resource    ../pages/zed/zed_store_page.robot
 
 Zed: create new Store:
     [Arguments]    @{args}
-    Zed: go to second navigation item level:    Administration    Stores
+    Zed: go to URL:    /store-gui/list
     Zed: click button in Header:    Create Store
     Wait Until Element Is Visible    ${zed_store_add_name_input}
     ${storeData}=    Set Up Keyword Arguments    @{args}

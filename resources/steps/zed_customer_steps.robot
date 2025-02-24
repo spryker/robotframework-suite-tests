@@ -10,7 +10,7 @@ Zed: delete customer:
         Zed: login on Zed with provided credentials:    ${zed_admin_email}
         ${registrationData}=    Set Up Keyword Arguments    @{args}
         ${currentURL}=    Get Location
-        IF    '/customer' not in '${currentURL}'    Zed: go to second navigation item level:    Customers    Customers
+        IF    '/customer' not in '${currentURL}'    Zed: go to URL:    /customer
         FOR    ${key}    ${value}    IN    &{registrationData}
             Log    Key is '${key}' and value is '${value}'.
             Zed: perform search by:    ${value}

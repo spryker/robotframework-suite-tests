@@ -8,7 +8,7 @@ Resource    products_steps.robot
 Zed: update warehouse:
     [Arguments]    @{args}
     ${warehouseData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Administration    Warehouses
+    Zed: go to URL:    /stock-gui/warehouse/list
     Zed: click Action Button in a table for row that contains:    ${warehouse}    Edit
     Wait Until Element Is Visible    ${zed_warehouse_name}
     FOR    ${key}    ${value}    IN    &{warehouseData}

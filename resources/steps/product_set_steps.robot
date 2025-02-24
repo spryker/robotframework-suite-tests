@@ -58,7 +58,7 @@ Yves: add all products to the shopping cart from Product Set
 
 Zed: create new product set:
     [Arguments]    @{args}
-    Zed: go to second navigation item level:    Merchandising    Product Sets
+    Zed: go to URL:    /product-set-gui
     Zed: click button in Header:    Create Product Set
     Wait Until Element Is Visible    ${zed_product_set_name_en_field}
     ${seteData}=    Set Up Keyword Arguments    @{args}
@@ -115,5 +115,5 @@ Zed: switch to tab in product set:
 
 Zed: delete product set:
     [Arguments]    ${set_name}
-    Zed: go to second navigation item level:    Merchandising    Product Sets
+    Zed: go to URL:    /product-set-gui
     Zed: click Action Button in a table for row that contains:    ${set_name}    Delete

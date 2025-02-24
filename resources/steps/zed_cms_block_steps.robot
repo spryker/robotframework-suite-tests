@@ -7,7 +7,7 @@ Resource    ../common/common.robot
 
 Zed: assigned store to cms block:
     [Arguments]    ${store}    ${block_name}
-    Zed: go to second navigation item level:    Content    Blocks
+    Zed: go to URL:    /cms-block-gui/list-block
     Zed: perform search by:    ${block_name}
     Zed: click Action Button in a table for row that contains:     ${block_name}     Edit Block
     Set Browser Timeout    ${browser_timeout}
