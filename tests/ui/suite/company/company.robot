@@ -41,3 +41,16 @@ Create_new_company_user_with_linked_entities_in_storefront
     Yves: assign the following permissions to the company role:    RobotYvesRole+${random}    View company users
     Yves: create new company business unit:    business_unit_name=RobotYvesBusinessUnit+${random}    business_unit_email=robot+business+unit+${random}@spryker.com
     Yves: create new company user:    business_unit=RobotYvesBusinessUnit+${random}    email=sonia+sf+new+cuser+${random}@spryker.com    role=RobotYvesRole+${random}    first_name=Sonia    last_name=NewUser    
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: create new Zed user with the following data:    agent+company_user_yves${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
+    Yves: go to the 'Home' page
+    Yves: go to URL:    agent/login
+    Yves: login on Yves with provided credentials:    agent+company_user_yves${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
+    Yves: perform search by customer:    sonia+sf+new+cuser+${random}@spryker.com
+    Yves: as an agent login under the customer:    sonia+sf+new+cuser+${random}@spryker.com
+    Yves: go to URL:    /company/user    
+    ${location}=    Get Location
+    Should Contain    ${location}    /company/user    msg=Failed to navigate to the 'Company User' page
+    Yves: go to URL:    /company/company-role
+    ${location}=    Get Location
+    Should Contain    ${location}    /403    msg=Navigated to the 'Company Role' page despite the lack of permissions

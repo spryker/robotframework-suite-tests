@@ -19,12 +19,18 @@ Zed: create new Company Business Unit for the following company:
     [Arguments]    ${company_name}    ${business_unit_name}    ${company_id}=EMPTY
     Zed: go to URL:    /company-business-unit-gui/list-company-business-unit
     Zed: click button in Header:    Create Company Business Unit
-    Click    ${zed_bu_company_dropdown_locator}
-    Type Text    ${zed_bu_company_search_field}    ${company_name}
-    Wait Until Element Is Visible    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${company_name}') and contains(text(),'${company_id}')]
-    Click    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${company_name}') and contains(text(),'${company_id}')]
-    Wait Until Element Is Not Visible    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${company_name}') and contains(text(),'${company_id}')]
-    Sleep    0.5s
+    ${is_company_dropdown_with_search}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_bu_company_dropdown_with_search_locator}    timeout=0.5s
+    IF    ${is_company_dropdown_with_search}
+        Click    ${zed_bu_company_dropdown_with_search_locator}
+        Type Text    ${zed_bu_company_search_field}    ${company_name}
+        Wait Until Element Is Visible    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${company_name}') and contains(text(),'${company_id}')]
+        Click    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${company_name}') and contains(text(),'${company_id}')]
+        Wait Until Element Is Not Visible    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${company_name}') and contains(text(),'${company_id}')]
+        Sleep    0.5s
+    ELSE
+        Click    ${zed_bu_company_dropdown_locator}
+        Select From List By Label Contains    ${zed_bu_company_dropdown_locator}    ${company_name}
+    END
     VAR    ${created_business_unit}    ${business_unit_name}+${random}    scope=TEST
     Type Text    ${zed_bu_name_field}    ${created_business_unit}
     Type Text    ${zed_bu_iban_field}    testiban+${random}
@@ -63,12 +69,18 @@ Zed: create new Company Role with provided permissions:
         Log    ${permission_to_set}
         Zed: Check checkbox by Label:   ${permission_to_set}
     END
-    Click    ${zed_role_company_dropdown_locator}
-    Type Text    ${zed_role_company_search_field}    ${company_name}
-    Wait Until Element Is Visible    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${company_name}') and contains(text(),'${company_id}')]
-    Click    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${company_name}') and contains(text(),'${company_id}')]
-    Wait Until Element Is Not Visible    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${company_name}') and contains(text(),'${company_id}')]
-    Sleep    0.5s
+    ${is_company_dropdown_with_search}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_role_company_dropdown_with_search_locator}    timeout=0.5s
+    IF    ${is_company_dropdown_with_search}
+        Click    ${zed_role_company_dropdown_with_search_locator}
+        Type Text    ${zed_role_company_search_field}    ${company_name}
+        Wait Until Element Is Visible    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${company_name}') and contains(text(),'${company_id}')]
+        Click    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${company_name}') and contains(text(),'${company_id}')]
+        Wait Until Element Is Not Visible    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${company_name}') and contains(text(),'${company_id}')]
+        Sleep    0.5s
+    ELSE
+        Click    ${zed_role_company_dropdown_locator}
+        Select From List By Label Contains    ${zed_role_company_dropdown_locator}    ${company_name}
+    END
     VAR    ${created_company_role}    ${role_name}+${random}    scope=TEST
     Type Text    ${zed_role_name_field}    ${created_company_role}
     Zed: submit the form
