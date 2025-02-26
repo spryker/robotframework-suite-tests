@@ -53,7 +53,7 @@ Yves: go to order details page to check comment:
 
 Zed: check comment appears at order detailed page in zed:
     [Arguments]    ${comment}    ${lastPlacedOrder}
-    Zed: go to second navigation item level:    Sales    Orders
+    Zed: go to URL:    /sales
     Zed: click Action Button in a table for row that contains:    ${lastPlacedOrder}    View 
     Wait Until Element Is Visible    ${zed_order_details_page_comments}
     ${text_entered}    Get Text    ${zed_order_details_page_comments}
