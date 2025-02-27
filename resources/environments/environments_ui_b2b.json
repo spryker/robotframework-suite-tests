@@ -33,6 +33,7 @@
        "yves_user_last_name":"Wagner",
        "yves_user_password":"change123",
        "yves_company_user_manager_and_buyer_email":"andrew@ottom.de",
+       "yves_spryker_admin_company_user_email":"Solomon@spryker.com",
        "yves_company_user_manager_and_buyer_firstname":"Andrew",
        "yves_company_user_manager_and_buyer_lastname":"Wedner",
        "yves_company_user_manager_and_buyer_address":"Mr Andrew Wedner, Seeburger Str. 270, 10115 Berlin",
