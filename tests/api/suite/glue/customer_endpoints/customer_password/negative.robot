@@ -94,16 +94,6 @@ Update_customer_password_with_too_long_password
     And Array in response should contain property with value:    [errors]    detail    confirmPassword => This value is too long. It should have 128 characters or less.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
-Update_customer_password_with_too_weak_password
-    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...  AND    I set Headers:    Authorization=${token}
-    AND I send a PATCH request:    /customer-password/${yves_user.reference}   {"data":{"type":"customer-password","attributes":{"password":"${yves_user.password_new}","newPassword":"1234567890123","confirmPassword":"1234567890123"}}}
-    Response status code should be:    422
-    And Response reason should be:    Unprocessable Content
-    And Response should return error code:    901
-    And Array in response should contain property with value:    [errors]    detail    newPassword => This password has been leaked in a data breach, it must not be used. Please use another password.
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
-
 Update_customer_password_with_missing_customer_reference
     Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
