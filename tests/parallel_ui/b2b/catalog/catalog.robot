@@ -231,6 +231,7 @@ Customer_Specific_Prices
     Yves: shopping cart contains product with unit price:    403125    EUROKRAFT hand truck - with open shovel - load capacity 400 kg    188.34
 
 Product_PDP
+    [Tags]    debug
     [Documentation]    Checks that PDP contains required elements
     [Setup]    Create dynamic customer in DB
     Delete All Cookies

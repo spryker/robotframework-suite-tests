@@ -43,6 +43,7 @@ Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 
 *** Test Cases ***
 Guest_User_Access_Restrictions
+    [Tags]    debug
     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
     Create dynamic customer in DB
     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}[${env}]     ${quickOrderIcon}    ${accountIcon}    ${shopping_list_icon_header_menu_item}[${env}]    ${shoppingCartIcon}
