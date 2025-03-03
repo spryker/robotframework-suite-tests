@@ -25,7 +25,7 @@ Zed: change global threshold settings:
                 Scroll Element Into View    ${zed_global_threshold_minimum_hard_second_locale_collapce_section}
                 Click    ${zed_global_threshold_minimum_hard_second_locale_collapce_section}
             END
-            ${second_local_maximum_hard_section_expanded}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_global_threshold_maximum_hard_second_locale_collapce_section}    timeout500ms
+            ${second_local_maximum_hard_section_expanded}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_global_threshold_maximum_hard_second_locale_collapce_section}    timeout=500ms
             IF    '${second_local_maximum_hard_section_expanded}'=='False'
                 Scroll Element Into View    ${zed_global_threshold_maximum_hard_second_locale_collapce_section}
                 Click    ${zed_global_threshold_maximum_hard_second_locale_collapce_section}

@@ -106,7 +106,6 @@ User_Account
     Yves: 'Newsletter' page is displayed
     Yves: go to user menu item in the left bar:    Returns
     Yves: 'Returns' page is displayed
-    Yves: delete all user addresses
     Yves: create a new customer address in profile:     Mr    ${yves_second_user_first_name} ${random}    ${yves_second_user_last_name} ${random}    Kirncher Str. ${random}    7    10247    Berlin${random}    Germany
     Yves: go to user menu item in the left bar:    Addresses
     Yves: 'Addresses' page is displayed
@@ -350,17 +349,18 @@ Reorder
 
 Business_on_Behalf
     [Documentation]    Check that BoB user has possibility to change the business unit
-    Create dynamic customer in DB    based_on=${yves_company_user_bob_email}    first_name=Oryx    last_name=Bob
+    Create dynamic customer in DB    first_name=Oryx${random}    last_name=Bob
     Create dynamic admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Customers    Company Users
-    Zed: click Action Button in a table for row that contains:    Oryx    Attach to BU
+    Zed: click Action Button in a table for row that contains:    Oryx${random}    Attach to BU
     Zed: attach company user to the following BU with role:    Spryker Systems Zurich    Admin
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to URL:    en/company/user/select
     Yves: 'Select Business Unit' page is displayed
-    Yves: 'Business Unit' dropdown contains:    Spryker Systems GmbH / Spryker Systems Berlin    Spryker Systems GmbH / Spryker Systems Zurich
-    [Teardown]    Delete dynamic admin user from DB
+    Yves: 'Business Unit' dropdown contains:    Spryker Systems GmbH / Spryker Systems HR department    Spryker Systems GmbH / Spryker Systems Zurich
+    [Teardown]    Run Keywords    Zed: delete company user xxx withing xxx company business unit:    Oryx${random}    Spryker Systems Zurich
+    ...    AND    Delete dynamic admin user from DB
 
 Wishlist_List_Supports_Offers
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart

@@ -82,7 +82,6 @@ CRUD_Product_Set
     ...    || name en            | name de            | url en             | url de             | set key       | active | product | product 2 | product 3 ||
     ...    || test set ${random} | test set ${random} | test-set-${random} | test-set-${random} | test${random} | true   | 005     | 007       | 010       ||
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: check if cart is not empty and clear it
     Yves: go to newly created page by URL:    en/test-set-${random}
     Yves: 'Product Set' page contains the following products:    Canon IXUS 175
     Yves: 'Product Set' page contains the following products:    Canon IXUS 285
@@ -91,7 +90,6 @@ CRUD_Product_Set
     Yves: shopping cart contains the following products:    005_30663301
     Yves: shopping cart contains the following products:    007_30691822
     Yves: shopping cart contains the following products:    010_30692994
-    Yves: check if cart is not empty and clear it
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: delete product set:    test set ${random}
     Trigger multistore p&s

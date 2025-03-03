@@ -72,12 +72,10 @@ Glossary
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: validate the page title:    ${original_EN_text}-Test-${random}
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: validate the page title:    ${original_EN_text}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
+    [Teardown]    Run Keywords    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
     ...    AND    Trigger p&s
     ...    AND    Delete dynamic admin user from DB

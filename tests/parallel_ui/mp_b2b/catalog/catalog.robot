@@ -176,8 +176,7 @@ Packaging_Units
     Yves: 'Thank you' page is displayed
 
 Product_Restrictions
-    [Setup]    Run keywords    Create dynamic admin user in DB
-    ...    AND    Create dynamic customer in DB
+    [Setup]    Run keywords    Create dynamic customer in DB
     ...    AND    Create dynamic customer in DB    based_on=${yves_company_user_restriction_customer_email_1}
     ...    AND    Create dynamic customer in DB    based_on=${yves_company_user_restriction_customer_email_2}
     [Documentation]    Checks White and Black lists

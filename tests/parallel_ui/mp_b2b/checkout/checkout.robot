@@ -78,11 +78,10 @@ Approval_Process
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
-    Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
+    Yves: select approver on the 'Summary' page:    Dynamic Customer (€1,000.00)
     Yves: 'send the request' on the summary page
     Yves: 'Summary' page is displayed
     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
-    Yves: go to the 'Home' page
     Yves: go to shopping cart page
     Yves: shopping cart contains/doesn't contain the following elements:    true    ${lockedCart}
     Yves: create new 'Shopping Cart' with name:    newApprovalCart+${random}
@@ -106,7 +105,7 @@ Approval_Process
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice
-    Yves: select approver on the 'Summary' page:    Lilu Dallas (€1,000.00)
+    Yves: select approver on the 'Summary' page:    Dynamic Customer (€1,000.00)
     Yves: 'send the request' on the summary page
     Yves: 'Summary' page is displayed
     Yves: 'Summary' page contains/doesn't contain:    true    ${cancelRequestButton}    ${alertWarning}    ${quoteStatus}
@@ -347,7 +346,7 @@ Checkout_Address_Management
     Yves: fill in the following new shipping address:
     ...    || salutation | firstName | lastName | street          | houseNumber | postCode | city   | country    | company | phone     | additionalAddress ||
     ...    || Mr.        | First     | Last     | Shipping Street | 7           | 10247    | Geneva | Switzerland| Spryker | 123456789 | Additional street ||
-    Yves: save new deviery address to address book:    true
+    Yves: save new delivery address to address book:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Marketplace Invoice

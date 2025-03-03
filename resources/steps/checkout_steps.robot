@@ -337,7 +337,7 @@ Yves: assert merchant of product in cart or list:
     [Arguments]    ${sku}    ${merchant_name_expected}
     Page Should Contain Element    xpath=(//*[@itemprop='sku' and (text()='${sku}' or @content='${sku}')]/ancestor::*[self::article or self::tr or self::product-item][contains(@itemtype,'Product')]//a[contains(@href,'merchant')][contains(text(),'${merchant_name_expected}')])[1]    timeout=${browser_timeout}
 
-Yves: save new deviery address to address book:
+Yves: save new delivery address to address book:
     [Arguments]    ${state}
     ${state}=    Convert To Lower Case    ${state}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}

@@ -47,7 +47,6 @@ ${default_dms}    ${False}
 Common_suite_setup
     [documentation]  Basic steps before each suite
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
-    Remove Files    resources/libraries/__pycache__/*
     Remove Files    ${OUTPUTDIR}/*.png
     Remove Files    ${OUTPUTDIR}/*.yml
     Load Variables    ${env}
@@ -1128,7 +1127,7 @@ Create dynamic customer in DB
                     ${unique_id}=    Generate Random String    3    [NUMBERS]
                     ${unique_id}=    Replace String    ${unique_id}    0    9
                     ${unique_id}=    Convert To Integer    ${unique_id}
-                    ${new_id_company_role_to_company_user}=    Evaluate    ${max_id_company_role_to_company_user} + ${unique_id}
+                    ${new_id_company_role_to_company_user}=    Evaluate    $${new_id_company_role_to_company_user} + ${unique_id}
                     ${attempt}=    Evaluate    ${attempt} + 1
                 END
             END

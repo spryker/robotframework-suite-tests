@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    static_set
+Test Tags    robot:recursive-stop-on-failure    static-set
 Resource    ../../../../resources/common/common_zed.robot
 Resource    ../../../../resources/steps/zed_discount_steps.robot
 Resource    ../../../../resources/steps/minimum_order_value_steps.robot
@@ -17,11 +17,10 @@ Resource    ../../../../resources/steps/zed_availability_steps.robot
 
 *** Test Cases ***
 Minimum_Order_Value
-    [Documentation]    checks that global minimum and maximun order thresholds can be applied
+    [Documentation]    checks that global minimum and maximum order thresholds can be applied
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
     ...    AND    Deactivate all discounts in the database
-    ...    AND    Yves: delete all user addresses
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: change global threshold settings:
     ...    || store & currency | minimum hard value | minimum hard en message  | minimum hard de message  | maximun hard value | maximun hard en message | maximun hard de message | soft threshold                | soft threshold value | soft threshold fixed fee | soft threshold en message | soft threshold de message ||
@@ -309,8 +308,8 @@ Manage_Shipments
     ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
     ...    || 1          | Hermes          | Next Day        | €15.00         | ASAP                    ||
     Zed: create new shipment inside the order:
-    ...    || delivert address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method | sku    ||
-    ...    || New address      | Mr         | Evil       | Tester    | ${yves_user_email} | Austria | Hartmanngasse | 1         | Vienna | 1050     | DHL - Standard  | 420845 ||
+    ...    || delivery address | salutation | first name | last name | email               | country | address 1     | address 2 | city   | zip code | shipment method | sku    ||
+    ...    || New address      | Mr         | Evil       | Tester    | ${dynamic_customer} | Austria | Hartmanngasse | 1         | Vienna | 1050     | DHL - Standard  | 420845 ||
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    2
     Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany
@@ -319,8 +318,8 @@ Manage_Shipments
     ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
     ...    || 2          | DHL             | Standard        | €0.00          | ASAP                    ||
     Zed: edit xxx shipment inside the order:
-    ...    || shipmentN | delivert address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method | requested delivery date | sku    ||
-    ...    || 2         | New address      | Mr         | Edit       | Shipment  | ${yves_user_email} | Germany | Hartmanngasse | 9         | Vienna | 0987     | DHL - Express   | 2025-01-25              | 420836 ||
+    ...    || shipmentN | delivery address | salutation | first name | last name | email               | country | address 1     | address 2 | city   | zip code | shipment method | requested delivery date | sku    ||
+    ...    || 2         | New address      | Mr         | Edit       | Shipment  | ${dynamic_customer} | Germany | Hartmanngasse | 9         | Vienna | 0987     | DHL - Express   | 2025-01-25              | 420836 ||
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
     Zed: shipment data inside xxx shipment should be:
     ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||

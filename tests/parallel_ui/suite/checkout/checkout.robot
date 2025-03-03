@@ -358,7 +358,7 @@ Checkout_Address_Management
     Yves: fill in the following new shipping address:
     ...    || salutation | firstName | lastName | street          | houseNumber | postCode | city   | country     | company | phone     | additionalAddress ||
     ...    || Mr.        | First     | Last     | Shipping Street | 7           | 10247    | Geneva | Switzerland | Spryker | 123456789 | Additional street ||
-    Yves: save new deviery address to address book:    true
+    Yves: save new delivery address to address book:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
@@ -469,10 +469,9 @@ Comment_Management_in_the_Cart
     [Documentation]    Editing and deleting comments in carts
     Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: create new 'Shopping Cart' with name:    commentManagement+${random}
     Yves: go to PDP of the product with sku:    ${bundled_product_3_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    commentManagement+${random}
+    Yves: go to shopping cart page
     Yves: add comment on cart:    abc${random}
     Yves: check comments are visible or not in cart:    true    abc${random}    
     Yves: edit comment on cart:    xyz${random}

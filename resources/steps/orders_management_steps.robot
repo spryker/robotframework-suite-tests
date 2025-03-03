@@ -291,7 +291,7 @@ Zed: create new shipment inside the order:
     Wait Until Element Is Visible    ${create_shipment_delivery_address_dropdown}
     FOR    ${key}    ${value}    IN    &{newShipmentData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='delivert address' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_delivery_address_dropdown}    ${value}
+        IF    '${key}'=='delivery address' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_delivery_address_dropdown}    ${value}
         IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_salutation_dropdown}    ${value}
         IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_first_name_field}    ${value}
         IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_last_name_field}    ${value}
@@ -320,7 +320,7 @@ Zed: edit xxx shipment inside the order:
     Wait Until Element Is Visible    ${create_shipment_delivery_address_dropdown}
     FOR    ${key}    ${value}    IN    &{newShipmentData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='delivert address' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_delivery_address_dropdown}    ${value}
+        IF    '${key}'=='delivery address' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_delivery_address_dropdown}    ${value}
         IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_salutation_dropdown}    ${value}
         IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_first_name_field}    ${value}
         IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_last_name_field}    ${value}

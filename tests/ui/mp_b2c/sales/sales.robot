@@ -212,7 +212,7 @@ Manage_Shipments
     ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
     ...    || 1          | Hermes          | Next Day        | €15.00         | ASAP                    ||
     Zed: create new shipment inside the order:
-    ...    || delivert address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method | sku          ||
+    ...    || delivery address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method | sku          ||
     ...    || New address      | Mr         | Evil       | Tester    | ${yves_user_email} | Austria | Hartmanngasse | 1         | Vienna | 1050     | DHL - Standard  | 012_25904598 ||
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    2
@@ -222,7 +222,7 @@ Manage_Shipments
     ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
     ...    || 2          | DHL             | Standard        | €0.00          | ASAP                    ||
     Zed: edit xxx shipment inside the order:
-    ...    || shipmentN | delivert address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method | requested delivery date | sku          ||
+    ...    || shipmentN | delivery address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method | requested delivery date | sku          ||
     ...    || 2         | New address      | Mr         | Edit       | Shipment  | ${yves_user_email} | Germany | Hartmanngasse | 9         | Vienna | 0987     | DHL - Express   | 2025-01-25              | 005_30663301 ||
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
     Zed: shipment data inside xxx shipment should be:

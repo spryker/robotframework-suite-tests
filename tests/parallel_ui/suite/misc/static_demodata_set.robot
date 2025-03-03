@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    static_set
+Test Tags    robot:recursive-stop-on-failure    static-set
 Resource    ../../../../resources/common/common_zed.robot
 Resource    ../../../../resources/steps/minimum_order_value_steps.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
@@ -521,8 +521,8 @@ Manage_Shipments
     ...    || shipment n | delivery method        | shipping method | shipping costs | requested delivery date ||
     ...    || 1          | Spryker Dummy Shipment | Standard        | €4.90          | ASAP                    ||
     Zed: create new shipment inside the order:
-    ...    || delivert address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method                  | sku          ||
-    ...    || New address      | Mr         | Evil       | Tester    | ${yves_user_email} | Austria | Hartmanngasse | 1         | Vienna | 1050     | Spryker Dummy Shipment - Express | 012_25904598 ||
+    ...    || delivery address | salutation | first name | last name | email               | country | address 1     | address 2 | city   | zip code | shipment method                  | sku          ||
+    ...    || New address      | Mr         | Evil       | Tester    | ${dynamic_customer} | Austria | Hartmanngasse | 1         | Vienna | 1050     | Spryker Dummy Shipment - Express | 012_25904598 ||
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    2
     Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany
@@ -531,8 +531,8 @@ Manage_Shipments
     ...    || shipment n | delivery method        | shipping method | shipping costs | requested delivery date ||
     ...    || 2          | Spryker Dummy Shipment | Express         | €0.00          | ASAP                    ||
     Zed: edit xxx shipment inside the order:
-    ...    || shipmentN | delivert address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method                    | requested delivery date | sku          ||
-    ...    || 2         | New address      | Mr         | Edit       | Shipment  | ${yves_user_email} | Germany | Hartmanngasse | 9         | Vienna | 0987     | Spryker Drone Shipment - Air Light | 2025-01-25              | 005_30663301 ||
+    ...    || shipmentN | delivery address | salutation | first name | last name | email               | country | address 1     | address 2 | city   | zip code | shipment method                    | requested delivery date | sku          ||
+    ...    || 2         | New address      | Mr         | Edit       | Shipment  | ${dynamic_customer} | Germany | Hartmanngasse | 9         | Vienna | 0987     | Spryker Drone Shipment - Air Light | 2025-01-25              | 005_30663301 ||
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
     Zed: shipment data inside xxx shipment should be:
     ...    || shipment n | delivery method        | shipping method | shipping costs | requested delivery date ||

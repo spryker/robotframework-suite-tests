@@ -654,11 +654,10 @@ Customer_Specific_Prices
     Yves: product price on the PDP should be:    ${product_with_merchant_price_default_price}
     Yves: logout on Yves as a customer
     Yves: login on Yves with provided credentials:    ${dynamic_second_customer}
-    Yves: create new 'Shopping Cart' with name:    customerPrices+${random}
     Yves: perform search by:    ${product_with_merchant_price_abstract_sku}
     Yves: product with name in the catalog should have price:    ${product_with_merchant_price_product_name}    ${product_with_merchant_price_merchant_price}
     Yves: go to PDP of the product with sku:    ${product_with_merchant_price_abstract_sku}
     Yves: product price on the PDP should be:    ${product_with_merchant_price_merchant_price}
     Yves: add product to the shopping cart
-    Yves: go to the shopping cart through the header with name:    customerPrices+${random}
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=${product_with_merchant_price_concrete_sku}    productName=${product_with_merchant_price_product_name}    productPrice=${product_with_merchant_price_merchant_price}

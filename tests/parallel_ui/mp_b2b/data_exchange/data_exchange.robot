@@ -44,7 +44,6 @@ Resource    ../../../../resources/steps/api_dynamic_entity_steps.robot
 
 *** Test Cases ***
 Data_exchange_API_download_specification
-    [Documentation]    DMS-ON: https://spryker.atlassian.net/browse/FRW-7396
     [Setup]    Run Keywords    Trigger API specification update
     ...    AND    Create dynamic admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}

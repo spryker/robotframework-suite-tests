@@ -37,8 +37,9 @@ Create_new_company_with_linked_entities_and_customer_in_backoffice
     
 Create_new_company_user_with_linked_entities_in_storefront
     [Documentation]    Create a new company user on Storefront
-    [Setup]    Create dynamic admin user in DB
-    Yves: login on Yves with provided credentials:    ${yves_spryker_admin_company_user_email}
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB    based_on=${yves_spryker_admin_company_user_email}
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: create new company role:    RobotYvesRole+${random}
     Yves: assign the following permissions to the company role:    RobotYvesRole+${random}    View company users
     Yves: create new company business unit:    business_unit_name=RobotYvesBusinessUnit+${random}    business_unit_email=robot+business+unit+${random}@spryker.com

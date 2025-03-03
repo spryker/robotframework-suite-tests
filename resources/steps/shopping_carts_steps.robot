@@ -198,10 +198,11 @@ Yves: shopping cart doesn't contain the following products:
     END
 
 Yves: get link for external cart sharing
+    Reload
     IF    '${env}' in ['ui_suite']
         Click    xpath=//input[@name='cart-share'][contains(@target-class-name,'external')]/ancestor::label
     ELSE
-        Yves: Expand shopping cart accordion:    Share Cart via link 
+        Click    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@data-qa,'url-mask-generator')]//ancestor::*[contains(@data-qa,'cart-sidebar-item')]//*[@data-toggle-target]
         Click    xpath=//input[@name='cart-share'][contains(@target-class-name,'external')]/ancestor::label    
     END
     Wait Until Element Is Visible    xpath=//input[@id='PREVIEW']
@@ -220,7 +221,7 @@ Yves: Expand shopping cart accordion:
      Log    ${accordionState}
      IF    'active' not in '${accordionState}'
          Run Keywords
-            Click With Options    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]    delay=1s
+            Click With Options    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]    delay=1s    force=True
             Wait Until Element Is Visible    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]/../div[contains(@class,'cart-sidebar-item__content')]
      END
 

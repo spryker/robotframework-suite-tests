@@ -128,7 +128,7 @@ Zed: attach company user to the following BU with role:
         Type Text    ${zed_edit_company_user_search_select_field}    ${business_unit}
         Click    xpath=(//input[@type='search']/../..//ul[contains(.,'${business_unit}')])[1]
     ELSE
-        Select From List By Label    ${zed_business_unit_selector}    ${business_unit}
+        Select From List By Label Contains    ${zed_business_unit_selector}    ${business_unit}
     END
     Zed: Check checkbox by Label:    ${role_checkbox}
     Zed: submit the form
