@@ -11,6 +11,7 @@ Resource    ../../../../resources/steps/agent_assist_steps.robot
 
 *** Test Cases ***
 Create_new_company_with_linked_entities_and_customer_in_backoffice
+    [Tags]    smoke
     [Documentation]    Create a new company with linked entities and new customer in backoffice
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Company with provided name:    RobotCompany
@@ -35,6 +36,7 @@ Create_new_company_with_linked_entities_and_customer_in_backoffice
     Should Contain    ${location}    /403    msg=Navigated to the 'Company Role' page despite the lack of permissions
     
 Create_new_company_user_with_linked_entities_in_storefront
+    [Tags]    smoke
     [Documentation]    Create a new company user on Storefront
     Yves: login on Yves with provided credentials:    ${yves_spryker_admin_company_user_email}
     Yves: create new company role:    RobotYvesRole+${random}
