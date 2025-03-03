@@ -105,11 +105,17 @@ Load Variables
     ...
     ...    ``Load Variables    api_suite``
     [Arguments]    ${env}
-    &{vars}=   Define Environment Variables From Json File    ${env}
-    FOR    ${key}    ${value}    IN    &{vars}
-        Log    Key is '${key}' and value is '${value}'.
-        ${var_value}=   Get Variable Value  ${${key}}   ${value}
-        Set Global Variable    ${${key}}    ${var_value}
+    ${variables_already_loaded}=    Run Keyword And Return Status    Variable Should Exist    ${env_variables_loaded}
+    IF    not ${variables_already_loaded}
+        &{vars}=   Define Environment Variables From Json File    ${env}
+        FOR    ${key}    ${value}    IN    &{vars}
+            Log    Key is '${key}' and value is '${value}'.
+            ${var_value}=   Get Variable Value  ${${key}}   ${value}
+            Set Global Variable    ${${key}}    ${var_value}
+        END
+        VAR    ${env_variables_loaded}    ${True}    scope=GLOBAL
+    ELSE
+        Log    Environment variables are already loaded
     END
 
 Overwrite env variables
