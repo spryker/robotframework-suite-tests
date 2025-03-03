@@ -1052,86 +1052,90 @@ Create dynamic customer in DB
     IF    '${env}' in ['ui_b2b','ui_mp_b2b','ui_suite']
         # Step 5: Fetch the existing company user data associated with the existing customer
         ${existing_company_user_data}=    Query    SELECT * FROM spy_company_user WHERE fk_customer = ${existing_customer_id}
+        ${existing_company_user_data_length}=    Get Length    ${existing_company_user_data}
+        IF    ${existing_company_user_data_length} > 0
+            # Extract the relevant fields for inserting a new company user
+            VAR    ${existing_id_company_user}    ${existing_company_user_data[0][0]}
+            VAR    ${existing_fk_company}    ${existing_company_user_data[0][1]}
+            VAR    ${existing_fk_company_business_unit}    ${existing_company_user_data[0][2]}
+            VAR    ${existing_key}    ${existing_company_user_data[0][6]}
 
-        # Extract the relevant fields for inserting a new company user
-        VAR    ${existing_id_company_user}    ${existing_company_user_data[0][0]}
-        VAR    ${existing_fk_company}    ${existing_company_user_data[0][1]}
-        VAR    ${existing_fk_company_business_unit}    ${existing_company_user_data[0][2]}
-        VAR    ${existing_key}    ${existing_company_user_data[0][6]}
+            # Step 6: Get the maximum id_company_user and increment it
+            ${max_id_company_user}=    Query    SELECT MAX(id_company_user) FROM spy_company_user
+            IF    '${None}' in '${max_id_company_user}'    VAR    ${max_id_company_user}    0
 
-        # Step 6: Get the maximum id_company_user and increment it
-        ${max_id_company_user}=    Query    SELECT MAX(id_company_user) FROM spy_company_user
-        IF    '${None}' in '${max_id_company_user}'    VAR    ${max_id_company_user}    0
-
-        IF    ${max_id_company_user[0][0]} > 5000
-            # new ID will be max +1 not to intersect with real IDs
-            ${new_id_company_user}=    Evaluate    ${max_id_company_user[0][0]} + 1
-        ELSE
-            # new ID will be max + 5001 not to intersect with real IDs
-            ${new_id_company_user}=    Evaluate    ${max_id_company_user[0][0]} + 5001
-        END
-
-        # Step 7: Generate unique values for `key` and `uuid`
-        VAR    ${new_key}    ${existing_key}--${new_id_company_user}
-        ${new_uuid}=   Generate Random String	4	[UPPER]
-        VAR    ${new_uuid}    ${new_uuid}-${random}-${random_str}-${random_id}
-
-        # Step 8: Insert the new company user entry in the spy_company_user table
-        ${attempt}=    Set Variable    1
-        WHILE    ${attempt} <= 3
-            TRY
-                Execute Sql String    INSERT INTO spy_company_user (id_company_user, fk_company, fk_company_business_unit, fk_customer, is_active, is_default, \`key\`, uuid) VALUES (${new_id_company_user}, ${existing_fk_company}, ${existing_fk_company_business_unit}, ${new_id_customer}, True, False, '${new_key}', '${new_uuid}')
-                Exit For Loop
-            EXCEPT
-                Log    Attempt ${attempt} failed due to duplicate entry in spy_company_user. Retrying...
-                ${unique_id}=    Generate Random String    3    [NUMBERS]
-                ${unique_id}=    Replace String    ${unique_id}    0    9
-                ${unique_id}=    Convert To Integer    ${unique_id}
-                ${new_id_company_user}=    Evaluate    ${new_id_company_user} + ${unique_id}
-                ${new_key}=    Set Variable    ${existing_key}--${new_id_company_user}
-                ${unique}=    Generate Random String    5    [NUMBERS]
-                VAR    ${new_uuid}    ${unique}-${random}-${random_str}-${random_id}
-                ${attempt}=    Evaluate    ${attempt} + 1
-            END
-        END
-        IF    ${attempt} > 3    Fail    Unable to insert company user into spy_company_user after 3 attempts.
-        
-        # Insert the new company role to company iser entry in the spy_company_role_to_company_user table
-        ${existing_company_role_to_user_data}=    Query    SELECT * FROM spy_company_role_to_company_user WHERE fk_company_user = ${existing_id_company_user}
-        FOR    ${roles}    IN    @{existing_company_role_to_user_data}
-
-            VAR    ${existing_fk_company_role}    ${roles[1]}
-            VAR    ${existing_created_at}    ${roles[3]}
-            VAR    ${existing_updated_at}    ${roles[4]}
-
-            # Get the maximum id_company_role_to_company_user and increment it
-            ${max_id_company_role_to_company_user}=    Query    SELECT MAX(id_company_role_to_company_user) FROM spy_company_role_to_company_user
-            IF    '${None}' in '${max_id_company_role_to_company_user}'    VAR    ${max_id_company_role_to_company_user}    0
-
-            IF    ${max_id_company_role_to_company_user[0][0]} > 5000
+            IF    ${max_id_company_user[0][0]} > 5000
                 # new ID will be max +1 not to intersect with real IDs
-                ${new_id_company_role_to_company_user}=    Evaluate    ${max_id_company_role_to_company_user[0][0]} + 1
+                ${new_id_company_user}=    Evaluate    ${max_id_company_user[0][0]} + 1
             ELSE
                 # new ID will be max + 5001 not to intersect with real IDs
-                ${new_id_company_role_to_company_user}=    Evaluate    ${max_id_company_role_to_company_user[0][0]} + 5001
+                ${new_id_company_user}=    Evaluate    ${max_id_company_user[0][0]} + 5001
             END
 
-            # Insert the new company role to company user entry in the spy_company_role_to_company_user table
+            # Step 7: Generate unique values for `key` and `uuid`
+            VAR    ${new_key}    ${existing_key}--${new_id_company_user}
+            ${new_uuid}=   Generate Random String	4	[UPPER]
+            VAR    ${new_uuid}    ${new_uuid}-${random}-${random_str}-${random_id}
+
+            # Step 8: Insert the new company user entry in the spy_company_user table
             ${attempt}=    Set Variable    1
             WHILE    ${attempt} <= 3
                 TRY
-                    Execute Sql String    INSERT INTO spy_company_role_to_company_user (id_company_role_to_company_user, fk_company_role, fk_company_user, created_at, updated_at) VALUES (${new_id_company_role_to_company_user}, ${existing_fk_company_role}, ${new_id_company_user}, '${existing_created_at}', '${existing_updated_at}')
+                    Execute Sql String    INSERT INTO spy_company_user (id_company_user, fk_company, fk_company_business_unit, fk_customer, is_active, is_default, \`key\`, uuid) VALUES (${new_id_company_user}, ${existing_fk_company}, ${existing_fk_company_business_unit}, ${new_id_customer}, True, False, '${new_key}', '${new_uuid}')
                     Exit For Loop
                 EXCEPT
-                    Log    Attempt ${attempt} failed due to duplicate entry in spy_company_role_to_company_user. Retrying...
+                    Log    Attempt ${attempt} failed due to duplicate entry in spy_company_user. Retrying...
                     ${unique_id}=    Generate Random String    3    [NUMBERS]
                     ${unique_id}=    Replace String    ${unique_id}    0    9
                     ${unique_id}=    Convert To Integer    ${unique_id}
-                    ${new_id_company_role_to_company_user}=    Evaluate    $${new_id_company_role_to_company_user} + ${unique_id}
+                    ${new_id_company_user}=    Evaluate    ${new_id_company_user} + ${unique_id}
+                    ${new_key}=    Set Variable    ${existing_key}--${new_id_company_user}
+                    ${unique}=    Generate Random String    5    [NUMBERS]
+                    VAR    ${new_uuid}    ${unique}-${random}-${random_str}-${random_id}
                     ${attempt}=    Evaluate    ${attempt} + 1
                 END
             END
-            IF    ${attempt} > 3    Fail    Unable to insert company role to company user into spy_company_role_to_company_user after 3 attempts.
+            IF    ${attempt} > 3    Fail    Unable to insert company user into spy_company_user after 3 attempts.
+            
+            # Insert the new company role to company iser entry in the spy_company_role_to_company_user table
+            ${existing_company_role_to_user_data}=    Query    SELECT * FROM spy_company_role_to_company_user WHERE fk_company_user = ${existing_id_company_user}
+            FOR    ${roles}    IN    @{existing_company_role_to_user_data}
+
+                VAR    ${existing_fk_company_role}    ${roles[1]}
+                VAR    ${existing_created_at}    ${roles[3]}
+                VAR    ${existing_updated_at}    ${roles[4]}
+
+                # Get the maximum id_company_role_to_company_user and increment it
+                ${max_id_company_role_to_company_user}=    Query    SELECT MAX(id_company_role_to_company_user) FROM spy_company_role_to_company_user
+                IF    '${None}' in '${max_id_company_role_to_company_user}'    VAR    ${max_id_company_role_to_company_user}    0
+
+                IF    ${max_id_company_role_to_company_user[0][0]} > 5000
+                    # new ID will be max +1 not to intersect with real IDs
+                    ${new_id_company_role_to_company_user}=    Evaluate    ${max_id_company_role_to_company_user[0][0]} + 1
+                ELSE
+                    # new ID will be max + 5001 not to intersect with real IDs
+                    ${new_id_company_role_to_company_user}=    Evaluate    ${max_id_company_role_to_company_user[0][0]} + 5001
+                END
+
+                # Insert the new company role to company user entry in the spy_company_role_to_company_user table
+                ${attempt}=    Set Variable    1
+                WHILE    ${attempt} <= 3
+                    TRY
+                        Execute Sql String    INSERT INTO spy_company_role_to_company_user (id_company_role_to_company_user, fk_company_role, fk_company_user, created_at, updated_at) VALUES (${new_id_company_role_to_company_user}, ${existing_fk_company_role}, ${new_id_company_user}, '${existing_created_at}', '${existing_updated_at}')
+                        Exit For Loop
+                    EXCEPT
+                        Log    Attempt ${attempt} failed due to duplicate entry in spy_company_role_to_company_user. Retrying...
+                        ${unique_id}=    Generate Random String    3    [NUMBERS]
+                        ${unique_id}=    Replace String    ${unique_id}    0    9
+                        ${unique_id}=    Convert To Integer    ${unique_id}
+                        ${new_id_company_role_to_company_user}=    Evaluate    $${new_id_company_role_to_company_user} + ${unique_id}
+                        ${attempt}=    Evaluate    ${attempt} + 1
+                    END
+                END
+                IF    ${attempt} > 3    Fail    Unable to insert company role to company user into spy_company_role_to_company_user after 3 attempts.
+            END
+        ELSE
+            Log    message=Selected customer is not a company user. Skipping company user creation.    level=INFO
         END
     END
     

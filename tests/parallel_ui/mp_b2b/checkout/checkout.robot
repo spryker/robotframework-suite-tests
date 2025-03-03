@@ -273,7 +273,7 @@ Split_Delivery
     [Teardown]    Delete dynamic admin user from DB
 
 Multiple_Merchants_Order
-    [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
+    [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be split per merchant
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Create dynamic admin user in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}

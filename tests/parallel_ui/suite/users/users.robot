@@ -63,6 +63,7 @@ Agent_Assist
     ...    || Mr.        | DynamicCustomerForAgent${random} | DynamicCustomerForAgent${random} | ${dynamic_customer} ||
     Yves: go to PDP of the product with sku:    ${available_never_out_of_stock_abstract_sku}
     Yves: add product to the shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:

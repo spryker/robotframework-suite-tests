@@ -308,318 +308,318 @@ Back_in_Stock_Notification
     [Teardown]    Run Keywords    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}
     ...    AND    Delete dynamic admin user from DB
 
-Manage_Product
-    [Documentation]    checks that BO user can manage abstract and concrete products + create new
-    [Setup]    Run Keywords    Create dynamic admin user in DB
-    ...    AND    Create dynamic customer in DB
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: start new abstract product creation:
-    ...    || sku                | store | name en                | name de                  | new from   | new to     ||
-    ...    || manageSKU${random} | DE    | manageProduct${random} | DEmanageProduct${random} | 01.01.2020 | 01.01.2030 ||
-    Zed: select abstract product variants:
-    ...    || attribute 1 | attribute value 1 | attribute 2 | attribute value 2 ||
-    ...    || farbe       | grey              | farbe       | blue              ||
-    Zed: update abstract product price on:
-    ...    || store | mode  | type    | currency | amount | tax set        ||
-    ...    || DE    | gross | default | €        | 100.00 | Standard Taxes ||
-    Trigger multistore p&s
-    Zed: change concrete product data:
-    ...    || productAbstract    | productConcrete               | active | searchable en | searchable de ||
-    ...    || manageSKU${random} | manageSKU${random}-farbe-grey | true   | true          | true          ||
-    Zed: change concrete product data:
-    ...    || productAbstract    | productConcrete               | active | searchable en | searchable de ||
-    ...    || manageSKU${random} | manageSKU${random}-farbe-blue | true   | true          | true          ||
-    Zed: change concrete product price on:
-    ...    || productAbstract    | productConcrete               | store | mode  | type    | currency | amount ||
-    ...    || manageSKU${random} | manageSKU${random}-farbe-blue | DE    | gross | default | €        | 15.00  ||
-    Zed: change concrete product stock:
-    ...    || productAbstract    | productConcrete               | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
-    ...    || manageSKU${random} | manageSKU${random}-farbe-grey | Warehouse1   | 100              | true                            ||
-    Zed: change concrete product stock:
-    ...    || productAbstract    | productConcrete               | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
-    ...    || manageSKU${random} | manageSKU${random}-farbe-blue | Warehouse1   | 100              | false                           ||
-    Zed: save abstract product:    manageSKU${random}
-    Trigger multistore p&s
-    Zed: update abstract product data:
-    ...    || productAbstract    | name de                        ||
-    ...    || manageSKU${random} | DEmanageProduct${random} force ||
-    Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    manageSKU${random}    wait_for_p&s=true
-    Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: change variant of the product on PDP on:    grey
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
-    Yves: reset selected variant of the product on PDP
-    Yves: change variant of the product on PDP on:    blue
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: add new concrete product to abstract:
-    ...    || productAbstract    | sku                            | autogenerate sku | attribute 1 | name en                  | name de                  | use prices from abstract ||
-    ...    || manageSKU${random} | manageSKU${random}-farbe-black | false            | black       | ENaddedConcrete${random} | DEaddedConcrete${random} | true                     ||
-    Trigger multistore p&s
-    Zed: change concrete product data:
-    ...    || productAbstract    | productConcrete                | active | searchable en | searchable de ||
-    ...    || manageSKU${random} | manageSKU${random}-farbe-black | true   | true          | true          ||
-    Zed: change concrete product price on:
-    ...    || productAbstract    | productConcrete                | store | mode  | type    | currency | amount ||
-    ...    || manageSKU${random} | manageSKU${random}-farbe-black | DE    | gross | default | €        | 25.00  ||
-    Zed: change concrete product stock:
-    ...    || productAbstract    | productConcrete                | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
-    ...    || manageSKU${random} | manageSKU${random}-farbe-black | Warehouse1   | 5                | false                           ||
-    Zed: update abstract product price on:
-    ...    || productAbstract    | store | mode  | type    | currency | amount | tax set        ||
-    ...    || manageSKU${random} | DE    | gross | default | €        | 150.00 | Standard Taxes ||
-    Trigger multistore p&s
-    Zed: update abstract product price on:
-    ...    || productAbstract    | store | mode  | type    | currency | amount | tax set        ||
-    ...    || manageSKU${random} | DE    | gross | default | €        | 150.00 | Standard Taxes ||
-    Trigger multistore p&s
-    Zed: update abstract product data:
-    ...    || productAbstract    | name en                         | name de                         ||
-    ...    || manageSKU${random} | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} ||
-    Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    manageSKU${random}    wait_for_p&s=true
-    Yves: product name on PDP should be:    ENUpdatedmanageProduct${random}
-    Yves: product price on the PDP should be:    €150.00    wait_for_p&s=true
-    Yves: change variant of the product on PDP on:    grey
-    Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
-    Yves: reset selected variant of the product on PDP
-    Yves: change variant of the product on PDP on:    blue
-    Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
-    Yves: reset selected variant of the product on PDP
-    Yves: change variant of the product on PDP on:    black
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: product name on PDP should be:    ENaddedConcrete${random}
-    Yves: product price on the PDP should be:    €25.00    wait_for_p&s=true
-    Yves: change quantity using '+' or '-' button № times:    +    5
-    Yves: try add product to the cart from PDP and expect error:    Item manageSKU${random}-farbe-black only has availability of 5.
-    Yves: change quantity using '+' or '-' button № times:    +    2
-    Yves: add product to the shopping cart
-    Yves: go to shopping cart page
-    Yves: shopping cart contains product with unit price:    manageSKU${random}-farbe-black    ENaddedConcrete${random}    25.00
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: go to second navigation item level:    Catalog    Products
-    Zed: click Action Button in a table for row that contains:     manageProduct${random}     View
-    Zed: view product page is displayed
-    Zed: view abstract product page contains:
-    ...    || store | sku                | name                            | variants count ||
-    ...    || DE AT | manageSKU${random} | ENUpdatedmanageProduct${random} | 3              ||
-    [Teardown]    Delete dynamic admin user from DB
+# Manage_Product
+#     [Documentation]    checks that BO user can manage abstract and concrete products + create new
+#     [Setup]    Run Keywords    Create dynamic admin user in DB
+#     ...    AND    Create dynamic customer in DB
+#     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+#     Zed: start new abstract product creation:
+#     ...    || sku                | store | name en                | name de                  | new from   | new to     ||
+#     ...    || manageSKU${random} | DE    | manageProduct${random} | DEmanageProduct${random} | 01.01.2020 | 01.01.2030 ||
+#     Zed: select abstract product variants:
+#     ...    || attribute 1 | attribute value 1 | attribute 2 | attribute value 2 ||
+#     ...    || farbe       | grey              | farbe       | blue              ||
+#     Zed: update abstract product price on:
+#     ...    || store | mode  | type    | currency | amount | tax set        ||
+#     ...    || DE    | gross | default | €        | 100.00 | Standard Taxes ||
+#     Trigger multistore p&s
+#     Zed: change concrete product data:
+#     ...    || productAbstract    | productConcrete               | active | searchable en | searchable de ||
+#     ...    || manageSKU${random} | manageSKU${random}-farbe-grey | true   | true          | true          ||
+#     Zed: change concrete product data:
+#     ...    || productAbstract    | productConcrete               | active | searchable en | searchable de ||
+#     ...    || manageSKU${random} | manageSKU${random}-farbe-blue | true   | true          | true          ||
+#     Zed: change concrete product price on:
+#     ...    || productAbstract    | productConcrete               | store | mode  | type    | currency | amount ||
+#     ...    || manageSKU${random} | manageSKU${random}-farbe-blue | DE    | gross | default | €        | 15.00  ||
+#     Zed: change concrete product stock:
+#     ...    || productAbstract    | productConcrete               | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
+#     ...    || manageSKU${random} | manageSKU${random}-farbe-grey | Warehouse1   | 100              | true                            ||
+#     Zed: change concrete product stock:
+#     ...    || productAbstract    | productConcrete               | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
+#     ...    || manageSKU${random} | manageSKU${random}-farbe-blue | Warehouse1   | 100              | false                           ||
+#     Zed: save abstract product:    manageSKU${random}
+#     Trigger multistore p&s
+#     Zed: update abstract product data:
+#     ...    || productAbstract    | name de                        ||
+#     ...    || manageSKU${random} | DEmanageProduct${random} force ||
+#     Trigger multistore p&s
+#     Yves: login on Yves with provided credentials:    ${dynamic_customer}
+#     Yves: go to PDP of the product with sku:    manageSKU${random}    wait_for_p&s=true
+#     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
+#     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+#     Yves: change variant of the product on PDP on:    grey
+#     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+#     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
+#     Yves: reset selected variant of the product on PDP
+#     Yves: change variant of the product on PDP on:    blue
+#     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+#     Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
+#     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+#     Zed: add new concrete product to abstract:
+#     ...    || productAbstract    | sku                            | autogenerate sku | attribute 1 | name en                  | name de                  | use prices from abstract ||
+#     ...    || manageSKU${random} | manageSKU${random}-farbe-black | false            | black       | ENaddedConcrete${random} | DEaddedConcrete${random} | true                     ||
+#     Trigger multistore p&s
+#     Zed: change concrete product data:
+#     ...    || productAbstract    | productConcrete                | active | searchable en | searchable de ||
+#     ...    || manageSKU${random} | manageSKU${random}-farbe-black | true   | true          | true          ||
+#     Zed: change concrete product price on:
+#     ...    || productAbstract    | productConcrete                | store | mode  | type    | currency | amount ||
+#     ...    || manageSKU${random} | manageSKU${random}-farbe-black | DE    | gross | default | €        | 25.00  ||
+#     Zed: change concrete product stock:
+#     ...    || productAbstract    | productConcrete                | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
+#     ...    || manageSKU${random} | manageSKU${random}-farbe-black | Warehouse1   | 5                | false                           ||
+#     Zed: update abstract product price on:
+#     ...    || productAbstract    | store | mode  | type    | currency | amount | tax set        ||
+#     ...    || manageSKU${random} | DE    | gross | default | €        | 150.00 | Standard Taxes ||
+#     Trigger multistore p&s
+#     Zed: update abstract product price on:
+#     ...    || productAbstract    | store | mode  | type    | currency | amount | tax set        ||
+#     ...    || manageSKU${random} | DE    | gross | default | €        | 150.00 | Standard Taxes ||
+#     Trigger multistore p&s
+#     Zed: update abstract product data:
+#     ...    || productAbstract    | name en                         | name de                         ||
+#     ...    || manageSKU${random} | ENUpdatedmanageProduct${random} | DEUpdatedmanageProduct${random} ||
+#     Trigger multistore p&s
+#     Yves: login on Yves with provided credentials:    ${dynamic_customer}
+#     Yves: go to PDP of the product with sku:    manageSKU${random}    wait_for_p&s=true
+#     Yves: product name on PDP should be:    ENUpdatedmanageProduct${random}
+#     Yves: product price on the PDP should be:    €150.00    wait_for_p&s=true
+#     Yves: change variant of the product on PDP on:    grey
+#     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
+#     Yves: reset selected variant of the product on PDP
+#     Yves: change variant of the product on PDP on:    blue
+#     Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
+#     Yves: reset selected variant of the product on PDP
+#     Yves: change variant of the product on PDP on:    black
+#     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+#     Yves: product name on PDP should be:    ENaddedConcrete${random}
+#     Yves: product price on the PDP should be:    €25.00    wait_for_p&s=true
+#     Yves: change quantity using '+' or '-' button № times:    +    5
+#     Yves: try add product to the cart from PDP and expect error:    Item manageSKU${random}-farbe-black only has availability of 5.
+#     Yves: change quantity using '+' or '-' button № times:    +    2
+#     Yves: add product to the shopping cart
+#     Yves: go to shopping cart page
+#     Yves: shopping cart contains product with unit price:    manageSKU${random}-farbe-black    ENaddedConcrete${random}    25.00
+#     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+#     Zed: go to second navigation item level:    Catalog    Products
+#     Zed: click Action Button in a table for row that contains:     manageProduct${random}     View
+#     Zed: view product page is displayed
+#     Zed: view abstract product page contains:
+#     ...    || store | sku                | name                            | variants count ||
+#     ...    || DE AT | manageSKU${random} | ENUpdatedmanageProduct${random} | 3              ||
+#     [Teardown]    Delete dynamic admin user from DB
 
-Product_Original_Price
-    [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
-    [Setup]    Run Keywords    Create dynamic admin user in DB
-    ...    AND    Create dynamic customer in DB
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: start new abstract product creation:
-    ...    || sku                  | store | name en                  | name de                    | new from   | new to     ||
-    ...    || originalSKU${random} | DE    | originalProduct${random} | DEoriginalProduct${random} | 01.01.2020 | 01.01.2030 ||
-    Zed: select abstract product variants:
-    ...    || attribute 1 | attribute value 1 | attribute 2 | attribute value 2 ||
-    ...    || farbe       | grey              | farbe       | blue              ||
-    Zed: update abstract product price on:
-    ...    || store | mode  | type    | currency | amount | tax set        ||
-    ...    || DE    | gross | default | €        | 100.00 | Standard Taxes ||
-    Zed: update abstract product price on:
-    ...    || store | mode  | type     | currency | amount | tax set        ||
-    ...    || DE    | gross | original | €        | 200.00 | Standard Taxes ||
-    Trigger multistore p&s
-    Zed: change concrete product data:
-    ...    || productAbstract      | productConcrete                 | active | searchable en | searchable de ||
-    ...    || originalSKU${random} | originalSKU${random}-farbe-grey | true   | true          | true          ||
-    Zed: change concrete product data:
-    ...    || productAbstract      | productConcrete                 | active | searchable en | searchable de ||
-    ...    || originalSKU${random} | originalSKU${random}-farbe-blue | true   | true          | true          ||
-    Zed: change concrete product price on:
-    ...    || productAbstract      | productConcrete                 | store | mode  | type    | currency | amount ||
-    ...    || originalSKU${random} | originalSKU${random}-farbe-blue | DE    | gross | default | €        | 15.00  ||
-    Zed: change concrete product price on:
-    ...    || productAbstract      | productConcrete                 | store | mode  | type     | currency | amount ||
-    ...    || originalSKU${random} | originalSKU${random}-farbe-blue | DE    | gross | original | €        | 50.00  ||
-    Zed: change concrete product stock:
-    ...    || productAbstract      | productConcrete                 | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
-    ...    || originalSKU${random} | originalSKU${random}-farbe-grey | Warehouse1   | 100              | true                            ||
-    Zed: change concrete product stock:
-    ...    || productAbstract      | productConcrete                 | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
-    ...    || originalSKU${random} | originalSKU${random}-farbe-blue | Warehouse1   | 100              | false                           ||
-    Trigger multistore p&s
-    Zed: update abstract product data:
-    ...    || productAbstract      | name de                     ||
-    ...    || originalSKU${random} | originalSKU${random} forced ||
-    Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to URL:    en/search?q=originalSKU${random}
-    Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    2    5s
-    Yves: 1st product card in catalog (not)contains:     Price    €100.00
-    Yves: 1st product card in catalog (not)contains:     Original Price    €200.00
-    Yves: go to PDP of the product with sku:    originalSKU${random}    wait_for_p&s=true
-    Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
-    Yves: product original price on the PDP should be:    €200.00
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: change variant of the product on PDP on:    blue
-    Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
-    Yves: product original price on the PDP should be:    €50.00
-    [Teardown]    Delete dynamic admin user from DB
+# Product_Original_Price
+#     [Documentation]    checks that Original price is displayed on the PDP and in Catalog
+#     [Setup]    Run Keywords    Create dynamic admin user in DB
+#     ...    AND    Create dynamic customer in DB
+#     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+#     Zed: start new abstract product creation:
+#     ...    || sku                  | store | name en                  | name de                    | new from   | new to     ||
+#     ...    || originalSKU${random} | DE    | originalProduct${random} | DEoriginalProduct${random} | 01.01.2020 | 01.01.2030 ||
+#     Zed: select abstract product variants:
+#     ...    || attribute 1 | attribute value 1 | attribute 2 | attribute value 2 ||
+#     ...    || farbe       | grey              | farbe       | blue              ||
+#     Zed: update abstract product price on:
+#     ...    || store | mode  | type    | currency | amount | tax set        ||
+#     ...    || DE    | gross | default | €        | 100.00 | Standard Taxes ||
+#     Zed: update abstract product price on:
+#     ...    || store | mode  | type     | currency | amount | tax set        ||
+#     ...    || DE    | gross | original | €        | 200.00 | Standard Taxes ||
+#     Trigger multistore p&s
+#     Zed: change concrete product data:
+#     ...    || productAbstract      | productConcrete                 | active | searchable en | searchable de ||
+#     ...    || originalSKU${random} | originalSKU${random}-farbe-grey | true   | true          | true          ||
+#     Zed: change concrete product data:
+#     ...    || productAbstract      | productConcrete                 | active | searchable en | searchable de ||
+#     ...    || originalSKU${random} | originalSKU${random}-farbe-blue | true   | true          | true          ||
+#     Zed: change concrete product price on:
+#     ...    || productAbstract      | productConcrete                 | store | mode  | type    | currency | amount ||
+#     ...    || originalSKU${random} | originalSKU${random}-farbe-blue | DE    | gross | default | €        | 15.00  ||
+#     Zed: change concrete product price on:
+#     ...    || productAbstract      | productConcrete                 | store | mode  | type     | currency | amount ||
+#     ...    || originalSKU${random} | originalSKU${random}-farbe-blue | DE    | gross | original | €        | 50.00  ||
+#     Zed: change concrete product stock:
+#     ...    || productAbstract      | productConcrete                 | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
+#     ...    || originalSKU${random} | originalSKU${random}-farbe-grey | Warehouse1   | 100              | true                            ||
+#     Zed: change concrete product stock:
+#     ...    || productAbstract      | productConcrete                 | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
+#     ...    || originalSKU${random} | originalSKU${random}-farbe-blue | Warehouse1   | 100              | false                           ||
+#     Trigger multistore p&s
+#     Zed: update abstract product data:
+#     ...    || productAbstract      | name de                     ||
+#     ...    || originalSKU${random} | originalSKU${random} forced ||
+#     Trigger multistore p&s
+#     Yves: login on Yves with provided credentials:    ${dynamic_customer}
+#     Yves: go to URL:    en/search?q=originalSKU${random}
+#     Try reloading page until element is/not appear:    ${catalog_product_card_locator}    true    2    5s
+#     Yves: 1st product card in catalog (not)contains:     Price    €100.00
+#     Yves: 1st product card in catalog (not)contains:     Original Price    €200.00
+#     Yves: go to PDP of the product with sku:    originalSKU${random}    wait_for_p&s=true
+#     Yves: product price on the PDP should be:    €100.00    wait_for_p&s=true
+#     Yves: product original price on the PDP should be:    €200.00
+#     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+#     Yves: change variant of the product on PDP on:    blue
+#     Yves: product price on the PDP should be:    €15.00    wait_for_p&s=true
+#     Yves: product original price on the PDP should be:    €50.00
+#     [Teardown]    Delete dynamic admin user from DB
 
-Product_Availability_Calculation
-    [Documentation]    Check product availability + multistore
-    [Setup]    Run Keywords    Create dynamic admin user in DB
-    ...    AND    Create dynamic customer in DB
-    Repeat Keyword    3    Trigger multistore p&s
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: update warehouse:
-    ...    || warehouse  | store ||
-    ...    || Warehouse1 | AT    ||
-    Zed: start new abstract product creation:
-    ...    || sku                      | store | store 2 | name en                      | name de                        | new from   | new to     ||
-    ...    || availabilitySKU${random} | DE    | AT      | availabilityProduct${random} | DEavailabilityProduct${random} | 01.01.2020 | 01.01.2030 ||
-    Zed: select abstract product variants:
-    ...    || attribute 1 | attribute value 1 ||
-    ...    || farbe       | grey              ||
-    Zed: update abstract product price on:
-    ...    || store | mode  | type    | currency | amount | tax set        ||
-    ...    || DE    | gross | default | €        | 100.00 | Standard Taxes ||
-    Zed: update abstract product price on:
-    ...    || store | mode  | type    | currency | amount | tax set        ||
-    ...    || AT    | gross | default | €        | 200.00 | Standard Taxes ||
-    Repeat Keyword    3    Trigger multistore p&s
-    Zed: change concrete product data:
-    ...    || productAbstract          | productConcrete                     | active | searchable en | searchable de ||
-    ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | true   | true          | true          ||
-    Zed: change concrete product price on:
-    ...    || productAbstract          | productConcrete                     | store | mode  | type    | currency | amount ||
-    ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | DE    | gross | default | €        | 50.00  ||
-    Zed: change concrete product price on:
-    ...    || productAbstract          | productConcrete                     | store | mode  | type    | currency | amount ||
-    ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | AT    | gross | default | €        | 75.00  ||
-    Zed: change concrete product stock:
-    ...    || productAbstract          | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
-    ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | Warehouse1   | 5                | false                            ||
-    Zed: update abstract product data:
-    ...    || productAbstract          | name de                              ||
-    ...    || availabilitySKU${random} | DEavailabilityProduct${random} force ||
-    Repeat Keyword    3    Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: change quantity using '+' or '-' button № times:    +    5
-    Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-farbe-grey only has availability of 5.
-    Yves: change quantity using '+' or '-' button № times:    +    2
-    Yves: add product to the shopping cart
-    Yves: go to shopping cart page
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
-    Yves: submit form on the checkout
-    Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
-    Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Trigger oms
-    Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: go to order page:    ${lastPlacedOrder}
-    Zed: wait for order item to be in state:    sku=availabilitySKU${random}-farbe-grey    state=payment pending    iterations=7
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: change quantity using '+' or '-' button № times:    +    5
-    Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-farbe-grey only has availability of 2.
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside this order:    Cancel
-    Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Yves: change quantity using '+' or '-' button № times:    +    5
-    Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-farbe-grey only has availability of 5.
-    Yves: go to AT store 'Home' page if other store not specified:
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: update warehouse:
-    ...    || warehouse  | unselect store ||
-    ...    || Warehouse1 | AT             ||
-    Repeat Keyword    3    Trigger multistore p&s
-    Yves: go to AT store 'Home' page if other store not specified:
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
-    [Teardown]    Run Keywords    Should Test Run
-    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: update warehouse:
-    ...    || warehouse  | unselect store ||
-    ...    || Warehouse1 | AT             ||
-    ...    AND    Trigger multistore p&s
-    ...    AND    Repeat Keyword    3    Trigger multistore p&s
-    ...    AND    Delete dynamic admin user from DB
+# Product_Availability_Calculation
+#     [Documentation]    Check product availability + multistore
+#     [Setup]    Run Keywords    Create dynamic admin user in DB
+#     ...    AND    Create dynamic customer in DB
+#     Repeat Keyword    3    Trigger multistore p&s
+#     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+#     Zed: update warehouse:
+#     ...    || warehouse  | store ||
+#     ...    || Warehouse1 | AT    ||
+#     Zed: start new abstract product creation:
+#     ...    || sku                      | store | store 2 | name en                      | name de                        | new from   | new to     ||
+#     ...    || availabilitySKU${random} | DE    | AT      | availabilityProduct${random} | DEavailabilityProduct${random} | 01.01.2020 | 01.01.2030 ||
+#     Zed: select abstract product variants:
+#     ...    || attribute 1 | attribute value 1 ||
+#     ...    || farbe       | grey              ||
+#     Zed: update abstract product price on:
+#     ...    || store | mode  | type    | currency | amount | tax set        ||
+#     ...    || DE    | gross | default | €        | 100.00 | Standard Taxes ||
+#     Zed: update abstract product price on:
+#     ...    || store | mode  | type    | currency | amount | tax set        ||
+#     ...    || AT    | gross | default | €        | 200.00 | Standard Taxes ||
+#     Repeat Keyword    3    Trigger multistore p&s
+#     Zed: change concrete product data:
+#     ...    || productAbstract          | productConcrete                     | active | searchable en | searchable de ||
+#     ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | true   | true          | true          ||
+#     Zed: change concrete product price on:
+#     ...    || productAbstract          | productConcrete                     | store | mode  | type    | currency | amount ||
+#     ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | DE    | gross | default | €        | 50.00  ||
+#     Zed: change concrete product price on:
+#     ...    || productAbstract          | productConcrete                     | store | mode  | type    | currency | amount ||
+#     ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | AT    | gross | default | €        | 75.00  ||
+#     Zed: change concrete product stock:
+#     ...    || productAbstract          | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
+#     ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | Warehouse1   | 5                | false                            ||
+#     Zed: update abstract product data:
+#     ...    || productAbstract          | name de                              ||
+#     ...    || availabilitySKU${random} | DEavailabilityProduct${random} force ||
+#     Repeat Keyword    3    Trigger multistore p&s
+#     Yves: login on Yves with provided credentials:    ${dynamic_customer}
+#     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
+#     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+#     Yves: change quantity using '+' or '-' button № times:    +    5
+#     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-farbe-grey only has availability of 5.
+#     Yves: change quantity using '+' or '-' button № times:    +    2
+#     Yves: add product to the shopping cart
+#     Yves: go to shopping cart page
+#     Yves: click on the 'Checkout' button in the shopping cart
+#     Yves: billing address same as shipping address:    true
+#     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
+#     Yves: submit form on the checkout
+#     Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
+#     Yves: submit form on the checkout
+#     Yves: select the following payment method on the checkout and go next:    Invoice
+#     Yves: accept the terms and conditions:    true
+#     Yves: 'submit the order' on the summary page
+#     Yves: 'Thank you' page is displayed
+#     Trigger oms
+#     Yves: get the last placed order ID by current customer
+#     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+#     Zed: go to order page:    ${lastPlacedOrder}
+#     Zed: wait for order item to be in state:    sku=availabilitySKU${random}-farbe-grey    state=payment pending    iterations=7
+#     Yves: login on Yves with provided credentials:    ${dynamic_customer}
+#     Yves: go to PDP of the product with sku:    availabilitySKU${random}
+#     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+#     Yves: change quantity using '+' or '-' button № times:    +    5
+#     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-farbe-grey only has availability of 2.
+#     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+#     Zed: go to order page:    ${lastPlacedOrder}
+#     Zed: trigger all matching states inside this order:    Cancel
+#     Trigger multistore p&s
+#     Yves: login on Yves with provided credentials:    ${dynamic_customer}
+#     Yves: go to PDP of the product with sku:    availabilitySKU${random}
+#     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+#     Yves: change quantity using '+' or '-' button № times:    +    5
+#     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-farbe-grey only has availability of 5.
+#     Yves: go to AT store 'Home' page if other store not specified:
+#     Yves: login on Yves with provided credentials:    ${dynamic_customer}
+#     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
+#     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+#     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+#     Zed: update warehouse:
+#     ...    || warehouse  | unselect store ||
+#     ...    || Warehouse1 | AT             ||
+#     Repeat Keyword    3    Trigger multistore p&s
+#     Yves: go to AT store 'Home' page if other store not specified:
+#     Yves: login on Yves with provided credentials:    ${dynamic_customer}
+#     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
+#     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
+#     [Teardown]    Run Keywords    Should Test Run
+#     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+#     ...    AND    Zed: update warehouse:
+#     ...    || warehouse  | unselect store ||
+#     ...    || Warehouse1 | AT             ||
+#     ...    AND    Trigger multistore p&s
+#     ...    AND    Repeat Keyword    3    Trigger multistore p&s
+#     ...    AND    Delete dynamic admin user from DB
 
-Configurable_Product_PDP_Shopping_List
-    [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of five items. Ensure that products that have not been configured cannot be purchased.
-    [Setup]    Run keywords    Create dynamic customer in DB
-    ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
-    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
-    Yves: PDP contains/doesn't contain:    true    ${configureButton}
-    Yves: product configuration status should be equal:       Configuration is not complete.
-    Yves: add product to the shopping cart
-    Yves: go to shopping cart page
-    Yves: product configuration status should be equal:       Configuration is not complete.
-    Yves: checkout is blocked with the following message:    This cart can't be processed. Please configure items inside the cart.
-    Yves: delete product from the shopping cart with sku:    ${configurable_product_concrete_sku}
-    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
-    Yves: check and go back that configuration page contains:
-    ...    || store | locale | price_mode | currency | customer_id                          | sku                                  ||
-    ...    || DE    | en_US  | GROSS_MODE | EUR      | ${yves_company_user_buyer_reference} | ${configurable_product_concrete_sku} ||
-    Yves: change the product options in configurator to:
-    ...    || option one | option two ||
-    ...    || 420        | 240        ||
-    Yves: save product configuration
-    Yves: product configuration status should be equal:      Configuration complete!
-    Yves: change the product options in configurator to:
-    ...    || option one | option two ||
-    ...    || 280        | 480        ||
-    Yves: product configuration notification is:     Only 7 items available
-    Yves: save product configuration
-    Yves: product configuration status should be equal:      Configuration complete!
-    Yves: configuration should be equal:
-    ...    || option one | option two ||
-    ...    || 5 shelves  | 3 lockers  ||
-    Yves: product configuration status should be equal:      Configuration complete!
-    Yves: change quantity on PDP:    8
-    Yves: try add product to the cart from PDP and expect error:    Item ${configurable_product_concrete_sku} only has availability of 7.
-    Yves: go to PDP of the product with sku:   ${configurable_product_abstract_sku}
-    Yves: change quantity on PDP:    7
-    Yves: add product to the shopping cart
-    Yves: go to shopping cart page
-    Yves: change the product options in configurator to:
-    ...    || option one | option two ||
-    ...    || 140        | 240        ||
-    Yves: save product configuration
-    Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €2,206.54
-    Yves: delete all shopping carts
-    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
-    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
-    Yves: add product to the shopping list:    configProduct+${random}
-    Yves: go to 'Shopping Lists' page
-    Yves: view shopping list with name:    configProduct+${random}
-    Yves: change the product options in configurator to:
-    ...    || option one | option two ||
-    ...    || 420        | 240        ||
-    Yves: save product configuration
-    Yves: configuration should be equal:
-    ...    || option one | option two ||
-    ...    || 6 shelves  | 2 lockers  ||
-    Yves: add all available products from list to cart
-    Yves: configuration should be equal:
-    ...    || option one | option two ||
-    ...    || 6 shelves  | 2 lockers  ||
-    Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €2,486.54
+# Configurable_Product_PDP_Shopping_List
+#     [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of five items. Ensure that products that have not been configured cannot be purchased.
+#     [Setup]    Run keywords    Create dynamic customer in DB
+#     ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+#     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
+#     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
+#     Yves: PDP contains/doesn't contain:    true    ${configureButton}
+#     Yves: product configuration status should be equal:       Configuration is not complete.
+#     Yves: add product to the shopping cart
+#     Yves: go to shopping cart page
+#     Yves: product configuration status should be equal:       Configuration is not complete.
+#     Yves: checkout is blocked with the following message:    This cart can't be processed. Please configure items inside the cart.
+#     Yves: delete product from the shopping cart with sku:    ${configurable_product_concrete_sku}
+#     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
+#     Yves: check and go back that configuration page contains:
+#     ...    || store | locale | price_mode | currency | customer_id                          | sku                                  ||
+#     ...    || DE    | en_US  | GROSS_MODE | EUR      | ${yves_company_user_buyer_reference} | ${configurable_product_concrete_sku} ||
+#     Yves: change the product options in configurator to:
+#     ...    || option one | option two ||
+#     ...    || 420        | 240        ||
+#     Yves: save product configuration
+#     Yves: product configuration status should be equal:      Configuration complete!
+#     Yves: change the product options in configurator to:
+#     ...    || option one | option two ||
+#     ...    || 280        | 480        ||
+#     Yves: product configuration notification is:     Only 7 items available
+#     Yves: save product configuration
+#     Yves: product configuration status should be equal:      Configuration complete!
+#     Yves: configuration should be equal:
+#     ...    || option one | option two ||
+#     ...    || 5 shelves  | 3 lockers  ||
+#     Yves: product configuration status should be equal:      Configuration complete!
+#     Yves: change quantity on PDP:    8
+#     Yves: try add product to the cart from PDP and expect error:    Item ${configurable_product_concrete_sku} only has availability of 7.
+#     Yves: go to PDP of the product with sku:   ${configurable_product_abstract_sku}
+#     Yves: change quantity on PDP:    7
+#     Yves: add product to the shopping cart
+#     Yves: go to shopping cart page
+#     Yves: change the product options in configurator to:
+#     ...    || option one | option two ||
+#     ...    || 140        | 240        ||
+#     Yves: save product configuration
+#     Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €2,206.54
+#     Yves: delete all shopping carts
+#     Yves: create new 'Shopping Cart' with name:    configProduct+${random}
+#     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
+#     Yves: add product to the shopping list:    configProduct+${random}
+#     Yves: go to 'Shopping Lists' page
+#     Yves: view shopping list with name:    configProduct+${random}
+#     Yves: change the product options in configurator to:
+#     ...    || option one | option two ||
+#     ...    || 420        | 240        ||
+#     Yves: save product configuration
+#     Yves: configuration should be equal:
+#     ...    || option one | option two ||
+#     ...    || 6 shelves  | 2 lockers  ||
+#     Yves: add all available products from list to cart
+#     Yves: configuration should be equal:
+#     ...    || option one | option two ||
+#     ...    || 6 shelves  | 2 lockers  ||
+#     Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €2,486.54

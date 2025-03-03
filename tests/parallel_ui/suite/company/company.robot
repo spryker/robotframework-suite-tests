@@ -11,6 +11,7 @@ Resource    ../../../../resources/steps/agent_assist_steps.robot
 
 *** Test Cases ***
 Create_new_company_with_linked_entities_and_customer_in_backoffice
+    [Tags]    smoke
     [Documentation]    Create a new company with linked entities and new customer in backoffice
     [Setup]    Create dynamic admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
@@ -36,6 +37,7 @@ Create_new_company_with_linked_entities_and_customer_in_backoffice
     [Teardown]    Delete dynamic admin user from DB
     
 Create_new_company_user_with_linked_entities_in_storefront
+    [Tags]    smoke
     [Documentation]    Create a new company user on Storefront
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB    based_on=${yves_spryker_admin_company_user_email}

@@ -121,10 +121,13 @@ Yves: delete user address:
     Yves: go to user menu item in the left bar:    Addresses
     IF    '${env}' in ['ui_b2c','ui_mp_b2c']
         Click    xpath=//li[contains(text(),'${street}')]/ancestor::div/div[@data-qa='component title-box']//form[contains(@action,'address/delete')]//button
+        Page Should Not Contain Element    xpath=//li[contains(text(),'${street}')]/ancestor::div/div[@data-qa='component title-box']//form[contains(@action,'address/delete')]//button
     ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Click    xpath=//li[contains(text(),'${street}')]/ancestor::div[@data-qa="component action-card"]//form[contains(@action,'address/delete')]//button
+        Page Should Not Contain Element    xpath=//li[contains(text(),'${street}')]/ancestor::div[@data-qa="component action-card"]//form[contains(@action,'address/delete')]//button
     ELSE
-        Click    xpath=//li[contains(text(),'${street}')]/ancestor::div//form[contains(@action,'delete')]//button
+        Click    xpath=//li[contains(text(),'${street}')]/ancestor::div[1]//form[contains(@action,'delete')]//button
+        Page Should Not Contain Element    xpath=//li[contains(text(),'${street}')]/ancestor::div[1]//form[contains(@action,'delete')]//button
     END
 
 Yves: delete all user addresses
