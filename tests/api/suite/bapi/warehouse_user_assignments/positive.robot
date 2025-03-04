@@ -45,7 +45,7 @@ Assign_user_to_warehouse_with_include
     ...    AND    Response status code should be:    204
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
 
-Get_warehouse_user_assigments_by_UUID
+Get_warehouse_user_assignments_by_UUID
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     # assign several warehouses to one user [only one warehouse active]
@@ -67,7 +67,7 @@ Get_warehouse_user_assigments_by_UUID
     ...    AND    Response status code should be:    204
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
 
-Get_warehouse_user_assigments_list
+Get_warehouse_user_assignments_list
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     # assign several warehouses to one user [only one warehous active]
@@ -99,7 +99,7 @@ Get_warehouse_user_assigments_list
     ...    AND    Response status code should be:    204
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
 
-Get_warehouse_user_assigments_with_filter_by_warehouse_assigment_uuid
+Get_warehouse_user_assignments_with_filter_by_warehouse_assigment_uuid
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    1
@@ -126,7 +126,7 @@ Get_warehouse_user_assigments_with_filter_by_warehouse_assigment_uuid
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid_2}    0
 
-Get_warehouse_user_assigments_with_filter_by_warehouse_uuid
+Get_warehouse_user_assignments_with_filter_by_warehouse_uuid
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    1
@@ -152,7 +152,7 @@ Get_warehouse_user_assigments_with_filter_by_warehouse_uuid
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid_2}    0
 
-Get_warehouse_user_assigments_with_filter_by_user_uuid
+Get_warehouse_user_assignments_with_filter_by_user_uuid
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    1
@@ -178,7 +178,7 @@ Get_warehouse_user_assigments_with_filter_by_user_uuid
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid_2}    0
 
-Get_warehouse_user_assigments_with_filter_by_isActive
+Get_warehouse_user_assignments_with_filter_by_isActive
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    1
@@ -246,7 +246,7 @@ Create_warehouse_user_assignment_with_multiple_active_assignments
     ...    AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id_2}
     ...    AND    Response status code should be:    204
 
-Update_one_of_already exist_warehouse_user_assigment_with_two_assigments_to active
+Update_one_of_already exist_warehouse_user_assigment_with_two_assignments_to active
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    1

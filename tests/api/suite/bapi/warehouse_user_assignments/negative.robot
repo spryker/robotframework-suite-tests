@@ -68,7 +68,7 @@ Create_warehouse_user_assignment_with_duplicate_assignment
     ...    AND    Response status code should be:    204
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
 
-Get_warehouse_user_assigments_by_UUID_without_token
+Get_warehouse_user_assignments_by_UUID_without_token
     [Setup]    Run Keywords    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    1
     ...    AND    Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
@@ -78,7 +78,7 @@ Get_warehouse_user_assigments_by_UUID_without_token
     [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
 
-Get_user_assigments_by_UUID_with_invalid_token
+Get_user_assignments_by_UUID_with_invalid_token
     And Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    1
     And Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
     Then Get_warehouse_user_assigment_id:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
@@ -90,7 +90,7 @@ Get_user_assigments_by_UUID_with_invalid_token
     [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
 
-Get_user_assigments_by_invalid_UUID
+Get_user_assignments_by_invalid_UUID
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    1
@@ -103,7 +103,7 @@ Get_user_assigments_by_invalid_UUID
     [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
 
-Get_user_assigments_list_with_invalid_token
+Get_user_assignments_list_with_invalid_token
     [Setup]    Run Keywords    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer wrong_token
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    1
     ...    AND    Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehous_user[0].user_uuid}    false
@@ -114,7 +114,7 @@ Get_user_assigments_list_with_invalid_token
     [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].user_uuid}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    0
 
-Get_user_assigments_list_without_token
+Get_user_assignments_list_without_token
     [Setup]    Run Keywords    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].user_uuid}    1
     ...    AND    Create_warehouse_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}   ${warehous_user[0].user_uuid}    false
     When I set Headers:    Content-Type=${default_header_content_type}
