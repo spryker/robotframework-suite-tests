@@ -1134,7 +1134,7 @@ Create dynamic customer in DB
                         ${unique_id}=    Generate Random String    3    [NUMBERS]
                         ${unique_id}=    Replace String    ${unique_id}    0    9
                         ${unique_id}=    Convert To Integer    ${unique_id}
-                        ${new_id_company_role_to_company_user}=    Evaluate    $${new_id_company_role_to_company_user} + ${unique_id}
+                        ${new_id_company_role_to_company_user}=    Evaluate    ${new_id_company_role_to_company_user} + ${unique_id}
                         ${attempt}=    Evaluate    ${attempt} + 1
                     END
                 END

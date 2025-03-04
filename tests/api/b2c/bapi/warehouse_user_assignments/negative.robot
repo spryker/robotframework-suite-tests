@@ -87,7 +87,7 @@ Get_warehouse_user_assigments_by_UUID_without_token
     Then Get_warehouse_user_assigment_id:   ${warehouse_uuid}    ${admin_user_uuid}
     Then I send a GET request:    /warehouse-user-assignments/${id_warehouse_user_assigment}
     Then Response status code should be:    403
-    And Remove_warehous_user_assigment:    ${warehouse_uuid}    $${admin_user_uuid}
+    And Remove_warehous_user_assigment:    ${warehouse_uuid}    ${admin_user_uuid}
     [Teardown]    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
 
 Get_user_assigments_by_UUID_with_invalid_token
