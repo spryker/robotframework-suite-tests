@@ -480,7 +480,7 @@ Search_for_Merchant_Offers_and_Products
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Stationery    true
 
 Merchant_Portal_Product_Volume_Prices
-    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete.
+    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Fallback to default price after delete.
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -543,7 +543,7 @@ Merchant_Portal_Product_Volume_Prices
     ...    AND    Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Deny
 
 Merchant_Portal_Offer_Volume_Prices
-    [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Falback to default price after delete
+    [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Fallback to default price after delete
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product

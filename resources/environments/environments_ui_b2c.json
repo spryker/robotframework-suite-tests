@@ -165,6 +165,17 @@
        "grant_type":{
          "password":"password",
          "refresh_token":"refresh_token"
+      },
+      "default_address":{
+         "salutation":"Mr",
+         "first_name":"RobotF",
+         "last_name":"RobotL",
+         "street":"Kirncher Str.",
+         "house_number":"7",
+         "post_code":"10247",
+         "city":"Berlin",
+         "country":"Germany",
+         "full_address":"Mr RobotF RobotL, Kirncher Str. 7, 10247 Berlin"
       }
     }
     ,

@@ -424,7 +424,7 @@ Yves: select xxx shipment type for item xxx:
     Click    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]//shipment-type-toggler//span[contains(@data-qa,'shipmentType')]//span[contains(text(), '${shipment_type}')]
     Repeat Keyword    2    Wait For Load State
 
-Yves: check store availabiity for item number xxx:
+Yves: check store availability for item number xxx:
     [Arguments]    @{args}
     ${availabilityData}=    Set Up Keyword Arguments    @{args}
     ${item_number}=    Set Variable    1

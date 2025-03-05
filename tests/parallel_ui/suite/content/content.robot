@@ -55,4 +55,3 @@ Content_Management
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    admin+root+cm${random}@spryker.com
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
-    ...    AND    Trigger multistore p&s

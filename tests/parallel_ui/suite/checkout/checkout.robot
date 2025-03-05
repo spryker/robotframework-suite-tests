@@ -294,7 +294,6 @@ Split_Delivery
     [Setup]    Run Keywords    Create dynamic customer in DB    based_on=${yves_user_email}
     ...    AND    Create dynamic admin user in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    005
@@ -376,7 +375,7 @@ Checkout_Address_Management
 
 
 Multiple_Merchants_Order
-    [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
+    [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be split per merchant
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}

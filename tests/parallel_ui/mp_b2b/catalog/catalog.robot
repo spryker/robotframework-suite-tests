@@ -387,7 +387,6 @@ Offer_Availability_Calculation
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products
     ...    AND    Zed: click Action Button in a table for row that contains:      offAvProduct${random}     Deny
-    ...    AND    Trigger multistore p&s
     ...    AND    Delete dynamic admin user from DB
 
 Product_Availability_Calculation

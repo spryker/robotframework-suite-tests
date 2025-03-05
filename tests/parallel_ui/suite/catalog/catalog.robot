@@ -496,8 +496,7 @@ Product_Availability_Calculation
 
 Configurable_Product_PDP_Wishlist_Availability
     [Documentation]    Configure product from PDP and Wishlist + availability case.
-    [Setup]    Run keywords   Create dynamic admin user in DB
-    ...    AND    Create dynamic customer in DB
+    [Setup]    Run keywords   Create dynamic customer in DB
     ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
@@ -542,7 +541,6 @@ Configurable_Product_PDP_Wishlist_Availability
     Yves: add all available products from wishlist to cart
     Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=${configurable_product_price_with_options}
-    [Teardown]    Delete dynamic admin user from DB
 
 Configurable_Product_PDP_Shopping_List
     [Tags]    smoke

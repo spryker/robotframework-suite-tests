@@ -139,7 +139,7 @@ Guest_Checkout_and_Addresses
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
 
 Multiple_Merchants_Order
-    [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
+    [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be split per merchant
     [Setup]    Run Keywords    
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
     ...    AND    MP: change offer stock:
@@ -319,16 +319,16 @@ Click_and_collect
     Yves: select multiple addresses from toggler
     Yves: select xxx shipment type for item number xxx:    shipment_type=Pickup    item_number=1
     Yves: select xxx shipment type for item number xxx:    shipment_type=Pickup    item_number=2
-    Yves: check store availabiity for item number xxx:
+    Yves: check store availability for item number xxx:
     ...    || item_number | store              | availability ||
     ...    || 1           | Spryker Main Store | green        ||
-    Yves: check store availabiity for item number xxx:
+    Yves: check store availability for item number xxx:
     ...    || item_number | store                | availability ||
     ...    || 1           | Spryker Berlin Store | green        ||
-    Yves: check store availabiity for item number xxx:
+    Yves: check store availability for item number xxx:
     ...    || item_number | store              | availability ||
     ...    || 2           | Spryker Main Store | green        ||
-    Yves: check store availabiity for item number xxx:
+    Yves: check store availability for item number xxx:
     ...    || item_number | store                | availability ||
     ...    || 2           | Spryker Berlin Store | green        ||
     Yves: select pickup service point store for item number xxx:

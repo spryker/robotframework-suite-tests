@@ -231,7 +231,6 @@ Customer_Specific_Prices
     Yves: shopping cart contains product with unit price:    403125    EUROKRAFT hand truck - with open shovel - load capacity 400 kg    188.34
 
 Product_PDP
-    [Tags]    debug
     [Documentation]    Checks that PDP contains required elements
     [Setup]    Create dynamic customer in DB
     Delete All Cookies
@@ -306,7 +305,7 @@ Back_in_Stock_Notification
     Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    true
-    [Teardown]    Run Keywords    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}
+    [Teardown]    Run Keywords    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}    ${dynamic_admin_user}
     ...    AND    Delete dynamic admin user from DB
 
 Manage_Product

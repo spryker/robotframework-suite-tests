@@ -60,7 +60,6 @@ Authorized_User_Access
     [Documentation]    Checks that authorized users see products info, cart and profile
     Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: check if cart is not empty and clear it
     Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]    ${accountIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}     ${addToCartButton}
@@ -330,7 +329,6 @@ Reorder
     [Documentation]    Checks that merchant relation is saved with reorder
     Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    ${available_never_out_of_stock_abstract_sku}
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
@@ -366,8 +364,6 @@ Wishlist_List_Supports_Offers
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    ...    AND    Yves: delete all wishlists
-    ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: go to 'Wishlist' page
     ...    AND    Yves: create wishlist with name:    Offer wishlist
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}

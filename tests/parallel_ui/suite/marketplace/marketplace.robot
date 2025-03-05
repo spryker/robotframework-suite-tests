@@ -345,7 +345,7 @@ Search_for_Merchant_Offers_and_Products
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
 
 Merchant_Portal_Product_Volume_Prices
-    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete
+    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Fallback to default price after delete
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Create dynamic admin user in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
@@ -409,11 +409,10 @@ Merchant_Portal_Product_Volume_Prices
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Deny
-    ...    AND    Trigger p&s
     ...    AND    Delete dynamic admin user from DB
 
 Merchant_Portal_Offer_Volume_Prices
-    [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Falback to default price after delete.
+    [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Fallback to default price after delete.
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Create dynamic admin user in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
@@ -501,7 +500,6 @@ Merchant_Portal_Offer_Volume_Prices
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Deny
-    ...    AND    Trigger p&s
     ...    AND    Delete dynamic admin user from DB
 
 Merchant_Portal_Customer_Specific_Prices
@@ -796,14 +794,13 @@ Manage_Merchant_Product
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     manageSKU${random}     Deny
-    ...    AND    Trigger multistore p&s
     ...    AND    Delete dynamic admin user from DB
 
 Merchant_Product_Original_Price
     [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
     [Setup]    Run Keywords    Zed: create dynamic merchant user:    Budget Cameras
     ...    AND    Create dynamic customer in DB
-    MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
+    MP: login on MP with provided credentials:    ${dynamic_budget_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
@@ -853,7 +850,6 @@ Merchant_Product_Original_Price
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:     originalSKU${random}     Deny
-    ...    AND    Trigger p&s
     ...    AND    Delete dynamic admin user from DB
 
 Offer_Availability_Calculation
@@ -967,5 +963,4 @@ Offer_Availability_Calculation
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products 
     ...    AND    Zed: click Action Button in a table for row that contains:      offAvProduct${random}     Deny
-    ...    AND    Trigger multistore p&s
     ...    AND    Delete dynamic admin user from DB

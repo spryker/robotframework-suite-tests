@@ -42,19 +42,41 @@ Resource    ../../../../resources/steps/configurable_product_steps.robot
 Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 
 *** Test Cases ***
-Content_Management
-    [Documentation]    Checks cms content can be edited in zed and that correct cms elements are present on homepage
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: create a cms page and publish it:    Test Page${random}    test-page${random}    Page Title    Page text
-    Yves: go to the 'Home' page
-    Yves: page contains CMS element:    Homepage Banners
-    Yves: page contains CMS element:    Product Slider    Top Sellers
-    Yves: page contains CMS element:    Homepage Inspirational block
-    Yves: page contains CMS element:    Homepage Banner Video
-    Yves: page contains CMS element:    Footer section
-    Yves: go to newly created page by URL:    en/test-page${random}
-    Yves: page contains CMS element:    CMS Page Title    Page Title
-    Yves: page contains CMS element:    CMS Page Content    Page text
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: go to second navigation item level:    Content    Pages
-    ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
+Zed_navigation_ordering_and_naming
+    [Documentation]    Verifies each left navigation node can be opened
+    [Setup]    Create dynamic admin user in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: verify first navigation root menus
+    Zed: verify root menu icons
+    Zed: verify second navigation root menus
+    [Teardown]    Delete dynamic admin user from DB
+
+Glossary
+    [Documentation]    Create + edit glossary translation in BO
+    Create dynamic admin user in DB
+    Create dynamic customer in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: go to second navigation item level:    Administration    Glossary  
+    Zed: click button in Header:    Create Translation
+    Zed: fill glossary form:
+    ...    || Name                     | EN_US                        | DE_DE                             ||
+    ...    || cart.price.test${random} | This is a sample translation | Dies ist eine Beispielübersetzung ||
+    Zed: submit the form
+    Zed: table should contain:    cart.price.test${random}
+    Zed: go to second navigation item level:    Administration    Glossary 
+    Zed: click Action Button in a table for row that contains:    ${glossary_name}    Edit
+    Zed: fill glossary form:
+    ...    || DE_DE                    | EN_US                              ||
+    ...    || ${original_DE_text}-Test | ${original_EN_text}-Test-${random} ||
+    Zed: submit the form
+    Trigger p&s
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Yves: validate the page title:    ${original_EN_text}-Test-${random}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
+    Trigger p&s
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Yves: validate the page title:    ${original_EN_text}
+    [Teardown]    Run Keywords    Zed: undo the changes in glossary translation:    ${glossary_name}     ${original_DE_text}    ${original_EN_text}
+    ...    AND    Trigger p&s
+    ...    AND    Delete dynamic admin user from DB

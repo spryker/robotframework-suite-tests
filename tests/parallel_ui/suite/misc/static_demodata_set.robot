@@ -228,16 +228,16 @@ Click_and_collect
     Yves: select multiple addresses from toggler
     Yves: select xxx shipment type for item number xxx:    shipment_type=Pickup    item_number=1
     Yves: select xxx shipment type for item number xxx:    shipment_type=Pickup    item_number=2
-    Yves: check store availabiity for item number xxx:
+    Yves: check store availability for item number xxx:
     ...    || item_number | store              | availability ||
     ...    || 1           | Spryker Main Store | green        ||
-    Yves: check store availabiity for item number xxx:
+    Yves: check store availability for item number xxx:
     ...    || item_number | store                | availability ||
     ...    || 1           | Spryker Berlin Store | green        ||
-    Yves: check store availabiity for item number xxx:
+    Yves: check store availability for item number xxx:
     ...    || item_number | store              | availability ||
     ...    || 2           | Spryker Main Store | green        ||
-    Yves: check store availabiity for item number xxx:
+    Yves: check store availability for item number xxx:
     ...    || item_number | store                | availability ||
     ...    || 2           | Spryker Berlin Store | green        ||
     Yves: select pickup service point store for item number xxx:
@@ -398,7 +398,6 @@ Discounts
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
-    ...    AND    Trigger p&s
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}

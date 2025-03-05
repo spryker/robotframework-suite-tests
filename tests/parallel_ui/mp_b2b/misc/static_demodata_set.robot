@@ -191,7 +191,6 @@ Discounts
     ...    AND    Deactivate all discounts in the database
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: change product stock:    M21777    421538    true    10
-    ...    AND    Trigger p&s
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
