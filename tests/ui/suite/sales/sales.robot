@@ -151,7 +151,7 @@ Refunds
     Zed: login on Zed with provided credentials:   ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,041.90
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    skip picking

@@ -40,6 +40,7 @@ Resource    ../../../../resources/steps/glossary_steps.robot
 Resource    ../../../../resources/steps/order_comments_steps.robot
 Resource    ../../../../resources/steps/configurable_product_steps.robot
 Resource    ../../../../resources/steps/dynamic_entity_steps.robot
+Resource    ../../../../resources/steps/zed_payment_methods_steps.robot
 
 *** Test Cases ***
 Zed_navigation_ordering_and_naming
@@ -50,6 +51,40 @@ Zed_navigation_ordering_and_naming
     Zed: verify root menu icons
     Zed: verify second navigation root menus
     [Teardown]    Delete dynamic admin user from DB
+
+Payment_method_update
+    [Documentation]    Deactivate payment method, unset payment method for stores in zed and check its impact on yves.
+    [Setup]    Run Keywords    Create dynamic customer in DB
+    ...    AND    Create dynamic admin user in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Yves: go to PDP of the product with sku:    020
+    Yves: add product to the shopping cart
+    Yves: go to shopping cart page    
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: fill in the following new shipping address:
+    ...    ||      firstName                    |           lastName                  |    street           |    houseNumber     |    city      |    postCode    |    phone        ||
+    ...    || ${yves_second_user_first_name}    |     ${yves_second_user_last_name}   |    ${random}        |    ${random}       |    Berlin    |   ${random}    |    ${random}    ||
+    Yves: billing address same as shipping address:    true
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
+    Yves: check that the payment method is/not present in the checkout process:    ${checkout_payment_credit_card_locator}    true
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: go to second navigation item level:    Administration    Payment Methods
+    Zed: activate/deactivate payment method:    Dummy Payment    Credit Card    False
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Yves: go to shopping cart page    
+    Yves: click on the 'Checkout' button in the shopping cart
+    Yves: fill in the following new shipping address:
+    ...    ||      firstName                    |           lastName                  |    street           |    houseNumber     |    city     |    postCode    |    phone        ||
+    ...    || ${yves_second_user_first_name}    |     ${yves_second_user_last_name}   |    ${random}        |    ${random}       |    Berlin   |   ${random}    |    ${random}    ||
+    Yves: billing address same as shipping address:    true
+    Yves: submit form on the checkout
+    Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
+    Yves: check that the payment method is/not present in the checkout process:     ${checkout_payment_credit_card_locator}    false
+    [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    ...    AND    Zed: go to second navigation item level:    Administration    Payment Methods
+    ...    AND    Zed: activate/deactivate payment method:    Dummy Payment    Credit Card    True
+    ...    AND    Delete dynamic admin user from DB
 
 Glossary
     [Documentation]    Create + edit glossary translation in BO

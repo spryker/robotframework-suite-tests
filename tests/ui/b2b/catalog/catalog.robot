@@ -97,8 +97,7 @@ Volume_Prices
     [Teardown]    Yves: delete 'Shopping Cart' with name:    VolumePriceCart+${random}
 
 Discontinued_Alternative_Products
-    [Documentation]    Checks that product can be discontinued in Zed. DMS-ON: https://spryker.atlassian.net/browse/FRW-7465 skipped for dms-on
-    [Tags]    dms-off
+    [Documentation]    Checks that product can be discontinued in Zed.
     Yves: go to PDP of the product with sku:  M21100
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -403,7 +402,7 @@ Manage_Product
     ...    AND    Yves: delete all shopping carts
 
 Product_Original_Price
-    [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
+    [Documentation]    checks that Original price is displayed on the PDP and in Catalog
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
     ...    || sku                  | store | name en                  | name de                    | new from   | new to     ||
@@ -523,7 +522,7 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-farbe-grey only has availability of 2.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Cancel
+    Zed: trigger all matching states inside this order:    Cancel
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}

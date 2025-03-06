@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_tree
+Test Tags    robot:recursive-stop-on-failure    group_two
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -47,13 +47,13 @@ New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
     Create dynamic admin user in DB
     Register a new customer with data:
-    ...    || salutation | first name | last name | e-mail                              | password                   ||
-    ...    || Mr.        | New        | User      | sonia+ui+new+${random}@spryker.com  | ${default_secure_password} ||
+    ...    || salutation | first name | last name | e-mail                            | password                   ||
+    ...    || Mr.        | New        | User      | sonia+ui+new${random}@spryker.com | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: delete customer:    sonia+ui+new${random}@spryker.com
     ...    AND    Delete dynamic admin user from DB
-    
+
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users see products info and cart but not profile
     Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]   ${wishlistIcon}    ${accountIcon}    ${shoppingCartIcon}
@@ -120,12 +120,11 @@ User_Account
     Yves: go to user menu item in the left bar:    Addresses
     Yves: check that user has address exists/doesn't exist:    true    ${yves_second_user_first_name}${random}    ${yves_second_user_last_name}${random}    address 1${random}    address 2 ${random}    ${random}    Berlin${random}    Austria
     [Teardown]    Delete dynamic admin user from DB
-    
+
 Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
     Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: create wishlist with name:    My wishlist
     Yves: go to PDP of the product with sku:  003
     Yves: add product to wishlist:    My wishlist
     Yves: go to 'Wishlist' page
@@ -137,25 +136,9 @@ Add_to_Wishlist
     Yves: wishlist contains product with sku:    003_26138343
     Yves: go to wishlist with name:    Second wishlist
     Yves: wishlist contains product with sku:    004_30663302
-
-Wishlist_List_Supports_Offers
-    [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
-    [Setup]    Run Keywords    Create dynamic customer in DB
-    ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    ...    AND    Yves: go to 'Wishlist' page
-    ...    AND    Yves: create wishlist with name:    Offer wishlist
-    Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
-    Yves: add product to wishlist:    Offer wishlist
-    Yves: select xxx merchant's offer:    Budget Cameras
-    Yves: add product to wishlist:    Offer wishlist
-    Yves: go to 'Wishlist' page
-    Yves: go to wishlist with name:    Offer wishlist
-    Yves: assert merchant of product in wishlist:    ${product_with_multiple_offers_concrete_sku}    Spryker
-    Yves: assert merchant of product in wishlist:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
-    Yves: add all available products from wishlist to cart
-    Yves: go to shopping cart page
-    Yves: assert merchant of product in b2c cart:    ${product_with_multiple_offers_abstract_name}    Spryker
-    Yves: assert merchant of product in b2c cart:    ${product_with_multiple_offers_abstract_name}    Budget Cameras
+    Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
+    Delete All Cookies
+    Yves: try to add product to wishlist as guest user
 
 Reorder
     [Documentation]    Checks that merchant relation is saved with reorder
@@ -164,7 +147,7 @@ Reorder
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
-    Yves: assert merchant of product in b2c cart:    Canon IXUS 285    Spryker
+    Yves: shopping cart contains the following products:    Canon IXUS 285
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
@@ -172,13 +155,13 @@ Reorder
     ...    || Mr.        | Guest     | User     | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
+    Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    Reorder    ${lastPlacedOrder}
-    Yves: assert merchant of product in b2c cart:    Canon IXUS 285    Spryker
+    Yves: shopping cart contains the following products:    Canon IXUS 285
 
 Update_Customer_Data
     [Documentation]    Checks customer data can be updated from Yves and Zed

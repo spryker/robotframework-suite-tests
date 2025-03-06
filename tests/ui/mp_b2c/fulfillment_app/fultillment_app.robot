@@ -85,7 +85,7 @@ Fulfillment_app_e2e
     Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay 
+    Zed: trigger all matching states inside this order:    Pay 
     Zed: wait for order item to be in state:    091_25873091    confirmed
     Zed: wait for order item to be in state:    093_24495843    confirmed
     Zed: trigger all matching states inside this order:    Skip timeout

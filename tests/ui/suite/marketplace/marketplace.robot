@@ -805,7 +805,7 @@ Manage_Merchant_Product
     ...    AND    Trigger multistore p&s
 
 Merchant_Product_Original_Price
-    [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
+    [Documentation]    checks that Original price is displayed on the PDP and in Catalog
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products    

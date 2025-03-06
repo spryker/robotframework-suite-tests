@@ -935,7 +935,7 @@ Manage_Merchant_Product
     ...    AND    Delete dynamic admin user from DB
     
 Merchant_Product_Original_Price
-    [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
+    [Documentation]    checks that Original price is displayed on the PDP and in Catalog
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
     ...    AND    Zed: create dynamic merchant user:    Office King

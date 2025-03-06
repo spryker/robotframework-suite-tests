@@ -163,7 +163,6 @@ Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
     Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: delete all wishlists
     Yves: go to PDP of the product with sku:  003
     Yves: add product to wishlist:    My wishlist
     Yves: go to 'Wishlist' page

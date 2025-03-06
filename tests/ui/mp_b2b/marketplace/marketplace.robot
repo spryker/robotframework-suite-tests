@@ -866,7 +866,7 @@ Manage_Merchant_Product
     ...    AND    Trigger multistore p&s
 
 Merchant_Product_Original_Price
-    [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
+    [Documentation]    checks that Original price is displayed on the PDP and in Catalog
     MP: login on MP with provided credentials:    ${merchant_office_king_email}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product

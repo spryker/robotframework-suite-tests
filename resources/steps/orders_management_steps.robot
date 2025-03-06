@@ -68,7 +68,7 @@ Zed: trigger all matching states inside this order:
 
 Zed: trigger matching state of xxx merchant's shipment:
     [Documentation]    Marketplace specific method, suitable for My Orders of merchant. Triggers action for whole shipment
-    [Arguments]    ${shipment_number}    ${event}    ${delay}=10s    ${iterations}=20
+    [Arguments]    ${shipment_number}    ${event}    ${delay}=4s    ${iterations}=20
     Trigger oms
     Reload
     ${elementSelector}=    Set Variable    xpath=//div[@id='items']//h3[contains(.,'Shipment ${shipment_number}')]/../../following-sibling::div[2]//form[@name='event_trigger_form']//button[@id='event_trigger_form_submit'][text()='${event}']
@@ -99,7 +99,7 @@ Zed: trigger matching state of xxx merchant's shipment:
     END
 
 Zed: trigger matching state of order item inside xxx shipment:
-    [Arguments]    ${sku}    ${event}    ${shipment}=1    ${delay}=10s    ${iterations}=20
+    [Arguments]    ${sku}    ${event}    ${shipment}=1    ${delay}=4s    ${iterations}=20
     Trigger oms
     Reload
     IF    '${env}' in ['ui_mp_b2b','ui_mp_b2c']
@@ -144,7 +144,7 @@ Zed: trigger matching state of order item inside xxx shipment:
     END
 
 Zed: trigger matching state of xxx order item inside xxx shipment:
-    [Arguments]    ${event}    ${item_number}=1    ${shipment}=1    ${delay}=10s    ${iterations}=20
+    [Arguments]    ${event}    ${item_number}=1    ${shipment}=1    ${delay}=4s    ${iterations}=20
     Trigger oms
     Reload
     ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${item_number}]//td//form[contains(@name,'trigger_form')]//button[contains(text(),'${event}')]

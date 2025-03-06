@@ -14,7 +14,7 @@ Yves: go to wishlist with name:
     Click    xpath=//*[contains(@data-qa,'wishlist-overview')]//table//a[contains(text(),'${wishlistName}')]
     Element Should Be Visible    xpath=//main//*[contains(@class,'title')][contains(text(),'${wishlistName}')]
 
-Yves: product with sku is marked as discountinued in wishlist:
+Yves: product with sku is marked as discontinued in wishlist:
     [Arguments]    ${productSku}
     FOR    ${index}    IN RANGE    0    21
         ${discontinue_applied}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[contains(text(),'${productSku}')]/ancestor::td/following-sibling::td/span[contains(text(),'Discontinued')]
@@ -82,7 +82,7 @@ Yves: add all available products from wishlist to cart
     Wait Until Element Is Visible    ${wishlist_add_all_to_cart_button}
     Click    ${wishlist_add_all_to_cart_button}
 
-Yves: create new 'Whistist' with name:
+Yves: create new 'Wishlist' with name:
     [Arguments]    ${wishlistName}
     ${currentURL}=    Get Location
     IF    '/wishlist' not in '${currentURL}'    

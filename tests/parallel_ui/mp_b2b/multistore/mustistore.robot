@@ -147,12 +147,7 @@ Multistore_Product_Offer
     ...    || multistoreSKU${random} | AT             ||
     Repeat Keyword    3    Trigger multistore p&s
     Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Should Test Run
-    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
-    ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
-    ...    AND    Trigger multistore p&s
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 Multistore_CMS
     [Documentation]    Check CMS multistore functionality

@@ -44,8 +44,9 @@ Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 *** Test Cases ***
 Split_Delivery
     [Documentation]    Checks split delivery in checkout and check dashboard graph created in zed.
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: check if cart is not empty and clear it
+    [Setup]    Run Keywords    Create dynamic customer in DB
+    ...    AND    Create dynamic admin user in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    005
@@ -77,15 +78,14 @@ Split_Delivery
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: delete all user addresses
+    [Teardown]    Delete dynamic admin user from DB
 
 Guest_Checkout
     [Documentation]    Guest checkout with bundles, discounts and OMS. DMS-ON: https://spryker.atlassian.net/browse/FRW-7463
-    [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Setup]    Run keywords    Create dynamic admin user in DB
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
@@ -116,7 +116,7 @@ Guest_Checkout
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Trigger oms
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
@@ -125,11 +125,13 @@ Guest_Checkout
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Close
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
-    ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
+    ...    AND    Delete dynamic admin user from DB
 
 Guest_Checkout_Addresses
     [Documentation]    Guest checkout with different addresses and OMS. DMS-ON: https://spryker.atlassian.net/browse/FRW-7463
+    [Setup]    Create dynamic admin user in DB
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to PDP of the product with sku:    007
@@ -165,7 +167,7 @@ Guest_Checkout_Addresses
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Trigger oms
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: get the last placed order ID of the customer by email:    sonia+guest+new${random}@spryker.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
@@ -178,14 +180,13 @@ Guest_Checkout_Addresses
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Close
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
+    ...    AND    Delete dynamic admin user from DB
 
 Checkout_Address_Management
     [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
-    [Setup]    Run Keywords    
-    ...    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: delete all user addresses
-    ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
@@ -195,7 +196,7 @@ Checkout_Address_Management
     ...    || salutation | firstName | lastName | street         | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
     ...    || Mr.        | First     | Last     | Billing Street | 123         | 10247    | Berlin | Germany | Spryker | 987654321 | Additional street ||
     Yves: save new billing address to address book:    false
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
+    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
@@ -218,20 +219,20 @@ Checkout_Address_Management
     Yves: get the last placed order ID by current customer
     Yves: check that user has address exists/doesn't exist:    true    First    Last    Shipping Street    7    10247    Geneva    Switzerland
     Yves: check that user has address exists/doesn't exist:    false    New    Billing    Changed Street    098    09876    Berlin    Germany
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: billing address for the order should be:    New Billing, Changed Street 098, 09876 Berlin, Germany
     Zed: shipping address inside xxx shipment should be:    1    Mr First, Last, Shipping Street, 7, Additional street, Spryker, 10247, Geneva, Switzerland 
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: delete all user addresses
+    [Teardown]    Delete dynamic admin user from DB
 
 Login_during_checkout
+    Create dynamic customer in DB
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
     Yves: go to shopping cart page  
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
+    Yves: proceed as a guest user and login during checkout:   ${dynamic_customer}
     Yves: fill in the following new shipping address:
     ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone           | additionalAddress     ||
     ...    || ${Salutation}  | ${Guest_user_first_name}     | ${Guest_user_last_name}     | ${random}     | ${random}         | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address} ||
@@ -247,6 +248,7 @@ Login_during_checkout
 Register_during_checkout
     [Documentation]    Guest user email should be whitelisted from the AWS side before running the test
     [Tags]    glue
+    [Setup]    Create dynamic admin user in DB
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
@@ -275,55 +277,5 @@ Register_during_checkout
     Yves: assert customer profile data:
     ...    || salutation    | first name               | last name               | email                            ||
     ...    || ${salutation} | ${guest_user_first_name} | ${guest_user_last_name} | sonia+guest${random}@spryker.com ||
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: delete customer:    sonia+guest${random}@spryker.com
-
-Configurable_Product_Checkout
-    [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate all discounts from Overview page
-    ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: create new 'Wishlist' with name:    configProduct${random}
-    ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: delete all user addresses
-    ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
-    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
-    Yves: change variant of the product on PDP on:    ${configurable_product_concrete_one_attribute}
-    Yves: PDP contains/doesn't contain:    true    ${configureButton}
-    Yves: product configuration status should be equal:       Configuration is not complete.
-    Yves: change the product options in configurator to:
-    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten       ||
-    ...    || 517        | 473        | 100          | 0.00       |  51         | 19         | 367          | 46           | 72          | English Keyboard ||
-    Yves: save product configuration
-    Yves: product configuration status should be equal:      Configuration complete!
-    Yves: add product to the shopping cart
-    Yves: go to shopping cart page
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=1,599.00
-    Yves: change the product options in configurator to:
-    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten      ||
-    ...    || 905        | 249        | 100          | 36         |  15         | 0.00       | 48           | 57           | 36          | German Keyboard ||
-    Yves: save product configuration
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=1,346.00 
-    Yves: product configuration status should be equal:      Configuration complete!
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:   ${yves_user_address}
-    Yves: submit form on the checkout
-    Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
-    Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,361.00
-    Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside this order:    Pay
-    Zed: trigger all matching states inside this order:    Skip timeout
-    Zed: trigger all matching states inside this order:    skip picking
-    Zed: trigger all matching states inside this order:    Ship
-    Zed: trigger all matching states inside this order:    Stock update
-    Zed: trigger all matching states inside this order:    Refund
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
-    [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: activate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order

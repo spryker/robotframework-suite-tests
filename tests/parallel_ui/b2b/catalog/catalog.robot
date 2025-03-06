@@ -93,8 +93,7 @@ Volume_Prices
     Yves: shopping cart contains product with unit price:    420685    Post-it stick note Super Sticky Meeting Notes 6445-4SS 4 pieces/pack    4.20
 
 Discontinued_Alternative_Products
-    [Documentation]    Checks that product can be discontinued in Zed. DMS-ON: https://spryker.atlassian.net/browse/FRW-7465 skipped for dms-on
-    [Tags]    dms-off
+    [Documentation]    Checks that product can be discontinued in Zed.
     [Setup]    Create dynamic admin user in DB
     Yves: go to PDP of the product with sku:  M21100
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
@@ -558,7 +557,6 @@ Product_Availability_Calculation
     ...    AND    Zed: update warehouse:
     ...    || warehouse  | unselect store ||
     ...    || Warehouse1 | AT             ||
-    ...    AND    Trigger multistore p&s
     ...    AND    Repeat Keyword    3    Trigger multistore p&s
     ...    AND    Delete dynamic admin user from DB
 

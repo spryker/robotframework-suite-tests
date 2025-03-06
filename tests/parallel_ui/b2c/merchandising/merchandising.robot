@@ -58,7 +58,8 @@ Product_labels
 
 Product_Sets
     [Documentation]    Check the usage of product sets.
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Create dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to URL:    en/product-sets
     Yves: 'Product Sets' page contains the following sets:    HP Product Set    Sony Product Set    Upgrade your running game
     Yves: view the following Product Set:    Upgrade your running game
@@ -68,12 +69,12 @@ Product_Sets
     Yves: go to shopping cart page
     Yves: shopping cart contains the following products:    TomTom Golf    Samsung Galaxy S6 edge
     Yves: delete from b2c cart products with name:    TomTom Golf    Samsung Galaxy S6 edge
-    [Teardown]    Yves: check if cart is not empty and clear it
 
 Configurable_Bundle
     [Documentation]    Check the usage of configurable bundles (includes authorized checkout). DMS-ON: https://spryker.atlassian.net/browse/FRW-7463
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: check if cart is not empty and clear it
+    [Setup]    Run Keywords    Create dynamic admin user in DB
+    ...    AND    Create dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to URL:    en/configurable-bundle/configurator/template-selection
     Yves: 'Choose Bundle to configure' page is displayed
     Yves: choose bundle template to configure:    Smartstation Kit
@@ -108,66 +109,18 @@ Configurable_Bundle
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
     Yves: 'Order Details' page contains the following product title N times:    Smartstation Kit    3
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    skip picking
     Zed: trigger all matching states inside this order:    Ship
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Close
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: check if cart is not empty and clear it
-
-Discounts
-    [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
-    [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate all discounts from Overview page
-    ...    AND    Zed: change product stock:    190    190_25111746    true    10
-    ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
-    ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
-    ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
-    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
-    Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=002    promotionalProductQuantity=2
-    Trigger p&s
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: check if cart is not empty and clear it
-    Yves: go to PDP of the product with sku:    190
-    Yves: add product to the shopping cart
-    Yves: go to shopping cart page
-    Yves: apply discount voucher to cart:    test${random}
-    Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €8.73
-    Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €17.46
-    Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
-    Yves: add product to the shopping cart
-    Yves: go to shopping cart page
-    Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €87.96
-    Yves: promotional product offer is/not shown in cart:    true
-    Yves: change quantity of promotional product and add to cart:    +    1
-    Yves: shopping cart contains the following products:    Kodak EasyShare M532    Canon IXUS 160
-    Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €75.00
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €753.55
-    [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
-    ...    AND    Zed: activate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
 
 Product_Relations
     [Documentation]    Checks related product on PDP and upsell products in cart
-    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Create dynamic customer in DB
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${product_with_relations_related_products_sku}
     Yves: PDP contains/doesn't contain:    true    ${relatedProducts}
     Yves: go to PDP of the product with sku:    ${product_with_relations_upselling_sku}
@@ -175,16 +128,16 @@ Product_Relations
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
-    [Teardown]    Yves: check if cart is not empty and clear it
 
 CRUD_Product_Set
-    [Documentation]    CRUD operations for product sets. DMS-ON: https://spryker.atlassian.net/browse/FRW-7393 
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Documentation]    CRUD operations for product sets.
+    Create dynamic admin user in DB
+    Create dynamic customer in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create new product set:
     ...    || name en            | name de            | url en             | url de             | set key       | active | product | product 2 | product 3 ||
     ...    || test set ${random} | test set ${random} | test-set-${random} | test-set-${random} | test${random} | true   | 005     | 007       | 010       ||
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
-    Yves: check if cart is not empty and clear it
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to newly created page by URL:    en/test-set-${random}
     Yves: 'Product Set' page contains the following products:    Canon IXUS 175
     Yves: 'Product Set' page contains the following products:    Canon IXUS 285
@@ -193,8 +146,8 @@ CRUD_Product_Set
     Yves: shopping cart contains the following products:    Canon IXUS 175
     Yves: shopping cart contains the following products:    Canon IXUS 285
     Yves: shopping cart contains the following products:    Canon IXUS 180
-    Yves: check if cart is not empty and clear it
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: delete product set:    test set ${random}
     Trigger multistore p&s
     Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/test-set-${random}
+    [Teardown]    Delete dynamic admin user from DB

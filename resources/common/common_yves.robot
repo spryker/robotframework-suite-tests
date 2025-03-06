@@ -70,14 +70,14 @@ Yves: login on Yves with provided credentials:
         IF    'agent' in '${currentURL}'
             Page Should Contain Element    ${customerSearchWidget}    Login Failed!
         ELSE    
-            Page Should Contain Element    ${user_navigation_icon_header_menu_item}[${env}]     Login Failed!
+            Page Should Contain Element    ${user_header_logout_button}     Login Failed!
         END
     EXCEPT
         Reload
         IF    'agent' in '${currentURL}'
             Page Should Contain Element    locator=${customerSearchWidget}    message=Login Failed!    timeout=1s
         ELSE    
-            Page Should Contain Element    locator=${user_navigation_icon_header_menu_item}[${env}]     message=Login Failed!    timeout=1s
+            Page Should Contain Element    locator=${user_header_logout_button}     message=Login Failed!    timeout=1s
         END
     END
     Yves: remove flash messages
@@ -110,11 +110,8 @@ Yves: login on Yves with provided credentials and expect error:
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
-
-    Page Should Not Contain Element    ${user_navigation_icon_header_menu_item}[${env}]
-
+    Page Should Not Contain Element    ${user_header_logout_button}
     Yves: flash message should be shown:    error    Please check that your E-mail address and password are correct and that you have confirmed your E-mail address by clicking the link in the registration message
-
     Yves: remove flash messages
 
 Yves: go to PDP of the product with sku:

@@ -130,7 +130,7 @@ Discontinued_Alternative_Products
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to 'Wishlist' page
     Yves: go to wishlist with name:    My wishlist
-    Yves: product with sku is marked as discountinued in wishlist:    ${discontinued_product_concrete_sku}
+    Yves: product with sku is marked as discontinued in wishlist:    ${discontinued_product_concrete_sku}
     Yves: product with sku is marked as alternative in wishlist:    012
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
@@ -335,7 +335,7 @@ Manage_Product
     ...    AND    Yves: check if cart is not empty and clear it
 
 Product_Original_Price
-    [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
+    [Documentation]    checks that Original price is displayed on the PDP and in Catalog
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
     ...    || sku                     | store | name en                  | name de                    | new from   | new to     ||
@@ -454,7 +454,7 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 2.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Cancel
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
@@ -485,7 +485,7 @@ Configurable_Product_PDP_Wishlist_Availability
     [Documentation]    Configure product from PDP and Wishlist + availability case.
     [Setup]    Run keywords   Delete All Cookies
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
+    ...    AND    Yves: create new 'Wishlist' with name:    configProduct${random}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
     ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany

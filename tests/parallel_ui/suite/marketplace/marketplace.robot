@@ -797,7 +797,7 @@ Manage_Merchant_Product
     ...    AND    Delete dynamic admin user from DB
 
 Merchant_Product_Original_Price
-    [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
+    [Documentation]    checks that Original price is displayed on the PDP and in Catalog
     [Setup]    Run Keywords    Zed: create dynamic merchant user:    Budget Cameras
     ...    AND    Create dynamic customer in DB
     MP: login on MP with provided credentials:    ${dynamic_budget_merchant}

@@ -126,7 +126,7 @@ Discontinued_Alternative_Products
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to 'Wishlist' page
     Yves: go to wishlist with name:    My wishlist
-    Yves: product with sku is marked as discountinued in wishlist:    ${discontinued_product_concrete_sku}
+    Yves: product with sku is marked as discontinued in wishlist:    ${discontinued_product_concrete_sku}
     Yves: product with sku is marked as alternative in wishlist:    012
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: undo discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
@@ -410,7 +410,7 @@ Product_Availability_Calculation
     [Documentation]    Configure product from PDP and Wishlist + availability case.
     [Setup]    Run keywords   Create dynamic customer in DB
     ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
+    ...    AND    Yves: create new 'Wishlist' with name:    configProduct${random}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: change variant of the product on PDP on:    ${configurable_product_concrete_one_attribute}
     Yves: PDP contains/doesn't contain:    true    ${configureButton}

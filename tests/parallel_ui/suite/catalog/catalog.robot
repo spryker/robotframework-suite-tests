@@ -104,7 +104,6 @@ Volume_Prices
     [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
     ...    AND    Zed: check and restore product availability in Zed:    ${volume_prices_product_abstract_sku}    Available    ${volume_prices_product_concrete_sku}    ${dynamic_admin_user}
-    ...    AND    Trigger p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${volume_prices_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
@@ -134,7 +133,7 @@ Discontinued_Alternative_Products
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to 'Wishlist' page
     Yves: go to wishlist with name:    My wishlist
-    Yves: product with sku is marked as discountinued in wishlist:    ${discontinued_product_concrete_sku}
+    Yves: product with sku is marked as discontinued in wishlist:    ${discontinued_product_concrete_sku}
     Yves: product with sku is marked as alternative in wishlist:    012
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: undo discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
@@ -346,7 +345,7 @@ Manage_Product
 Product_Original_Price
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
-    [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
+    [Documentation]    checks that Original price is displayed on the PDP and in Catalog
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: start new abstract product creation:
     ...    || sku                     | store | name en                  | name de                    | new from   | new to     ||
@@ -411,7 +410,6 @@ Product_Availability_Calculation
     ...    || warehouse  | store || 
     ...    || Warehouse1 | AT    ||
     Repeat Keyword    3    Trigger multistore p&s
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: start new abstract product creation:
     ...    || sku                      | store | store 2 | name en                      | name de                        | new from   | new to     ||
     ...    || availabilitySKU${random} | DE    | AT      | availabilityProduct${random} | DEavailabilityProduct${random} | 01.01.2020 | 01.01.2030 ||
@@ -498,7 +496,7 @@ Configurable_Product_PDP_Wishlist_Availability
     [Documentation]    Configure product from PDP and Wishlist + availability case.
     [Setup]    Run keywords   Create dynamic customer in DB
     ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
+    ...    AND    Yves: create new 'Wishlist' with name:    configProduct${random}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${configureButton}
     Yves: product price on the PDP should be:    ${configurable_product_price_without_configurations}

@@ -44,9 +44,8 @@ Resource    ../../../../resources/steps/configurable_bundle_steps.robot
 
 *** Test Cases ***
 Product_Sets
-    [Documentation]    Checks that product set can be added into cart. DMS-on mode: https://spryker.atlassian.net/browse/FRW-6377
-    [Tags]    dms-off
-    [Setup]    Create dynamic customer in DB
+    [Documentation]    Checks that product set can be added into cart.
+    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to URL:    en/product-sets
     Yves: 'Product Sets' page contains the following sets:    The Presenter's Set    Basic office supplies    The ultimate data disposal set

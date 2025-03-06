@@ -44,12 +44,13 @@ Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 *** Test Cases ***
 Login_during_checkout
     [Tags]    smoke
+    Create dynamic customer in DB
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
     Yves: go to shopping cart page  
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
+    Yves: proceed as a guest user and login during checkout:   ${dynamic_customer}
     Yves: fill in the following new shipping address:
     ...    || salutation     | firstName                    | lastName                    | street        | houseNumber       | postCode     | city       | country     | company    | phone     | additionalAddress     ||
     ...    || ${Salutation}  | ${Guest_user_first_name}     | ${Guest_user_last_name}     | ${random}     | ${random}         | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address} ||

@@ -217,28 +217,23 @@ Multistore_Product_Offer
     ...    || multistoreSKU${random} | AT             ||
     Repeat Keyword    3    Trigger multistore p&s
     Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
-    ...    AND    Zed: click Action Button in a table for row that contains:     multistoreSKU${random}     Deny
-    ...    AND    Trigger multistore p&s
-    ...    AND    Delete dynamic admin user from DB
+    [Teardown]    Delete dynamic admin user from DB
 
 Multistore_CMS
     [Documentation]    check CMS multistore functionality
-    Create dynamic admin user in DB    user_name=admin+multi+root${random}@spryker.com
-    Create dynamic admin user in DB    user_name=admin+multi+content${random}@spryker.com
-    Zed: login on Zed with provided credentials:    admin+multi+content${random}@spryker.com
+    Create dynamic admin user in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
     Trigger multistore p&s
     Yves: go to newly created page by URL on AT store if other store not specified:    en/multistore-page${random}
     Save current URL
     Yves: page contains CMS element:    CMS Page Title    Multistore Page
-    Zed: login on Zed with provided credentials:    admin+multi+content${random}@spryker.com
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: update cms page and publish it:
     ...    || cmsPage                  | unselect store ||
     ...    || Multistore Page${random} | AT             ||
     Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    admin+multi+root${random}@spryker.com
+    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Multistore Page${random}    Deactivate
 
@@ -309,4 +304,3 @@ Dynamic_multistore
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    New Page Store${random}   Deactivate
-    ...    AND    Trigger multistore p&s

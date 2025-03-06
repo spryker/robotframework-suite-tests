@@ -122,7 +122,7 @@ Discontinued_Alternative_Products
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to 'Wishlist' page
     Yves: go to wishlist with name:    My wishlist
-    Yves: product with sku is marked as discountinued in wishlist:    ${discontinued_product_concrete_sku}
+    Yves: product with sku is marked as discontinued in wishlist:    ${discontinued_product_concrete_sku}
     Yves: product with sku is marked as alternative in wishlist:    012
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}    
     ...    AND    Yves: check if cart is not empty and clear it
@@ -274,7 +274,7 @@ Offer_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 2.
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Cancel
     Trigger p&s
@@ -363,7 +363,7 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-1 only has availability of 2.
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Cancel
     Trigger multistore p&s
@@ -402,7 +402,7 @@ Product_Availability_Calculation
  Configurable_Product_PDP_Wishlist_Availability
     [Documentation]    Configure product from PDP and Wishlist + availability case.
     [Setup]    Run keywords   Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
+    ...    AND    Yves: create new 'Wishlist' with name:    configProduct${random}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
     ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
