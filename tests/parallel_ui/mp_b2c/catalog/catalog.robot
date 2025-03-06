@@ -44,6 +44,8 @@ Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 *** Test Cases ***
 Catalog
     [Documentation]    Checks that catalog options and search work
+    Trigger multistore p&s
+    Yves: go to the 'Home' page
     Yves: perform search by:    canon
     Yves: 'Catalog' page should show products:    29
     Yves: select filter value:    Color    blue
