@@ -20,11 +20,11 @@ Yves: check comments are visible or not in cart:
     [Arguments]    ${condition}    @{comments}    
     FOR    ${element}    IN    @{comments}
         IF    '${env}' in ['ui_suite']
-            IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should    timeout=${browser_timeout}
-            IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not    timeout=${browser_timeout}
+            IF    '${condition}' == 'true'    Page Should Contain Element    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should    timeout=${browser_timeout}
+            IF    '${condition}' == 'false'    Page Should Not Contain Element    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not    timeout=${browser_timeout}
         ELSE
-            IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should    timeout=${browser_timeout}
-            IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not    timeout=${browser_timeout}
+            IF    '${condition}' == 'true'    Page Should Contain Element    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should    timeout=${browser_timeout}
+            IF    '${condition}' == 'false'    Page Should Not Contain Element    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not    timeout=${browser_timeout}
         END
     END
 
