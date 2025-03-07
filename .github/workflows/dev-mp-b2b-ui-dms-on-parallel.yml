@@ -77,18 +77,18 @@ jobs:
               run: |
                   cd robotframework-tests
                   rebot -d results --output output.xml --merge results/dynamic_set/output.xml results/static_set/output.xml
-            # - name: Rerun Failed Tests
-            #   id: rerun_failed_tests
-            #   if: always() && steps.merge_initial_results.outcome != 'success'
-            #   continue-on-error: true
-            #   run: |
-            #       cd robotframework-tests
-            #       robot -v env:ui_mp_b2b -v dms:true -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.parallel_ui.mp_b2b .
-            # - name: Merge Final Test Results
-            #   if: always() && steps.merge_initial_results.outcome != 'success'
-            #   run: |
-            #       cd robotframework-tests
-            #       rebot -d results --merge results/output.xml results/rerun/rerun.xml
+            - name: Rerun Failed Tests
+              id: rerun_failed_tests
+              if: always() && steps.merge_initial_results.outcome != 'success'
+              continue-on-error: true
+              run: |
+                  cd robotframework-tests
+                  robot -v env:ui_mp_b2b -v dms:true -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.parallel_ui.mp_b2b .
+            - name: Merge Final Test Results
+              if: always() && steps.merge_initial_results.outcome != 'success'
+              run: |
+                  cd robotframework-tests
+                  rebot -d results --merge results/output.xml results/rerun/rerun.xml
             - name: Upload artifacts
               if: always() && steps.merge_initial_results.outcome != 'success'
               run: |
