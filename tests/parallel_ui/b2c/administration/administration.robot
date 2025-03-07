@@ -56,6 +56,8 @@ Payment_method_update
     [Documentation]    Deactivate payment method, unset payment method for stores in zed and check its impact on yves.
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Create dynamic admin user in DB
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: activate/deactivate payment method:    Dummy Payment    Credit Card    true
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    020
     Yves: add product to the shopping cart
