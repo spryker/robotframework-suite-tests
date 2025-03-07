@@ -51,6 +51,14 @@ Yves: product with sku is marked as alternative in wishlist:
 
 Yves: create wishlist with name:
     [Arguments]    ${wishlistName}
+    ${currentURL}=    Get Location
+    IF    '/wishlist/detail' in '${currentURL}' or '/wishlist' not in '${currentURL}'
+            IF    '.at.' in '${currentURL}'
+                Go To    ${yves_at_url}wishlist
+            ELSE
+                Go To    ${yves_url}wishlist
+            END    
+    END
     Type Text    ${wishlist_name_input_field}    ${wishlistName}
     Click    ${wishlist_add_new_button}
     Yves: flash message should be shown:    success    Wishlist created successfully.
@@ -85,7 +93,7 @@ Yves: add all available products from wishlist to cart
 Yves: create new 'Wishlist' with name:
     [Arguments]    ${wishlistName}
     ${currentURL}=    Get Location
-    IF    '/wishlist' not in '${currentURL}'    
+    IF    '/wishlist/detail' in '${currentURL}' or '/wishlist' not in '${currentURL}'
             IF    '.at.' in '${currentURL}'
                 Go To    ${yves_at_url}wishlist
             ELSE
