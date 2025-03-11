@@ -1087,7 +1087,11 @@ Create dynamic customer in DB
             ${attempt}=    Set Variable    1
             WHILE    ${attempt} <= 3
                 TRY
-                    Execute Sql String    INSERT INTO spy_company_user (id_company_user, fk_company, fk_company_business_unit, fk_customer, is_active, is_default, \`key\`, uuid) VALUES (${new_id_company_user}, ${existing_fk_company}, ${existing_fk_company_business_unit}, ${new_id_customer}, True, False, '${new_key}', '${new_uuid}')
+                    IF    '${db_engine}' == 'pymysql' 
+                        Execute Sql String    INSERT INTO spy_company_user (id_company_user, fk_company, fk_company_business_unit, fk_customer, is_active, is_default, \`key\`, uuid) VALUES (${new_id_company_user}, ${existing_fk_company}, ${existing_fk_company_business_unit}, ${new_id_customer}, True, False, '${new_key}', '${new_uuid}')
+                    ELSE
+                        Execute Sql String    INSERT INTO spy_company_user (id_company_user, fk_company, fk_company_business_unit, fk_customer, is_active, is_default, key, uuid) VALUES (${new_id_company_user}, ${existing_fk_company}, ${existing_fk_company_business_unit}, ${new_id_customer}, True, False, '${new_key}', '${new_uuid}')
+                    END
                     Exit For Loop
                 EXCEPT
                     Log    Attempt ${attempt} failed due to duplicate entry in spy_company_user. Retrying...
