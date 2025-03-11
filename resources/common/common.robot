@@ -97,7 +97,7 @@ Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
     ...    It accepts the name of the environment as specified at the beginning of an environment file e.g. ``"environment": "api_suite"``.
     ...
-    ...    These variables are loaded and usable throughtout all tests of the test suite, if this keyword is called during suite setup.
+    ...    These variables are loaded and usable throughout all tests of the test suite, if this keyword is called during suite setup.
     ...
     ...    *Example:*
     ...
@@ -180,7 +180,7 @@ Evaluate datatype of a variable:
     # ${is int}=      Evaluate     isinstance($variable, int)    # will be True
     # ${is string}=   Evaluate     isinstance($variable, str)    # will be False
 
-Conver string to List by separator:
+Convert string to List by separator:
     [Arguments]    ${string}    ${separator}=,
     ${convertedList}=    Split String    ${string}    ${separator}
     ${convertedList}=    Set Test Variable    ${convertedList}
@@ -196,7 +196,7 @@ Connect to Spryker DB
     [Documentation]    This keyword allows to connect to Spryker DB.
     ...        Supports both MariaDB and PostgeSQL.
     ...
-    ...        To specify the expected DB engine, use ``db_engine`` variabl. Default one -> *MariaDB*
+    ...        To specify the expected DB engine, use ``db_engine`` variable. Default one -> *MariaDB*
     ...
     ...    *Example:*
     ...    ``robot -v env:api_suite -v db_engine:psycopg2``
@@ -1107,7 +1107,7 @@ Create dynamic customer in DB
             END
             IF    ${attempt} > 3    Fail    Unable to insert company user into spy_company_user after 3 attempts.
             
-            # Insert the new company role to company iser entry in the spy_company_role_to_company_user table
+            # Insert the new company role to company user entry in the spy_company_role_to_company_user table
             ${existing_company_role_to_user_data}=    Query    SELECT * FROM spy_company_role_to_company_user WHERE fk_company_user = ${existing_id_company_user}
             FOR    ${roles}    IN    @{existing_company_role_to_user_data}
 
