@@ -77,6 +77,7 @@ User_Control
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: deactivate the created user:    sonia+control${random}@spryker.com
     Zed: login with deactivated user/invalid data:    sonia+control${random}@spryker.com    ${default_secure_password}
+    Fail    Test Fail
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Users    User Roles
     ...    AND    Zed: click Action Button in a table for row that contains:    controlRole${random}    Delete
