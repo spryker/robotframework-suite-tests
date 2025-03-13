@@ -295,7 +295,7 @@ Run console command
             END
         END
         Log    ${ignore_console}
-        IF    ${ignore_console} != True
+        IF    ${ignore_console} != True and not ${docker}
             TRY
                 ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
                 Log   ${output}
@@ -322,7 +322,7 @@ Run console command
                 Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
             END
         END
-        IF    ${ignore_console} != True
+        IF    ${ignore_console} != True and not ${docker}
             TRY
                 ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
                 Log   ${output}
@@ -337,12 +337,12 @@ Run console command
     END
 
 Trigger p&s
-    [Arguments]    ${timeout}=0.5s    ${storeName}=DE
+    [Arguments]    ${timeout}=0.3s    ${storeName}=DE
     Run console command    console queue:worker:start --stop-when-empty    ${storeName}
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger API specification update
-    [Arguments]    ${timeout}=1s    ${storeName}=DE
+    [Arguments]    ${timeout}=0.3s    ${storeName}=DE
     IF    ${docker}
         Run console command    glue api:generate:documentation --invalidated-after-interval 90sec    ${storeName}
     ELSE
@@ -351,7 +351,7 @@ Trigger API specification update
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger multistore p&s
-    [Arguments]    ${timeout}=0.5s
+    [Arguments]    ${timeout}=0.3s
     IF    ${dms}
         Trigger p&s    ${timeout}    DE
     ELSE
@@ -360,7 +360,7 @@ Trigger multistore p&s
     END
 
 Trigger oms
-    [Arguments]    ${timeout}=0.5s
+    [Arguments]    ${timeout}=0.3s
     IF    ${dms}
         Run console command    console oms:check-timeout    DE
         Run console command    console oms:check-condition    DE
@@ -378,7 +378,7 @@ Trigger publish trigger-events
         ...
         ...    ``Trigger publish trigger-events    resource=service_point    storeName=DE    timeout=5s``
         ...
-    [Arguments]    ${resource}    ${storeName}=DE    ${timeout}=5s
+    [Arguments]    ${resource}    ${storeName}=DE    ${timeout}=0.3s
     Run console command    console publish:trigger-events -r ${resource}    ${storeName}
     Trigger p&s    ${timeout}    ${storeName}
 
@@ -834,7 +834,7 @@ Delete product_price by id_price_product in Database:
     Disconnect From Database
 
 Trigger product labels update
-    [Arguments]    ${timeout}=1s
+    [Arguments]    ${timeout}=0.3s
     Run console command    console product-label:relations:update -vvv --no-touch    DE
     Run console command    console product-label:validity    DE
     Run console command    console product-label:relations:update -vvv --no-touch    AT

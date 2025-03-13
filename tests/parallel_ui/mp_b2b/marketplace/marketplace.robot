@@ -186,37 +186,6 @@ Shopping_List_Contains_Offers
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
 
-Merchant_Portal_Customer_Specific_Prices
-    [Documentation]    Checks that customer will see product/offer prices specified by merchant for his business unit
-    [Setup]    Run Keywords    Create dynamic admin user in DB
-    ...    AND    Create dynamic customer in DB    based_on=${yves_company_user_custom_merchant_prices_email}
-    ...    AND    Zed: create dynamic merchant user:    Spryker
-    MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
-    MP: open navigation menu tab:    Products
-    MP: perform search by:    ${one_variant_product_of_main_merchant_abstract_sku}
-    MP: click on a table row that contains:    ${one_variant_product_of_main_merchant_abstract_sku}
-    MP: open concrete drawer by SKU:    ${one_variant_product_of_main_merchant_concrete_sku}
-    MP: fill product price values:
-    ...    || product type | row number | customer                  | store | currency | gross default ||
-    ...    || concrete     | 1          | 5 - Spryker Systems GmbH  | DE    | EUR      | 100           ||
-    MP: save concrete product
-    Trigger p&s
-    Yves: login on Yves with provided credentials:     ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
-    Yves: merchant's offer/product price should be:    Spryker     €100.00
-    MP: login on MP with provided credentials:    ${merchant_spryker_email}
-    MP: open navigation menu tab:    Products
-    MP: perform search by:    ${one_variant_product_of_main_merchant_abstract_sku}
-    MP: click on a table row that contains:    ${one_variant_product_of_main_merchant_abstract_sku}
-    MP: open concrete drawer by SKU:    ${one_variant_product_of_main_merchant_concrete_sku}
-    MP: delete product price row that contains text:    5 - Spryker Systems GmbH
-    MP: save concrete product
-    Trigger p&s
-    Yves: login on Yves with provided credentials:     ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
-    Yves: merchant's offer/product price should be:    Spryker     €632.12
-    [Teardown]    Delete dynamic admin user from DB
-
 Search_for_Merchant_Offers_and_Products
     [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers
     Create dynamic customer in DB

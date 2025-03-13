@@ -216,7 +216,7 @@ Request_for_Quote
     [Teardown]    Delete dynamic admin user from DB
 
 Unique_URL
-    [Tags]    dms-on    debug
+    [Tags]    dms-on
     [Documentation]    Bug: https://spryker.atlassian.net/browse/CC-12380
     Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
