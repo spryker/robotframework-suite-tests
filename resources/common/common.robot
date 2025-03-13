@@ -337,12 +337,12 @@ Run console command
     END
 
 Trigger p&s
-    [Arguments]    ${timeout}=0.3s    ${storeName}=DE
+    [Arguments]    ${timeout}=0.5s    ${storeName}=DE
     Run console command    console queue:worker:start --stop-when-empty    ${storeName}
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger API specification update
-    [Arguments]    ${timeout}=0.3s    ${storeName}=DE
+    [Arguments]    ${timeout}=0.5s    ${storeName}=DE
     IF    ${docker}
         Run console command    glue api:generate:documentation --invalidated-after-interval 90sec    ${storeName}
     ELSE
@@ -351,7 +351,7 @@ Trigger API specification update
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger multistore p&s
-    [Arguments]    ${timeout}=0.3s
+    [Arguments]    ${timeout}=0.5s
     IF    ${dms}
         Trigger p&s    ${timeout}    DE
     ELSE
@@ -360,7 +360,7 @@ Trigger multistore p&s
     END
 
 Trigger oms
-    [Arguments]    ${timeout}=0.3s
+    [Arguments]    ${timeout}=0.5s
     IF    ${dms}
         Run console command    console oms:check-timeout    DE
         Run console command    console oms:check-condition    DE
@@ -378,7 +378,7 @@ Trigger publish trigger-events
         ...
         ...    ``Trigger publish trigger-events    resource=service_point    storeName=DE    timeout=5s``
         ...
-    [Arguments]    ${resource}    ${storeName}=DE    ${timeout}=0.3s
+    [Arguments]    ${resource}    ${storeName}=DE    ${timeout}=0.5s
     Run console command    console publish:trigger-events -r ${resource}    ${storeName}
     Trigger p&s    ${timeout}    ${storeName}
 
@@ -834,7 +834,7 @@ Delete product_price by id_price_product in Database:
     Disconnect From Database
 
 Trigger product labels update
-    [Arguments]    ${timeout}=0.3s
+    [Arguments]    ${timeout}=0.5s
     Run console command    console product-label:relations:update -vvv --no-touch    DE
     Run console command    console product-label:validity    DE
     Run console command    console product-label:relations:update -vvv --no-touch    AT
