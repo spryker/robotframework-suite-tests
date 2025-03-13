@@ -47,6 +47,7 @@ Merchant_Portal_Product_Volume_Prices
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
     ...    AND    Zed: create dynamic merchant user:    Office King
+    ...    AND    Trigger p&s
     MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
