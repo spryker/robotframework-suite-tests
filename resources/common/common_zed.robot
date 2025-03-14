@@ -209,3 +209,9 @@ Zed: filter by merchant:
     [Arguments]    ${merchant}
     Wait Until Element Is Visible    ${zed_merchants_dropdown_locator}
     Select From List By Label    ${zed_merchants_dropdown_locator}    ${merchant}
+
+Zed: go to URL:
+    [Arguments]    ${url}
+    ${url}=    Get URL Without Starting Slash    ${url}
+    Set Browser Timeout    ${browser_timeout}
+    Go To    ${zed_url}${url}
