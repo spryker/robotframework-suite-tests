@@ -1,0 +1,21 @@
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace Prices
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace Manage Product
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace Offline Profile
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace Product And Offer
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace Volume Prices
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace Oms
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Catalog.Catalog
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Catalog.Catalog Offer Availability
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Catalog.Catalog Product Availability
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Multistore.Multistore Catalog
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Sales.Sales
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Checkout.Checkout
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Content.Content
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Customers.Customer
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Company.Company
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Users.Users
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Administration.Administration
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Merchandising.Merchandising
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Data Exchange.Data Exchange
+--suite Spryker.Tests.Parallel Ui.Mp B2B.Multistore.Multistore Dms
