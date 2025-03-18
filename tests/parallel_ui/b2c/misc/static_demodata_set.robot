@@ -130,6 +130,7 @@ Configurable_Product_Checkout
 
 Fulfillment_app_e2e
     # # LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
+    Remove all warehouse user assignments by user uuid:    ${warehouse_user[0].de_admin_user_uuid}
     Make user a warehouse user/ not a warehouse user:    ${warehouse_user[0].de_admin_user_uuid}    0
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update Zed user:

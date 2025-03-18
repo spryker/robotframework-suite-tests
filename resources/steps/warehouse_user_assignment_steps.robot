@@ -47,6 +47,20 @@ Remove_warehouse_user_assignment:
     Execute Sql String    DELETE FROM spy_warehouse_user_assignment WHERE id_warehouse_user_assignment = ${id_warehouse_user_assignment};
     Disconnect From Database
 
+Remove all warehouse user assignments by user uuid:
+    [Documentation]    This keyword deletes all entries from the DB table `spy_warehouse_user_assignment` matching provided user_uuid.
+        ...    *Example:*
+        ...
+        ...    ``Remove all warehouse user assignments by user uuid:    ${user_uuid}``
+        ...
+    [Arguments]    ${user_uuid}
+    Connect to Spryker DB
+    ${assignments}=    Query    SELECT id_warehouse_user_assignment FROM spy_warehouse_user_assignment WHERE user_uuid='${user_uuid}'
+    FOR    ${row}    IN    @{assignments}
+        ${assignment_id}=    Set Variable    ${row}[0]
+        Execute Sql String    DELETE FROM spy_warehouse_user_assignment WHERE id_warehouse_user_assignment = ${assignment_id}
+    END
+
 Make user a warehouse user/ not a warehouse user:
     [Documentation]    This keyword update user with warehouse assignment in the DB table `spy_user`.
         ...    *Example:*
