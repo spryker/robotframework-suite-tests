@@ -6,11 +6,11 @@ Resource    ../common/common_api.robot
 
 *** Keywords ***
 
-Create_warehouse_user_assigment:
-    [Documentation]    This keyword creates new warehouse user assigment in the DB table `spy_warehouse_user_assignment`.
+Create_warehouse_user_assignment:
+    [Documentation]    This keyword creates new warehouse user assignment in the DB table `spy_warehouse_user_assignment`.
         ...    *Example:*
         ...
-        ...    ``Create_warehouse_user_assigment:   ${warehouse_uuid}    ${user_uuid}    false``
+        ...    ``Create_warehouse_user_assignment:   ${warehouse_uuid}    ${user_uuid}    false``
         ...
     [Arguments]    ${warehouse_uuid}    ${fk_warehouse}    ${user_uuid}    ${isActive}
     ${idWarehouseUserAssignment}=    Get next id from table    spy_warehouse_user_assignment    id_warehouse_user_assignment
@@ -22,33 +22,33 @@ Create_warehouse_user_assigment:
     END
     Disconnect From Database
 
-Get_warehouse_user_assigment_id:
-    [Documentation]    This keyword retrive  warehouse user assigment  ${id_warehouse_user_assigment} in the DB table `spy_warehouse_user_assignment` by uuuid and user_uuid.
+Get_warehouse_user_assignment_id:
+    [Documentation]    This keyword retrieve  warehouse user assignment  ${id_warehouse_user_assignment} in the DB table `spy_warehouse_user_assignment` by uuuid and user_uuid.
         ...    *Example:*
         ...
-        ...    ``Get_warehouse_user_assigment_id:   ${warehouse_uuid}    ${user_uuid}`
+        ...    ``Get_warehouse_user_assignment_id:   ${warehouse_uuid}    ${user_uuid}`
         ...
     [Arguments]    ${warehouse_uuid}    ${user_uuid}
     Connect to Spryker DB
-    ${id_warehouse_user_assigment}=   Query    SELECT id_warehouse_user_assignment FROM spy_warehouse_user_assignment WHERE uuid = '${warehouse_uuid}' AND user_uuid='${user_uuid}';
+    ${id_warehouse_user_assignment}=   Query    SELECT id_warehouse_user_assignment FROM spy_warehouse_user_assignment WHERE uuid = '${warehouse_uuid}' AND user_uuid='${user_uuid}';
     Disconnect From Database
-    Set Test Variable    ${id_warehouse_user_assigment}    ${id_warehouse_user_assigment[0][0]}
-    RETURN    ${id_warehouse_user_assigment}
+    Set Test Variable    ${id_warehouse_user_assignment}    ${id_warehouse_user_assignment[0][0]}
+    RETURN    ${id_warehouse_user_assignment}
 
-Remove_warehous_user_assigment:
+Remove_warehouse_user_assignment:
     [Documentation]    This keyword deletes the entry from the DB table `spy_warehouse_user_assignment`.
         ...    *Example:*
         ...
-        ...    ``Remove_warehous_user_assigment:    ${warehouse_uuid}    ${user_uuid}``
+        ...    ``Remove_warehouse_user_assignment:    ${warehouse_uuid}    ${user_uuid}``
         ...
     [Arguments]    ${warehouse_uuid}    ${user_uuid}
-    ${id_warehouse_user_assigment}=    Get_warehouse_user_assigment_id:   ${warehouse_uuid}    ${user_uuid}
+    ${id_warehouse_user_assignment}=    Get_warehouse_user_assignment_id:   ${warehouse_uuid}    ${user_uuid}
     Connect to Spryker DB
-    Execute Sql String    DELETE FROM spy_warehouse_user_assignment WHERE id_warehouse_user_assignment = ${id_warehouse_user_assigment};
+    Execute Sql String    DELETE FROM spy_warehouse_user_assignment WHERE id_warehouse_user_assignment = ${id_warehouse_user_assignment};
     Disconnect From Database
 
 Make user a warehouse user/ not a warehouse user:
-    [Documentation]    This keyword update user with warehouse assigment in the DB table `spy_user`.
+    [Documentation]    This keyword update user with warehouse assignment in the DB table `spy_user`.
         ...    *Example:*
         ...
         ...    ``Make user a warehouse user/ not a warehouse user:   ${user_uuid}    0``

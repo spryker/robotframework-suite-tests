@@ -186,8 +186,8 @@
        "payment_provider_name_1":"DummyPayment",
        "payment_method_name_1":"Credit Card"
     },
-    "warehouse_user_assigment":{
-       "warehous_user":[
+    "warehouse_user_assignment":{
+       "warehouse_user":[
          { 
              "admin_user_uuid":"c0e244d4-03e8-556f-aa8d-174be9d236e5",
              "de_admin_user_uuid":"92cd431f-96e3-5259-91cb-ab9f6d14829f"

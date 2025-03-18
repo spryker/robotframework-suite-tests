@@ -16,7 +16,7 @@ Resource    ../../../../resources/steps/mp_offers_steps.robot
 Resource    ../../../../resources/steps/checkout_steps.robot
 Resource    ../../../../resources/steps/zed_marketplace_steps.robot
 Resource    ../../../../resources/steps/configurable_product_steps.robot
-Resource    ../../../../resources/steps/warehouse_user_assigment_steps.robot
+Resource    ../../../../resources/steps/warehouse_user_assignment_steps.robot
 Resource    ../../../../resources/steps/picking_list_steps.robot
 Resource    ../../../../resources/steps/zed_availability_steps.robot
 Resource    ../../../../resources/steps/mp_orders_steps.robot
@@ -29,7 +29,7 @@ Minimum_Order_Value
     ...    AND    Deactivate all discounts in the database
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: change global threshold settings:
-    ...    || store & currency | minimum hard value | minimum hard en message  | minimum hard de message  | maximun hard value | maximun hard en message | maximun hard de message | soft threshold                | soft threshold value | soft threshold fixed fee | soft threshold en message | soft threshold de message ||
+    ...    || store & currency | minimum hard value | minimum hard en message  | minimum hard de message  | maximum hard value | maximum hard en message | maximum hard de message | soft threshold                | soft threshold value | soft threshold fixed fee | soft threshold en message | soft threshold de message ||
     ...    || DE - Euro [EUR]  | 5                  | EN minimum {{threshold}} | DE minimum {{threshold}} | 150                | EN max {{threshold}}    | DE max {{threshold}}    | Soft Threshold with fixed fee | 100000               | 9                        | EN fixed {{fee}} fee      | DE fixed {{fee}} fee      ||
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -65,7 +65,7 @@ Minimum_Order_Value
     [Teardown]    Run keywords    Restore all discounts in the database
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: change global threshold settings:
-    ...    || store & currency | minimum hard value | minimum hard en message | minimum hard de message | maximun hard value | maximun hard en message                                                                                   | maximun hard de message                                                                                                              | soft threshold | soft threshold value | soft threshold en message | soft threshold de message ||
+    ...    || store & currency | minimum hard value | minimum hard en message | minimum hard de message | maximum hard value | maximum hard en message                                                                                   | maximum hard de message                                                                                                              | soft threshold | soft threshold value | soft threshold en message | soft threshold de message ||
     ...    || DE - Euro [EUR]  | ${SPACE}           | ${SPACE}                | ${SPACE}                | 10000.00           | The cart value cannot be higher than {{threshold}}. Please remove some items to proceed with the order    | Der Warenkorbwert darf nicht höher als {{threshold}} sein. Bitte entfernen Sie einige Artikel, um mit der Bestellung fortzufahren    | None           | ${EMPTY}             | ${EMPTY}                  | ${EMPTY}                  ||
     ...    AND    Delete dynamic admin user from DB
     
@@ -250,7 +250,7 @@ Configurable_Product_Checkout
 
 Fulfillment_app_e2e
     # #LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
-    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].de_admin_user_uuid}    0
+    Make user a warehouse user/ not a warehouse user:    ${warehouse_user[0].de_admin_user_uuid}    0
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update Zed user:
     ...    || oldEmail             | user_is_warehouse_user ||
@@ -261,9 +261,9 @@ Fulfillment_app_e2e
     # #ASSIGN admin_de user TO WAREHOUSE [Spryker Mer 000001 Warehouse 1] MAKE WAREHOUSE ACTIVE BY BAPI
     And I get access token by user credentials:   ${zed_admin_email}
     I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
+    I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehouse_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id  
+    Then Save value to a variable:    [data][id]   warehouse_assignment_id  
     # #CREATE AN ORDER BY GLUE
     I set Headers:    Content-Type=${default_header_content_type}
     Remove Tags    *
@@ -343,8 +343,8 @@ Fulfillment_app_e2e
     [Teardown]     Run Keywords    Remove picking list item by uuid in DB:    ${item_id_1}
     ...  AND    Remove picking list item by uuid in DB:    ${item_id_2} 
     ...  AND    Remove picking list by uuid in DB:    ${picklist_id}
-    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
-    ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}     
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehouse_user[0].de_admin_user_uuid}    0
+    ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assignment_id}     
 
 Discounts
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout). DMS-ON: https://spryker.atlassian.net/browse/FRW-7476

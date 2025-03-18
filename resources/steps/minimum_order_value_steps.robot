@@ -56,9 +56,9 @@ Zed: change global threshold settings:
         IF    '${key}'=='minimum hard value' and '${value}' != '${EMPTY}'    Type Text    ${zed_global_threshold_minimum_hard_value_input}    ${value}
         IF    '${key}'=='minimum hard en message' and '${value}' != '${EMPTY}'    Type Text    ${zed_global_threshold_minimum_hard_en_message_input}    ${value}
         IF    '${key}'=='minimum hard de message' and '${value}' != '${EMPTY}'    Type Text    ${zed_global_threshold_minimum_hard_de_message_input}    ${value}
-        IF    '${key}'=='maximun hard value' and '${value}' != '${EMPTY}'    Type Text    ${zed_global_threshold_maximum_hard_value_input}    ${value}
-        IF    '${key}'=='maximun hard en message' and '${value}' != '${EMPTY}'    Type Text    ${zed_global_threshold_maximum_hard_en_message_input}    ${value}
-        IF    '${key}'=='maximun hard de message' and '${value}' != '${EMPTY}'    Type Text    ${zed_global_threshold_maximum_hard_de_message_input}    ${value}
+        IF    '${key}'=='maximum hard value' and '${value}' != '${EMPTY}'    Type Text    ${zed_global_threshold_maximum_hard_value_input}    ${value}
+        IF    '${key}'=='maximum hard en message' and '${value}' != '${EMPTY}'    Type Text    ${zed_global_threshold_maximum_hard_en_message_input}    ${value}
+        IF    '${key}'=='maximum hard de message' and '${value}' != '${EMPTY}'    Type Text    ${zed_global_threshold_maximum_hard_de_message_input}    ${value}
         IF    '${key}'=='soft threshold' and '${value}' != '${EMPTY}'    Click    xpath=//input[contains(@name,'global-threshold[softThreshold][strategy]')]/../../label[contains(.,'${value}')]
         IF    '${key}'=='soft threshold value' and '${value}' != '${EMPTY}'    Type Text    ${zed_global_threshold_soft_value_input}    ${value}
         IF    '${key}'=='soft threshold en message' and '${value}' != '${EMPTY}'    Type Text    ${zed_global_threshold_soft_en_message_input}    ${value}
