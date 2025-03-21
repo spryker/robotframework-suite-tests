@@ -56,6 +56,8 @@ New_Customer_Registration
 
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users see products info and cart but not profile
+    Yves: go to the 'Home' page
+    Yves: logout on Yves as a customer
     Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]   ${wishlistIcon}    ${accountIcon}    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton}

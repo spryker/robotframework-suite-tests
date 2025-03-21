@@ -45,6 +45,8 @@ Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users are not able to see: Prices, Availability, Quick Order, "My Account" features
     Create dynamic customer in DB
+    Yves: go to the 'Home' page
+    Yves: logout on Yves as a customer
     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}[${env}]     ${quickOrderIcon}    ${accountIcon}    ${shopping_list_icon_header_menu_item}[${env}]    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku} 
     Yves: PDP contains/doesn't contain:     false    ${pdpPriceLocator}    ${addToCartButton}
