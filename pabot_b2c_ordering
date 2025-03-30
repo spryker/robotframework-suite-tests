@@ -1,0 +1,15 @@
+--suite Spryker.Tests.Parallel Ui.B2C.Catalog.Catalog Manage Product
+--suite Spryker.Tests.Parallel Ui.B2C.Catalog.Catalog
+--suite Spryker.Tests.Parallel Ui.B2C.Catalog.Catalog Product Availability
+--suite Spryker.Tests.Parallel Ui.B2C.Catalog.Catalog Prices
+--suite Spryker.Tests.Parallel Ui.B2C.Multistore.Multistore Catalog
+--suite Spryker.Tests.Parallel Ui.B2C.Sales.Sales
+--suite Spryker.Tests.Parallel Ui.B2C.Checkout.Checkout Guest
+--suite Spryker.Tests.Parallel Ui.B2C.Checkout.Checkout
+--suite Spryker.Tests.Parallel Ui.B2C.Content.Content
+--suite Spryker.Tests.Parallel Ui.B2C.Customers.Customer
+--suite Spryker.Tests.Parallel Ui.B2C.Users.Users
+--suite Spryker.Tests.Parallel Ui.B2C.Administration.Administration
+--suite Spryker.Tests.Parallel Ui.B2C.Merchandising.Merchandising
+--suite Spryker.Tests.Parallel Ui.B2C.Data Exchange.Data Exchange
+--suite Spryker.Tests.Parallel Ui.B2C.Multistore.Multistore Dms
