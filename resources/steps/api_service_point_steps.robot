@@ -348,7 +348,7 @@ Create dynamic service with all data via BAPI if doesn't exist
         VAR    ${dynamic_service_uuid}    ${service_id}    scope=SUITE
 
         # Publish to Redis and ES
-        Trigger p&s
+        Repeat Keyword    3    Trigger p&s
     END
 
 Delete all non-default service points from DB with p&s
