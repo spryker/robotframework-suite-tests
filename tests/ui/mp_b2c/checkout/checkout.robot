@@ -320,16 +320,16 @@ Click_and_collect
     Yves: select multiple addresses from toggler
     Yves: select xxx shipment type for item number xxx:    shipment_type=Pickup    item_number=1
     Yves: select xxx shipment type for item number xxx:    shipment_type=Pickup    item_number=2
-    Yves: check store availabiity for item number xxx:
+    Yves: check store availability for item number xxx:
     ...    || item_number | store              | availability ||
     ...    || 1           | Spryker Main Store | green        ||
-    Yves: check store availabiity for item number xxx:
+    Yves: check store availability for item number xxx:
     ...    || item_number | store                | availability ||
     ...    || 1           | Spryker Berlin Store | green        ||
-    Yves: check store availabiity for item number xxx:
+    Yves: check store availability for item number xxx:
     ...    || item_number | store              | availability ||
     ...    || 2           | Spryker Main Store | green        ||
-    Yves: check store availabiity for item number xxx:
+    Yves: check store availability for item number xxx:
     ...    || item_number | store                | availability ||
     ...    || 2           | Spryker Berlin Store | green        ||
     Yves: select pickup service point store for item number xxx:

@@ -83,6 +83,31 @@ Yves: select the following existing address on the checkout as 'shipping' addres
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
 
+Yves: select the following existing address on the checkout as 'shipping':
+    [Arguments]    ${addressToUse}
+    Reload
+    Repeat Keyword    3    Wait For Load State
+    Wait For Load State    networkidle
+    Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
+    WHILE  '${selected_address}' != '${addressToUse}'    limit=5
+        IF    '${env}' in ['ui_b2c','ui_mp_b2c']
+            Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+            Repeat Keyword    3    Wait For Load State
+            Sleep    1s
+            ${selected_address}=    Get Text    xpath=//select[contains(@name,'shippingAddress')][contains(@id,'addressesForm_shippingAddress_id')]/..//span[contains(@id,'shippingAddress_id')]
+        ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
+            Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+            Repeat Keyword    3    Wait For Load State
+            Sleep    1s
+            ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+        ELSE
+            Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+            Repeat Keyword    3    Wait For Load State
+            Sleep    1s
+            Exit For Loop
+        END
+    END
+
 Yves: fill in the following new shipping address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
     [Arguments]    @{args}
@@ -424,7 +449,13 @@ Yves: select xxx shipment type for item xxx:
     Click    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]//shipment-type-toggler//span[contains(@data-qa,'shipmentType')]//span[contains(text(), '${shipment_type}')]
     Repeat Keyword    2    Wait For Load State
 
-Yves: check store availabiity for item number xxx:
+Yves: select xxx shipment type on checkout:
+    [Arguments]    ${shipment_type}
+    Click    xpath=(//form[@name='addressesForm']//shipment-type-toggler//span[contains(@data-qa,'shipmentType')]//span[contains(text(), '${shipment_type}')])[1]
+    Repeat Keyword    2    Wait For Load State
+    Repeat Keyword    2    Wait For Load State    domcontentloaded
+
+Yves: check store availability for item number xxx:
     [Arguments]    @{args}
     ${availabilityData}=    Set Up Keyword Arguments    @{args}
     ${item_number}=    Set Variable    1
