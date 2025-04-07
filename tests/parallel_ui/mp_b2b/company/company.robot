@@ -23,6 +23,7 @@ Create_new_company_with_linked_entities_and_customer_in_backoffice
     ...    || email                                     | salutation | first_name | last_name | gender | company           | business_unit            | role      ||
     ...    || sonia+created+cuser+${random}@spryker.com | Ms         | Robot      | User      | Female | ${created_company}| ${created_business_unit} | RobotRole ||
     Yves: go to the 'Home' page
+    Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    ${dynamic_admin_user}
     Yves: perform search by customer:    sonia+created+cuser+${random}@spryker.com
