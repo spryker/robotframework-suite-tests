@@ -46,6 +46,7 @@ Create_new_company_user_with_linked_entities_in_storefront
     Yves: assign the following permissions to the company role:    RobotYvesRole+${random}    View company users
     Yves: create new company business unit:    business_unit_name=RobotYvesBusinessUnit+${random}    business_unit_email=robot+business+unit+${random}@spryker.com
     Yves: create new company user:    business_unit=RobotYvesBusinessUnit+${random}    email=sonia+sf+new+cuser+${random}@spryker.com    role=RobotYvesRole+${random}    first_name=Sonia    last_name=NewUser    
+    Yves: logout on Yves as a customer
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    ${dynamic_admin_user}
