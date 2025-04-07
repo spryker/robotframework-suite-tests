@@ -209,7 +209,7 @@ Zed: go to tab:
 
 Zed: go to tab by link href that contains:
     [Arguments]    ${href}
-    Click    xpath=//a[contains(@data-toggle,'tab')][contains(@href,'${href}')]
+    Click    xpath=//a[contains(@data-toggle,'tab')][contains(@href,'${href}')] | //*[contains(@data-toggle,'tab')]//a[contains(@href,'${href}')]
 
 Zed: message should be shown:
     [Arguments]    ${text}
