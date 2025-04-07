@@ -23,6 +23,7 @@ Create_new_company_with_linked_entities_and_customer_in_backoffice
     ...    || sonia+created+cuser+${random}@spryker.com | Ms         | Robot      | User      | Female | ${created_company}| ${created_business_unit} | RobotRole ||
     Zed: create new Zed user with the following data:    agent+company_user_bo${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
     Yves: go to the 'Home' page
+    Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent+company_user_bo${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
     Yves: perform search by customer:    sonia+created+cuser+${random}@spryker.com
@@ -44,6 +45,7 @@ Create_new_company_user_with_linked_entities_in_storefront
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+company_user_yves${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
     Yves: go to the 'Home' page
+    Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent+company_user_yves${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
     Yves: perform search by customer:    sonia+sf+new+cuser+${random}@spryker.com
