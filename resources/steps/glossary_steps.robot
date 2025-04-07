@@ -19,7 +19,7 @@ Zed: fill glossary form:
 Zed: undo the changes in glossary translation:
     [Arguments]    ${glossaryName}    ${original_DE}    ${original_EN}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Administration    Glossary 
+    Zed: go to URL:    /glossary
     Zed: click Action Button in a table for row that contains:    ${glossaryName}    Edit  
     Zed: fill glossary form:
     ...    || DE_DE          | EN_US          ||
