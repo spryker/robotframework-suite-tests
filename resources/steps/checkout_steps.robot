@@ -451,7 +451,7 @@ Yves: select xxx shipment type for item xxx:
 
 Yves: select xxx shipment type on checkout:
     [Arguments]    ${shipment_type}
-    Click    xpath=(//form[@name='addressesForm']//shipment-type-toggler//span[contains(@data-qa,'shipmentType')]//span[contains(text(), '${shipment_type}')])[1]
+    Click With Options    xpath=(//form[@name='addressesForm']//shipment-type-toggler//span[contains(@data-qa,'shipmentType')]//span[contains(text(), '${shipment_type}')])[1]    force=True
     Repeat Keyword    2    Wait For Load State
     Repeat Keyword    2    Wait For Load State    domcontentloaded
 

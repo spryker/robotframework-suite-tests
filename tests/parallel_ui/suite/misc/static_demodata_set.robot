@@ -521,8 +521,10 @@ Discounts
     Yves: shopping cart contains the following products:    190_25111746    002_25904004
     Yves: discount is applied:    cart rule    Promotional Product 100% ${random}    - €75.00
     Yves: click on the 'Checkout' button in the shopping cart
+    Yves: select xxx shipment type on checkout:    Delivery
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
+    Yves: select xxx shipment type on checkout:    Delivery
     Yves: select the following shipping method for the shipment:    1    Spryker Dummy Shipment    Standard
     Yves: select the following shipping method for the shipment:    2    Spryker Dummy Shipment    Express
     Yves: select the following shipping method for the shipment:    3    Spryker Drone Shipment    Air Light
