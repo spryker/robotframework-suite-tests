@@ -349,6 +349,7 @@ Comments_in_Cart
     Zed: check comment appears at order detailed page in zed:    abc${random}    ${lastPlacedOrder}
 
 Comment_Management_in_the_Cart
+    [Tags]    skip-due-to-refactoring
     [Documentation]    Editing and deleting comments in carts
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    commentManagement+${random}

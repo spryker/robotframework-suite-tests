@@ -895,6 +895,16 @@ Response should contain the array of a certain size:
     ${list_length}=    Convert To String    ${list_length}
     Should Be Equal    ${list_length}    ${expected_size}    actual size '${list_length}' doesn't equal expected '${expected_size}' in '${json_path}'.
 
+Response should contain the array of size in:
+    [Documentation]    This keyword verifies that the array at the given JSON path has a length equal to one of the expected sizes provided.
+    ...              It accepts one or more expected sizes as optional arguments.
+    [Arguments]    ${json_path}    @{expected_sizes}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    Log    @{data}
+    ${actual_length}=    Get Length    @{data}
+    ${actual_length}=    Convert To String    ${actual_length}
+    Should Contain    ${expected_sizes}    ${actual_length}    msg=Actual size '${actual_length}' does not match any of the expected sizes '${expected_sizes}' in '${json_path}'.
+
 Response should contain the array larger than a certain size:
     [Documentation]    This keyword checks that the body array sent in ``${json_path}`` argument contains the number of items that is more than ``${expected_size}``.
     ...    The expected size should be an integer value that is less than you expect elements. So if you expect an array to have at least 2 elements, the ``${expected_size}`` should be 1.
