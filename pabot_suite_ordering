@@ -1,22 +1,22 @@
---suite Spryker.Tests.Parallel Ui.Suite.Marketplace.Marketplace Prices
---suite Spryker.Tests.Parallel Ui.Suite.Marketplace.Marketplace Manage Product
---suite Spryker.Tests.Parallel Ui.Suite.Marketplace.Marketplace Offline Profile
---suite Spryker.Tests.Parallel Ui.Suite.Marketplace.Marketplace
---suite Spryker.Tests.Parallel Ui.Suite.Marketplace.Marketplace Offer Availability
---suite Spryker.Tests.Parallel Ui.Suite.Marketplace.Marketplace Volume Prices
---suite Spryker.Tests.Parallel Ui.Suite.Catalog.Catalog Manage Product
---suite Spryker.Tests.Parallel Ui.Suite.Catalog.Catalog
---suite Spryker.Tests.Parallel Ui.Suite.Catalog.Catalog Product Availability
---suite Spryker.Tests.Parallel Ui.Suite.Catalog.Catalog Prices
---suite Spryker.Tests.Parallel Ui.Suite.Multistore.Multistore Catalog
---suite Spryker.Tests.Parallel Ui.Suite.Sales.Sales
---suite Spryker.Tests.Parallel Ui.Suite.Checkout.Checkout Guest
---suite Spryker.Tests.Parallel Ui.Suite.Checkout.Checkout
---suite Spryker.Tests.Parallel Ui.Suite.Content.Content
---suite Spryker.Tests.Parallel Ui.Suite.Customers.Customer
---suite Spryker.Tests.Parallel Ui.Suite.Company.Company
---suite Spryker.Tests.Parallel Ui.Suite.Users.Users
---suite Spryker.Tests.Parallel Ui.Suite.Administration.Administration
---suite Spryker.Tests.Parallel Ui.Suite.Merchandising.Merchandising
---suite Spryker.Tests.Parallel Ui.Suite.Data Exchange.Data Exchange
---suite Spryker.Tests.Parallel Ui.Suite.Multistore.Multistore Dms
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Marketplace.Marketplace Prices
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Marketplace.Marketplace Manage Product
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Marketplace.Marketplace Offline Profile
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Marketplace.Marketplace
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Marketplace.Marketplace Offer Availability
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Marketplace.Marketplace Volume Prices
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Catalog.Catalog Manage Product
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Catalog.Catalog
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Catalog.Catalog Product Availability
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Catalog.Catalog Prices
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Multistore.Multistore Catalog
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Sales.Sales
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Checkout.Checkout Guest
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Checkout.Checkout
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Content.Content
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Customers.Customer
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Company.Company
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Users.Users
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Administration.Administration
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Merchandising.Merchandising
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Data Exchange.Data Exchange
+--suite robotframework-suite-tests.Tests.Parallel Ui.Suite.Multistore.Multistore Dms

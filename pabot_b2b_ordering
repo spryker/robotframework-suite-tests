@@ -1,16 +1,16 @@
---suite Spryker.Tests.Parallel Ui.B2B.Catalog.Catalog Manage Product
---suite Spryker.Tests.Parallel Ui.B2B.Catalog.Catalog
---suite Spryker.Tests.Parallel Ui.B2B.Catalog.Catalog Product Availability
---suite Spryker.Tests.Parallel Ui.B2B.Catalog.Catalog Prices
---suite Spryker.Tests.Parallel Ui.B2B.Multistore.Multistore Catalog
---suite Spryker.Tests.Parallel Ui.B2B.Sales.Sales
---suite Spryker.Tests.Parallel Ui.B2B.Checkout.Checkout
---suite Spryker.Tests.Parallel Ui.B2B.Content.Content
---suite Spryker.Tests.Parallel Ui.B2B.Customers.Customer
---suite Spryker.Tests.Parallel Ui.B2B.Company.Company
---suite Spryker.Tests.Parallel Ui.B2B.Users.Users
---suite Spryker.Tests.Parallel Ui.B2B.Administration.Administration
---suite Spryker.Tests.Parallel Ui.B2B.Merchandising.Merchandising
---suite Spryker.Tests.Parallel Ui.B2B.Data Exchange.Data Exchange
---suite Spryker.Tests.Parallel Ui.B2B.Marketplace.Marketplace
---suite Spryker.Tests.Parallel Ui.B2B.Multistore.Multistore Dms
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Catalog.Catalog Manage Product
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Catalog.Catalog
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Catalog.Catalog Product Availability
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Catalog.Catalog Prices
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Multistore.Multistore Catalog
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Sales.Sales
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Checkout.Checkout
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Content.Content
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Customers.Customer
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Company.Company
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Users.Users
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Administration.Administration
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Merchandising.Merchandising
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Data Exchange.Data Exchange
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Marketplace.Marketplace
+--suite robotframework-suite-tests.Tests.Parallel Ui.B2B.Multistore.Multistore Dms

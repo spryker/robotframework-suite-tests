@@ -1,20 +1,20 @@
---suite Spryker.Tests.Parallel Ui.Mp B2C.Marketplace.Marketplace Prices
---suite Spryker.Tests.Parallel Ui.Mp B2C.Marketplace.Marketplace Manage Product
---suite Spryker.Tests.Parallel Ui.Mp B2C.Marketplace.Marketplace Offline Profile
---suite Spryker.Tests.Parallel Ui.Mp B2C.Marketplace.Marketplace
---suite Spryker.Tests.Parallel Ui.Mp B2C.Marketplace.Marketplace Product And Offer
---suite Spryker.Tests.Parallel Ui.Mp B2C.Marketplace.Marketplace Volume Prices
---suite Spryker.Tests.Parallel Ui.Mp B2C.Marketplace.Marketplace Oms
---suite Spryker.Tests.Parallel Ui.Mp B2C.Catalog.Catalog
---suite Spryker.Tests.Parallel Ui.Mp B2C.Catalog.Catalog Offer Availability
---suite Spryker.Tests.Parallel Ui.Mp B2C.Catalog.Catalog Product Availability
---suite Spryker.Tests.Parallel Ui.Mp B2C.Multistore.Multistore Catalog
---suite Spryker.Tests.Parallel Ui.Mp B2C.Sales.Sales
---suite Spryker.Tests.Parallel Ui.Mp B2C.Checkout.Checkout
---suite Spryker.Tests.Parallel Ui.Mp B2C.Content.Content
---suite Spryker.Tests.Parallel Ui.Mp B2C.Customers.Customer
---suite Spryker.Tests.Parallel Ui.Mp B2C.Users.Users
---suite Spryker.Tests.Parallel Ui.Mp B2C.Administration.Administration
---suite Spryker.Tests.Parallel Ui.Mp B2C.Merchandising.Merchandising
---suite Spryker.Tests.Parallel Ui.Mp B2C.Data Exchange.Data Exchange
---suite Spryker.Tests.Parallel Ui.Mp B2C.Multistore.Multistore Dms
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Marketplace.Marketplace Prices
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Marketplace.Marketplace Manage Product
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Marketplace.Marketplace Offline Profile
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Marketplace.Marketplace
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Marketplace.Marketplace Product And Offer
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Marketplace.Marketplace Volume Prices
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Marketplace.Marketplace Oms
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Catalog.Catalog
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Catalog.Catalog Offer Availability
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Catalog.Catalog Product Availability
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Multistore.Multistore Catalog
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Sales.Sales
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Checkout.Checkout
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Content.Content
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Customers.Customer
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Users.Users
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Administration.Administration
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Merchandising.Merchandising
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Data Exchange.Data Exchange
+--suite robotframework-suite-tests.Tests.Parallel Ui.Mp B2C.Multistore.Multistore Dms
