@@ -24,7 +24,7 @@ Get_country_collection
     And Response body parameter should be:    [data][0][name]    Ascension Island
     And Response body parameter should be:    [data][0][postal_code_mandatory]    False
     And Response body parameter should be:    [data][0][postal_code_regex]    None
-    And Response body parameter should be:    [data][253][id_country]    254
+    And Response body parameter should be:    [data][253][id_country]    256
     And Response body parameter should be:    [data][253][iso2_code]    ZM
     And Response body parameter should be:    [data][253][iso3_code]    ZMB
     And Response body parameter should be:    [data][253][name]    Zambia
@@ -60,7 +60,7 @@ Get_country_collection_with_filter
     And I send a GET request:    /dynamic-entity/robot-test-countries?filter[country.iso2_code]=UA
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [data][0][id_country]    235
+    And Response body parameter should be:    [data][0][id_country]    237
     And Response body parameter should be:    [data][0][iso2_code]    UA
     And Response body parameter should be:    [data][0][iso3_code]    UKR
     And Response body parameter should be:    [data][0][name]    Ukraine
@@ -85,7 +85,7 @@ Get_country_collection_with_multiple_filter_fields
     And Response body parameter should be:    [data][0][name]    Andorra
     And Response body parameter should be:    [data][0][postal_code_mandatory]    True
     And Response body parameter should be:    [data][0][postal_code_regex]    AD\\\\d{3}
-    And Response body parameter should be:    [data][1][id_country]    235
+    And Response body parameter should be:    [data][1][id_country]    237
     And Response body parameter should be:    [data][1][iso2_code]    UA
     And Response body parameter should be:    [data][1][iso3_code]    UKR
     And Response body parameter should be:    [data][1][name]    Ukraine
@@ -116,7 +116,7 @@ Get_country_collection_with_filter_in_condition
     And Response body parameter should be:    [data][1][name]    United Arab Emirates
     And Response body parameter should be:    [data][1][postal_code_mandatory]    False
     And Response body parameter should be:    [data][1][postal_code_regex]    None
-    And Response body parameter should be:    [data][2][id_country]    235
+    And Response body parameter should be:    [data][2][id_country]    237
     And Response body parameter should be:    [data][2][iso2_code]    UA
     And Response body parameter should be:    [data][2][iso3_code]    UKR
     And Response body parameter should be:    [data][2][name]    Ukraine
@@ -152,7 +152,7 @@ Get_country_collection_with_paginations
     And Response header parameter should be:    Content-Type    application/json
     And Response should contain the array of a certain size:   $    1
     And Response should contain the array of a certain size:   [data]    2
-    And Response body parameter should be:    [data][0][id_country]    235
+    And Response body parameter should be:    [data][0][id_country]    237
     And Response body parameter should be:    [data][0][iso2_code]    UA
     And Response body parameter should be:    [data][0][iso3_code]    UKR
     And Response body parameter should be:    [data][0][name]    Ukraine
@@ -197,7 +197,7 @@ Get_country_collection_with_short_configuration
     And Response body parameter should be:    [data][0][id_country]    1
     And Response body parameter should be:    [data][0][iso2_code]    AC
     And Response body parameter should be:    [data][0][name]    Ascension Island
-    And Response body parameter should be:    [data][253][id_country]    254
+    And Response body parameter should be:    [data][253][id_country]    256
     And Response body parameter should be:    [data][253][iso2_code]    ZM
     And Response body parameter should be:    [data][253][name]    Zambia
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
@@ -219,10 +219,10 @@ Get_country_by_id
     When Save value to a variable:    [access_token]    token
     ### GET COUNTRY BY ID ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a GET request:    /dynamic-entity/robot-test-countries/235
+    And I send a GET request:    /dynamic-entity/robot-test-countries/237
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [data][id_country]    235
+    And Response body parameter should be:    [data][id_country]    237
     And Response body parameter should be:    [data][iso2_code]    UA
     And Response body parameter should be:    [data][iso3_code]    UKR
     And Response body parameter should be:    [data][name]    Ukraine
