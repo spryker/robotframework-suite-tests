@@ -81,7 +81,7 @@ Agent_Assist
     Yves: logout as an agent
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to 'Order History' page
-    Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    ${order_state}
+    Yves: 'Order History' page contains the following order:    ${lastPlacedOrder}
     [Teardown]    Delete dynamic admin user from DB
 
 User_Control

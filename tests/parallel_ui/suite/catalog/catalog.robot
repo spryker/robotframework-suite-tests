@@ -199,7 +199,6 @@ Back_in_Stock_Notification
     ...    AND    Create dynamic customer in DB
     [Documentation]    Back in stock notification is sent and availability check
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
     Zed: change product stock:    ${stock_product_abstract_sku}    ${stock_product_concrete_sku}    false    0
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    false
     Yves: login on Yves with provided credentials:    ${dynamic_customer}

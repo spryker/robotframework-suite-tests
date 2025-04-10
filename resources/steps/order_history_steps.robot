@@ -49,6 +49,10 @@ Yves: 'Order History' page contains the following order with a status:
     ${actualOrderStatus}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//td[contains(text(),'${orderID}')]/..//*[@data-qa='component status']/..//ancestor::td
     Should Contain    ${actualOrderStatus}    ${expectedStatus}    msg=None    values=True    ignore_case=True
 
+Yves: 'Order History' page contains the following order:
+    [Arguments]    ${expectedOrderReference}
+    Page Should Contain Element    xpath=//div[contains(@data-qa,'component order-table')]//td[contains(text(),'${expectedOrderReference}')]
+
 Yves: 'Order Details' page contains the cancel order button:
     [Arguments]    ${condition}
     ${condition}=    Convert To Lower Case    ${condition}

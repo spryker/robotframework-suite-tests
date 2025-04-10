@@ -1,15 +1,15 @@
 --suite Robotframework.Tests.Parallel Ui.B2C.Catalog.Catalog Manage Product
---suite Robotframework.TestsTests.Parallel Ui.B2C.Catalog.Catalog
---suite Robotframework.TestsTests.Parallel Ui.B2C.Catalog.Catalog Product Availability
---suite Robotframework.TestsTests.Parallel Ui.B2C.Catalog.Catalog Prices
---suite Robotframework.TestsTests.Parallel Ui.B2C.Multistore.Multistore Catalog
---suite Robotframework.TestsTests.Parallel Ui.B2C.Sales.Sales
---suite Robotframework.TestsTests.Parallel Ui.B2C.Checkout.Checkout Guest
---suite Robotframework.TestsTests.Parallel Ui.B2C.Checkout.Checkout
---suite Robotframework.TestsTests.Parallel Ui.B2C.Content.Content
---suite Robotframework.TestsTests.Parallel Ui.B2C.Customers.Customer
---suite Robotframework.TestsTests.Parallel Ui.B2C.Users.Users
---suite Robotframework.TestsTests.Parallel Ui.B2C.Administration.Administration
---suite Robotframework.TestsTests.Parallel Ui.B2C.Merchandising.Merchandising
---suite Robotframework.TestsTests.Parallel Ui.B2C.Data Exchange.Data Exchange
---suite Robotframework.TestsTests.Parallel Ui.B2C.Multistore.Multistore Dms
+--suite Robotframework.Tests.Parallel Ui.B2C.Catalog.Catalog
+--suite Robotframework.Tests.Parallel Ui.B2C.Catalog.Catalog Product Availability
+--suite Robotframework.Tests.Parallel Ui.B2C.Catalog.Catalog Prices
+--suite Robotframework.Tests.Parallel Ui.B2C.Multistore.Multistore Catalog
+--suite Robotframework.Tests.Parallel Ui.B2C.Sales.Sales
+--suite Robotframework.Tests.Parallel Ui.B2C.Checkout.Checkout Guest
+--suite Robotframework.Tests.Parallel Ui.B2C.Checkout.Checkout
+--suite Robotframework.Tests.Parallel Ui.B2C.Content.Content
+--suite Robotframework.Tests.Parallel Ui.B2C.Customers.Customer
+--suite Robotframework.Tests.Parallel Ui.B2C.Users.Users
+--suite Robotframework.Tests.Parallel Ui.B2C.Administration.Administration
+--suite Robotframework.Tests.Parallel Ui.B2C.Merchandising.Merchandising
+--suite Robotframework.Tests.Parallel Ui.B2C.Data Exchange.Data Exchange
+--suite Robotframework.Tests.Parallel Ui.B2C.Multistore.Multistore Dms
