@@ -152,7 +152,7 @@ Get_country_collection_with_paginations
     And Response header parameter should be:    Content-Type    application/json
     And Response should contain the array of a certain size:   $    1
     And Response should contain the array of a certain size:   [data]    2
-    And Response body parameter should be:    [data][0][id_country]    237
+    And Response body parameter should be:    [data][0][id_country]    235
     And Response body parameter should be:    [data][0][iso2_code]    UA
     And Response body parameter should be:    [data][0][iso3_code]    UKR
     And Response body parameter should be:    [data][0][name]    Ukraine
@@ -197,9 +197,9 @@ Get_country_collection_with_short_configuration
     And Response body parameter should be:    [data][0][id_country]    1
     And Response body parameter should be:    [data][0][iso2_code]    AC
     And Response body parameter should be:    [data][0][name]    Ascension Island
-    And Response body parameter should be:    [data][253][id_country]    256
-    And Response body parameter should be:    [data][253][iso2_code]    ZM
-    And Response body parameter should be:    [data][253][name]    Zambia
+    And Response body parameter should be:    [data][255][id_country]    256
+    And Response body parameter should be:    [data][255][iso2_code]    ZM
+    And Response body parameter should be:    [data][255][name]    Zambia
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Get_country_by_id
