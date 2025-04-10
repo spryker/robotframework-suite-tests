@@ -136,18 +136,18 @@ Zed: submit the form
     Repeat Keyword    2    Wait For Load State
     Wait Until Element Is Visible    ${zed_log_out_button}
     ${error_flash_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_flash_message}    1s
-    IF    'FAIL' in ${got_response}
+    IF    'FAIL' in $got_response
         Click    ${zed_save_button}
         Repeat Keyword    2    Wait For Load State
         Wait Until Element Is Visible    ${zed_log_out_button}
     END
-    IF    'FAIL' in ${error_flash_message}
+    IF    'FAIL' in $error_flash_message
         Click    ${zed_save_button}
         Repeat Keyword    2    Wait For Load State
         Wait Until Element Is Visible    ${zed_log_out_button}
     END
     ${error_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_message}    1s
-    IF    'FAIL' in ${error_message}
+    IF    'FAIL' in $error_message
         Click    ${zed_save_button}
         Repeat Keyword    2    Wait For Load State
         Wait Until Element Is Visible    ${zed_log_out_button}

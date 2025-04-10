@@ -99,7 +99,7 @@ MP: save offer
     MP: click submit button
     ${offerSaved}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    ${offer_saved_popup}    timeout=5s
     ### resave in case of error
-    IF    'FAIL' in ${offerSaved}
+    IF    'FAIL' in $offerSaved
         TRY
             MP: click submit button    timeout=3s
             Wait Until Element Is Visible    ${offer_saved_popup}    timeout=5s

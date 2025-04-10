@@ -66,7 +66,7 @@ Yves: filter order history by business unit:
     [Arguments]    ${business_unit}
     Wait Until Element Is Visible    ${order_history_search_filter_button}
     ${is_form_open}=    Run Keyword And Ignore Error    Page Should Contain Element    ${order_history_apply_filter_button}    timeout=1s
-    IF    'PASS' in ${is_form_open}    
+    IF    'PASS' in $is_form_open
         Log    Form is active
     ELSE
         Click    ${order_history_search_filter_button}

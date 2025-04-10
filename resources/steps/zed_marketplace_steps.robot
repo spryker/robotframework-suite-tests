@@ -81,7 +81,7 @@ Zed: update Merchant on edit page with the following data:
     END
     Zed: submit the form
     ${form_submitted}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_create_merchant_email_field}    1s
-    IF    'FAIL' in ${form_submitted}
+    IF    'FAIL' in $form_submitted
         Reload
         Zed: submit the form
     END

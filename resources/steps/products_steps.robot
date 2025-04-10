@@ -86,7 +86,7 @@ Zed: change concrete product price on:
     END
     Set Browser Timeout    ${browser_timeout}
     ${is_success_message_displayed}=    Run Keyword And Ignore Error    Element Should Be Visible    ${zed_success_flash_message}    timeout=1s
-    IF    'FAIL' in ${is_success_message_displayed}
+    IF    'FAIL' in $is_success_message_displayed
         Trigger multistore p&s
         Reload
         Sleep    1s

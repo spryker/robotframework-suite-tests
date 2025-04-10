@@ -83,7 +83,7 @@ MP: create multi sku product with following data:
             Click    ${new_product_multiple_concretes_option}
             MP: click submit button
             ${is_form_submitted}=    Run Keyword And Ignore Error    Element Should Not Contain    ${mp_submit_button}    Next
-            IF    'FAIL' in ${is_form_submitted}   
+            IF    'FAIL' in $is_form_submitted
                 Sleep    0.5s
                 MP: click submit button
             END

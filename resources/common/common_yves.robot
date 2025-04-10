@@ -52,7 +52,7 @@ Yves: login on Yves with provided credentials:
         END  
     END
     ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    locator=${email_field}    message=Login page is not displayed
-    IF    'FAIL' in ${is_login_page}
+    IF    'FAIL' in $is_login_page
         Delete All Cookies
         Yves: go to the 'Home' page
         IF    '.at.' in '${currentURL}'
@@ -98,7 +98,7 @@ Yves: login on Yves with provided credentials and expect error:
         END
     END
     ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    locator=${email_field}    message=Login page is not displayed
-    IF    'FAIL' in ${is_login_page}
+    IF    'FAIL' in $is_login_page
         Delete All Cookies
         Yves: go to the 'Home' page
         IF    '.at.' in '${currentURL}'
@@ -133,7 +133,7 @@ Yves: go to PDP of the product with sku:
                 Take Screenshot    EMBED    fullPage=True
                 Fail    Product '${sku}' is not displayed in the search results
             END
-            IF    'FAIL' in ${result}   
+            IF    'FAIL' in $result
                 Sleep    ${delay}
                 Yves: go to URL:    /search?q=${sku}
                 Continue For Loop
@@ -142,7 +142,7 @@ Yves: go to PDP of the product with sku:
                 Yves: go to URL:    ${pdp_url}?fake=${random}+${index}
                 Repeat Keyword    3    Wait For Load State
                 ${pdp_available}=    Run Keyword And Ignore Error    Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]    timeout=0.5s
-                IF    'PASS' in ${pdp_available}
+                IF    'PASS' in $pdp_available
                     Exit For Loop
                 ELSE
                     Sleep    ${delay}
@@ -472,17 +472,17 @@ Yves: get index of the first available product
         ...    ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Run Keyword And Ignore Error    Page should contain element    xpath=(//product-item[@data-qa='component product-item'])[${index}]//ajax-add-to-cart//button    Add to cart button is missing    timeout=10ms
         Log    ${index}
         ${pdp_url}=    IF    '${env}' in ['ui_b2b','ui_suite']    Get Element Attribute    xpath=(//product-item[@data-qa='component product-item'])[${index}]//a[@itemprop='url']    href
-        IF    'PASS' in ${status} and '${env}' in ['ui_b2b','ui_suite']    Continue For Loop
+        IF    'PASS' in $status and '${env}' in ['ui_b2b','ui_suite']    Continue For Loop
         IF    'bundle' in '${pdp_url}' and '${env}' in ['ui_b2b','ui_suite']    Continue For Loop
-        IF    'FAIL' in ${status} and '${env}' in ['ui_b2b','ui_suite']
+        IF    'FAIL' in $status and '${env}' in ['ui_b2b','ui_suite']
             Return From Keyword  ${index}
             Log ${index}
             Exit For Loop
         END
         ${pdp_url}=    IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Get Element Attribute    xpath=(//product-item[@data-qa='component product-item'])[${index}]//div[contains(@class,'product-item__image')]//a[contains(@class,'link-detail-page')]    href
-        IF    'FAIL' in ${status} and '${env}' in ['ui_b2c','ui_mp_b2c']    Continue For Loop
+        IF    'FAIL' in $status and '${env}' in ['ui_b2c','ui_mp_b2c']    Continue For Loop
         IF    'bundle' in '${pdp_url}' and '${env}' in ['ui_b2c','ui_mp_b2c']    Continue For Loop
-        IF    'PASS' in ${status} and '${env}' in ['ui_b2c','ui_mp_b2c']
+        IF    'PASS' in $status and '${env}' in ['ui_b2c','ui_mp_b2c']
             Return From Keyword    ${index}
             Log ${index}
             Exit For Loop
@@ -502,8 +502,8 @@ Yves: get index of the first available product on marketplace
         Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
         ${status}=    Run Keyword And Ignore Error     Page should contain element    &{pdp_add_to_cart_disabled_button}[${env}]    timeout=10ms
         Log    ${index}
-        IF    'PASS' in ${status}    Continue For Loop
-        IF    'FAIL' in ${status}
+        IF    'PASS' in $status    Continue For Loop
+        IF    'FAIL' in $status
             Run Keywords
                 Return From Keyword  ${index}
                 Log ${index}

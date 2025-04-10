@@ -101,7 +101,6 @@ Payment_method_update
     Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
     Yves: check that the payment method is/not present in the checkout process:    ${checkout_payment_credit_card_locator}    true
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: go to second navigation item level:    Administration    Payment Methods
     Zed: activate/deactivate payment method:    Dummy Payment    Credit Card    False
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to shopping cart page    
@@ -114,6 +113,5 @@ Payment_method_update
     Yves: select the following shipping method on the checkout and go next:     Standard: €4.90
     Yves: check that the payment method is/not present in the checkout process:     ${checkout_payment_credit_card_locator}    false
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: go to second navigation item level:    Administration    Payment Methods
     ...    AND    Zed: activate/deactivate payment method:    Dummy Payment    Credit Card    True
     ...    AND    Delete dynamic admin user from DB

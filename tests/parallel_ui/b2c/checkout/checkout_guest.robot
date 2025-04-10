@@ -64,7 +64,7 @@ Guest_Checkout
     Yves: apply discount voucher to cart:    guestTest${random}
     Yves: shopping cart contains the following products:    ${bundle_product_product_name}
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest${random}@spryker.com
+    Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest+checkout${random}@spryker.com
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
     ...    || salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
@@ -77,7 +77,7 @@ Guest_Checkout
     Yves: 'Thank you' page is displayed
     Trigger oms
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
+    Zed: get the last placed order ID of the customer by email:    sonia+guest+checkout${random}@spryker.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    skip picking

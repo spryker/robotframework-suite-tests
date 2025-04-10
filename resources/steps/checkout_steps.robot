@@ -252,22 +252,22 @@ Yves: select the following payment method on the checkout and go next:
     IF    '${env}'=='ui_b2b' and '${paymentMethod}'=='Invoice'
         Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=1s
-        IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
+        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
         Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Invoice'
         Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
-        IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
         Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Invoice (Marketplace)'
         Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
-        IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
         Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Marketplace Invoice'
         Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
-        IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
         Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    ('${env}'=='ui_suite' and '${paymentProvider}'!='${EMPTY}')
         Click    //form[@name='paymentForm']//h5[contains(text(), '${paymentProvider}')]/following-sibling::ul//label/span[contains(text(), '${paymentMethod}')]
@@ -283,29 +283,29 @@ Yves: select the following payment method on the checkout and go next:
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Invoice'
         Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=1s
-        IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
+        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
         Click    ${submit_checkout_form_button}[${env}]    
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Invoice (Marketplace)'
         Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
-        IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
         Click    ${submit_checkout_form_button}[${env}]    
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Marketplace Invoice'
         Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
-        IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
         Click    ${submit_checkout_form_button}[${env}]    
     ELSE
         IF    '${paymentMethod}' == 'Invoice' or '${paymentMethod}' == 'invoice'
             ${payment_method_index}=    Set Variable    last()
             Click    xpath=(//form[@name='paymentForm']//span[contains(@class,'toggler') and contains(text(),'${paymentMethod}')]/preceding-sibling::span[@class='toggler-radio__box'])[${payment_method_index}]
             ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=1s
-            IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
+            IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
         ELSE
             ${payment_method_index}=    Set Variable    position()=1
             Click    xpath=(//form[@name='paymentForm']//span[contains(@class,'toggler') and contains(text(),'Invoice')]/preceding-sibling::span[@class='toggler-radio__box'])[${payment_method_index}]
             ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
-            IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+            IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
         END
         Click    ${submit_checkout_form_button}[${env}]
     END

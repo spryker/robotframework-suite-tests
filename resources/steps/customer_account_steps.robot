@@ -232,11 +232,11 @@ Zed: create a new customer address in profile:
     END
     Click    ${zed_customer_edit_address_submit_button}
     ${error_flash_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_flash_message}    1s
-    IF    'FAIL' in ${error_flash_message}
+    IF    'FAIL' in $error_flash_message
         Click    ${zed_customer_edit_address_submit_button}
     END
     ${error_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_message}    1s
-    IF    'FAIL' in ${error_message}
+    IF    'FAIL' in $error_message
         Click    ${zed_customer_edit_address_submit_button}
     END
     Wait Until Element Is Not Visible    ${zed_customer_edit_address_submit_button}

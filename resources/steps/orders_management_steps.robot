@@ -53,13 +53,13 @@ Zed: trigger all matching states inside this order:
     Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
     Trigger oms
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             Reload
             Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
             Trigger oms
     END
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             ${order_state}=    Get Text    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
             Scroll Element Into View    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
             Take Screenshot    EMBED    fullPage=True
@@ -85,13 +85,13 @@ Zed: trigger matching state of xxx merchant's shipment:
     Click    ${elementSelector}
     Trigger oms
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             Reload
             Click    ${elementSelector}
             Trigger oms
     END
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             ${order_state}=    Get Text    ${elementSelector}
             Scroll Element Into View    ${elementSelector}
             Take Screenshot    EMBED    fullPage=True
@@ -130,13 +130,13 @@ Zed: trigger matching state of order item inside xxx shipment:
     Click    ${elementSelector}
     Trigger oms
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             Reload
             Click    ${elementSelector}
             Trigger oms
     END
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             ${order_item_state}=    Get Text    ${elementSelector}
             Scroll Element Into View    ${elementSelector}
             Take Screenshot    EMBED    fullPage=True 
@@ -161,13 +161,13 @@ Zed: trigger matching state of xxx order item inside xxx shipment:
     Click    ${elementSelector}
     Trigger oms
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             Reload
             Click    ${elementSelector}
             Trigger oms
     END
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             ${order_item_state}=    Get Text    ${elementSelector}
             Scroll Element Into View    ${elementSelector}
             Take Screenshot    EMBED    fullPage=True

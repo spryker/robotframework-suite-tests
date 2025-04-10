@@ -396,7 +396,7 @@ Ping and go to URL:
     [Arguments]    ${url}    ${timeout}=${EMPTY}
     ${accessible}=    Run Keyword And Ignore Error    Send GET request and return status code:    ${url}    ${timeout}
     ${successful}=    Run Keyword And Ignore Error    Should Contain Any    '${response.status_code}'    '200'    '201'    '202'    '301'    '302'
-    IF    'PASS' in ${accessible} and 'PASS' in ${successful}
+    IF    'PASS' in $accessible and 'PASS' in $successful
         Go To    ${url}
     ELSE
         Fail    '${url}' URL is not accessible of throws an error

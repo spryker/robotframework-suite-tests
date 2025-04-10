@@ -52,7 +52,7 @@ MP: open navigation menu tab:
 
 MP: Wait until loader is no longer visible
     ${loader_displayed}=    Run Keyword And Ignore Error    Element Should Be Visible    ${mp_loading_icon}    timeout=1s
-    IF    'PASS' in ${loader_displayed}
+    IF    'PASS' in $loader_displayed
         TRY
             Wait Until Element Is Not Visible    ${mp_loading_icon}
         EXCEPT    
