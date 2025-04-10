@@ -24,12 +24,12 @@ Get_country_collection
     And Response body parameter should be:    [data][0][name]    Ascension Island
     And Response body parameter should be:    [data][0][postal_code_mandatory]    False
     And Response body parameter should be:    [data][0][postal_code_regex]    None
-    And Response body parameter should be:    [data][253][id_country]    256
-    And Response body parameter should be:    [data][253][iso2_code]    ZM
-    And Response body parameter should be:    [data][253][iso3_code]    ZMB
-    And Response body parameter should be:    [data][253][name]    Zambia
-    And Response body parameter should be:    [data][253][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][253][postal_code_regex]    \\\\d{5}
+    And Response body parameter should be:    [data][255][id_country]    256
+    And Response body parameter should be:    [data][255][iso2_code]    ZM
+    And Response body parameter should be:    [data][255][iso3_code]    ZMB
+    And Response body parameter should be:    [data][255][name]    Zambia
+    And Response body parameter should be:    [data][255][postal_code_mandatory]    True
+    And Response body parameter should be:    [data][255][postal_code_regex]    \\\\d{5}
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Get_country_Collection_with_filter_first_item
