@@ -55,7 +55,7 @@ Yves: add product to the shopping cart
                 Take Screenshot    EMBED    fullPage=True
                 Fail    'Add to cart' button is not actionable/available on PDP
             END
-            IF    'FAIL' in ${result}
+            IF    'FAIL' in $result
                 Sleep    ${delay}
                 Reload
                 Repeat Keyword    3    Wait For Load State
@@ -164,7 +164,7 @@ Yves: change variant of the product on PDP on:
         EXCEPT
             ${final_try}=    Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
             Repeat Keyword    3    Wait For Load State
-            IF    'FAIL' in ${final_try}
+            IF    'FAIL' in $final_try
                 Take Screenshot    EMBED    fullPage=True
                 FAIL    '${variantToChoose}' variant was not selected on PDP. Check if variant exists
             END
@@ -195,7 +195,7 @@ Yves: product price on the PDP should be:
     IF    ${wait_for_p&s}
         FOR    ${index}    IN RANGE    1    ${iterations}
             ${price_displayed}=    Run Keyword And Ignore Error    Page Should Contain Element    ${pdp_price_element_locator}    timeout=1s
-            IF    'PASS' in ${price_displayed}
+            IF    'PASS' in $price_displayed
                 ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
             END
             ${result}=    Run Keyword And Ignore Error    Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
@@ -203,7 +203,7 @@ Yves: product price on the PDP should be:
                 Take Screenshot    EMBED    fullPage=True
                 Fail    Actual product price is ${actualProductPrice}, expected ${expectedProductPrice}
             END
-            IF    'FAIL' in ${result} or 'FAIL' in ${price_displayed}
+            IF    'FAIL' in $result or 'FAIL' in $price_displayed
                 Sleep    ${delay}
                 Reload
                 Continue For Loop
@@ -239,8 +239,8 @@ Yves: add product to the shopping list:
     Repeat Keyword    3    Wait For Load State
     ${variants_present_status}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=1s
     ${shopping_list_dropdown_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_shopping_list_selector}    timeout=5s
-    IF    'FAIL' in ${variants_present_status}    Yves: change variant of the product on PDP on random value
-    IF    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in ${shopping_list_dropdown_status})
+    IF    'FAIL' in $variants_present_status    Yves: change variant of the product on PDP on random value
+    IF    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in $shopping_list_dropdown_status)
         TRY
             Set Browser Timeout    3s
             Wait Until Element Is Enabled    ${pdp_shopping_list_selector}
@@ -362,16 +362,22 @@ Yves: select xxx merchant's offer:
     Repeat Keyword    3    Wait For Load State
     TRY
         Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+        Wait For Request
         Repeat Keyword    3    Wait For Load State
+        Repeat Keyword    3    Wait For Load State    domcontentloaded
         Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
     EXCEPT
         Reload
         Repeat Keyword    3    Wait For Load State
         Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+        Wait For Request
+        Repeat Keyword    3    Wait For Load State
+        Repeat Keyword    3    Wait For Load State    domcontentloaded
         Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
     END
     Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
     Repeat Keyword    3    Wait For Load State
+    Repeat Keyword    3    Wait For Load State    domcontentloaded
     Wait For Load State    networkidle
 
 Yves: select xxx merchant's offer with price:
@@ -394,13 +400,15 @@ Yves: select xxx merchant's offer with price:
                 Take Screenshot    EMBED    fullPage=True
                 Fail    Expected '${merchantName}' merchant offer with '${price}' is not present on PDP
             END
-            IF    'FAIL' in ${result}
+            IF    'FAIL' in $result
                 Sleep    ${delay}
                 Reload
                 Continue For Loop
             ELSE
                 Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
-                Repeat Keyword    2    Wait For Load State
+                Wait For Request
+                Repeat Keyword    3    Wait For Load State
+                Repeat Keyword    3    Wait For Load State    domcontentloaded
                 Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
                 Exit For Loop
             END
@@ -408,12 +416,17 @@ Yves: select xxx merchant's offer with price:
     ELSE
         TRY
             Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
-            Repeat Keyword    2    Wait For Load State
+            Wait For Request
+            Repeat Keyword    3    Wait For Load State
+            Repeat Keyword    3    Wait For Load State    domcontentloaded
             Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
         EXCEPT
             Reload
             Repeat Keyword    2    Wait For Load State
             Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+            Wait For Request
+            Repeat Keyword    3    Wait For Load State
+            Repeat Keyword    3    Wait For Load State    domcontentloaded
             Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
         END
     END
@@ -429,7 +442,7 @@ Yves: merchant's offer/product price should be:
 Yves: merchant is (not) displaying in Sold By section of PDP:
     [Arguments]    ${merchantName}    ${condition}
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
-    Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]     ${condition}    20    10s
+    Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]     ${condition}    10    10s
 
 Yves: select random varian if variant selector is available
     ${variants_present_status}=    Run Keyword And Return Status    Page should contain element    ${pdp_variant_selector}    ${EMPTY}    0:00:01

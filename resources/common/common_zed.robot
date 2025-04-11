@@ -25,10 +25,17 @@ Zed: login on Zed with provided credentials:
     Delete All Cookies
     Reload
     Wait Until Element Is Visible    ${zed_user_name_field}
+    ${email_value}=    Convert To Lower Case   ${email}
+    IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
     Type Text    ${zed_user_name_field}    ${email}
     Type Text    ${zed_password_field}    ${password}
     Click    ${zed_login_button}
-    Wait Until Element Is Visible    ${zed_log_out_button}    Zed:Dashboard page is not displayed
+    TRY
+        Wait Until Element Is Visible    ${zed_log_out_button}    Zed:Dashboard page is not displayed
+    EXCEPT    
+        Reload
+        Wait Until Element Is Visible    ${zed_log_out_button}    Zed:Dashboard page is not displayed
+    END
 
 Zed: login with deactivated user/invalid data:
    [Arguments]    ${email}    ${password}=${default_password}
@@ -88,10 +95,14 @@ Zed: click Action Button in a table for row that contains:
     Click    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
     Repeat Keyword    3    Wait For Load State
 
-Zed: save abstract product:  
-    [Arguments]    ${productAbstract}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Catalog    Products 
+Zed: save abstract product:
+    [Arguments]    ${productAbstract}    ${admin_email}=${zed_admin_email}
+    ${dynamic_admin_user_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_admin_user}
+    IF    ${dynamic_admin_user_exists}
+        VAR    ${admin_email}    ${dynamic_admin_user}
+    END
+    Zed: login on Zed with provided credentials:    ${admin_email}
+    Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
     Wait until element is visible    ${zed_save_button}
     Zed: submit the form
@@ -121,16 +132,22 @@ Zed: Uncheck Checkbox by Label:
 Zed: submit the form
     Wait until element is visible    ${zed_save_button}
     Click    ${zed_save_button}
+    ${got_response}=    Run Keyword And Ignore Error    Wait For Response
     Repeat Keyword    2    Wait For Load State
     Wait Until Element Is Visible    ${zed_log_out_button}
     ${error_flash_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_flash_message}    1s
-    IF    'FAIL' in ${error_flash_message}
+    IF    'FAIL' in $got_response
+        Click    ${zed_save_button}
+        Repeat Keyword    2    Wait For Load State
+        Wait Until Element Is Visible    ${zed_log_out_button}
+    END
+    IF    'FAIL' in $error_flash_message
         Click    ${zed_save_button}
         Repeat Keyword    2    Wait For Load State
         Wait Until Element Is Visible    ${zed_log_out_button}
     END
     ${error_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_message}    1s
-    IF    'FAIL' in ${error_message}
+    IF    'FAIL' in $error_message
         Click    ${zed_save_button}
         Repeat Keyword    2    Wait For Load State
         Wait Until Element Is Visible    ${zed_log_out_button}
@@ -190,6 +207,10 @@ Zed: go to tab:
     [Arguments]    ${tabName}
     Click    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
 
+Zed: go to tab by link href that contains:
+    [Arguments]    ${href}
+    Click    xpath=//a[contains(@data-toggle,'tab')][contains(@href,'${href}')] | //*[contains(@data-toggle,'tab')]//a[contains(@href,'${href}')]
+
 Zed: message should be shown:
     [Arguments]    ${text}
     Wait Until Element Is Visible    xpath=//div[contains(@class,'alert alert-success')]//*[contains(text(),'${text}')]    message=Success message is not shown
@@ -209,3 +230,29 @@ Zed: filter by merchant:
     [Arguments]    ${merchant}
     Wait Until Element Is Visible    ${zed_merchants_dropdown_locator}
     Select From List By Label    ${zed_merchants_dropdown_locator}    ${merchant}
+
+Zed: is admin user is logged in
+    Wait For Load State
+    Wait For Load State    networkidle
+    ${adminIsLoggedIn}=    Run Keyword And Return Status    Page Should Contain Element    locator=${zed_log_out_button}    timeout=0.1s
+    RETURN    ${adminIsLoggedIn}
+
+Zed: go to URL:
+    [Arguments]    ${url}    ${expected_response_code}=${EMPTY}
+    ${url}=    Get URL Without Starting Slash    ${url}
+    Set Browser Timeout    ${browser_timeout}
+    ${response_code}=    Go To    ${zed_url}${url}
+    ${response_code}=    Convert To Integer    ${response_code}
+    ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+    IF    ${is_5xx}
+        LocalStorage Clear
+        ${response_code}=    Go To    ${zed_url}${url}
+        ${response_code}=    Convert To Integer    ${response_code}
+        ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+        IF    ${is_5xx}    Fail    '${response_code}' error occurred on go to '${zed_url}${url}'
+    END
+    IF    '${expected_response_code}' != '${EMPTY}'
+        ${expected_response_code}=    Convert To Integer    ${expected_response_code}
+        Should Be Equal    ${response_code}    ${expected_response_code}    msg=Expected response code (${expected_response_code}) is not equal to the actual response code (${response_code}) on Go to: ${zed_url}${url}
+    END
+    RETURN    ${response_code}

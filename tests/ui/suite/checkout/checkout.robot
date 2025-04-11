@@ -47,7 +47,7 @@ Login_during_checkout
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
     Yves: fill in the following new shipping address:
@@ -69,7 +69,7 @@ Register_during_checkout
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
     Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Kj${random_str_password}!0${random_id_password}
     Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
@@ -93,9 +93,7 @@ Register_during_checkout
     Yves: assert customer profile data:
     ...    || salutation    | first name               | last name               | email                            ||
     ...    || ${salutation} | ${guest_user_first_name} | ${guest_user_last_name} | sonia+guest${random}@spryker.com ||
-    [Teardown]    Zed: delete customer:
-    ...    || email                            ||
-    ...    || sonia+guest${random}@spryker.com ||
+    [Teardown]    Zed: delete customer:    sonia+guest${random}@spryker.com
 
 Guest_Checkout
     [Tags]    smoke
@@ -104,7 +102,6 @@ Guest_Checkout
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
-    ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
     ...    AND    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    guestTest${random}    discountName=Guest Voucher Code 5% ${random}
     ...    AND    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Guest Cart Rule 10% ${random}
     Yves: go to the 'Home' page
@@ -112,7 +109,7 @@ Guest_Checkout
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
     Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: apply discount voucher to cart:    guestTest${random}
     Yves: shopping cart contains the following products:    ${bundle_product_concrete_sku}
     Yves: click on the 'Checkout' button in the shopping cart
@@ -151,7 +148,7 @@ Guest_Checkout_Addresses
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest+new${random}@spryker.com
     Yves: billing address same as shipping address:    true
@@ -300,7 +297,7 @@ Split_Delivery
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select delivery to multiple addresses
     Yves: fill in new delivery address for a product:
@@ -341,7 +338,7 @@ Checkout_Address_Management
     ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     Yves: go to PDP of the product with sku:    ${available_never_out_of_stock_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    false
     Yves: fill in the following new billing address:
@@ -361,7 +358,7 @@ Checkout_Address_Management
     Yves: fill in the following new shipping address:
     ...    || salutation | firstName | lastName | street          | houseNumber | postCode | city   | country     | company | phone     | additionalAddress ||
     ...    || Mr.        | First     | Last     | Shipping Street | 7           | 10247    | Geneva | Switzerland | Spryker | 123456789 | Additional street ||
-    Yves: save new deviery address to address book:    true
+    Yves: save new delivery address to address book:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
@@ -457,7 +454,7 @@ Click_and_collect
     Yves: go to PDP of the product with sku:     clickCollectSku${random}
     Yves: select xxx merchant's offer with price:    Budget Cameras    €150.00
     Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select multiple addresses from toggler
     Yves: select xxx shipment type for item number xxx:    shipment_type=Pickup    item_number=1
@@ -510,7 +507,7 @@ Click_and_collect
     ...    AND    Trigger p&s
 
 Multiple_Merchants_Order
-    [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
+    [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be split per merchant
     [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
     ...    AND    MP: change offer stock:
@@ -540,7 +537,7 @@ Multiple_Merchants_Order
     Yves: select xxx merchant's offer:    Video King
     Yves: product price on the PDP should be:    ${second_product_with_multiple_offers_video_king_price}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in cart or list:    ${one_variant_product_of_main_merchant_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
     Yves: assert merchant of product in cart or list:    ${second_product_with_multiple_offers_concrete_sku}    Video King
@@ -563,7 +560,8 @@ Multiple_Merchants_Order
     ...    AND    Yves: delete all user addresses
 
 Unique_URL
-    [Documentation]    Fails due to Bug:CC-12380
+    [Tags]    dms-on
+    [Documentation]    Bug: https://spryker.atlassian.net/browse/CC-12380
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
@@ -631,7 +629,7 @@ Configurable_Product_Checkout
     Yves: save product configuration
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
     ...    || 389.50     | 249        ||

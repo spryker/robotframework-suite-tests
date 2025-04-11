@@ -3,6 +3,7 @@ Library    Browser    run_on_failure=Take Screenshot \ EMBED \ fullPage=True
 Resource    common.robot
 Resource    ../pages/yves/yves_header_section.robot
 Resource    ../pages/yves/yves_login_page.robot
+Resource    common_api.robot
 
 *** Variables ***
 # *** UI SUITE VARIABLES ***
@@ -12,6 +13,7 @@ ${browser}             chromium
 ${browser_timeout}     60 seconds
 ${email_domain}        @spryker.com
 ${default_password}    change123
+${default_secure_password}    qweRTY_123456
 ${admin_email}         admin@spryker.com
 ${device}
 # ${device}              Desktop Chrome
@@ -116,8 +118,6 @@ UI_suite_setup
     Set Browser Timeout    ${browser_timeout}
     Create default Main Context
     New Page    ${yves_url}
-    ### Executed only in CI env ###
-    Trigger multistore p&s    timeout=1s
 
 UI_suite_teardown
     Close Browser    ALL
@@ -396,7 +396,7 @@ Ping and go to URL:
     [Arguments]    ${url}    ${timeout}=${EMPTY}
     ${accessible}=    Run Keyword And Ignore Error    Send GET request and return status code:    ${url}    ${timeout}
     ${successful}=    Run Keyword And Ignore Error    Should Contain Any    '${response.status_code}'    '200'    '201'    '202'    '301'    '302'
-    IF    'PASS' in ${accessible} and 'PASS' in ${successful}
+    IF    'PASS' in $accessible and 'PASS' in $successful
         Go To    ${url}
     ELSE
         Fail    '${url}' URL is not accessible of throws an error

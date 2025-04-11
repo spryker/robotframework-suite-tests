@@ -122,7 +122,7 @@ Yves: select filter value:
         Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
         Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
         ${filter_expanded}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]    timeout=3s
-        IF    'FAIL' in ${filter_expanded}
+        IF    'FAIL' in $filter_expanded
             Reload
             Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
             Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
@@ -200,7 +200,7 @@ Yves: at least one product is/not displayed on the search results page:
             ELSE
                 ${result}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${catalog_product_card_locator}
             END
-            IF    'FAIL' in ${result}   
+            IF    'FAIL' in $result
                 Sleep    ${delay}
                 Reload
                 Continue For Loop

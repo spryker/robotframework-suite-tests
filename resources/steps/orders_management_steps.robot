@@ -10,13 +10,13 @@ Resource    ../pages/zed/zed_order_details_page.robot
 *** Keywords ***
 Zed: go to order page:
     [Arguments]    ${orderID}
-    Zed: go to second navigation item level:    Sales    Orders
+    Zed: go to URL:    /sales
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
 
 Zed: go to my order page:
     [Documentation]    Marketplace specific method, to see this page you should be logged in as zed_spryker_merchant_admin_email
     [Arguments]    ${orderID}
-    Zed: go to second navigation item level:    Sales    My Orders
+    Zed: go to URL:    /merchant-sales-order-merchant-user-gui
     Zed: perform search by:    ${orderID}
     Try reloading page until element is/not appear:    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${orderID}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]    true    15    10s
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
@@ -53,13 +53,13 @@ Zed: trigger all matching states inside this order:
     Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
     Trigger oms
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             Reload
             Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
             Trigger oms
     END
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             ${order_state}=    Get Text    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
             Scroll Element Into View    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
             Take Screenshot    EMBED    fullPage=True
@@ -68,7 +68,7 @@ Zed: trigger all matching states inside this order:
 
 Zed: trigger matching state of xxx merchant's shipment:
     [Documentation]    Marketplace specific method, suitable for My Orders of merchant. Triggers action for whole shipment
-    [Arguments]    ${shipment_number}    ${event}    ${delay}=10s    ${iterations}=20
+    [Arguments]    ${shipment_number}    ${event}    ${delay}=4s    ${iterations}=20
     Trigger oms
     Reload
     ${elementSelector}=    Set Variable    xpath=//div[@id='items']//h3[contains(.,'Shipment ${shipment_number}')]/../../following-sibling::div[2]//form[@name='event_trigger_form']//button[@id='event_trigger_form_submit'][text()='${event}']
@@ -85,13 +85,13 @@ Zed: trigger matching state of xxx merchant's shipment:
     Click    ${elementSelector}
     Trigger oms
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             Reload
             Click    ${elementSelector}
             Trigger oms
     END
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             ${order_state}=    Get Text    ${elementSelector}
             Scroll Element Into View    ${elementSelector}
             Take Screenshot    EMBED    fullPage=True
@@ -99,7 +99,7 @@ Zed: trigger matching state of xxx merchant's shipment:
     END
 
 Zed: trigger matching state of order item inside xxx shipment:
-    [Arguments]    ${sku}    ${event}    ${shipment}=1    ${delay}=10s    ${iterations}=20
+    [Arguments]    ${sku}    ${event}    ${shipment}=1    ${delay}=4s    ${iterations}=20
     Trigger oms
     Reload
     IF    '${env}' in ['ui_mp_b2b','ui_mp_b2c']
@@ -130,13 +130,13 @@ Zed: trigger matching state of order item inside xxx shipment:
     Click    ${elementSelector}
     Trigger oms
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             Reload
             Click    ${elementSelector}
             Trigger oms
     END
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             ${order_item_state}=    Get Text    ${elementSelector}
             Scroll Element Into View    ${elementSelector}
             Take Screenshot    EMBED    fullPage=True 
@@ -144,7 +144,7 @@ Zed: trigger matching state of order item inside xxx shipment:
     END
 
 Zed: trigger matching state of xxx order item inside xxx shipment:
-    [Arguments]    ${event}    ${item_number}=1    ${shipment}=1    ${delay}=10s    ${iterations}=20
+    [Arguments]    ${event}    ${item_number}=1    ${shipment}=1    ${delay}=4s    ${iterations}=20
     Trigger oms
     Reload
     ${elementSelector}=    Set Variable    xpath=//table[@data-qa='order-item-list'][${shipment}]/tbody//tr[${item_number}]//td//form[contains(@name,'trigger_form')]//button[contains(text(),'${event}')]
@@ -161,13 +161,13 @@ Zed: trigger matching state of xxx order item inside xxx shipment:
     Click    ${elementSelector}
     Trigger oms
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             Reload
             Click    ${elementSelector}
             Trigger oms
     END
     ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
+    IF    'FAIL' in $order_changed_status
             ${order_item_state}=    Get Text    ${elementSelector}
             Scroll Element Into View    ${elementSelector}
             Take Screenshot    EMBED    fullPage=True
@@ -221,7 +221,7 @@ Yves: check that 'Print Slip' contains the following products:
 
 Zed: create a return for the following order and product in it:
     [Arguments]    ${orderID}    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
-    Zed: go to second navigation item level:    Sales    Orders
+    Zed: go to URL:    /sales
     Zed: perform search by:    ${orderID}
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
     Wait Until Page Contains Element    xpath=//div[@class='title-action']/a[contains(.,'Return')]
@@ -238,14 +238,14 @@ Zed: create a return for the following order and product in it:
 
 Zed: grand total for the order equals:
     [Arguments]    ${orderID}    ${grandTotal}
-    Zed: go to second navigation item level:    Sales    Orders
+    Zed: go to URL:    /sales
     Zed: perform search by:    ${orderID}
     Table Should Contain    ${zed_table_locator}  ${grandTotal}
 
 Zed: get the last placed order ID of the customer by email:
     [Documentation]    Returns orderID of the last order from the Backoffice by email
     [Arguments]    ${email}
-    Zed: go to second navigation item level:    Sales    Orders
+    Zed: go to URL:    /sales
     Zed: perform search by:    ${email}
     ${zedLastPlacedOrder}=    Get Text    xpath=//table[contains(@data-ajax,'sales')][contains(@class,'dataTable')]/tbody/tr[1]/td[2]
     Set Suite Variable    ${zedLastPlacedOrder}    ${zedLastPlacedOrder}
@@ -253,7 +253,7 @@ Zed: get the last placed order ID of the customer by email:
 
 Zed: order has the following number of shipments:
     [Arguments]    ${orderID}    ${expectedShipments}
-    Zed: go to second navigation item level:    Sales    Orders
+    Zed: go to URL:    /sales
     Zed: perform search by:    ${orderID}
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
     Wait Until Element Is Visible    xpath=//table[@data-qa='order-item-list'][1]
@@ -291,7 +291,7 @@ Zed: create new shipment inside the order:
     Wait Until Element Is Visible    ${create_shipment_delivery_address_dropdown}
     FOR    ${key}    ${value}    IN    &{newShipmentData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='delivert address' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_delivery_address_dropdown}    ${value}
+        IF    '${key}'=='delivery address' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_delivery_address_dropdown}    ${value}
         IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_salutation_dropdown}    ${value}
         IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_first_name_field}    ${value}
         IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_last_name_field}    ${value}
@@ -320,7 +320,7 @@ Zed: edit xxx shipment inside the order:
     Wait Until Element Is Visible    ${create_shipment_delivery_address_dropdown}
     FOR    ${key}    ${value}    IN    &{newShipmentData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='delivert address' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_delivery_address_dropdown}    ${value}
+        IF    '${key}'=='delivery address' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_delivery_address_dropdown}    ${value}
         IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_salutation_dropdown}    ${value}
         IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_first_name_field}    ${value}
         IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_last_name_field}    ${value}

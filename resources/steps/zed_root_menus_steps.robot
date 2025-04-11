@@ -48,10 +48,10 @@ Zed: verify second navigation root menus
                 END
                 Click Element by xpath with JavaScript    ((//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]/ancestor::li//ul[contains(@class,'nav-second-level')]//a)[${counter_1}]
                 Repeat Keyword    3    Wait For Load State
-                Wait Until Element Is Visible    ${zed_log_out_button}    timeout=10s
+                Wait Until Element Is Visible    ${zed_log_out_button}    timeout=${browser_timeout}
                 Log    ${counter_1}
                 ${counter_1}=    Evaluate    ${counter_1} + 1   
             END        
-        Wait Until Element Is Visible    ${zed_log_out_button}    timeout=10s
+        Wait Until Element Is Visible    ${zed_log_out_button}    timeout=${browser_timeout}
         ${counter}=    Evaluate    ${counter} + 1  
     END

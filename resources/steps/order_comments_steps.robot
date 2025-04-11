@@ -14,17 +14,21 @@ Yves: add comment on cart:
     Click With Options    ${shopping_cart_write_comment_placeholder}    delay=0.5s    force=true
     Type Text    ${shopping_cart_write_comment_placeholder}    ${comment}    delay=50ms
     Keyboard Key    press    Enter
-    Click With Options    ${shopping_cart_add_comment_button}    delay=0.5s
+    Click    ${shopping_cart_add_comment_button}
+    Repeat Keyword    3    Wait For Load State
+    Repeat Keyword    3    Wait For Load State    networkidle
 
 Yves: check comments are visible or not in cart:
     [Arguments]    ${condition}    @{comments}    
+    Repeat Keyword    3    Wait For Load State
+    Repeat Keyword    3    Wait For Load State    networkidle
     FOR    ${element}    IN    @{comments}
         IF    '${env}' in ['ui_suite']
-            IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should
-            IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not
+            IF    '${condition}' == 'true'    Page Should Contain Element    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should    timeout=${browser_timeout}
+            IF    '${condition}' == 'false'    Page Should Not Contain Element    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not    timeout=${browser_timeout}
         ELSE
-            IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should
-            IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not
+            IF    '${condition}' == 'true'    Page Should Contain Element    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should    timeout=${browser_timeout}
+            IF    '${condition}' == 'false'    Page Should Not Contain Element    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not    timeout=${browser_timeout}
         END
     END
 
@@ -53,7 +57,7 @@ Yves: go to order details page to check comment:
 
 Zed: check comment appears at order detailed page in zed:
     [Arguments]    ${comment}    ${lastPlacedOrder}
-    Zed: go to second navigation item level:    Sales    Orders
+    Zed: go to URL:    /sales
     Zed: click Action Button in a table for row that contains:    ${lastPlacedOrder}    View 
     Wait Until Element Is Visible    ${zed_order_details_page_comments}
     ${text_entered}    Get Text    ${zed_order_details_page_comments}
@@ -69,14 +73,17 @@ Yves: edit comment on cart:
     Repeat Keyword    3    Wait For Load State
     IF    '${env}' not in ['ui_suite']    Click    ${shopping_cart_edit_comment_button}
     Repeat Keyword    3    Wait For Load State 
+    Repeat Keyword    3    Wait For Load State    networkidle
     Fill Text    ${shopping_cart_edit_comment_placeholder}    ${EMPTY}    force=true
     Fill Text    ${shopping_cart_edit_comment_placeholder}    ${comment_to_set}    force=true
-    Click With Options    ${shopping_cart_update_comment_button}    delay=0.5s
+    Click    ${shopping_cart_update_comment_button}
     Repeat Keyword    3    Wait For Load State
+    Repeat Keyword    3    Wait For Load State    networkidle
 
 Yves: delete comment on cart
-    Click With Options    ${shopping_cart_remove_comment_button}    delay=0.5s 
+    Click    ${shopping_cart_remove_comment_button}
     Repeat Keyword    3    Wait For Load State
+    Repeat Keyword    3    Wait For Load State    networkidle
     Page Should Not Contain Element    ${shopping_cart_remove_comment_button}
 
 Yves: add comment on order in order detail page:

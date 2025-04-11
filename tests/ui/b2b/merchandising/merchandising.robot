@@ -44,8 +44,7 @@ Resource    ../../../../resources/steps/configurable_bundle_steps.robot
 
 *** Test Cases ***
 Product_Sets
-    [Documentation]    Checks that product set can be added into cart. DMS-on mode: https://spryker.atlassian.net/browse/FRW-6377
-    [Tags]    dms-off
+    [Documentation]    Checks that product set can be added into cart.
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    productSetsCart+${random}
     Yves: go to URL:    en/product-sets
@@ -126,7 +125,6 @@ Discounts
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_sku}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Merchandising    Discount
     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=M29503    promotionalProductQuantity=2
@@ -159,7 +157,6 @@ Discounts
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,072.31
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: go to second navigation item level:    Merchandising    Discount
     ...    AND    Zed: Deactivate Following Discounts From Overview Page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
     ...    AND    Zed: activate following discounts from Overview page:    Free chair    Tu & Wed $5 off 5 or more    10% off $100+    Free marker    20% off storage    	Free office chair    Free standard delivery    	10% off Safescan    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
     ...    AND    Trigger p&s

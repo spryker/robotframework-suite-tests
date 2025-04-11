@@ -9,34 +9,34 @@ Resource    ../pages/zed/zed_view_concrete_product_page.robot
 Zed: discontinue the following product:
     [Arguments]    ${productAbstract}    ${productConcrete}
     Wait Until Element Is Visible    ${zed_log_out_button}
-    Zed: go to second navigation item level:    Catalog    Products
+    Zed: go to URL:    /product-management
     Zed: perform search by:    ${productAbstract}
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
-    Zed: switch to the tab on 'Edit product' page:    Variants
+    Zed: go to tab by link href that contains:   variants
     Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
     Wait Until Element Is Visible    ${zed_pdp_concrete_main_content_locator}
-    Zed: switch to the tab on 'Edit product' page:    Discontinue
+    Zed: go to tab by link href that contains:   discontinue
     ${can_be_discontinued}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_pdp_discontinue_button}
     IF    '${can_be_discontinued}'=='True'    Click    ${zed_pdp_discontinue_button}
 
 Zed: undo discontinue the following product:
     [Arguments]    ${productAbstract}    ${productConcrete}
-    Zed: go to second navigation item level:    Catalog    Products
+    Zed: go to URL:    /product-management
     Zed: perform search by:    ${productAbstract}
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
-    Zed: switch to the tab on 'Edit product' page:    Variants
+    Zed: go to tab by link href that contains:   variants
     Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
     Wait Until Element Is Visible    ${zed_pdp_concrete_main_content_locator}
-    Zed: switch to the tab on 'Edit product' page:    Discontinue
+    Zed: go to tab by link href that contains:   discontinue
     ${can_be_restored}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_pdp_restore_button}
     IF    '${can_be_restored}'=='True'    Click    ${zed_pdp_restore_button}
 
 Zed: check if at least one price exists for concrete and add if doesn't:
     [Arguments]    ${price}
     ${currentURL}=    Get Location
-    IF    'content-price' not in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Price & Stock
+    IF    'content-price' not in '${currentURL}'    Zed: go to tab by link href that contains:   content-price
     ${exists}=    BuiltIn.Run Keyword And Return Status    Element Should Exist    xpath=//table[@id='price-table-collection']//input[@id='product_concrete_form_edit_prices_1-93-DEFAULT-BOTH_moneyValue_gross_amount']
     IF        '${exists}'=='False'    Type Text    xpath=//table[@id='price-table-collection']//input[@id='product_concrete_form_edit_prices_1-93-DEFAULT-BOTH_moneyValue_gross_amount']    ${price}
     Click    ${zed_pdp_save_button}
@@ -44,13 +44,13 @@ Zed: check if at least one price exists for concrete and add if doesn't:
 Zed: change concrete product price on:
     [Arguments]    @{args}
     ${priceData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Catalog    Products
+    Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
-    Zed: switch to the tab on 'Edit product' page:    Variants
+    Zed: go to tab by link href that contains:   variants
     Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
     Wait Until Element Is Visible    ${zed_pdp_concrete_main_content_locator}
-    Zed: switch to the tab on 'Edit product' page:    Price & Stock
+    Zed: go to tab by link href that contains:   content-price
     FOR    ${key}    ${value}    IN    &{priceData}
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'
@@ -86,13 +86,43 @@ Zed: change concrete product price on:
     END
     Set Browser Timeout    ${browser_timeout}
     ${is_success_message_displayed}=    Run Keyword And Ignore Error    Element Should Be Visible    ${zed_success_flash_message}    timeout=1s
-    IF    'FAIL' in ${is_success_message_displayed}    Click    ${zed_pdp_save_button}
+    IF    'FAIL' in $is_success_message_displayed
+        Trigger multistore p&s
+        Reload
+        Sleep    1s
+        FOR    ${key}    ${value}    IN    &{priceData}
+            Log    Key is '${key}' and value is '${value}'.
+            IF    '${key}'=='store' and '${value}' != '${EMPTY}'
+                ${store}=    Set Variable    ${value}
+            END
+            IF    '${key}'=='mode' and '${value}' != '${EMPTY}'
+                ${mode}=    Set Variable    ${value}_amount
+            END
+            IF    '${key}'=='type' and '${value}' == 'default'
+                ${type}=    Set Variable    DEFAULT
+            END
+            IF    '${key}'=='type' and '${value}' == 'original'
+                ${type}=    Set Variable    ORIGINAL
+            END
+            IF    '${key}'=='currency' and '${value}' == '€'
+            ${inputField}=    Set Variable    xpath=//table[@id='price-table-collection']//td[1][contains(text(),'${store}')]/../following-sibling::tr[1]//input[contains(@id,'${mode}')][contains(@id,'${type}')]
+            END
+            IF    '${key}'=='currency' and '${value}' == 'CHF'
+            ${inputField}=    Set Variable    xpath=//table[@id='price-table-collection']//td[1][contains(text(),'${store}')]/ancestor::tr//input[contains(@id,'${mode}')][contains(@id,'${type}')]
+            END
+            IF    '${key}'=='amount' and '${value}' != '${EMPTY}'
+                Type Text    ${inputField}    ${value}
+            END
+        END
+        Sleep    1s
+        Click    ${zed_pdp_save_button}
+    END
     Page Should Contain Element    ${zed_success_flash_message}
 
 Zed: add following alternative products to the concrete:
     [Arguments]    @{alternative_products_list}
     ${currentURL}=    Get Location
-    IF    'content-alternatives' not in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Product Alternatives
+    IF    'content-alternatives' not in '${currentURL}'    Zed: go to tab by link href that contains:   alternatives
     ${alternative_products_list_count}=   get length  ${alternative_products_list}
     FOR    ${index}    IN RANGE    0    ${alternative_products_list_count}
         ${alternative_product_to_assign}=    Get From List    ${alternative_products_list}    ${index}
@@ -105,7 +135,7 @@ Zed: add following alternative products to the concrete:
 Zed: concrete product has the following alternative products:
     [Arguments]    @{alternative_products_list}
     ${currentURL}=    Get Location
-    IF    'content-alternatives' not in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Product Alternatives
+    IF    'content-alternatives' not in '${currentURL}'    Zed: go to tab by link href that contains:   alternatives
     ${alternative_products_list_count}=   get length  ${alternative_products_list}
     FOR    ${index}    IN RANGE    0    ${alternative_products_list_count}
         ${alternative_product_to_check}=    Get From List    ${alternative_products_list}    ${index}
@@ -123,7 +153,7 @@ Zed: switch to the tab on 'Add product' page:
 
 Zed: product is successfully discontinued
     ${currentURL}=    Get Location
-    IF    'discontinue' not in '${currentURL}'    Zed: switch to the tab on 'Edit product' page:    Discontinue
+    IF    'discontinue' not in '${currentURL}'    Zed: go to tab by link href that contains:   discontinue
     Page Should Contain Element    ${zed_pdp_restore_button}
 
 Zed: view product page is displayed
@@ -164,7 +194,7 @@ Zed: view abstract product page contains:
 Zed: update abstract product data:
     [Arguments]    @{args}
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to URL:    /product-management 
     Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${${zed_product_general_second_locale_expanded_section}}    3s
     IF    '${second_locale_section_expanded}'=='False'
@@ -205,7 +235,7 @@ Zed: update abstract product price on:
     ${priceData}=    Set Up Keyword Arguments    @{args}
     Set Browser Timeout    1s
     TRY
-        Zed: switch to the tab on 'Add product' page:    Price & Tax
+        Zed: go to tab by link href that contains:   content-price
     EXCEPT
         Log    It's edit price case
     END
@@ -213,10 +243,10 @@ Zed: update abstract product price on:
     FOR    ${key}    ${value}    IN    &{priceData}
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='productAbstract' and '${value}' != '${EMPTY}'
-            Zed: go to second navigation item level:    Catalog    Products
+            Zed: go to URL:    /product-management
             Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
             Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
-            Zed: switch to the tab on 'Edit product' page:    Price & Tax
+            Zed: go to tab by link href that contains:   content-price
         END
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'
             ${store}=    Set Variable    ${value}
@@ -246,7 +276,7 @@ Zed: update abstract product price on:
 Zed: start new abstract product creation:
     [Arguments]    @{args}
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Catalog    Products
+    Zed: go to URL:    /product-management
     Zed: click button in Header:    Create Product
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=1s
     IF    '${second_locale_section_expanded}'=='False'
@@ -286,7 +316,7 @@ Zed: start new abstract product creation:
 Zed: select abstract product variants:
     [Arguments]    @{args}
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
-    Zed: switch to the tab on 'Add product' page:    Variants
+    Zed: go to tab by link href that contains:   variants
     FOR    ${key}    ${value}    IN    &{abstractProductData}
         IF    '${key}'=='attribute 1' and '${value}' != '${EMPTY}'
             ${attribute_1}=    Set Variable    ${value}
@@ -321,10 +351,10 @@ Zed: select abstract product variants:
 Zed: change concrete product data:
     [Arguments]    @{args}
     ${priceData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Catalog    Products
+    Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
-    Zed: switch to the tab on 'Edit product' page:    Variants
+    Zed: go to tab by link href that contains:   variants
     Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
     Wait Until Element Is Visible    ${zed_pdp_concrete_main_content_locator}
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=1s
@@ -383,13 +413,13 @@ Zed: change concrete product data:
 Zed: change concrete product stock:
     [Arguments]    @{args}
     ${stockData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Catalog    Products
+    Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
-    Zed: switch to the tab on 'Edit product' page:    Variants
+    Zed: go to tab by link href that contains:   variants
     Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
     Wait Until Element Is Visible    ${zed_pdp_concrete_main_content_locator}
-    Zed: switch to the tab on 'Edit product' page:    Price & Stock
+    Zed: go to tab by link href that contains:   content-price
     FOR    ${key}    ${value}    IN    &{stockData}
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='warehouse n1' and '${value}' != '${EMPTY}'    
@@ -458,7 +488,7 @@ Zed: change concrete product stock:
 Zed: add new concrete product to abstract:
     [Arguments]    @{args}
     ${productData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Catalog    Products
+    Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
     Zed: click button in Header:    Add Variant
@@ -503,7 +533,7 @@ Zed: add new concrete product to abstract:
                 Type Text    ${zed_add_concrete_name_de_input}    ${value}
         END
         IF    '${key}'=='use prices from abstract' and '${value}' != '${EMPTY}'  
-            Zed: switch to the tab on 'Add product' page:    Price & Stock
+            Zed: go to tab by link href that contains:   content-price
             Wait Until Element Is Visible    ${zed_add_concrete_use_price_from_abstract}
             IF    '${value}'=='true'
                 Check Checkbox    ${zed_add_concrete_use_price_from_abstract}

@@ -49,6 +49,14 @@ MP: fill offer fields:
             Click    ${offer_service_point_selector}
         END
         IF    '${key}'=='services' and '${value}' != '${EMPTY}'
+            FOR    ${index}    IN RANGE    30
+            ${services_dropdown_is_disabled}=    Get Element Attribute    ${offer_services_selector}    class
+                IF    'disabled' in '${services_dropdown_is_disabled}'
+                    Sleep    1s
+                ELSE
+                    BREAK
+                END
+            END
             Click    ${offer_services_selector}
             MP: select option in expanded dropdown:    ${value}
             Click    ${offer_services_selector}
@@ -91,7 +99,7 @@ MP: save offer
     MP: click submit button
     ${offerSaved}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    ${offer_saved_popup}    timeout=5s
     ### resave in case of error
-    IF    'FAIL' in ${offerSaved}
+    IF    'FAIL' in $offerSaved
         TRY
             MP: click submit button    timeout=3s
             Wait Until Element Is Visible    ${offer_saved_popup}    timeout=5s
