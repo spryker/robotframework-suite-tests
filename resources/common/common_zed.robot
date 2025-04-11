@@ -238,7 +238,21 @@ Zed: is admin user is logged in
     RETURN    ${adminIsLoggedIn}
 
 Zed: go to URL:
-    [Arguments]    ${url}
+    [Arguments]    ${url}    ${expected_response_code}=${EMPTY}
     ${url}=    Get URL Without Starting Slash    ${url}
     Set Browser Timeout    ${browser_timeout}
-    Go To    ${zed_url}${url}
+    ${response_code}=    Go To    ${zed_url}${url}
+    ${response_code}=    Convert To Integer    ${response_code}
+    ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+    IF    ${is_5xx}
+        LocalStorage Clear
+        ${response_code}=    Go To    ${zed_url}${url}
+        ${response_code}=    Convert To Integer    ${response_code}
+        ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+        IF    ${is_5xx}    Fail    '${response_code}' error occurred on go to '${zed_url}${url}'
+    END
+    IF    '${expected_response_code}' != '${EMPTY}'
+        ${expected_response_code}=    Convert To Integer    ${expected_response_code}
+        Should Be Equal    ${response_code}    ${expected_response_code}    msg=Expected response code (${expected_response_code}) is not equal to the actual response code (${response_code}) on Go to: ${zed_url}${url}
+    END
+    RETURN    ${response_code}

@@ -303,10 +303,28 @@ Yves: go to URL:
     ELSE
         ${response_code}=    Go To    ${yves_url}${url}
     END    
-    IF    '${expected_response_code}' != '${EMPTY}'
+    ${response_code}=    Convert To Integer    ${response_code}
+    ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+    IF    ${is_5xx}
+        LocalStorage Clear
+        IF    '.at.' in '${currentURL}'
+            ${response_code}=    Go To    ${yves_at_url}${url}
+        ELSE
+            ${response_code}=    Go To    ${yves_url}${url}
+        END
         ${response_code}=    Convert To Integer    ${response_code}
+        ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+        IF    ${is_5xx}
+            IF    '.at.' in '${currentURL}'
+                Fail    '${response_code}' error occurred on Go to: ${yves_at_url}${url}
+            ELSE
+                Fail    '${response_code}' error occurred on Go to: ${yves_url}${url}
+            END
+        END
+    END
+    IF    '${expected_response_code}' != '${EMPTY}'
         ${expected_response_code}=    Convert To Integer    ${expected_response_code}
-        Should Be Equal    ${response_code}    ${expected_response_code}    msg=Expected response code (${expected_response_code}) is not equal to the actual response code (${response_code})
+        Should Be Equal    ${response_code}    ${expected_response_code}    msg=Expected response code (${expected_response_code}) is not equal to the actual response code (${response_code}) on Go to: ${url}
     END
     RETURN    ${response_code}
 

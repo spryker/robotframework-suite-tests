@@ -18,8 +18,8 @@ ${mp_loading_icon}    xpath=//span[contains(@class,'spin-dot') and not(ancestor:
 *** Keywords ***
 MP: login on MP with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
-    Go To    ${mp_url}
     Delete All Cookies
+    Go To    ${mp_url}
     Reload
     Wait Until Element Is Visible    ${mp_user_name_field}
     ${email_value}=    Convert To Lower Case   ${email}
@@ -27,7 +27,7 @@ MP: login on MP with provided credentials:
     Type Text    ${mp_user_name_field}    ${email}
     Type Text    ${mp_password_field}    ${password}
     Click    ${mp_login_button}
-    Wait Until Element Is Visible    ${mp_user_menu_button}    MP: user menu is not displayed
+    Wait Until Element Is Visible    ${mp_user_menu_button}    MP: Login failed
 
 MP: login on MP with provided credentials and expect error:
     [Arguments]    ${email}    ${password}=${default_password}

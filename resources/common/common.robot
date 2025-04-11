@@ -1016,8 +1016,8 @@ Create dynamic customer in DB
     ${existing_phone}=                     Set Variable If    '${existing_customer_data[0][14]}' != '${EMPTY}'   ${existing_customer_data[0][14]}   ${EMPTY}
     ${existing_registered}=                Set Variable If    ${existing_customer_data[0][15]}   ${existing_customer_data[0][15]}   '2020-06-24'
     ${existing_registration_key}=          Set Variable If    ${existing_customer_data[0][16]}   ${existing_customer_data[0][16]}   NULL
-    ${existing_restore_password_date}=     Set Variable If    ${existing_customer_data[0][17]}   ${existing_customer_data[0][17]}   NULL
-    ${existing_restore_password_key}=      Set Variable If    ${existing_customer_data[0][18]}   ${existing_customer_data[0][18]}   NULL
+    VAR    ${existing_restore_password_date}    NULL
+    VAR    ${existing_restore_password_key}    NULL
     ${existing_salutation}=                Set Variable    ${existing_customer_data[0][19]}
     ${existing_created_at}=                Set Variable    ${existing_customer_data[0][20]}
     ${existing_updated_at}=                Set Variable    ${existing_customer_data[0][21]}
