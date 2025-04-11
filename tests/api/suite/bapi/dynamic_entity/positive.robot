@@ -158,7 +158,7 @@ Get_country_collection_with_paginations
     And Response body parameter should be:    [data][0][name]    Ukraine
     And Response body parameter should be:    [data][0][postal_code_mandatory]    True
     And Response body parameter should be:    [data][0][postal_code_regex]    \\\\d{5}
-    And Response body parameter should be:    [data][1][id_country]    236
+    And Response body parameter should be:    [data][1][id_country]    238
     And Response body parameter should be:    [data][1][iso2_code]    UG
     And Response body parameter should be:    [data][1][iso3_code]    UGA
     And Response body parameter should be:    [data][1][name]    Uganda
