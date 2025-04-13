@@ -41,25 +41,15 @@ Yves: login on Yves with provided credentials:
     Set Browser Timeout    ${browser_timeout}
     ${currentURL}=    Get Url
     IF    '/login' not in '${currentURL}'
-        IF    '.at.' in '${currentURL}'
             Delete All Cookies
             Reload
-            Go To    ${yves_at_url}login
-        ELSE
-            Delete All Cookies
-            Reload
-            Go To    ${yves_url}login
-        END  
+            Yves: go to URL:    /login
     END
     ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    locator=${email_field}    message=Login page is not displayed
     IF    'FAIL' in $is_login_page
         Delete All Cookies
         Yves: go to the 'Home' page
-        IF    '.at.' in '${currentURL}'
-            Go To    ${yves_at_url}login
-        ELSE
-            Go To    ${yves_url}login
-        END
+        Yves: go to URL:    /login
     END
     ${currentURL}=    Get Url
     Type Text    ${email_field}    ${email}
@@ -87,25 +77,15 @@ Yves: login on Yves with provided credentials and expect error:
     Set Browser Timeout    ${browser_timeout}
     ${currentURL}=    Get Url
     IF    '/login' not in '${currentURL}'
-        IF    '.at.' in '${currentURL}'
             Delete All Cookies
             Reload
-            Go To    ${yves_at_url}login
-        ELSE
-            Delete All Cookies
-            Reload
-            Go To    ${yves_url}login
-        END
+            Yves: go to URL:    /login
     END
     ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    locator=${email_field}    message=Login page is not displayed
     IF    'FAIL' in $is_login_page
         Delete All Cookies
         Yves: go to the 'Home' page
-        IF    '.at.' in '${currentURL}'
-            Go To    ${yves_at_url}login
-        ELSE
-            Go To    ${yves_url}login
-        END
+        Yves: go to URL:    /login
     END
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}

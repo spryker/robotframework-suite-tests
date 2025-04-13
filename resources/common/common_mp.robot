@@ -19,7 +19,8 @@ ${mp_loading_icon}    xpath=//span[contains(@class,'spin-dot') and not(ancestor:
 MP: login on MP with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
     Delete All Cookies
-    Go To    ${mp_url}
+    MP: go to URL:    /
+    Delete All Cookies
     Reload
     Wait Until Element Is Visible    ${mp_user_name_field}
     ${email_value}=    Convert To Lower Case   ${email}
@@ -31,7 +32,8 @@ MP: login on MP with provided credentials:
 
 MP: login on MP with provided credentials and expect error:
     [Arguments]    ${email}    ${password}=${default_password}
-    Go To    ${mp_url}
+    Delete All Cookies
+    MP: go to URL:    /
     Delete All Cookies
     Reload
     Wait Until Element Is Visible    ${mp_user_name_field}
@@ -140,3 +142,23 @@ MP: remove notification wrapper
     EXCEPT    
         Log    Flash message is not shown
     END
+
+MP: go to URL:
+    [Arguments]    ${url}    ${expected_response_code}=${EMPTY}
+    ${url}=    Get URL Without Starting Slash    ${url}
+    Set Browser Timeout    ${browser_timeout}
+    ${response_code}=    Go To    ${mp_url}${url}
+    ${response_code}=    Convert To Integer    ${response_code}
+    ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+    IF    ${is_5xx}
+        LocalStorage Clear
+        ${response_code}=    Go To    ${mp_url}${url}
+        ${response_code}=    Convert To Integer    ${response_code}
+        ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+        IF    ${is_5xx}    Fail    '${response_code}' error occurred on go to '${mp_url}${url}'
+    END
+    IF    '${expected_response_code}' != '${EMPTY}'
+        ${expected_response_code}=    Convert To Integer    ${expected_response_code}
+        Should Be Equal    ${response_code}    ${expected_response_code}    msg=Expected response code (${expected_response_code}) is not equal to the actual response code (${response_code}) on Go to: ${mp_url}${url}
+    END
+    RETURN    ${response_code}

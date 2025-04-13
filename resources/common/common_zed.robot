@@ -21,7 +21,8 @@ ${zed_attribute_access_denied_header}    xpath=//div[@class='wrapper wrapper-con
 *** Keywords ***
 Zed: login on Zed with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
-    Go To    ${zed_url}
+    Delete All Cookies
+    Zed: go to URL:    /
     Delete All Cookies
     Reload
     Wait Until Element Is Visible    ${zed_user_name_field}
@@ -39,7 +40,8 @@ Zed: login on Zed with provided credentials:
 
 Zed: login with deactivated user/invalid data:
    [Arguments]    ${email}    ${password}=${default_password}
-    Go To    ${zed_url}
+    Delete All Cookies
+    Zed: go to URL:    /
     Delete All Cookies
     Reload
     Wait Until Element Is Visible    ${zed_user_name_field}
@@ -81,8 +83,8 @@ Zed: go to second navigation item level:
     
 Zed: click button in Header:
     [Arguments]    ${button_name}
-    wait until element is visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
-    Click    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
+    Wait Until Element Is Visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
+    Click and retry if 5xx occurred:    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
 
 Zed: wait for button in Header to be visible:
     [Arguments]    ${button_name}    ${timeout}
@@ -92,7 +94,7 @@ Zed: click Action Button in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform search by:    ${row_content}
     Wait until element is visible    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
-    Click    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
+    Click and retry if 5xx occurred:    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
     Repeat Keyword    3    Wait For Load State
 
 Zed: save abstract product:
@@ -111,7 +113,7 @@ Zed: click Action Button in Variant table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform variant search by:    ${row_content}
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
-    Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
+    Click and retry if 5xx occurred:    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
     Repeat Keyword    2    Wait For Load State
 
 Zed: Check checkbox by Label:

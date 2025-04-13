@@ -402,6 +402,43 @@ Ping and go to URL:
         Fail    '${url}' URL is not accessible of throws an error
     END
 
+*** Keywords ***
+Click and retry if 5xx occurred:
+    [Arguments]    ${selector}
+    Click    ${selector}
+    ${statuses}=    Create List
+    FOR    ${i}    IN RANGE    10
+        ${result}=    Run Keyword And Ignore Error    Wait For Response    matcher=**    timeout=0.5s
+        IF    '${result}[0]'=='FAIL'
+            Exit For Loop
+        END
+        ${response}=    Set Variable    ${result}[1]
+        ${status}=    Get From Dictionary    ${response}    status
+        Append To List    ${statuses}    ${status}
+    END
+    ${is_5xx}=    Evaluate    any(status >= 500 for status in ${statuses})
+    IF    not ${is_5xx}
+        RETURN
+    END
+    # Retry click if 5xx occurred
+    Log    message=Clicking '${selector}' triggered a 5xx error. Retrying ...    level=WARN
+    LocalStorage Clear
+    Reload
+    Click    ${selector}
+    ${statuses_retry}=    Create List
+    FOR    ${i}    IN RANGE    10
+        ${result}=    Run Keyword And Ignore Error    Wait For Response    matcher=**    timeout=0.5s
+        IF    '${result}[0]'=='FAIL'
+            Exit For Loop
+        END
+        ${response}=    Set Variable    ${result}[1]
+        ${status}=    Get From Dictionary    ${response}    status
+        Append To List    ${statuses_retry}    ${status}
+    END
+    Log    Retry click response statuses: ${statuses_retry}
+    ${second_error}=    Evaluate    any(status >= 500 for status in ${statuses_retry})
+    Should Not Be True    ${second_error}    msg=Clicking '${selector}' triggered a 5xx error.
+
 # *** Example of intercepting the network request ***
 #     [Arguments]    ${eventName}    ${timeout}=30s
 #     ${response}=    Wait for response    matcher=bazaarvoice\\.com\\/\\w+\\.gif\\?.*type=${eventName}    timeout=${timeout}
