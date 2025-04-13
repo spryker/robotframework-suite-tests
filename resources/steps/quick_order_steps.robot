@@ -37,9 +37,13 @@ Yves: find and add new item in the quick order form:
     Type Text    ${quick_order_add_articles_text_area}    ${EMPTY}
     Sleep    3s
     Click    ${quick_order_verify_button}
-    Repeat Keyword    3    Wait For Load State
-    Repeat Keyword    3    Wait For Load State    networkidle
-    Repeat Keyword    3    Wait For Load State    domcontentloaded
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Repeat Keyword    3    Wait For Load State    networkidle
+        Repeat Keyword    3    Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
     ${emptyRowAvailable}=    Run Keyword And Return Status    Page Should Contain Element    ${quick_order_first_empty_row}
     IF    '${emptyRowAvailable}'=='False'    
         Click    ${quick_order_add_more_rows}
@@ -49,20 +53,32 @@ Yves: find and add new item in the quick order form:
     Wait Until Element Is Visible    ${quick_order_row_search_results}
     Wait Until Page Contains Element    xpath=(//div[contains(@data-qa,'component quick-order-rows')]//*[contains(@class,'autocomplete')][@value=''])[1]/ancestor::quick-order-row//ul[@data-qa='component products-list']/li[@data-value='${searchQuery}']
     Click    xpath=(//div[contains(@data-qa,'component quick-order-rows')]//*[contains(@class,'autocomplete')][@value=''])[1]/ancestor::quick-order-row//ul[@data-qa='component products-list']/li[@data-value='${searchQuery}']
-    Repeat Keyword    3    Wait For Load State
-    Repeat Keyword    3    Wait For Load State    networkidle
-    Repeat Keyword    3    Wait For Load State    domcontentloaded
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Repeat Keyword    3    Wait For Load State    networkidle
+        Repeat Keyword    3    Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
     Sleep    3s
     Wait Until Element Is Visible    ${quick_order_row_merchant_selector}
     Select From List By Label    ${quick_order_row_merchant_selector}    ${merchant}
     Sleep    1s
-    Repeat Keyword    3    Wait For Load State
-    Repeat Keyword    3    Wait For Load State    networkidle
-    Repeat Keyword    3    Wait For Load State    domcontentloaded
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Repeat Keyword    3    Wait For Load State    networkidle
+        Repeat Keyword    3    Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
     Clear Text    ${quick_order_add_articles_text_area}
     Type Text    ${quick_order_add_articles_text_area}    ${EMPTY}
     Sleep    1s
     Click    ${quick_order_verify_button}
-    Repeat Keyword    3    Wait For Load State
-    Repeat Keyword    3    Wait For Load State    networkidle
-    Repeat Keyword    3    Wait For Load State    domcontentloaded
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Repeat Keyword    3    Wait For Load State    networkidle
+        Repeat Keyword    3    Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END

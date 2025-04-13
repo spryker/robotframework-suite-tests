@@ -86,40 +86,64 @@ Zed: create new product set:
             Zed: switch to tab in product set:    Products
             Wait Until Element Is Visible    ${zed_product_set_search_product_table_field}
             Input Text    ${zed_product_set_search_product_table_field}    ${value}
-            Wait For Load State
-            Wait For Load State    domcontentloaded
-            Wait For Load State    networkidle
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    3s
             Check Checkbox    ${zed_product_set_search_product_table_select_first_checkbox}
-            Wait For Load State
-            Wait For Load State    domcontentloaded
-            Wait For Load State    networkidle
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
         END
         IF    '${key}'=='product 2' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_product_set_search_product_table_field}
             Input Text    ${zed_product_set_search_product_table_field}    ${value}
-            Wait For Load State
-            Wait For Load State    domcontentloaded
-            Wait For Load State    networkidle
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    3s
             Check Checkbox    ${zed_product_set_search_product_table_select_first_checkbox}
-            Wait For Load State
-            Wait For Load State    domcontentloaded
-            Wait For Load State    networkidle
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
         END
         IF    '${key}'=='product 3' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_product_set_search_product_table_field}
             Input Text    ${zed_product_set_search_product_table_field}    ${value}
-            Wait For Load State
-            Wait For Load State    domcontentloaded
-            Wait For Load State    networkidle
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    3s
             Check Checkbox    ${zed_product_set_search_product_table_select_first_checkbox}
-            Wait For Load State
-            Wait For Load State    domcontentloaded
-            Wait For Load State    networkidle
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
         END
     END

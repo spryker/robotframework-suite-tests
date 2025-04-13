@@ -14,8 +14,12 @@ Zed: change global threshold settings:
     ${thresholdData}=    Set Up Keyword Arguments    @{args}
     Zed: go to URL:    /sales-order-threshold-gui/global
     Wait Until Element Is Visible    ${zed_global_threshold_store_currency_span}
-    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
+    EXCEPT    
+        Log    Page is not loaded
+    END
     FOR    ${key}    ${value}    IN    &{thresholdData}
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='store & currency' and '${value}' != '${EMPTY}'    

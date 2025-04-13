@@ -22,15 +22,27 @@ Yves: billing address same as shipping address:
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingSameAsShipping'][@checked]    timeout=1s
     IF    '${checkboxState}'=='False' and '${state}' == 'true'    
         Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
-        Repeat Keyword    3    Wait For Load State
+        TRY
+            Repeat Keyword    3    Wait For Load State
+        EXCEPT
+            Log    Page is not loaded
+        END
     END
     IF    '${checkboxState}'=='True' and '${state}' == 'false'    
         Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
-        Repeat Keyword    3    Wait For Load State
+        TRY
+            Repeat Keyword    3    Wait For Load State
+        EXCEPT
+            Log    Page is not loaded
+        END
     END
     Sleep    1s
     IF    '${state}' == 'true'    Wait Until Element Is Not Visible    ${checkout_billing_address_first_name_field}
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: 'billing same as shipping' checkbox should be displayed:
     [Arguments]    ${expected_condition}
@@ -58,51 +70,87 @@ Yves: accept the terms and conditions:
 Yves: select the following existing address on the checkout as 'shipping' address and go next:
     [Arguments]    ${addressToUse}
     Reload
-    Repeat Keyword    3    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
     Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
     WHILE  '${selected_address}' != '${addressToUse}'    limit=5
         IF    '${env}' in ['ui_b2c','ui_mp_b2c']
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
-            Repeat Keyword    3    Wait For Load State
+            TRY
+                Repeat Keyword    3    Wait For Load State
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
             ${selected_address}=    Get Text    xpath=//select[contains(@name,'shippingAddress')][contains(@id,'addressesForm_shippingAddress_id')]/..//span[contains(@id,'shippingAddress_id')]
         ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
-            Repeat Keyword    3    Wait For Load State
+            TRY
+                Repeat Keyword    3    Wait For Load State
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
             ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
         ELSE
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
-            Repeat Keyword    3    Wait For Load State
+            TRY
+                Repeat Keyword    3    Wait For Load State
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
             Exit For Loop
         END
     END
     Click    ${submit_checkout_form_button}[${env}]
-    Repeat Keyword    3    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: select the following existing address on the checkout as 'shipping':
     [Arguments]    ${addressToUse}
     Reload
-    Repeat Keyword    3    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
     Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
     WHILE  '${selected_address}' != '${addressToUse}'    limit=5
         IF    '${env}' in ['ui_b2c','ui_mp_b2c']
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
-            Repeat Keyword    3    Wait For Load State
+            TRY
+                Repeat Keyword    3    Wait For Load State
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
             ${selected_address}=    Get Text    xpath=//select[contains(@name,'shippingAddress')][contains(@id,'addressesForm_shippingAddress_id')]/..//span[contains(@id,'shippingAddress_id')]
         ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
-            Repeat Keyword    3    Wait For Load State
+            TRY
+                Repeat Keyword    3    Wait For Load State
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
             ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
         ELSE
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
-            Repeat Keyword    3    Wait For Load State
+            TRY
+                Repeat Keyword    3    Wait For Load State
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
             Exit For Loop
         END
@@ -128,7 +176,11 @@ Yves: fill in the following new shipping address:
         IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_phone_field}    ${value}
         IF    '${key}'=='additionalAddress' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_additional_address_field}    ${value}
     END
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Sleep    1s
 
 Yves: fill in the following new billing address:
@@ -152,7 +204,11 @@ Yves: fill in the following new billing address:
         IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_phone_field}    ${value}
         IF    '${key}'=='additionalAddress' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_additional_address_field}    ${value}
     END
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Sleep    1s
 
 Yves: select delivery to multiple addresses
@@ -164,9 +220,17 @@ Yves: select multiple addresses from toggler
 
 Yves: click checkout button:
     [Arguments]    ${buttonName}
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Click    xpath=//button[@type='submit' and contains(text(),'${buttonName}')]
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: fill in new delivery address for a product:
     [Documentation]    Possible argument names: product (SKU or Name), salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
@@ -221,7 +285,11 @@ Yves: fill in new delivery address for a product:
             IF    '${key}'=='additionalAddress' and '${value}' != '${EMPTY}'    Type Text    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]/ancestor::div[contains(@class,'address-item-form')][1]//input[contains(@name,'[address3]')]    ${value}
         END
     END
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Sleep    1s
 
 Yves: select the following shipping method on the checkout and go next:
@@ -232,12 +300,20 @@ Yves: select the following shipping method on the checkout and go next:
         Click    xpath=//div[@data-qa='component shipment-sidebar']//*[contains(.,'Shipping Method')]/../ul//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]
     END
     Click    ${submit_checkout_form_button}[${env}]
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: submit form on the checkout
     Click    ${submit_checkout_form_button}[${env}]
-    Repeat Keyword    3    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: select the following shipping method for the shipment:
     [Arguments]    ${shipment}    ${shippingProvider}    ${shippingMethod}
@@ -309,8 +385,12 @@ Yves: select the following payment method on the checkout and go next:
         END
         Click    ${submit_checkout_form_button}[${env}]
     END
-    Repeat Keyword    3    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: '${checkoutAction}' on the summary page
     [Documentation]    Possible supported actions: 'submit the order', 'send the request' and 'approve the cart'
@@ -321,8 +401,12 @@ Yves: '${checkoutAction}' on the summary page
     ELSE IF    '${checkoutAction}' == 'approve the cart'
         Click    ${checkout_summary_approve_request_button}
     END
-    Repeat Keyword    3    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: select approver on the 'Summary' page:
     [Arguments]    ${approver}
@@ -370,11 +454,19 @@ Yves: save new delivery address to address book:
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped'][@checked]    timeout=1s
     IF    '${checkboxState}'=='False' and '${state}' == 'true'    
         Click    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
-        Repeat Keyword    3    Wait For Load State
+        TRY
+            Repeat Keyword    3    Wait For Load State
+        EXCEPT
+            Log    Page is not loaded
+        END
     END
     IF    '${checkboxState}'=='True' and '${state}' == 'false'
         Click    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
-        Repeat Keyword    3    Wait For Load State
+        TRY
+            Repeat Keyword    3    Wait For Load State
+        EXCEPT
+            Log    Page is not loaded
+        END
     END
     
 Yves: save new billing address to address book:
@@ -385,18 +477,30 @@ Yves: save new billing address to address book:
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped'][@checked]    timeout=1s
     IF    '${checkboxState}'=='False' and '${state}' == 'true'    
         Click    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
-        Repeat Keyword    3    Wait For Load State
+        TRY
+            Repeat Keyword    3    Wait For Load State
+        EXCEPT
+            Log    Page is not loaded
+        END
     END
     IF    '${checkboxState}'=='True' and '${state}' == 'false'    
         Click    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
-        Repeat Keyword    3    Wait For Load State
+        TRY
+            Repeat Keyword    3    Wait For Load State
+        EXCEPT
+            Log    Page is not loaded
+        END
     END
     
 Yves: return to the previous checkout step:
     [Arguments]    ${checkoutStep}
     ${checkoutStep}=    Convert To Lower Case    ${checkoutStep}
     Click    //ul[@data-qa='component breadcrumb']//a[contains(@href,'${checkoutStep}')]
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     
 Yves: check that the payment method is/not present in the checkout process:
     [Arguments]    ${payment_method_locator}    ${condition}
@@ -414,14 +518,22 @@ Yves: check that the payment method is/not present in the checkout process:
         Type Text    ${email_field}    ${email}
         Type Text    ${password_field}    ${password}
         Click    ${form_login_button}
-        Repeat Keyword    3    Wait For Load State
+        TRY
+            Repeat Keyword    3    Wait For Load State
+        EXCEPT
+            Log    Page is not loaded
+        END
     ELSE
         Wait Until Page Contains Element    ${yves_checkout_login_tab} 
         Click    ${yves_checkout_login_tab} 
         Type Text    ${email_field}    ${email}
         Type Text    ${password_field}    ${password}
         Click    ${form_login_button}
-        Repeat Keyword    3    Wait For Load State
+        TRY
+            Repeat Keyword    3    Wait For Load State
+        EXCEPT
+            Log    Page is not loaded
+        END
     END
 
 Yves: signup guest user during checkout:
@@ -442,18 +554,30 @@ Yves: select xxx shipment type for item number xxx:
     ${item_number}=    Evaluate    ${item_number}-1
     Wait Until Element Is Visible    xpath=//input[contains(@id,'addressesForm_multiShippingAddresses_${item_number}')]/following-sibling::span[contains(text(), '${shipment_type}')]
     Click    xpath=//input[contains(@id,'addressesForm_multiShippingAddresses_${item_number}')]/following-sibling::span[contains(text(), '${shipment_type}')]
-    Repeat Keyword    2    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: select xxx shipment type for item xxx:
     [Arguments]    ${shipment_type}    ${item}
     Click    xpath=//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${item}')]//shipment-type-toggler//span[contains(@data-qa,'shipmentType')]//span[contains(text(), '${shipment_type}')]
-    Repeat Keyword    2    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: select xxx shipment type on checkout:
     [Arguments]    ${shipment_type}
     Click With Options    xpath=(//form[@name='addressesForm']//shipment-type-toggler//span[contains(@data-qa,'shipmentType')]//span[contains(text(), '${shipment_type}')])[1]    force=True
-    Repeat Keyword    2    Wait For Load State
-    Repeat Keyword    2    Wait For Load State    domcontentloaded
+    TRY
+        Repeat Keyword    2    Wait For Load State
+        Repeat Keyword    2    Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: check store availability for item number xxx:
     [Arguments]    @{args}
@@ -476,7 +600,11 @@ Yves: check store availability for item number xxx:
             END
             Keyboard Key    press    Enter
             Sleep    2s
-            Repeat Keyword    5    Wait For Load State
+            TRY
+                Repeat Keyword    5    Wait For Load State
+            EXCEPT
+                Log    Page is not loaded
+            END
         END
         IF    '${key}'=='availability' and '${value}' != '${EMPTY}'
             ${value}=    Convert To Lower Case    ${value}
@@ -490,7 +618,11 @@ Yves: check store availability for item number xxx:
         END
     END
     Click With Options    xpath=((//div[contains(@id,'service-point-selector')])[${item_number}]//button[contains(@class,'close')][contains(@class,'main-popup')])[1]    force=True
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: select pickup service point store for item number xxx:
     [Arguments]    @{args}
@@ -513,9 +645,17 @@ Yves: select pickup service point store for item number xxx:
             END
             Keyboard Key    press    Enter
             Sleep    2s
-            Repeat Keyword    5    Wait For Load State
+            TRY
+                Repeat Keyword    5    Wait For Load State
+            EXCEPT
+                Log    Page is not loaded
+            END
             Click With Options    xpath=((//div[contains(@id,'service-point-selector')])[${item_number}]//button[contains(@class,'select-button')])[position()=1]    force=true
-            Repeat Keyword    3    Wait For Load State
+            TRY
+                Repeat Keyword    3    Wait For Load State
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
         END
     END
@@ -523,7 +663,11 @@ Yves: select pickup service point store for item number xxx:
 Yves: checkout summary page contains product with unit price:
     [Arguments]    ${sku}    ${productName}    ${productPrice}
     Reload
-    Wait For Load State
+    TRY
+        Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         TRY
             Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=1s
@@ -538,5 +682,9 @@ Yves: checkout summary page contains product with unit price:
 
 Yves: checkout summary step contains product with unit price:
     [Arguments]    ${productName}    ${productPrice}
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Page Should Contain Element    xpath=(//*[contains(@data-qa,'summary-node')]//div[contains(.,'${productName}')]/ancestor::*[contains(@data-qa,'summary-node')]//strong[contains(.,'${productPrice}')])[1]

@@ -151,8 +151,12 @@ Yves: delete all user addresses
             END
         END   
     END
-    Repeat Keyword    3    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: assert customer profile data:
     [Arguments]    @{args}

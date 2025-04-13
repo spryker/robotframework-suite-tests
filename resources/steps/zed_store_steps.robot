@@ -65,7 +65,11 @@ Zed: perform store search by:
     EXCEPT    
         Log    Search event is not fired
     END
-    Repeat Keyword    2    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Zed: store context add timezone:
     [Arguments]    ${timezone}

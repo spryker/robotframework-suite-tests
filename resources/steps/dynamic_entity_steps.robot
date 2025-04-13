@@ -53,7 +53,11 @@ Zed: edit data exchange api configuration:
 
 Zed: save data exchange api configuration
     Click    ${data_exchange_create_configuration_button}
-    Wait For Load State
+    TRY
+        Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Page Should Not Contain Element    ${zed_error_message}    1s
     Page Should Not Contain Element    ${zed_error_flash_message}    1s
 

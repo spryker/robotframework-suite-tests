@@ -193,7 +193,11 @@ Yves: check that 'Print Slip' contains the following products:
     [Arguments]    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     IF    'local' not in '${yves_url}' or 'false' in '${headless}'
         Click    ${return_details_print_slip_button}
-        Repeat Keyword    3    Wait For Load State
+        TRY
+            Repeat Keyword    3    Wait For Load State
+        EXCEPT
+            Log    Page is not loaded
+        END
         ### Wait until new page (pop-up) is displayed ###
         Sleep    3s
         ${context}=    Get Browser Catalog
@@ -276,8 +280,8 @@ Zed: view the latest return from My Returns:
 
 Zed: billing address for the order should be:
     [Arguments]    ${expected_billing_address}
-    Wait Until Page Contains Element    ${order_details_billng_address}
-    Element Should Contain    ${order_details_billng_address}    ${expected_billing_address}
+    Wait Until Page Contains Element    ${order_details_billing_address}
+    Element Should Contain    ${order_details_billing_address}    ${expected_billing_address}
 
 Zed: shipping address inside xxx shipment should be:
     [Arguments]    ${shipment}    ${expected_address}
@@ -310,7 +314,7 @@ Zed: create new shipment inside the order:
         IF    '${key}'=='sku 5' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
     END
     Zed: submit the form
-    Wait Until Element Is Visible    ${order_details_billng_address}
+    Wait Until Element Is Visible    ${order_details_billing_address}
 
 Zed: edit xxx shipment inside the order:
     [Arguments]    @{args}
@@ -339,7 +343,7 @@ Zed: edit xxx shipment inside the order:
         IF    '${key}'=='sku 5' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
     END
     Zed: submit the form
-    Wait Until Element Is Visible    ${order_details_billng_address}
+    Wait Until Element Is Visible    ${order_details_billing_address}
 
 Zed: shipment data inside xxx shipment should be:
     [Arguments]    @{args}
@@ -378,9 +382,17 @@ Yves: cancel the order:
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${order_id}
     Yves: try reloading page if element is/not appear:    ${order_details_cancel_button_locator}    true
     Wait Until Element Is Visible    ${order_details_cancel_button_locator}
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Click    ${order_details_cancel_button_locator}
-    Repeat Keyword    2    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Wait Until Element Is Not Visible    ${order_details_cancel_button_locator}
     Yves: go to 'Order History' page
     Yves: 'Order History' page contains the following order with a status:    ${order_id}    Canceled

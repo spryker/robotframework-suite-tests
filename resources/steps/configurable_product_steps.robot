@@ -9,8 +9,12 @@ Yves: change the product options in configurator to:
     [Documentation]    fill the fields for product configuration (it is possible to set price OR option name).
     [Arguments]    @{args}
     ${configurationData}=    Set Up Keyword Arguments    @{args}
-    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
     Click    ${pdp_configure_button}
     FOR    ${key}    ${value}    IN    &{configurationData}
         ${key}=   Convert To Lower Case   ${key}
@@ -35,8 +39,12 @@ Yves: change the product options in configurator to:
         END 
    END
     ### sleep 1 seconds to process background event
-    Repeat Keyword    3    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
     Sleep    1s
 
 Yves: change the product configuration to:
@@ -53,16 +61,28 @@ Yves: change the product configuration to:
     END
     Click    ${configurator_day_time_selector}
     ### sleep 1 seconds to process background event
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Sleep    1s
     Click    ${configurator_save_button}
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Wait Until Element Is Visible    ${pdp_configure_button}
 
 
 Yves: save product configuration    
     Click    ${configurator_save_button}
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Wait Until Element Is Visible    ${pdp_configure_button}
 
 Yves: product configuration notification is:

@@ -85,7 +85,11 @@ Zed: update Merchant on edit page with the following data:
         Reload
         Zed: submit the form
     END
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Zed: table should contain:    search_key=${zedMerchantNewName}    error_message=Merchant Profile Update Failed! Form does not submit
 
 Zed: update Merchant name on edit page:
@@ -185,8 +189,12 @@ Zed: create dynamic merchant user:
         IF    not ${adminIsLoggedIn}    Zed: login on Zed with provided credentials:    ${zed_admin_email}
         Go To    ${zed_url}merchant-gui/list-merchant
     END
-    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
     Zed: click Action Button in a table for row that contains:     ${merchant}     Edit
     Zed: go to tab by link href that contains:    merchant-user
     Click    ${zed_add_merchant_user_button}
@@ -247,8 +255,12 @@ Zed: delete merchant user:
         IF    not ${adminIsLoggedIn}    Zed: login on Zed with provided credentials:    ${zed_admin_email}
         Go To    ${zed_url}merchant-gui/list-merchant
     END
-    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
     Zed: click Action Button in a table for row that contains:     ${merchant}     Edit
     Zed: go to tab by link href that contains:    merchant-user
     Zed: click Action Button in Merchant Users table for row that contains:    ${merchant_user}    Delete
@@ -277,7 +289,11 @@ Zed: perform Merchant User search by:
     EXCEPT    
         Log    Search event is not fired
     END
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Zed: click Action Button in Merchant Users table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}

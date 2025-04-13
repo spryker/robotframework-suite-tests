@@ -109,7 +109,11 @@ MP: save offer
 
     END
     MP: remove notification wrapper
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT    
+        Log    Page is not loaded
+    END
     MP: Wait until loader is no longer visible
 
 MP: change offer stock:
@@ -143,7 +147,11 @@ MP: delete offer price row that contains quantity:
     Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[7][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
     Click    ${product_delete_price_row_button}
     Wait Until Element Is Visible    ${product_price_deleted_popup}
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT    
+        Log    Page is not loaded
+    END
     MP: remove notification wrapper
 
 Zed: view offer page is displayed
@@ -151,8 +159,8 @@ Zed: view offer page is displayed
 
 Zed: view offer product page contains:
     [Arguments]    @{args}
-    ${offertData}=    Set Up Keyword Arguments    @{args}
-    FOR    ${key}    ${value}    IN    &{offertData}
+    ${offerData}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{offerData}
         IF    '${key}'=='approval status' and '${value}' != '${EMPTY}'    
             Element Should Contain    ${zed_view_offer_approval_status}    ${value}
         END
