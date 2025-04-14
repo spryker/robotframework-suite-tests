@@ -378,6 +378,7 @@ MP: add new concrete product:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -385,8 +386,10 @@ MP: add new concrete product:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
-    Wait Until Element Is Visible    ${mp_add_concrete_products_button}
+    ${is_form_submitted}=    Run Keyword And Return Status    Wait Until Element Is Not Visible    ${new_product_submit_create_button}
+    IF    not ${is_form_submitted}    Click With Options    selector=${new_product_submit_create_button}    force=True
     MP: remove notification wrapper
