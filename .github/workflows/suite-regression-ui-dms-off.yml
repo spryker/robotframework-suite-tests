@@ -27,6 +27,17 @@ jobs:
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
                   git clone -b feature/frw-9914/enable-parallel-test-execution --single-branch https://github.com/spryker-shop/suite.git .
+            - name: Cache pip packages
+              uses: actions/cache@v4
+              with:
+                  path: ~/.cache/pip
+                  key: ${{ runner.os }}-pip-${{ hashFiles('composer.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-pip-
+            - name: Install robotframework-suite-tests folder
+              run: |
+                  cd ./data && composer require "spryker/robotframework-suite-tests:dev-feature/frw-9914/master-enable-parallel-test-execution" --dev --no-interaction
+                  cp -r vendor ../vendor
             - name: Install packages
               run: |
                   sudo apt-get install apache2-utils
