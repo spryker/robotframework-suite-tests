@@ -8,8 +8,7 @@ Resource    ../pages/yves/yves_order_details_page.robot
 
 *** Keywords ***
 Yves: go to 'Order History' page
-    ${lang}=    Yves: get current lang
-    Yves: go to URL:    ${lang}/customer/order
+    Yves: go to URL:    /customer/order
         
 Yves: 'View Order/Reorder/Return' on the order history page:
     [Arguments]    ${orderAction}    ${lastPlacedOrder}=${lastPlacedOrder}

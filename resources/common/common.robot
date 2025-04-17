@@ -845,7 +845,7 @@ Trigger product labels update
 Create dynamic admin user in DB
     [Documentation]    This keyword creates a new admin user in the DB using data from an existing admin.
         ...    It works for both MariaDB and PostgreSQL.
-    [Arguments]    ${user_name}=${EMPTY}    ${first_name}=Dynamic    ${last_name}=Admin
+    [Arguments]    ${user_name}=${EMPTY}    ${first_name}=Dynamic    ${last_name}=Admin    ${based_on}=${zed_admin_email}
 
     IF    '${user_name}' == '${EMPTY}'
         ${unique}=    Generate Random String    5    [NUMBERS]
@@ -857,11 +857,11 @@ Create dynamic admin user in DB
 
     # Step 1: Fetch the existing user data (admin@spryker.com)
     Connect to Spryker DB
-    ${existing_user_data_id}=    Query    SELECT spy_user.id_user FROM spy_user WHERE username = 'admin@spryker.com'
-    ${existing_user_data_locale}=    Query    SELECT spy_user.fk_locale FROM spy_user WHERE username = 'admin@spryker.com'
-    ${existing_user_data_password}=    Query    SELECT spy_user.password FROM spy_user WHERE username = 'admin@spryker.com'
-    ${existing_user_data_created_at}=    Query    SELECT spy_user.created_at FROM spy_user WHERE username = 'admin@spryker.com'
-    ${existing_user_data_updated_at}=    Query    SELECT spy_user.updated_at FROM spy_user WHERE username = 'admin@spryker.com'
+    ${existing_user_data_id}=    Query    SELECT spy_user.id_user FROM spy_user WHERE username = '${based_on}'
+    ${existing_user_data_locale}=    Query    SELECT spy_user.fk_locale FROM spy_user WHERE username = '${based_on}'
+    ${existing_user_data_password}=    Query    SELECT spy_user.password FROM spy_user WHERE username = '${based_on}'
+    ${existing_user_data_created_at}=    Query    SELECT spy_user.created_at FROM spy_user WHERE username = '${based_on}'
+    ${existing_user_data_updated_at}=    Query    SELECT spy_user.updated_at FROM spy_user WHERE username = '${based_on}'
     
     # Step 1: Extract fields from the existing user
     ${existing_id_user}=    Set Variable    ${existing_user_data_id[0][0]}
@@ -917,6 +917,10 @@ Create dynamic admin user in DB
             ${new_id_user}=    Evaluate    ${new_id_user} + ${unique_id}
             ${unique}=    Generate Random String    5    [NUMBERS]
             VAR    ${new_uuid}    ${unique}-${random}-${random_str}-${random_id}
+            IF    '${user_name}' == '${EMPTY}'
+                VAR    ${user_name}    admin+robot${unique}@spryker.com
+                VAR    ${dynamic_admin_user}    ${user_name}    scope=TEST
+            END
             ${attempt}=    Evaluate    ${attempt} + 1
         END
     END
@@ -1050,6 +1054,19 @@ Create dynamic customer in DB
             ${unique_id}=    Convert To Integer    ${unique_id}
             ${new_id_customer}=    Evaluate    ${new_id_customer} + ${unique_id}
             ${new_customer_reference}=    Set Variable    dynamic--${new_id_customer}
+            IF    '${email}' == '${EMPTY}'
+                ${unique}=    Generate Random String    5    [NUMBERS]
+                IF    ${dynamic_second_customer_exists}
+                    VAR    ${email}    sonia+robot${unique}@spryker.com
+                    VAR    ${dynamic_third_customer}    ${email}    scope=TEST
+                ELSE IF    ${dynamic_customer_exists}
+                    VAR    ${email}    sonia+robot${unique}@spryker.com
+                    VAR    ${dynamic_second_customer}    ${email}    scope=TEST
+                ELSE
+                    VAR    ${email}    sonia+robot${unique}@spryker.com
+                    VAR    ${dynamic_customer}    ${email}    scope=TEST
+                END
+            END
             ${attempt}=    Evaluate    ${attempt} + 1
         END
     END

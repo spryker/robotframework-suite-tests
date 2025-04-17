@@ -186,12 +186,18 @@ MP: go to URL:
     ${response_code}=    Go To    ${mp_url}${url}
     ${response_code}=    Convert To Integer    ${response_code}
     ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
-    IF    ${is_5xx}
+    ${page_title}=    Get Title
+    ${page_title}=    Convert To Lower Case    ${page_title}
+    ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
+    IF    ${is_5xx} or not ${no_exception}
         LocalStorage Clear
         ${response_code}=    Go To    ${mp_url}${url}
         ${response_code}=    Convert To Integer    ${response_code}
         ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
         IF    ${is_5xx}    Fail    '${response_code}' error occurred on go to '${mp_url}${url}'
+        ${page_title}=    Get Title
+        ${page_title}=    Convert To Lower Case    ${page_title}
+        Should Not Contain    ${page_title}    error    msg='${response_code}' error occurred on go to '${mp_url}${url}'
     END
     IF    '${expected_response_code}' != '${EMPTY}'
         ${expected_response_code}=    Convert To Integer    ${expected_response_code}

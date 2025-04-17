@@ -70,6 +70,7 @@ Return_Management
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_spryker_second_merchant}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}
@@ -121,7 +122,8 @@ Return_Management
     Yves: 'Order History' page contains the following order with a status:    ${lastPlacedOrder}    Returned
     [Teardown]    Delete dynamic admin user from DB
 
-Order_Cancelation
+Order_Cancellation
+    [Tags]    smoke
     [Documentation]    Check that customer is able to cancel order.
     Create dynamic admin user in DB
     Create dynamic customer in DB

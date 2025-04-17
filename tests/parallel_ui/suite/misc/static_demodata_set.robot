@@ -118,6 +118,7 @@ Configurable_Product_RfQ_OMS
     Zed: login on Zed with provided credentials:    ${dynamic_spryker_merchant}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €771.90
     Zed: go to order page:    ${lastPlacedOrder} 
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}
@@ -367,7 +368,8 @@ Fulfill_Order_from_Merchant_Portal
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
+    Zed: trigger all matching states inside this order:    Pay
     Zed: wait for order item to be in state:    ${product_with_multiple_offers_concrete_sku}    sent to merchant    2
     MP: login on MP with provided credentials:    ${dynamic_budget_merchant}
     MP: open navigation menu tab:    Orders    
@@ -523,7 +525,7 @@ Discounts
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select xxx shipment type on checkout:    Delivery
     Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
+    Yves: select the following existing address on the checkout as 'shipping':    ${default_address.full_address}
     Yves: select xxx shipment type on checkout:    Delivery
     Yves: select the following shipping method for the shipment:    1    Spryker Dummy Shipment    Standard
     Yves: select the following shipping method for the shipment:    2    Spryker Dummy Shipment    Express

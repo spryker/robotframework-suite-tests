@@ -305,7 +305,10 @@ Yves: go to URL:
     END    
     ${response_code}=    Convert To Integer    ${response_code}
     ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
-    IF    ${is_5xx}
+    ${page_title}=    Get Title
+    ${page_title}=    Convert To Lower Case    ${page_title}
+    ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
+    IF    ${is_5xx} or not ${no_exception}
         LocalStorage Clear
         IF    '.at.' in '${currentURL}'
             ${response_code}=    Go To    ${yves_at_url}${url}
@@ -321,6 +324,9 @@ Yves: go to URL:
                 Fail    '${response_code}' error occurred on Go to: ${yves_url}${url}
             END
         END
+        ${page_title}=    Get Title
+        ${page_title}=    Convert To Lower Case    ${page_title}
+        Should Not Contain    ${page_title}    error    msg='${response_code}' error occurred on Go to: ${yves_url}${url}
     END
     IF    '${expected_response_code}' != '${EMPTY}'
         ${expected_response_code}=    Convert To Integer    ${expected_response_code}

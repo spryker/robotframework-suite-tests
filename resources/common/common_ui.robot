@@ -417,7 +417,10 @@ Click and retry if 5xx occurred:
         Append To List    ${statuses}    ${status}
     END
     ${is_5xx}=    Evaluate    any(status >= 500 for status in ${statuses})
-    IF    not ${is_5xx}
+    ${page_title}=    Get Title
+    ${page_title}=    Convert To Lower Case    ${page_title}
+    ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
+    IF    not ${is_5xx} and ${no_exception}
         RETURN
     END
     # Retry click if 5xx occurred
@@ -438,6 +441,9 @@ Click and retry if 5xx occurred:
     Log    Retry click response statuses: ${statuses_retry}
     ${second_error}=    Evaluate    any(status >= 500 for status in ${statuses_retry})
     Should Not Be True    ${second_error}    msg=Clicking '${selector}' triggered a 5xx error.
+    ${page_title}=    Get Title
+    ${page_title}=    Convert To Lower Case    ${page_title}
+    Should Not Contain    ${page_title}    error    msg=Clicking '${selector}' triggered a 5xx error.
 
 # *** Example of intercepting the network request ***
 #     [Arguments]    ${eventName}    ${timeout}=30s
