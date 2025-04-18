@@ -527,6 +527,7 @@ Discounts
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping':    ${default_address.full_address}
     Yves: select xxx shipment type on checkout:    Delivery
+    Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    Spryker Dummy Shipment    Standard
     Yves: select the following shipping method for the shipment:    2    Spryker Dummy Shipment    Express
     Yves: select the following shipping method for the shipment:    3    Spryker Drone Shipment    Air Light
