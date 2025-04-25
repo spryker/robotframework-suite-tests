@@ -38,6 +38,8 @@ Refresh_token_with_invalid_type
     And Response should return error message:    Invalid type.
 
 Refresh_token_with_deleted_refresh_token
+    [Tags]    skip-due-to-issue
+    [Documentation]    Bug: https://spryker.atlassian.net/browse/FRW-10160
     [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_user.email}","password":"${yves_user.password}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][attributes][refreshToken]    refresh_token
