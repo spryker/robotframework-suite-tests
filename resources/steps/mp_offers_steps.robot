@@ -49,6 +49,14 @@ MP: fill offer fields:
             Click    ${offer_service_point_selector}
         END
         IF    '${key}'=='services' and '${value}' != '${EMPTY}'
+            FOR    ${index}    IN RANGE    30
+            ${services_dropdown_is_disabled}=    Get Element Attribute    ${offer_services_selector}    class
+                IF    'disabled' in '${services_dropdown_is_disabled}'
+                    Sleep    1s
+                ELSE
+                    BREAK
+                END
+            END
             Click    ${offer_services_selector}
             MP: select option in expanded dropdown:    ${value}
             Click    ${offer_services_selector}
@@ -91,7 +99,7 @@ MP: save offer
     MP: click submit button
     ${offerSaved}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    ${offer_saved_popup}    timeout=5s
     ### resave in case of error
-    IF    'FAIL' in ${offerSaved}
+    IF    'FAIL' in $offerSaved
         TRY
             MP: click submit button    timeout=3s
             Wait Until Element Is Visible    ${offer_saved_popup}    timeout=5s
@@ -101,7 +109,11 @@ MP: save offer
 
     END
     MP: remove notification wrapper
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT    
+        Log    Page is not loaded
+    END
     MP: Wait until loader is no longer visible
 
 MP: change offer stock:
@@ -135,7 +147,11 @@ MP: delete offer price row that contains quantity:
     Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[7][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
     Click    ${product_delete_price_row_button}
     Wait Until Element Is Visible    ${product_price_deleted_popup}
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT    
+        Log    Page is not loaded
+    END
     MP: remove notification wrapper
 
 Zed: view offer page is displayed
@@ -143,8 +159,8 @@ Zed: view offer page is displayed
 
 Zed: view offer product page contains:
     [Arguments]    @{args}
-    ${offertData}=    Set Up Keyword Arguments    @{args}
-    FOR    ${key}    ${value}    IN    &{offertData}
+    ${offerData}=    Set Up Keyword Arguments    @{args}
+    FOR    ${key}    ${value}    IN    &{offerData}
         IF    '${key}'=='approval status' and '${value}' != '${EMPTY}'    
             Element Should Contain    ${zed_view_offer_approval_status}    ${value}
         END

@@ -8,7 +8,7 @@ Resource    ../pages/zed/zed_store_page.robot
 
 Zed: create new Store:
     [Arguments]    @{args}
-    Zed: go to second navigation item level:    Administration    Stores
+    Zed: go to URL:    /store-gui/list
     Zed: click button in Header:    Create Store
     Wait Until Element Is Visible    ${zed_store_add_name_input}
     ${storeData}=    Set Up Keyword Arguments    @{args}
@@ -65,7 +65,11 @@ Zed: perform store search by:
     EXCEPT    
         Log    Search event is not fired
     END
-    Repeat Keyword    2    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Zed: store context add timezone:
     [Arguments]    ${timezone}

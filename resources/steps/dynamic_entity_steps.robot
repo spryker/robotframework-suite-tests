@@ -7,10 +7,10 @@ Resource    ../../resources/pages/zed/zed_data_exchange_api_configurator_page.ro
 *** Keywords ***
 Zed: start creation of new data exchange api configuration for db table:
     [Arguments]    ${table_name}
-    Zed: go to first navigation item level:    Data Exchange API Configuration
+    Zed: go to URL:    /dynamic-entity-gui/configuration-list
     Zed: perform search by:    ${table_name}
     ${is_table_empty}=    Run Keyword And Ignore Error    Page Should Contain Element    xpath=//table//td[contains(@class,'empty')]    timeout=1s
-    IF    'PASS' in ${is_table_empty}
+    IF    'PASS' in $is_table_empty
         Zed: click button in Header:    Data Exchange API Configuration
         Select From List By Value    ${data_exchange_table_select_locator}    ${table_name}
         Click    ${data_exchange_create_configuration_button}
@@ -28,7 +28,7 @@ Zed: edit data exchange api configuration:
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='table_name' and '${value}' != '${EMPTY}'
             ${currentURL}=    Get Location
-            IF    '/configuration-list' not in '${currentURL}'    Zed: go to first navigation item level:    Data Exchange API Configuration
+            IF    '/configuration-list' not in '${currentURL}'    Zed: go to URL:    /dynamic-entity-gui/configuration-list
             Zed: click Action Button in a table for row that contains:    ${value}    Edit
             Wait Until Page Contains Element    ${data_exchange_resource_name_field}
         END
@@ -53,14 +53,18 @@ Zed: edit data exchange api configuration:
 
 Zed: save data exchange api configuration
     Click    ${data_exchange_create_configuration_button}
-    Wait For Load State
+    TRY
+        Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Page Should Not Contain Element    ${zed_error_message}    1s
     Page Should Not Contain Element    ${zed_error_flash_message}    1s
 
 Zed: download data exchange api specification should be active:
     [Arguments]    ${expected_condition}
     ${currentURL}=    Get Location
-    IF    '/configuration-list' not in '${currentURL}'    Zed: go to first navigation item level:    Data Exchange API Configuration
+    IF    '/configuration-list' not in '${currentURL}'    Zed: go to URL:    /dynamic-entity-gui/configuration-list
     ${expected_condition}=    Convert To Lower Case    ${expected_condition}
     IF    '${expected_condition}' == 'true'
         Wait Until Element Is Enabled    ${data_exchange_download_spec_button}    timeout=3s    message=Data Exchange API spec is NOT downloadable

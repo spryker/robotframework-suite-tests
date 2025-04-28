@@ -58,16 +58,16 @@ Yves: add all products to the shopping cart from Product Set
 
 Zed: create new product set:
     [Arguments]    @{args}
-    Zed: go to second navigation item level:    Merchandising    Product Sets
+    Zed: go to URL:    /product-set-gui
     Zed: click button in Header:    Create Product Set
     Wait Until Element Is Visible    ${zed_product_set_name_en_field}
-    ${seteData}=    Set Up Keyword Arguments    @{args}
+    ${setData}=    Set Up Keyword Arguments    @{args}
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_set_general_second_locale_expanded_section}    timeout=3s
     IF    '${second_locale_section_expanded}'=='False'
         Scroll Element Into View    ${zed_product_set_general_second_locale_collapsed_section}
         Click    ${zed_product_set_general_second_locale_collapsed_section}
     END
-    FOR    ${key}    ${value}    IN    &{seteData}
+    FOR    ${key}    ${value}    IN    &{setData}
         ${key}=    Convert To Lower Case    ${key}
         IF    '${key}'=='name en' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_set_name_en_field}    ${value}
         IF    '${key}'=='name de' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_set_name_de_field}    ${value}
@@ -86,22 +86,64 @@ Zed: create new product set:
             Zed: switch to tab in product set:    Products
             Wait Until Element Is Visible    ${zed_product_set_search_product_table_field}
             Input Text    ${zed_product_set_search_product_table_field}    ${value}
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    3s
             Check Checkbox    ${zed_product_set_search_product_table_select_first_checkbox}
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
         END
         IF    '${key}'=='product 2' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_product_set_search_product_table_field}
             Input Text    ${zed_product_set_search_product_table_field}    ${value}
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    3s
             Check Checkbox    ${zed_product_set_search_product_table_select_first_checkbox}
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
         END
         IF    '${key}'=='product 3' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_product_set_search_product_table_field}
             Input Text    ${zed_product_set_search_product_table_field}    ${value}
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    3s
             Check Checkbox    ${zed_product_set_search_product_table_select_first_checkbox}
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
         END
     END
@@ -115,5 +157,5 @@ Zed: switch to tab in product set:
 
 Zed: delete product set:
     [Arguments]    ${set_name}
-    Zed: go to second navigation item level:    Merchandising    Product Sets
+    Zed: go to URL:    /product-set-gui
     Zed: click Action Button in a table for row that contains:    ${set_name}    Delete

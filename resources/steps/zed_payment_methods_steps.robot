@@ -11,7 +11,7 @@ Zed: wait for payment method:
 
 Zed: activate/deactivate payment method:
     [Arguments]    ${provider}    ${name}    ${activate}=true    ${stores}=DE,AT
-    Zed: go to second navigation item level:    Administration    Payment Methods
+    Zed: go to URL:    /payment-gui/payment-method
     Zed: wait for payment method:    ${provider}    ${name}
     ${activate}=    Convert To String    ${activate}
     ${activate}=    Convert To Lower Case    ${activate}
@@ -21,7 +21,7 @@ Zed: activate/deactivate payment method:
     ELSE
         Zed: uncheck checkbox by label:    Is the Payment Method active?
     END
-    Zed: go to tab:    Store Relation
+    Zed: go to tab by link href that contains:    store-relation
     ${storesList}=    split string    ${stores}    ,
     ${storesListLength}=    get length    ${storesList}
     FOR    ${index}    IN RANGE    0    ${storesListLength}

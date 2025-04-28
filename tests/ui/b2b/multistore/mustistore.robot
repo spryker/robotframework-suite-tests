@@ -116,7 +116,6 @@ Multistore_Product
 Multistore_CMS
     [Documentation]    check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
     Trigger multistore p&s
     Yves: go to newly created page by URL on AT store if other store not specified:    en/multistore-page${random}
@@ -177,7 +176,6 @@ Dynamic_multistore
     Yves: product price on the PDP should be:    €15.00
     #### create new cms page and check it in new store on YVES
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    New Page Store${random}    store-page${random}    Page Title    Page text
     Trigger multistore p&s
     Yves: go to newly created page by URL:    en/store-page${random}

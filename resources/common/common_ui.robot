@@ -3,6 +3,7 @@ Library    Browser    run_on_failure=Take Screenshot \ EMBED \ fullPage=True
 Resource    common.robot
 Resource    ../pages/yves/yves_header_section.robot
 Resource    ../pages/yves/yves_login_page.robot
+Resource    common_api.robot
 
 *** Variables ***
 # *** UI SUITE VARIABLES ***
@@ -12,6 +13,7 @@ ${browser}             chromium
 ${browser_timeout}     60 seconds
 ${email_domain}        @spryker.com
 ${default_password}    change123
+${default_secure_password}    qweRTY_123456
 ${admin_email}         admin@spryker.com
 ${device}
 # ${device}              Desktop Chrome
@@ -116,8 +118,6 @@ UI_suite_setup
     Set Browser Timeout    ${browser_timeout}
     Create default Main Context
     New Page    ${yves_url}
-    ### Executed only in CI env ###
-    Trigger multistore p&s    timeout=1s
 
 UI_suite_teardown
     Close Browser    ALL
@@ -396,11 +396,54 @@ Ping and go to URL:
     [Arguments]    ${url}    ${timeout}=${EMPTY}
     ${accessible}=    Run Keyword And Ignore Error    Send GET request and return status code:    ${url}    ${timeout}
     ${successful}=    Run Keyword And Ignore Error    Should Contain Any    '${response.status_code}'    '200'    '201'    '202'    '301'    '302'
-    IF    'PASS' in ${accessible} and 'PASS' in ${successful}
+    IF    'PASS' in $accessible and 'PASS' in $successful
         Go To    ${url}
     ELSE
         Fail    '${url}' URL is not accessible of throws an error
     END
+
+*** Keywords ***
+Click and retry if 5xx occurred:
+    [Arguments]    ${selector}
+    Click    ${selector}
+    ${statuses}=    Create List
+    FOR    ${i}    IN RANGE    10
+        ${result}=    Run Keyword And Ignore Error    Wait For Response    matcher=**    timeout=0.5s
+        IF    '${result}[0]'=='FAIL'
+            Exit For Loop
+        END
+        ${response}=    Set Variable    ${result}[1]
+        ${status}=    Get From Dictionary    ${response}    status
+        Append To List    ${statuses}    ${status}
+    END
+    ${is_5xx}=    Evaluate    any(status >= 500 for status in ${statuses})
+    ${page_title}=    Get Title
+    ${page_title}=    Convert To Lower Case    ${page_title}
+    ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
+    IF    not ${is_5xx} and ${no_exception}
+        RETURN
+    END
+    # Retry click if 5xx occurred
+    Log    message=Clicking '${selector}' triggered a 5xx error. Retrying ...    level=WARN
+    LocalStorage Clear
+    Reload
+    Click    ${selector}
+    ${statuses_retry}=    Create List
+    FOR    ${i}    IN RANGE    10
+        ${result}=    Run Keyword And Ignore Error    Wait For Response    matcher=**    timeout=0.5s
+        IF    '${result}[0]'=='FAIL'
+            Exit For Loop
+        END
+        ${response}=    Set Variable    ${result}[1]
+        ${status}=    Get From Dictionary    ${response}    status
+        Append To List    ${statuses_retry}    ${status}
+    END
+    Log    Retry click response statuses: ${statuses_retry}
+    ${second_error}=    Evaluate    any(status >= 500 for status in ${statuses_retry})
+    Should Not Be True    ${second_error}    msg=Clicking '${selector}' triggered a 5xx error.
+    ${page_title}=    Get Title
+    ${page_title}=    Convert To Lower Case    ${page_title}
+    Should Not Contain    ${page_title}    error    msg=Clicking '${selector}' triggered a 5xx error.
 
 # *** Example of intercepting the network request ***
 #     [Arguments]    ${eventName}    ${timeout}=30s

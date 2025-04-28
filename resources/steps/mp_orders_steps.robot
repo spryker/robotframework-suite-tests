@@ -37,7 +37,11 @@ MP: update order state using header button:
     Wait Until Element Is Enabled    xpath=//div[@class='mp-manage-order__transitions']//button[contains(text(),'${buttonName}')]
     Click    xpath=//div[@class='mp-manage-order__transitions']//button[contains(text(),'${buttonName}')]
     Wait For Response
-    Wait For Load State
+    TRY
+        Wait For Load State
+    EXCEPT    
+        Log    Page is not loaded
+    END
     Wait Until Element Is Visible    ${mp_success_flyout}
     MP: remove notification wrapper
     Trigger oms
@@ -48,7 +52,11 @@ MP: change order item state on:
     Click    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody//orc-render-item//*[contains(text(),'${sku}')]/ancestor::tr/td//spy-checkbox
     Click    xpath=//*[contains(@class,'table-features')]//*[contains(@class,'batch-actions')]//button[contains(text(),'${state}')]
     Wait For Response
-    Wait For Load State
+    TRY
+        Wait For Load State
+    EXCEPT    
+        Log    Page is not loaded
+    END
     Wait Until Element Is Visible    ${mp_success_flyout}
     MP: remove notification wrapper
     Trigger oms
