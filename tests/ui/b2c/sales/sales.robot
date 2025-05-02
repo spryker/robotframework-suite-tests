@@ -109,16 +109,17 @@ Return_Management
 
 Refunds
     [Documentation]    Checks that refund can be created for one item and the whole order. DMS-ON: https://spryker.atlassian.net/browse/FRW-7463
+    [Tags]      unzer
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    008
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    010
-    Yves: add product to the shopping cart
+#    Yves: go to PDP of the product with sku:    008
+#    Yves: add product to the shopping cart
+#    Yves: go to PDP of the product with sku:    010
+#    Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true

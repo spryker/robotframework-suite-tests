@@ -224,7 +224,15 @@ Yves: select the following shipping method for the shipment:
 
 Yves: select the following payment method on the checkout and go next:
     [Arguments]    ${paymentMethod}    ${paymentProvider}=${EMPTY}
-    IF    '${env}'=='ui_b2b' and '${paymentMethod}'=='Invoice'
+    IF    '${env}'=='ui_b2c' and '${paymentMethod}'=='unzerCreditCard'
+            Click    //toggler-radio[contains(@data-qa,'paymentForm_paymentSelection_unzerCreditCard')]
+
+            Type Text    //div[@id='containerUnzerCardNumber']//iframe >>> //input[@id='card-number']    4111111111111111
+            Type Text    //div[@id='containerUnzerCardExpiry']//iframe >>> //input[@id='card-expiry-date']     03/30
+            Type Text    //div[@id='containerUnzerCardCvc']//iframe >>> //input[@id='card-ccv']    123
+
+            Click    ${submit_checkout_form_button}[${env}]
+    ELSE IF    '${env}'=='ui_b2b' and '${paymentMethod}'=='Invoice'
         Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=1s
         IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
