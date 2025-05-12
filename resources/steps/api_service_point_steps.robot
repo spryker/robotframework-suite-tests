@@ -367,6 +367,7 @@ Delete all non-default service points from DB with p&s
         Connect to Spryker DB
         Execute Sql String    DELETE FROM spy_service_point_store WHERE fk_service_point = ${idServicePoint};
         Execute Sql String    DELETE FROM spy_service_point_address WHERE fk_service_point = ${idServicePoint};
+        Execute Sql String    DELETE pos FROM spy_product_offer_service pos INNER JOIN spy_service se ON pos.fk_service = se.id_service WHERE se.fk_service_point = ${idServicePoint};
         Execute Sql String    DELETE FROM spy_service WHERE fk_service_point = ${idServicePoint};
         Execute Sql String    DELETE FROM spy_service_point WHERE uuid = '${uuid}';
     END
@@ -374,6 +375,7 @@ Delete all non-default service points from DB with p&s
     ${service_types_uuids}=    Query    SELECT uuid FROM spy_service_type WHERE id_service_type > 2;
     FOR    ${row}    IN    @{service_types_uuids}
         ${uuid}=    Set Variable    ${row}[0]
+        Execute Sql String    DELETE FROM spy_shipment_type_service_type WHERE fk_service_type > 2;
         Execute Sql String    DELETE FROM spy_service_type WHERE uuid = '${uuid}';
     END
 
