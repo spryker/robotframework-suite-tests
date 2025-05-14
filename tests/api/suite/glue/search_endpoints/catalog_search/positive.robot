@@ -55,8 +55,8 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][config][isMultiValued]    True
     #Filters - color
-    And Response body parameter should be in:    [data][0][attributes][valueFacets][2][name]    color    product-abstract-types
-    And Response body parameter should be in:    [data][0][attributes][valueFacets][2][localizedName]    Color    Product Abstract Types
+    And Response body parameter should be in:    [data][0][attributes][valueFacets][2][name]    Product Type    product-abstract-types
+    And Response body parameter should be in:    [data][0][attributes][valueFacets][2][localizedName]    Product Type    Product Abstract Types
     And Response should contain the array of size in:    [data][0][attributes][valueFacets][2][values]    ${default_qty.colors}    ${default_qty.product_abstract_types}
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][config][isMultiValued]    True

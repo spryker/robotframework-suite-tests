@@ -286,13 +286,13 @@ Fulfill_Order_from_Merchant_Portal
     Yves: select xxx merchant's offer:    Video King
     Yves: product price on the PDP should be:    ${second_product_with_multiple_offers_video_king_price}
     Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:     ${product_with_budget_cameras_offer_abstract_sku}
+    Yves: go to PDP of the product with sku:     015
     Yves: select xxx merchant's offer:    Budget Cameras
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
     Yves: assert merchant of product in cart or list:    ${one_variant_product_of_main_merchant_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
-    Yves: assert merchant of product in cart or list:    ${product_with_budget_cameras_offer_concrete_sku}    Budget Cameras
+    Yves: assert merchant of product in cart or list:    015_25904009    Budget Cameras
     Yves: assert merchant of product in cart or list:    ${second_product_with_multiple_offers_concrete_sku}    Video King
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -315,18 +315,18 @@ Fulfill_Order_from_Merchant_Portal
     MP: open navigation menu tab:    Orders
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_budget_cameras_reference}
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_budget_cameras_reference}
-    MP: order grand total should be:    €171.42
+    MP: order grand total should be:    €162.42
     MP: update order state using header button:    Ship
     MP: order states on drawer should contain:    Shipped
     MP: switch to the tab:    Items
     MP: change order item state on:    ${product_with_multiple_offers_concrete_sku}    Deliver
     MP: switch to the tab:    Items
-    MP: order item state should be:    ${product_with_budget_cameras_offer_concrete_sku}    shipped
+    MP: order item state should be:    015_25904009    shipped
     MP: order item state should be:    ${product_with_multiple_offers_concrete_sku}    delivered
     MP: update order state using header button:    Deliver
     MP: order states on drawer should contain:    Delivered
     MP: switch to the tab:    Items
-    MP: order item state should be:    ${product_with_budget_cameras_offer_concrete_sku}    delivered
+    MP: order item state should be:    015_25904009    delivered
     MP: order item state should be:    ${product_with_multiple_offers_concrete_sku}    delivered
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    	Free mobile phone    20% off cameras products    Free Acer M2610 product    Free delivery    10% off Intel products    5% off white products    Tuesday & Wednesday $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
