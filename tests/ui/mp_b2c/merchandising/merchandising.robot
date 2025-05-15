@@ -64,7 +64,6 @@ Discounts
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_name}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Merchandising    Discount
     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=002    promotionalProductQuantity=2
@@ -73,13 +72,13 @@ Discounts
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    190
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: apply discount voucher to cart:    test${random}
     Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €8.73
     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €17.46
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €87.96
     Yves: promotional product offer is/not shown in cart:    true
     Yves: change quantity of promotional product and add to cart:    +    1
@@ -95,7 +94,7 @@ Discounts
     Yves: select the following shipping method for the shipment:    2    DHL    Express
     Yves: select the following shipping method for the shipment:    3    DHL    Express
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Credit Card
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -116,7 +115,7 @@ Product_Relations
     Yves: go to PDP of the product with sku:    ${product_with_relations_upselling_sku}
     Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
     [Teardown]    Yves: check if cart is not empty and clear it
 
@@ -131,7 +130,7 @@ Product_Relations
 #     Yves: 'Product Set' page contains the following products:    TomTom Golf    Samsung Galaxy S6 edge
 #     Yves: change variant of the product on CMS page on:    Samsung Galaxy S6 edge    128 GB
 #     Yves: add all products to the shopping cart from Product Set
-#     Yves: go to b2c shopping cart
+#     Yves: go to shopping cart page
 #     Yves: shopping cart contains the following products:    TomTom Golf    Samsung Galaxy S6 edge
 #     Yves: delete from b2c cart products with name:    TomTom Golf    Samsung Galaxy S6 edge
 #     [Teardown]    Yves: check if cart is not empty and clear it
@@ -155,7 +154,7 @@ Product_Relations
 #     Yves: select product in the bundle slot:    Slot 6    Sony HDR-MV1
 #     Yves: go to 'Summary' step in the bundle configurator
 #     Yves: add products to the shopping cart in the bundle configurator
-#     Yves: go to b2c shopping cart
+#     Yves: go to shopping cart page
 #     Yves: change quantity of the configurable bundle in the shopping cart on:    Smartstation Kit    2
 #     Yves: click on the 'Checkout' button in the shopping cart
 #     Yves: billing address same as shipping address:    true

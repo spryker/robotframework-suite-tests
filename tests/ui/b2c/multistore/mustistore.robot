@@ -96,7 +96,7 @@ Multistore_Product
     Yves: product price on the PDP should be:    €25.00    wait_for_p&s=true
     Save current URL
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    multiSKU${random}-color-grey    multiProduct${random}    25.00
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update abstract product data:
@@ -116,7 +116,6 @@ Multistore_Product
 Multistore_CMS
     [Documentation]    check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
     Trigger multistore p&s
     Yves: go to newly created page by URL on AT store if other store not specified:    en/multistore-page${random}
@@ -176,7 +175,6 @@ Dynamic_multistore
     Yves: product price on the PDP should be:    €15.00
     ### create new cms page and check it in new store on YVES
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    New Page Store${random}    store-page${random}    Page Title    Page text
     Trigger multistore p&s
     Yves: go to newly created page by URL:    en/store-page${random}
@@ -192,14 +190,12 @@ Dynamic_multistore
     ## register new customer in the new store on YVES
     Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
     Register a new customer with data:
-    ...    || salutation | first name | last name | e-mail                       | password                      ||
-    ...    || Mr.        | New        | User      | sonia+dms${random}@spryker.com  | P${random_str_password}s#!#${random_id_password} ||
+    ...    || salutation | first name | last name | e-mail                             | password                   ||
+    ...    || Mr.        | New        | User      | sonia+ui+dms${random}@spryker.com  | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Run Keywords    Should Test Run
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    New Page Store${random}   Deactivate
+    ...    AND    Zed: delete customer:    sonia+ui+dms${random}@spryker.com
     ...    AND    Trigger multistore p&s
-    Zed: delete customer:
-    ...    || email                          ||
-    ...    || sonia+dms${random}@spryker.com ||

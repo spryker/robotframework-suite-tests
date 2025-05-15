@@ -9,8 +9,9 @@ Resource    ../pages/zed/zed_user_group_page.robot
 *** Keywords ***
 Zed: delete Zed user with the following email:
     [Arguments]    ${zed_email}
+    Reload
     ${currentURL}=    Get Location
-    IF    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
+    IF    '/user' not in '${currentURL}'    Zed: go to URL:    /user
     Zed: click Action Button in a table for row that contains:    ${zed_email}    Delete
     Wait Until Page Contains Element    ${zed_confirm_delete_user_button}
     Click    ${zed_confirm_delete_user_button}
@@ -18,9 +19,15 @@ Zed: delete Zed user with the following email:
 Zed: update Zed user:
     [Arguments]    @{args}
     ${newUserData}=    Set Up Keyword Arguments    @{args}
+    Reload
     ${currentURL}=    Get Location
-    IF    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
-    Zed: click Action Button in a table for row that contains:    ${oldEmail}    Edit
+    IF    '/user' not in '${currentURL}'    Zed: go to URL:    /user
+    ${variable_exists}=    Run Keyword And Return Status    Variable Should Exist    ${oldEmail}
+    IF    ${variable_exists}
+        Zed: click Action Button in a table for row that contains:    ${oldEmail}    Edit
+    ELSE
+        Zed: click Action Button in a table for row that contains:    ${email}    Edit
+    END
     Wait Until Element Is Visible    ${zed_user_email_field}
     FOR    ${key}    ${value}    IN    &{newUserData}
         Log    Key is '${key}' and value is '${value}'.
@@ -31,11 +38,20 @@ Zed: update Zed user:
         END
         IF    '${key}'=='firstName' and '${value}' != '${EMPTY}'    Type Text    ${zed_user_first_name_field}    ${value}
         IF    '${key}'=='lastName' and '${value}' != '${EMPTY}'    Type Text    ${zed_user_last_name_field}    ${value}
+        IF    '${key}'=='user_is_warehouse_user' and '${value}' != '${EMPTY}'
+            ${value}=    Convert To Lower Case    ${value}
+        END
         IF    '${key}'=='user_is_warehouse_user' and '${value}' == 'true'   
             Zed: Check checkbox by Label:     This user is a warehouse user
         END
         IF    '${key}'=='user_is_warehouse_user' and '${value}' == 'false'   
             Zed: Uncheck Checkbox by Label:    This user is a warehouse user
+        END
+        IF    '${key}'=='group' and '${value}' != '${EMPTY}'
+            Zed: Check checkbox by Label:    ${value}
+        END
+        IF    '${key}'=='remove group' and '${value}' != '${EMPTY}'
+            Zed: Uncheck Checkbox by Label:    ${value}
         END
     END
     Zed: submit the form
@@ -43,7 +59,7 @@ Zed: update Zed user:
 Zed: create new role with name:
     [Documentation]    Create a new role.
     [Arguments]    ${name}
-    Zed: go to second navigation item level:    Users    User Roles
+    Zed: go to URL:    /acl/role
     Zed: click button in Header:    Add new Role
     Type Text    ${zed_user_role_name}      ${name}
     Zed: submit the form
@@ -59,7 +75,7 @@ Zed: apply access permissions for user role:
 
 Zed: create new group with role assigned:
     [Arguments]    ${group_name}    ${role_name}
-    Zed: go to second navigation item level:    Users    User Groups
+    Zed: go to URL:    /acl/group
     Zed: click button in Header:    Create Group
     Type Text   ${zed_user_group_title}      ${group_name}
     Type Text     ${zed_user_group_assigned_role_textbox}      ${role_name}
@@ -73,10 +89,10 @@ Zed: validate the message when permission is restricted:
 
 Zed: deactivate the created user:
     [Arguments]    ${email}
-    Zed: go to second navigation item level:    Users    Users
+    Zed: go to URL:    /user
     Zed: click Action Button in a table for row that contains:    ${email}    Deactivate
     Wait Until Element Is Visible    ${zed_success_flash_message}
 
  Zed: assign warehouse to user:
     [Arguments]    ${email}
-    Zed: go to second navigation item level:    Users    Users   
+    Zed: go to URL:    /user   

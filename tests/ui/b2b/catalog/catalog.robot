@@ -97,8 +97,7 @@ Volume_Prices
     [Teardown]    Yves: delete 'Shopping Cart' with name:    VolumePriceCart+${random}
 
 Discontinued_Alternative_Products
-    [Documentation]    Checks that product can be discontinued in Zed. DMS-ON: https://spryker.atlassian.net/browse/FRW-7465 skipped for dms-on
-    [Tags]    dms-off
+    [Documentation]    Checks that product can be discontinued in Zed.
     Yves: go to PDP of the product with sku:  M21100
     Yves: PDP contains/doesn't contain:    true    ${alternativeProducts}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -229,6 +228,7 @@ Customer_Specific_Prices
 
 Product_PDP
     [Documentation]    Checks that PDP contains required elements
+    Delete All Cookies
     Yves: go to PDP of the product with sku:    ${multi_variant_product_abstract_sku}
     Yves: change variant of the product on PDP on:    500 x 930 x 400
     Yves: PDP contains/doesn't contain:    true    ${pdp_warranty_option}    ${pdp_insurance_option}
@@ -281,10 +281,8 @@ Catalog_Actions
 Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
     Zed: change product stock:    ${stock_product_abstract_sku}    ${stock_product_concrete_sku}    false    0
-    Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    false
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
@@ -293,9 +291,7 @@ Back_in_Stock_Notification
     Yves: submit back in stock notification request for email:    ${yves_user_email}
     Yves: unsubscribe from availability notifications
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Catalog    Availability
     Zed: change product stock:    ${stock_product_abstract_sku}    ${stock_product_concrete_sku}    true    0
-    Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
@@ -406,7 +402,7 @@ Manage_Product
     ...    AND    Yves: delete all shopping carts
 
 Product_Original_Price
-    [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
+    [Documentation]    checks that Original price is displayed on the PDP and in Catalog
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
     ...    || sku                  | store | name en                  | name de                    | new from   | new to     ||
@@ -526,7 +522,7 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-farbe-grey only has availability of 2.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Cancel
+    Zed: trigger all matching states inside this order:    Cancel
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}
@@ -621,7 +617,7 @@ Configurable_Product_PDP_Shopping_List
 Configurable_Product_RfQ_OMS
     [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder.
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Config    Product    Root group    This user is an agent in Storefront    en_US
+    ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com    ${default_secure_password}    Config    Product    Root group    This user is an agent in Storefront    en_US
     ...    AND    Zed: deactivate all discounts from Overview page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
@@ -638,7 +634,7 @@ Configurable_Product_RfQ_OMS
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent_config+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
+    Yves: login on Yves with provided credentials:    agent_config+${random}@spryker.com    ${default_secure_password}
     Yves: go to 'Agent Quote Requests' page through the header
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
     Yves: view quote request with reference:    ${lastCreatedRfQ}
