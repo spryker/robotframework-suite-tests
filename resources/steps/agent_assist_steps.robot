@@ -8,7 +8,7 @@ Resource    ../pages/yves/yves_agent_assist_page.robot
 Zed: create new Zed user with the following data:
     [Arguments]    ${zedUserEmail}    ${zedUserPassword}   ${zedUserFirstName}    ${zedUserLastName}    ${checkboxGroup}   ${checkboxAgent}    ${userInterfaceLanguage}
     ${currentURL}=    Get Location
-    IF    '/user' not in '${currentURL}'    Zed: go to second navigation item level:    Users    Users
+    IF    '/user' not in '${currentURL}'    Zed: go to URL:    /user
     IF    '${env}' in ['ui_mp_b2b']
         Zed: click button in Header:    Add New User
     ELSE 
