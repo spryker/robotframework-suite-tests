@@ -601,13 +601,14 @@
       },
       "default_qty":{
          "ipp_pages":"19",
-         "categories":"19",
+         "categories":"20",
          "colors":"10",
          "labels":"5",
          "materials":"7",
          "material":"5",
          "brands":"10",
-         "sorting_options":"6"
+         "sorting_options":"6",
+         "product_abstract_types":"2"
       },
       "default_price_range":{
          "min":"0",
@@ -636,10 +637,10 @@
          "id":"13",
          "qty":"5"
       },
-      "category_tree_branches_qty":"6",
+      "category_tree_branches_qty":"7",
       "total_number_of_products_in_search":"218",
       "min_number_of_products_in_search":"215",
-      "max_number_of_products_in_search":"220",
+      "max_number_of_products_in_search":"225",
       "abstract_sku_highest_rating":"035"
    },
    "availability":{
@@ -671,7 +672,7 @@
    "misc":{
       "default_header_content_type":"application/vnd.api+json",
       "urlencoded_header_content_type":"application/x-www-form-urlencoded",
-      "qty_of_categories_in_category_trees":"6",
+      "qty_of_categories_in_category_trees":"7",
       "discount_voucher_type_id":"3",
       "color_name":"Black",
       "x_anonymous_prefix":"anonymous",

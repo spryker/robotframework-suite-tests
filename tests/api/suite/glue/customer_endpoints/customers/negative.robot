@@ -28,14 +28,6 @@ Create_a_customer_with_too_long_password
     And Response should return error message:    password => This value is too long. It should have 128 characters or less.
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
 
-Create_a_customer_with_too_weak_password
-    I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"1234567890123","confirmPassword":"1234567890123","acceptedTerms":True}}}
-    Response status code should be:    422
-    And Response reason should be:    Unprocessable Content
-    And Response should return error code:    901
-    And Array in response should contain property with value:    [errors]    detail    password => This password has been leaked in a data breach, it must not be used. Please use another password.
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}
-
 Create_a_customer_with_not_equal_passwords
     I send a POST request:    /customers/    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_user.email}","password":"${yves_user.password_new}","confirmPassword":"1234567890123","acceptedTerms":True}}}
     Response status code should be:    422

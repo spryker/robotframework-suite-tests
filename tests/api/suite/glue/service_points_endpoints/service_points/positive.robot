@@ -82,7 +82,7 @@ Retrieves_list_of_service_points_sort_by_city_asc
     And Each array element of array in response should contain nested property:    [data]    [attributes]    name
     And Each array element of array in response should contain nested property:    [data]    [attributes]    key
     And Each array element of array in response should contain nested property:    [data]    [links]    self
-    And Response body parameter should be:    [data][2][id]    ${dynamic_service_point_uuid}
+    And Response body parameter should be:    [data][6][id]    ${dynamic_service_point_uuid}
     And Response body has correct self link
 
 Retrieves_list_of_service_points_sort_by_city_desc

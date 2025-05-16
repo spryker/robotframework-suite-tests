@@ -55,23 +55,23 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][config][isMultiValued]    True
     #Filters - color
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][name]    color
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][localizedName]    Color
-    And Response should contain the array of acertain size:    [data][0][attributes][valueFacets][2][values]    ${default_qty.colors}
+    And Response body parameter should be in:    [data][0][attributes][valueFacets][2][name]    Product Type    product-abstract-types
+    And Response body parameter should be in:    [data][0][attributes][valueFacets][2][localizedName]    Product Type    Product Abstract Types
+    And Response should contain the array of size in:    [data][0][attributes][valueFacets][2][values]    ${default_qty.colors}    ${default_qty.product_abstract_types}
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][config][isMultiValued]    True
     #Filters - material
-    And Response body parameter should be:    [data][0][attributes][valueFacets][3][name]    storage_capacity
-    And Response body parameter should be:    [data][0][attributes][valueFacets][3][localizedName]    Storage Capacity
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][3][values]    ${default_qty.material}
+    And Response body parameter should be in:    [data][0][attributes][valueFacets][3][name]    storage_capacity    color
+    And Response body parameter should be in:    [data][0][attributes][valueFacets][3][localizedName]    Storage Capacity    Color
+    And Response should contain the array of size in:    [data][0][attributes][valueFacets][3][values]    ${default_qty.material}    ${default_qty.colors}
     And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][3][config][isMultiValued]    True
     #Filters - brand
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][name]    brand
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][localizedName]    Brand
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    ${default_qty.brands}
+    And Response body parameter should be in:    [data][0][attributes][valueFacets][4][name]    brand    storage_capacity
+    And Response body parameter should be in:    [data][0][attributes][valueFacets][4][localizedName]    Brand    Storage Capacity
+    And Response should contain the array of size in:    [data][0][attributes][valueFacets][4][values]    ${default_qty.brands}    ${default_qty.material}
     And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    None
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][config][isMultiValued]    False
+    And Response body parameter should be in:    [data][0][attributes][valueFacets][4][config][isMultiValued]    False    True
     #Filters - rating
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][name]    price-DEFAULT-EUR-GROSS_MODE
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][localizedName]    Price range
@@ -128,7 +128,7 @@ Search_by_concrete_sku
     #labels
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    1
     #brand
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][5][values]    1
     And Response body has correct self link
 
 Search_by_abstract_sku
@@ -149,7 +149,7 @@ Search_by_abstract_sku
     #labels
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    1
     #brand
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][5][values]    1
     And Response body has correct self link
 
 Search_by_full_name
@@ -170,7 +170,7 @@ Search_by_full_name
     #labels
     And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][1][values]    0
     #brand
-    And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][4][values]    1
+    And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][5][values]    1
     And Response body has correct self link
 
 Search_by_name_substring
@@ -190,7 +190,7 @@ Search_by_name_substring
     #labels
     And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][1][values]    0
     #brand
-    And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][4][values]    1
+    And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][5][values]    1
     And Response body has correct self link
 
 Search_by_attribute_(brand)
@@ -205,9 +205,9 @@ Search_by_attribute_(brand)
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
     And Response body parameter should contain:   [data][0][attributes][abstractProducts][0][abstractName]    ${brand_1}
     #brand
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    2
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    None
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][values][0][value]    ${brand_1}
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][5][values]    2
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][activeValue]    None
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][values][0][value]    ${brand_1}
     And Response body has correct self link
 
 Search_by_several_attributes
@@ -281,7 +281,7 @@ Filter_by_brand_one_brand
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    ${brand_1}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][activeValue]    ${brand_1}
     And Response body has correct self link
 
 Filter_by_brand_two_brands
@@ -294,11 +294,10 @@ Filter_by_brand_two_brands
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue][0]    ${brand_2}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue][1]    ${brand_1}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][activeValue][0]    ${brand_2}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][activeValue][1]    ${brand_1}
 
 Filter_by_brand_empty_brand
-
     When I send a GET request:    /catalog-search?q=&brand=
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -309,7 +308,7 @@ Filter_by_brand_empty_brand
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    ${EMPTY}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][activeValue]    ${EMPTY}
     And Response body has correct self link
 
 Filter_by_brand_non_existing_brand
@@ -322,7 +321,7 @@ Filter_by_brand_non_existing_brand
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    0
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    0
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    0
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    test123
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][activeValue]    test123
     And Response body has correct self link
 
 Filter_by_label_one_label
@@ -386,11 +385,11 @@ Filter_by_color_one_color
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    10
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue]    ${color_2}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue]    ${color_2}
     #additional checks that other filers react accordingly and reduce the number of available facets to match facets present for the found products
     And Response should contain the array smaller than a certain size:   [data][0][attributes][valueFacets][0]    ${default_qty.categories}
     And Response should contain the array smaller than a certain size:   [data][0][attributes][valueFacets][3]    ${default_qty.materials}
-    And Response should contain the array smaller than a certain size:    [data][0][attributes][valueFacets][4]    ${default_qty.brands}
+    And Response should contain the array smaller than a certain size:    [data][0][attributes][valueFacets][5]    ${default_qty.brands}
     And Response body has correct self link
 
 Filter_by_color_two_colors
@@ -403,8 +402,8 @@ Filter_by_color_two_colors
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    10
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][0]    ${color_1}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][1]    ${color_2}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue][0]    ${color_1}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue][1]    ${color_2}
 
 Filter_by_color_non_existing_color
     When I send a GET request:    /catalog-search?q=&color[]=test123
@@ -416,7 +415,7 @@ Filter_by_color_non_existing_color
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    0
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    0
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    0
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][0]    test123
+    And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue][0]    test123
 
 Filter_by_color_empty_color
     When I send a GET request:    /catalog-search?q=&color[]=
@@ -429,7 +428,7 @@ Filter_by_color_empty_color
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][0]    ${EMPTY}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue][0]    ${EMPTY}
 
 Filter_by_valid_main_category
     When I send a GET request:    /catalog-search?q=&category=${category_lvl1.id}

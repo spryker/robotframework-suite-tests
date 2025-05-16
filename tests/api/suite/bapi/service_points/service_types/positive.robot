@@ -15,11 +15,11 @@ Get_Service_Types_List
     Then Response status code should be:    200
     And Array in response should contain property with value:    [data]  type    service-types
     And Response should contain the array larger than a certain size:    [data]    1
-    And Response body parameter should be in:    data[0][attributes][name]    Pickup    S_type${random}    robot
-    And Response body parameter should be in:    data[1][attributes][name]    Pickup    S_type${random}    robot
-    And Response body parameter should be in:    data[0][attributes][key]    pickup    s_type${random}    robot
-    And Response body parameter should be in:    data[1][attributes][key]    pickup    s_type${random}    robot
-    [Teardown]    Delete service type in DB    ${service_type_id}    
+    And Response body parameter should be in:    data[0][attributes][name]    Pickup    S_type${random}    robot    Service Visit
+    And Response body parameter should be in:    data[1][attributes][name]    Pickup    S_type${random}    robot    Service Visit
+    And Response body parameter should be in:    data[0][attributes][key]    pickup    s_type${random}    robot    on-site-service
+    And Response body parameter should be in:    data[1][attributes][key]    pickup    s_type${random}    robot    on-site-service
+    [Teardown]    Delete service type in DB    ${service_type_id}
 
 Create_Service_Type
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
