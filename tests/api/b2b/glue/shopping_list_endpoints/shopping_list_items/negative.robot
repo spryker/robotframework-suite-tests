@@ -344,7 +344,6 @@ Update_quantity_of_the_product_at_the_shopping_list_to_zero
 
 Update_product_quntity_at_the_shopping_list_to_non_digit_value
     [Documentation]    Created a new bug CC-22842 as current error message is: "quantity => This value should be less than 2147483647." and not This value should be greater than 0.
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a PATCH request:
@@ -365,7 +364,6 @@ Update_product_quntity_at_the_shopping_list_to_non_digit_value
 
 Update_product_quntity_at_the_shopping_list_to_not_allowed_qty
     [Documentation]    Created a new bug CC-22842 as current error message is: "quantity => This value should be less than 2147483647." and not This value should be greater than 0.
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     I send a PATCH request:
