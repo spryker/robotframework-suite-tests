@@ -13,9 +13,9 @@ Zed: create new Merchant with the following data:
     [Arguments]    @{args}
     ${merchantData}=    Set Up Keyword Arguments    @{args}
     IF    '${env}' in ['ui_suite','ui_mp_b2b','ui_mp_b2c','ui_b2c']
-        Zed: go to second navigation item level:    Marketplace    Merchants
+        Zed: go to URL:    /merchant-gui/list-merchant
     ELSE
-        Zed: go to second navigation item level:    B2B Contracts    Merchants
+        Zed: go to URL:    /merchant-gui/list-merchant
     END    
     Zed: click button in Header:    Add Merchant
     Wait Until Element Is Visible    ${zed_create_merchant_name_field}
