@@ -155,7 +155,7 @@ Yves: update customer profile data:
 Zed: assert customer profile data:
     [Arguments]    @{args}
     ${profileData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Customers    Customers
+    Zed: go to URL:    /customer
     Zed: click Action Button in a table for row that contains:    ${email}    Edit
     Wait Until Element Is Visible    ${zed_customer_edit_salutation_select}
     FOR    ${key}    ${value}    IN    &{profileData}
@@ -168,7 +168,7 @@ Zed: assert customer profile data:
 Zed: update customer profile data:
     [Arguments]    @{args}
     ${profileData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Customers    Customers
+    Zed: go to URL:    /customer
     Zed: click Action Button in a table for row that contains:    ${email}    Edit
     Wait Until Element Is Visible    ${zed_customer_edit_salutation_select}
     FOR    ${key}    ${value}    IN    &{profileData}
@@ -181,7 +181,7 @@ Zed: update customer profile data:
 Zed: create a new customer address in profile:
     [Arguments]    @{args}
     ${profileData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to second navigation item level:    Customers    Customers
+    Zed: go to URL:    /customer
     Zed: click Action Button in a table for row that contains:    ${email}    View
     Zed: click button in Header:    Add new Address
     Wait Until Element Is Visible    ${zed_customer_edit_address_salutation_select}

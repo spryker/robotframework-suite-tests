@@ -286,15 +286,21 @@ Yves: get the last placed order ID by current customer
     RETURN    ${lastPlacedOrder}
 
 Yves: go to URL:
-    [Arguments]    ${url}
+    [Arguments]    ${url}    ${expected_response_code}=${EMPTY}
     ${url}=    Get URL Without Starting Slash    ${url}
     Set Browser Timeout    ${browser_timeout}
     ${currentURL}=    Get Location
     IF    '.at.' in '${currentURL}'
-        Go To    ${yves_at_url}${url}
+        ${response_code}=    Go To    ${yves_at_url}${url}
     ELSE
-        Go To    ${yves_url}${url}
+        ${response_code}=    Go To    ${yves_url}${url}
     END    
+    IF    '${expected_response_code}' != '${EMPTY}'
+        ${response_code}=    Convert To Integer    ${response_code}
+        ${expected_response_code}=    Convert To Integer    ${expected_response_code}
+        Should Be Equal    ${response_code}    ${expected_response_code}    msg=Expected response code (${expected_response_code}) is not equal to the actual response code (${response_code})
+    END
+    RETURN    ${response_code}
 
 Yves: go to AT store URL if other store not specified:
     [Arguments]    ${url}    ${store}=AT

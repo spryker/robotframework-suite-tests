@@ -55,7 +55,7 @@ Zed: create a discount and activate it:
     ### Voucher codes
     IF    '${discountType}'=='voucher'    Zed: generate vouchers:    1    ${voucherCode}
     ### Check discount in Zed
-    Zed: go to second navigation item level:    Merchandising    Discount
+    Zed: go to URL:    /discount/index/list
     Zed: perform search by:    ${discountName}
     Element Should Be Visible    xpath=//td[contains(@class,'name') and contains(text(),'${discountName}')]/ancestor::tr//span[contains(@class,'label') and contains(text(),'Active')]    message=None
 
@@ -71,7 +71,7 @@ Zed: generate vouchers:
 Zed: deactivate following discounts from Overview page:
     [Arguments]    @{discountNames}
     ${items_list_count}=   get length  ${discountNames}
-    Zed: go to second navigation item level:    Merchandising    Discount
+    Zed: go to URL:    /discount/index/list
     FOR    ${name}    IN    @{discountNames}
         Zed: clear search field
         Zed: perform search by:    ${name}
@@ -84,7 +84,7 @@ Zed: deactivate following discounts from Overview page:
     END
 
 Zed: deactivate all discounts from Overview page
-    Zed: go to second navigation item level:    Merchandising    Discount
+    Zed: go to URL:    /discount/index/list
     Wait Until Element Is Visible    xpath=/descendant::a[contains(.,'View')][1]
     Zed: clear search field
     Save the result of a SELECT DB query to a variable:    select COUNT(id_discount) from spy_discount    DiscountPagesCount
@@ -107,7 +107,7 @@ Zed: deactivate all discounts from Overview page
 Zed: activate following discounts from Overview page:
     [Arguments]    @{discountNames}
     ${items_list_count}=   get length  ${discountNames}
-    Zed: go to second navigation item level:    Merchandising    Discount
+    Zed: go to URL:    /discount/index/list
     FOR    ${name}    IN    @{discountNames}
         Zed: clear search field
         Zed: perform search by:    ${name}
