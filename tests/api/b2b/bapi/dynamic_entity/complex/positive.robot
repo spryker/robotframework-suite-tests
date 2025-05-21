@@ -26,6 +26,7 @@ Test Tags    bapi
     ### GET TOKEN ###
     I get access token by user credentials:   ${zed_admin.email}
     ### GET PRODUCT ABSTRACT COLLECTION WITH CHILDS ONE LVEL ###
+    Trigger p&s
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/robot-tests-product-abstracts?include=robotTestsProductAbstractProducts
     Then Response status code should be:    200

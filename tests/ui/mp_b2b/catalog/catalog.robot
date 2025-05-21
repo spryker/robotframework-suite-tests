@@ -487,8 +487,7 @@ Product_Availability_Calculation
     ...    AND    Repeat Keyword    3    Trigger multistore p&s
 
 Configurable_Product_PDP_Shopping_List
-    [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of 7 items. Ensure that products that have not been configured cannot be purchased. bug: https://spryker.atlassian.net/browse/CC-33647
-    [Tags]    skip-due-to-issue
+    [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of 7 items. Ensure that products that have not been configured cannot be purchased.
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}

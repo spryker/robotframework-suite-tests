@@ -199,8 +199,6 @@ Get_single_shopping_list_info_with_includes
     ...    AND    Response reason should be:    No Content
 
 Get_several_shopping_lists_info_with_includes
-    [Documentation]   bug https://spryker.atlassian.net/browse/CC-16541
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
     I send a GET request:    /shopping-lists?include=shopping-list-items,concrete-products

@@ -35,34 +35,32 @@ Adding_voucher_code_to_cart_of_logged_in_customer
     ...  AND    Response status code should be:    204
 
 Checking_voucher_is_applied_after_order_is_placed
-    [Documentation]   bug CC-16735 is fixed in internal B2B, but there is no fix in public MP-B2B
-    [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cart_id
     ...    AND    Response status code should be:    201
-    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${discount.concrete_products_with_discounts.concrete_product_with_brand_safescan}","quantity": 2}}}
+    ...    AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${discount.concrete_products_with_discounts.concrete_product_with_brand_safescan}","quantity": 2, "merchantReference" : "${merchants.merchant_spryker_id}"}}}
     ...    AND    Response status code should be:    201
     ...    AND    Get voucher code by discountId from Database:    4
     ...    AND    I send a POST request:    /carts/${cart_id}/vouchers    {"data": {"type": "vouchers","attributes": {"code": "${discount_voucher_code}"}}}
     ...    AND    Response status code should be:    201
-    When I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"salutation": "${yves_user.salutation}","email": "${yves_user.email}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentMethodName": "${payment.method_name}","paymentProviderName": "${payment.provider_name}"}],"shipments": [{"items": ["${product_with_relations.has_related_products.concrete_sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}"},"idShipmentMethod": 2,"requestedDeliveryDate": "${shipment.delivery_date}"},{"items": ["${abstract_product.product_with_options.concrete_sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${changed.address1}","address2": "${changed.address2}","address3": "${changed.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${changed.phone}","isDefaultBilling": False,"isDefaultShipping": False},"idShipmentMethod": 4,"requestedDeliveryDate": None}]}}}
+    When I send a POST request:    /checkout?include=orders    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentProviderName": "${payment.provider_name}","paymentMethodName": "${payment.method_name}","paymentSelection": "${payment.selection_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${discount.concrete_products_with_discounts.concrete_product_with_brand_safescan}"]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Save value to a variable:    [included][0][attributes][totals][discountTotal]    discount_total_sum
     And Save value to a variable:    [included][0][attributes][totals][subtotal]    sub_total_sum
     And Save value to a variable:    [included][0][attributes][totals][expenseTotal]    expense_total_sum
     #discountTotal
-    And Save value to a variable:    discount_total_sum    ${discount.products_cost_with_discounts.voucher_concrete_product_1_with_brand_safescan_2_items}
     And Response body parameter with rounding should be:    [included][0][attributes][totals][discountTotal]    ${discount_total_sum}
     #grandTotal
     And Perform arithmetical calculation with two arguments:    grand_total_sum    ${sub_total_sum}    -    ${discount_total_sum}
     And Perform arithmetical calculation with two arguments:    grand_total_sum    ${grand_total_sum}    +    ${expense_total_sum}
     And Response body parameter with rounding should be:    [included][0][attributes][totals][grandTotal]    ${grand_total_sum}
     #calculatedDiscounts - "10% off Safescan" discount
-    And Response body parameter should not be EMPTY:    [included][0][attributes][calculatedDiscounts]["${id_4.name}"]
+    And Response body parameter should not be EMPTY:    [included][0][attributes][calculatedDiscounts]["${discount.id_4.name}"]
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]["${discount.id_4.name}"][displayName]    ${discount.id_4.name}
+    VAR    ${discount_total_sum}    ${discount.products_cost_with_discounts.voucher_concrete_product_1_with_brand_safescan_2_items}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]["${discount.id_4.name}"][sumAmount]    ${discount_total_sum}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]["${discount.id_4.name}"][voucherCode]    ${discount_voucher_code}
 

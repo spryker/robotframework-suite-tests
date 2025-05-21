@@ -315,7 +315,6 @@ Get_order_by_order_id_with_nonsplit_item
     And Response body parameter should be:    [data][attributes][items][0][quantity]    1
 
 Get_order_by_order_id_with_split_shipment_&_include
-    [Documentation]   https://spryker.atlassian.net/browse/CC-25733
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}

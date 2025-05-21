@@ -221,8 +221,6 @@ Request_for_Quote
     ...    AND    Zed: delete Zed user with the following email:    agent_quote+${random}@spryker.com
 
 Unique_URL
-    [Tags]    skip-due-to-issue
-    [Documentation]    Bug: CC-12380.
     Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
     Yves: go to PDP of the product with sku:    M90806
@@ -231,7 +229,7 @@ Unique_URL
     Yves: 'Shopping Cart' page is displayed
     Yves: get link for external cart sharing
     Yves: logout on Yves as a customer
-    Yves: go to URL:    ${externalURL}
+    Yves: go to external URL:    ${externalURL}
     Yves: 'Shopping Cart' page is displayed
     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
     Yves: shopping cart contains the following products:    108302

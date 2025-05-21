@@ -563,7 +563,7 @@ Multiple_Merchants_Order
     ...    AND    Yves: delete all user addresses
 
 Unique_URL
-    [Documentation]    Fails due to Bug:CC-12380
+    [Documentation]
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
