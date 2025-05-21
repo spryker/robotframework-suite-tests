@@ -9,9 +9,10 @@ Test Tags    bapi
 *** Test Cases ***
 Retrieve_push_notification_providers_without_authorization
     When I set Headers:    Content-Type=application/vnd.api+json
-    When I send a GET request:    /push-notification-providers
+    And I send a GET request:    /push-notification-providers
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
+    And Response should return error message:    Unauthorized request.
 
 Retrieve_push_notification_providers_with_incorrect_token
     When I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer incorrect_token

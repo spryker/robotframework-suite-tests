@@ -56,7 +56,7 @@ Product_labels
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Discounts
-    [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout). DMS-ON: https://spryker.atlassian.net/browse/FRW-7476
+    [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout).
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Zed: change product stock:    190    190_25111746    true    10

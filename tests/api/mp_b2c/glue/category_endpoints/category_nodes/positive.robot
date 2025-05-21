@@ -6,8 +6,6 @@ Test Tags    glue
 
 *** Test Cases ***
 Get_category_node_is_root_by_id
-   [Documentation]     https://spryker.atlassian.net/browse/CC-25961
-   [Tags]    skip-due-to-issue
     When I send a GET request:    /category-nodes/${node_is_root_id}
     Then Response status code should be:    200
     And Response reason should be:    OK

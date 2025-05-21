@@ -7,11 +7,10 @@ Test Tags    glue
 *** Test Cases ***    
 #GET requests
 Get_cart_by_cart_id
-    [Documentation]    bug https://spryker.atlassian.net/browse/CC-26179
-    [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
+    ...  AND    Cleanup all items in the cart:    ${cart_id}
     When I send a GET request:    /carts/${cart_id}
     Then Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts

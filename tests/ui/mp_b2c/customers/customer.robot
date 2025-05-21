@@ -221,7 +221,6 @@ Update_Customer_Data
     ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name} | ${yves_second_user_last_name} ||
 
 Email_Confirmation
-    [Tags]    skip-due-to-refactoring
     [Documentation]    Check that a new user cannot login if the email is not verified
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                             | password                                        ||

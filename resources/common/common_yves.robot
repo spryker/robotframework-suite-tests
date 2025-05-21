@@ -65,9 +65,9 @@ Yves: login on Yves with provided credentials:
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
     IF    'agent' in '${email}'    
-    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
-        ELSE    
-        Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}[${env}]     Login Failed!
+        Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
+    ELSE    
+        Page Should Contain Element    locator=${user_header_logout_button}     message=Yves: Login Failed!    timeout=1s
     END
     Yves: remove flash messages
 
@@ -100,7 +100,7 @@ Yves: login on Yves with provided credentials and expect error:
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
 
-    Page Should Not Contain Element    ${user_navigation_icon_header_menu_item}[${env}]
+    Page Should Not Contain Element    ${user_header_logout_button}    message=Yves: logged in successfully but should not be
 
     Yves: flash message should be shown:    error    Please check that your E-mail address and password are correct and that you have confirmed your E-mail address by clicking the link in the registration message
 

@@ -28,7 +28,7 @@ Zed: login on Zed with provided credentials:
     Type Text    ${zed_user_name_field}    ${email}
     Type Text    ${zed_password_field}    ${password}
     Click    ${zed_login_button}
-    Wait Until Element Is Visible    ${zed_log_out_button}    Zed:Dashboard page is not displayed
+    Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!
 
 Zed: login with deactivated user/invalid data:
    [Arguments]    ${email}    ${password}=${default_password}
