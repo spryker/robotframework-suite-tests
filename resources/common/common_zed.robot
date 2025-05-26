@@ -11,7 +11,7 @@ ${zed_error_flash_message}    xpath=//div[@class='flash-messages']/div[@class='a
 ${zed_info_flash_message}    xpath=//div[@class='flash-messages']/../div[@class='alert alert-info']
 ${zed_error_message}    xpath=//div[@class='alert alert-danger']
 ${zed_table_locator}    xpath=//table[contains(@class,'dataTable')]/tbody
-${zed_search_field_locator}     xpath=//input[@type='search']
+${zed_search_field_locator}     xpath=//div[@class='dataTables_filter']//input[@type='search']
 ${zed_variant_search_field_locator}     xpath=//*[@id='product-variant-table_filter']//input[@type='search']
 ${zed_processing_block_locator}     xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')]
 ${zed_merchants_dropdown_locator}    xpath=//select[@name='id-merchant']
