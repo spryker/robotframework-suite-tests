@@ -7,8 +7,6 @@ Test Tags    glue
 *** Test Cases ***
 #POST requests
 Create_order_with_invalid_access_token
-    [Documentation]    Created the bug-ticket https://spryker.atlassian.net/browse/CC-16699, bug is fixed, fix isn`t merged to b2c demoshop
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart

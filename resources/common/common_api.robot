@@ -32,7 +32,6 @@ Overwrite api variables
     Log Many    @{Test Tags}
     VAR    ${current_url}    ${EMPTY}
     FOR  ${tag}  IN  @{Test Tags}
-        Log   ${tag}
         Set Test Variable    ${tag}
         IF    '${tag}' == 'dms-on'    CONTINUE
         IF    '${glue_env}' == '${EMPTY}'
@@ -119,8 +118,8 @@ API_test_setup
     ...    ``Test Setup    TestSetup``
     ...
     ...    ``Test Tags    bapi``
-    Overwrite api variables
     Should Test Run
+    Overwrite api variables
     I set default Headers:    &{default_headers}
 
 I set Headers:

@@ -57,8 +57,7 @@ Product_labels
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Product_Sets
-    [Documentation]    Check the usage of product sets. DMS-on mode: https://spryker.atlassian.net/browse/FRW-6377
-    [Tags]    dms-off
+    [Documentation]    Check the usage of product sets.
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to URL:    en/product-sets
     Yves: 'Product Sets' page contains the following sets:    HP Product Set    Sony Product Set    Upgrade your running game

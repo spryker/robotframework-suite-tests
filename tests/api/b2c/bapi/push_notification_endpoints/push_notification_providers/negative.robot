@@ -12,7 +12,7 @@ Retrieve_push_notification_providers_without_authorization
     And I send a GET request:    /push-notification-providers
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
-    And Response should return error message:    Unauthorized request..
+    And Response should return error message:    Unauthorized request.
 
 Retrieve_push_notification_providers_with_incorrect_token
     When I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer incorrect_token
@@ -39,12 +39,11 @@ Create_push_notification_provider_without_name
    And Response should return error message:    Wrong request body.
 
 Create_push_notification_provider_without_authorization
-  [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-  [Tags]    skip-due-to-issue
+    I set Headers:    Content-Type=application/vnd.api+json
     When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "Unauthorized Push Notification Provider"}}}
     Then Response status code should be:    403
-    And Response reason should be:    Unauthorized
-    And Response should return error message:    Invalid access token.
+    And Response reason should be:    Forbidden
+    And Response should return error message:    Unauthorized request.
 
 Create_push_notification_provider_with_invalid_type
     [Documentation]    https://spryker.atlassian.net/browse/FRW-6312
@@ -88,8 +87,6 @@ Update_push_notification_provider_without_name
     [Teardown]    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id}
 
 Update_push_notification_provider_with_incorrect_auth
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer invalid
     ...    AND    I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "Unauthorized Push Notification Provider"}}}
     ...    AND    Save value to a variable:    [data][id]    push_notification_provider_id
@@ -124,8 +121,6 @@ Update_non-existent_push_notification_provider
     ...    AND    I send a DELETE request:    /push-notification-providers/${push_notification_provider_id_2}
 
 Delete_push_notification_provider_with_not_exist_id
-    [Documentation]    https://spryker.atlassian.net/browse/CC-31549
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=application/vnd.api+json   Authorization=Bearer ${token}
     Then I send a DELETE request:    /push-notification-providers/invalid
