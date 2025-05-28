@@ -82,7 +82,6 @@ Overwrite pyz variables
     END
     &{urls}=    Create Dictionary    yves_url    ${yves_url}    yves_at_url    ${yves_at_url}    zed_url    ${zed_url}    mp_url    ${mp_url}    glue_url    ${glue_url}
     FOR    ${key}    ${url}    IN    &{urls}
-        Log    Key is '${key}' and value is '${url}'.
         ${url_last_character}=    Get Regexp Matches    ${url}    .$    flags=IGNORECASE
         ${url_last_character}=    Convert To String    ${url_last_character}
         ${url_last_character}=    Replace String    ${url_last_character}    '   ${EMPTY}

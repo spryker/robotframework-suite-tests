@@ -45,7 +45,13 @@ ${default_dms}    ${False}
 
 *** Keywords ***
 Common_suite_setup
-    [documentation]  Basic steps before each suite
+    [Documentation]  Basic steps before each suite
+    [Arguments]    ${skip_if_already_executed}=False
+    ${already_executed}=    Run Keyword And Return Status    Variable Should Exist    ${setup_done}
+    IF    ${already_executed} and ${skip_if_already_executed}
+        # Setup is already done, skip
+        RETURN
+    END
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
     Remove Files    resources/libraries/__pycache__/*
     Remove Files    ${OUTPUTDIR}/*.png
@@ -70,6 +76,7 @@ Common_suite_setup
     IF    ${docker}
         Set Global Variable    ${db_host}    ${docker_db_host}
     END
+    VAR    ${setup_done}    ${True}    scope=GLOBAL
     RETURN    ${random}
 
 Generate global random variable
@@ -114,35 +121,35 @@ Load Variables
 
 Overwrite env variables
     IF    '${project_location}' == '${EMPTY}'
-            Set Suite Variable    ${cli_path}    ${cli_path}
+            Set Global Variable    ${cli_path}    ${cli_path}
     ELSE
-            Set Suite Variable    ${cli_path}    ${project_location}
+            Set Global Variable    ${cli_path}    ${project_location}
     END
     IF    '${ignore_console}' == '${EMPTY}'
-            Set Suite Variable    ${ignore_console}    ${default_ignore_console}
+            Set Global Variable    ${ignore_console}    ${default_ignore_console}
     ELSE
-            Set Suite Variable    ${ignore_console}    ${ignore_console}
+            Set Global Variable    ${ignore_console}    ${ignore_console}
     END
     IF    '${docker}' == '${EMPTY}'
-            Set Suite Variable    ${docker}    ${default_docker}
+            Set Global Variable    ${docker}    ${default_docker}
     ELSE
-            Set Suite Variable    ${docker}    ${docker}
+            Set Global Variable    ${docker}    ${docker}
     END
     IF    '${dms}' == '${EMPTY}'
-            Set Suite Variable    ${dms}    ${default_dms}
+            Set Global Variable    ${dms}    ${default_dms}
     ELSE
-        Set Suite Variable    ${dms}    ${dms}
+        Set Global Variable    ${dms}    ${dms}
     END
     ${dms}=    Convert To String    ${dms}
     ${dms}=    Convert To Lower Case    ${dms}
-    IF    '${dms}' == 'true'    Set Suite Variable    ${dms}    ${True}
-    IF    '${dms}' == 'false'    Set Suite Variable    ${dms}    ${False}
-    IF    '${dms}' == 'on'    Set Suite Variable    ${dms}    ${True}
-    IF    '${dms}' == 'off'    Set Suite Variable    ${dms}    ${False}
-    IF    '${ignore_console}' == 'true'    Set Suite Variable    ${ignore_console}    ${True}
-    IF    '${ignore_console}' == 'false'    Set Suite Variable    ${ignore_console}    ${False}
-    IF    '${docker}' == 'true'    Set Suite Variable    ${docker}    ${True}
-    IF    '${docker}' == 'false'    Set Suite Variable    ${docker}    ${False}
+    IF    '${dms}' == 'true'    Set Global Variable    ${dms}    ${True}
+    IF    '${dms}' == 'false'    Set Global Variable    ${dms}    ${False}
+    IF    '${dms}' == 'on'    Set Global Variable    ${dms}    ${True}
+    IF    '${dms}' == 'off'    Set Global Variable    ${dms}    ${False}
+    IF    '${ignore_console}' == 'true'    Set Global Variable    ${ignore_console}    ${True}
+    IF    '${ignore_console}' == 'false'    Set Global Variable    ${ignore_console}    ${False}
+    IF    '${docker}' == 'true'    Set Global Variable    ${docker}    ${True}
+    IF    '${docker}' == 'false'    Set Global Variable    ${docker}    ${False}
     ${verify_ssl}=    Convert To String    ${verify_ssl}
     ${verify_ssl}=    Convert To Lower Case    ${verify_ssl}
     IF    '${verify_ssl}' == 'true'
@@ -155,7 +162,6 @@ Set Up Keyword Arguments
     [Arguments]    @{args}
     &{arguments}=    Fill Variables From Text String    @{args}
     FOR    ${key}    ${value}    IN    &{arguments}
-        Log    Key is '${key}' and value is '${value}'.
         ${var_value}=   Set Variable    ${value}
         Set Test Variable    ${${key}}    ${var_value}
     END
@@ -225,7 +231,7 @@ Connect to Spryker DB
     Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
 
 Save the result of a SELECT DB query to a variable:
-    [Documentation]    This keyword saves any value which you receive from DB using SQL query ``${sql_query}`` to a test variable called ``${variable_name}``.
+    [Documentation]    This keyword saves any value which you receive from DB using SQL query ``{sql_query}`` to a test variable called ``{variable_name}``.
     ...
     ...    It can be used to save a value returned by any query into a custom test variable.
     ...    This variable, once created, can be used during the specific test where this keyword is used and can be re-used by the keywords that follow this keyword in the test.
@@ -356,7 +362,6 @@ Get next id from table
         ${newId}=    Evaluate    1
     END
     Disconnect From Database
-    Log    ${newId}
     RETURN    ${newId}
 
 Get concrete product sku by id from DB:
@@ -686,10 +691,8 @@ Delete dynamic entity configuration relation in Database:
     [Arguments]    ${relation_name}
     Connect to Spryker DB
     ${dynamic_entity_configuration_relation_id}=    Query    SELECT id_dynamic_entity_configuration_relation from spy_dynamic_entity_configuration_relation where name='${relation_name}';
-    Log    ${dynamic_entity_configuration_relation_id}
     ${dynamic_entity_configuration_relation_id_length}=    Get Length    ${dynamic_entity_configuration_relation_id}
     ${dynamic_entity_configuration_relation_id_length}=    Set Variable    ${dynamic_entity_configuration_relation_id_length}
-    Log    ${dynamic_entity_configuration_relation_id_length}
     IF   ${dynamic_entity_configuration_relation_id_length} > 0
         ${dynamic_entity_configuration_relation_id}=    Set Variable    ${dynamic_entity_configuration_relation_id[0][0]}
         Log   ${dynamic_entity_configuration_relation_id}
