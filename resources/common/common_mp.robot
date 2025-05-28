@@ -5,7 +5,7 @@ Resource    ../pages/mp/mp_login_page.robot
 *** Variables ***
 ${mp_user_menu_button}    xpath=//button[contains(@class,'spy-user-menu__action')]
 ${mp_navigation_slider_menu}    xpath=//spy-navigation
-${mp_submit_button}    xpath=//button[@type='submit'][not(contains(text(),'Back'))]
+${mp_submit_button}    xpath=//button[@type='submit' and not(.//text()[normalize-space()='Back'])]
 ${mp_items_table}    xpath=//nz-table-inner-default//table
 ${mp_search_box}    xpath=//spy-table//input[contains(@placeholder,'Search')]
 ${mp_close_drawer_button}    xpath=(//button[contains(@class,'spy-drawer-wrapper__action--close')])[1]
@@ -52,7 +52,7 @@ MP: Wait until loader is no longer visible
     IF    'PASS' in ${loader_displayed}
         TRY
             Wait Until Element Is Not Visible    ${mp_loading_icon}
-        EXCEPT    
+        EXCEPT
             Take Screenshot    EMBED    fullPage=True
             Fail    Timeout exceeded. Loader is still displayed after ${browser_timeout}
         END
@@ -75,7 +75,7 @@ MP: perform search by:
     Keyboard Key    press    Enter
     TRY
         Wait For Response    timeout=10s
-    EXCEPT    
+    EXCEPT
         Log    Search event is not fired
     END
     Repeat Keyword    3    Wait For Load State
@@ -84,7 +84,7 @@ MP: perform search by:
 
 MP: click on a table row that contains:
     [Arguments]    ${rowContent}
-    Wait Until Element Is Visible    xpath=//div[@class='spy-table-column-text'][contains(text(),'${rowContent}')]/ancestor::tr[contains(@class,'ant-table-row')] 
+    Wait Until Element Is Visible    xpath=//div[@class='spy-table-column-text'][contains(text(),'${rowContent}')]/ancestor::tr[contains(@class,'ant-table-row')]
     Click    xpath=//div[@class='spy-table-column-text'][contains(text(),'${rowContent}')]/ancestor::tr[contains(@class,'ant-table-row')]
     Wait Until Page Contains Element    ${mp_close_drawer_button}
     Repeat Keyword    3    Wait For Load State
@@ -95,7 +95,7 @@ MP: close drawer
     Wait Until Element Is Visible    ${mp_close_drawer_button}
     Click    ${mp_close_drawer_button}
     Wait Until Element Is Visible    ${mp_items_table}
-   
+
 MP: click on create new entity button:
     [Arguments]        ${buttonName}
     Wait Until Element Is Visible    xpath=//spy-headline//*[contains(text(),'${buttonName}')]
@@ -113,7 +113,7 @@ MP: select option in expanded dropdown:
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
     Sleep    0.5s
-    
+
 MP: switch to the tab:
     [Arguments]    ${tabName}
     Wait Until Element Is Visible    xpath=//web-spy-tabs[@class='spy-tabs']//div[@role='tablist'][contains(@class,'ant-tabs')]//div[contains(text(),'${tabName}')]
@@ -121,12 +121,12 @@ MP: switch to the tab:
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
     MP: Wait until loader is no longer visible
-    
+
 MP: remove notification wrapper
     TRY
         ${flash_massage_state}=    Page Should Contain Element    ${mp_notification_wrapper}    message=Notification wrapper message is not shown    timeout=1s
         Remove element from HTML with JavaScript    //spy-notification-wrapper
         Remove element from HTML with JavaScript    (//spy-notification-wrapper//div)[1]
-    EXCEPT    
+    EXCEPT
         Log    Flash message is not shown
     END

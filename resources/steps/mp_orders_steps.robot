@@ -5,13 +5,13 @@ Resource    ../pages/mp/mp_order_drawer.robot
 
 *** Keywords ***
 MP: wait for order to appear:
-    [Arguments]    ${orderReference}    ${tries}=20    ${timeout}=1s   
-    Trigger oms 
+    [Arguments]    ${orderReference}    ${tries}=20    ${timeout}=1s
+    Trigger oms
     FOR    ${index}    IN RANGE    0    ${tries}
         MP: perform search by:    ${orderReference}
         ${elementAppears}=    Run Keyword And Return Status    Table Should Contain    ${mp_items_table}     ${orderReference}
         IF    '${elementAppears}'=='False'
-            Sleep    ${timeout}    
+            Sleep    ${timeout}
             Reload
         ELSE
             Exit For Loop
@@ -21,7 +21,7 @@ MP: wait for order to appear:
         Take Screenshot    EMBED    fullPage=True
         Fail    'Timeout exceeded, merchant order was not created'
     END
-     
+
 MP: order grand total should be:
     [Arguments]    ${expectedTotal}
     Wait Until Element Is Visible    ${order_grand_total}
@@ -34,8 +34,8 @@ MP: order states on drawer should contain:
 
 MP: update order state using header button:
     [Arguments]    ${buttonName}
-    Wait Until Element Is Enabled    xpath=//div[@class='mp-manage-order__transitions']//button[contains(text(),'${buttonName}')]
-    Click    xpath=//div[@class='mp-manage-order__transitions']//button[contains(text(),'${buttonName}')]
+    Wait Until Element Is Enabled    xpath=//div[@class='mp-manage-order__transitions']//button[.//text()[normalize-space()='${buttonName}']]
+    Click    xpath=//div[@class='mp-manage-order__transitions']//button[.//text()[normalize-space()='${buttonName}']]
     Wait For Response
     Wait For Load State
     Wait Until Element Is Visible    ${mp_success_flyout}
@@ -46,7 +46,7 @@ MP: change order item state on:
     [Arguments]    ${sku}    ${state}
     Wait Until Element Is Visible    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody
     Click    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody//orc-render-item//*[contains(text(),'${sku}')]/ancestor::tr/td//spy-checkbox
-    Click    xpath=//*[contains(@class,'table-features')]//*[contains(@class,'batch-actions')]//button[contains(text(),'${state}')]
+    Click    xpath=//*[contains(@class,'table-features')]//*[contains(@class,'batch-actions')]//button[.//text()[normalize-space()='${state}']]
     Wait For Response
     Wait For Load State
     Wait Until Element Is Visible    ${mp_success_flyout}
