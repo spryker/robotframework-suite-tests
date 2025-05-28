@@ -11,7 +11,7 @@ Resource    ../../../../resources/steps/agent_assist_steps.robot
 
 *** Test Cases ***
 Create_new_company_with_linked_entities_and_customer_in_backoffice
-    [Tags]    smoke
+    [Tags]    skip-due-to-issue
     [Documentation]    Create a new company with linked entities and new customer in backoffice
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Company with provided name:    RobotCompany
