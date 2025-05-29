@@ -47,17 +47,11 @@ ${default_dms}    ${False}
 Common_suite_setup
     [Documentation]  Basic steps before each suite
     [Arguments]    ${skip_if_already_executed}=False
-    ${already_executed}=    Run Keyword And Return Status    Variable Should Exist    ${setup_done}
-    IF    ${already_executed} and ${skip_if_already_executed}
-        # Setup is already done, skip
-        RETURN
-    END
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
     Remove Files    resources/libraries/__pycache__/*
     Remove Files    ${OUTPUTDIR}/*.png
     Remove Files    ${OUTPUTDIR}/*.yml
-    Load Variables    ${env}
-    Overwrite env variables
+    
     Generate global random variable
     ${random_id}=    Generate Random String    5    [NUMBERS]
     ${random_str}=    Generate Random String    5    [LETTERS]
@@ -73,11 +67,18 @@ Common_suite_setup
 
     ${today}=    Get Current Date    result_format=%Y-%m-%d
     Set Global Variable    ${today}
+
+    ${already_executed}=    Run Keyword And Return Status    Variable Should Exist    ${setup_done}
+    IF    ${already_executed} and ${skip_if_already_executed}
+        # Setup is already done, skip
+        RETURN
+    END
+    Load Variables    ${env}
+    Overwrite env variables
     IF    ${docker}
         Set Global Variable    ${db_host}    ${docker_db_host}
     END
     VAR    ${setup_done}    ${True}    scope=GLOBAL
-    RETURN    ${random}
 
 Generate global random variable
     ${excluded_ranges}=    Evaluate    [str(i).zfill(3) for i in list(range(1, 220)) + [666]]

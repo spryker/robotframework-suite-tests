@@ -160,7 +160,6 @@ Reset API Headers
 
 I set default Headers:
     [Arguments]    &{headers}
-    Log Dictionary    ${headers}
     Set Suite Variable    &{headers}
     RETURN    &{headers}
 
