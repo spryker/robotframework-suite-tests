@@ -1,15 +1,17 @@
 *** Settings ***
 Library    RequestsLibrary
 Library    JSONLibrary
+Library    ../../resources/libraries/fastjson.py
 Resource    common.robot
 
 *** Variables ***
 # *** API SUITE VARIABLES ***
-${api_timeout}    60
+${api_timeout}    15
 ${default_password}    change123
 ${default_allow_redirects}     true
 ${default_auth}    ${NONE}
 &{default_headers}
+${api_session}    api
 
 # *** default headers example: applied to all requests if not empty ***
 # &{default_headers}    Store=DE    Accept-Language=EN
@@ -89,6 +91,7 @@ Overwrite api variables
             Set Suite Variable    ${current_url}
         END
     END
+    Create Session    ${api_session}    ${current_url}    timeout=${api_timeout}
 
 Setup_api_host_if_undefined
     ${api_host_is_undefined}=    Run Keyword And Return Status    Variable Should Not Exist    ${current_url}
@@ -135,7 +138,6 @@ I set Headers:
 
     [Arguments]    &{headers}
     Set To Dictionary    ${headers}    &{headers}    &{default_headers}
-    Log Dictionary    ${headers}
     Set Test Variable    &{headers}
     RETURN    &{headers}
 
@@ -177,9 +179,9 @@ I get access token for the customer:
     [Arguments]    ${email}    ${password}=${default_password}
     Setup_api_host_if_undefined
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
-    ${data}=    Evaluate    {"data":{"type":"access-tokens","attributes":{"username":"${email}","password":"${password}"}}}
-    ${response}=    IF    ${headers_not_empty}       run keyword    POST    ${current_url}/access-tokens    json=${data}    headers=${headers}    verify=${verify_ssl}
-    ...    ELSE    POST    ${current_url}/access-tokens    json=${data}    verify=${verify_ssl}
+    ${data}=    Convert String To JSON    {"data":{"type":"access-tokens","attributes":{"username":"${email}","password":"${password}"}}}
+    ${response}=    IF    ${headers_not_empty}    POST On Session    ${api_session}    ${current_url}/access-tokens    json=${data}    headers=${headers}    verify=${verify_ssl}
+    ...    ELSE    POST On Session    ${api_session}    ${current_url}/access-tokens    json=${data}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
     IF    ${response.status_code} != 204
         TRY
@@ -210,9 +212,9 @@ I get access token for the company user by uuid:
     [Arguments]    ${company_user_uuid}
     Setup_api_host_if_undefined
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
-    ${data}=    Evaluate    {"data":{"type":"company-user-access-tokens","attributes":{"idCompanyUser":"${company_user_uuid}"}}}
-    ${response}=    IF    ${headers_not_empty}       run keyword    POST    ${current_url}/company-user-access-tokens    json=${data}    headers=${headers}    verify=${verify_ssl}
-    ...    ELSE    POST    ${current_url}/company-user-access-tokens    json=${data}    verify=${verify_ssl}
+    ${data}=    Convert String To JSON    {"data":{"type":"company-user-access-tokens","attributes":{"idCompanyUser":"${company_user_uuid}"}}}
+    ${response}=    IF    ${headers_not_empty}    POST On Session    ${api_session}    ${current_url}/company-user-access-tokens    json=${data}    headers=${headers}    verify=${verify_ssl}
+    ...    ELSE    POST On Session    ${api_session}    ${current_url}/company-user-access-tokens    json=${data}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
     IF    ${response.status_code} != 204
         TRY
@@ -244,10 +246,10 @@ I send a POST request:
     ...    ``I send a POST request:    /agent-access-tokens    {"data": {"type": "agent-access-tokens","attributes": {"username": "${agent.email}","password": "${agent.password}"}}}``
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     Setup_api_host_if_undefined
-    ${data}=    Evaluate    ${json}
+    ${data}=    Convert String To JSON    ${json}
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${headers_not_empty}   run keyword    POST    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
-    ...    ELSE    POST    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY    verify=${verify_ssl}
+    ${response}=    IF    ${headers_not_empty}    POST On Session    ${api_session}    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    POST On Session    ${api_session}    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
     IF    ${response.status_code} != 204
         TRY
@@ -282,8 +284,8 @@ I send a POST request with data:
     Setup_api_host_if_undefined
     ${data}=    Evaluate    ${data}
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${headers_not_empty}   run keyword    POST    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
-    ...    ELSE    POST    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ${response}=    IF    ${headers_not_empty}    POST On Session    ${api_session}    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    POST On Session    ${api_session}    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
     IF    ${response.status_code} != 204
         TRY
@@ -316,10 +318,10 @@ I send a PUT request:
     ...    ``I send a PUT request:    /some-endpoint/${someID}    {"data": {"type": "some-type"}}``
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     Setup_api_host_if_undefined
-    ${data}=    Evaluate    ${json}
+    ${data}=    Convert String To JSON    ${json}
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${headers_not_empty}   run keyword    PUT    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
-    ...    ELSE    PUT    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ${response}=    IF    ${headers_not_empty}    PUT On Session    ${api_session}    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    PUT On Session    ${api_session}    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
     IF    ${response.status_code} != 204
         TRY
@@ -354,8 +356,8 @@ I send a PUT request with data:
     Setup_api_host_if_undefined
     ${data}=    Evaluate    ${data}
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${headers_not_empty}   run keyword    PUT    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
-    ...    ELSE    PUT    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ${response}=    IF    ${headers_not_empty}    PUT On Session    ${api_session}    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    PUT On Session    ${api_session}    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
     IF    ${response.status_code} != 204
         TRY
@@ -393,10 +395,10 @@ I send a PATCH request:
 
     [Arguments]   ${path}    ${json}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     Setup_api_host_if_undefined
-    ${data}=    Evaluate    ${json}
+    ${data}=    Convert String To JSON    ${json}
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${headers_not_empty}   run keyword    PATCH   ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
-    ...    ELSE    PATCH    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ${response}=    IF    ${headers_not_empty}    PATCH On Session    ${api_session}    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    PATCH On Session    ${api_session}    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
     IF    ${response.status_code} != 204
         TRY
@@ -437,8 +439,8 @@ I send a PATCH request with data:
     Setup_api_host_if_undefined
     ${data}=    Evaluate    ${data}
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${headers_not_empty}   run keyword    PATCH    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
-    ...    ELSE    PATCH    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ${response}=    IF    ${headers_not_empty}   PATCH On Session    ${api_session}    ${current_url}${path}    data=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    PATCH On Session    ${api_session}    ${current_url}${path}    data=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
     IF    ${response.status_code} != 204
         TRY
@@ -476,8 +478,8 @@ I send a GET request:
     [Arguments]   ${path}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     Setup_api_host_if_undefined
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${headers_not_empty}   run keyword    GET    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
-    ...    ELSE    GET    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ${response}=    IF    ${headers_not_empty}    GET On Session    ${api_session}    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    GET On Session    ${api_session}    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
     IF    ${response.status_code} != 204
         TRY
@@ -518,8 +520,8 @@ I send a DELETE request:
     [Arguments]   ${path}    ${timeout}=${api_timeout}    ${allow_redirects}=${default_allow_redirects}    ${auth}=${default_auth}    ${expected_status}=ANY
     Setup_api_host_if_undefined
     ${headers_not_empty}    Run Keyword and return status     Should not be empty    ${headers}
-    ${response}=    IF    ${headers_not_empty}   run keyword    DELETE    ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
-    ...    ELSE    DELETE    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ${response}=    IF    ${headers_not_empty}    DELETE On Session    ${api_session}   ${current_url}${path}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
+    ...    ELSE    DELETE On Session    ${api_session}    ${current_url}${path}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ${response_headers}=    Set Variable    ${response.headers}
     ${response.status_code}=    Set Variable    ${response.status_code}
     IF    ${response.status_code} != 204
@@ -917,7 +919,7 @@ Each array element of the array in response should contain a nested array larger
     [Arguments]    ${json_path}    ${nested_array}    ${expected_size}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
@@ -960,7 +962,7 @@ Each array element of array in response should contain property:
     [Arguments]    ${json_path}    ${expected_property}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         List Should Contain Value    ${list_element}    ${expected_property}    msg=Array element '${list_element}' of array '${json_path}' does not contain property: '${expected_property}'.
@@ -979,7 +981,7 @@ Each array element of array in response should contain value:
     [Arguments]    ${json_path}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${sub_list_element}=    Create List    ${list_element}
@@ -999,7 +1001,7 @@ Each array element of array in response should contain a nested array of a certa
     [Arguments]    ${parent_array}    ${nested_array}    ${array_expected_size}
     @{data}=    Get Value From Json    ${response_body}    ${parent_array}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
@@ -1024,7 +1026,7 @@ Each array element of array in response should contain property with value:
     [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}    msg='${json_path}' does not contain property: '${expected_property}' with value: '${expected_value}'.
@@ -1042,7 +1044,7 @@ Each array element of array in response should contain property with value in:
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
@@ -1069,7 +1071,7 @@ Each array in response should contain property with NOT EMPTY value:
     [Arguments]    ${json_path}    ${expected_property}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
@@ -1092,7 +1094,7 @@ Each array in response should contain property with value NOT in:
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
@@ -1119,7 +1121,7 @@ Each array element of array in response should contain property with value NOT i
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
@@ -1144,7 +1146,7 @@ Each array element of array in response should NOT be empty:
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
@@ -1171,7 +1173,7 @@ Each array element of nested array should contain property with value in:
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length1}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index1}    IN RANGE    0    ${list_length1}
         ${list_element}=    Get From List    @{data}    ${index1}
         @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
@@ -1203,7 +1205,7 @@ Each array element of nested array should contain property with value NOT in:
 
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length1}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index1}    IN RANGE    0    ${list_length1}
         ${list_element}=    Get From List    @{data}    ${index1}
         @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
@@ -1252,7 +1254,7 @@ Each array element of array in response should contain nested property with valu
     [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
@@ -1292,7 +1294,7 @@ Each array element of array in response should contain nested property in range:
     IF    ${lower_value} > ${higher_value}    Fail    Your lower value cannot be greater than the lower value.
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
@@ -1332,7 +1334,7 @@ Each array element of array in response should be greater than:
     [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
@@ -1373,7 +1375,7 @@ Each array element of array in response should be less than:
     [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
@@ -1413,7 +1415,7 @@ Each array element of array in response should contain nested property with data
     [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_type}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         @{list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
@@ -1446,7 +1448,7 @@ Each array element of array in response should contain nested property with data
     [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_type1}    ${expected_type2}    ${expected_type3}=test    ${expected_type4}=test
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         @{list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
@@ -1465,7 +1467,7 @@ Each array element of array in response should contain nested property:
     [Arguments]    ${json_path}    ${level1_property}    ${level2_property}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${list_element}=    Get Value From Json    ${list_element}    ${level1_property}
@@ -1524,7 +1526,7 @@ Response should contain certain number of values:
     ...    ``Response should contain certain number of values:    [data][attributes][nodes]    cms_page    4``
     [Arguments]    ${json_path}    ${expected_value}    ${expected_count}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     ${list_as_string}=    Convert To String    @{data}
     ${count}=    Get Count    : ${list_as_string}    ${expected_value}
     ${count}=    Convert To String    ${count}
@@ -1540,7 +1542,7 @@ Response include should contain certain entity type:
     [Arguments]    ${expected_value}    #this should be the 'type' of the included item, e.g. abstract-product-prices
     @{include}=    Get Value From Json    ${response_body}    [included]
     ${list_length}=    Get Length    @{include}
-    ${log_list}=    Log List    @{include}
+    # ${log_list}=    Log List    @{include}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${include_element}=    Get From List    @{include}    ${index}
         ${type}=    Get Value From Json    ${include_element}    [type]
@@ -1564,7 +1566,7 @@ Response include element has self link:
     [Arguments]    ${expected_value}    #this should be the 'type' of the included item, e.g. abstract-product-prices
     @{include}=    Get Value From Json    ${response_body}    [included]
     ${list_length}=    Get Length    @{include}
-    ${log_list}=    Log List    @{include}
+    # ${log_list}=    Log List    @{include}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${include_element}=    Get From List    @{include}    ${index}
         ${type}=    Get Value From Json    ${include_element}    [type]
@@ -1663,7 +1665,7 @@ Array in response should contain property with value:
     [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${value}=    Get Value From Json    ${list_element}    ${expected_property}
@@ -1686,7 +1688,7 @@ Cleanup existing customer addresses:
     ...    ``Cleanup existing customer addresses:    ${yves_user.reference}``
     [Arguments]    ${customer_reference}
     Setup_api_host_if_undefined
-    ${response}=    GET    ${current_url}/customers/${customer_reference}/addresses    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200    verify=${verify_ssl}
+    ${response}=    GET On Session    ${api_session}    ${current_url}/customers/${customer_reference}/addresses    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200    verify=${verify_ssl}
     IF    ${response.status_code} != 204
         TRY
             ${response_body}=    Set Variable    ${response.json()}
@@ -1704,7 +1706,7 @@ Cleanup existing customer addresses:
     @{data}=    Get Value From Json    ${response_body}    [data]
     ${list_length}=    Get Length    @{data}
     ${list_length}=    Convert To Integer    ${list_length}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${address_uid}=    Get Value From Json    ${list_element}    [id]
@@ -1712,7 +1714,7 @@ Cleanup existing customer addresses:
         ${address_uid}=    Replace String    ${address_uid}    '   ${EMPTY}
         ${address_uid}=    Replace String    ${address_uid}    [   ${EMPTY}
         ${address_uid}=    Replace String    ${address_uid}    ]   ${EMPTY}
-        ${response_delete}=    DELETE    ${current_url}/customers/${customer_reference}/addresses/${address_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
+        ${response_delete}=    DELETE On Session    ${api_session}    ${current_url}/customers/${customer_reference}/addresses/${address_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response_delete.status_code}
         IF    ${response.status_code} != 204
             TRY
@@ -1733,7 +1735,7 @@ Find or create customer cart
         ...     This keyword does not accept any arguments. Makes GET request in order to fetch cart for the customer or creates it otherwise.
         ...
         Setup_api_host_if_undefined
-        ${response}=    GET    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200    verify=${verify_ssl}
+        ${response}=    GET On Session    ${api_session}    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
         IF    ${response.status_code} != 204
             TRY
@@ -1849,7 +1851,7 @@ Cleanup all items in the cart:
         ...    ``Cleanup items in the cart:    ${cart_id}``
         [Arguments]    ${cart_id}
         Setup_api_host_if_undefined
-        ${response}=    GET    ${current_url}/carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
+        ${response}=    GET On Session    ${api_session}    ${current_url}/carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
         IF    ${response.status_code} != 204
             TRY
@@ -1879,9 +1881,9 @@ Cleanup all items in the cart:
                     ${cart_item_sku}=    Replace String    ${cart_item_sku}    [   ${EMPTY}
                     ${cart_item_sku}=    Replace String    ${cart_item_sku}    ]   ${EMPTY}
                     TRY
-                        ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
+                        ${response_delete}=    DELETE On Session    ${api_session}    ${current_url}/carts/${cart_id}/items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
                     EXCEPT
-                        ${response_delete}=    DELETE    ${current_url}/carts/${cart_id}/items/${cart_item_sku}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
+                        ${response_delete}=    DELETE On Session    ${api_session}    ${current_url}/carts/${cart_id}/items/${cart_item_sku}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
                     END
             END
         END
@@ -1900,7 +1902,7 @@ Cleanup all customer carts
             Save value to a variable:    [data][id]    cart_id
         END
         Setup_api_host_if_undefined
-        ${response}=    GET    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
+        ${response}=    GET On Session    ${api_session}    ${current_url}/carts    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
         IF    ${response.status_code} != 204
             TRY
@@ -1928,10 +1930,10 @@ Cleanup all customer carts
                         IF    '${cart_uuid}' == '${cart_id}'
                             Continue For Loop
                         ELSE
-                            ${response_delete}=    DELETE    ${current_url}/carts/${cart_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
+                            ${response_delete}=    DELETE On Session    ${api_session}    ${current_url}/carts/${cart_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
                         END
                     ELSE
-                        ${response_delete}=    DELETE    ${current_url}/carts/${cart_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
+                        ${response_delete}=    DELETE On Session    ${api_session}    ${current_url}/carts/${cart_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
                     END
             END
         END
@@ -1946,7 +1948,7 @@ Cleanup all items in the guest cart:
         ...    ``Cleanup all items in the guest cart:    ${cart_id}``
         [Arguments]    ${cart_id}
         Setup_api_host_if_undefined
-        ${response}=    GET    ${current_url}/guest-carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=guest-cart-items,bundle-items    expected_status=200    verify=${verify_ssl}
+        ${response}=    GET On Session    ${api_session}    ${current_url}/guest-carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=guest-cart-items,bundle-items    expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
         IF    ${response.status_code} != 204
             TRY
@@ -1970,7 +1972,7 @@ Cleanup all items in the guest cart:
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    ]   ${EMPTY}
-                    ${response_delete}=    DELETE    ${current_url}/guest-carts/${cart_id}/guest-cart-items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
+                    ${response_delete}=    DELETE On Session    ${api_session}    ${current_url}/guest-carts/${cart_id}/guest-cart-items/${cart_item_uid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
             END
         END
 Cleanup all availability notifications:
@@ -1983,7 +1985,7 @@ Cleanup all availability notifications:
         ...    ``Cleanup all availability notifications in the guest cart:    ${yves_user.reference}``
         [Arguments]    ${yves_user.reference}
         Setup_api_host_if_undefined
-        ${response}=    GET    ${current_url}/customers/${yves_user.reference}/availability-notifications    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}   expected_status=200    verify=${verify_ssl}
+        ${response}=    GET On Session    ${api_session}    ${current_url}/customers/${yves_user.reference}/availability-notifications    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}   expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
         IF    ${response.status_code} != 204
             TRY
@@ -2001,7 +2003,7 @@ Cleanup all availability notifications:
         IF    ${list_not_empty} > 0
             ${list_length}=    Get Length    @{data}
             ${list_length}=    Convert To Integer    ${list_length}
-            ${log_list}=    Log List    @{data}
+            # ${log_list}=    Log List    @{data}
             FOR    ${index}    IN RANGE    0    ${list_length}
                     ${list_element}=    Get From List    @{data}    ${index}
                     ${availability_notification_id}=    Get Value From Json    ${list_element}    [id]
@@ -2009,7 +2011,7 @@ Cleanup all availability notifications:
                     ${availability_notification_id}=    Replace String    ${availability_notification_id}    '   ${EMPTY}
                     ${availability_notification_id}=    Replace String    ${availability_notification_id}    [   ${EMPTY}
                     ${availability_notification_id}=    Replace String    ${availability_notification_id}    ]   ${EMPTY}
-                    ${response_delete}=    DELETE    ${current_url}/availability-notifications/${availability_notification_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
+                    ${response_delete}=    DELETE On Session    ${api_session}    ${current_url}/availability-notifications/${availability_notification_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
             END
         END
 
@@ -2036,7 +2038,7 @@ Array element should contain nested array at least once:
     [Arguments]    ${parent_array}    ${expected_nested_array}
     @{data}=    Get Value From Json    ${response_body}    ${parent_array}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    [   ${EMPTY}
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    ]   ${EMPTY}
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    '   ${EMPTY}
@@ -2061,7 +2063,7 @@ Array element should contain property with value at least once:
     [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${result}=    Run Keyword And Ignore Error    Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}
@@ -2083,7 +2085,7 @@ Nested array element should contain sub-array at least once:
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${result}=    Set Variable    'FALSE'
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    [   ${EMPTY}
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    ]   ${EMPTY}
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    '   ${EMPTY}
@@ -2112,7 +2114,7 @@ Nested array element should contain sub-array with property and value at least o
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${result}=    Set Variable    'FALSE'
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    [   ${EMPTY}
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    ]   ${EMPTY}
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    '   ${EMPTY}
@@ -2121,7 +2123,7 @@ Nested array element should contain sub-array with property and value at least o
         IF    'PASS' in ${result}    BREAK
         ${parrent_array_element}=    Get From List    @{data}    ${index}
         @{actual_parent_element}=    Get Value From Json    ${parrent_array_element}    ${parrent_array}
-        Log List    @{actual_parent_element}
+        # Log List    @{actual_parent_element}
         ${actual_nested_array}=    Get From List    ${actual_parent_element}    0
         ${actual_property_array}=    Get Value From Json    ${actual_nested_array}    ${expected_nested_array}
         ${actual_property_value}=    Get From List    ${actual_property_array}    0
@@ -2148,7 +2150,7 @@ Array element should contain nested array with property and value at least once:
     [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length1}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     ${result}=    Set Variable    'FALSE'
     FOR    ${index1}    IN RANGE    0    ${list_length1}
         IF    'PASS' in ${result}    BREAK
@@ -2181,7 +2183,7 @@ Get company user id by customer reference:
     I send a GET request:    /company-users?include=customers
     @{data}=    Get Value From Json    ${response_body}    [data]
     ${list_length}=    Get Length    @{data}
-    ${log_list}=    Log List    @{data}
+    # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${company_user_id}=    Get Value From Json    ${list_element}    id
@@ -2212,7 +2214,7 @@ Cleanup all existing shopping lists
         ...
         ...    ``Cleanup all existing shopping lists``
         Setup_api_host_if_undefined
-        ${response}=    GET    ${current_url}/shopping-lists    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
+        ${response}=    GET On Session    ${api_session}    ${current_url}/shopping-lists    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
         IF    ${response.status_code} != 204
             TRY
@@ -2236,7 +2238,7 @@ Cleanup all existing shopping lists
                     ${shopping_list_uuid}=    Replace String    ${shopping_list_uuid}    '   ${EMPTY}
                     ${shopping_list_uuid}=    Replace String    ${shopping_list_uuid}    [   ${EMPTY}
                     ${shopping_list_uuid}=    Replace String    ${shopping_list_uuid}    ]   ${EMPTY}
-                    ${response_delete}=    DELETE    ${current_url}/shopping-lists/${shopping_list_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
+                    ${response_delete}=    DELETE On Session    ${api_session}    ${current_url}/shopping-lists/${shopping_list_uuid}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204
             END
         END
 
@@ -2277,3 +2279,16 @@ Array Element Should Contain Nested Property With Value At Least Once
     ...    any(item.get('${nested_path}', {}).get('${property}', None) == ${expected_value} for item in ${matches})
     Should Be True    ${exists}    Expected property '${property}' with value '${expected_value}' not found in any array element.
 
+To JSON Boolean
+    [Arguments]    ${value}
+    ${is_true}=    Run Keyword And Return Status    Should Be True    ${value}
+    IF    ${is_true}
+        RETURN    true
+    ELSE    
+        RETURN    false
+    END
+
+Get Json Value
+    [Arguments]    ${body}    ${path}
+    ${value}=    Get Value    ${body}    ${path}
+    RETURN    ${value}

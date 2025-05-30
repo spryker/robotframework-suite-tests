@@ -5,7 +5,7 @@ Test Tags    glue
 
 *** Test Cases ***
 Customer_confirmation
-    [Setup]    Run Keywords    I send a POST request:    /customers    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_third_user.first_name}.${yves_third_user.last_name}${random}@spryker.com","password":"${yves_third_user.password_new}","confirmPassword":"${yves_third_user.password_new}","acceptedTerms":True}}}
+    [Setup]    Run Keywords    I send a POST request:    /customers    {"data":{"type":"customers","attributes":{"firstName":"${yves_third_user.first_name}","lastName":"${yves_third_user.last_name}","gender":"${gender.male}","salutation":"${yves_third_user.salutation}","email":"${yves_third_user.first_name}.${yves_third_user.last_name}${random}@spryker.com","password":"${yves_third_user.password_new}","confirmPassword":"${yves_third_user.password_new}","acceptedTerms":true}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    user_reference_id
     ...    AND    Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where customer_reference = '${user_reference_id}'    confirmation_key

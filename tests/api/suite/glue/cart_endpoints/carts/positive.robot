@@ -317,7 +317,7 @@ Get_cart_with_included_cart_rules
        ...  AND    I set Headers:    Authorization=${token}
        ...  AND    Cleanup all customer carts
        ...  AND    Create empty customer cart:    ${mode.gross}    ${currency.eur.code}    ${store.de}    cart_rules
-       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}", "quantity": "4"}}}
+       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}", "quantity": 4}}}
        ...  AND    Response status code should be:    201
     When I send a GET request:    /carts/${cart_id}?include=cart-rules
     Then Response status code should be:    200

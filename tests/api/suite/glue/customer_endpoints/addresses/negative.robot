@@ -42,8 +42,7 @@ Create_customer_address_with_empty_fields
     And Array in response should contain property with value:    [errors]    detail    zipCode => This value should not be blank.
     And Array in response should contain property with value:    [errors]    detail    city => This value should not be blank.
 
-Create_customer_address_with_invalid_salutation_bug_CC-15866
-    [Documentation]    Bug CC-15866
+Create_customer_address_with_invalid_salutation_bug
     When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "Fake","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
@@ -244,7 +243,7 @@ Patch_customer_address_with_empty_required_fields
     ...    AND    I send a POST request:    /customers/${yves_user.reference}/addresses    {"data": {"type": "addresses","attributes": {"salutation": "${yves_second_user.salutation}","firstName": "${yves_second_user.first_name}","lastName": "${yves_second_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","country": "${default.country}","iso2Code": "${default.iso2Code}","company":"${default.company}","phone": "${default.phone}","isDefaultShipping": ${default.shipping_status},"isDefaultBilling": ${default.billing_status}}}}
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    address_uid
-    When I send a PATCH request:    /customers/${yves_user.reference}/addresses/${address_uid}    {"data": {"salutation": "${yves_second_user.salutation}","type": "addresses","attributes": {"salutation": None,"firstName": None,"lastName": None, "address1": None,"address2": None,"zipCode": None,"city": None,"iso2Code": None}}}
+    When I send a PATCH request:    /customers/${yves_user.reference}/addresses/${address_uid}    {"data": {"salutation": "${yves_second_user.salutation}","type": "addresses","attributes": {"salutation": null,"firstName": null,"lastName": null, "address1": null,"address2": null,"zipCode": null,"city": null,"iso2Code": null}}}
     Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901
