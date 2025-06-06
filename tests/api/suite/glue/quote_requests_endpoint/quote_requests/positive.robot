@@ -61,7 +61,7 @@ Create_quote_request
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
 
-Create_quote_request_with_included_customers_&_comapny_users_&_company_business_units_and_concrete_products
+Create_quote_request_with_included_customers_&_company_users_&_company_business_units_and_concrete_products
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}

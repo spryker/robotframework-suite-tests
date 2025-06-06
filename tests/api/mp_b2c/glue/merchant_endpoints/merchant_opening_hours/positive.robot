@@ -59,4 +59,4 @@ Retrieves_merchant_with_include_merchant_opening_hours
     And Response body parameter should be:    [included][0][attributes][weekdaySchedule][0][timeFrom]    07:00:00.000000
     And Response body parameter should be:    [included][0][attributes][weekdaySchedule][0][timeTo]    13:00:00.000000
     And Response body parameter should be:    [included][0][attributes][dateSchedule][0][date]    2024-01-01
-    And Response body parameter should be:    [included][0][attributes][dateSchedule][0][noteGlossaryKey]    "New Years Day"
+    And Response body parameter should be:    [included][0][attributes][dateSchedule][0][noteGlossaryKey]    New Years Day

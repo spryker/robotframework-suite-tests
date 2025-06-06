@@ -508,13 +508,13 @@ Get_customer_orders_list_without_order_id
     And Each array element of array in response should contain nested property:    [data]    [attributes]    createdAt
     And Each array element of array in response should contain nested property:    [data]    [attributes]    currencyIsoCode
     And Each array element of array in response should contain nested property:    [data]    [attributes]    priceMode
-    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals] [expenseTotal]   int
-    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals] [discountTotal]   int
-    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals] [taxTotal]   int
-    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals] [subtotal]   int
-    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals] [grandTotal]   int
-    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals] [canceledTotal]   int
-    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals] [remunerationTotal]   int
+    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][expenseTotal]   int
+    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][discountTotal]   int
+    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][taxTotal]   int
+    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][subtotal]   int
+    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][grandTotal]   int
+    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][canceledTotal]   int
+    And Each array element of array in response should contain nested property with datatype:    [data]    [attributes][totals][remunerationTotal]   int
     And Each array element of array in response should contain nested property:    [data]    [attributes][totals]    expenseTotal
     And Each array element of array in response should contain nested property:    [data]    [attributes][totals]    discountTotal
     And Each array element of array in response should contain nested property:    [data]    [attributes][totals]    taxTotal

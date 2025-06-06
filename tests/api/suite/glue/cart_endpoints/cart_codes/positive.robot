@@ -39,7 +39,7 @@ Add_gift_card_code_to_cart
     And Response body parameter should not be EMPTY:    [data][id]
     And Response include should contain certain entity type:    gift-cards
     And Response include element has self link:   gift-cards
-    And Response body parameter should be:    [data][relationships][gift-cards] [data][0][type]    gift-cards
+    And Response body parameter should be:    [data][relationships][gift-cards][data][0][type]    gift-cards
     And Response body parameter should not be EMPTY:   [data][relationships][gift-cards][data][0][id]
     And Response body parameter should be:    [included][0][type]    gift-cards
     And Response body parameter should not be EMPTY:   [included][0][id]
@@ -94,7 +94,7 @@ Add_gift_card_code_to_the_guest_cart
     And Response body parameter should not be EMPTY:    [data][attributes][discounts][0][displayName]
     And Response body parameter should not be EMPTY:    [data][attributes][discounts][0][amount]
     And Response body parameter should be:    [data][attributes][discounts][0][code]    None
-    And Response body parameter should be:    [data][relationships][gift-cards] [data][0][type]    gift-cards
+    And Response body parameter should be:    [data][relationships][gift-cards][data][0][type]    gift-cards
     And Response body parameter should not be EMPTY:   [data][relationships][gift-cards][data][0][id]
     And Response include should contain certain entity type:    gift-cards
     And Response include element has self link:   gift-cards

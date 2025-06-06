@@ -11,7 +11,7 @@ Resources_list_which_customer_can_access
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should contain:    [data][0][type]    customer-access
-    And Response should contain the array of a certain size:    [data][0][attributes] [resourceTypes]    2
+    And Response should contain the array of a certain size:    [data][0][attributes][resourceTypes]    2
     And Response body parameter should be:    [data][0][attributes][resourceTypes][0]    wishlists
     And Response body parameter should be:    [data][0][attributes][resourceTypes][1]    wishlist-items
     And Response body has correct self link

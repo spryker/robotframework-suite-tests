@@ -37,10 +37,10 @@ Get_Services_List
     And Response body parameter should not be EMPTY:    [data][1][attributes][uuid]
     And Response body parameter should not be EMPTY:    [data][0][id]
     And Response body parameter should not be EMPTY:    [data][1][id]
-    And Response body parameter should be:    data[0][attributes][isActive]    True
-    And Response body parameter should be:    data[1][attributes][isActive]    True
-    And Response body parameter should be in:    data[0][attributes][key]    s1    s2
-    And Response body parameter should be in:    data[1][attributes][key]    s1    s2
+    And Response body parameter should be:    [data][0][attributes][isActive]    True
+    And Response body parameter should be:    [data][1][attributes][isActive]    True
+    And Response body parameter should be in:    [data][0][attributes][key]    s1    s2
+    And Response body parameter should be in:    [data][1][attributes][key]    s1    s2
     And Response body has correct self link
 
 Create_Service

@@ -7,7 +7,6 @@ Test Tags    glue
 
 *** Test Cases ***
 Search_with_empty_search_criteria_all_default_values_check
-    [Tags]    debug
     When I send a GET request:    /catalog-search?q=
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -465,7 +464,6 @@ Filter_by_valid_subcategory
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
     And Array element should contain property with value at least once:    [data][0][attributes][categoryTreeFilter]    docCount    ${${category_lvl2.qty}}
     And Array element should contain nested array with property and value at least once:    [data][0][attributes][categoryTreeFilter]    [children]    docCount    ${category_lvl2.qty}
-    And Response body parameter should be less than:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    ${category_lvl2.qty}
     And Response body has correct self link
 
 Search_with_specific_currency

@@ -29,7 +29,7 @@ Get_country_collection
     And Response body parameter should be:    [data][253][iso3_code]    ZMB
     And Response body parameter should be:    [data][253][name]    Zambia
     And Response body parameter should be:    [data][253][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][253][postal_code_regex]    \\\\d{5}
+    And Response body parameter should be:    [data][253][postal_code_regex]    \\d{5}
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Get_country_Collection_with_filter_first_item
@@ -65,7 +65,7 @@ Get_country_collection_with_filter
     And Response body parameter should be:    [data][0][iso3_code]    UKR
     And Response body parameter should be:    [data][0][name]    Ukraine
     And Response body parameter should be:    [data][0][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][0][postal_code_regex]    \\\\d{5}
+    And Response body parameter should be:    [data][0][postal_code_regex]    \\d{5}
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Get_country_collection_with_multiple_filter_fields
@@ -84,13 +84,13 @@ Get_country_collection_with_multiple_filter_fields
     And Response body parameter should be:    [data][0][iso3_code]    AND
     And Response body parameter should be:    [data][0][name]    Andorra
     And Response body parameter should be:    [data][0][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][0][postal_code_regex]    AD\\\\d{3}
+    And Response body parameter should be:    [data][0][postal_code_regex]    AD\\d{3}
     And Response body parameter should be:    [data][1][id_country]    235
     And Response body parameter should be:    [data][1][iso2_code]    UA
     And Response body parameter should be:    [data][1][iso3_code]    UKR
     And Response body parameter should be:    [data][1][name]    Ukraine
     And Response body parameter should be:    [data][1][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][1][postal_code_regex]    \\\\d{5}
+    And Response body parameter should be:    [data][1][postal_code_regex]    \\d{5}
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Get_country_collection_with_filter_in_condition
@@ -109,7 +109,7 @@ Get_country_collection_with_filter_in_condition
     And Response body parameter should be:    [data][0][iso3_code]    AND
     And Response body parameter should be:    [data][0][name]    Andorra
     And Response body parameter should be:    [data][0][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][0][postal_code_regex]    AD\\\\d{3}
+    And Response body parameter should be:    [data][0][postal_code_regex]    AD\\d{3}
     And Response body parameter should be:    [data][1][id_country]    3
     And Response body parameter should be:    [data][1][iso2_code]    AE
     And Response body parameter should be:    [data][1][iso3_code]    ARE
@@ -121,7 +121,7 @@ Get_country_collection_with_filter_in_condition
     And Response body parameter should be:    [data][2][iso3_code]    UKR
     And Response body parameter should be:    [data][2][name]    Ukraine
     And Response body parameter should be:    [data][2][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][2][postal_code_regex]    \\\\d{5}
+    And Response body parameter should be:    [data][2][postal_code_regex]    \\d{5}
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Get_country_collection_with_invalid_multiple_filter
@@ -157,7 +157,7 @@ Get_country_collection_with_paginations
     And Response body parameter should be:    [data][0][iso3_code]    UKR
     And Response body parameter should be:    [data][0][name]    Ukraine
     And Response body parameter should be:    [data][0][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][0][postal_code_regex]    \\\\d{5}
+    And Response body parameter should be:    [data][0][postal_code_regex]    \\d{5}
     And Response body parameter should be:    [data][1][id_country]    236
     And Response body parameter should be:    [data][1][iso2_code]    UG
     And Response body parameter should be:    [data][1][iso3_code]    UGA
@@ -227,7 +227,7 @@ Get_country_by_id
     And Response body parameter should be:    [data][iso3_code]    UKR
     And Response body parameter should be:    [data][name]    Ukraine
     And Response body parameter should be:    [data][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][postal_code_regex]    \\\\d{5}
+    And Response body parameter should be:    [data][postal_code_regex]    \\d{5}
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Create_and_update_country:
@@ -336,7 +336,7 @@ Create_country_collection:
     And Response body parameter should be:    [data][2][iso2_code]    XC
     And Response body parameter should be:    [data][2][iso3_code]    XXC
     And Response body parameter should be:    [data][2][name]    Country XC
-    And Response body parameter should be:    [data][2][postal_code_regex]    \\\\d{5}
+    And Response body parameter should be:    [data][2][postal_code_regex]    \\d{5}
     Response body parameter should be greater than :    [data][2][id_country]    200
     When Save value to a variable:    [data][0][id_country]    xxa_country_id
     When Save value to a variable:    [data][1][id_country]    xxb_country_id
@@ -385,7 +385,7 @@ Create_country_collection_non_transactional:
     And Response body parameter should be:    [data][2][iso2_code]    XC
     And Response body parameter should be:    [data][2][iso3_code]    XXC
     And Response body parameter should be:    [data][2][name]    Country XC
-    And Response body parameter should be:    [data][2][postal_code_regex]    \\\\d{5}
+    And Response body parameter should be:    [data][2][postal_code_regex]    \\d{5}
     Response body parameter should be greater than :    [data][2][id_country]    200
     When Save value to a variable:    [data][0][id_country]    xxa_country_id
     When Save value to a variable:    [data][1][id_country]    xxb_country_id

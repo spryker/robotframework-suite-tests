@@ -101,7 +101,7 @@ API_test_setup
     [Documentation]   This setup should be called in Settings of every test suite. It defines which url variable will be used in the test suite.
     ...
     ...    At the moment it is used to define if the test is for GLUE (``glue`` tag) or BAPI (``bapi`` tag) by checking for the default or test tag.
-    ...    If the tag is there it replaces the domein URL with bapi url.
+    ...    If the tag is there it replaces the domain URL with bapi url.
     ...
     ...    To set a tag to a test case use ``[Tags]`` under the test name.
     ...    To set Test Tags for the whole test suite (.robotframework file), use ``Test Tags`` keyword in the suite Settings.
@@ -127,10 +127,10 @@ API_test_setup
 
 I set Headers:
     [Documentation]    Keyword sets any number of headers for the further endpoint calls.
-    ...    Headers can have any name and any value, they are set as test variable - which means they can be used throughtout one test if set once.
+    ...    Headers can have any name and any value, they are set as test variable - which means they can be used throughout one test if set once.
     ...    This keyword can be used to add access token to the next endpoint calls or to set header for the guest customer, etc.
     ...
-    ...    It accepts a list of pairs haader-name=header-value as an argument. The list items should be separated by 4 spaces.
+    ...    It accepts a list of pairs header-name=header-value as an argument. The list items should be separated by 4 spaces.
     ...
     ...    *Example:*
     ...
@@ -234,10 +234,10 @@ I get access token for the company user by uuid:
     RETURN    ${token}
 
 I send a POST request:
-    [Documentation]    This keyword is used to make POST requests. It accepts the endpoint *without the domain* and the body in JOSN.
+    [Documentation]    This keyword is used to make POST requests. It accepts the endpoint *without the domain* and the body in JSON.
     ...    Variables can and should be used in the endpoint url and in the body JSON.
     ...
-    ...    If the endpoint needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
+    ...    If the endpoint needs to have any headers (e.g. token for authorization), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
     ...
     ...    After this keyword is called, response body, selflink, response status and headers are recorded into the test variables which have the scope of the current test and can then be used by other keywords to get and compare data.
     ...
@@ -273,7 +273,7 @@ I send a POST request with data:
     [Documentation]    This keyword is used to make POST requests with a plain text data. It accepts the endpoint *without the domain* and the body in plain text.
     ...    Variables can and should be used in the endpoint url and in the body.
     ...
-    ...    If the endpoint needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
+    ...    If the endpoint needs to have any headers (e.g. token for authorization), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
     ...
     ...    After this keyword is called, response body, selflink, response status and headers are recorded into the test variables which have the scope of the current test and can then be used by other keywords to get and compare data.
     ...
@@ -309,7 +309,7 @@ I send a PUT request:
     [Documentation]    This keyword is used to make PUT requests. It accepts the endpoint *without the domain* and the body in JSON.
     ...    Variables can and should be used in the endpoint url and in the body JSON.
     ...
-    ...    If the endpoint needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
+    ...    If the endpoint needs to have any headers (e.g. token for authorization), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
     ...
     ...    After this keyword is called, response body, selflink, response status and headers are recorded into the test variables which have the scope of the current test and can then be used by other keywords to get and compare data.
     ...
@@ -345,7 +345,7 @@ I send a PUT request with data:
     [Documentation]    This keyword is used to make PUT requests with a plain text data. It accepts the endpoint *without the domain* and the body in plain text.
     ...    Variables can and should be used in the endpoint url and in the body plain text.
     ...
-    ...    If the endpoint needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
+    ...    If the endpoint needs to have any headers (e.g. token for authorization), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
     ...
     ...    After this keyword is called, response body, selflink, response status and headers are recorded into the test variables which have the scope of the current test and can then be used by other keywords to get and compare data.
     ...
@@ -378,14 +378,14 @@ I send a PUT request with data:
     RETURN    ${response_body}
 
 I send a PATCH request:
-    [Documentation]    This keyword is used to make PATCH requests. It accepts the endpoint *without the domain* and the body in JOSN.
+    [Documentation]    This keyword is used to make PATCH requests. It accepts the endpoint *without the domain* and the body in JSON.
     ...    Variables can and should be used in the endpoint url and in the body JSON.
     ...
-    ...    If the endpoint needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
+    ...    If the endpoint needs to have any headers (e.g. token for authorization), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
     ...    If this keyword was already called within this test case (e.g. before POST request), there is no need to call it again.
     ...
     ...    Usually for PATCH requests you need to know and use the ID (UID) if the resource you need to update.
-    ...    To  get the ID you need forst to make a POST or GET request to get the data and then call ``Save value to a variable:`` endpoint to save the ID to a test variable to be able to use it in the PATCH request.
+    ...    To  get the ID you need first to make a POST or GET request to get the data and then call ``Save value to a variable:`` endpoint to save the ID to a test variable to be able to use it in the PATCH request.
     ...
     ...    After this keyword is called, response body, selflink, response status and headers are recorded into the test variables which have the scope of the current test and can then be used by other keywords to get and compare data.
     ...
@@ -422,11 +422,11 @@ I send a PATCH request with data:
     [Documentation]    This keyword is used to make PATCH requests with a plain text data. It accepts the endpoint *without the domain* and the body in plain text.
     ...    Variables can and should be used in the endpoint url and in the body JSON.
     ...
-    ...    If the endpoint needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
+    ...    If the endpoint needs to have any headers (e.g. token for authorization), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
     ...    If this keyword was already called within this test case (e.g. before POST request), there is no need to call it again.
     ...
     ...    Usually for PATCH requests you need to know and use the ID (UID) if the resource you need to update.
-    ...    To  get the ID you need forst to make a POST or GET request to get the data and then call ``Save value to a variable:`` endpoint to save the ID to a test variable to be able to use it in the PATCH request.
+    ...    To  get the ID you need first to make a POST or GET request to get the data and then call ``Save value to a variable:`` endpoint to save the ID to a test variable to be able to use it in the PATCH request.
     ...
     ...    After this keyword is called, response body, selflink, response status and headers are recorded into the test variables which have the scope of the current test and can then be used by other keywords to get and compare data.
     ...
@@ -464,11 +464,11 @@ I send a GET request:
     [Documentation]    This keyword is used to make GET requests. It accepts the endpoint *without the domain*.
     ...    Variables can and should be used in the endpoint url.
     ...
-    ...    If the endpoint needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
+    ...    If the endpoint needs to have any headers (e.g. token for authorization), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
     ...    If this keyword was already called within this test case (e.g. before POST request), there is no need to call it again.
     ...
     ...    Sometimes for GET requests you need to know and use the ID (UID) if the resource you need to view.
-    ...    To  get the ID you need forst to make a POST or GET request to get the data and then call ``Save value to a variable:`` endpoint to save the ID to a test variable to be able to use it in the GET request.
+    ...    To  get the ID you need first to make a POST or GET request to get the data and then call ``Save value to a variable:`` endpoint to save the ID to a test variable to be able to use it in the GET request.
     ...
     ...    After this keyword is called, response body, selflink, response status and headers are recorded into the test variables which have the scope of the current test and can then be used by other keywords to get and compare data.
     ...
@@ -495,6 +495,7 @@ I send a GET request:
     END
     Set Test Variable    ${response_headers}    ${response_headers}
     Set Test Variable    ${response_body}    ${response_body}
+    Log Many    ${response_body}
     Set Test Variable    ${response}    ${response}
     Set Test Variable    ${expected_self_link}    ${current_url}${path}
     RETURN    ${response_body}
@@ -503,14 +504,14 @@ I send a DELETE request:
     [Documentation]    This keyword is used to make DELETE requests. It accepts the endpoint *without the domain*.
     ...    Variables can and should be used in the endpoint url.
     ...
-    ...    This endpoint usually needs to have any headers (e.g. token for authorisation), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
+    ...    This endpoint usually needs to have any headers (e.g. token for authorization), ``I set Headers`` keyword should be called before this keyword to set the headers beforehand.
     ...    If this keyword was already called within this test case (e.g. before POST request), there is no need to call it again.
     ...
     ...    For DELETE requests you need to know and use the ID (UID) if the resource you need to delete.
-    ...    To  get the ID you need forst to make a POST or GET request to get the data and then call ``Save value to a variable:`` endpoint to save the ID to a test variable to be able to use it in the GET request.
+    ...    To  get the ID you need first to make a POST or GET request to get the data and then call ``Save value to a variable:`` endpoint to save the ID to a test variable to be able to use it in the GET request.
     ...
     ...    After this keyword is called, response body, selflink, response status and headers are recorded into the test variables which have the scope of the current test and can then be used by other keywords to get and compare data.
-    ...    Body is recorded only in case there was an error, if DELETE endpoint worked without errors, reqponse body is empty and so not recorded.
+    ...    Body is recorded only in case there was an error, if DELETE endpoint worked without errors, response body is empty and so not recorded.
     ...
     ...    *Example:*
     ...
@@ -560,7 +561,7 @@ Response status code should be:
     Should Be Equal As Strings    ${response.status_code}    ${status_code}    Expected 'status code': '${status_code}' does not equal actual 'status code': '${response.status_code}'.
 
 Response body should contain:
-    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contsains the string passed as an argument.
+    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contains the string passed as an argument.
     ...
     ...    *Example:*
     ...
@@ -582,13 +583,13 @@ Response body should not contain:
     Should Not Contain    ${response_body}    ${value}    Response body contains not expected: '${value}'.
 
 Response body parameter should be:
-    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contsains the speficied parameter ``{json_path}`` with the specified value ``{expected_value}``.
+    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contains the specified parameter ``{json_path}`` with the specified value ``{expected_value}``.
     ...
     ...    *Example:*
     ...
     ...    ``Response body parameter should be:    [data][0][type]    abstract-product-availabilities``
     [Arguments]    ${json_path}    ${expected_value}
-    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
@@ -602,7 +603,7 @@ Response body case-insensitive parameter should be:
     ...
     ...    ``Response body case-insensitive parameter should be:    [data][0][type]    Abstract-Product-Availabilities``
     [Arguments]    ${json_path}    ${expected_value}
-    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
@@ -637,7 +638,7 @@ Perform arithmetical calculation with two arguments:
     RETURN    ${variable_name}
 
 Response body parameter should be in:
-    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contsains the speficied parameter ``{json_path}`` with the value that matches one of the parameters ``{expected_value1}``, ``{expected_value2}``.
+    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contains the specified parameter ``{json_path}`` with the value that matches one of the parameters ``{expected_value1}``, ``{expected_value2}``.
     ...
     ...    The minimal number of arguments are 2, maximum is 4
     ...
@@ -645,7 +646,7 @@ Response body parameter should be in:
     ...
     ...    ``Response body parameter should be in:    [data][attributes][allowInput]    true    false``
     [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value    ${expected_value5}=robotframework-dummy-value    ${expected_value6}=robotframework-dummy-value    ${expected_value7}=robotframework-dummy-value    ${expected_value8}=robotframework-dummy-value    ${expected_value9}=robotframework-dummy-value
-    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
@@ -657,7 +658,7 @@ Response body parameter should be in:
     END
 
 Response body parameter with rounding should be:
-    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contains the speficied parameter ``{json_path}`` that was rounded and can differ from the expected value by 1 more cent or 1 less cent.
+    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contains the specified parameter ``{json_path}`` that was rounded and can differ from the expected value by 1 more cent or 1 less cent.
     ...    It can be used if you need to check value with rounding for prices etg.
     ...
     ...    Range is calculated as
@@ -669,7 +670,7 @@ Response body parameter with rounding should be:
     ...
     ...    ``Response body parameter with rounding should be:    [data][attributes][discounts][0][amount]    ${discount.product_3.with_10%_discount}``
     [Arguments]    ${json_path}    ${expected_value}
-    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
@@ -684,7 +685,7 @@ Response body parameter with rounding should be:
     Should Be Equal    ${result}    True    Actual ${data} is not in expected Range [${range_value_min}; ${range_value_max}], json_path: '${json_path}'
 
 Response body parameter should be NOT in:
-    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contsains the speficied parameter ``{json_path}`` with the value that matches one of the parameters ``{expected_value1}``, ``{expected_value2}``.
+    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contains the specified parameter ``{json_path}`` with the value that matches one of the parameters ``{expected_value1}``, ``{expected_value2}``.
     ...
     ...    The minimal number of arguments is 1, maximum is 4
     ...
@@ -692,7 +693,7 @@ Response body parameter should be NOT in:
     ...
     ...    ``Response body parameter should be NOT in:    [data][attributes][allowInput]    None``
     [Arguments]    ${json_path}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
-    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
@@ -704,7 +705,7 @@ Response body parameter should be NOT in:
     END
 
 Response body parameter should NOT be:
-    [Documentation]    This keyword checks that the response saved in ``{response_body}`` test variable contsains the speficied parameter ``{json_path}`` has a value that is DIFFERENT from the value passed as an argument ``{expected_value}``.
+    [Documentation]    This keyword checks that the response saved in ``{response_body}`` test variable contains the specified parameter ``{json_path}`` has a value that is DIFFERENT from the value passed as an argument ``{expected_value}``.
     ...
     ...    This keyword can be conveniently used when you need to make sure the parameter is not empty. To check for ``null`` value in robot Framework use ``None`` keyword as shown in the example below.
     ...
@@ -712,7 +713,7 @@ Response body parameter should NOT be:
     ...
     ...    ``Response body parameter should NOT be:    data.id    None``
     [Arguments]    ${json_path}    ${expected_value}
-    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
@@ -721,7 +722,7 @@ Response body parameter should NOT be:
     Should Not Be Equal    ${data}    ${expected_value}    '${data}' in '${json_path}' should be equal to '${expected_value}'.
 
 Response body parameter should have datatype:
-    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contsains the speficied parameter ``{parameter}`` and that parameter has the specified data type ``{expected_data_type}``.
+    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contains the specified parameter ``{parameter}`` and that parameter has the specified data type ``{expected_data_type}``.
     ...
     ...    Some types that can be used are: ``int``, ``str``, ``list``. It uses a custom keyword ``Evaluate datatype of a variable:`` to evaluate the datatype.
     ...
@@ -730,8 +731,8 @@ Response body parameter should have datatype:
     ...    ``Response body parameter should have datatype:    [data][0][attributes][name]    str``
     ...    ``Response body parameter should have datatype:    [data][0][attributes][sort][sortParamNames]    list``
     [Arguments]    ${parameter}    ${expected_data_type}
-    @{parameter}=    Get Value From Json    ${response_body}    ${parameter}
-    ${actual_data_type}=    Evaluate datatype of a variable:    @{parameter}
+    ${parameter}=    Get Json Value    ${response_body}    ${parameter}
+    ${actual_data_type}=    Evaluate datatype of a variable:    ${parameter}
     Should Be Equal    ${actual_data_type}    ${expected_data_type}    Parameter: '${parameter}' should be '${expected_data_type}' but got: '${actual_data_type}'.
 
 Evaluate datatype of a variable:
@@ -747,7 +748,7 @@ Evaluate datatype of a variable:
     RETURN    ${data_type}
 
 Response header parameter should be:
-    [Documentation]    This keyword checks that the response header saved previiously in ``{response_headers}`` test variable has the expected header with name ``{header_parameter}`` and this header has value ``{header_value}``
+    [Documentation]    This keyword checks that the response header saved previously in ``{response_headers}`` test variable has the expected header with name ``{header_parameter}`` and this header has value ``{header_value}``
     ...
     ...    *Example:*
     ...
@@ -757,7 +758,7 @@ Response header parameter should be:
     Should Be Equal    ${actual_header_value}    ${header_value}    Header parameter: '${header_parameter}' should have value: '${header_value}' but got: '${actual_header_value}'.
 
 Response header parameter should contain:
-    [Documentation]    This keyword checks that the response header saved previiously in ``{response_headers}`` test variable has the expected header with name ``{header_parameter}`` and this header contains substring ``{header_value}``
+    [Documentation]    This keyword checks that the response header saved previously in ``{response_headers}`` test variable has the expected header with name ``{header_parameter}`` and this header contains substring ``{header_value}``
     ...
     ...    *Example:*
     ...
@@ -772,11 +773,11 @@ Response body has correct self link
     ...     This keyword does not accept any arguments. Expected self link on the endpoint call as assembled from the domain and the endpoint passed to the request.
     ...
     ...    *NOTE:* this keyword checks the first link that is OUTSUDE of the ``data[]`` array in the response
-    ${actual_self_link}=    Get Value From Json    ${response_body}    $.links.self    #Exampleof path: $..address.streetAddress
-    ${actual_self_link}=    Convert To String    ${actual_self_link}
-    ${actual_self_link}=    Replace String    ${actual_self_link}    [    ${EMPTY}
-    ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
-    ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
+    ${actual_self_link}=    Get Json Value    ${response_body}    [links][self]    #Example of path: $..address.streetAddress
+    # ${actual_self_link}=    Convert To String    ${actual_self_link}
+    # ${actual_self_link}=    Replace String    ${actual_self_link}    [    ${EMPTY}
+    # ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
+    # ${actual_self_link}=    Replace String    ${actual_self_link}    '    ${EMPTY}
     Should Be Equal    ${actual_self_link}    ${expected_self_link}    Expected self link: '${expected_self_link}' does not match actual link: '${actual_self_link}'.
 
 Response body has correct self link internal
@@ -785,7 +786,7 @@ Response body has correct self link internal
     ...     This keyword does not accept any arguments. Expected self link on the endpoint call as assembled from the domain and the endpoint passed to the request.
     ...
     ...    *NOTE:* this keyword checks the first link that is INSIDE of the ``data[]`` array in the response.
-    ${actual_self_link}=    Get Value From Json    ${response_body}    [data][links][self]    #Exampleof path: $..address.streetAddress
+    ${actual_self_link}=    Get Json Value    ${response_body}    [data][links][self]    #Example of path: $..address.streetAddress
     ${actual_self_link}=    Convert To String    ${actual_self_link}
     ${actual_self_link}=    Replace String    ${actual_self_link}    [    ${EMPTY}
     ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
@@ -795,7 +796,7 @@ Response body has correct self link internal
 Response body has correct self link for created entity:
     [Documentation]    This keyword checks that the actual selflink retrieved from the test variable ``{response_body}`` plus the UID of the entity that was created and matches the self link recorded into the ``{expected_self_link}`` test variable on endpoint call.
     ...
-    ...     This keyword requires one argument which is the ending of the URL usually containing the UID of the created resource. Expected self link on the endpoint call as assembled from the domain, the endpoint passed to the request and the end of the URTL passed as the argument.
+    ...     This keyword requires one argument which is the ending of the URL usually containing the UID of the created resource. Expected self link on the endpoint call as assembled from the domain, the endpoint passed to the request and the end of the URL passed as the argument.
     ...
     ...    *NOTE:* this keyword checks the first link that is INSIDE of the ``data[]`` array in the response.
     ...
@@ -807,7 +808,7 @@ Response body has correct self link for created entity:
     ...
     ...    In the case above the self link for create cart would be ``glue.domain/carts/687b806f-2fab-555f-90ae-e32d96b6aa71``, ``{expected_self_link}`` would be ``glue.domain/carts/`` and the UID will come from the argument.
     [Arguments]    ${url}    #the ending of the url, usually the ID
-    ${actual_self_link}=    Get Value From Json    ${response_body}    [data][links][self]    #Exampleof path: $..address.streetAddress
+    ${actual_self_link}=    Get Json Value    ${response_body}    [data][links][self]    #Example of path: $..address.streetAddress
     ${actual_self_link}=    Convert To String    ${actual_self_link}
     ${actual_self_link}=    Replace String    ${actual_self_link}    [    ${EMPTY}
     ${actual_self_link}=    Replace String    ${actual_self_link}    ]    ${EMPTY}
@@ -817,19 +818,19 @@ Response body has correct self link for created entity:
 Response body parameter should not be EMPTY:
     [Documentation]    This keyword checks that the body parameter sent in ``{json_path}`` argument is not empty. If the parameter value is other that ``null`` the keyword will fail.
     ...
-    ...    This keyword checks both that the parameter does not have null value or that it does not have an empty string value and makes sure that the pagameter actually exists.
+    ...    This keyword checks both that the parameter does not have null value or that it does not have an empty string value and makes sure that the parameter actually exists.
     ...
     ...    *Example:*
     ...
     ...    ``Response body parameter should not be EMPTY:    [data][attributes][description]``
     [Arguments]    ${json_path}
-    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
-    Should Not Be Empty    ${data}    '${json_path}' property value '${data}' is empty but shoud not be
-    Should Not Be Equal    ${data}    None    '${json_path}' property value is '${data}' which is null, but it shoud be a non-null.
+    Should Not Be Empty    ${data}    '${json_path}' property value '${data}' is empty but should not be
+    Should Not Be Equal    ${data}    None    '${json_path}' property value is '${data}' which is null, but it should be a non-null.
 
 Response body parameter should be greater than:
     [Documentation]    This keyword checks that the body parameter sent in ``{json_path}`` argument is greater than a specific integer value ``{expected_value}``.
@@ -841,7 +842,7 @@ Response body parameter should be greater than:
     ...
     ...    ``Response body parameter should be greater than:    data[0].attributes.dateSchedule[0].date    ${today}``
     [Arguments]    ${json_path}    ${expected_value}
-    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
@@ -860,7 +861,7 @@ Response body parameter should be less than:
     ...
     ...    ``Response body parameter should be less than:    data[0].attributes.dateSchedule[0].date    2019-01-01``
     [Arguments]    ${json_path}    ${expected_value}
-    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
@@ -871,14 +872,14 @@ Response body parameter should be less than:
 
 Response should contain the array of a certain size:
     [Documentation]    This keyword checks that the body array sent in ``{json_path}`` argument contains the specific number of items ``{expected_size}``. The expected size should be an integer value.
-    ...    It can be used to check how many products, adderesses, etc. were returned, if you know the exact number of emelents that should be returned.
+    ...    It can be used to check how many products, addresses, etc. were returned, if you know the exact number of elements that should be returned.
     ...
     ...    *Example:*
     ...
     ...    ``Response should contain the array of a certain size:    [data][0][relationships][abstract-product-image-sets][data]    1``
     [Arguments]    ${json_path}    ${expected_size}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     ${list_length}=    Convert To String    ${list_length}
     Should Be Equal    ${list_length}    ${expected_size}    actual size '${list_length}' doesn't equal expected '${expected_size}' in '${json_path}'.
 
@@ -886,8 +887,8 @@ Response should contain the array of size in:
     [Documentation]    This keyword verifies that the array at the given JSON path has a length equal to one of the expected sizes provided.
     ...              It accepts one or more expected sizes as optional arguments.
     [Arguments]    ${json_path}    @{expected_sizes}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${actual_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${actual_length}=    Get Length    ${data}
     ${actual_length}=    Convert To String    ${actual_length}
     Should Contain    ${expected_sizes}    ${actual_length}    msg=Actual size '${actual_length}' does not match any of the expected sizes '${expected_sizes}' in '${json_path}'.
 
@@ -895,14 +896,14 @@ Response should contain the array larger than a certain size:
     [Documentation]    This keyword checks that the body array sent in ``{json_path}`` argument contains the number of items that is more than ``{expected_size}``.
     ...    The expected size should be an integer value that is less than you expect elements. So if you expect an array to have at least 2 elements, the ``{expected_size}`` should be 1.
     ...
-    ...    It can be used to check how many elements were returned, if you know the exact number of emelents that should be returned, but know there should be at least 1 for example.
+    ...    It can be used to check how many elements were returned, if you know the exact number of elements that should be returned, but know there should be at least 1 for example.
     ...
     ...    *Example:*
     ...
     ...    `` Response should contain the array larger than a certain size:    [data][relationships][category-nodes][data]    1``
     [Arguments]    ${json_path}    ${expected_size}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     ${list_length}=    Convert To Integer    ${list_length}
     ${result}=    Evaluate   ${list_length} > ${expected_size}
     ${result}=    Convert To String    ${result}
@@ -917,15 +918,15 @@ Each array element of the array in response should contain a nested array larger
     ...
     ...    `` Each array element of the array in response should contain a nested array larger than a certain size:    [data]    [attributes][stores]    0``
     [Arguments]    ${json_path}    ${nested_array}    ${expected_size}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
-    ${list_length}=    Get From List    @{data}    ${index}
-    @{data}=    Get Value From Json    ${list_length}    ${nested_array}
-    ${nested_array_list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
+    ${list_length}=    Get From List    ${data}    ${index}
+    ${data}=    Get Json Value    ${list_length}    ${nested_array}
+    ${nested_array_list_length}=    Get Length    ${data}
     ${result}=    Evaluate   ${nested_array_list_length} > ${expected_size}
     ${result}=    Convert To String    ${result}
     Should Be Equal    ${result}    True    Actual nested array length is '${nested_array_list_length}' not greater than expected '${expected_size}'.
@@ -935,22 +936,22 @@ Response should contain the array smaller than a certain size:
     [Documentation]    This keyword checks that the body array sent in ``{json_path}`` argument contains the number of items that is fewer than ``{expected_size}``.
     ...    The expected size should be an integer value that is less than you expect elements. So if you expect an array to have 0 or 1 elements, the ``{expected_size}`` should be 2.
     ...
-    ...    It can be used to check how many elements were returned, if you know the exact number of emelents that should be returned, but know there should be fewer, than the default value for example.
+    ...    It can be used to check how many elements were returned, if you know the exact number of elements that should be returned, but know there should be fewer, than the default value for example.
     ...    It is useful when you check search and know how many values are there if there is no filtering, but you also know that with filtering, there should be fewer values than without it.
     ...
     ...    *Example:*
     ...
     ...    ``Response should contain the array smaller than a certain size:    [data][0][attributes][valueFacets][1]    5``
     [Arguments]    ${json_path}    ${expected_size}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     ${list_length}=    Convert To Integer    ${list_length}
     ${result}=    Evaluate   ${list_length} < ${expected_size}
     ${result}=    Convert To String    ${result}
     Should Be Equal    ${result}    True    Actual array length is '${list_length}' and it is not smaller than expected '${expected_size}' in '${json_path}'.
 
 Each array element of array in response should contain property:
-    [Documentation]    This keyword checks whether the array ``{json_path}`` that is present in the ``{response_body}`` test variable contsains a property with ``{expected_property}`` name in every of it's array elements.
+    [Documentation]    This keyword checks whether the array ``{json_path}`` that is present in the ``{response_body}`` test variable contains a property with ``{expected_property}`` name in every of it's array elements.
     ...
     ...    It does not take into account the property value, just checks it is there for every element. If some of the elements have this property and others do not, the keyword will fail.
     ...
@@ -958,18 +959,18 @@ Each array element of array in response should contain property:
     ...
     ...   ``Each array element of array in response should contain property:    [data][0][attributes][prices][0][volumePrices]    quantity``
     ...
-    ...    The example above checks if ALL prices returened in volumePrices array have quantity property, while quantity value can be any and even null.
+    ...    The example above checks if ALL prices returned in volumePrices array have quantity property, while quantity value can be any and even null.
     [Arguments]    ${json_path}    ${expected_property}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get From List    ${data}    ${index}
         List Should Contain Value    ${list_element}    ${expected_property}    msg=Array element '${list_element}' of array '${json_path}' does not contain property: '${expected_property}'.
     END
 
 Each array element of array in response should contain value:
-        [Documentation]    This keyword checks whether the array ``{json_path}`` that is present in the ``{response_body}`` test variable contsains a value ``{expected_value}`` in every of it's array elements.
+        [Documentation]    This keyword checks whether the array ``{json_path}`` that is present in the ``{response_body}`` test variable contains a value ``{expected_value}`` in every of it's array elements.
     ...
     ...    It does not take into account the property name, just checks if the value is there for every element. If some of the array elements have this value and others do not, the keyword will fail.
     ...
@@ -977,20 +978,20 @@ Each array element of array in response should contain value:
     ...
     ...   ``Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.eur.code}``
     ...
-    ...    The example above checks if ALL prices returened in volumePrices array have currency code, regardless of which property has this value.
+    ...    The example above checks if ALL prices returned in volumePrices array have currency code, regardless of which property has this value.
     [Arguments]    ${json_path}    ${expected_value}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get From List    ${data}    ${index}
         ${sub_list_element}=    Create List    ${list_element}
         ${sub_list_element}=    Convert To String    ${sub_list_element}
         Should Contain    : ${sub_list_element}    ${expected_value}    msg=Array element:'${sub_list_element}' of array:'${json_path}' does not contain:'${expected_value}'.
     END
 
 Each array element of array in response should contain a nested array of a certain size:
-        [Documentation]    This keyword checks whether the array ``{paret_array}`` that is present in the ``{response_body}`` test variable contsains an array ``{nested_array}`` in every of it's array elements and for every its occurrence that nested array has sixe ``{array_expected_size}``.
+        [Documentation]    This keyword checks whether the array ``{parent_array}`` that is present in the ``{response_body}`` test variable contains an array ``{nested_array}`` in every of it's array elements and for every its occurrence that nested array has sixe ``{array_expected_size}``.
     ...
     ...    If the nested arrays are of different sizes, this keyword will fail.
     ...
@@ -999,13 +1000,13 @@ Each array element of array in response should contain a nested array of a certa
     ...   ``Each array element of array in response should contain a nested array of a certain size:    [data]    [prices]    2``
 
     [Arguments]    ${parent_array}    ${nested_array}    ${array_expected_size}
-    @{data}=    Get Value From Json    ${response_body}    ${parent_array}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${parent_array}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
-        ${list_length2}=    Get Length    @{list_element2}
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${list_element2}=    Get Json Value    ${list_element}    ${nested_array}
+        ${list_length2}=    Get Length    ${list_element2}
         ${list_length2}=    Convert To String    ${list_length2}
         Should Be Equal    ${list_length2}    ${array_expected_size}    Actual nested array size:'${list_length2}' in '${nested_array}' does not match '${array_expected_size}'.
     END
@@ -1024,16 +1025,16 @@ Each array element of array in response should contain property with value:
     ...
     ...    ``Each array element of array in response should contain property with value:    [data][0][attributes][prices]    volumePrices    []``
     [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get From List    ${data}    ${index}
         Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}    msg='${json_path}' does not contain property: '${expected_property}' with value: '${expected_value}'.
     END
 
 Each array element of array in response should contain property with value in:
-    [Documentation]    This keyword checks that each array element contsains the speficied parameter ``{expected_property}`` with the value that matches one of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
+    [Documentation]    This keyword checks that each array element contains the specified parameter ``{expected_property}`` with the value that matches one of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
     ...
     ...    The minimal number of arguments are 2, maximum is 4
     ...
@@ -1042,12 +1043,12 @@ Each array element of array in response should contain property with value in:
     ...    ``Each array element of array in response should contain property with value in:    [data]    [attributes][allowInput]    True    False``
     [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${list_element}=    Get Json Value    ${list_element}    ${expected_property}
         ${list_element}=    Convert To String    ${list_element}
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
@@ -1069,21 +1070,21 @@ Each array in response should contain property with NOT EMPTY value:
     ...    ``Each array element in response should contain property with NOT EMPTY value:    [data]    [attributes][name]``
 
     [Arguments]    ${json_path}    ${expected_property}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${list_element}=    Get Json Value    ${list_element}    ${expected_property}
         ${list_element}=    Convert To String    ${list_element}
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
-    Should Not Be Empty     ${list_element}    '${expected_property}' property value in json path '${json_path}' is empty but shoud Not Be EMPTY
+    Should Not Be Empty     ${list_element}    '${expected_property}' property value in json path '${json_path}' is empty but should Not Be EMPTY
     END
 
 Each array in response should contain property with value NOT in:
-    [Documentation]    This keyword checks that each array element contsains the speficied parameter ``{expected_property}`` with the value that does not match any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
+    [Documentation]    This keyword checks that each array element contains the specified parameter ``{expected_property}`` with the value that does not match any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
     ...
     ...    The minimal number of arguments is 1, maximum is 4
     ...
@@ -1092,12 +1093,12 @@ Each array in response should contain property with value NOT in:
     ...    ``Each array element in response should contain property with value NOT in:    [data]    [attributes][isSuper]    None``
     [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${list_element}=    Get Json Value    ${list_element}    ${expected_property}
         ${list_element}=    Convert To String    ${list_element}
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
@@ -1110,7 +1111,7 @@ Each array in response should contain property with value NOT in:
     END
 
 Each array element of array in response should contain property with value NOT in:
-    [Documentation]    This keyword checks that each array element of array contsains the speficied parameter ``{expected_property}`` with the value that does not match any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
+    [Documentation]    This keyword checks that each array element of array contains the specified parameter ``{expected_property}`` with the value that does not match any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
     ...
     ...    The minimal number of arguments is 1, maximum is 4
     ...
@@ -1119,12 +1120,12 @@ Each array element of array in response should contain property with value NOT i
     ...    ``Each array element of array in response should contain property with value NOT in:    [data]    [attributes][isSuper]    None``
     [Arguments]    ${json_path}    ${expected_property}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${list_element}=    Get Json Value    ${list_element}    ${expected_property}
         ${list_element}=    Convert To String    ${list_element}
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
@@ -1137,19 +1138,19 @@ Each array element of array in response should contain property with value NOT i
     END
 
 Each array element of array in response should NOT be empty:
-    [Documentation]    This keyword checks that each array element of array contsains the speficied parameter ``{expected_property}`` with the value that does not empty.
+    [Documentation]    This keyword checks that each array element of array contains the specified parameter ``{expected_property}`` with the value that does not empty.
     ...
     ...    *Example:*
     ...
     ...    ``Each array element of array in response should NOT be empty:    [data]    id``
     [Arguments]    ${json_path}    ${expected_property}
 
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${list_element}=    Get Json Value    ${list_element}    ${expected_property}
         ${list_element}=    Convert To String    ${list_element}
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
@@ -1162,7 +1163,7 @@ Each array element of array in response should NOT be empty:
     END
 
 Each array element of nested array should contain property with value in:
-    [Documentation]    This keyword checks that each array element of ``{nested_array} that is inside the parent array ``{json_path}`` contains the speficied parameter ``{expected_property}`` with the value that matches any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
+    [Documentation]    This keyword checks that each array element of ``{nested_array} that is inside the parent array ``{json_path}`` contains the specified parameter ``{expected_property}`` with the value that matches any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
     ...
     ...    The minimal number of arguments is 1, maximum is 4
     ...
@@ -1171,16 +1172,16 @@ Each array element of nested array should contain property with value in:
     ...    ``Each array element of nested array should contain property with value in:    [data]    [attributes][localizedKeys]    translation    en_US    de_DE``
     [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}    ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length1}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length1}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index1}    IN RANGE    0    ${list_length1}
-        ${list_element}=    Get From List    @{data}    ${index1}
-        @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
-        ${list_length2}=    Get Length    @{list_element2}
+        ${list_element}=    Get From List    ${data}    ${index1}
+        ${list_element2}=    Get Json Value    ${list_element}    ${nested_array}
+        ${list_length2}=    Get Length    ${list_element2}
         FOR    ${index2}    IN RANGE    0    ${list_length2}
-            ${list_element}=    Get From List    @{list_element2}    ${index2}
-            ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+            ${list_element}=    Get From List    ${list_element2}    ${index2}
+            ${list_element}=    Get Json Value    ${list_element}    ${expected_property}
             ${list_element}=    Convert To String    ${list_element}
             ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
             ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
@@ -1194,7 +1195,7 @@ Each array element of nested array should contain property with value in:
     END
 
 Each array element of nested array should contain property with value NOT in:
-    [Documentation]    This keyword checks that each array element of ``{nested_array} that is inside the parent array ``{json_path}`` contsains the speficied parameter ``{expected_property}`` with the value that does not match any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
+    [Documentation]    This keyword checks that each array element of ``{nested_array} that is inside the parent array ``{json_path}`` contains the specified parameter ``{expected_property}`` with the value that does not match any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
     ...
     ...    The minimal number of arguments is 1, maximum is 4
     ...
@@ -1203,16 +1204,16 @@ Each array element of nested array should contain property with value NOT in:
     ...    ``Each array element of nested array should contain property with value NOT in:    [data]    [attributes][localizedKeys]    translation    None``
     [Arguments]    ${json_path}    ${nested_array}    ${expected_property}    ${expected_value1}    ${expected_value2}=robotframework-dummy-value   ${expected_value3}=robotframework-dummy-value    ${expected_value4}=robotframework-dummy-value
 
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length1}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length1}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index1}    IN RANGE    0    ${list_length1}
-        ${list_element}=    Get From List    @{data}    ${index1}
-        @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
-        ${list_length2}=    Get Length    @{list_element2}
+        ${list_element}=    Get From List    ${data}    ${index1}
+        ${list_element2}=    Get Json Value    ${list_element}    ${nested_array}
+        ${list_length2}=    Get Length    ${list_element2}
         FOR    ${index2}    IN RANGE    0    ${list_length2}
-            ${list_element}=    Get From List    @{list_element2}    ${index2}
-            ${list_element}=    Get Value From Json    ${list_element}    ${expected_property}
+            ${list_element}=    Get From List    ${list_element2}    ${index2}
+            ${list_element}=    Get Json Value    ${list_element}    ${expected_property}
             ${list_element}=    Convert To String    ${list_element}
             ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
             ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
@@ -1252,12 +1253,12 @@ Each array element of array in response should contain nested property with valu
     ...
     ...    ``Each array element of array in response should contain nested property with value:    [data]    [relationships][concrete-products][data][0][type]    concrete-products``
     [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_value}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        ${list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${list_element}=    Get Json Value    ${list_element}    ${expected_nested_property}
         ${list_element}=    Convert To String    ${list_element}
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
@@ -1292,12 +1293,12 @@ Each array element of array in response should contain nested property in range:
     [Arguments]    ${json_path}    ${expected_nested_property}    ${lower_value}    ${higher_value}
     IF    ${lower_value} == ${higher_value}    Fail    Your higher and lower values cannot be the same.
     IF    ${lower_value} > ${higher_value}    Fail    Your lower value cannot be greater than the lower value.
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        ${list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${list_element}=    Get Json Value    ${list_element}    ${expected_nested_property}
         ${list_element}=    Convert To String    ${list_element}
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
@@ -1332,12 +1333,12 @@ Each array element of array in response should be greater than:
     ...
     ...    ``Each array element of array in response should be greater than:    [data]    [relationships][concrete-products][data][0][price]     5000``
     [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_value}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        ${list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${list_element}=    Get Json Value    ${list_element}    ${expected_nested_property}
         ${list_element}=    Convert To String    ${list_element}
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
@@ -1373,12 +1374,12 @@ Each array element of array in response should be less than:
     ...
     ...    ``Each array element of array in response should be less than:    [data]    [relationships][concrete-products][data][0][price]     5000``
     [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_value}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        ${list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${list_element}=    Get Json Value    ${list_element}    ${expected_nested_property}
         ${list_element}=    Convert To String    ${list_element}
         ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
         ${list_element}=    Replace String    ${list_element}    '   ${EMPTY}
@@ -1413,13 +1414,13 @@ Each array element of array in response should contain nested property with data
     ...
     ...    ``Each array element of array in response should contain nested property with datatype:    [data]    attributes.price    int``
     [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_type}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        @{list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
-        ${actual_data_type}=    Evaluate datatype of a variable:    @{list_element}
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${list_element}=    Get Json Value    ${list_element}    ${expected_nested_property}
+        ${actual_data_type}=    Evaluate datatype of a variable:    ${list_element}
         Should Be Equal    ${actual_data_type}    ${expected_type}
     END
 
@@ -1446,13 +1447,13 @@ Each array element of array in response should contain nested property with data
     ...
     ...    ``Each array element of array in response should contain nested property with datatype in:    [data]    attributes.price    int    float``
     [Arguments]    ${json_path}    ${expected_nested_property}    ${expected_type1}    ${expected_type2}    ${expected_type3}=test    ${expected_type4}=test
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        @{list_element}=    Get Value From Json    ${list_element}    $.${expected_nested_property}
-        ${actual_data_type}=    Evaluate datatype of a variable:    @{list_element}
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${list_element}=    Get Json Value    ${list_element}    ${expected_nested_property}
+        ${actual_data_type}=    Evaluate datatype of a variable:    ${list_element}
         Should Contain Any    ${actual_data_type}    ${expected_type1}    ${expected_type2}    ${expected_type3}    ${expected_type4}
     END
 
@@ -1465,12 +1466,12 @@ Each array element of array in response should contain nested property:
     ...
     ...    The example above checks if inside [data] array there is property attributes and inside that there is sku property
     [Arguments]    ${json_path}    ${level1_property}    ${level2_property}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        ${list_element}=    Get Value From Json    ${list_element}    ${level1_property}
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${list_element}=    Get Json Value    ${list_element}    ${level1_property}
         ${list_element}=    Convert To String    ${list_element}
         Should Contain    ${list_element}    ${level2_property}
     END
@@ -1485,19 +1486,24 @@ Response should return error message:
     ...
     ...    ``Response should return error message:    Can`t find abstract product image sets.``
     [Arguments]    ${error_message}
+    ${error_message}=    Convert To String    ${error_message}
+    # Remove a leading " if present
+    ${error_message}=    Replace String Using Regexp    ${error_message}    ^"    ${EMPTY}
+    # Remove a trailing " if present
+    ${error_message}=    Replace String Using Regexp    ${error_message}    "$    ${EMPTY}
     FOR  ${tag}  IN  @{Test Tags}
         IF    '${tag}'=='bapi' or '${tag}'=='sapi'
-            ${data}=    Get Value From Json    ${response_body}    [errors][0][message]
+            ${data}=    Get Json Value    ${response_body}    [errors][0][message]
         END
         IF    '${tag}'=='glue'
-            ${data}=    Get Value From Json    ${response_body}    [errors][0][detail]
+            ${data}=    Get Json Value    ${response_body}    [errors][0][detail]
         END
     END
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
-    Should Be Equal    ${data}    ${error_message}    Actual '${data}' error reason doens't match expected '${error_message}'
+    Should Be Equal    ${data}    ${error_message}    Actual '${data}' error reason doesn't match expected '${error_message}'
 
 Response should return error code:
     [Documentation]    This keyword checks if the ``{response_body}`` test variable that contains the response of the previous request contains the specific  ``{error_code}``.
@@ -1509,7 +1515,7 @@ Response should return error code:
     ...    ``Response should return error code:    204``
     [Arguments]    ${error_code}
     ${error_code}=    Convert To String    ${error_code}
-    ${data}=    Get Value From Json    ${response_body}    [errors][0][code]
+    ${data}=    Get Json Value    ${response_body}    [errors][0][code]
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
@@ -1525,27 +1531,27 @@ Response should contain certain number of values:
     ...
     ...    ``Response should contain certain number of values:    [data][attributes][nodes]    cms_page    4``
     [Arguments]    ${json_path}    ${expected_value}    ${expected_count}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
     # ${log_list}=    Log List    @{data}
-    ${list_as_string}=    Convert To String    @{data}
+    ${list_as_string}=    Convert To String    ${data}
     ${count}=    Get Count    : ${list_as_string}    ${expected_value}
     ${count}=    Convert To String    ${count}
     Should Be Equal    ${count}    ${expected_count}    Actual count '${count}' of '${expected_value}' in '${json_path}' does not match '${expected_count}'
 
 Response include should contain certain entity type:
     [Documentation]    This keyword checks that a certain entity with type ``{expected_value}`` is included into the ``[included]`` section of the ``{response_body}`` test variable.
-    ...    It accepts the type of the included entity (usually can be found in [included][index][type]) and checks if such entity exists in the responce at least once.
+    ...    It accepts the type of the included entity (usually can be found in [included][index][type]) and checks if such entity exists in the response at least once.
     ...
     ...    *Example:*
     ...
     ...    ``Response include should contain certain entity type:    concrete-products``
     [Arguments]    ${expected_value}    #this should be the 'type' of the included item, e.g. abstract-product-prices
-    @{include}=    Get Value From Json    ${response_body}    [included]
-    ${list_length}=    Get Length    @{include}
+    ${include}=    Get Json Value    ${response_body}    [included]
+    ${list_length}=    Get Length    ${include}
     # ${log_list}=    Log List    @{include}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${include_element}=    Get From List    @{include}    ${index}
-        ${type}=    Get Value From Json    ${include_element}    [type]
+        ${include_element}=    Get From List    ${include}    ${index}
+        ${type}=    Get Json Value    ${include_element}    [type]
         ${type}=    Convert To String    ${type}
         ${type}=    Replace String    ${type}    '   ${EMPTY}
         ${type}=    Replace String    ${type}    [   ${EMPTY}
@@ -1564,41 +1570,63 @@ Response include element has self link:
     ...
     ...    ``Response include element has self link:   concrete-products``
     [Arguments]    ${expected_value}    #this should be the 'type' of the included item, e.g. abstract-product-prices
-    @{include}=    Get Value From Json    ${response_body}    [included]
-    ${list_length}=    Get Length    @{include}
-    # ${log_list}=    Log List    @{include}
-    FOR    ${index}    IN RANGE    0    ${list_length}
-        ${include_element}=    Get From List    @{include}    ${index}
-        ${type}=    Get Value From Json    ${include_element}    [type]
-        ${type}=    Convert To String    ${type}
-        ${type}=    Replace String    ${type}    '   ${EMPTY}
-        ${type}=    Replace String    ${type}    [   ${EMPTY}
-        ${type}=    Replace String    ${type}    ]   ${EMPTY}
-        ${result}=    Evaluate    '${type}' == '${expected_value}'
-        ${link_found}=    IF    ${result}    Get Value From Json    ${include_element}    [links][self]
-        IF    ${link_found}    Should Not Be Equal    ${link_found}    None    ${link_found} is  empty for ${expected_value} include section
-        IF    ${result}    Exit For Loop
+    # 1) Attempt to retrieve the entire [included] array. If missing, fail immediately.
+    ${status}    ${temp_included}=    Run Keyword And Ignore Error    Get Json Value    ${response_body}    [included]
+    IF    '${status}' == 'FAIL'
+        Fail    The response body did not even contain an [included] section.
     END
-    Should Be Equal As Strings    ${result}    True    Include section '${expected_value}' was not found
+    ${included_list}=    Set Variable    ${temp_included}
+
+    # 2) Loop over each element in [included], looking for type == ${expected_value}
+    ${list_length}=    Get Length    ${included_list}
+    ${found}=    Set Variable    False
+
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${elem}=           Get From List       ${included_list}    ${index}
+        ${elem_type}=      Get Json Value      ${elem}             [type]
+        ${elem_type}=      Convert To String   ${elem_type}
+
+        IF    '${elem_type}' == '${expected_value}'
+            ${found}=     Set Variable        True
+
+            # 3) Fetch its self‐link and assert it’s not empty
+            ${link}=      Get Json Value      ${elem}             [links][self]
+            ${link}=      Convert To String   ${link}
+            IF    '${link}' == ''
+                Fail    Self‐link is empty for included element of type '${expected_value}'.
+            END
+            Exit For Loop
+        END
+    END
+
+    # 4) If we never flipped ${found} to True, fail now
+    IF    not ${found}
+        Fail    “${expected_value}” was not present in the included section.
+    END
 
 Save value to a variable:
     [Documentation]    This keyword saves any value located in a response parameter ``{json_path}`` to a test variable called ``{name}``.
     ...
     ...    It can be used to save a value returned by any request into a custom test variable.
-    ...    This variable, once created, can be used during the cpecific test where this keyword is used and can be re-used by the keywords that follow this keyword in the test.
+    ...    This variable, once created, can be used during the specific test where this keyword is used and can be re-used by the keywords that follow this keyword in the test.
     ...    It will not be visible to other tests.
     ...
     ...    *Examples:*
     ...
     ...    ``Save value to a variable:    [data][id]    cart_uid``
     ...
-    ...    The example above should be called after POST request for cart creation. It gets cart ID from the ``{response_body}`` test vatialbe and saves it into ``{cart_uid}`` test variable whcih can then be used in other requests, e.g. in a checkout request.
+    ...    The example above should be called after POST request for cart creation. It gets cart ID from the ``{response_body}`` test variable and saves it into ``{cart_uid}`` test variable which can then be used in other requests, e.g. in a checkout request.
     [Arguments]    ${json_path}    ${name}
-    ${var_value}=    Get Value From Json    ${response_body}    ${json_path}
-    ${var_value}=    Convert To String    ${var_value}
-    ${var_value}=    Replace String    ${var_value}    '   ${EMPTY}
-    ${var_value}=    Replace String    ${var_value}    [   ${EMPTY}
-    ${var_value}=    Replace String    ${var_value}    ]   ${EMPTY}
+    ${status}    ${var_value}=    Run Keyword And Ignore Error    Get Json Value    ${response_body}    ${json_path}
+    IF    '${status}' == 'FAIL'
+        # If Get Json Value failed (KeyError, IndexError, etc.), default to empty string
+        ${var_value}=    Set Variable    ${EMPTY}
+    ELSE
+        # Otherwise, take whatever Get Json Value returned
+        ${var_value}=    Set Variable    ${var_value}
+    END
+    # Always convert to string (so numbers, booleans, etc. become a string)
+    ${var_value} =    Convert To String    ${var_value}
     Set Test Variable    ${${name}}    ${var_value}
     RETURN    ${name}
 
@@ -1606,22 +1634,22 @@ Save Header value to a variable:
     [Documentation]    This keyword saves any value located in a response Header parameter ``{header_parameter}`` to a test variable called ``{name}``.
     ...
     ...    It can be used to save a value returned by any request into a custom test variable.
-    ...    This variable, once created, can be used during the cpecific test where this keyword is used and can be re-used by the keywords that follow this keyword in the test.
+    ...    This variable, once created, can be used during the specific test where this keyword is used and can be re-used by the keywords that follow this keyword in the test.
     ...    It will not be visible to other tests.
     ...
     ...    *Examples:*
     ...
     ...    ``Save Header value to a variable:    ETag    header_tag``
     ...
-    ...    The example above should be called after POST request for cart creation. It gets ETag from the ``{response_headers}`` test vatialbe and saves it into ``{header_tag}`` test variable which can then be used in other requests, e.g. in a PATCH request.
+    ...    The example above should be called after POST request for cart creation. It gets ETag from the ``{response_headers}`` test variable and saves it into ``{header_tag}`` test variable which can then be used in other requests, e.g. in a PATCH request.
     [Arguments]    ${header_parameter}    ${name}
     ${actual_header_value}=    Get From Dictionary    ${response_headers}    ${header_parameter}
     Set Test Variable    ${${name}}    ${actual_header_value}
     RETURN    ${name}
 
 Response body parameter should contain:
-    [Documentation]    This keyword checks that response parameter with name ``{json_path}`` contains the specified substing ``{expected_value}``.
-    ...    It can check that a long value has the required substing without needing to know the whole value. It is a partial patch check.
+    [Documentation]    This keyword checks that response parameter with name ``{json_path}`` contains the specified substring ``{expected_value}``.
+    ...    It can check that a long value has the required substring without needing to know the whole value. It is a partial patch check.
     ...
     ...    *Example:*
     ...
@@ -1631,7 +1659,7 @@ Response body parameter should contain:
     ...    In fact this is abstract product request and this array returns the list of concrete products that are variants of this abstract.
     ...    Since in Spryker often concrete SKU includes abstract sku, this checks that the list contains abstract sku.
     [Arguments]    ${json_path}    ${expected_value}
-    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
@@ -1639,7 +1667,7 @@ Response body parameter should contain:
     Should Contain   ${data}    ${expected_value}    Body parameter:'${json_path}' does not contain '${expected_value}'
 
 Response body parameter should start with:
-    [Documentation]    This keyword checks that response parameter with name ``{json_path}`` starts with the specified substing ``{expected_value}``.
+    [Documentation]    This keyword checks that response parameter with name ``{json_path}`` starts with the specified substring ``{expected_value}``.
     ...
     ...    *Example:*
     ...
@@ -1647,7 +1675,7 @@ Response body parameter should start with:
     ...
     ...    The example above checks that ``name`` parameter starts with 'comp', e.g. as in Computer.
     [Arguments]    ${json_path}    ${expected_value}
-    ${data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
@@ -1663,12 +1691,12 @@ Array in response should contain property with value:
     ...
     ...    ``Array in response should contain property with value:    [errors]    detail    iso2Code => This field is missing.``
     [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        ${value}=    Get Value From Json    ${list_element}    ${expected_property}
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${value}=    Get Json Value    ${list_element}    ${expected_property}
         ${value}=    Convert To String    ${value}
         ${value}=    Replace String    ${value}    '   ${EMPTY}
         ${value}=    Replace String    ${value}    [   ${EMPTY}
@@ -1703,13 +1731,13 @@ Cleanup existing customer addresses:
     Set Variable    ${response_body}    ${response_body}
     Set Variable    ${response}    ${response}
     Should Be Equal As Strings    ${response.status_code}    200    Could not get customer addresses
-    @{data}=    Get Value From Json    ${response_body}    [data]
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    [data]
+    ${list_length}=    Get Length    ${data}
     ${list_length}=    Convert To Integer    ${list_length}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        ${address_uid}=    Get Value From Json    ${list_element}    [id]
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${address_uid}=    Get Json Value    ${list_element}    [id]
         ${address_uid}=    Convert To String    ${address_uid}
         ${address_uid}=    Replace String    ${address_uid}    '   ${EMPTY}
         ${address_uid}=    Replace String    ${address_uid}    [   ${EMPTY}
@@ -1750,24 +1778,24 @@ Find or create customer cart
         END
         ${response_headers}=    Set Variable    ${response.headers}
         Set Test Variable    ${response_headers}    ${response_headers}
-        @{data}=    Get Value From Json    ${response_body}    [data]
-        ${cart_id}=    Get Value From Json    ${response_body}    [data][0][id]
+        ${data}=    Get Json Value    ${response_body}    [data]
+        ${cart_id}=    Get Json Value    ${response_body}    [data][0][id]
         ${hasCart}    Run Keyword and return status     Should not be empty    ${cart_id}
         IF    ${hasCart}
-            ${carts_number}=    Get Length    @{data}
+            ${carts_number}=    Get Length    ${data}
             FOR    ${index}    IN RANGE    0    ${carts_number}
-                    ${cart}=    Get From List    @{data}    ${index}
-                    ${cart_id}=    Get Value From Json    ${cart}    [id]
+                    ${cart}=    Get From List    ${data}    ${index}
+                    ${cart_id}=    Get Json Value    ${cart}    [id]
                     ${cart_id}=    Convert To String    ${cart_id}
                     ${cart_id}=    Replace String    ${cart_id}    '   ${EMPTY}
                     ${cart_id}=    Replace String    ${cart_id}    [   ${EMPTY}
                     ${cart_id}=    Replace String    ${cart_id}    ]   ${EMPTY}
-                    ${cart_mode}=    Get Value From Json    ${cart}    [attributes][priceMode]
+                    ${cart_mode}=    Get Json Value    ${cart}    [attributes][priceMode]
                     ${cart_mode}=    Convert To String    ${cart_mode}
                     ${cart_mode}=    Replace String    ${cart_mode}    '   ${EMPTY}
                     ${cart_mode}=    Replace String    ${cart_mode}    [   ${EMPTY}
                     ${cart_mode}=    Replace String    ${cart_mode}    ]   ${EMPTY}
-                    ${cart_currency}=    Get Value From Json    ${cart}    [attributes][currency]
+                    ${cart_currency}=    Get Json Value    ${cart}    [attributes][currency]
                     ${cart_currency}=    Convert To String    ${cart_currency}
                     ${cart_currency}=    Replace String    ${cart_currency}    '   ${EMPTY}
                     ${cart_currency}=    Replace String    ${cart_currency}    [   ${EMPTY}
@@ -1814,14 +1842,23 @@ Get ETag header value from cart
         ...    and it can be re-used by the keywords that follow this keyword in the test
         ...    This keyword does not accept any arguments. This keyword is used for removing unused/unwanted (ex. W/"") characters from ETag header value.
         ${response}=    I send a GET request:    /carts
-        ${Etag}=    Get Value From Json   ${response_headers}    [ETag]
-        ${Etag}=    Convert To String    ${Etag}
-        ${Etag}=    Replace String    ${Etag}    '   ${EMPTY}
-        ${Etag}=    Replace String    ${Etag}    [   ${EMPTY}
-        ${Etag}=    Replace String    ${Etag}    ]   ${EMPTY}
-        ${Etag}=    Replace String    ${Etag}    W   ${EMPTY}
-        ${Etag}=    Replace String    ${Etag}    /   ${EMPTY}
-        ${Etag}=    Replace String    ${Etag}    "   ${EMPTY}
+        TRY
+            # response_headers is a Python dict-like object; prefer Get From Dictionary instead of Get Json Value here.
+            ${Etag_raw}=    Get From Dictionary    ${response_headers}    ETag
+        EXCEPT
+            # If “ETag” key is not present, set ${Etag_raw} to an empty string
+            ${Etag_raw}=    Set Variable    ${EMPTY}
+        END
+        ${Etag}=    Convert To String    ${Etag_raw}
+        IF    '${Etag}' != ''
+            ${Etag}=    Convert To String    ${Etag}
+            ${Etag}=    Replace String    ${Etag}    '   ${EMPTY}
+            ${Etag}=    Replace String    ${Etag}    [   ${EMPTY}
+            ${Etag}=    Replace String    ${Etag}    ]   ${EMPTY}
+            ${Etag}=    Replace String    ${Etag}    W   ${EMPTY}
+            ${Etag}=    Replace String    ${Etag}    /   ${EMPTY}
+            ${Etag}=    Replace String    ${Etag}    "   ${EMPTY}
+        END
         Set Test Variable    ${Etag}
         RETURN    ${Etag}
 
@@ -1864,14 +1901,19 @@ Cleanup all items in the cart:
         IF    ${response.status_code} == 204
             ${response_body}=    Set Variable    ${EMPTY}
         END
-        @{included}=    Get Value From Json    ${response_body}    [included]
+        TRY
+            ${included}=    Get Json Value    ${response_body}    [included]
+        EXCEPT
+            # KeyError or “path not found”: treat as “no items” → empty list
+            ${included}=    Create List
+        END
         ${list_not_empty}=    Get length    ${included}
         IF    ${list_not_empty} > 0
-            ${list_length}=    Get length    @{included}
+            ${list_length}=    Get length    ${included}
             FOR    ${index}    IN RANGE    0    ${list_length}
-                    ${list_element}=    Get From List    @{included}    ${index}
-                    ${cart_item_uid}=    Get Value From Json    ${list_element}    [attributes][groupKey]
-                    ${cart_item_sku}=    Get Value From Json    ${list_element}    [attributes][sku]
+                    ${list_element}=    Get From List    ${included}    ${index}
+                    ${cart_item_uid}=    Get Json Value    ${list_element}    [attributes][groupKey]
+                    ${cart_item_sku}=    Get Json Value    ${list_element}    [attributes][sku]
                     ${cart_item_uid}=    Convert To String    ${cart_item_uid}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
@@ -1915,13 +1957,13 @@ Cleanup all customer carts
         IF    ${response.status_code} == 204
             ${response_body}=    Set Variable    ${EMPTY}
         END
-        @{data}=    Get Value From Json    ${response_body}    [data]
+        ${data}=    Get Json Value    ${response_body}    [data]
         ${list_not_empty}=    Get length    ${data}
         IF    ${list_not_empty} > 0
-            ${list_length}=    Get Length    @{data}
+            ${list_length}=    Get Length    ${data}
             FOR    ${index}    IN RANGE    0    ${list_length}-1
-                    ${list_element}=    Get From List    @{data}    ${index}
-                    ${cart_uuid}=    Get Value From Json    ${list_element}    [id]
+                    ${list_element}=    Get From List    ${data}    ${index}
+                    ${cart_uuid}=    Get Json Value    ${list_element}    [id]
                     ${cart_uuid}=    Convert To String    ${cart_uuid}
                     ${cart_uuid}=    Replace String    ${cart_uuid}    '   ${EMPTY}
                     ${cart_uuid}=    Replace String    ${cart_uuid}    [   ${EMPTY}
@@ -1961,13 +2003,13 @@ Cleanup all items in the guest cart:
         IF    ${response.status_code} == 204
             ${response_body}=    Set Variable    ${EMPTY}
         END
-        @{included}=    Get Value From Json    ${response_body}    [included]
+        ${included}=    Get Json Value    ${response_body}    [included]
         ${list_not_empty}=    Get length    ${included}
         IF    ${list_not_empty} > 0
-            ${list_length}=    Get length    @{included}
+            ${list_length}=    Get length    ${included}
             FOR    ${index}    IN RANGE    0    ${list_length}
-                    ${list_element}=    Get From List    @{included}    ${index}
-                    ${cart_item_uid}=    Get Value From Json    ${list_element}    [id]
+                    ${list_element}=    Get From List    ${included}    ${index}
+                    ${cart_item_uid}=    Get Json Value    ${list_element}    [id]
                     ${cart_item_uid}=    Convert To String    ${cart_item_uid}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    '   ${EMPTY}
                     ${cart_item_uid}=    Replace String    ${cart_item_uid}    [   ${EMPTY}
@@ -1998,15 +2040,15 @@ Cleanup all availability notifications:
         IF    ${response.status_code} == 204
             ${response_body}=    Set Variable    ${EMPTY}
         END
-        @{data}=    Get Value From Json    ${response_body}    [data]
+        ${data}=    Get Json Value    ${response_body}    [data]
         ${list_not_empty}=    Get length    ${data}
         IF    ${list_not_empty} > 0
-            ${list_length}=    Get Length    @{data}
+            ${list_length}=    Get Length    ${data}
             ${list_length}=    Convert To Integer    ${list_length}
             # ${log_list}=    Log List    @{data}
             FOR    ${index}    IN RANGE    0    ${list_length}
-                    ${list_element}=    Get From List    @{data}    ${index}
-                    ${availability_notification_id}=    Get Value From Json    ${list_element}    [id]
+                    ${list_element}=    Get From List    ${data}    ${index}
+                    ${availability_notification_id}=    Get Json Value    ${list_element}    [id]
                     ${availability_notification_id}=    Convert To String    ${availability_notification_id}
                     ${availability_notification_id}=    Replace String    ${availability_notification_id}    '   ${EMPTY}
                     ${availability_notification_id}=    Replace String    ${availability_notification_id}    [   ${EMPTY}
@@ -2016,7 +2058,7 @@ Cleanup all availability notifications:
         END
 
 Get the first company user id and its' customer email
-    [Documentation]    This keyword sends the GET reguest to the ``/company-users?include=customers`` endpoint and returns first available company user id and its' customer email in
+    [Documentation]    This keyword sends the GET request to the ``/company-users?include=customers`` endpoint and returns first available company user id and its' customer email in
     ...    ``{companyUserId}``  and  ``{companyUserEmail}`` variables.
     ...    If the fist company user is anne.boleyn@spryker.com - the next one will be taken and Anna is a 'BoB' user
     ...
@@ -2029,26 +2071,26 @@ Get the first company user id and its' customer email
     END
 
 Array element should contain nested array at least once:
-    [Documentation]    This keyword checks whether the array ``{paret_array}`` that is present in the ``{response_body}`` test variable contsains an array ``{expected_nested_array}`` at least once.
+    [Documentation]    This keyword checks whether the array ``{parent_array}`` that is present in the ``{response_body}`` test variable contains an array ``{expected_nested_array}`` at least once.
     ...
     ...    *Example:*
     ...
     ...   ``Array element should contain nested array at least once:    [data]    [relationships]``
     ...
     [Arguments]    ${parent_array}    ${expected_nested_array}
-    @{data}=    Get Value From Json    ${response_body}    ${parent_array}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${parent_array}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    [   ${EMPTY}
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    ]   ${EMPTY}
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    '   ${EMPTY}
     ${expected_nested_array}=    Create List    ${expected_nested_array}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        @{list_element}=    Get From List    @{data}    ${index}
+        @{list_element}=    Get From List    ${data}    ${index}
         ${result}=    Run Keyword And Ignore Error    List Should Contain Sub List    ${list_element}    ${expected_nested_array}
         IF    'PASS' in ${result}    Exit For Loop
         IF    ${index} == ${list_length}-1
-            Fail    expected '${expected_nested_array}' array is not present in '@{data}'
+            Fail    expected '${expected_nested_array}' array is not present in '${data}'
         END
         IF    'FAIL' in ${result}    Continue For Loop
     END
@@ -2061,30 +2103,30 @@ Array element should contain property with value at least once:
     ...    ``And Array element should contain property with value at least once:    [data][0][attributes][categoryTreeFilter]    docCount    ${${category_lvl2.qty}}``
     ...
     [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
+        ${list_element}=    Get From List    ${data}    ${index}
         ${result}=    Run Keyword And Ignore Error    Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}
         IF    'PASS' in ${result}    Exit For Loop
         IF    ${index} == ${list_length}-1
-            Fail    expected '${expected_property}' with value '${expected_value}' is not present in '@{data}' but should
+            Fail    expected '${expected_property}' with value '${expected_value}' is not present in '${data}' but should
         END
         IF    'FAIL' in ${result}    Continue For Loop
     END
 
 Nested array element should contain sub-array at least once:
-    [Documentation]    This keyword checks that nested array ``{parrent_array}`` in the array specified as ``{json_path}`` contains the specified sub-array ``{expected_nested_array}`` at least once.
+    [Documentation]    This keyword checks that nested array ``{parent_array}`` in the array specified as ``{json_path}`` contains the specified sub-array ``{expected_nested_array}`` at least once.
     ...
     ...    *Example:*
     ...
     ...    ``And Nested array element should contain sub-array at least once:      [data]    [relationships]    company-role``
     ...
-    [Arguments]    ${json_path}     ${parrent_array}    ${expected_nested_array}
-    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    [Arguments]    ${json_path}     ${parent_array}    ${expected_nested_array}
+    ${data}=    Get Json Value    ${response_body}    ${json_path}
     ${result}=    Set Variable    'FALSE'
-    ${list_length}=    Get Length    @{data}
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    [   ${EMPTY}
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    ]   ${EMPTY}
@@ -2092,19 +2134,19 @@ Nested array element should contain sub-array at least once:
     ${expected_nested_array}=    Create List    ${expected_nested_array}
     FOR    ${index}    IN RANGE    0    ${list_length}
         IF    'PASS' in ${result}    BREAK
-        ${list_element}=    Get From List    @{data}    ${index}
-        @{list_element2}=    Get Value From Json    ${list_element}    ${parrent_array}
+        ${list_element}=    Get From List    ${data}    ${index}
+        @{list_element2}=    Get Json Value    ${list_element}    ${parent_array}
         @{list_element}=    Get From List    ${list_element2}    0
         ${result}=    Run Keyword And Ignore Error    List Should Contain Sub List   ${list_element}    ${expected_nested_array}    ignore_case=True
         IF    'PASS' in ${result}    Exit For Loop
         IF    ${index} == ${list_length}-1
-                Fail    expected '${expected_nested_array}' array is not present in '@{data}'
+                Fail    expected '${expected_nested_array}' array is not present in '${data}'
         END
         IF    'FAIL' in ${result}    Continue For Loop
     END
 
 Nested array element should contain sub-array with property and value at least once:
-    [Documentation]    This keyword checks whether the nested array ``{expected_nested_array}`` that is present in the parrent array ``{parrent_array}`` under the json path ``{json_path}``  contsains propery ``{expected_property}`` with value ``{expected_value}`` at least once.
+    [Documentation]    This keyword checks whether the nested array ``{expected_nested_array}`` that is present in the parent array ``{parent_array}`` under the json path ``{json_path}``  contains property ``{expected_property}`` with value ``{expected_value}`` at least once.
     ...
     ...    *Example:*
     ...
@@ -2174,33 +2216,33 @@ Array element should contain nested array with property and value at least once:
     END
 
 Get company user id by customer reference:
-    [Documentation]    This keyword sends the GET reguest to the ``/company-users?include=customers`` endpoint and returns company user id by customer reference. Sets variable : ``{companyUserId}``
+    [Documentation]    This keyword sends the GET request to the ``/company-users?include=customers`` endpoint and returns company user id by customer reference. Sets variable : ``{companyUserId}``
     ...
     ...    *Example:*
     ...    ``Get company user id by customer reference:    ${yves_fifth_user.reference}``
     ...
     [Arguments]    ${customer_reference}
     I send a GET request:    /company-users?include=customers
-    @{data}=    Get Value From Json    ${response_body}    [data]
-    ${list_length}=    Get Length    @{data}
+    ${data}=    Get Json Value    ${response_body}    [data]
+    ${list_length}=    Get Length    ${data}
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        ${list_element}=    Get From List    @{data}    ${index}
-        ${company_user_id}=    Get Value From Json    ${list_element}    id
+        ${list_element}=    Get From List    ${data}    ${index}
+        ${company_user_id}=    Get Json Value    ${list_element}    id
         ${company_user_id}=    Convert To String    ${company_user_id}
         ${company_user_id}=    Replace String    ${company_user_id}    '   ${EMPTY}
         ${company_user_id}=    Replace String    ${company_user_id}    [   ${EMPTY}
         ${company_user_id}=    Replace String    ${company_user_id}    ]   ${EMPTY}
         Set Test Variable    ${companyUserId}    ${company_user_id}
-        @{list_element2}=    Get Value From Json    ${list_element}    relationships
-        ${company_user_customer_id}=    Get Value From Json    @{list_element2}    customers.data[0].id
+        ${list_element2}=    Get Json Value    ${list_element}    relationships
+        ${company_user_customer_id}=    Get Json Value    ${list_element2}    [customers][data][0][id]
         ${company_user_customer_id}=    Convert To String    ${company_user_customer_id}
         ${company_user_customer_id}=    Replace String    ${company_user_customer_id}    '   ${EMPTY}
         ${company_user_customer_id}=    Replace String    ${company_user_customer_id}    [   ${EMPTY}
         ${company_user_customer_id}=    Replace String    ${company_user_customer_id}    ]   ${EMPTY}
         IF    '${company_user_customer_id}' == '${customer_reference}'    BREAK
         IF    ${index} == ${list_length}-1
-            Fail    expected customer reference '${customer_reference}' is not present in '@{data}' but should
+            Fail    expected customer reference '${customer_reference}' is not present in '${data}' but should
         END
     END
 
@@ -2227,13 +2269,13 @@ Cleanup all existing shopping lists
         IF    ${response.status_code} == 204
             ${response_body}=    Set Variable    ${EMPTY}
         END
-        @{data}=    Get Value From Json    ${response_body}    [data]
+        ${data}=    Get Json Value    ${response_body}    [data]
         ${list_not_empty}=    Get length    ${data}
         IF    ${list_not_empty} > 0
-            ${list_length}=    Get Length    @{data}
+            ${list_length}=    Get Length    ${data}
             FOR    ${index}    IN RANGE    0    ${list_length}
-                    ${list_element}=    Get From List    @{data}    ${index}
-                    ${shopping_list_uuid}=    Get Value From Json    ${list_element}    [id]
+                    ${list_element}=    Get From List    ${data}    ${index}
+                    ${shopping_list_uuid}=    Get Json Value    ${list_element}    [id]
                     ${shopping_list_uuid}=    Convert To String    ${shopping_list_uuid}
                     ${shopping_list_uuid}=    Replace String    ${shopping_list_uuid}    '   ${EMPTY}
                     ${shopping_list_uuid}=    Replace String    ${shopping_list_uuid}    [   ${EMPTY}
@@ -2274,7 +2316,7 @@ Switch to BAPI
 *** Keywords ***
 Array Element Should Contain Nested Property With Value At Least Once
     [Arguments]    ${json_path}    ${nested_path}    ${property}    ${expected_value}
-    ${matches}=    Get Value From Json     ${response_body}    ${json_path}
+    ${matches}=    Get Json Value     ${response_body}    ${json_path}
     ${exists}=    Evaluate
     ...    any(item.get('${nested_path}', {}).get('${property}', None) == ${expected_value} for item in ${matches})
     Should Be True    ${exists}    Expected property '${property}' with value '${expected_value}' not found in any array element.
@@ -2288,7 +2330,80 @@ To JSON Boolean
         RETURN    false
     END
 
+# Get Json Value
+#     [Arguments]    ${body}    ${path}
+#     IF    '${path}' == '' or '${path}' == '$'    RETURN    ${body}
+#     ${value}=    Get Value    ${body}    ${path}
+#     RETURN    ${value}
+
 Get Json Value
+    [Documentation]
+    ...    Extracts a value from a Python dict `${body}` using either:
+    ...      - Robot‐style bracket notation (e.g. `[data][0][attributes][name]`), OR
+    ...      - Dot notation (e.g. `data.0.attributes.name`).
+    ...    If you pass a path surrounded by single or double quotes, those are stripped off first.
+    ...    If `${path}` is empty or exactly `$`, returns `${body}` unchanged.
+    ...    If any intermediate key or index is missing (or path is malformed), returns `${NONE}` instead of failing.
     [Arguments]    ${body}    ${path}
-    ${value}=    Get Value    ${body}    ${path}
+
+    # 1) Strip any whitespace from the ends
+    ${path}=    Strip String    ${path}
+
+    # 2) If path is surround­ed by matching quotes, remove them.
+    IF    '${path}'.startswith("'") and '${path}'.endswith("'")
+        ${path}=    Evaluate    ${path}[1:-1]
+    ELSE IF    '${path}'.startswith('"') and '${path}'.endswith('"')
+        ${path}=    Evaluate    ${path}[1:-1]
+    END
+
+    # 3) If path is now empty or exactly '$', just return the entire body
+    IF    '${path}' == '' or '${path}' == '$'
+        RETURN    ${body}
+    END
+
+    # 4) Build a bracket‐style path token by token.  (Split on dot, strip each token, remove any stray quotes.)
+    ${first_char}=    Set Variable    ${path}[0]
+    IF    '${first_char}' != '['
+        # Dot notation case: split on '.', clean each token, then wrap in [..]
+        @{TOKENS}=    Split String    ${path}    .
+        ${transformed_path}=    Set Variable    ${EMPTY}
+        FOR    ${token}    IN    @{TOKENS}
+            ${clean}=    Strip String    ${token}
+            # Remove any stray quotes inside this token
+            ${clean}=    Replace String    ${clean}    "'"    ${EMPTY}
+            ${clean}=    Replace String    ${clean}    '"'    ${EMPTY}
+            ${transformed_path}=    Catenate    SEPARATOR=    ${transformed_path}    [${clean}]
+        END
+    ELSE
+        # Already bracket‐style, use as‐is (but strip any whitespace inside)
+        ${transformed_path}=    Strip String    ${path}
+    END
+
+    # 5) Finally, try to extract using fastjson.Get Value.  If anything goes wrong, return ${NONE}.
+    TRY
+        ${value}=    fastjson.Get Value    ${body}    ${transformed_path}
+    EXCEPT    KeyError    IndexError    ValueError    TypeError
+        ${value}=    Set Variable    ${NONE}
+    END
     RETURN    ${value}
+
+Convert To Bracket Path
+    [Documentation]
+    ...    Converts “dot-notation” (e.g. `data.0.attributes.name`)
+    ...    into Robot-bracket notation (e.g. `[data][0][attributes][name]`).
+    [Arguments]    ${dot_path}
+    # 1) Split on literal '.' into segments
+    ${segments}=    Split String    ${dot_path}    .
+    # 2) Wrap each segment in [ ] (unless it already starts with '[')
+    @{wrapped}=    Create List
+    FOR    ${seg}    IN    @{segments}
+        IF    '${seg}'.startswith('[')
+            Append To List    ${wrapped}    ${seg}
+        ELSE
+            Append To List    ${wrapped}    [${seg}]
+        END
+    END
+    # 3) If the very first segment did not itself begin with '[',
+    #    it’s safe—our loop has already done “[segment]”. We just join all pieces.
+    ${joined}=    Catenate    SEPARATOR=    @{wrapped}
+    RETURN    ${joined}
