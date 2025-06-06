@@ -284,7 +284,6 @@ Add_Configurable_products_without_configurations_and_set_configuration
     ...    AND    Response reason should be:    No Content
 
 Add_Configurable_products_and_regular_product
-    [Tags]    debug
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /wishlists    {"data": { "type": "wishlists","attributes": { "name": "product-mix-${random}" } }}
