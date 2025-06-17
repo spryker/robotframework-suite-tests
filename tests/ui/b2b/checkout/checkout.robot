@@ -221,7 +221,7 @@ Request_for_Quote
     ...    AND    Zed: delete Zed user with the following email:    agent_quote+${random}@spryker.com
 
 Unique_URL
-    [Tags]    skip-due-to-issue
+    [Tags]    dms-on
     [Documentation]    Fails due to Bug:CC-12380
     Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
@@ -235,7 +235,8 @@ Unique_URL
     Yves: 'Shopping Cart' page is displayed
     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
     Yves: shopping cart contains the following products:    108302
-    [Teardown]    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
+    ...    AND    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
 Split_Delivery
     [Documentation]    Checks split delivery in checkout with new addresses
