@@ -207,10 +207,8 @@ Product_Bundles
 Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
     Zed: change product stock:    ${stock_product_abstract_sku}    ${stock_product_concrete_sku}    false    0
-    Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    false
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
@@ -219,9 +217,7 @@ Back_in_Stock_Notification
     Yves: submit back in stock notification request for email:    ${yves_second_user_email}
     Yves: unsubscribe from availability notifications
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Catalog    Availability
     Zed: change product stock:    ${stock_product_abstract_sku}    ${stock_product_concrete_sku}    true    0
-    Zed: go to second navigation item level:    Catalog    Availability
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}

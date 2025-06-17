@@ -9,6 +9,7 @@ Zed: create a discount and activate it:
     [Arguments]    ${discountType}    ${valueType}    ${discountValue}    ${applyToQuery}=    ${voucherCode}=    ${promotionalProductDiscount}=False    ${promotionalProductAbstractSku}=    ${promotionalProductQuantity}=    ${applyWhenQuery}=    ${discountName}=Test Discount    ${discountDescription}='Test Description'
     ${currentURL}=    Get Location
     ### General information
+    Zed: go to URL:    /discount/index/list
     Click    ${zed_discount_add_new_discount_button}
     Wait Until Element Is Visible    ${zed_discount_create_discount_page}
     IF    '${discountType}'=='voucher'

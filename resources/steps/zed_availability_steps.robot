@@ -7,6 +7,9 @@ Resource    ../common/common.robot
 Zed: check if product is/not in stock:
     [Arguments]    ${sku}    ${isInStock}
     ${isInStock}=    Convert To Lower Case    ${isInStock}
+    ${currentURL}=    Get Location
+    IF    '/availability-gui' not in '${currentURL}'    Zed: go to URL:    /availability-gui
+    IF    '/availability-gui/index' in '${currentURL}'    Zed: go to URL:    /availability-gui
     Zed: perform search by:    ${sku}
     IF    '${isInStock}'=='true'
         Element Text Should Be    ${zed_availability_product_availability_label}     Available    Message='Expected product availability is not found'
@@ -19,7 +22,7 @@ Zed: change product stock:
     ${isNeverOutOfStock}=    Convert To Lower Case    ${isNeverOutOfStock}
     ${currentURL}=    Get Location
     IF    '/availability-gui' not in '${currentURL}'    Zed: go to URL:    /availability-gui
-    IF    '/availability-gui/index/edit' in '${currentURL}'    Zed: go to URL:    /availability-gui
+    IF    '/availability-gui/index' in '${currentURL}'    Zed: go to URL:    /availability-gui
     Zed: perform search by:    ${skuORnameAbstract}
     TRY
         Set Browser Timeout    5s
