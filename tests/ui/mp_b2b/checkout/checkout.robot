@@ -235,7 +235,8 @@ Unique_URL
     Yves: 'Shopping Cart' page is displayed
     Yves: Shopping Cart title should be equal:    Preview: externalCart+${random}
     Yves: shopping cart contains the following products:    108302
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
+    [Teardown]    Run Keywords    Should Test Run
+    ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_manager_and_buyer_email}
     ...    AND    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
 Split_Delivery
