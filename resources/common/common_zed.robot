@@ -16,6 +16,7 @@ ${zed_variant_search_field_locator}     xpath=//*[@id='product-variant-table_fil
 ${zed_processing_block_locator}     xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')]
 ${zed_merchants_dropdown_locator}    xpath=//select[@name='id-merchant']
 ${zed_attribute_access_denied_header}    xpath=//div[@class='wrapper wrapper-content']//div[@class='flash-messages']//following-sibling::h1
+${zed_sweet_alert_js_error_popup}    xpath=//*[contains(@class,'sweet-alert')]
 
 
 *** Keywords ***
@@ -242,6 +243,9 @@ Zed: go to URL:
         ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
         IF    ${is_5xx}    Fail    '${response_code}' error occurred on go to '${zed_url}${url}'
         ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
-        IF    not ${no_js_error}    Fail    ''sweet-alert' js error popup on the page '${zed_url}${url}'
+        IF    not ${no_js_error}    
+            Take Screenshot    EMBED    fullPage=True
+            Fail    ''sweet-alert' js error popup on the page '${zed_url}${url}'
+        END
     END
     RETURN    ${response_code}
