@@ -211,7 +211,37 @@ Zed: filter by merchant:
     Select From List By Label    ${zed_merchants_dropdown_locator}    ${merchant}
 
 Zed: go to URL:
-    [Arguments]    ${url}
+    [Arguments]    ${url}    ${expected_response_code}=${EMPTY}
     ${url}=    Get URL Without Starting Slash    ${url}
     Set Browser Timeout    ${browser_timeout}
-    Go To    ${zed_url}${url}
+    ${response_code}=    Go To    ${zed_url}${url}
+    ${response_code}=    Convert To Integer    ${response_code}
+    ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+    ${page_title}=    Get Title
+    ${page_title}=    Convert To Lower Case    ${page_title}
+    ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
+    IF    ${is_5xx} or not ${no_exception}
+        LocalStorage Clear
+        ${response_code}=    Go To    ${zed_url}${url}
+        ${response_code}=    Convert To Integer    ${response_code}
+        ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+        IF    ${is_5xx}    Fail    '${response_code}' error occurred on go to '${zed_url}${url}'
+        ${page_title}=    Get Title
+        ${page_title}=    Convert To Lower Case    ${page_title}
+        Should Not Contain    ${page_title}    error    msg='${response_code}' error occurred on go to '${zed_url}${url}'
+    END
+    IF    '${expected_response_code}' != '${EMPTY}'
+        ${expected_response_code}=    Convert To Integer    ${expected_response_code}
+        Should Be Equal    ${response_code}    ${expected_response_code}    msg=Expected response code (${expected_response_code}) is not equal to the actual response code (${response_code}) on Go to: ${zed_url}${url}
+    END
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
+    IF    not ${no_js_error}
+        LocalStorage Clear
+        ${response_code}=    Go To    ${zed_url}${url}
+        ${response_code}=    Convert To Integer    ${response_code}
+        ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+        IF    ${is_5xx}    Fail    '${response_code}' error occurred on go to '${zed_url}${url}'
+        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
+        IF    not ${no_js_error}    Fail    ''sweet-alert' js error popup on the page '${zed_url}${url}'
+    END
+    RETURN    ${response_code}
