@@ -7,7 +7,6 @@ Test Tags    glue
 
 *** Test Cases ***
 Search_with_empty_search_criteria_all_default_values_check
-    [Tags]    debug
     When I send a GET request:    /catalog-search?q=
     Then Response status code should be:    200
     And Response reason should be:    OK

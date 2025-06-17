@@ -327,7 +327,7 @@ Trigger multistore p&s
     Trigger p&s    ${timeout}    AT
 
 Trigger oms
-    [Arguments]    ${timeout}=5s
+    [Arguments]    ${timeout}=1s
     Run console command    console order:invoice:send    DE
     Run console command    console order:invoice:send    AT
     Run console command    console oms:check-timeout    DE
@@ -342,7 +342,7 @@ Trigger publish trigger-events
         ...
         ...    ``Trigger publish trigger-events    resource=service_point    storeName=DE    timeout=5s``
         ...
-    [Arguments]    ${resource}    ${storeName}=DE    ${timeout}=5s
+    [Arguments]    ${resource}    ${storeName}=DE    ${timeout}=1s
     Run console command    console publish:trigger-events -r ${resource}    ${storeName}
     Trigger p&s    ${timeout}    ${storeName}
 

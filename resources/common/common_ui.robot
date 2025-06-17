@@ -350,9 +350,9 @@ Try reloading page until element is/not appear:
     FOR    ${index}    IN RANGE    0    ${tries}
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
         IF    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'
-            Run Keywords    Sleep    ${timeout}    AND    Reload
+            Run Keywords    Sleep    ${timeout}    AND    Reload    AND    Wait For Load State
         ELSE IF     '${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True'
-            Run Keywords    Sleep    ${timeout}    AND    Reload
+            Run Keywords    Sleep    ${timeout}    AND    Reload    AND    Wait For Load State
         ELSE
             Exit For Loop
         END

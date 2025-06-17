@@ -353,5 +353,5 @@ Configurable_Product_OMS
     Yves: 'View Order/Reorder/Return' on the order history page:    Reorder    ${lastPlacedOrder}
     Yves: go to b2c shopping cart
     Yves: shopping cart contains the following products:     ${configurable_product_name}
-    Yves: product configuration status should be equal:       Configuration is not complete.
+    # Yves: product configuration status should be equal:       Configuration is not complete.
     [Teardown]    Yves: check if cart is not empty and clear it

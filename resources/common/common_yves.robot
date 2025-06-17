@@ -67,7 +67,7 @@ Yves: login on Yves with provided credentials:
     IF    'agent' in '${email}'    
         Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     ELSE    
-        Page Should Contain Element    locator=${user_header_logout_button}     message=Yves: Login Failed!    timeout=1s
+        Page Should Contain Element    locator=${user_header_logout_button}     message=Yves: Login Failed!
     END
     Yves: remove flash messages
 
