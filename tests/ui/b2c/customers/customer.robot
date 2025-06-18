@@ -46,8 +46,8 @@ Resource    ../../../../resources/steps/customer_registration_steps.robot
 New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
-    ...    || salutation | first name | last name | e-mail                      | password                                        ||
-    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com | Gx${random_str_password}!2${random_id_password} ||
+    ...    || salutation | first name | last name | e-mail                      | password                   ||
+    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Zed: delete customer:
     ...    || email                       ||
@@ -204,10 +204,10 @@ Update_Customer_Data
 Email_Confirmation
     [Documentation]    Check that a new user cannot login if the email is not verified
     Register a new customer with data:
-    ...    || salutation | first name | last name | e-mail                             | password                                        ||
-    ...    || Mr.        | New        | User      | sonia+fails+${random}@spryker.com  | Ps${random_str_password}!5${random_id_password} ||
+    ...    || salutation | first name | last name | e-mail                             | password                   ||
+    ...    || Mr.        | New        | User      | sonia+fails+${random}@spryker.com  | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
-    Yves: login on Yves with provided credentials and expect error:     sonia+fails+${random}@spryker.com     Ps${random_str_password}!5${random_id_password}
+    Yves: login on Yves with provided credentials and expect error:     sonia+fails+${random}@spryker.com     ${default_secure_password}
     [Teardown]    Zed: delete customer:
     ...    || email                             ||
     ...    || sonia+fails+${random}@spryker.com ||

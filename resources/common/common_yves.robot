@@ -125,6 +125,9 @@ Yves: go to PDP of the product with sku:
                 Take Screenshot    EMBED    fullPage=True
                 Fail    Product '${sku}' is not displayed in the search results
             END
+            IF    ${index} == 5 or ${index} == 10  
+                Trigger multistore p&s
+            END
             IF    'FAIL' in ${result}   
                 Sleep    ${delay}
                 Yves: go to URL:    /search?q=${sku}

@@ -227,8 +227,8 @@ Dynamic_multistore
     ## register new customer in the new store on YVES
     Yves: go to AT store 'Home' page if other store not specified:    ${random_str_store}_${random_str_store}
     Register a new customer with data:
-    ...    || salutation | first name | last name | e-mail                       | password                      ||
-    ...    || Mr.        | New        | User      | sonia+dms${random}@spryker.com  | P${random_str_password}s#!#${random_id_password} ||
+    ...    || salutation | first name | last name | e-mail                          | password                   ||
+    ...    || Mr.        | New        | User      | sonia+dms${random}@spryker.com  | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     [Teardown]    Run Keywords    Should Test Run
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
