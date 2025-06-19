@@ -453,7 +453,6 @@ Product_Original_Price
     Yves: product original price on the PDP should be:    €50.00
 
 Product_Availability_Calculation
-    [Tags]    debug
     [Documentation]    Check product availability + multistore
     Repeat Keyword    3    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
