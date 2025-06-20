@@ -15,10 +15,24 @@ Zed: go to order page:
 
 Zed: go to my order page:
     [Documentation]    Marketplace specific method, to see this page you should be logged in as zed_spryker_merchant_admin_email
-    [Arguments]    ${orderID}
+    [Arguments]    ${orderID}    ${delay}=10s    ${iterations}=15
     Zed: go to URL:    /merchant-sales-order-merchant-user-gui
     Zed: perform search by:    ${orderID}
-    Try reloading page until element is/not appear:    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${orderID}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]    true    15    10s
+    FOR    ${index}    IN RANGE    1    ${iterations}
+        ${merchant_order_is_created}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${orderID}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]    timeout=1s
+        IF    '${merchant_order_is_created}'=='False'
+            Run Keywords    Sleep    ${delay}    AND    Reload
+        ELSE
+            Exit For Loop
+        END
+        IF    ${index} == 2 or ${index} == 5
+            Trigger oms
+        END
+        IF    ${index} == ${iterations}-1
+            Take Screenshot    EMBED    fullPage=True
+            Fail    Expected merchant order with reference '${orderID}' is not available/was not created'. Check if OMS is functional
+        END
+    END
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
 
 Zed: trigger all matching states inside xxx order:
@@ -37,6 +51,9 @@ Zed: trigger all matching states inside this order:
         ELSE
             Exit For Loop
         END
+        IF    ${index} == 3 or ${index} == 6
+            Trigger oms
+        END
         IF    ${index} == ${iterations}-1
             Scroll Element Into View    xpath=(//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'])[1]
             Take Screenshot    EMBED    fullPage=True
@@ -51,20 +68,6 @@ Zed: trigger all matching states inside this order:
         END
     END
     Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
-    Trigger oms
-    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
-            Reload
-            Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
-            Trigger oms
-    END
-    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
-            ${order_state}=    Get Text    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
-            Scroll Element Into View    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
-            Take Screenshot    EMBED    fullPage=True
-            Fail    Order stuck in '${order_state}' state. Check if OMS is functional
-    END
 
 Zed: trigger matching state of xxx merchant's shipment:
     [Documentation]    Marketplace specific method, suitable for My Orders of merchant. Triggers action for whole shipment
@@ -81,22 +84,22 @@ Zed: trigger matching state of xxx merchant's shipment:
     END
     Set Browser Timeout    ${browser_timeout}
     ${shipment_available_transitions}=    Convert To String    ${shipment_available_transitions}
-    Try reloading page until element is/not appear:    ${elementSelector}    true    ${iterations}    ${delay}    message=Expected shipment state transition '${event}' for shipment# '${shipment_number}' is not available. Only '${shipment_available_transitions}' is/are available. Check if OMS is functional
-    Click    ${elementSelector}
-    Trigger oms
-    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
-            Reload
-            Click    ${elementSelector}
+    FOR    ${index}    IN RANGE    1    ${iterations}
+        ${expected_oms_transition_is_available}=    Run Keyword And Return Status    Page Should Contain Element    ${elementSelector}    timeout=1s
+        IF    '${expected_oms_transition_is_available}'=='False'
+            Run Keywords    Sleep    ${delay}    AND    Reload
+        ELSE
+            Exit For Loop
+        END
+        IF    ${index} == 3 or ${index} == 6
             Trigger oms
-    END
-    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
-            ${order_state}=    Get Text    ${elementSelector}
-            Scroll Element Into View    ${elementSelector}
+        END
+        IF    ${index} == ${iterations}-1
             Take Screenshot    EMBED    fullPage=True
-            Fail    Order stuck in '${order_state}' state. Check if OMS is functional
+            Fail    Expected shipment state transition '${event}' for shipment# '${shipment_number}' is not available. Only '${shipment_available_transitions}' is/are available. Check if OMS is functional
+        END
     END
+    Click    ${elementSelector}
 
 Zed: trigger matching state of order item inside xxx shipment:
     [Arguments]    ${sku}    ${event}    ${shipment}=1    ${delay}=10s    ${iterations}=20
@@ -126,22 +129,22 @@ Zed: trigger matching state of order item inside xxx shipment:
     END
     Set Browser Timeout    ${browser_timeout}
     ${item_available_transition}=    Convert To String    ${item_available_transition}
-    Try reloading page until element is/not appear:    ${elementSelector}    true    ${iterations}    ${delay}    message=Expected item state transition '${event}' for item '${sku}' is not available. Only '${item_available_transitions}' is/are available. Check if OMS is functional
-    Click    ${elementSelector}
-    Trigger oms
-    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
-            Reload
-            Click    ${elementSelector}
+    FOR    ${index}    IN RANGE    1    ${iterations}
+        ${expected_oms_transition_is_available}=    Run Keyword And Return Status    Page Should Contain Element    ${elementSelector}    timeout=1s
+        IF    '${expected_oms_transition_is_available}'=='False'
+            Run Keywords    Sleep    ${delay}    AND    Reload
+        ELSE
+            Exit For Loop
+        END
+        IF    ${index} == 3 or ${index} == 6
             Trigger oms
+        END
+        IF    ${index} == ${iterations}-1
+            Take Screenshot    EMBED    fullPage=True
+            Fail    Expected item state transition '${event}' for item '${sku}' is not available. Only '${item_available_transitions}' is/are available. Check if OMS is functional
+        END
     END
-    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
-            ${order_item_state}=    Get Text    ${elementSelector}
-            Scroll Element Into View    ${elementSelector}
-            Take Screenshot    EMBED    fullPage=True 
-            Fail    Order item stuck in '${order_item_state}' state. Check if OMS is functional
-    END
+    Click    ${elementSelector}
 
 Zed: trigger matching state of xxx order item inside xxx shipment:
     [Arguments]    ${event}    ${item_number}=1    ${shipment}=1    ${delay}=10s    ${iterations}=20
@@ -157,27 +160,41 @@ Zed: trigger matching state of xxx order item inside xxx shipment:
     END
     Set Browser Timeout    ${browser_timeout}
     ${item_available_transitions}=    Convert To String    ${item_available_transitions}
-    Try reloading page until element is/not appear:    ${elementSelector}    true    ${iterations}    ${delay}    message=Expected item state transition '${event}' for item number '${item_number}' is not available in shipment# '${shipment}'. Only '${item_available_transitions}' is/are available. Check if OMS is functional
-    Click    ${elementSelector}
-    Trigger oms
-    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
-            Reload
-            Click    ${elementSelector}
+    FOR    ${index}    IN RANGE    1    ${iterations}
+        ${expected_oms_transition_is_available}=    Run Keyword And Return Status    Page Should Contain Element    ${elementSelector}    timeout=1s
+        IF    '${expected_oms_transition_is_available}'=='False'
+            Run Keywords    Sleep    ${delay}    AND    Reload
+        ELSE
+            Exit For Loop
+        END
+        IF    ${index} == 3 or ${index} == 6
             Trigger oms
-    END
-    ${order_changed_status}=    Run Keyword And Ignore Error    Element Should Not Be Visible    ${elementSelector}    timeout=1s
-    IF    'FAIL' in ${order_changed_status}
-            ${order_item_state}=    Get Text    ${elementSelector}
-            Scroll Element Into View    ${elementSelector}
+        END
+        IF    ${index} == ${iterations}-1
             Take Screenshot    EMBED    fullPage=True
-            Fail    Order item stuck in '${order_item_state}' state. Check if OMS is functional
+            Fail    Expected item state transition '${event}' for item number '${item_number}' is not available in shipment# '${shipment}'. Only '${item_available_transitions}' is/are available. Check if OMS is functional
+        END
     END
+    Click    ${elementSelector}
 
 Zed: wait for order item to be in state:
     [Arguments]    ${sku}    ${state}    ${shipment}=1    ${delay}=10s    ${iterations}=20
-    ${elementSelector}=    Set Variable    xpath=(//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td[@class='state-history']//a[contains(text(),'${state}')])[1]
-    Try reloading page until element is/not appear:    ${elementSelector}    true    ${iterations}    ${delay}    message=Expected order item state '${state}' is not available for the item '${sku}'. Check if OMS is functional
+    FOR    ${index}    IN RANGE    1    ${iterations}
+        ${order_item_state_reached}=    Run Keyword And Return Status    Page Should Contain Element    xpath=(//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td[@class='state-history']//a[contains(text(),'${state}')])[1]    timeout=1s
+        IF    '${order_item_state_reached}'=='False'
+            Run Keywords    Sleep    ${delay}    AND    Reload
+        ELSE
+            Exit For Loop
+        END
+        IF    ${index} == 2 or ${index} == 5
+            Trigger oms
+        END
+        IF    ${index} == ${iterations}-1
+            Take Screenshot    EMBED    fullPage=True
+            ${order_item_current_state}=    Get Text    xpath=(//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td[@class='state-history'])//a[1][@href]
+            Fail    Expected order item state '${state}' is not available for the item '${sku}'. Current order item state is '${order_item_current_state}'. Check if OMS is functional
+        END
+    END
 
 Yves: create return for the following products:
     [Arguments]    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}

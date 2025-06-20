@@ -5,7 +5,7 @@ Test Setup     API_test_setup
 Test Tags    glue
 
 *** Test Cases ***
-Get_all_availiable_stores
+Get_all_available_stores
     [Tags]    dms-off
     And I set Headers:    Content-Type=${default_header_content_type}
     When I send a GET request:    /stores
@@ -58,7 +58,7 @@ Get_store_by_id
     And Each array element of array in response should contain property:    [data][attributes][countries]    postalCodeRegex
     And Response body has correct self link internal
 
-DMS_Get_all_availiable_stores
+DMS_Get_all_available_stores
     [Tags]    dms-on
     And I set Headers:    Content-Type=${default_header_content_type}
     When I send a GET request:    /stores

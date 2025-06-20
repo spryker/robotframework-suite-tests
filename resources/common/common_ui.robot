@@ -12,6 +12,7 @@ ${browser}             chromium
 ${browser_timeout}     60 seconds
 ${email_domain}        @spryker.com
 ${default_password}    change123
+${default_secure_password}    qweRTY_123456
 ${admin_email}         admin@spryker.com
 ${device}
 # ${device}              Desktop Chrome
@@ -82,7 +83,6 @@ Overwrite pyz variables
     END
     &{urls}=    Create Dictionary    yves_url    ${yves_url}    yves_at_url    ${yves_at_url}    zed_url    ${zed_url}    mp_url    ${mp_url}    glue_url    ${glue_url}
     FOR    ${key}    ${url}    IN    &{urls}
-        Log    Key is '${key}' and value is '${url}'.
         ${url_last_character}=    Get Regexp Matches    ${url}    .$    flags=IGNORECASE
         ${url_last_character}=    Convert To String    ${url_last_character}
         ${url_last_character}=    Replace String    ${url_last_character}    '   ${EMPTY}
@@ -351,9 +351,9 @@ Try reloading page until element is/not appear:
     FOR    ${index}    IN RANGE    0    ${tries}
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
         IF    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'
-            Run Keywords    Sleep    ${timeout}    AND    Reload
+            Run Keywords    Sleep    ${timeout}    AND    Reload    AND    Wait For Load State
         ELSE IF     '${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True'
-            Run Keywords    Sleep    ${timeout}    AND    Reload
+            Run Keywords    Sleep    ${timeout}    AND    Reload    AND    Wait For Load State
         ELSE
             Exit For Loop
         END

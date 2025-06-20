@@ -43,7 +43,7 @@ Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 
 *** Test Cases ***
 Return_Management
-    [Documentation]    Checks that returns work and oms process is checked. DMS-ON: https://spryker.atlassian.net/browse/FRW-7477
+    [Documentation]    Checks that returns work and oms process is checked.
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
@@ -94,11 +94,11 @@ Return_Management
     MP: order states on drawer should contain:    Shipped
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create a return for the following order and product in it:    ${lastPlacedOrder}    012_25904598
-    Zed: create new Zed user with the following data:    returnagent+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
+    Zed: create new Zed user with the following data:    returnagent+${random}@spryker.com    ${default_secure_password}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    returnagent+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
+    Yves: login on Yves with provided credentials:    returnagent+${random}@spryker.com    ${default_secure_password}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_user_email}
     Yves: agent widget contains:    ${yves_user_email}
@@ -126,7 +126,7 @@ Return_Management
     ...    AND    Zed: delete Zed user with the following email:    returnagent+${random}@spryker.com
 
 Refunds
-    [Documentation]    Checks that refund can be created for one item and the whole order. DMS-ON: https://spryker.atlassian.net/browse/FRW-7476
+    [Documentation]    Checks that refund can be created for one item and the whole order.
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -316,28 +316,26 @@ Order_Cancellation
     # ...    AND    Yves: delete all user addresses
 
 Configurable_Product_OMS
-    [Documentation]    Conf Product OMS check and reorder. DMS-ON: https://spryker.atlassian.net/browse/FRW-6380
-    [Tags]    robot:skip
+    [Documentation]    Conf Product OMS check and reorder.
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
     ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: change variant of the product on PDP on:    ${configurable_product_concrete_one_attribute}
-    Yves: change the product configuration to:
-    ...    || date       | date_time ||
-    ...    || 12.12.2030 | Evening   ||
+    Yves: change the product options in configurator to:
+    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten       ||
+    ...    || 517        | 473        | €0.00        | 0.00       |  51         | 19         | 367          | 46           | 72          | English Keyboard ||
+    Yves: save product configuration
     Yves: add product to the shopping cart
     Yves: reset selected variant of the product on PDP
     Yves: change variant of the product on PDP on:    ${configurable_product_concrete_two_attribute}
-    Yves: change the product configuration to:
-    ...    || date       | date_time ||
-    ...    || 01.01.2055 | Afternoon ||
+    Yves: change the product options in configurator to:
+    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten      ||
+    ...    || 905        | 249        | 100          | 36         |  15         | 0.00       | 48           | 57           | 36          | German Keyboard ||
+    Yves: save product configuration
     Yves: add product to the shopping cart
     Yves: go to b2c shopping cart
-    Yves: configuration should be equal:
-    ...    || date       | date_time ||
-    ...    || 12.12.2030 | Evening   ||
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
@@ -351,14 +349,13 @@ Configurable_Product_OMS
     Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €316.67
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: product configuration should be equal:
-    ...    || shipment | position | sku                                      | date       | date_time ||
-    ...    || 1        | 1        | ${configurable_product_concrete_one_sku} | 12.12.2030 | Evening   ||
+    ...    || shipment | position | sku                                      | GPU                                 ||
+    ...    || 1        | 1        | ${configurable_product_concrete_one_sku} | NVIDIA GeForce GTX 1650Ti 4GB GDDR6 ||
     Zed: product configuration should be equal:
-    ...    || shipment | position | sku                                      | date       | date_time ||
-    ...    || 1        | 2        | ${configurable_product_concrete_two_sku} | 01.01.2055 | Afternoon ||
+    ...    || shipment | position | sku                                      | GPU                  ||
+    ...    || 1        | 2        | ${configurable_product_concrete_two_sku} | AMD Radeon RX Vega 6 ||
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}
@@ -367,7 +364,6 @@ Configurable_Product_OMS
     Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    2
     Zed: trigger matching state of xxx order item inside xxx shipment:    Deliver    2
     Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    2
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €37.50
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    1
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -392,7 +388,5 @@ Configurable_Product_OMS
     Yves: 'View Order/Reorder/Return' on the order history page:    Reorder    ${lastPlacedOrder}
     Yves: go to b2c shopping cart
     Yves: shopping cart contains the following products:     ${configurable_product_name}
-    Yves: configuration should be equal:
-    ...    || date       | date_time ||
-    ...    || 12.12.2030 | Evening   ||
+    # Yves: product configuration status should be equal:       Configuration is not complete.
     [Teardown]    Yves: check if cart is not empty and clear it

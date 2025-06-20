@@ -30,7 +30,7 @@ Create_Duplicate_Service_Point_Address
     And Response should return error message:    A service point address for the service point already exists.
 
 Create_Service_Point_address_without_address
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-1597
+    [Documentation]    https://spryker.atlassian.net/browse/CC-29310
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
@@ -38,7 +38,7 @@ Create_Service_Point_address_without_address
     Then Response status code should be:    400
 
 Create_Service_Point_address_with_empty_address
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-1597
+    [Documentation]    https://spryker.atlassian.net/browse/CC-29310
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
@@ -46,7 +46,7 @@ Create_Service_Point_address_with_empty_address
     Then Response status code should be:    400
 
 Create_Service_Point_address_with_not_existing_region
-    [Documentation]     https://spryker.atlassian.net/browse/FRW-1597
+    [Documentation]     https://spryker.atlassian.net/browse/CC-29310
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
@@ -61,7 +61,7 @@ Create_Service_Point_address_with_not_existing_region
     [Teardown]    Deactivate service point via BAPI    ${service_point_id}
 
 Create_Service_Point_address_with_not_existing_country
-    [Documentation]     https://spryker.atlassian.net/browse/FRW-1597
+    [Documentation]     https://spryker.atlassian.net/browse/CC-29310
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
@@ -76,7 +76,7 @@ Create_Service_Point_address_with_not_existing_country
     [Teardown]    Deactivate service point via BAPI    ${service_point_id}
 
  Create_Service_Point_address_with_zip_more_than_15
-    [Documentation]     https://spryker.atlassian.net/browse/FRW-1597
+    [Documentation]     https://spryker.atlassian.net/browse/CC-29310
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}

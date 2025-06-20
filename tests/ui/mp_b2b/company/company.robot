@@ -11,7 +11,6 @@ Resource    ../../../../resources/steps/agent_assist_steps.robot
 
 *** Test Cases ***
 Create_new_company_with_linked_entities_and_customer_in_backoffice
-    [Tags]    skip-due-to-issue
     [Documentation]    Create a new company with linked entities and new customer in backoffice
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Company with provided name:    RobotCompany
@@ -22,11 +21,11 @@ Create_new_company_with_linked_entities_and_customer_in_backoffice
     Zed: Create new Company User with provided details:
     ...    || email                                     | salutation | first_name | last_name | gender | company           | business_unit            | role      ||
     ...    || sonia+created+cuser+${random}@spryker.com | Ms         | Robot      | User      | Female | ${created_company}| ${created_business_unit} | RobotRole ||
-    Zed: create new Zed user with the following data:    agent+company_user_bo${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
+    Zed: create new Zed user with the following data:    agent+company_user_bo${random}@spryker.com    ${default_secure_password}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent+company_user_bo${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
+    Yves: login on Yves with provided credentials:    agent+company_user_bo${random}@spryker.com    ${default_secure_password}
     Yves: perform search by customer:    sonia+created+cuser+${random}@spryker.com
     Yves: as an agent login under the customer:    sonia+created+cuser+${random}@spryker.com
     Yves: go to URL:    /company/user    
@@ -44,11 +43,11 @@ Create_new_company_user_with_linked_entities_in_storefront
     Yves: create new company business unit:    business_unit_name=RobotYvesBusinessUnit+${random}    business_unit_email=robot+business+unit+${random}@spryker.com
     Yves: create new company user:    business_unit=RobotYvesBusinessUnit+${random}    email=sonia+sf+new+cuser+${random}@spryker.com    role=RobotYvesRole+${random}    first_name=Sonia    last_name=NewUser    
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: create new Zed user with the following data:    agent+company_user_yves${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
+    Zed: create new Zed user with the following data:    agent+company_user_yves${random}@spryker.com    ${default_secure_password}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent+company_user_yves${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
+    Yves: login on Yves with provided credentials:    agent+company_user_yves${random}@spryker.com    ${default_secure_password}
     Yves: perform search by customer:    sonia+sf+new+cuser+${random}@spryker.com
     Yves: as an agent login under the customer:    sonia+sf+new+cuser+${random}@spryker.com
     Yves: go to URL:    /company/user    

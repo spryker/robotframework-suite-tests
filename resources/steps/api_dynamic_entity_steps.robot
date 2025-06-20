@@ -123,4 +123,6 @@ Restore product initial stock via data exchange api:
     API_test_setup
     I get access token by user credentials:   ${zed_admin.email}
     I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
+    Log    ${initial_is_never_out_of_stock}
+    ${initial_is_never_out_of_stock}=    To JSON Boolean    ${initial_is_never_out_of_stock}
     I send a PATCH request:    /dynamic-entity/stock-products/${id_stock_product}    {"data":{"is_never_out_of_stock":${initial_is_never_out_of_stock},"quantity":${initial_quantity}}}

@@ -76,7 +76,7 @@ Create_country_with_empty_body
     I get access token by user credentials:   ${zed_admin.email}
     ### POST WITH EMPTY BODY ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a POST request:    /dynamic-entity/countries   ''
+    And I send a POST request:    /dynamic-entity/countries   {}
     Then Response status code should be:    400
     And Response body parameter should contain:    [0][message]    Invalid or missing data format. Please ensure that the data is provided in the correct format
     And Response body parameter should be:    [0][code]    1301

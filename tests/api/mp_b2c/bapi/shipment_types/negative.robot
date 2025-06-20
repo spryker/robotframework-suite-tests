@@ -18,7 +18,7 @@ Create_shipment_type_with_incorrect_type_in_body
     And Response should return error message:    Unknown error.
 
 Create_shipment_type_with_empty_body
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5851
+    [Documentation]    https://spryker.atlassian.net/browse/CC-29310
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
@@ -28,13 +28,11 @@ Create_shipment_type_with_empty_body
     And Response should return error message:    Unknown error.
 
 Create_shipment_type_with_empty_token
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-    [Tags]    skip-due-to-issue
-    [Setup]    I set Headers:    Authorization=
+    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    Authorization=
     When I send a POST request:    /shipment-types    {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type","key": "empty_token${random}","isActive": "true","stores": ["DE", "AT"]}}}
     Then Response status code should be:    403
-    And Response reason should be:    Unauthorized
-    And Response should return error message:    Invalid access token.
+    And Response reason should be:    Forbidden
+    And Response should return error message:    Missing access token.
 
 Create_shipment_type_with_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
@@ -43,7 +41,7 @@ Create_shipment_type_with_incorrect_token
     And Response reason should be:    Forbidden
 
 Create_shipment_type_without_key_in_request
-    [Documentation]    FRW-1597: Attribute validation in Glue Requests
+    [Documentation]    https://spryker.atlassian.net/browse/CC-32473 Attribute validation in Glue Requests
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
@@ -70,24 +68,23 @@ Create_shipment_type_with_already_used_key
     And Response should return error message:    A delivery type with the same key already exists.
     [Teardown]     Delete shipment type in DB:    existing-shipment-type-key
 
-Update_sipment_type_without_token
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-    [Tags]    skip-due-to-issue
+Update_shipment_type_without_token
+    I set Headers:    Content-Type=${default_header_content_type}
     When I send a PATCH request:    /shipment-types/${shipment_type_uuid}
     ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}} 
     Then Response status code should be:    403
-    And Response reason should be:    Unauthorized
-    And Response should return error message:    Invalid access token.
+    And Response reason should be:    Forbidden
+    And Response should return error message:    Unauthorized request.
 
-Update_sipment_type_with_incorrect_token
+Update_shipment_type_with_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a PATCH request:    /shipment-types/${shipment_type_uuid}
     ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}} 
      Then Response status code should be:    403
      And Response reason should be:    Forbidden
 
-Update_sipment_type_without_key
-    [Documentation]    FRW-1597: Attribute validation in Glue Requests
+Update_shipment_type_without_key
+    [Documentation]    https://spryker.atlassian.net/browse/CC-29310 Attribute validation in Glue Requests
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
@@ -97,8 +94,8 @@ Update_sipment_type_without_key
     And Response should return error code:    5501
     And Response should return error message:    A delivery type entity was not found.
 
-Update_sipment_type_with_empty_key
-    [Documentation]    FRW-1597: Attribute validation in Glue Requests
+Update_shipment_type_with_empty_key
+    [Documentation]    https://spryker.atlassian.net/browse/CC-32473 Attribute validation in Glue Requests
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
@@ -117,21 +114,20 @@ Update_sipment_type_with_not_existing_key
     And Response should return error code:    5501
     And Response should return error message:    A delivery type entity was not found.
 
-Retrive_single_shipment_type_without_auth
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-    [Tags]    skip-due-to-issue
+Retrieve_single_shipment_type_without_auth
+    When I set Headers:    Content-Type=${default_header_content_type}
+    And I send a GET request:    /shipment-types/${shipment_type_uuid}
+    Then Response status code should be:    403
+    And Response reason should be:    Forbidden
+    And Response should return error message:    Unauthorized request.
+
+Retrieve_single_shipment_type_with_incorrect_token
+    [Setup]    I set Headers:    Content-Type=${default_header_content_type}    Authorization=wrong_token
     When I send a GET request:    /shipment-types/${shipment_type_uuid}
     Then Response status code should be:    403
-    And Response reason should be:    Unauthorized
-    And Response should return error message:    Invalid access token.
+    And Response reason should be:    Forbidden
 
-Retrive_single_shipment_type_with_incorrect_token
-    [Setup]    I set Headers:    Authorization=wrong_token
-    When I send a GET request:    /shipment-types/${shipment_type_uuid}
-     Then Response status code should be:    403
-     And Response reason should be:    Forbidden
-
-Retrive_single_shipment_type_with_incorrect_id
+Retrieve_single_shipment_type_with_incorrect_id
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     When I send a GET request:    /shipment-types/incorrect_id
@@ -139,15 +135,14 @@ Retrive_single_shipment_type_with_incorrect_id
     And Response should return error code:    5501
     And Response should return error message:    A delivery type entity was not found.
 
-Retrive_list_of_shipment_types_without_auth
-    [Documentation]    https://spryker.atlassian.net/browse/FRW-5850
-    [Tags]    skip-due-to-issue
+Retrieve_list_of_shipment_types_without_auth
+    I set Headers:    Content-Type=${default_header_content_type}
     When I send a GET request:    /shipment-types/
     Then Response status code should be:    403
-    And Response reason should be:    Unauthorized
-    And Response should return error message:    Invalid access token.
+    And Response reason should be:    Forbidden
+    And Response should return error message:    Unauthorized request.
 
-Retrive_list_of_shipment_types_witt_incorrect_token
+Retrieve_list_of_shipment_types_witt_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a GET request:    /shipment-types/${shipment_type_uuid}
      Then Response status code should be:    403

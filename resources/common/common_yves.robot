@@ -65,9 +65,9 @@ Yves: login on Yves with provided credentials:
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
     IF    'agent' in '${email}'    
-    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
-        ELSE    
-        Wait Until Element Is Visible    ${user_navigation_icon_header_menu_item}[${env}]     Login Failed!
+        Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
+    ELSE    
+        Page Should Contain Element    locator=${user_header_logout_button}     message=Yves: Login Failed!
     END
     Yves: remove flash messages
 
@@ -100,7 +100,7 @@ Yves: login on Yves with provided credentials and expect error:
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
 
-    Page Should Not Contain Element    ${user_navigation_icon_header_menu_item}[${env}]
+    Page Should Not Contain Element    ${user_header_logout_button}    message=Yves: logged in successfully but should not be
 
     Yves: flash message should be shown:    error    Please check that your E-mail address and password are correct and that you have confirmed your E-mail address by clicking the link in the registration message
 
@@ -124,6 +124,9 @@ Yves: go to PDP of the product with sku:
             IF    ${index} == ${iterations}-1
                 Take Screenshot    EMBED    fullPage=True
                 Fail    Product '${sku}' is not displayed in the search results
+            END
+            IF    ${index} == 5 or ${index} == 10  
+                Trigger multistore p&s
             END
             IF    'FAIL' in ${result}   
                 Sleep    ${delay}
@@ -322,7 +325,6 @@ Yves: go to newly created page by URL:
     FOR    ${index}    IN RANGE    1    ${iterations}
         Go To    ${yves_url}${url}?${index}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
-        Log    ${page_not_published}
         IF    '${page_not_published}'=='True'
             Sleep    ${delay}
         ELSE
@@ -349,7 +351,6 @@ Yves: go to newly created page by URL on AT store if other store not specified:
             Go To    ${yves_url}${url}?${index}
         END
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
-        Log    ${page_not_published}
         IF    '${page_not_published}'=='True'
             Sleep    ${delay}
         ELSE
@@ -376,7 +377,6 @@ Yves: navigate to specified AT store URL if no other store is specified and refr
             Go To    ${url}
         END
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
-        Log    ${page_not_published}
         IF    '${page_not_published}'=='False'
             Run Keyword    Sleep    ${delay}
         ELSE
@@ -393,7 +393,6 @@ Yves: go to URL and refresh until 404 occurs:
     FOR    ${index}    IN RANGE    1    ${iterations}
         Go To    ${url}
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
-        Log    ${page_not_published}
         IF    '${page_not_published}'=='False'
             Run Keyword    Sleep    ${delay}
         ELSE
@@ -416,7 +415,6 @@ Yves: go to second navigation item level:
     ${nodeClass}=    Replace String    ${nodeClass}    \n    ${EMPTY}
     ${nodeShownClass}=    Set Variable    is-shown
     ${nodeUpdatedClass}=    Set Variable    ${nodeClass} ${nodeShownClass}
-    Log    ${nodeClass}
     ${1LevelXpath}=    Set Variable    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li
     Add/Edit element attribute with JavaScript:    ${1LevelXpath}    class    ${nodeUpdatedClass}
     Wait Until Element Is Visible    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
@@ -445,7 +443,6 @@ Yves: go to third navigation item level:
     ${nodeClass}=    Replace String    ${nodeClass}    \n    ${EMPTY}
     ${nodeShownClass}=    Set Variable    is-shown
     ${nodeUpdatedClass}=    Set Variable    ${nodeClass} ${nodeShownClass}
-    Log    ${nodeClass}
     ${1LevelXpath}=    Set Variable    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li
     Add/Edit element attribute with JavaScript:    ${1LevelXpath}    class    ${nodeUpdatedClass}
     Wait Until Element Is Visible    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
@@ -457,12 +454,10 @@ Yves: get index of the first available product
     Yves: perform search by:    ${EMPTY}
     Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
-    Log    ${productsCount}
     FOR    ${index}    IN RANGE    1    ${productsCount}+1
         ${status}=    IF    '${env}'=='ui_b2b'    Run Keyword And Ignore Error     Page should contain element    xpath=(//product-item[@data-qa='component product-item'])[${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']    timeout=10ms
         ${status}=    IF    '${env}'=='ui_suite'    Run Keyword And Ignore Error     Page should contain element    xpath=(//product-item[@data-qa='component product-item'])[${index}]//*[@class='product-item__actions']//ajax-add-to-cart//button[@disabled='']    timeout=10ms
         ...    ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Run Keyword And Ignore Error    Page should contain element    xpath=(//product-item[@data-qa='component product-item'])[${index}]//ajax-add-to-cart//button    Add to cart button is missing    timeout=10ms
-        Log    ${index}
         ${pdp_url}=    IF    '${env}' in ['ui_b2b','ui_suite']    Get Element Attribute    xpath=(//product-item[@data-qa='component product-item'])[${index}]//a[@itemprop='url']    href
         IF    'PASS' in ${status} and '${env}' in ['ui_b2b','ui_suite']    Continue For Loop
         IF    'bundle' in '${pdp_url}' and '${env}' in ['ui_b2b','ui_suite']    Continue For Loop
@@ -487,13 +482,11 @@ Yves: get index of the first available product on marketplace
     Yves: perform search by:    ${EMPTY}
     Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
     ${productsCount}=    Get Element Count    xpath=//product-item[@data-qa='component product-item']
-    Log    ${productsCount}   
     FOR    ${index}    IN RANGE    1    ${productsCount}+1
         Click    xpath=(//product-item[@data-qa='component product-item'])[${index}]//a[contains(@class,'link-detail-page') and (contains(@class,'info')) or (contains(@class,'name'))]
         Wait For Load State
         Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
         ${status}=    Run Keyword And Ignore Error     Page should contain element    &{pdp_add_to_cart_disabled_button}[${env}]    timeout=10ms
-        Log    ${index}
         IF    'PASS' in ${status}    Continue For Loop
         IF    'FAIL' in ${status}
             Run Keywords

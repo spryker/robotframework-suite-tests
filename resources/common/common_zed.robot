@@ -16,6 +16,7 @@ ${zed_variant_search_field_locator}     xpath=//*[@id='product-variant-table_fil
 ${zed_processing_block_locator}     xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')]
 ${zed_merchants_dropdown_locator}    xpath=//select[@name='id-merchant']
 ${zed_attribute_access_denied_header}    xpath=//div[@class='wrapper wrapper-content']//div[@class='flash-messages']//following-sibling::h1
+${zed_sweet_alert_js_error_popup}    xpath=//*[contains(@class,'sweet-alert')]
 
 
 *** Keywords ***
@@ -28,7 +29,7 @@ Zed: login on Zed with provided credentials:
     Type Text    ${zed_user_name_field}    ${email}
     Type Text    ${zed_password_field}    ${password}
     Click    ${zed_login_button}
-    Wait Until Element Is Visible    ${zed_log_out_button}    Zed:Dashboard page is not displayed
+    Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!
 
 Zed: login with deactivated user/invalid data:
    [Arguments]    ${email}    ${password}=${default_password}
@@ -52,7 +53,6 @@ Zed: go to second navigation item level:
     [Documentation]     example: "Zed: Go to Second Navigation Item Level    Customers    Customer Access"
     [Arguments]     ${navigation_item_level1}   ${navigation_item_level2}
     ${node_state}=    Get Element Attribute  xpath=(//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li)[1]    class
-    log    ${node_state}
     IF    'active' in '${node_state}'
         wait until element is visible  xpath=(//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}'])[1]
         Click Element by xpath with JavaScript    (//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}'])[1]
@@ -84,8 +84,9 @@ Zed: wait for button in Header to be visible:
 Zed: click Action Button in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform search by:    ${row_content}
-    Wait until element is visible    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
-    Click    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
+    # all services are not supported due to demodata collision
+    Wait until element is visible    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}') and not(contains(text(),'service'))]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
+    Click    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}') and not(contains(text(),'service'))]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
     Repeat Keyword    3    Wait For Load State
 
 Zed: save abstract product:  
@@ -211,7 +212,40 @@ Zed: filter by merchant:
     Select From List By Label    ${zed_merchants_dropdown_locator}    ${merchant}
 
 Zed: go to URL:
-    [Arguments]    ${url}
+    [Arguments]    ${url}    ${expected_response_code}=${EMPTY}
     ${url}=    Get URL Without Starting Slash    ${url}
     Set Browser Timeout    ${browser_timeout}
-    Go To    ${zed_url}${url}
+    ${response_code}=    Go To    ${zed_url}${url}
+    ${response_code}=    Convert To Integer    ${response_code}
+    ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+    ${page_title}=    Get Title
+    ${page_title}=    Convert To Lower Case    ${page_title}
+    ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
+    IF    ${is_5xx} or not ${no_exception}
+        LocalStorage Clear
+        ${response_code}=    Go To    ${zed_url}${url}
+        ${response_code}=    Convert To Integer    ${response_code}
+        ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+        IF    ${is_5xx}    Fail    '${response_code}' error occurred on go to '${zed_url}${url}'
+        ${page_title}=    Get Title
+        ${page_title}=    Convert To Lower Case    ${page_title}
+        Should Not Contain    ${page_title}    error    msg='${response_code}' error occurred on go to '${zed_url}${url}'
+    END
+    IF    '${expected_response_code}' != '${EMPTY}'
+        ${expected_response_code}=    Convert To Integer    ${expected_response_code}
+        Should Be Equal    ${response_code}    ${expected_response_code}    msg=Expected response code (${expected_response_code}) is not equal to the actual response code (${response_code}) on Go to: ${zed_url}${url}
+    END
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
+    IF    not ${no_js_error}
+        LocalStorage Clear
+        ${response_code}=    Go To    ${zed_url}${url}
+        ${response_code}=    Convert To Integer    ${response_code}
+        ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+        IF    ${is_5xx}    Fail    '${response_code}' error occurred on go to '${zed_url}${url}'
+        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
+        IF    not ${no_js_error}    
+            Take Screenshot    EMBED    fullPage=True
+            Fail    ''sweet-alert' js error popup on the page '${zed_url}${url}'
+        END
+    END
+    RETURN    ${response_code}

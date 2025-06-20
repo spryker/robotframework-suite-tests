@@ -56,7 +56,7 @@ Product_labels
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Discounts
-    [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout). DMS-ON: https://spryker.atlassian.net/browse/FRW-7476
+    [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout).
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Zed: change product stock:    190    190_25111746    true    10
@@ -64,7 +64,6 @@ Discounts
     ...    AND    Zed: change product stock:    ${bundled_product_2_abstract_name}    ${bundled_product_2_concrete_sku}    true    10
     ...    AND    Zed: change product stock:    ${bundled_product_3_abstract_sku}    ${bundled_product_3_concrete_sku}    true    10
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Merchandising    Discount
     Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    test${random}    discountName=Voucher Code 5% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Cart Rule 10% ${random}
     Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=002    promotionalProductQuantity=2

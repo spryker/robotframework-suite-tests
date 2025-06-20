@@ -46,7 +46,6 @@ Content_Management
     [Tags]    smoke
     [Documentation]    Checks cms content can be edited in zed and that correct cms elements are present on homepage
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Content    Pages
     Zed: create a cms page and publish it:    Test Page${random}    test-page${random}    Page Title    Page text
     Yves: go to newly created page by URL:    en/test-page${random}
     Yves: page contains CMS element:    CMS Page Title    Page Title
