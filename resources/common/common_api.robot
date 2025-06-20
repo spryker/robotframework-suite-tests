@@ -7,6 +7,7 @@ Resource    common.robot
 *** Variables ***
 # *** API SUITE VARIABLES ***
 ${api_timeout}    15
+${max_retries}    0
 ${default_password}    change123
 ${default_allow_redirects}     true
 ${default_auth}    ${NONE}
@@ -91,7 +92,7 @@ Overwrite api variables
             Set Suite Variable    ${current_url}
         END
     END
-    Create Session    ${api_session}    ${current_url}    timeout=${api_timeout}
+    Create Session    ${api_session}    ${current_url}    timeout=${api_timeout}    max_retries=${max_retries}
 
 Setup_api_host_if_undefined
     ${api_host_is_undefined}=    Run Keyword And Return Status    Variable Should Not Exist    ${current_url}
