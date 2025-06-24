@@ -296,7 +296,7 @@ Offer_Availability_Calculation
     ...    AND    Trigger multistore p&s
 
 Product_Availability_Calculation
-    [Documentation]    Check product availability + multistore. DMS-ON: https://spryker.atlassian.net/browse/FRW-7477
+    [Documentation]    Check product availability + multistore.
     Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products    

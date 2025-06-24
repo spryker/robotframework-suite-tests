@@ -484,8 +484,7 @@ Product_Availability_Calculation
     ...    AND    Repeat Keyword    3    Trigger multistore p&s
 
 Configurable_Product_PDP_Shopping_List
-    [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of 7 items. Ensure that products that have not been configured cannot be purchased. bug: https://spryker.atlassian.net/browse/CC-33647
-    [Tags]    skip-due-to-issue
+    [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of 7 items. Ensure that products that have not been configured cannot be purchased.
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
     ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
@@ -617,10 +616,6 @@ Configurable_Product_RfQ_OMS
     Yves: reorder all items from 'Order Details' page
     Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
-    # Yves: configuration should be equal:
-    # ...    || option one | option two ||
-    # ...    || 5 shelves  | 2 lockers  ||
-
     # Yves: product configuration status should be equal:       Configuration is not complete.
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    	Free mobile phone    20% off cameras products    Free Acer M2610 product    Free delivery    10% off Intel products    5% off white products    Tuesday & Wednesday $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order

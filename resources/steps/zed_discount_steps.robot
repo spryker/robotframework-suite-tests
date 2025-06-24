@@ -10,6 +10,7 @@ Zed: create a discount and activate it:
     ${currentURL}=    Get Location
     IF    '/discount' not in '${currentURL}'    Zed: go to URL:    /discount/index/list
     ### General information
+    Zed: go to URL:    /discount/index/list
     Click    ${zed_discount_add_new_discount_button}
     Wait Until Element Is Visible    ${zed_discount_create_discount_page}
     IF    '${discountType}'=='voucher'

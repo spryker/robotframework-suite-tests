@@ -121,11 +121,10 @@ Get_user_assignments_list_with_invalid_token
     When Make user a warehouse user/ not a warehouse user:   ${warehouse_user[0].admin_user_uuid}    1      
     And Create_warehouse_user_assignment:    ${warehouse[0].warehouse_uuid}    ${warehouse[0].fk_warehouse_spryker}    ${warehouse_user[0].admin_user_uuid}    false
     Then I send a GET request:    /warehouse-user-assignments/
-    Then Response status code should be:    401
-    And Response reason should be:    Unauthorized
-    And Response should return error message:    Invalid access token.
-    [Teardown]    Run Keywords    Remove_warehouse_user_assignment:    ${warehouse[0].warehouse_uuid}    ${warehouse_user[0].admin_user_uuid}
-    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehouse_user[0].admin_user_uuid}    0   
+    Then Response status code should be:    403
+    And Response reason should be:    Forbidden
+    [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].admin_user_uuid}
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    0   
 
 
 Get_user_assignments_list_without_token

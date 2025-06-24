@@ -84,7 +84,7 @@ Split_Delivery
     ...    AND    Yves: delete all user addresses
 
 Guest_Checkout_and_Addresses
-    [Documentation]    Guest checkout with discounts, OMS and different addresses. DMS-ON: https://spryker.atlassian.net/browse/FRW-7476
+    [Documentation]    Guest checkout with discounts, OMS and different addresses.
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    guestTest${random}    discountName=Guest Voucher Code 5% ${random}
     ...    AND    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Guest Cart Rule 10% ${random}

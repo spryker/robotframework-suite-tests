@@ -4,6 +4,7 @@ ${user_navigation_menu_login_button}    xpath=//a[@class='user-block__button but
 &{user_navigation_icon_header_menu_item}    ui_b2b=xpath=//div[contains(@class,'user-navigation__user-name')]    ui_b2c=xpath=//nav[@data-qa='component navigation-top']//*[@*='user-account']    ui_suite=xpath=//header//a[contains(@href,'/customer/overview')]    ui_mp_b2b=xpath=//div[contains(@class,'user-navigation__user-name')]    ui_mp_b2c=xpath=//nav[@data-qa='component navigation-top']//*[@*='user-account']    api_suite=xpath=//header//a[contains(@href,'/customer/overview')]
 ${user_header_logout_button}    xpath=//header//a[contains(@href,'logout')]
 &{user_navigation_fly_out_header_menu_item}    ui_b2b=xpath=//li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]    ui_b2c=xpath=//div[contains(@class,'user-block js-nav-overlay__drop-down-block')]    ui_mp_b2b=xpath=//li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]    ui_mp_b2c=xpath=//div[contains(@class,'user-block js-nav-overlay__drop-down-block')]
+${user_header_logout_button}    xpath=//header//a[contains(@href,'logout')]
 ${company_name_icon_header_menu_item}    xpath=//div[@class='header__top']//a[contains(@class,'navigation-top__company')]
 ${store_switcher_header_menu_item}    xpath=//*[@data-qa='component header']//select[contains(@name,'store')]
 ${store_switcher_selected_option}    xpath=//*[@data-qa='component header']//select[contains(@name,'store')]/option[@selected='']
@@ -26,5 +27,5 @@ ${agent_customer_search_widget}    xpath=//autocomplete-form[@data-qa='component
 ${agent_confirm_login_button}    xpath=//agent-control-bar[@data-qa='component agent-control-bar']//button[contains(@class,'button--success')]
 ${agent_quote_requests_header_item}    xpath=//agent-control-bar//a[contains(@href,'quote-request') and not(contains(@href,'detail'))]/ancestor::li[contains(@class,'item')][contains(@class,'-has-children') and not(contains(@class,'navigation'))]
 ${agent_quote_requests_widget}    xpath=//agent-control-bar//a[contains(@href,'quote-request') and not(contains(@href,'detail'))]/ancestor::li[contains(@class,'item')][contains(@class,'-has-children') and not(contains(@class,'navigation'))]//ul
-${wishlist_icon_header_navigation_widget}    xpath=//nav[@data-qa='component navigation-top']//*[@*='#:wishlist']/ancestor::*[@data-qa='component icon']
+${wishlist_icon_header_navigation_widget}    xpath=//nav[@data-qa='component navigation-top']//*[@*='#:wishlist']/ancestor::*[@data-qa='component icon'] | //nav[@data-qa='component navigation-top']//*[@*='wishlist']
 ${cart_widget_item_quantity_counter}    xpath=//*[@data-qa='component navigation-top']//span[contains(@class,'cart-counter__quantity js-cart-counter__quantity')]

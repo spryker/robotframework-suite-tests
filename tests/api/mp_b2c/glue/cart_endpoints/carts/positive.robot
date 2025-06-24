@@ -7,11 +7,10 @@ Test Tags    glue
 *** Test Cases ***    
 #GET requests
 Get_cart_by_cart_id
-    [Documentation]    bug https://spryker.atlassian.net/browse/CC-26179
-    [Tags]    skip-due-to-issue 
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
+    ...  AND    Cleanup all items in the cart:    ${cart_id}
     When I send a GET request:    /carts/${cart_id}
     Then Response reason should be:    OK
     And Response body parameter should be:    [data][type]    carts
@@ -115,7 +114,7 @@ Get_cart_with_included_cart_rules
        ...  AND    I set Headers:    Authorization=${token}
        ...  AND    Find or create customer cart
        ...  AND    Cleanup all items in the cart:    ${cart_id}
-       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}", "quantity": "4"}}}
+       ...  AND    I send a POST request:    /carts/${cart_id}/items    {"data": {"type": "items","attributes": {"sku": "${concrete_product_with_concrete_product_alternative.sku}", "quantity": 4}}}
        ...  AND    Response status code should be:    201
     When I send a GET request:    /carts?include=cart-rules
     Then Response status code should be:    200

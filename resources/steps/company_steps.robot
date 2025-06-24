@@ -16,7 +16,7 @@ Resource    ../pages/yves/yves_company_user_page.robot
 *** Keywords ***
 Zed: create new Company Business Unit for the following company:
     [Documentation]     Creates new company BU with provided BU Name and for provided company.
-    [Arguments]    ${company_name}    ${business_unit_name}    ${company_id}=EMPTY
+    [Arguments]    ${company_name}    ${business_unit_name}    ${company_id}=EMPTY    ${parent_business_unit}=parent
     Zed: go to URL:    /company-business-unit-gui/list-company-business-unit
     Zed: click button in Header:    Create Company Business Unit
     ${is_company_dropdown_with_search}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_bu_company_dropdown_with_search_locator}    timeout=0.5s
@@ -30,11 +30,18 @@ Zed: create new Company Business Unit for the following company:
     ELSE
         Click    ${zed_bu_company_dropdown_locator}
         Select From List By Label Contains    ${zed_bu_company_dropdown_locator}    ${company_name}
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
+        Select From List By Label Contains    ${zed_bu_parent_bu_dropdown_locator}    ${parent_business_unit}
     END
     VAR    ${created_business_unit}    ${business_unit_name}+${random}    scope=TEST
     Type Text    ${zed_bu_name_field}    ${created_business_unit}
     Type Text    ${zed_bu_iban_field}    testiban+${random}
     Type Text    ${zed_bu_bic_field}    testbic+${random}
+    Wait For Load State
+    Wait For Load State    domcontentloaded
+    Wait For Load State    networkidle
     Zed: submit the form
     Wait Until Element Is Visible    ${zed_success_flash_message}
     Wait Until Element Is Visible    ${zed_table_locator}

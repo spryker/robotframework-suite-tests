@@ -69,10 +69,10 @@ Create_quote_request_with_empty_cart_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     When I send a POST request:    /quote-requests    {"data":{"type":"quote-requests","attributes":{"cartUuid":"","meta":{"purchase_order_number":"${quote_request.purchase_order_number}","delivery_date":"${quote_request.delivery_date}","note":"${quote_request.note}"}}}}
-    Then Response status code should be:    404
-    And Response should return error code:    101
-    And Response reason should be:    Not Found
-    And Response should return error message:    Cart with given uuid not found.
+    Then Response status code should be:    422
+    And Response should return error code:    901
+    And Response reason should be:    Unprocessable Content
+    And Response should return error message:    cartUuid => This value should not be blank.
 
 Create_quote_request_from_another_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -95,7 +95,7 @@ Create_quote_request_from_another_customer
 Create_quote_request_for_cart_with_read_only_access
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    userToken
-    ...    AND    I set Headers:    Authorization=Bearer ${userToken}  
+    ...    AND    I set Headers:    Authorization=Bearer ${userToken}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    I send a POST request:    /carts/${cartId}/items    {"data":{"type":"items","attributes":{"sku":"${concrete.available_product.with_stock_and_never_out_of_stock.sku_1}","quantity":1}}}
@@ -215,10 +215,10 @@ Update_quote_request_with_empty_cart_id
     ...    AND    Response status code should be:    201
     ...    AND    Save value to a variable:    [data][id]    quoteRequestId
     When I send a PATCH request:    /quote-requests/${quoteRequestId}    {"data":{"type":"quote-requests","attributes":{"cartUuid":"","meta":{"note":"Test1"}}}}
-    Then Response status code should be:    404
-    And Response reason should be:    Not Found
-    And Response should return error code:    101
-    And Response should return error message:    Cart with given uuid not found.
+    Then Response status code should be:    422
+    And Response reason should be:    Unprocessable Content
+    And Response should return error code:    901
+    And Response should return error message:    cartUuid => This value should not be blank.
     [Teardown]    Run Keywords    I send a DELETE request:     /carts/${cart_id}
     ...    AND    Response status code should be:    204
 

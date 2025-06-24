@@ -93,7 +93,7 @@ User_Control
     Zed: apply access permissions for user role:    ${full_access}    ${full_access}    ${full_access}   ${permission_allow}
     Zed: apply access permissions for user role:    ${bundle_access}    ${controller_access}    ${action_access}    ${permission_deny}
     Zed: create new group with role assigned:   controlGroup${random}    controlRole${random}
-    Zed: create new Zed user with the following data:    sonia+control${random}@spryker.com   ${default_secure_password}    First Control    Last Control    ControlGroup${random}    This user is an agent    en_US    
+    Zed: create new Zed user with the following data:    sonia+control${random}@spryker.com   ${default_secure_password}    First Control    Last Control    ControlGroup${random}    This user is an agent    en_US
     Zed: login on Zed with provided credentials:   sonia+control${random}@spryker.com    ${default_secure_password}
     Zed: go to second navigation item level:    Catalog    Attributes
     Zed: click button in Header:    Create Product Attribute

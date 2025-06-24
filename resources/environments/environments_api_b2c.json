@@ -103,8 +103,8 @@
          "iso2Code":"DE",
          "company":"Spryker",
          "phone":"22111-3-4-5",
-         "shipping_status":"False",
-         "billing_status":"False"
+         "shipping_status":"false",
+         "billing_status":"false"
       },
       "changed":{
          "address1":"New Street 123",

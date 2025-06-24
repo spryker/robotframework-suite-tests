@@ -322,7 +322,7 @@ Create_country_collection:
     I get access token by user credentials:   ${zed_admin.email}
     ### CREATE THREE TEST COUNTRIES ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"Country XA"},{"iso2_code":"XB","iso3_code":"XXB","name":"Country XB"},{"iso2_code":"XC","iso3_code":"XXC","name":"Country XC","postal_code_regex":"\\d{5}"}]}
+    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"Country XA"},{"iso2_code":"XB","iso3_code":"XXB","name":"Country XB"},{"iso2_code":"XC","iso3_code":"XXC","name":"Country XC","postal_code_regex":"\\\\d{5}"}]}
     Then Response status code should be:    201
     And Response header parameter should be:    Content-Type    application/json
     And Response body parameter should be:    [data][0][iso2_code]    XA
@@ -371,7 +371,7 @@ Create_country_collection_non_transactional:
     I get access token by user credentials:   ${zed_admin.email}
     ### CREATE THREE TEST COUNTRIES ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}    X-Is-Transactional=false
-    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"Country XA"},{"iso2_code":"XB","iso3_code":"XXB","name":"Country XB"},{"iso2_code":"XC","iso3_code":"XXC","name":"Country XC","postal_code_regex":"\\d{5}"}]}
+    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"Country XA"},{"iso2_code":"XB","iso3_code":"XXB","name":"Country XB"},{"iso2_code":"XC","iso3_code":"XXC","name":"Country XC","postal_code_regex":"\\\\d{5}"}]}
     Then Response status code should be:    201
     And Response header parameter should be:    Content-Type    application/json
     And Response body parameter should be:    [data][0][iso2_code]    XA
@@ -515,7 +515,7 @@ Delete_country_collection:
     I get access token by user credentials:   ${zed_admin.email}
     ### CREATE TEST COUNTRIES ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"Country XA"},{"iso2_code":"XB","iso3_code":"XXB","name":"Country XB"},{"iso2_code":"XC","iso3_code":"XXC","name":"Country XC","postal_code_regex":"\\d{5}"}]}
+    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"Country XA"},{"iso2_code":"XB","iso3_code":"XXB","name":"Country XB"},{"iso2_code":"XC","iso3_code":"XXC","name":"Country XC","postal_code_regex":"\\\\d{5}"}]}
     Then Response status code should be:    201
     And Response body parameter should be:    [data][2][iso2_code]    XC
     And Response body parameter should be:    [data][2][iso3_code]    XXC
@@ -606,7 +606,7 @@ Availability_recalculation_after_stock_update
     API_test_setup
     When I get access token by user credentials:   ${zed_admin.email}
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a PATCH request:    /dynamic-entity/stock-products/${index}    {"data":{"is_never_out_of_stock":${false},"quantity":0}}
+    And I send a PATCH request:    /dynamic-entity/stock-products/${index}    {"data":{"is_never_out_of_stock":false,"quantity":0}}
     Then Response status code should be:    200
     And Response body parameter should be:    [data][is_never_out_of_stock]    False
     And Response body parameter should be:    [data][quantity]    0

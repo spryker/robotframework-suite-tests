@@ -84,9 +84,9 @@ Catalog_Actions
     Yves: perform search by:     150_29554292
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: quick add to cart for first item in catalog
-    Yves: perform search by:    115
+    Yves: perform search by:    115_26408656
     Yves: 1st product card in catalog (not)contains:     Add to Cart    false
-    Yves: perform search by:    002
+    Yves: perform search by:    002_25904004
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: 1st product card in catalog (not)contains:      Color selector   true
     Yves: mouse over color on product card:    D3D3D3
@@ -603,7 +603,7 @@ Configurable_Product_PDP_Shopping_List
 Configurable_Product_RfQ_OMS
     [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder.
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com   Kj${random_str_password}!0${random_id_password}   Config    Product    Root group    This user is an agent in Storefront    en_US
+    ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com   ${default_secure_password}   Config    Product    Root group    This user is an agent in Storefront    en_US
     ...    AND    Zed: deactivate all discounts from Overview page
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: delete all shopping carts
@@ -619,7 +619,7 @@ Configurable_Product_RfQ_OMS
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent_config+${random}@spryker.com    Kj${random_str_password}!0${random_id_password}
+    Yves: login on Yves with provided credentials:    agent_config+${random}@spryker.com    ${default_secure_password}
     Yves: go to 'Agent Quote Requests' page through the header
     Yves: quote request with reference xxx should have status:    ${lastCreatedRfQ}    Waiting
     Yves: view quote request with reference:    ${lastCreatedRfQ}
@@ -673,8 +673,6 @@ Configurable_Product_RfQ_OMS
     Yves: reorder all items from 'Order Details' page
     Yves: go to the shopping cart through the header with name:    ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
-    # ### bug: https://spryker.atlassian.net/browse/CC-33647
-    # Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €766.00
     Yves: product configuration status should be equal:       Configuration is not complete.
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    	Free mobile phone    20% off cameras products    Free Acer M2610 product    Free delivery    10% off Intel products    5% off white products    Tuesday & Wednesday $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order

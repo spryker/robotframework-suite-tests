@@ -27,6 +27,7 @@ Test Tags    bapi
     ### GET TOKEN ###
     I get access token by user credentials:   ${zed_admin.email}
     ### GET PRODUCT ABSTRACT COLLECTION WITH CHILDS ONE LVEL ###
+    Trigger p&s
     And I set Headers:    Content-Type=application/json    Store=DE    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/robot-tests-product-abstracts?include=robotTestsProductAbstractProducts
     Then Response status code should be:    200
@@ -42,7 +43,7 @@ Test Tags    bapi
     And I send a GET request:    /dynamic-entity/robot-tests-product-abstracts?include=robotTestsProductAbstractProducts.robotTestsProductCategories.robotTestsCategories
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response should contain the array of a certain size:   [data]    224
+    And Response should contain the array of a certain size:   [data]    228
     And Response should contain the array of a certain size:   [data][0]    9
     And Response should contain the array of a certain size:   [data][0][robotTestsProductAbstractProducts]    1
     And Response should contain the array of a certain size:   [data][0][robotTestsProductAbstractProducts][0][robotTestsProductCategories]    1

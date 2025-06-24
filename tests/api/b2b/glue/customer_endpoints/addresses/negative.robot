@@ -322,7 +322,7 @@ Patch_customer_address_with_empty_required_fields
     ...    AND    Save value to a variable:    [data][id]    address_uid
     When I send a PATCH request:
     ...    /customers/${yves_user.reference}/addresses/${address_uid}
-    ...    {"data": {"type": "addresses","attributes": {"salutation": None,"firstName": None,"lastName": None, "address1": None,"address2": None,"zipCode": None,"city": None,"iso2Code": None}}}
+    ...    {"data": {"type": "addresses","attributes": {"salutation": null,"firstName": null,"lastName": null, "address1": null,"address2": null,"zipCode": null,"city": null,"iso2Code": null}}}
     Then Response status code should be:    ${422}
     And Response reason should be:    Unprocessable Content
     And Each array element of array in response should contain property with value:    [errors]    code    901

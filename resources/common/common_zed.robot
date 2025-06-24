@@ -11,7 +11,7 @@ ${zed_error_flash_message}    xpath=//div[@class='flash-messages']/div[@class='a
 ${zed_info_flash_message}    xpath=//div[@class='flash-messages']/../div[@class='alert alert-info']
 ${zed_error_message}    xpath=//div[@class='alert alert-danger']
 ${zed_table_locator}    xpath=//table[contains(@class,'dataTable')]/tbody
-${zed_search_field_locator}     xpath=//input[@type='search']
+${zed_search_field_locator}     xpath=//div[@class='dataTables_filter']//input[@type='search']
 ${zed_variant_search_field_locator}     xpath=//*[@id='product-variant-table_filter']//input[@type='search']
 ${zed_processing_block_locator}     xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')]
 ${zed_merchants_dropdown_locator}    xpath=//select[@name='id-merchant']
@@ -127,8 +127,9 @@ Zed: wait for button in Header to be visible:
 Zed: click Action Button in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform search by:    ${row_content}
-    Wait until element is visible    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
-    Click and retry if 5xx occurred:    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
+    # all services are not supported due to demodata collision
+    Wait until element is visible    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}') and not(contains(text(),'service'))]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
+    Click and retry if 5xx occurred:    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}') and not(contains(text(),'service'))]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
     TRY
         Repeat Keyword    3    Wait For Load State
     EXCEPT
@@ -393,6 +394,9 @@ Zed: go to URL:
         ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
         IF    ${is_5xx}    Fail    '${response_code}' error occurred on go to '${zed_url}${url}'
         ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
-        IF    not ${no_js_error}    Fail    ''sweet-alert' js error popup on the page '${zed_url}${url}'
+        IF    not ${no_js_error}    
+            Take Screenshot    EMBED    fullPage=True
+            Fail    ''sweet-alert' js error popup on the page '${zed_url}${url}'
+        END
     END
     RETURN    ${response_code}

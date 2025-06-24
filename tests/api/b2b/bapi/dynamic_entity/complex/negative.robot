@@ -289,7 +289,7 @@ Delete_country_collection_with_existing_child_entity
     I get access token by user credentials:   ${zed_admin.email}
     ### CREATE TEST COUNTRIES ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"Country XA"},{"iso2_code":"XB","iso3_code":"XXB","name":"Country XB"},{"iso2_code":"XC","iso3_code":"XXC","name":"Country XC","postal_code_regex":"\\d{5}"}]}
+    And I send a POST request:    /dynamic-entity/robot-test-countries   {"data":[{"iso2_code":"XA","iso3_code":"XXA","name":"Country XA"},{"iso2_code":"XB","iso3_code":"XXB","name":"Country XB"},{"iso2_code":"XC","iso3_code":"XXC","name":"Country XC","postal_code_regex":"\\\\d{5}"}]}
     Then Response status code should be:    201
     And Response body parameter should be:    [data][2][iso2_code]    XC
     And Response body parameter should be:    [data][2][iso3_code]    XXC

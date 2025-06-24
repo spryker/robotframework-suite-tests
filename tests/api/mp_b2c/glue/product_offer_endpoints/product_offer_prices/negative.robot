@@ -13,10 +13,8 @@ Retrieve_prices_of_a_product_offer_without_offerId
     And Response should return error message:    Product offer ID is not specified.
 
 Get_product_offer_prices_with_invalid_offerId
-   [Documentation]    https://spryker.atlassian.net/browse/CC-24094
-    [Tags]    skip-due-to-issue 
     When I send a GET request:    /product-offers/InvalidOfferId/product-offer-prices
     Then Response status code should be:    404
     And Response reason should be:   Not Found
     And Response should return error code:    3701
-    And Response should return error message:    Product offer was not found.
+    And Response should return error message:    Product offer not found.

@@ -162,17 +162,17 @@ Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: delete all wishlists
-    Yves: go to PDP of the product with sku:  003
+    Yves: go to PDP of the product with sku:  005
     Yves: add product to wishlist:    My wishlist
     Yves: go to 'Wishlist' page
     Yves: create wishlist with name:    Second wishlist
-    Yves: go to PDP of the product with sku:  004
+    Yves: go to PDP of the product with sku:  006
     Yves: add product to wishlist:    Second wishlist    select
     Yves: go to 'Wishlist' page
     Yves: go to wishlist with name:    My wishlist
-    Yves: wishlist contains product with sku:    003_26138343
+    Yves: wishlist contains product with sku:    005_30663301
     Yves: go to wishlist with name:    Second wishlist
-    Yves: wishlist contains product with sku:    004_30663302
+    Yves: wishlist contains product with sku:    006_30692993
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: try to add product to wishlist as guest user
     [Teardown]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -404,4 +404,6 @@ Email_Confirmation
     ...    || Mr.        | New        | User      | sonia+fails+${random}@spryker.com  | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     Yves: login on Yves with provided credentials and expect error:     sonia+fails+${random}@spryker.com     ${default_secure_password}
-    [Teardown]    Zed: delete customer:    sonia+fails+${random}@spryker.com
+    [Teardown]    Zed: delete customer:
+    ...    || email                             ||
+    ...    || sonia+fails+${random}@spryker.com ||

@@ -11,8 +11,6 @@ Test Tags    glue
 #####POST#####
 
 Adding_voucher_code_to_cart_of_logged_in_customer
-    [Documentation]    Fails because of CC-16735 ( CC-16719 is closed as duplicate)
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -57,8 +55,6 @@ Adding_voucher_code_to_cart_of_logged_in_customer
     ...    AND    Response status code should be:    204
 
 Checking_voucher_is_applied_after_order_is_placed
-    [Documentation]    Fails because of CC-16735 ( CC-16719 is closed as duplicate)
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -71,17 +67,12 @@ Checking_voucher_is_applied_after_order_is_placed
     ...    AND    Response status code should be:    201
     When I send a POST request:
     ...    /checkout?include=orders
-    ...    {"data": {"type": "checkout","attributes": {"customer": {"salutation": "${yves_user.salutation}","email": "${yves_user.email}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": False,"isDefaultShipping": False},"payments": [{"paymentMethodName": "${payment_method_name}","paymentProviderName": "${payment_provider_name}"}],"shipments": [{"items": ["${concrete.with_relations_upselling_sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}"},"idShipmentMethod": 2,"requestedDeliveryDate": "${shipment.delivery_date}"},{"items": ["${concrete.with_options.sku}"],"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${changed.address1}","address2": "${changed.address2}","address3": "${changed.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${changed.phone}","isDefaultBilling": False,"isDefaultShipping": False},"idShipmentMethod": 4,"requestedDeliveryDate": None}]}}}
+    ...    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": false,"isDefaultShipping": false},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": false,"isDefaultShipping": false},"payments": [{"paymentProviderName": "${payment_provider_name}","paymentMethodName": "${payment_method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${concrete.with_brand_safescan.product_1.sku}"]}}}
     Then Response status code should be:    201
     And Response reason should be:    Created
     And Save value to a variable:    [included][0][attributes][totals][discountTotal]    discount_total_sum
     And Save value to a variable:    [included][0][attributes][totals][subtotal]    sub_total_sum
     And Save value to a variable:    [included][0][attributes][totals][expenseTotal]    expense_total_sum
-    #discountTotal
-    And Save value to a variable:    discount_total_sum    ${voucher.brand_safescan_2_items}
-    And Response body parameter with rounding should be:
-    ...    [included][0][attributes][totals][discountTotal]
-    ...    ${discount_total_sum}
     #grandTotal
     And Perform arithmetical calculation with two arguments:
     ...    grand_total_sum
@@ -97,12 +88,13 @@ Checking_voucher_is_applied_after_order_is_placed
     ...    [included][0][attributes][totals][grandTotal]
     ...    ${grand_total_sum}
     #calculatedDiscounts - "10% off Safescan" discount
+    VAR    ${discount_total_sum}    ${voucher.brand_safescan_2_items}
     And Response body parameter should not be EMPTY:
     ...    [included][0][attributes][calculatedDiscounts]["${discounts.id_4.name}"]
     And Response body parameter should contain:
     ...    [included][0][attributes][calculatedDiscounts]["${discounts.id_4.name}"][displayName]
     ...    ${discounts.id_4.name}
-    And Response body parameter should contain:
+    And Response body parameter with rounding should be:
     ...    [included][0][attributes][calculatedDiscounts]["${discounts.id_4.name}"][sumAmount]
     ...    ${discount_total_sum}
     And Response body parameter should contain:
@@ -110,8 +102,6 @@ Checking_voucher_is_applied_after_order_is_placed
     ...    ${discount_voucher_code}
 
 Adding_two_vouchers_with_different_priority_to_the_same_cart
-    [Documentation]    Fails because of CC-16735 ( CC-16719 is closed as duplicate)
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -171,8 +161,6 @@ Adding_two_vouchers_with_different_priority_to_the_same_cart
     ...    AND    Response status code should be:    204
 
 Adding_voucher_with_cart_rule_with_to_the_same_cart
-    [Documentation]    Fails because of CC-16735 ( CC-16719 is closed as duplicate)
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -223,8 +211,6 @@ Adding_voucher_with_cart_rule_with_to_the_same_cart
 ####### DELETE #######
 
 Deleting_voucher_from_cart_of_logged_in_customer
-    [Documentation]    Fails because of CC-16735 ( CC-16719 is closed as duplicate)
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
