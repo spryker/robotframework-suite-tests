@@ -18,11 +18,16 @@ Zed: fill glossary form:
 
 Zed: undo the changes in glossary translation:
     [Arguments]    ${glossaryName}    ${original_DE}    ${original_EN}    ${admin_email}=${zed_admin_email}
+    ${currentURL}=    Get Location
     ${dynamic_admin_user_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_admin_user}
-    IF    ${dynamic_admin_user_exists}
+    IF    ${dynamic_admin_user_exists} and '${admin_email}' == '${zed_admin_email}'
         VAR    ${admin_email}    ${dynamic_admin_user}
+    ELSE IF    not ${dynamic_admin_user_exists}
+        VAR    ${admin_email}    ${zed_admin_email}
     END
-    Zed: login on Zed with provided credentials:    ${admin_email}
+    IF    '${zed_url}' not in '${currentURL}' or '${zed_url}security-gui/login' in '${currentURL}'
+        Zed: login on Zed with provided credentials:    ${admin_email}
+    END
     Zed: go to URL:    /glossary
     Zed: click Action Button in a table for row that contains:    ${glossaryName}    Edit  
     Zed: fill glossary form:

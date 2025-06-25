@@ -152,13 +152,17 @@ Yves: 'Business Unit' dropdown contains:
 Zed: delete company user xxx withing xxx company business unit:
     [Documentation]    Possible argument names: company user name
     [Arguments]    ${companyUserName}    ${companyBusinessUnit}    ${admin_email}=${zed_admin_email}
-    ${dynamic_admin_user_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_admin_user}
-    IF    ${dynamic_admin_user_exists}
-        VAR    ${admin_email}    ${dynamic_admin_user}
-    END
-    Zed: login on Zed with provided credentials:    ${admin_email}
     ${currentURL}=    Get Location
-    IF    '/customer' not in '${currentURL}'    Zed: go to URL:    /company-user-gui/list-company-user
+    ${dynamic_admin_user_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_admin_user}
+    IF    ${dynamic_admin_user_exists} and '${admin_email}' == '${zed_admin_email}'
+        VAR    ${admin_email}    ${dynamic_admin_user}
+    ELSE IF    not ${dynamic_admin_user_exists}
+        VAR    ${admin_email}    ${zed_admin_email}
+    END
+    IF    '${zed_url}' not in '${currentURL}' or '${zed_url}security-gui/login' in '${currentURL}'
+        Zed: login on Zed with provided credentials:    ${admin_email}
+    END
+    Zed: go to URL:    /company-user-gui/list-company-user
     Zed: perform search by:    ${companyUserName}
     ${customerExists}=    Run Keyword And Return Status    Table should contain    ${zed_table_locator}    ${companyBusinessUnit}
     IF    '${customerExists}'=='True'

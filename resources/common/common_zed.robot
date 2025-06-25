@@ -138,11 +138,16 @@ Zed: click Action Button in a table for row that contains:
 
 Zed: save abstract product:
     [Arguments]    ${productAbstract}    ${admin_email}=${zed_admin_email}
+    ${currentURL}=    Get Location
     ${dynamic_admin_user_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_admin_user}
-    IF    ${dynamic_admin_user_exists}
+    IF    ${dynamic_admin_user_exists} and '${admin_email}' == '${zed_admin_email}'
         VAR    ${admin_email}    ${dynamic_admin_user}
+    ELSE IF    not ${dynamic_admin_user_exists}
+        VAR    ${admin_email}    ${zed_admin_email}
     END
-    Zed: login on Zed with provided credentials:    ${admin_email}
+    IF    '${zed_url}' not in '${currentURL}' or '${zed_url}security-gui/login' in '${currentURL}'
+        Zed: login on Zed with provided credentials:    ${admin_email}
+    END
     Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
     Wait until element is visible    ${zed_save_button}

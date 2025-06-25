@@ -14,11 +14,10 @@ Zed: delete customer:
         ELSE IF    not ${dynamic_admin_user_exists}
             VAR    ${admin_email}    ${zed_admin_email}
         END
-        VAR    ${zed_customer_page_url}    ${zed_url}customer    SCOPE=LOCAL
-        IF    '${zed_customer_page_url}' not in '${currentURL}'
+        IF    '${zed_url}' not in '${currentURL}' or '${zed_url}security-gui/login' in '${currentURL}'
             Zed: login on Zed with provided credentials:    ${admin_email}
-            Zed: go to URL:    /customer
         END
+        Zed: go to URL:    /customer        
         Zed: perform search by:    ${email}
         ${customerExists}=    Run Keyword And Return Status    Element Text Should Be    xpath=//tbody//td[contains(@class,' column-email') and contains(text(),'${email}')]     ${email}
         IF    '${customerExists}'=='True'
