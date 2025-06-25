@@ -23,7 +23,7 @@ Create_warehouse_user_assignment:
     Disconnect From Database
 
 Get_warehouse_user_assignment_id:
-    [Documentation]    This keyword retrieve  warehouse user assignment  ${id_warehouse_user_assignment} in the DB table `spy_warehouse_user_assignment` by uuuid and user_uuid.
+    [Documentation]    This keyword retrieve  warehouse user assignment  ${id_warehouse_user_assignment} in the DB table `spy_warehouse_user_assignment` by uuid and user_uuid.
         ...    *Example:*
         ...
         ...    ``Get_warehouse_user_assignment_id:   ${warehouse_uuid}    ${user_uuid}`

@@ -239,10 +239,6 @@
             }
          }
       },
-      "warehouse_user":{
-         "name":"",
-         "password":""
-      },
       "admin_not_warehouse_user":{
         "email":"admin_de@spryker.com",
         "password":"change123"

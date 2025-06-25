@@ -44,7 +44,7 @@ Create_warehouse_user_assignment_with_invalid_body
     And Response should return error message:    Warehouse user assignment not found.
     [Teardown]    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
 
-Create_warehouse_user_assigment_with_empty_body
+Create_warehouse_user_assignment_with_empty_body
     [Documentation]    https://spryker.atlassian.net/browse/CC-29310
     [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    I get access token by user credentials:    ${zed_admin.email}
@@ -90,17 +90,17 @@ Get_warehouse_user_assignments_by_UUID_without_token
     And Remove_warehouse_user_assignment:    ${warehouse_uuid}    ${admin_user_uuid}
     [Teardown]    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
 
-Get_user_assigments_by_UUID_with_invalid_token
+Get_user_assignments_by_UUID_with_invalid_token
     Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    1
     And Create_warehouse_user_assignment:    ${warehouse_uuid}    ${fk_warehouse_spryker}    ${admin_user_uuid}    false
     Then Get_warehouse_user_assignment_id:   ${warehouse_uuid}    ${admin_user_uuid}
     When I get access token by user credentials:    invalid
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token}  
-    Then I send a GET request:    /warehouse-user-assignments/${id_warehouse_user_assigment}
+    Then I send a GET request:    /warehouse-user-assignments/${id_warehouse_user_assignment}
     Then Response status code should be:    403
     And Response should return error code:    002
     And Response should return error message:   Missing access token.
-    [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse_uuid}    ${admin_user_uuid}
+    [Teardown]    Run Keywords    Remove_warehouse_user_assignment:    ${warehouse_uuid}    ${admin_user_uuid}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
 
 Get_user_assignments_by_invalid_UUID
@@ -116,7 +116,7 @@ Get_user_assignments_by_invalid_UUID
     [Teardown]    Run Keywords    Remove_warehouse_user_assignment:    ${warehouse_uuid}    ${admin_user_uuid}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
 
-Get_user_assigments_list_with_invalid_token
+Get_user_assignments_list_with_invalid_token
     [Setup]    Run Keywords    I get access token by user credentials:    invalid
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${token} 
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    1
@@ -125,7 +125,7 @@ Get_user_assigments_list_with_invalid_token
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
     And Response should return error message:    Missing access token.
-    [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse_uuid}    ${admin_user_uuid}
+    [Teardown]    Run Keywords    Remove_warehouse_user_assignment:    ${warehouse_uuid}    ${admin_user_uuid}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
 
 Get_user_assignments_list_without_token

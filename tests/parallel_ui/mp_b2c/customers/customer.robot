@@ -50,8 +50,7 @@ New_Customer_Registration
     ...    || salutation | first name | last name | e-mail                              | password                   ||
     ...    || Mr.        | New        | User      | sonia+ui+new+${random}@spryker.com  | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: delete customer:    sonia+ui+new${random}@spryker.com
+    [Teardown]    Run Keywords    Zed: delete customer:    sonia+ui+new${random}@spryker.com
     ...    AND    Delete dynamic admin user from DB
     
 Guest_User_Access_Restrictions
@@ -226,6 +225,5 @@ Email_Confirmation
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     Yves: login on Yves with provided credentials and expect error:     sonia+ui+fails+${random}@spryker.com     ${default_secure_password}
     [Teardown]    Run Keywords    Create dynamic admin user in DB
-    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: delete customer:    sonia+ui+fails+${random}@spryker.com
     ...    AND    Delete dynamic admin user from DB

@@ -6,9 +6,19 @@ Resource    ../common/common.robot
 *** Keywords ***
 Zed: delete customer:
     [Documentation]    Possible argument names: email
-        [Arguments]    ${email}
+        [Arguments]    ${email}    ${admin_email}=${zed_admin_email}
         ${currentURL}=    Get Location
-        IF    '/customer' not in '${currentURL}'    Zed: go to URL:    /customer
+        ${dynamic_admin_user_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_admin_user}
+        IF    ${dynamic_admin_user_exists} and '${admin_email}' == '${zed_admin_email}'
+            VAR    ${admin_email}    ${dynamic_admin_user}
+        ELSE IF    not ${dynamic_admin_user_exists}
+            VAR    ${admin_email}    ${zed_admin_email}
+        END
+        VAR    ${zed_customer_page_url}    ${zed_url}customer    SCOPE=LOCAL
+        IF    '${zed_customer_page_url}' not in '${currentURL}'
+            Zed: login on Zed with provided credentials:    ${admin_email}
+            Zed: go to URL:    /customer
+        END
         Zed: perform search by:    ${email}
         ${customerExists}=    Run Keyword And Return Status    Element Text Should Be    xpath=//tbody//td[contains(@class,' column-email') and contains(text(),'${email}')]     ${email}
         IF    '${customerExists}'=='True'

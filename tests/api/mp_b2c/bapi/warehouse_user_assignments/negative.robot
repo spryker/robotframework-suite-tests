@@ -123,8 +123,8 @@ Get_user_assignments_list_with_invalid_token
     Then I send a GET request:    /warehouse-user-assignments/
     Then Response status code should be:    403
     And Response reason should be:    Forbidden
-    [Teardown]    Run Keywords    Remove_warehous_user_assigment:    ${warehouse[0].warehouse_uuid}    ${warehous_user[0].admin_user_uuid}
-    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].admin_user_uuid}    0   
+    [Teardown]    Run Keywords    Remove_warehouse_user_assignment:    ${warehouse[0].warehouse_uuid}    ${warehouse_user[0].admin_user_uuid}
+    ...    AND    Make user a warehouse user/ not a warehouse user:   ${warehouse_user[0].admin_user_uuid}    0   
 
 
 Get_user_assignments_list_without_token

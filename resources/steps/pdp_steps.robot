@@ -437,44 +437,53 @@ Yves: select xxx merchant's offer:
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     TRY
         Repeat Keyword    3    Wait For Load State
-    EXCEPT
-        Log    Page is not loaded
-    END
-    TRY
-        Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
-        Wait For Request
-        TRY
-            Repeat Keyword    3    Wait For Load State
-            Repeat Keyword    3    Wait For Load State    domcontentloaded
-        EXCEPT
-            Log    Page is not loaded
-        END
-        Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
-    EXCEPT
-        Reload
-        TRY
-            Repeat Keyword    3    Wait For Load State
-            Repeat Keyword    3    Wait For Load State    domcontentloaded
-        EXCEPT
-            Log    Page is not loaded
-        END
-        Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
-        Wait For Request
-        TRY
-            Repeat Keyword    3    Wait For Load State
-            Repeat Keyword    3    Wait For Load State    domcontentloaded
-        EXCEPT
-            Log    Page is not loaded
-        END
-        Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
-    END
-    Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
-    TRY
-        Repeat Keyword    3    Wait For Load State
-        Repeat Keyword    3    Wait For Load State    domcontentloaded
+        Wait For Load State    domcontentloaded
         Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
+    END
+    ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input[@checked]    timeout=50ms
+    IF    not ${merchant_offer_is_already_selected}
+        TRY
+            Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+            Wait For Request
+            TRY
+                Repeat Keyword    3    Wait For Load State
+                Repeat Keyword    3    Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    Page is not loaded
+            END
+            Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
+        EXCEPT
+            Reload
+            TRY
+                Repeat Keyword    3    Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
+            ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input[@checked]    timeout=50ms
+            IF    not ${merchant_offer_is_already_selected}
+                Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+                Wait For Request
+                TRY
+                    Repeat Keyword    3    Wait For Load State
+                    Repeat Keyword    3    Wait For Load State    domcontentloaded
+                EXCEPT
+                    Log    Page is not loaded
+                END
+                Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
+            END
+        END
+        Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
+        TRY
+            Repeat Keyword    3    Wait For Load State
+            Wait For Load State    domcontentloaded
+            Wait For Load State    networkidle
+        EXCEPT
+            Log    Page is not loaded
+        END
     END
 
 Yves: select xxx merchant's offer with price:
@@ -482,6 +491,8 @@ Yves: select xxx merchant's offer with price:
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     TRY
         Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -519,33 +530,41 @@ Yves: select xxx merchant's offer with price:
             END
         END
     ELSE
-        TRY
-            Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
-            Wait For Request
+        ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input[@checked]    timeout=50ms
+        IF    not ${merchant_offer_is_already_selected}
             TRY
-                Repeat Keyword    3    Wait For Load State
-                Repeat Keyword    3    Wait For Load State    domcontentloaded
+                Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+                Wait For Request
+                TRY
+                    Repeat Keyword    3    Wait For Load State
+                    Wait For Load State    domcontentloaded
+                    Wait For Load State    networkidle
+                EXCEPT
+                    Log    Page is not loaded
+                END
+                Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
             EXCEPT
-                Log    Page is not loaded
+                Reload
+                ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input[@checked]    timeout=50ms
+                IF    not ${merchant_offer_is_already_selected}
+                    TRY
+                        Repeat Keyword    3    Wait For Load State
+                        Repeat Keyword    3    Wait For Load State    domcontentloaded
+                    EXCEPT
+                        Log    Page is not loaded
+                    END
+                    Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+                    Wait For Request
+                    TRY
+                        Repeat Keyword    3    Wait For Load State
+                        Wait For Load State    domcontentloaded
+                        Wait For Load State    networkidle
+                    EXCEPT
+                        Log    Page is not loaded
+                    END
+                END
+                Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
             END
-            Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
-        EXCEPT
-            Reload
-            TRY
-                Repeat Keyword    3    Wait For Load State
-                Repeat Keyword    3    Wait For Load State    domcontentloaded
-            EXCEPT
-                Log    Page is not loaded
-            END
-            Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
-            Wait For Request
-            TRY
-                Repeat Keyword    3    Wait For Load State
-                Repeat Keyword    3    Wait For Load State    domcontentloaded
-            EXCEPT
-                Log    Page is not loaded
-            END
-            Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
         END
     END
     Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should

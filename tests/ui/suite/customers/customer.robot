@@ -404,6 +404,4 @@ Email_Confirmation
     ...    || Mr.        | New        | User      | sonia+fails+${random}@spryker.com  | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     Yves: login on Yves with provided credentials and expect error:     sonia+fails+${random}@spryker.com     ${default_secure_password}
-    [Teardown]    Zed: delete customer:
-    ...    || email                             ||
-    ...    || sonia+fails+${random}@spryker.com ||
+    [Teardown]    Zed: delete customer:    sonia+fails+${random}@spryker.com

@@ -95,8 +95,7 @@ Register_during_checkout
     Yves: assert customer profile data:
     ...    || salutation    | first name               | last name               | email                            ||
     ...    || ${salutation} | ${guest_user_first_name} | ${guest_user_last_name} | sonia+guest${random}@spryker.com ||
-    [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: delete customer:    sonia+guest${random}@spryker.com
+    [Teardown]    Run Keywords    Zed: delete customer:    sonia+guest${random}@spryker.com
     ...    AND    Delete dynamic admin user from DB
 
 Business_Unit_Address_on_Checkout
