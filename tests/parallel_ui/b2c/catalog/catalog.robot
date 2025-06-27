@@ -76,9 +76,9 @@ Catalog_Actions
     Yves: perform search by:    NEX-VG20EH
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: quick add to cart for first item in catalog
-    Yves: perform search by:    115
+    Yves: perform search by:    115_26408656
     Yves: 1st product card in catalog (not)contains:     Add to Cart    false
-    Yves: perform search by:    002
+    Yves: perform search by:    002_25904004
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: 1st product card in catalog (not)contains:      Color selector   true
     Yves: mouse over color on product card:    silver

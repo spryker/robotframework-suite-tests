@@ -122,16 +122,16 @@ Data_exchange_API_Configuration_in_Zed
     I get access token by user credentials:   ${dynamic_admin_user}
     ### CREATE TEST MIME TYPE USING DATA EXCHANGE API ###
     I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    I send a POST request:    /dynamic-entity/mime-types    {"data":[{"name":"POST ${random}","is_allowed":${false},"extensions":"[\\"fake\\"]"}]}
+    I send a POST request:    /dynamic-entity/mime-types    {"data":[{"name":"POST ${random}","is_allowed":false,"extensions":"fake"}]}
     Response status code should be:    201
     Response header parameter should be:    Content-Type    application/json
     Response body parameter should be:    [data][0][name]    POST ${random}
     Response body parameter should be:    [data][0][is_allowed]    False
-    Response body parameter should be:    [data][0][extensions]    "fake"
+    Response body parameter should be:    [data][0][extensions]    fake
     Response body parameter should be:    [data][0][comment]    None
     Save value to a variable:    [data][0][id_mime_type]    id_mime_type
     ### UPDATE TEST MIME TYPE USING DATA EXCHANGE API ###
-    I send a PATCH request:    /dynamic-entity/mime-types/${id_mime_type}    {"data":{"comment":${null},"extensions":"[\\"dummy\\"]","is_allowed":${true},"name":"PATCH ${random}"}}
+    I send a PATCH request:    /dynamic-entity/mime-types/${id_mime_type}    {"data":{"comment":null,"extensions":"dummy","is_allowed":true,"name":"PATCH ${random}"}}
     Response status code should be:    200
     ### GET UPDATE TEST MIME TYPE BY ID ###
     I send a GET request:    /dynamic-entity/mime-types/${id_mime_type}
@@ -139,7 +139,7 @@ Data_exchange_API_Configuration_in_Zed
     Response header parameter should be:    Content-Type    application/json
     Response body parameter should be:    [data][name]    PATCH ${random}
     Response body parameter should be:    [data][is_allowed]    True
-    Response body parameter should be:    [data][extensions]    "dummy"
+    Response body parameter should be:    [data][extensions]    dummy
     Response body parameter should be:    [data][comment]    None
     ### DELETE TEST CONFIGURATION AND TEST MIME TYPE FROM DB ###
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
