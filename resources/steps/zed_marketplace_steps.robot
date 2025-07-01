@@ -187,7 +187,7 @@ Zed: create dynamic merchant user:
     IF    '/list-merchant' not in '${currentURL}'    
         ${adminIsLoggedIn}=    Zed: is admin user is logged in
         IF    not ${adminIsLoggedIn}    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-        Go To    ${zed_url}merchant-gui/list-merchant
+        Zed: go to URL:    /merchant-gui/list-merchant
     END
     TRY
         Wait For Load State
@@ -197,7 +197,7 @@ Zed: create dynamic merchant user:
     END
     Zed: click Action Button in a table for row that contains:     ${merchant}     Edit
     Zed: go to tab by link href that contains:    merchant-user
-    Click    ${zed_add_merchant_user_button}
+    Click and retry if 5xx occurred:    ${zed_add_merchant_user_button}
     Wait Until Element Is Visible    ${zed_create_merchant_user_email_field}
     Type Text    ${zed_create_merchant_user_email_field}    ${merchant_user_email}
     Type Text    ${zed_create_merchant_user_first_name_field}    ${merchant_user_first_name}${unique}
@@ -299,4 +299,4 @@ Zed: click Action Button in Merchant Users table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform merchant user search by:    ${row_content}
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
-    Click    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
+    Click and retry if 5xx occurred:    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]

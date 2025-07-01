@@ -78,7 +78,6 @@ Zed: update cms page and publish it:
     [Arguments]    @{args}
     ${cmsPageData}=    Set Up Keyword Arguments    @{args}
     Zed: go to URL:    /cms-gui/list-page
-    Zed: perform search by:    ${cmsPage}
     Zed: click Action Button in a table for row that contains:     ${cmsPage}     Edit
     Set Browser Timeout    5s
     TRY

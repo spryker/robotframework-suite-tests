@@ -196,7 +196,8 @@ Zed: update abstract product data:
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
     Zed: go to URL:    /product-management 
     Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
-    ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${${zed_product_general_second_locale_expanded_section}}    3s
+    Wait For Load State
+    ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    100ms
     IF    '${second_locale_section_expanded}'=='False'
     Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
     Click    ${zed_product_general_second_locale_collapsed_section}
@@ -232,22 +233,21 @@ Zed: update abstract product data:
 
 Zed: update abstract product price on:
     [Arguments]    @{args}
+    Wait For Load State
     ${priceData}=    Set Up Keyword Arguments    @{args}
-    Set Browser Timeout    1s
-    TRY
+    ${is_edit_abstract_price_tab_exists}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//a[contains(@data-toggle,'tab')][contains(@href,'content-price_and_tax')] | //*[contains(@data-toggle,'tab')]//a[contains(@href,'content-price_and_tax')]    timeout=100ms
+    IF    '${is_edit_abstract_price_tab_exists}'=='False'
+        Zed: go to URL:    /product-management
+        Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
+        Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
         Zed: go to tab by link href that contains:   content-price
-    EXCEPT
-        Log    It's edit price case
-    END
-    Set Browser Timeout    ${browser_timeout}
-    FOR    ${key}    ${value}    IN    &{priceData}
-        Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='productAbstract' and '${value}' != '${EMPTY}'
-            Zed: go to URL:    /product-management
-            Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
-            Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
-            Zed: go to tab by link href that contains:   content-price
+    ELSE
+        ${currentURL}=    Get Location
+        IF    'content-price_and_tax' not in '${currentURL}'
+            Zed: go to tab by link href that contains:   content-price_and_tax
         END
+    END
+    FOR    ${key}    ${value}    IN    &{priceData}
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'
             ${store}=    Set Variable    ${value}
         END
@@ -271,7 +271,7 @@ Zed: update abstract product price on:
         END
         IF    '${key}'=='tax set' and '${value}' != '${EMPTY}'    Select From List By Label    ${zed_product_tax_set_select}    ${value}
     END
-    Click    ${zed_pdp_save_button}
+    Click and retry if 5xx occurred:    ${zed_pdp_save_button}
 
 Zed: start new abstract product creation:
     [Arguments]    @{args}

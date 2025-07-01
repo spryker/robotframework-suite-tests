@@ -251,7 +251,7 @@ Yves: product price on the PDP should be:
     IF    '${wait_for_p&s}' == 'false'
         ${wait_for_p&s}=    Set Variable    ${False}
     END
-    Set Browser Timeout    3s
+    Set Browser Timeout    1s
     IF    ${wait_for_p&s}
         FOR    ${index}    IN RANGE    1    ${iterations}
             ${price_displayed}=    Run Keyword And Ignore Error    Page Should Contain Element    ${pdp_price_element_locator}    timeout=1s
@@ -273,7 +273,7 @@ Yves: product price on the PDP should be:
             END
         END
     ELSE
-        Set Browser Timeout    3s
+        Set Browser Timeout    1s
         TRY
             ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
             Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}    message=Actual product price is ${actualProductPrice}, expected ${expectedProductPrice}
@@ -306,7 +306,7 @@ Yves: add product to the shopping list:
     IF    'FAIL' in $variants_present_status    Yves: change variant of the product on PDP on random value
     IF    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in $shopping_list_dropdown_status)
         TRY
-            Set Browser Timeout    3s
+            Set Browser Timeout    1s
             Wait Until Element Is Enabled    ${pdp_shopping_list_selector}
             Select From List By Label    ${pdp_shopping_list_selector}    ${shoppingListName}
             Wait Until Element Is Visible    ${pdp_add_to_shopping_list_button}

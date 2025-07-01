@@ -25,6 +25,7 @@ MP: change store status to:
         Click    ${store_status_checkbox}
     END
     MP: click submit button
+    Wait For Load State
     Wait Until Element Is Visible    ${mp_success_flyout}    timeout=5s
     Trigger multistore p&s
 

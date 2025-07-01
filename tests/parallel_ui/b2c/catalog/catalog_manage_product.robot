@@ -42,7 +42,7 @@ Resource    ../../../../resources/steps/configurable_product_steps.robot
 Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 
 *** Test Cases ***
-Manage_Product
+Manage_Product    
     [Documentation]    checks that BO user can manage abstract and concrete products + create new
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB

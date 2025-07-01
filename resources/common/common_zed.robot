@@ -16,14 +16,20 @@ ${zed_variant_search_field_locator}     xpath=//*[@id='product-variant-table_fil
 ${zed_processing_block_locator}     xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')]
 ${zed_merchants_dropdown_locator}    xpath=//select[@name='id-merchant']
 ${zed_attribute_access_denied_header}    xpath=//div[@class='wrapper wrapper-content']//div[@class='flash-messages']//following-sibling::h1
-${zed_sweet_alert_js_error_popup}    xpath=//*[contains(@class,'sweet-alert')]
+${sweet_alert_js_error_popup}    xpath=//*[contains(@class,'sweet-alert')]
 
 
 *** Keywords ***
 Zed: login on Zed with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
     Delete All Cookies
-    Zed: go to URL:    /
+    LocalStorage Clear
+    ${is_zed_url_accessible}    Run Keyword And Ignore Error    Zed: go to URL:    /
+    IF    'FAIL' in $is_zed_url_accessible
+        LocalStorage Clear
+        Delete All Cookies
+        Zed: go to URL:    /
+    END
     Delete All Cookies
     Reload
     Wait Until Element Is Visible    ${zed_user_name_field}
@@ -31,13 +37,40 @@ Zed: login on Zed with provided credentials:
     IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
     Type Text    ${zed_user_name_field}    ${email}
     Type Text    ${zed_password_field}    ${password}
-    Click    ${zed_login_button}
-    TRY
-        Wait Until Element Is Visible    ${zed_log_out_button}    Zed:Dashboard page is not displayed
-    EXCEPT    
+    # workaround for the issue with deadlocks on concurrent login attempts
+    ${is_5xx}=    Click and return True if 5xx occurred:    ${zed_login_button}
+    IF    ${is_5xx}
+        Delete All Cookies
+        LocalStorage Clear
+        Zed: go to URL:    /
+        Delete All Cookies
         Reload
-        Wait Until Element Is Visible    ${zed_log_out_button}    Zed:Dashboard page is not displayed
+        Wait Until Element Is Visible    ${zed_user_name_field}
+        ${email_value}=    Convert To Lower Case   ${email}
+        IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
+        Type Text    ${zed_user_name_field}    ${email}
+        Type Text    ${zed_password_field}    ${password}
+        Click    ${zed_login_button}
     END
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=1s
+    EXCEPT
+        Delete All Cookies
+        LocalStorage Clear
+        Zed: go to URL:    /
+        Delete All Cookies
+        Reload
+        Wait Until Element Is Visible    ${zed_user_name_field}
+        ${email_value}=    Convert To Lower Case   ${email}
+        IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
+        Type Text    ${zed_user_name_field}    ${email}
+        Type Text    ${zed_password_field}    ${password}
+        Click    ${zed_login_button}
+        Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=5s
+    END
+    
+    
 
 Zed: login with deactivated user/invalid data:
    [Arguments]    ${email}    ${password}=${default_password}
@@ -61,11 +94,12 @@ Zed: go to first navigation item level:
     EXCEPT
         Log    Page is not loaded
     END
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
+    # workaround for the issue with deadlocks on concurrent search attempts
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
         LocalStorage Clear
         Reload
-        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
+        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
         IF    not ${no_js_error}    Fail    ''sweet-alert' js error popup on the page '${zed_url}: ${navigation_item}'
     END
 
@@ -107,11 +141,12 @@ Zed: go to second navigation item level:
             Log    Page is not loaded
         END
     END
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
+    # workaround for the issue with deadlocks on concurrent search attempts
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
         LocalStorage Clear
         Reload
-        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
+        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
         IF    not ${no_js_error}    Fail    ''sweet-alert' js error popup on the page '${zed_url}: ${navigation_item_level1}->${navigation_item_level2}'
     END
     
@@ -127,7 +162,6 @@ Zed: wait for button in Header to be visible:
 Zed: click Action Button in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform search by:    ${row_content}
-    # all services are not supported due to demodata collision
     Wait until element is visible    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}') and not(contains(text(),'service'))]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
     Click and retry if 5xx occurred:    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}') and not(contains(text(),'service'))]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
     TRY
@@ -157,6 +191,7 @@ Zed: click Action Button in Variant table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
     Zed: perform variant search by:    ${row_content}
     wait until element is visible    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
+    # workaround for the issue with deadlocks on concurrent search attempts
     Click and retry if 5xx occurred:    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')]
     TRY
         Repeat Keyword    3    Wait For Load State
@@ -182,6 +217,7 @@ Zed: Uncheck Checkbox by Label:
 Zed: submit the form
     Wait until element is visible    ${zed_save_button}
     Click    ${zed_save_button}
+    # workaround for the issue with deadlocks on concurrent search attempts
     ${got_response}=    Run Keyword And Ignore Error    Wait For Response
     TRY
         Repeat Keyword    3    Wait For Load State
@@ -224,39 +260,91 @@ Zed: submit the form
 Zed: perform search by:
     [Arguments]    ${search_key}
     Zed: clear search field
-    Type Text    ${zed_search_field_locator}    ${search_key}
+    # workaround for the issue with deadlocks on concurrent search attempts
     TRY
-        Wait For Response    timeout=10s
+        ${promise}=    Promise to    Wait For Response    matcher=**    timeout=10s
+        Type Text    ${zed_search_field_locator}    ${search_key}
+        ${result}=    Run Keyword And Ignore Error    Wait for    ${promise}
+        TRY
+            Repeat Keyword    3    Wait For Load State
+            Wait For Load State    networkidle
+        EXCEPT    
+            Log    Search event is not fired
+        END
+        IF    '${result}[0]'=='FAIL'
+            VAR    ${is_5xx}    ${False}
+        ELSE
+            ${response}=    Set Variable    ${result}[1]
+            ${status}=    Get From Dictionary    ${response}    status
+            ${is_5xx}=    Evaluate    ${status} >= 500
+            IF    ${is_5xx}
+                LocalStorage Clear
+                Reload
+                Zed: clear search field
+                Type Text    ${zed_search_field_locator}    ${search_key}
+                TRY
+                    Wait For Load State
+                    Wait For Load State    networkidle
+                EXCEPT
+                    Log    Search event is not fired
+                END
+            END
+        END
     EXCEPT    
-        Log    Search event is not fired
+        LocalStorage Clear
+        Reload
+        Zed: clear search field
+        Type Text    ${zed_search_field_locator}    ${search_key}
+        TRY
+            Wait For Load State
+            Wait For Load State    networkidle
+        EXCEPT
+            Log    Search event is not fired
+        END
     END
     TRY
-        Repeat Keyword    3    Wait For Load State
+        Wait For Load State
         Wait For Load State    networkidle
     EXCEPT
         Log    Search event is not fired
+    END
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    IF    not ${no_js_error}
+        LocalStorage Clear
+        Reload
+        Zed: clear search field
+        Type Text    ${zed_search_field_locator}    ${search_key}
+        TRY
+            Wait For Load State
+            Wait For Load State    networkidle
+        EXCEPT
+            Log    Search event is not fired
+        END
+        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+        IF    not ${no_js_error}    Fail    ''sweet-alert' js error popup occurred'
     END
 
 Zed: clear search field
     Clear Text    ${zed_search_field_locator}
+    # workaround for the issue with deadlocks on concurrent search attempts
     TRY
-        Repeat Keyword    3    Wait For Load State
+        Wait For Load State
         Wait For Load State    networkidle
     EXCEPT
         Log    Search event is not fired
     END
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
         LocalStorage Clear
         Reload
         Clear Text    ${zed_search_field_locator}
         TRY
-            Repeat Keyword    3    Wait For Load State
+            Wait For Load State
             Wait For Load State    networkidle
         EXCEPT
             Log    Search event is not fired
         END
-        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
+        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
         IF    not ${no_js_error}    Fail    ''sweet-alert' js error popup occurred'
     END
 
@@ -264,30 +352,72 @@ Zed: perform variant search by:
     [Arguments]    ${search_key}
     Clear Text    ${zed_variant_search_field_locator}
     TRY
-        Repeat Keyword    3    Wait For Load State
+        Wait For Load State
         Wait For Load State    networkidle
     EXCEPT
         Log    Search event is not fired
     END
-    Type Text    ${zed_variant_search_field_locator}    ${search_key}
+    # workaround for the issue with deadlocks on concurrent search attempts
     TRY
-        Wait For Response    timeout=10s
+        ${promise}=    Promise to    Wait For Response    matcher=**    timeout=10s
+        Type Text    ${zed_variant_search_field_locator}    ${search_key}
+        ${result}=    Run Keyword And Ignore Error    Wait for    ${promise}
+        TRY
+            Wait For Load State
+            Wait For Load State    networkidle
+        EXCEPT
+            Log    Search event is not fired
+        END
+        IF    '${result}[0]'=='FAIL'
+            VAR    ${is_5xx}    ${False}
+        ELSE
+            ${response}=    Set Variable    ${result}[1]
+            ${status}=    Get From Dictionary    ${response}    status
+            ${is_5xx}=    Evaluate    ${status} >= 500
+            IF    ${is_5xx}
+                LocalStorage Clear
+                Reload
+                Clear Text    ${zed_variant_search_field_locator}
+                TRY
+                    Wait For Load State
+                    Wait For Load State    networkidle
+                EXCEPT
+                    Log    Search event is not fired
+                END
+                Type Text    ${zed_variant_search_field_locator}    ${search_key}
+                TRY
+                    Wait For Load State
+                    Wait For Load State    networkidle
+                EXCEPT
+                    Log    Search event is not fired
+                END
+            END
+        END
     EXCEPT    
-        Log    Search event is not fired
+        LocalStorage Clear
+        Reload
+        Clear Text    ${zed_variant_search_field_locator}
+        TRY
+            Wait For Load State
+            Wait For Load State    networkidle
+        EXCEPT
+            Log    Search event is not fired
+        END
+        Type Text    ${zed_variant_search_field_locator}    ${search_key}
+        TRY
+            Wait For Load State
+            Wait For Load State    networkidle
+        EXCEPT
+            Log    Search event is not fired
+        END
     END
-    TRY
-        Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
-    EXCEPT
-        Log    Search event is not fired
-    END
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
         LocalStorage Clear
         Reload
         Clear Text    ${zed_variant_search_field_locator}
         TRY
-            Repeat Keyword    3    Wait For Load State
+            Wait For Load State
             Wait For Load State    networkidle
         EXCEPT
             Log    Search event is not fired
@@ -299,12 +429,12 @@ Zed: perform variant search by:
             Log    Search event is not fired
         END
         TRY
-            Repeat Keyword    3    Wait For Load State
+            Wait For Load State
             Wait For Load State    networkidle
         EXCEPT
             Log    Search event is not fired
         END
-        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
+        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
         IF    not ${no_js_error}    Fail    ''sweet-alert' js error popup occurred'
     END
 
@@ -327,11 +457,23 @@ Zed: table should contain xxx N times:
 
 Zed: go to tab:
     [Arguments]    ${tabName}
-    Click    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
+    ${is_5xx}=    Click and return True if 5xx occurred:    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
+    # workaround for the issue with deadlocks on concurrent click attempts
+    IF    ${is_5xx}
+        Reload
+        Click With Options    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]    force=True    noWaitAfter=True
+    END
+    Wait For Load State
 
 Zed: go to tab by link href that contains:
     [Arguments]    ${href}
-    Click    xpath=//a[contains(@data-toggle,'tab')][contains(@href,'${href}')] | //*[contains(@data-toggle,'tab')]//a[contains(@href,'${href}')]
+    ${is_5xx}=    Click and return True if 5xx occurred:    xpath=//a[contains(@data-toggle,'tab')][contains(@href,'${href}')] | //*[contains(@data-toggle,'tab')]//a[contains(@href,'${href}')]
+    # workaround for the issue with deadlocks on concurrent click attempts
+    IF    ${is_5xx}
+        Reload
+        Click With Options    xpath=//a[contains(@data-toggle,'tab')][contains(@href,'${href}')] | //*[contains(@data-toggle,'tab')]//a[contains(@href,'${href}')]    force=True    noWaitAfter=True
+    END
+    Wait For Load State
 
 Zed: message should be shown:
     [Arguments]    ${text}
@@ -373,6 +515,7 @@ Zed: go to URL:
     Set Browser Timeout    ${browser_timeout}
     ${response_code}=    Go To    ${zed_url}${url}
     ${response_code}=    Convert To Integer    ${response_code}
+    # workaround for the issue with deadlocks on concurrent search attempts
     ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
     ${page_title}=    Get Title
     ${page_title}=    Convert To Lower Case    ${page_title}
@@ -391,14 +534,14 @@ Zed: go to URL:
         ${expected_response_code}=    Convert To Integer    ${expected_response_code}
         Should Be Equal    ${response_code}    ${expected_response_code}    msg=Expected response code (${expected_response_code}) is not equal to the actual response code (${response_code}) on Go to: ${zed_url}${url}
     END
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
         LocalStorage Clear
         ${response_code}=    Go To    ${zed_url}${url}
         ${response_code}=    Convert To Integer    ${response_code}
         ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
         IF    ${is_5xx}    Fail    '${response_code}' error occurred on go to '${zed_url}${url}'
-        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_sweet_alert_js_error_popup}    timeout=500ms
+        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
         IF    not ${no_js_error}    
             Take Screenshot    EMBED    fullPage=True
             Fail    ''sweet-alert' js error popup on the page '${zed_url}${url}'

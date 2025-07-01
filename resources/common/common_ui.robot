@@ -403,11 +403,26 @@ Ping and go to URL:
 
 *** Keywords ***
 Click and retry if 5xx occurred:
-    [Arguments]    ${selector}
-    Click    ${selector}
+    [Arguments]    ${selector}    ${timeout}=300ms
+    Wait For Load State
+    VAR    ${sweet_alert_js_error_popup}    xpath=//*[contains(@class,'sweet-alert')]
+    TRY
+        ${promise}=    Promise to    Wait For Response    matcher=**    timeout=${timeout}
+        Click    ${selector}
+        ${result}=    Run Keyword And Ignore Error    Wait for    ${promise}
+    EXCEPT
+        Log    No requests were fired
+    END
+    IF    '${result}[0]'=='FAIL'
+        VAR    ${is_5xx}    ${False}
+    ELSE
+        ${response}=    Set Variable    ${result}[1]
+        ${status}=    Get From Dictionary    ${response}    status
+        ${is_5xx}=    Evaluate    ${status} >= 500
+    END
     ${statuses}=    Create List
     FOR    ${i}    IN RANGE    10
-        ${result}=    Run Keyword And Ignore Error    Wait For Response    matcher=**    timeout=0.5s
+        ${result}=    Run Keyword And Ignore Error    Wait For Response    matcher=**    timeout=${timeout}
         IF    '${result}[0]'=='FAIL'
             Exit For Loop
         END
@@ -415,21 +430,22 @@ Click and retry if 5xx occurred:
         ${status}=    Get From Dictionary    ${response}    status
         Append To List    ${statuses}    ${status}
     END
-    ${is_5xx}=    Evaluate    any(status >= 500 for status in ${statuses})
+    ${is_5xx_in_page_load}=    Evaluate    any(status >= 500 for status in ${statuses})
     ${page_title}=    Get Title
     ${page_title}=    Convert To Lower Case    ${page_title}
     ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
-    IF    not ${is_5xx} and ${no_exception}
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    IF    not ${is_5xx} and not ${is_5xx_in_page_load} and ${no_exception} and ${no_js_error}
         RETURN
     END
-    # Retry click if 5xx occurred
+    # Retry click if 5xx occurred or exception
     Log    message=Clicking '${selector}' triggered a 5xx error. Retrying ...    level=WARN
     LocalStorage Clear
     Reload
-    Click    ${selector}
+    Click With Options    ${selector}    force=True
     ${statuses_retry}=    Create List
     FOR    ${i}    IN RANGE    10
-        ${result}=    Run Keyword And Ignore Error    Wait For Response    matcher=**    timeout=0.5s
+        ${result}=    Run Keyword And Ignore Error    Wait For Response    matcher=**    timeout=100ms
         IF    '${result}[0]'=='FAIL'
             Exit For Loop
         END
@@ -437,12 +453,52 @@ Click and retry if 5xx occurred:
         ${status}=    Get From Dictionary    ${response}    status
         Append To List    ${statuses_retry}    ${status}
     END
-    Log    Retry click response statuses: ${statuses_retry}
-    ${second_error}=    Evaluate    any(status >= 500 for status in ${statuses_retry})
-    Should Not Be True    ${second_error}    msg=Clicking '${selector}' triggered a 5xx error.
+    ${second_5xx_error_in_page_load}=    Evaluate    any(status >= 500 for status in ${statuses_retry})
+    Should Not Be True    ${second_5xx_error_in_page_load}    msg=Clicking '${selector}' triggered a 5xx error.
     ${page_title}=    Get Title
     ${page_title}=    Convert To Lower Case    ${page_title}
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
     Should Not Contain    ${page_title}    error    msg=Clicking '${selector}' triggered a 5xx error.
+    IF     not ${no_js_error}    Fail    Clicking '${selector}' triggered a 5xx error.
+
+Click and return True if 5xx occurred:
+    [Arguments]    ${locator}    ${timeout}=400ms
+    Wait For Load State
+    VAR    ${sweet_alert_js_error_popup}    xpath=//*[contains(@class,'sweet-alert')]
+    TRY
+        ${promise}=    Promise to    Wait For Response    matcher=**    timeout=${timeout}
+        Click    ${locator}
+        ${result}=    Run Keyword And Ignore Error    Wait for    ${promise}
+    EXCEPT
+        Log    No requests were fired
+    END
+    IF    '${result}[0]'=='FAIL'
+        VAR    ${is_5xx}    ${False}
+    ELSE
+        ${response}=    Set Variable    ${result}[1]
+        ${status}=    Get From Dictionary    ${response}    status
+        ${is_5xx}=    Evaluate    ${status} >= 500
+    END
+    ${page_load_statuses}=    Create List
+    FOR    ${i}    IN RANGE    10
+        ${result}=    Run Keyword And Ignore Error    Wait For Response    matcher=**    timeout=${timeout}
+        IF    '${result}[0]'=='FAIL'
+            Exit For Loop
+        END
+        ${response}=    Set Variable    ${result}[1]
+        ${status}=    Get From Dictionary    ${response}    status
+        Append To List    ${page_load_statuses}    ${status}
+    END
+    ${is_5xx_in_page_load}=    Evaluate    any(status >= 500 for status in ${page_load_statuses})
+    ${page_title}=    Get Title
+    ${page_title}=    Convert To Lower Case    ${page_title}
+    ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    IF    ${is_5xx} or ${is_5xx_in_page_load} or not ${no_exception} or not ${no_js_error}
+        RETURN    ${True}
+    ELSE
+        RETURN    ${False}
+    END
 
 # *** Example of intercepting the network request ***
 #     [Arguments]    ${eventName}    ${timeout}=30s

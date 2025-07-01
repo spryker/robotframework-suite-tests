@@ -19,6 +19,7 @@ ${mp_loading_icon}    xpath=//span[contains(@class,'spin-dot') and not(ancestor:
 MP: login on MP with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
     Delete All Cookies
+    LocalStorage Clear
     MP: go to URL:    /
     Delete All Cookies
     Reload
@@ -27,8 +28,20 @@ MP: login on MP with provided credentials:
     IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
     Type Text    ${mp_user_name_field}    ${email}
     Type Text    ${mp_password_field}    ${password}
-    Click    ${mp_login_button}
-    Wait Until Element Is Visible    ${mp_user_menu_button}    MP: Login failed
+    # workaround for the issue with deadlocks on concurrent login attempts
+    ${is_5xx}=    Click and return True if 5xx occurred:    ${mp_login_button}
+    IF    ${is_5xx}
+        Delete All Cookies
+        LocalStorage Clear
+        MP: go to URL:    /
+        Wait Until Element Is Visible    ${mp_user_name_field}
+        ${email_value}=    Convert To Lower Case   ${email}
+        IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
+        Type Text    ${mp_user_name_field}    ${email}
+        Type Text    ${mp_password_field}    ${password}
+        Click    ${mp_login_button}
+    END
+    Wait Until Element Is Visible    ${mp_user_menu_button}    MP: Login failed!    timeout=15s
 
 MP: login on MP with provided credentials and expect error:
     [Arguments]    ${email}    ${password}=${default_password}

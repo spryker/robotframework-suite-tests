@@ -42,12 +42,14 @@ Yves: login on Yves with provided credentials:
     ${currentURL}=    Get Url
     IF    '/login' not in '${currentURL}'
             Delete All Cookies
+            LocalStorage Clear
             Reload
             Yves: go to URL:    /login
     END
     ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    locator=${email_field}    message=Login page is not displayed
     IF    'FAIL' in $is_login_page
         Delete All Cookies
+        LocalStorage Clear
         Yves: go to the 'Home' page
         Yves: go to URL:    /login
     END
@@ -55,19 +57,20 @@ Yves: login on Yves with provided credentials:
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
+    Wait For Load State
     # workaround for the issue with deadlocks on concurrent login attempts
     TRY
         IF    'agent' in '${currentURL}'
-            Page Should Contain Element    ${customerSearchWidget}    Login Failed!
+            Page Should Contain Element    ${customerSearchWidget}    Login Failed!    timeout=1s
         ELSE    
-            Page Should Contain Element    ${user_header_logout_button}     Login Failed!
+            Page Should Contain Element    ${user_header_logout_button}     Login Failed!    timeout=1s
         END
     EXCEPT
         Reload
         IF    'agent' in '${currentURL}'
-            Page Should Contain Element    locator=${customerSearchWidget}    message=Login Failed!    timeout=1s
+            Page Should Contain Element    locator=${customerSearchWidget}    message=Yves: Login Failed    timeout=5s
         ELSE    
-            Page Should Contain Element    locator=${user_header_logout_button}     message=Login Failed!    timeout=1s
+            Page Should Contain Element    locator=${user_header_logout_button}     message=Yves: Login Failed    timeout=5s
         END
     END
     Yves: remove flash messages
