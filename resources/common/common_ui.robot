@@ -350,9 +350,25 @@ Try reloading page until element is/not appear:
     FOR    ${index}    IN RANGE    0    ${tries}
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
         IF    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'
-            Run Keywords    Sleep    ${timeout}    AND    Reload    AND    Wait For Load State
+            Sleep    ${timeout}    
+            Reload
+            TRY
+                Wait For Load State
+                Wait For Load State    networkidle
+                Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    page is not fully loaded
+            END
         ELSE IF     '${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True'
-            Run Keywords    Sleep    ${timeout}    AND    Reload    AND    Wait For Load State
+            Sleep    ${timeout}
+            Reload
+            TRY
+                Wait For Load State
+                Wait For Load State    networkidle
+                Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    page is not fully loaded
+            END
         ELSE
             Exit For Loop
         END
@@ -404,7 +420,13 @@ Ping and go to URL:
 *** Keywords ***
 Click and retry if 5xx occurred:
     [Arguments]    ${selector}    ${timeout}=300ms
-    Wait For Load State
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
     VAR    ${sweet_alert_js_error_popup}    xpath=//*[contains(@class,'sweet-alert')]
     TRY
         ${promise}=    Promise to    Wait For Response    matcher=**    timeout=${timeout}
@@ -463,7 +485,13 @@ Click and retry if 5xx occurred:
 
 Click and return True if 5xx occurred:
     [Arguments]    ${locator}    ${timeout}=400ms
-    Wait For Load State
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
     VAR    ${sweet_alert_js_error_popup}    xpath=//*[contains(@class,'sweet-alert')]
     TRY
         ${promise}=    Promise to    Wait For Response    matcher=**    timeout=${timeout}

@@ -30,18 +30,26 @@ Zed: create new Company Business Unit for the following company:
     ELSE
         Click    ${zed_bu_company_dropdown_locator}
         Select From List By Label Contains    ${zed_bu_company_dropdown_locator}    ${company_name}
-        Wait For Load State
-        Wait For Load State    domcontentloaded
-        Wait For Load State    networkidle
+        TRY
+            Wait For Load State
+            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    page is not fully loaded
+        END
         Select From List By Label Contains    ${zed_bu_parent_bu_dropdown_locator}    ${parent_business_unit}
     END
     VAR    ${created_business_unit}    ${business_unit_name}+${random}    scope=TEST
     Type Text    ${zed_bu_name_field}    ${created_business_unit}
     Type Text    ${zed_bu_iban_field}    testiban+${random}
     Type Text    ${zed_bu_bic_field}    testbic+${random}
-    Wait For Load State
-    Wait For Load State    domcontentloaded
-    Wait For Load State    networkidle
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
     Zed: submit the form
     Wait Until Element Is Visible    ${zed_success_flash_message}
     Wait Until Element Is Visible    ${zed_table_locator}

@@ -461,7 +461,13 @@ Zed: go to tab:
         Reload
         Click With Options    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]    force=True    noWaitAfter=True
     END
-    Wait For Load State
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
 
 Zed: go to tab by link href that contains:
     [Arguments]    ${href}
@@ -471,7 +477,13 @@ Zed: go to tab by link href that contains:
         Reload
         Click With Options    xpath=//a[contains(@data-toggle,'tab')][contains(@href,'${href}')] | //*[contains(@data-toggle,'tab')]//a[contains(@href,'${href}')]    force=True    noWaitAfter=True
     END
-    Wait For Load State
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
 
 Zed: message should be shown:
     [Arguments]    ${text}

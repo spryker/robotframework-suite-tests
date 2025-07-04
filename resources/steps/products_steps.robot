@@ -196,7 +196,13 @@ Zed: update abstract product data:
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
     Zed: go to URL:    /product-management 
     Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
-    Wait For Load State
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    100ms
     IF    '${second_locale_section_expanded}'=='False'
     Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}

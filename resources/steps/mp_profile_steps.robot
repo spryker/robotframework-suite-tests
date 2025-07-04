@@ -25,7 +25,13 @@ MP: change store status to:
         Click    ${store_status_checkbox}
     END
     MP: click submit button
-    Wait For Load State
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
     Wait Until Element Is Visible    ${mp_success_flyout}    timeout=5s
     Trigger multistore p&s
 

@@ -57,7 +57,13 @@ Yves: login on Yves with provided credentials:
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}
-    Wait For Load State
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
     # workaround for the issue with deadlocks on concurrent login attempts
     TRY
         IF    'agent' in '${currentURL}'

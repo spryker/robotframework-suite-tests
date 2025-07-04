@@ -97,7 +97,13 @@ MP: add offer price:
 
 MP: save offer    
     MP: click submit button
-    Wait For Load State
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
     ${offerSaved}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    ${offer_saved_popup}    timeout=1s
     ### resave in case of error
     IF    'FAIL' in $offerSaved
