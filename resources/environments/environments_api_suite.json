@@ -604,7 +604,7 @@
          "material":"5",
          "brands":"10",
          "sorting_options":"6",
-         "product_abstract_types":"2"
+         "product_classes":"2"
       },
       "default_price_range":{
          "min":"0",
