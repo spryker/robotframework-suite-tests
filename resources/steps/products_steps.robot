@@ -230,13 +230,27 @@ Zed: update abstract product data:
         END
     END
     Click    ${zed_pdp_save_button}
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT    
+        Log    Load event was not fired
+    END
 
 Zed: update abstract product price on:
     [Arguments]    @{args}
-    Wait For Load State
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT    
+        Log    Load event was not fired
+    END
     ${priceData}=    Set Up Keyword Arguments    @{args}
+    ${productAbstractIsProvided}=    Run Keyword And Return Status    Variable Should Exist    ${productAbstract}
     ${is_edit_abstract_price_tab_exists}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//a[contains(@data-toggle,'tab')][contains(@href,'content-price_and_tax')] | //*[contains(@data-toggle,'tab')]//a[contains(@href,'content-price_and_tax')]    timeout=100ms
-    IF    '${is_edit_abstract_price_tab_exists}'=='False'
+    IF    '${is_edit_abstract_price_tab_exists}'=='False' and ${productAbstractIsProvided}
         Zed: go to URL:    /product-management
         Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
         Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
@@ -272,6 +286,13 @@ Zed: update abstract product price on:
         IF    '${key}'=='tax set' and '${value}' != '${EMPTY}'    Select From List By Label    ${zed_product_tax_set_select}    ${value}
     END
     Click and retry if 5xx occurred:    ${zed_pdp_save_button}
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT    
+        Log    Load event was not fired
+    END
 
 Zed: start new abstract product creation:
     [Arguments]    @{args}
@@ -312,6 +333,13 @@ Zed: start new abstract product creation:
         END
     END
     Click    ${zed_pdp_save_button}
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT    
+        Log    Load event was not fired
+    END
     
 Zed: select abstract product variants:
     [Arguments]    @{args}
@@ -347,6 +375,13 @@ Zed: select abstract product variants:
         END
     END
     Click    ${zed_pdp_save_button}
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT    
+        Log    Load event was not fired
+    END
 
 Zed: change concrete product data:
     [Arguments]    @{args}

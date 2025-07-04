@@ -31,6 +31,7 @@ MP: login on MP with provided credentials:
     # workaround for the issue with deadlocks on concurrent login attempts
     ${is_5xx}=    Click and return True if 5xx occurred:    ${mp_login_button}
     IF    ${is_5xx}
+        Reload
         Delete All Cookies
         LocalStorage Clear
         MP: go to URL:    /

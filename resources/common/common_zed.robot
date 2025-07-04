@@ -40,11 +40,11 @@ Zed: login on Zed with provided credentials:
     # workaround for the issue with deadlocks on concurrent login attempts
     ${is_5xx}=    Click and return True if 5xx occurred:    ${zed_login_button}
     IF    ${is_5xx}
+        Reload
         Delete All Cookies
         LocalStorage Clear
         Zed: go to URL:    /
         Delete All Cookies
-        Reload
         Wait Until Element Is Visible    ${zed_user_name_field}
         ${email_value}=    Convert To Lower Case   ${email}
         IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
@@ -56,11 +56,11 @@ Zed: login on Zed with provided credentials:
         Repeat Keyword    3    Wait For Load State
         Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=1s
     EXCEPT
+        Reload
         Delete All Cookies
         LocalStorage Clear
         Zed: go to URL:    /
         Delete All Cookies
-        Reload
         Wait Until Element Is Visible    ${zed_user_name_field}
         ${email_value}=    Convert To Lower Case   ${email}
         IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
@@ -69,8 +69,6 @@ Zed: login on Zed with provided credentials:
         Click    ${zed_login_button}
         Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=5s
     END
-    
-    
 
 Zed: login with deactivated user/invalid data:
    [Arguments]    ${email}    ${password}=${default_password}
