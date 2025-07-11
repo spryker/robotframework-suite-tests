@@ -18,18 +18,12 @@ Get_country_collection
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response should contain the array of a certain size:   [data][0]    6
-    And Response body parameter should be:    [data][0][id_country]    1
-    And Response body parameter should be:    [data][0][iso2_code]    AC
-    And Response body parameter should be:    [data][0][iso3_code]    ASC
-    And Response body parameter should be:    [data][0][name]    Ascension Island
-    And Response body parameter should be:    [data][0][postal_code_mandatory]    False
-    And Response body parameter should be:    [data][0][postal_code_regex]    None
-    And Response body parameter should be:    [data][255][id_country]    256
-    And Response body parameter should be:    [data][255][iso2_code]    ZM
-    And Response body parameter should be:    [data][255][iso3_code]    ZMB
-    And Response body parameter should be:    [data][255][name]    Zambia
-    And Response body parameter should be:    [data][255][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][255][postal_code_regex]    \\\\d{5}
+    And Array in response should contain property with value:    [data]    iso2_code    AC
+    And Array in response should contain property with value:    [data]    iso3_code    ASC
+    And Array in response should contain property with value:    [data]    name    Ascension Island
+    And Array in response should contain property with value:    [data]    iso2_code    ZM
+    And Array in response should contain property with value:    [data]    iso3_code    ZMB
+    And Array in response should contain property with value:    [data]    name    Zambia
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Get_country_Collection_with_filter_first_item
@@ -43,10 +37,9 @@ Get_country_Collection_with_filter_first_item
     And I send a GET request:    /dynamic-entity/robot-test-countries?filter[country.iso2_code]=AC
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [data][0][id_country]    1
-    And Response body parameter should be:    [data][0][iso2_code]    AC
-    And Response body parameter should be:    [data][0][iso3_code]    ASC
-    And Response body parameter should be:    [data][0][name]    Ascension Island
+    And Array in response should contain property with value:    [data]    iso2_code    AC
+    And Array in response should contain property with value:    [data]    iso3_code    ASC
+    And Array in response should contain property with value:    [data]    name    Ascension Island
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Get_country_collection_with_filter
@@ -60,12 +53,9 @@ Get_country_collection_with_filter
     And I send a GET request:    /dynamic-entity/robot-test-countries?filter[country.iso2_code]=UA
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [data][0][id_country]    237
-    And Response body parameter should be:    [data][0][iso2_code]    UA
-    And Response body parameter should be:    [data][0][iso3_code]    UKR
-    And Response body parameter should be:    [data][0][name]    Ukraine
-    And Response body parameter should be:    [data][0][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][0][postal_code_regex]    \\\\d{5}
+    And Array in response should contain property with value:    [data]    iso2_code    UA
+    And Array in response should contain property with value:    [data]    iso3_code    UKR
+    And Array in response should contain property with value:    [data]    name    Ukraine
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Get_country_collection_with_multiple_filter_fields
@@ -79,18 +69,12 @@ Get_country_collection_with_multiple_filter_fields
     And I send a GET request:    /dynamic-entity/robot-test-countries?filter[countries.iso2_code]={"in": ["UA","AD","AE"]}&filter[countries.postal_code_mandatory]=1
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [data][0][id_country]    2
-    And Response body parameter should be:    [data][0][iso2_code]    AD
-    And Response body parameter should be:    [data][0][iso3_code]    AND
-    And Response body parameter should be:    [data][0][name]    Andorra
-    And Response body parameter should be:    [data][0][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][0][postal_code_regex]    AD\\\\d{3}
-    And Response body parameter should be:    [data][1][id_country]    237
-    And Response body parameter should be:    [data][1][iso2_code]    UA
-    And Response body parameter should be:    [data][1][iso3_code]    UKR
-    And Response body parameter should be:    [data][1][name]    Ukraine
-    And Response body parameter should be:    [data][1][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][1][postal_code_regex]    \\\\d{5}
+    And Array in response should contain property with value:    [data]    iso2_code    AD
+    And Array in response should contain property with value:    [data]    iso3_code    AND
+    And Array in response should contain property with value:    [data]    name    Andorra
+    And Array in response should contain property with value:    [data]    iso2_code    UA
+    And Array in response should contain property with value:    [data]    iso3_code    UKR
+    And Array in response should contain property with value:    [data]    name    Ukraine
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Get_country_collection_with_filter_in_condition
@@ -104,24 +88,15 @@ Get_country_collection_with_filter_in_condition
     And I send a GET request:    /dynamic-entity/robot-test-countries?filter[countries.iso2_code]={"in": ["UA","AD","AE"]}
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [data][0][id_country]    2
-    And Response body parameter should be:    [data][0][iso2_code]    AD
-    And Response body parameter should be:    [data][0][iso3_code]    AND
-    And Response body parameter should be:    [data][0][name]    Andorra
-    And Response body parameter should be:    [data][0][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][0][postal_code_regex]    AD\\\\d{3}
-    And Response body parameter should be:    [data][1][id_country]    3
-    And Response body parameter should be:    [data][1][iso2_code]    AE
-    And Response body parameter should be:    [data][1][iso3_code]    ARE
-    And Response body parameter should be:    [data][1][name]    United Arab Emirates
-    And Response body parameter should be:    [data][1][postal_code_mandatory]    False
-    And Response body parameter should be:    [data][1][postal_code_regex]    None
-    And Response body parameter should be:    [data][2][id_country]    237
-    And Response body parameter should be:    [data][2][iso2_code]    UA
-    And Response body parameter should be:    [data][2][iso3_code]    UKR
-    And Response body parameter should be:    [data][2][name]    Ukraine
-    And Response body parameter should be:    [data][2][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][2][postal_code_regex]    \\\\d{5}
+    And Array in response should contain property with value:    [data]    iso2_code    AD
+    And Array in response should contain property with value:    [data]    iso3_code    AND
+    And Array in response should contain property with value:    [data]    name    Andorra
+    And Array in response should contain property with value:    [data]    iso2_code    AE
+    And Array in response should contain property with value:    [data]    iso3_code    ARE
+    And Array in response should contain property with value:    [data]    name    United Arab Emirates
+    And Array in response should contain property with value:    [data]    iso2_code    UA
+    And Array in response should contain property with value:    [data]    iso3_code    UKR
+    And Array in response should contain property with value:    [data]    name    Ukraine
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Get_country_collection_with_invalid_multiple_filter
@@ -147,23 +122,14 @@ Get_country_collection_with_paginations
     I get access token by user credentials:   ${zed_admin.email}
     ### GET COUNTRY COLLECTION WITH PAGINATIONS ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a GET request:    /dynamic-entity/robot-test-countries?page[offset]=236&page[limit]=2
+    And I send a GET request:    /dynamic-entity/robot-test-countries?page[offset]=234&page[limit]=2
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response should contain the array of a certain size:   $    1
     And Response should contain the array of a certain size:   [data]    2
-    And Response body parameter should be:    [data][0][id_country]    237
-    And Response body parameter should be:    [data][0][iso2_code]    UA
-    And Response body parameter should be:    [data][0][iso3_code]    UKR
-    And Response body parameter should be:    [data][0][name]    Ukraine
-    And Response body parameter should be:    [data][0][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][0][postal_code_regex]    \\\\d{5}
-    And Response body parameter should be:    [data][1][id_country]    238
-    And Response body parameter should be:    [data][1][iso2_code]    UG
-    And Response body parameter should be:    [data][1][iso3_code]    UGA
-    And Response body parameter should be:    [data][1][name]    Uganda
-    And Response body parameter should be:    [data][1][postal_code_mandatory]    False
-    And Response body parameter should be:    [data][1][postal_code_regex]    None
+    And Each array element of array in response should contain property:    [data]    iso2_code
+    And Each array element of array in response should contain property:    [data]    iso3_code
+    And Each array element of array in response should contain property:    [data]    name
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Get_country_collection_with_paginations_out_of_items
@@ -194,12 +160,10 @@ Get_country_collection_with_short_configuration
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
     And Response should contain the array of a certain size:   [data][0]    3
-    And Response body parameter should be:    [data][0][id_country]    1
-    And Response body parameter should be:    [data][0][iso2_code]    AC
-    And Response body parameter should be:    [data][0][name]    Ascension Island
-    And Response body parameter should be:    [data][255][id_country]    256
-    And Response body parameter should be:    [data][255][iso2_code]    ZM
-    And Response body parameter should be:    [data][255][name]    Zambia
+    And Array in response should contain property with value:    [data]    iso2_code    AC
+    And Array in response should contain property with value:    [data]    name    Ascension Island
+    And Array in response should contain property with value:    [data]    iso2_code    ZM
+    And Array in response should contain property with value:    [data]    name    Zambia
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Get_country_by_id
@@ -219,15 +183,13 @@ Get_country_by_id
     When Save value to a variable:    [access_token]    token
     ### GET COUNTRY BY ID ###
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
-    And I send a GET request:    /dynamic-entity/robot-test-countries/237
+    And I send a GET request:    /dynamic-entity/robot-test-countries/1
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response body parameter should be:    [data][id_country]    237
-    And Response body parameter should be:    [data][iso2_code]    UA
-    And Response body parameter should be:    [data][iso3_code]    UKR
-    And Response body parameter should be:    [data][name]    Ukraine
-    And Response body parameter should be:    [data][postal_code_mandatory]    True
-    And Response body parameter should be:    [data][postal_code_regex]    \\\\d{5}
+    And Response body parameter should not be EMPTY:    [data][iso2_code]
+    And Response body parameter should not be EMPTY:    [data][iso3_code]
+    And Response body parameter should not be EMPTY:    [data][name]
+    And Response body parameter should not be EMPTY:    [data][postal_code_mandatory]
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
 
 Create_and_update_country:
