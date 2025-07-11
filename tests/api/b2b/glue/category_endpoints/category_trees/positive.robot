@@ -52,7 +52,7 @@ Get_category_trees
     ...    [data][0][attributes][categoryNodesStorage]
     ...    ${qty_of_categories_in_category_trees}
     ...    ${qty_of_categories_in_category_trees_ssp}
-    And Response should contain the array of size:
+    And Response should contain the array of a certain size:
     ...    [data][0][attributes][categoryNodesStorage][1][children]
     ...    ${qty_of_subcategories_in_category_trees}
     And Response body has correct self link
