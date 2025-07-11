@@ -27,9 +27,10 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should contain:    [data][0][attributes]    currentSortParam
     And Response body parameter should contain:    [data][0][attributes]    currentSortOrder
     #Pagination
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][0][attributes][pagination][numFound]
     ...    ${total_number_of_products_in_search}
+    ...    ${total_number_of_products_in_search_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
     And Response body parameter should be:    [data][0][attributes][pagination][currentItemsPerPage]    ${ipp.default}
@@ -674,10 +675,10 @@ Filter_by_valid_subcategory
     ...    [data][0][attributes][categoryTreeFilter]
     ...    ${category_tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be greater than: 
+    And Response body parameter should be greater than:
     ...    [data][0][attributes][categoryTreeFilter][3][docCount]
     ...    ${category_lvl2.qty_approx}
-    And Response body parameter should be greater than: 
+    And Response body parameter should be greater than:
     ...    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]
     ...    ${category_lvl2.qty_approx}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    0
