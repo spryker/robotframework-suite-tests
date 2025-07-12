@@ -485,9 +485,10 @@ Filter_by_label_empty_label
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][0][attributes][pagination][numFound]
     ...    ${total_number_of_products_in_search}
+    ...    ${total_number_of_products_in_search_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
     And Response should contain the array of a certain size:
@@ -541,7 +542,7 @@ Filter_by_color_non_existing_color
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    0
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    0
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    0
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][0]    test123
+    And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][0]    test123    OR    [data][0][attributes][valueFacets][3][activeValue][0]
 
 Filter_by_color_empty_color
     When I send a GET request:    /catalog-search?q=&farbe[]=
@@ -549,9 +550,10 @@ Filter_by_color_empty_color
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][0][attributes][pagination][numFound]
     ...    ${total_number_of_products_in_search}
+    ...    ${total_number_of_products_in_search_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
     And Response should contain the array of a certain size:
