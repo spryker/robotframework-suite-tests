@@ -542,8 +542,7 @@ Filter_by_color_non_existing_color
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    0
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    0
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    0
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue][0]    test123
-    Or Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue][0]    test123
+    And Response body parameter should be either:    [data][0][attributes][valueFacets][2][activeValue][0]    test123    [data][0][attributes][valueFacets][3][activeValue][0]    test123
 
 Filter_by_color_empty_color
     When I send a GET request:    /catalog-search?q=&farbe[]=
