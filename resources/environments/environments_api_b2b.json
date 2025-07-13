@@ -207,6 +207,7 @@
     "search":{
        "default_qty":{
           "categories":"37",
+          "categories_ssp":"38",
           "colors":"10",
           "labels":"5",
           "materials":"10",

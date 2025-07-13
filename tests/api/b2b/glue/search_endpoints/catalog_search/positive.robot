@@ -87,9 +87,10 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should contain:    [data][0][attributes]    valueFacets
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][name]    category
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][localizedName]    Categories
-    And Response should contain the array of a certain size:
+    And Response should contain the array of size in:
     ...    [data][0][attributes][valueFacets][0][values]
     ...    ${default_qty.categories}
+    ...    ${default_qty.categories_ssp}
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][config][isMultiValued]    False
     #Filters - labels
