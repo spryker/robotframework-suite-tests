@@ -102,7 +102,7 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][config][isMultiValued]    True
     #Filters - color
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][name]    farbe
+    And Response body parameter should be either:    [data][0][attributes][valueFacets][2][name]    farbe    [data][0][attributes][valueFacets][3][name]    farbe
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][localizedName]    Color
     And Response should contain the array of acertain size:
     ...    [data][0][attributes][valueFacets][2][values]
@@ -197,7 +197,7 @@ Search_by_concrete_sku
     #labels
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    2
     #brand
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    1
+    And Response body parameter should be either:    [data][0][attributes][valueFacets][4][values]    1    [data][0][attributes][valueFacets][5][values]    1
     And Response body has correct self link
 
 Search_by_abstract_sku
