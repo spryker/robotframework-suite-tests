@@ -32,7 +32,7 @@ Search_with_empty_search_criteria_all_default_values_check
     ...    ${total_number_of_products_in_search}
     ...    ${total_number_of_products_in_search_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
+    And Response body parameter should be in:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}    ${default_qty.ipp_pages_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentItemsPerPage]    ${ipp.default}
     And Response body parameter should be:
     ...    [data][0][attributes][pagination][config][defaultItemsPerPage]
