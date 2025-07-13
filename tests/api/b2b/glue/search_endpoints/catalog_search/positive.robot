@@ -763,9 +763,10 @@ Search_set_specific_page_with_ipp.default
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][0][attributes][pagination][numFound]
     ...    ${total_number_of_products_in_search}
+    ...    ${total_number_of_products_in_search_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    4
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
     And Response body parameter should be:
@@ -810,9 +811,10 @@ Search_set_last_page_and_nonipp.default
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][0][attributes][pagination][numFound]
     ...    ${total_number_of_products_in_search}
+    ...    ${total_number_of_products_in_search_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    12
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    12
     And Response body parameter should be:
