@@ -113,21 +113,25 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should be either:    [data][0][attributes][valueFacets][2][activeValue]    None    [data][0][attributes][valueFacets][3][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][config][isMultiValued]    True
     #Filters - material
-    And Response body parameter should be:    [data][0][attributes][valueFacets][3][name]    material
-    And Response body parameter should be:    [data][0][attributes][valueFacets][3][localizedName]    Material
-    And Response should contain the array of a certain size:
+    And Response body parameter should be either:    [data][0][attributes][valueFacets][3][name]    material    [data][0][attributes][valueFacets][4][name]    material
+    And Response body parameter should be either:    [data][0][attributes][valueFacets][3][localizedName]    Material    [data][0][attributes][valueFacets][4][localizedName]    Material
+    And Response should contain the array of a certain size either:
     ...    [data][0][attributes][valueFacets][3][values]
     ...    ${default_qty.materials}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue]    None
-    And Response body parameter should be:    [data][0][attributes][valueFacets][3][config][isMultiValued]    True
+    ...    [data][0][attributes][valueFacets][4][values]
+    ...    ${default_qty.materials}
+    And Response body parameter should be either:    [data][0][attributes][valueFacets][3][activeValue]    None    [data][0][attributes][valueFacets][5][activeValue]    None
+    And Response body parameter should be either:    [data][0][attributes][valueFacets][3][config][isMultiValued]    True    [data][0][attributes][valueFacets][4][config][isMultiValued]    True
     #Filters - brand
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][name]    brand
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][localizedName]    Brand
-    And Response should contain the array of a certain size:
+    And Response body parameter should be either:    [data][0][attributes][valueFacets][4][name]    brand    [data][0][attributes][valueFacets][5][name]    brand
+    And Response body parameter should be either:    [data][0][attributes][valueFacets][4][localizedName]    Brand    [data][0][attributes][valueFacets][5][localizedName]    Brand
+    And Response should contain the array of a certain size either:
     ...    [data][0][attributes][valueFacets][4][values]
     ...    ${default_qty.brands}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    None
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][config][isMultiValued]    False
+    ...    [data][0][attributes][valueFacets][5][values]
+    ...    ${default_qty.brands}
+    And Response body parameter should be either:    [data][0][attributes][valueFacets][4][activeValue]    None    [data][0][attributes][valueFacets][5][activeValue]    None
+    And Response body parameter should be either:    [data][0][attributes][valueFacets][4][config][isMultiValued]    False    [data][0][attributes][valueFacets][5][config][isMultiValued]    False
     #Filters - rating
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][name]    rating
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][localizedName]    Product Ratings
