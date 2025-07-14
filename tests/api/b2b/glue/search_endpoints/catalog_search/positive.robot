@@ -714,9 +714,10 @@ Filter_by_valid_sub_subcategory
     ...    ${ipp.default}
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][activeValue]    ${category_lvl3.id}
     # check that category tree is correctly updated
-    And Response should contain the array of a certain size:
+    And Response should contain the array of size in:
     ...    [data][0][attributes][categoryTreeFilter]
     ...    ${category_tree_branches_qty}
+    ...    ${category_tree_branches_qty_ssp}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
     And Response body parameter should be:
     ...    [data][0][attributes][categoryTreeFilter][3][docCount]
