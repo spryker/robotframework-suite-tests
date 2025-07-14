@@ -1,5 +1,5 @@
 *** Variables ***
-${mp_my_account_header_menu_item}    xpath=//spy-user-menu-link[@class='spy-user-menu-link']
+${mp_my_account_header_menu_item}    xpath=//spy-user-menu-link[@class='spy-user-menu-link'][normalize-space(text())='My Account']
 ${mp_account_first_name_field}    id=user-merchant-portal-gui_merchant-account_first_name
 ${mp_account_last_name_field}    id=user-merchant-portal-gui_merchant-account_last_name
 ${mp_account_email_field}    id=user-merchant-portal-gui_merchant-account_username
