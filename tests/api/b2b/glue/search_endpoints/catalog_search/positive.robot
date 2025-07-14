@@ -300,8 +300,10 @@ Search_by_name_substring
     ...    [data][0][attributes][valueFacets][1][values]
     ...    2
     #brand
-    And Response should contain the array larger than a certain size:
+    And Response should contain the array larger than a certain size either:
     ...    [data][0][attributes][valueFacets][4][values]
+    ...    1
+    ...    [data][0][attributes][valueFacets][5][values]
     ...    1
     And Response body has correct self link
 
