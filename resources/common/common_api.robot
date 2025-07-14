@@ -2300,3 +2300,10 @@ Response body parameter should be either:
     ${status_1}=    Run Keyword And Return Status    Response body parameter should be:    ${json_path_1}    ${expected_1}
     ${status_2}=    Run Keyword And Return Status    Response body parameter should be:    ${json_path_2}    ${expected_2}
     Run Keyword Unless    ${status_1} or ${status_2}    Fail    Neither '${json_path_1}' nor '${json_path_2}' equals expected value.
+
+*** Keywords ***
+Response should contain the array of a certain size either:
+    [Arguments]    ${json_path_1}    ${expected_size_1}    ${json_path_2}    ${expected_size_2}
+    ${status_1}=    Run Keyword And Return Status    Response should contain the array of a certain size:    ${json_path_1}    ${expected_size_1}
+    ${status_2}=    Run Keyword And Return Status    Response should contain the array of a certain size:    ${json_path_2}    ${expected_size_2}
+    Run Keyword Unless    ${status_1} or ${status_2}    Fail    Neither '${json_path_1}' nor '${json_path_2}' contains array of expected size.

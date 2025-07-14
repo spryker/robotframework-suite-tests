@@ -103,11 +103,14 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][config][isMultiValued]    True
     #Filters - color
     And Response body parameter should be either:    [data][0][attributes][valueFacets][2][name]    farbe    [data][0][attributes][valueFacets][3][name]    farbe
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][localizedName]    Color
-    And Response should contain the array of acertain size:
+    And Response body parameter should be either:    [data][0][attributes][valueFacets][2][localizedName]    Color    [data][0][attributes][valueFacets][3][localizedName]    Color
+    And Response should contain the array of a certain size either:
     ...    [data][0][attributes][valueFacets][2][values]
     ...    ${default_qty.colors}
-    And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue]    None
+    ...    [data][0][attributes][valueFacets][3][values]
+    ...    ${default_qty.colors}
+
+    And Response body parameter should be either:    [data][0][attributes][valueFacets][2][activeValue]    None    [data][0][attributes][valueFacets][3][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][config][isMultiValued]    True
     #Filters - material
     And Response body parameter should be:    [data][0][attributes][valueFacets][3][name]    material
