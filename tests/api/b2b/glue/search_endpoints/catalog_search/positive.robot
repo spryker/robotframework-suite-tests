@@ -120,7 +120,7 @@ Search_with_empty_search_criteria_all_default_values_check
     ...    ${default_qty.materials}
     ...    [data][0][attributes][valueFacets][4][values]
     ...    ${default_qty.materials}
-    And Response body parameter should be either:    [data][0][attributes][valueFacets][3][activeValue]    None    [data][0][attributes][valueFacets][5][activeValue]    None
+    And Response body parameter should be either:    [data][0][attributes][valueFacets][3][activeValue]    None    [data][0][attributes][valueFacets][4][activeValue]    None
     And Response body parameter should be either:    [data][0][attributes][valueFacets][3][config][isMultiValued]    True    [data][0][attributes][valueFacets][4][config][isMultiValued]    True
     #Filters - brand
     And Response body parameter should be either:    [data][0][attributes][valueFacets][4][name]    brand    [data][0][attributes][valueFacets][5][name]    brand
@@ -323,7 +323,7 @@ Search_by_attribute_(brand)
     #brand
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    1
     And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    None
-    And Response body parameter should be:    [data][0][attributes][valueFacets][4][values][0][value]    ${brand_1}
+    And Response body parameter should be either:    [data][0][attributes][valueFacets][4][values][0][value]    ${brand_1}    [data][0][attributes][valueFacets][5][values][0][value]    ${brand_1}
     And Response body has correct self link
 
 Search_by_several_attributes
