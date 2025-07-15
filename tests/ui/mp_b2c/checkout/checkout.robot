@@ -125,7 +125,7 @@ Guest_Checkout_and_Addresses
     Yves: 'Thank you' page is displayed
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
-    Zed: trigger all matching states inside this order:    skip grace period
+    Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: go to my order page:    ${zedLastPlacedOrder}
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
@@ -406,7 +406,7 @@ Configurable_Product_Checkout
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,361.00
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside this order:    skip grace period
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}
