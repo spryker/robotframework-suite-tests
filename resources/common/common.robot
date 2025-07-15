@@ -43,6 +43,9 @@ ${verify_ssl}          false
 ${dms}
 ${default_dms}    ${False}
 
+# *** SSP VARIABLES ***
+${is_ssp}
+
 *** Keywords ***
 Common_suite_setup
     [Documentation]  Basic steps before each suite
@@ -51,7 +54,7 @@ Common_suite_setup
     Remove Files    resources/libraries/__pycache__/*
     Remove Files    ${OUTPUTDIR}/*.png
     Remove Files    ${OUTPUTDIR}/*.yml
-    
+
     Generate global random variable
     ${random_id}=    Generate Random String    5    [NUMBERS]
     ${random_str}=    Generate Random String    5    [LETTERS]
@@ -158,6 +161,8 @@ Overwrite env variables
     ELSE
         Set Global Variable    ${verify_ssl}    ${False}
     END
+    ${is_ssp}=    Convert To String    ${is_ssp}
+    ${is_ssp}=    Convert To Lower Case    ${is_ssp}
 
 Set Up Keyword Arguments
     [Arguments]    @{args}
