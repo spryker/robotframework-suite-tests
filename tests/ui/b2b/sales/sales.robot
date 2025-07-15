@@ -64,6 +64,7 @@ Return_Management
     Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
@@ -127,6 +128,7 @@ Refunds
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,366.16
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger matching state of order item inside xxx shipment:    107254    Ship
@@ -260,6 +262,7 @@ Order_Cancellation
     Yves: 'Order Details' page contains the cancel order button:    true
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger matching state of order item inside xxx shipment:    403125    Pay
     Zed: trigger matching state of order item inside xxx shipment:    403125    Skip timeout
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -269,6 +272,7 @@ Order_Cancellation
     ### change state of state of all products ###
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger matching state of order item inside xxx shipment:    107254    Pay
     Zed: trigger matching state of order item inside xxx shipment:    107254    Skip timeout
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}

@@ -154,6 +154,7 @@ Refunds
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €394.41
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}
@@ -290,6 +291,7 @@ Order_Cancellation
     # ### change the order state of one product ###
     # Zed: login on Zed with provided credentials:    ${zed_admin_email}
     # Zed: go to order page:    ${lastPlacedOrder}
+    # Zed: trigger all matching states inside this order:    skip grace period
     # Zed: trigger matching state of order item inside xxx shipment:    005_30663301    Pay
     # Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     # Yves: go to 'Order History' page
@@ -305,6 +307,7 @@ Order_Cancellation
     # ### change state of state of all products ###
     # Zed: login on Zed with provided credentials:    ${zed_admin_email}
     # Zed: go to order page:    ${lastPlacedOrder}
+    # Zed: trigger all matching states inside this order:    skip grace period
     # Zed: trigger matching state of order item inside xxx shipment:    007_30691822    Pay
     # Zed: trigger matching state of order item inside xxx shipment:    007_30691822    Skip timeout
     # Yves: login on Yves with provided credentials:    ${yves_second_user_email}
@@ -356,6 +359,7 @@ Configurable_Product_OMS
     Zed: product configuration should be equal:
     ...    || shipment | position | sku                                      | GPU                  ||
     ...    || 1        | 2        | ${configurable_product_concrete_two_sku} | AMD Radeon RX Vega 6 ||
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}

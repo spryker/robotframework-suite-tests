@@ -134,7 +134,7 @@ Discontinued_Alternative_Products
     Yves: go to wishlist with name:    My wishlist
     Yves: product with sku is marked as discountinued in wishlist:    ${discontinued_product_concrete_sku}
     Yves: product with sku is marked as alternative in wishlist:    012
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}    
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: undo discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
@@ -280,7 +280,7 @@ Manage_Product
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:    manageSKU${random}-color-black    ENaddedConcrete${random}    75.00
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to second navigation item level:    Catalog    Products
     Zed: click Action Button in a table for row that contains:     manageProduct${random}     View
     Zed: view product page is displayed
     Zed: view abstract product page contains:
@@ -345,8 +345,8 @@ Product_Availability_Calculation
     [Documentation]    Check product availability + multistore. DMS-ON: https://spryker.atlassian.net/browse/FRW-7477
     Repeat Keyword    3    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: update warehouse:    
-    ...    || warehouse  | store || 
+    Zed: update warehouse:
+    ...    || warehouse  | store ||
     ...    || Warehouse1 | AT    ||
     Repeat Keyword    3    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -396,12 +396,13 @@ Product_Availability_Calculation
     Yves: select the following payment method on the checkout and go next:    Invoice
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed    
+    Yves: 'Thank you' page is displayed
     Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: wait for order item to be in state:    sku=availabilitySKU${random}-color-grey    state=payment pending    iterations=7 
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
+    Zed: wait for order item to be in state:    sku=availabilitySKU${random}-color-grey    state=payment pending    iterations=7
     Yves: go to PDP of the product with sku:    availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity using '+' or '-' button № times:    +    5
@@ -420,8 +421,8 @@ Product_Availability_Calculation
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: update warehouse:    
-    ...    || warehouse  | unselect store || 
+    Zed: update warehouse:
+    ...    || warehouse  | unselect store ||
     ...    || Warehouse1 | AT             ||
     Repeat Keyword    3    Trigger multistore p&s
     Yves: go to AT store 'Home' page if other store not specified:
@@ -430,8 +431,8 @@ Product_Availability_Calculation
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
     [Teardown]    Run Keywords    Should Test Run
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: update warehouse:    
-    ...    || warehouse  | unselect store || 
+    ...    AND    Zed: update warehouse:
+    ...    || warehouse  | unselect store ||
     ...    || Warehouse1 | AT             ||
     ...    AND    Trigger multistore p&s
     ...    AND    Repeat Keyword    3    Trigger multistore p&s
@@ -447,7 +448,7 @@ Configurable_Product_PDP_Wishlist_Availability
     Yves: change variant of the product on PDP on:    ${configurable_product_concrete_one_attribute}
     Yves: PDP contains/doesn't contain:    true    ${configureButton}
     Yves: product price on the PDP should be:    €25.00
-    Yves: product configuration status should be equal:      Configuration is not complete. 
+    Yves: product configuration status should be equal:      Configuration is not complete.
     Yves: check and go back that configuration page contains:
     ...    || store | locale | price_mode | currency | sku                                      ||
     ...    || DE    | en_US  | GROSS_MODE | EUR      | ${configurable_product_concrete_one_sku} ||
@@ -475,11 +476,11 @@ Configurable_Product_PDP_Wishlist_Availability
     Yves: change the product options in configurator to:
     ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten      ||
     ...    || 905        | 249        | 100          | 36         |  15         | 0.00       | 48           | 57           | 36          | German Keyboard ||
-    Yves: product configuration price should be:    €1,346.00 
+    Yves: product configuration price should be:    €1,346.00
     Yves: save product configuration
     Yves: add all available products from wishlist to cart
     Yves: go to b2c shopping cart
     Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=€1,347.00
     [Teardown]    Run Keywords    Yves: delete all wishlists
     ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: delete all user addresses  
+    ...    AND    Yves: delete all user addresses

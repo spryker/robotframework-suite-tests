@@ -513,6 +513,7 @@ Product_Availability_Calculation
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
     Zed: wait for order item to be in state:    sku=availabilitySKU${random}-farbe-grey    state=payment pending    iterations=7
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}
@@ -665,6 +666,7 @@ Configurable_Product_RfQ_OMS
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,352.44
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
