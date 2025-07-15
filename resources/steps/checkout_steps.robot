@@ -61,11 +61,11 @@ Yves: select the following existing address on the checkout as 'shipping' addres
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
     IF    '${is_ssp}' == 'true'
-         ${checkout_address_selector}=    ${checkout_address_delivery_selector}['ssp_b2b']
-         ${checkout_address_selector_text_selector}=    xpath=(//div[contains(@class, 'js-address-item-form-field-list__item-shipping') and not(contains(@class, 'is-hidden'))]//select[@name='checkout-full-addresses']/following-sibling::span//span[@class='select2-selection__rendered'])[1]
+        ${checkout_address_selector}=    Set Variable    ${checkout_address_delivery_selector}[ssp_b2b]
+        ${checkout_address_selector_text_selector}=    Set Variable    xpath=(//div[contains(@class, 'js-address-item-form-field-list__item-shipping') and not(contains(@class, 'is-hidden'))]//select[@name='checkout-full-addresses']/following-sibling::span//span[@class='select2-selection__rendered'])[1]
     ELSE
-         ${checkout_address_selector}=    ${checkout_address_delivery_selector}[${env}]
-         ${checkout_address_selector_text_selector}=    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+        ${checkout_address_selector}=    Set Variable    ${checkout_address_delivery_selector}[${env}]
+        ${checkout_address_selector_text_selector}=    Set Variable    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
     END
     Wait Until Element Is Visible    ${checkout_address_selector}
     WHILE  '${selected_address}' != '${addressToUse}'    limit=5
