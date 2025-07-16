@@ -9,6 +9,7 @@ Resource    common.robot
 ${api_timeout}    15
 ${max_retries}    0
 ${default_password}    change123
+${default_secure_password}    qweRTY_123456
 ${default_allow_redirects}     true
 ${default_auth}    ${NONE}
 &{default_headers}
@@ -2047,11 +2048,11 @@ Array element should contain nested array at least once:
     FOR    ${index}    IN RANGE    0    ${list_length}
         @{list_element}=    Get From List    @{data}    ${index}
         ${result}=    Run Keyword And Ignore Error    List Should Contain Sub List    ${list_element}    ${expected_nested_array}
-        IF    'PASS' in ${result}    Exit For Loop
+        IF    'PASS' in $result    Exit For Loop
         IF    ${index} == ${list_length}-1
             Fail    expected '${expected_nested_array}' array is not present in '@{data}'
         END
-        IF    'FAIL' in ${result}    Continue For Loop
+        IF    'FAIL' in $result    Continue For Loop
     END
 
 Array element should contain property with value at least once:
@@ -2068,11 +2069,11 @@ Array element should contain property with value at least once:
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${result}=    Run Keyword And Ignore Error    Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}
-        IF    'PASS' in ${result}    Exit For Loop
+        IF    'PASS' in $result    Exit For Loop
         IF    ${index} == ${list_length}-1
             Fail    expected '${expected_property}' with value '${expected_value}' is not present in '@{data}' but should
         END
-        IF    'FAIL' in ${result}    Continue For Loop
+        IF    'FAIL' in $result    Continue For Loop
     END
 
 Nested array element should contain sub-array at least once:
@@ -2092,16 +2093,16 @@ Nested array element should contain sub-array at least once:
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    '   ${EMPTY}
     ${expected_nested_array}=    Create List    ${expected_nested_array}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        IF    'PASS' in ${result}    BREAK
+        IF    'PASS' in $result    BREAK
         ${list_element}=    Get From List    @{data}    ${index}
         @{list_element2}=    Get Value From Json    ${list_element}    ${parrent_array}
         @{list_element}=    Get From List    ${list_element2}    0
         ${result}=    Run Keyword And Ignore Error    List Should Contain Sub List   ${list_element}    ${expected_nested_array}    ignore_case=True
-        IF    'PASS' in ${result}    Exit For Loop
+        IF    'PASS' in $result    Exit For Loop
         IF    ${index} == ${list_length}-1
                 Fail    expected '${expected_nested_array}' array is not present in '@{data}'
         END
-        IF    'FAIL' in ${result}    Continue For Loop
+        IF    'FAIL' in $result    Continue For Loop
     END
 
 Nested array element should contain sub-array with property and value at least once:
@@ -2121,7 +2122,7 @@ Nested array element should contain sub-array with property and value at least o
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    '   ${EMPTY}
     ${expected_nested_array}=    Convert To String    ${expected_nested_array}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        IF    'PASS' in ${result}    BREAK
+        IF    'PASS' in $result    BREAK
         ${parrent_array_element}=    Get From List    @{data}    ${index}
         @{actual_parent_element}=    Get Value From Json    ${parrent_array_element}    ${parrent_array}
         # Log List    @{actual_parent_element}
@@ -2134,11 +2135,11 @@ Nested array element should contain sub-array with property and value at least o
         ${actual_property_value}=    Replace String    ${actual_property_value}    [   ${EMPTY}
         ${actual_property_value}=    Replace String    ${actual_property_value}    ]   ${EMPTY}
         ${result}=    Run Keyword And Ignore Error    Should Contain   ${actual_property_value}    ${expected_value}    ignore_case=True
-            IF    'PASS' in ${result}    BREAK
+            IF    'PASS' in $result    BREAK
             IF    ${index} == ${list_length}-1
                 Fail    expected '${expected_property}' with value '${expected_value}' is not present in '${expected_nested_array}' but should
             END
-            IF    'FAIL' in ${result}    Continue For Loop
+            IF    'FAIL' in $result    Continue For Loop
     END
 
 Array element should contain nested array with property and value at least once:
@@ -2154,7 +2155,7 @@ Array element should contain nested array with property and value at least once:
     # ${log_list}=    Log List    @{data}
     ${result}=    Set Variable    'FALSE'
     FOR    ${index1}    IN RANGE    0    ${list_length1}
-        IF    'PASS' in ${result}    BREAK
+        IF    'PASS' in $result    BREAK
         ${list_element}=    Get From List    @{data}    ${index1}
         @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
         ${list_length2}=    Get Length    @{list_element2}
@@ -2166,11 +2167,11 @@ Array element should contain nested array with property and value at least once:
             ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
             ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
             ${result}=    Run Keyword And Ignore Error    Should Contain   ${list_element}    ${expected_value}    ignore_case=True
-            IF    'PASS' in ${result}    BREAK
+            IF    'PASS' in $result    BREAK
             IF    ${index1} == ${list_length1}-1 and ${index2} == ${list_length2}-1
                 Fail    expected '${expected_property}' with value '${expected_value}' is not present in '${nested_array}' but should
             END
-            IF    'FAIL' in ${result}    Continue For Loop
+            IF    'FAIL' in $result    Continue For Loop
         END
     END
 
@@ -2280,6 +2281,29 @@ Array Element Should Contain Nested Property With Value At Least Once
     ...    any(item.get('${nested_path}', {}).get('${property}', None) == ${expected_value} for item in ${matches})
     Should Be True    ${exists}    Expected property '${property}' with value '${expected_value}' not found in any array element.
 
+Delete dynamic customer via API
+    [Arguments]    ${customer_email}=${EMPTY}
+
+    ${dynamic_customer_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_customer}
+
+    IF    '${customer_email}' == '${EMPTY}'
+        IF    ${dynamic_customer_exists}
+            VAR    ${customer_email}    ${dynamic_customer}
+        ELSE
+            Log    message=No dynamic (doesn't exist) or static customer was provided for deletion    level=INFO
+            RETURN
+        END
+    END
+    Set Tags    glue
+    API_test_setup
+    I get access token for the customer:    ${customer_email}
+    I set Headers:    Authorization=${token}
+    I send a GET request:    /customers
+    Save value to a variable:    [data][0][id]    userId
+    I send a DELETE request:    /customers/${userId}
+    Response status code should be:    204
+    Remove Tags    glue
+
 To JSON Boolean
     [Arguments]    ${value}
     ${is_true}=    Run Keyword And Return Status    Should Be True    ${value}
@@ -2292,4 +2316,3 @@ To JSON Boolean
 Get Json Value
     [Arguments]    ${body}    ${path}
     ${value}=    Get Value    ${body}    ${path}
-    RETURN    ${value}

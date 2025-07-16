@@ -213,6 +213,7 @@ Customer_Specific_Prices
 
 Product_PDP
     [Documentation]    Checks that PDP contains required elements
+    Delete All Cookies
     Yves: go to PDP of the product with sku:    ${multi_variant_product_abstract_sku}
     Yves: change variant of the product on PDP on:    500 x 930 x 400
     Yves: PDP contains/doesn't contain:    true    ${pdp_limited_warranty_option}[${env}]     ${pdp_insurance_coverage_option}
@@ -357,7 +358,7 @@ Offer_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 2.
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Cancel
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
@@ -445,7 +446,7 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-1 only has availability of 2.
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Cancel
     Trigger multistore p&s
@@ -597,7 +598,7 @@ Configurable_Product_RfQ_OMS
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center

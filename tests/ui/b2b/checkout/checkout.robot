@@ -311,7 +311,7 @@ Checkout_Address_Management
     Yves: fill in the following new shipping address:
     ...    || salutation | firstName | lastName | street          | houseNumber | postCode | city   | country     | company | phone     | additionalAddress ||
     ...    || Mr.        | First     | Last     | Shipping Street | 7           | 10247    | Geneva | Switzerland | Spryker | 123456789 | Additional street ||
-    Yves: save new deviery address to address book:    true
+    Yves: save new delivery address to address book:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
@@ -401,7 +401,7 @@ Configurable_Product_Checkout
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,352.44
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
     Zed: trigger all matching states inside this order:    Stock update

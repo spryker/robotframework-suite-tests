@@ -52,7 +52,7 @@ Split_Delivery
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select delivery to multiple addresses
     Yves: fill in new delivery address for a product:
@@ -100,7 +100,7 @@ Guest_Checkout
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    008
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: apply discount voucher to cart:    guestTest${random}
     Yves: shopping cart contains the following products:    ${bundle_product_product_name}
     Yves: click on the 'Checkout' button in the shopping cart
@@ -138,7 +138,7 @@ Guest_Checkout_Addresses
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest+new${random}@spryker.com
     Yves: billing address same as shipping address:    true
@@ -188,7 +188,7 @@ Checkout_Address_Management
     ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    false
     Yves: fill in the following new billing address:
@@ -208,7 +208,7 @@ Checkout_Address_Management
     Yves: fill in the following new shipping address:
     ...    || salutation | firstName | lastName | street          | houseNumber | postCode | city   | country     | company | phone     | additionalAddress ||
     ...    || Mr.        | First     | Last     | Shipping Street | 7           | 10247    | Geneva | Switzerland | Spryker | 123456789 | Additional street ||
-    Yves: save new deviery address to address book:    true
+    Yves: save new delivery address to address book:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice
@@ -229,7 +229,7 @@ Login_during_checkout
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart  
+    Yves: go to shopping cart page  
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
     Yves: fill in the following new shipping address:
@@ -251,7 +251,7 @@ Register_during_checkout
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
     Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
-    Yves: go to b2c shopping cart  
+    Yves: go to shopping cart page  
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    ${default_secure_password}    ${default_secure_password}
     Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
@@ -275,15 +275,13 @@ Register_during_checkout
     Yves: assert customer profile data:
     ...    || salutation    | first name               | last name               | email                            ||
     ...    || ${salutation} | ${guest_user_first_name} | ${guest_user_last_name} | sonia+guest${random}@spryker.com ||
-    [Teardown]    Zed: delete customer:
-    ...    || email                            ||
-    ...    || sonia+guest${random}@spryker.com ||
+    [Teardown]    Zed: delete customer:    sonia+guest${random}@spryker.com 
 
 Configurable_Product_Checkout
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
+    ...    AND    Yves: create new 'Wishlist' with name:    configProduct${random}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
     ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
@@ -297,7 +295,7 @@ Configurable_Product_Checkout
     Yves: save product configuration
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=1,599.00
     Yves: change the product options in configurator to:
     ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten      ||
@@ -319,10 +317,10 @@ Configurable_Product_Checkout
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,361.00
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Skip timeout
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip picking
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Ship
+    Zed: trigger all matching states inside this order:    Pay
+    Zed: trigger all matching states inside this order:    Skip timeout
+    Zed: trigger all matching states inside this order:    skip picking
+    Zed: trigger all matching states inside this order:    Ship
     Zed: trigger all matching states inside this order:    Stock update
     Zed: trigger all matching states inside this order:    Refund
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00

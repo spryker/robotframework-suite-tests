@@ -3,6 +3,7 @@ Library    Browser    run_on_failure=Take Screenshot \ EMBED \ fullPage=True
 Resource    common.robot
 Resource    ../pages/yves/yves_header_section.robot
 Resource    ../pages/yves/yves_login_page.robot
+Resource    common_api.robot
 
 *** Variables ***
 # *** UI SUITE VARIABLES ***
@@ -116,8 +117,6 @@ UI_suite_setup
     Set Browser Timeout    ${browser_timeout}
     Create default Main Context
     New Page    ${yves_url}
-    ### Executed only in CI env ###
-    Trigger multistore p&s    timeout=1s
 
 UI_suite_teardown
     Close Browser    ALL
@@ -351,9 +350,25 @@ Try reloading page until element is/not appear:
     FOR    ${index}    IN RANGE    0    ${tries}
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
         IF    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'
-            Run Keywords    Sleep    ${timeout}    AND    Reload    AND    Wait For Load State
+            Sleep    ${timeout}    
+            Reload
+            TRY
+                Wait For Load State
+                Wait For Load State    networkidle
+                Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    page is not fully loaded
+            END
         ELSE IF     '${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True'
-            Run Keywords    Sleep    ${timeout}    AND    Reload    AND    Wait For Load State
+            Sleep    ${timeout}
+            Reload
+            TRY
+                Wait For Load State
+                Wait For Load State    networkidle
+                Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    page is not fully loaded
+            END
         ELSE
             Exit For Loop
         END
@@ -396,10 +411,121 @@ Ping and go to URL:
     [Arguments]    ${url}    ${timeout}=${EMPTY}
     ${accessible}=    Run Keyword And Ignore Error    Send GET request and return status code:    ${url}    ${timeout}
     ${successful}=    Run Keyword And Ignore Error    Should Contain Any    '${response.status_code}'    '200'    '201'    '202'    '301'    '302'
-    IF    'PASS' in ${accessible} and 'PASS' in ${successful}
+    IF    'PASS' in $accessible and 'PASS' in $successful
         Go To    ${url}
     ELSE
         Fail    '${url}' URL is not accessible of throws an error
+    END
+
+*** Keywords ***
+Click and retry if 5xx occurred:
+    [Arguments]    ${selector}    ${timeout}=300ms
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
+    VAR    ${sweet_alert_js_error_popup}    xpath=//*[contains(@class,'sweet-alert')]
+    TRY
+        ${promise}=    Promise to    Wait For Response    matcher=**    timeout=${timeout}
+        Click    ${selector}
+        ${result}=    Run Keyword And Ignore Error    Wait for    ${promise}
+    EXCEPT
+        Log    No requests were fired
+    END
+    IF    '${result}[0]'=='FAIL'
+        VAR    ${is_5xx}    ${False}
+    ELSE
+        ${response}=    Set Variable    ${result}[1]
+        ${status}=    Get From Dictionary    ${response}    status
+        ${is_5xx}=    Evaluate    ${status} >= 500
+    END
+    ${statuses}=    Create List
+    FOR    ${i}    IN RANGE    10
+        ${result}=    Run Keyword And Ignore Error    Wait For Response    matcher=**    timeout=${timeout}
+        IF    '${result}[0]'=='FAIL'
+            Exit For Loop
+        END
+        ${response}=    Set Variable    ${result}[1]
+        ${status}=    Get From Dictionary    ${response}    status
+        Append To List    ${statuses}    ${status}
+    END
+    ${is_5xx_in_page_load}=    Evaluate    any(status >= 500 for status in ${statuses})
+    ${page_title}=    Get Title
+    ${page_title}=    Convert To Lower Case    ${page_title}
+    ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    IF    not ${is_5xx} and not ${is_5xx_in_page_load} and ${no_exception} and ${no_js_error}
+        RETURN
+    END
+    # Retry click if 5xx occurred or exception
+    Log    message=Clicking '${selector}' triggered a 5xx error. Retrying ...    level=WARN
+    LocalStorage Clear
+    Reload
+    Click With Options    ${selector}    force=True
+    ${statuses_retry}=    Create List
+    FOR    ${i}    IN RANGE    10
+        ${result}=    Run Keyword And Ignore Error    Wait For Response    matcher=**    timeout=100ms
+        IF    '${result}[0]'=='FAIL'
+            Exit For Loop
+        END
+        ${response}=    Set Variable    ${result}[1]
+        ${status}=    Get From Dictionary    ${response}    status
+        Append To List    ${statuses_retry}    ${status}
+    END
+    ${second_5xx_error_in_page_load}=    Evaluate    any(status >= 500 for status in ${statuses_retry})
+    Should Not Be True    ${second_5xx_error_in_page_load}    msg=Clicking '${selector}' triggered a 5xx error.
+    ${page_title}=    Get Title
+    ${page_title}=    Convert To Lower Case    ${page_title}
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    Should Not Contain    ${page_title}    error    msg=Clicking '${selector}' triggered a 5xx error.
+    IF     not ${no_js_error}    Fail    Clicking '${selector}' triggered a 5xx error.
+
+Click and return True if 5xx occurred:
+    [Arguments]    ${locator}    ${timeout}=400ms
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
+    VAR    ${sweet_alert_js_error_popup}    xpath=//*[contains(@class,'sweet-alert')]
+    TRY
+        ${promise}=    Promise to    Wait For Response    matcher=**    timeout=${timeout}
+        Click    ${locator}
+        ${result}=    Run Keyword And Ignore Error    Wait for    ${promise}
+    EXCEPT
+        Log    No requests were fired
+    END
+    IF    '${result}[0]'=='FAIL'
+        VAR    ${is_5xx}    ${False}
+    ELSE
+        ${response}=    Set Variable    ${result}[1]
+        ${status}=    Get From Dictionary    ${response}    status
+        ${is_5xx}=    Evaluate    ${status} >= 500
+    END
+    ${page_load_statuses}=    Create List
+    FOR    ${i}    IN RANGE    10
+        ${result}=    Run Keyword And Ignore Error    Wait For Response    matcher=**    timeout=${timeout}
+        IF    '${result}[0]'=='FAIL'
+            Exit For Loop
+        END
+        ${response}=    Set Variable    ${result}[1]
+        ${status}=    Get From Dictionary    ${response}    status
+        Append To List    ${page_load_statuses}    ${status}
+    END
+    ${is_5xx_in_page_load}=    Evaluate    any(status >= 500 for status in ${page_load_statuses})
+    ${page_title}=    Get Title
+    ${page_title}=    Convert To Lower Case    ${page_title}
+    ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    IF    ${is_5xx} or ${is_5xx_in_page_load} or not ${no_exception} or not ${no_js_error}
+        RETURN    ${True}
+    ELSE
+        RETURN    ${False}
     END
 
 # *** Example of intercepting the network request ***

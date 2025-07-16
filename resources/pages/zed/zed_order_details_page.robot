@@ -1,5 +1,5 @@
 *** Variables ***
-${order_details_billng_address}    xpath=//div[@id='customer']//div[contains(@class,'content')]//dd[last()]
+${order_details_billing_address}    xpath=//div[@id='customer']//div[contains(@class,'content')]//dd[last()]
 ${create_shipment_button}    xpath=//a[contains(@href,'/shipment-gui/create')]
 ${create_shipment_delivery_address_dropdown}    id=shipment_group_form_shipment_shippingAddress_idCustomerAddress
 ${create_shipment_salutation_dropdown}    id=shipment_group_form_shipment_shippingAddress_salutation

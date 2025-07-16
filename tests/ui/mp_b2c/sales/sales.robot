@@ -54,7 +54,7 @@ Return_Management
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
@@ -70,7 +70,7 @@ Return_Management
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
@@ -137,7 +137,7 @@ Refunds
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    010
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
@@ -154,7 +154,7 @@ Refunds
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €394.41
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
@@ -182,7 +182,7 @@ Manage_Shipments
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select delivery to multiple addresses
     Yves: fill in new delivery address for a product:
@@ -212,7 +212,7 @@ Manage_Shipments
     ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
     ...    || 1          | Hermes          | Next Day        | €15.00         | ASAP                    ||
     Zed: create new shipment inside the order:
-    ...    || delivert address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method | sku          ||
+    ...    || delivery address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method | sku          ||
     ...    || New address      | Mr         | Evil       | Tester    | ${yves_user_email} | Austria | Hartmanngasse | 1         | Vienna | 1050     | DHL - Standard  | 012_25904598 ||
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    2
@@ -222,7 +222,7 @@ Manage_Shipments
     ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
     ...    || 2          | DHL             | Standard        | €0.00          | ASAP                    ||
     Zed: edit xxx shipment inside the order:
-    ...    || shipmentN | delivert address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method | requested delivery date | sku          ||
+    ...    || shipmentN | delivery address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method | requested delivery date | sku          ||
     ...    || 2         | New address      | Mr         | Edit       | Shipment  | ${yves_user_email} | Germany | Hartmanngasse | 9         | Vienna | 0987     | DHL - Express   | 2025-01-25              | 005_30663301 ||
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
     Zed: shipment data inside xxx shipment should be:
@@ -247,7 +247,7 @@ Order_Cancellation
     Yves: delete all user addresses
     Yves: go to PDP of the product with sku:    005
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
@@ -273,7 +273,7 @@ Order_Cancellation
     # Yves: add product to the shopping cart
     # Yves: go to PDP of the product with sku:    007_30691822
     # Yves: add product to the shopping cart
-    # Yves: go to b2c shopping cart
+    # Yves: go to shopping cart page
     # Yves: click on the 'Checkout' button in the shopping cart
     # Yves: billing address same as shipping address:    true
     # Yves: fill in the following new shipping address:
@@ -335,7 +335,10 @@ Configurable_Product_OMS
     ...    || 905        | 249        | 100          | 36         |  15         | 0.00       | 48           | 57           | 36          | German Keyboard ||
     Yves: save product configuration
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
+    Yves: configuration should be equal:
+    ...    || date       | date_time ||
+    ...    || 12.12.2030 | Evening   ||
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
@@ -386,7 +389,7 @@ Configurable_Product_OMS
     Yves: go to user menu:    Orders History
     ### Reorder ###
     Yves: 'View Order/Reorder/Return' on the order history page:    Reorder    ${lastPlacedOrder}
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains the following products:     ${configurable_product_name}
     # Yves: product configuration status should be equal:       Configuration is not complete.
     [Teardown]    Yves: check if cart is not empty and clear it
