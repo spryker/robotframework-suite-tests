@@ -61,13 +61,10 @@ Yves: select the following existing address on the checkout as 'shipping' addres
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
     IF    '${is_ssp}' == 'true'
-        ${checkout_address_selector}=    Set Variable    ${checkout_address_delivery_selector}[ssp_b2b]
-        ${checkout_address_selector_text_selector}=    Set Variable    xpath=(//div[contains(@class, 'js-address-item-form-field-list__item-shipping') and not(contains(@class, 'is-hidden'))]//select[@name='checkout-full-addresses']/following-sibling::span//span[@class='select2-selection__rendered'])[1]
+        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[ssp_b2b] 
     ELSE
-        ${checkout_address_selector}=    Set Variable    ${checkout_address_delivery_selector}[${env}]
-        ${checkout_address_selector_text_selector}=    Set Variable    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
     END
-    Wait Until Element Is Visible    ${checkout_address_selector}
     WHILE  '${selected_address}' != '${addressToUse}'    limit=5
         IF    '${env}' in ['ui_b2c','ui_mp_b2c']
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
@@ -75,10 +72,18 @@ Yves: select the following existing address on the checkout as 'shipping' addres
             Sleep    1s
             ${selected_address}=    Get Text    xpath=//select[contains(@name,'shippingAddress')][contains(@id,'addressesForm_shippingAddress_id')]/..//span[contains(@id,'shippingAddress_id')]
         ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-            Repeat Keyword    2    Select From List By Label   ${checkout_address_selector}    ${addressToUse}
+            IF    '${is_ssp}' == 'true'
+                Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[ssp_b2b]    ${addressToUse}
+            ELSE
+                Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+            END
             Repeat Keyword    3    Wait For Load State
             Sleep    1s
-            ${selected_address}=    Get Text    ${checkout_address_selector_text_selector}
+            IF    '${is_ssp}' == 'true'
+                ${selected_address}=    Get Text    xpath=//address-item-form-field-list//select[@name='checkout-full-addresses' and not(ancestor::div[1][contains(@class, 'is-hidden')])]/..//span[contains(@id,'checkout-full-addresses')]
+            ELSE
+                ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+            END
         ELSE
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
             Repeat Keyword    3    Wait For Load State
@@ -86,7 +91,6 @@ Yves: select the following existing address on the checkout as 'shipping' addres
             Exit For Loop
         END
     END
-    IF    '${is_ssp}' == 'true'   Yves: billing address same as shipping address:    true
     Click    ${submit_checkout_form_button}[${env}]
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
@@ -183,12 +187,11 @@ Yves: fill in the following new billing address:
 
 Yves: select delivery to multiple addresses
     IF    '${is_ssp}' == 'true'
-       ${checkbox_locator}=    Set Variable    xpath=//toggler-checkbox[contains(@name,'isSingleAddressPerShipmentType')][1]
-        Wait Until Page Contains Element    ${checkbox_locator}
-        ${checkboxState}=    Set Variable    ${EMPTY}
-        ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//toggler-checkbox[contains(@name,'isSingleAddressPerShipmentType')][1][@checked]    timeout=1s
-        IF    '${checkboxState}'=='True'
-            Click    ${checkbox_locator}
+        VAR    ${single_address_per_shipment_type_checkbox_locator}    xpath=//toggler-checkbox[contains(@name,'isSingleAddressPerShipmentType')][1]
+        Wait Until Page Contains Element    ${single_address_per_shipment_type_checkbox_locator}
+        ${single_address_per_shipment_type_checkbox_is_checked}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//toggler-checkbox[contains(@name,'isSingleAddressPerShipmentType')][1][@checked]    timeout=1s
+        IF    '${single_address_per_shipment_type_checkbox_is_checked}'=='True'
+            Click    ${single_address_per_shipment_type_checkbox_locator}
         END
     ELSE
         Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Deliver to multiple addresses
