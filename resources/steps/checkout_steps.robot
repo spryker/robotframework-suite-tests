@@ -164,7 +164,16 @@ Yves: fill in the following new billing address:
     Sleep    1s
 
 Yves: select delivery to multiple addresses
-    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Deliver to multiple addresses
+    IF    '${is_ssp}' == 'true'
+#       ${setSameAddressForAllProductsCheckbox}=    Set Variable    xpath=(//input[starts-with(@id, 'addressesForm_multiShippingAddresses_') and contains(@id, '_isSingleAddressPerShipmentType')])[1]
+#       Wait Until Page Contains Element    ${setSameAddressForAllProductsCheckbox}
+#       Select Checkbox    ${setSameAddressForAllProductsCheckbox}
+       ${checkbox_locator}=    Set Variable    xpath=//input[starts-with(@id, 'addressesForm_multiShippingAddresses_') and contains(@id, '_isSingleAddressPerShipmentType')]
+        Wait Until Page Contains Element    ${checkbox_locator}
+        Uncheck Checkbox    ${checkbox_locator}
+    ELSE
+        Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Deliver to multiple addresses
+    END
 
 Yves: select multiple addresses from toggler
     Wait Until Element Is Visible    ${checkout_address_multiple_addresses_toggler_button}
