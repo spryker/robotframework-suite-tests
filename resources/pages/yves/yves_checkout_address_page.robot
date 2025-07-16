@@ -17,6 +17,17 @@ ${checkout_shipping_address_city_field}    id=addressesForm_shippingAddress_city
 ${checkout_shipping_address_phone_field}    id=addressesForm_shippingAddress_phone
 ${checkout_shipping_address_salutation_selector}    id=addressesForm_shippingAddress_salutation
 ${checkout_shipping_address_country_selector}    id=addressesForm_shippingAddress_iso2_code
+${ssp_checkout_shipping_address_first_name_field}    xpath=//*[contains(@data-qa,'address-item-form')]//*[contains(@id,'shippingAddress_first_name')]
+${ssp_checkout_shipping_address_last_name_field}    xpath=//*[contains(@data-qa,'address-item-form')]//*[contains(@id,'shippingAddress_last_name')]
+${ssp_checkout_shipping_address_company_name_field}    xpath=//*[contains(@data-qa,'address-item-form')]//*[contains(@id,'shippingAddress_company')]
+${ssp_checkout_shipping_address_street_field}    xpath=//*[contains(@data-qa,'address-item-form')]//*[contains(@id,'shippingAddress_address1')]
+${ssp_checkout_shipping_address_house_number_field}    xpath=//*[contains(@data-qa,'address-item-form')]//*[contains(@id,'shippingAddress_address2')]
+${ssp_checkout_shipping_address_additional_address_field}    xpath=//*[contains(@data-qa,'address-item-form')]//*[contains(@id,'shippingAddress_address3')]
+${ssp_checkout_shipping_address_zip_code_field}    xpath=//*[contains(@data-qa,'address-item-form')]//*[contains(@id,'shippingAddress_zip_code')]
+${ssp_checkout_shipping_address_city_field}    xpath=//*[contains(@data-qa,'address-item-form')]//*[contains(@id,'shippingAddress_city')]
+${ssp_checkout_shipping_address_phone_field}    xpath=//*[contains(@data-qa,'address-item-form')]//*[contains(@id,'shippingAddress_phone')]
+${ssp_checkout_shipping_address_salutation_selector}    xpath=//*[contains(@data-qa,'address-item-form')]//*[contains(@name,'[shippingAddress][salutation]')]
+${ssp_checkout_shipping_address_country_selector}    xpath=//*[contains(@data-qa,'address-item-form')]//select[contains(@id,'shippingAddress_iso2_code')]
 ${checkout_address_submit_button}    xpath=//button[@data-qa='submit-button']
 &{checkout_address_billing_selector}    ui_b2c=xpath=//select[@id='addressesForm_billingAddress_id_customer_address']    ui_b2b=xpath=//select[contains(@class,'form-select-billingAddress')]    ui_mp_b2b=xpath=//select[contains(@class,'form-select-billingAddress')]    ui_mp_b2c=xpath=//select[@id='addressesForm_billingAddress_id_customer_address']    ui_suite=xpath=//select[contains(@class,'form-select-billingAddress')]
 ${checkout_billing_address_salutation_selector}    xpath=//select[@id='addressesForm_billingAddress_salutation']

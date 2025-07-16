@@ -45,6 +45,7 @@ ${default_dms}    ${False}
 
 # *** SSP VARIABLES ***
 ${is_ssp}
+${default_is_ssp}    ${False}
 
 *** Keywords ***
 Common_suite_setup
@@ -144,6 +145,14 @@ Overwrite env variables
     ELSE
         Set Global Variable    ${dms}    ${dms}
     END
+    IF    '${is_ssp}' == '${EMPTY}'
+            Set Global Variable    ${is_ssp}    ${default_is_ssp}
+    ELSE
+        ${is_ssp}=    Convert To String    ${is_ssp}
+        ${is_ssp}=    Convert To Lower Case    ${is_ssp}
+        IF    '${is_ssp}' == 'yes'    Set Global Variable    ${is_ssp}    true
+        Set Global Variable    ${is_ssp}    ${is_ssp}
+    END
     ${dms}=    Convert To String    ${dms}
     ${dms}=    Convert To Lower Case    ${dms}
     IF    '${dms}' == 'true'    Set Global Variable    ${dms}    ${True}
@@ -161,8 +170,6 @@ Overwrite env variables
     ELSE
         Set Global Variable    ${verify_ssl}    ${False}
     END
-    ${is_ssp}=    Convert To String    ${is_ssp}
-    ${is_ssp}=    Convert To Lower Case    ${is_ssp}
 
 Set Up Keyword Arguments
     [Arguments]    @{args}

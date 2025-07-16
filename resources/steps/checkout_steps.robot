@@ -120,8 +120,26 @@ Yves: fill in the following new shipping address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
     [Arguments]    @{args}
     ${newAddressData}=    Set Up Keyword Arguments    @{args}
-    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Define new address
-    Wait Until Element Is Visible    ${checkout_new_shipping_address_form}
+    IF    '${is_ssp}' == 'true'
+        Select From List By Label    ${checkout_address_delivery_selector}[ssp_b2b]    Define new address
+        Wait Until Element Is Visible    xpath=//*[contains(@data-qa,'address-item-form')]//div[contains(@class,'address-content')][@data-qa='component form']
+    ELSE
+        Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Define new address
+        Wait Until Element Is Visible    ${checkout_new_shipping_address_form}
+    END
+    IF    '${is_ssp}' == 'true'
+        VAR    ${checkout_shipping_address_salutation_selector}    ${ssp_checkout_shipping_address_salutation_selector}
+        VAR    ${checkout_shipping_address_last_name_field}    ${ssp_checkout_shipping_address_last_name_field}
+        VAR    ${checkout_shipping_address_company_name_field}    ${ssp_checkout_shipping_address_company_name_field}
+        VAR    ${checkout_shipping_address_street_field}    ${ssp_checkout_shipping_address_street_field}
+        VAR    ${checkout_shipping_address_house_number_field}    ${ssp_checkout_shipping_address_house_number_field}
+        VAR    ${checkout_shipping_address_additional_address_field}    ${ssp_checkout_shipping_address_additional_address_field}
+        VAR    ${checkout_shipping_address_zip_code_field}    ${ssp_checkout_shipping_address_zip_code_field}
+        VAR    ${checkout_shipping_address_city_field}    ${ssp_checkout_shipping_address_city_field}
+        VAR    ${checkout_shipping_address_country_selector}    ${ssp_checkout_shipping_address_country_selector}
+        VAR    ${checkout_shipping_address_phone_field}    ${ssp_checkout_shipping_address_phone_field}
+        ${checkout_shipping_address_first_name_field}[${env}]=    Set Variable    ${ssp_checkout_shipping_address_first_name_field}
+    END
     FOR    ${key}    ${value}    IN    &{newAddressData}
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${checkout_shipping_address_salutation_selector}    ${value}
@@ -165,12 +183,13 @@ Yves: fill in the following new billing address:
 
 Yves: select delivery to multiple addresses
     IF    '${is_ssp}' == 'true'
-#       ${setSameAddressForAllProductsCheckbox}=    Set Variable    xpath=(//input[starts-with(@id, 'addressesForm_multiShippingAddresses_') and contains(@id, '_isSingleAddressPerShipmentType')])[1]
-#       Wait Until Page Contains Element    ${setSameAddressForAllProductsCheckbox}
-#       Select Checkbox    ${setSameAddressForAllProductsCheckbox}
-       ${checkbox_locator}=    Set Variable    xpath=//input[starts-with(@id, 'addressesForm_multiShippingAddresses_') and contains(@id, '_isSingleAddressPerShipmentType')]
+       ${checkbox_locator}=    Set Variable    xpath=//toggler-checkbox[contains(@name,'isSingleAddressPerShipmentType')][1]
         Wait Until Page Contains Element    ${checkbox_locator}
-        Uncheck Checkbox    ${checkbox_locator}
+        ${checkboxState}=    Set Variable    ${EMPTY}
+        ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//toggler-checkbox[contains(@name,'isSingleAddressPerShipmentType')][1][@checked]    timeout=1s
+        IF    '${checkboxState}'=='True'
+            Click    ${checkbox_locator}
+        END
     ELSE
         Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Deliver to multiple addresses
     END
@@ -379,18 +398,31 @@ Yves: assert merchant of product in cart or list:
     [Arguments]    ${sku}    ${merchant_name_expected}
     Page Should Contain Element    xpath=(//*[@itemprop='sku' and (text()='${sku}' or @content='${sku}')]/ancestor::*[self::article or self::tr or self::product-item][contains(@itemtype,'Product')]//a[contains(@href,'merchant')][contains(text(),'${merchant_name_expected}')])[1]    timeout=${browser_timeout}
 
-Yves: save new deviery address to address book:
+Yves: save new delivery address to address book:
     [Arguments]    ${state}
     ${state}=    Convert To Lower Case    ${state}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
-    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped'][@checked]    timeout=1s
+    IF    '${is_ssp}' == 'true'
+        ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//*[contains(@data-qa,'address-item-form')]//input[contains(@name,'[shippingAddress][isAddressSavingSkipped]')][checked]    timeout=1s
+    ELSE
+        ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped'][@checked]    timeout=1s
+    END
     IF    '${checkboxState}'=='False' and '${state}' == 'true'
-        Click    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
+        IF    '${is_ssp}' == 'true'
+            Click    xpath=//*[contains(@data-qa,'address-item-form')]//input[contains(@name,'[shippingAddress][isAddressSavingSkipped]')]/ancestor::span[contains(@data-qa,'checkbox')]
+        ELSE
+            Click    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
+        END
         Repeat Keyword    3    Wait For Load State
     END
     IF    '${checkboxState}'=='True' and '${state}' == 'false'
-        Click    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
+        IF    '${is_ssp}' == 'true'
+            Click    xpath=//*[contains(@data-qa,'address-item-form')]//input[contains(@name,'[shippingAddress][isAddressSavingSkipped]')]/ancestor::span[contains(@data-qa,'checkbox')]
+        ELSE
+            Click    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
+        END
+        
         Repeat Keyword    3    Wait For Load State
     END
 
