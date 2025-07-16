@@ -218,6 +218,10 @@ Connect to Spryker DB
     ${db_engine}=    Convert To Lower Case    ${db_engine}
     IF    '${db_engine}' == 'mysql'
         ${db_engine}=    Set Variable    pymysql
+    ELSE IF    '${db_engine}' == 'mariadb'
+        ${db_engine}=    Set Variable    pymysql
+    ELSE IF    '${db_engine}' == 'maria'
+        ${db_engine}=    Set Variable    pymysql
     ELSE IF    '${db_engine}' == 'postgresql'
         ${db_engine}=    Set Variable    psycopg2
     ELSE IF    '${db_engine}' == 'postgres'
