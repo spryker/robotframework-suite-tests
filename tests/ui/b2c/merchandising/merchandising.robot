@@ -109,6 +109,7 @@ Configurable_Bundle
     Yves: 'Order Details' page is displayed
     Yves: 'Order Details' page contains the following product title N times:    Smartstation Kit    3
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    skip picking
@@ -178,7 +179,7 @@ Product_Relations
     [Teardown]    Yves: check if cart is not empty and clear it
 
 CRUD_Product_Set
-    [Documentation]    CRUD operations for product sets. DMS-ON: https://spryker.atlassian.net/browse/FRW-7393 
+    [Documentation]    CRUD operations for product sets. DMS-ON: https://spryker.atlassian.net/browse/FRW-7393
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new product set:
     ...    || name en            | name de            | url en             | url de             | set key       | active | product | product 2 | product 3 ||

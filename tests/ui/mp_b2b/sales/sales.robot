@@ -66,6 +66,7 @@ Return_Management
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
@@ -143,6 +144,7 @@ Refunds
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,762.85
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
@@ -254,7 +256,7 @@ Order_Cancellation
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: wait for order item to be in state:    403125    canceled
+    Zed: wait for order item to be in state:    403125    cancelled
     ### NOT FINISHED AS NO REQUIREMENTS FOR MP CASE
     # Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     # Yves: create new 'Shopping Cart' with name:    cancelationCart+${random}
@@ -278,6 +280,7 @@ Order_Cancellation
     # ### change the order state of one product ###
     # Zed: login on Zed with provided credentials:    ${zed_admin_email}
     # Zed: go to order page:    ${lastPlacedOrder}
+    # Zed: trigger all matching states inside this order:    skip grace period
     # Zed: trigger matching state of order item inside xxx shipment:    403125    Pay
     # Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     # Yves: go to 'Order History' page
