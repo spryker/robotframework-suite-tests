@@ -60,13 +60,13 @@ Fulfillment_app_e2e
     I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid_warehouse1}"},"isActive":"true"}}}
     Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id  
+    Then Save value to a variable:    [data][id]   warehouse_assigment_id
     # CREATE AN ORDER BY GLUE
     I set Headers:    Content-Type=${default_header_content_type}
     Remove Tags    *
     Set Tags    glue
     API_test_setup
-    When I get access token for the customer:    ${yves_user_email}    
+    When I get access token for the customer:    ${yves_user_email}
     Then I set Headers:    Authorization=${token}
     When Find or create customer cart
     Then Cleanup all items in the cart:    ${cart_id}
@@ -79,8 +79,8 @@ Fulfillment_app_e2e
     And Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     And Save value to a variable:    [included][0][attributes][items][1][uuid]    uuid1
     # # MOVE ORDER ITEMS INTO WAITING STATE
-    And Update order status in Database:    waiting    ${uuid} 
-    And Update order status in Database:    waiting    ${uuid1}     
+    And Update order status in Database:    waiting    ${uuid}
+    And Update order status in Database:    waiting    ${uuid1}
     # # MOVE ORDER ITEMS TO PROPER STATE USING BO, PICKING LIST GENERATED AUTOMATICALLY. UI TEST
     UI_test_setup
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -89,6 +89,7 @@ Fulfillment_app_e2e
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside this order:    picking list generation schedule
+    Trigger oms
     # # ORDER READY FOR PICKING
     Zed: wait for order item to be in state:    091_25873091    ready for picking
     Zed: wait for order item to be in state:    093_24495843    ready for picking
@@ -121,7 +122,7 @@ Fulfillment_app_e2e
     And Response body parameter should be:    [data][0][attributes][status]    picking-finished
     # CLEAN SYSTEM, REMOVE CREATED RELATIONS IN DB
     [Teardown]     Run Keywords    Remove picking list item by uuid in DB:    ${item_id_1}
-    ...  AND    Remove picking list item by uuid in DB:    ${item_id_2} 
+    ...  AND    Remove picking list item by uuid in DB:    ${item_id_2}
     ...  AND    Remove picking list by uuid in DB:    ${picklist_id}
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
-    ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}    
+    ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}

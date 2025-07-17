@@ -681,7 +681,7 @@ Configurable_Product_RfQ_OMS
     Yves: 'Order Details' page is displayed
     ### Reorder ###
     Yves: reorder all items from 'Order Details' page
-    Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
+    Yves: go to the shopping cart through the header with name:    Reorder from Order ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
     # Yves: product configuration status should be equal:       Configuration is not complete.
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
