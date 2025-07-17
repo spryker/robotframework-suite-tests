@@ -2285,7 +2285,7 @@ To JSON Boolean
     ${is_true}=    Run Keyword And Return Status    Should Be True    ${value}
     IF    ${is_true}
         RETURN    true
-    ELSE    
+    ELSE
         RETURN    false
     END
 
@@ -2293,3 +2293,17 @@ Get Json Value
     [Arguments]    ${body}    ${path}
     ${value}=    Get Value    ${body}    ${path}
     RETURN    ${value}
+
+*** Keywords ***
+Response body parameter should be either:
+    [Arguments]    ${json_path_1}    ${json_path_2}    ${expected}
+    ${status_1}=    Run Keyword And Return Status    Response body parameter should be:    ${json_path_1}    ${expected}
+    ${status_2}=    Run Keyword And Return Status    Response body parameter should be:    ${json_path_2}    ${expected}
+    Run Keyword Unless    ${status_1} or ${status_2}    Fail    Neither '${json_path_1}' nor '${json_path_2}' equals expected value ${expected}.
+
+*** Keywords ***
+Response should contain the array of a certain size either:
+    [Arguments]    ${json_path_1}    ${json_path_2}    ${expected_size}
+    ${status_1}=    Run Keyword And Return Status    Response should contain the array of a certain size:    ${json_path_1}    ${expected_size}
+    ${status_2}=    Run Keyword And Return Status    Response should contain the array of a certain size:    ${json_path_2}    ${expected_size}
+    Run Keyword Unless    ${status_1} or ${status_2}    Fail    Neither '${json_path_1}' nor '${json_path_2}' contains array of expected size.
