@@ -79,6 +79,13 @@ Fulfillment_app_e2e
     And Save value to a variable:    [included][0][attributes][items][0][uuid]    uuid
     And Save value to a variable:    [included][0][attributes][items][1][uuid]    uuid1
     # # MOVE ORDER ITEMS INTO WAITING STATE
+    Trigger oms
+    Yves: login on Yves with provided credentials:    ${yves_user_email}
+    Yves: get the last placed order ID by current customer
+    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
+    Trigger oms
     And Update order status in Database:    waiting    ${uuid}
     And Update order status in Database:    waiting    ${uuid1}
     # # MOVE ORDER ITEMS TO PROPER STATE USING BO, PICKING LIST GENERATED AUTOMATICALLY. UI TEST
