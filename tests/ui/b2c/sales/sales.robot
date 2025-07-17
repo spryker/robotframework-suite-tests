@@ -280,7 +280,6 @@ Order_Cancellation
     ### change state for all products ###
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger matching state of order item inside xxx shipment:    007_30691822    Pay
     Zed: trigger matching state of order item inside xxx shipment:    007_30691822    Skip timeout
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
