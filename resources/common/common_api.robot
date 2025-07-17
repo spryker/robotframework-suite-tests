@@ -2067,7 +2067,6 @@ Array element should contain property with value at least once:
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
-        Log Many    ${list_element}
         ${result}=    Run Keyword And Ignore Error    Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}
         IF    'PASS' in ${result}    Exit For Loop
         IF    ${index} == ${list_length}-1
@@ -2116,7 +2115,6 @@ Each array element should contain property with value:
     ${list_length}=    Get Length               @{data}
     FOR    ${index}    IN RANGE                 0    ${list_length}
         ${element}=       Get From List            @{data}    ${index}
-        Log Many    ${element}
         Dictionary Should Contain Key    ${element}    ${expected_property}
         ${actual}=         Get From Dictionary      ${element}    ${expected_property}
         ${actual_str}=     Convert To String        ${actual}

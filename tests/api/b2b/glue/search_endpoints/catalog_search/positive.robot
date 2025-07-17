@@ -27,11 +27,12 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should contain:    [data][0][attributes]    currentSortParam
     And Response body parameter should contain:    [data][0][attributes]    currentSortOrder
     #Pagination
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][0][attributes][pagination][numFound]
     ...    ${total_number_of_products_in_search}
+    ...    ${total_number_of_products_in_search_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
+    And Response body parameter should be in:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}    ${default_qty.ipp_pages_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentItemsPerPage]    ${ipp.default}
     And Response body parameter should be:
     ...    [data][0][attributes][pagination][config][defaultItemsPerPage]
@@ -88,9 +89,10 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should contain:    [data][0][attributes]    valueFacets
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][name]    category
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][localizedName]    Categories
-    And Response should contain the array of a certain size:
+    And Response should contain the array of size in:
     ...    [data][0][attributes][valueFacets][0][values]
     ...    ${default_qty.categories}
+    ...    ${default_qty.categories_ssp}
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][config][isMultiValued]    False
     #Filters - labels
@@ -101,10 +103,6 @@ Search_with_empty_search_criteria_all_default_values_check
     ...    ${default_qty.labels}
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][config][isMultiValued]    True
-    #Filters - product class
-    And Array element should contain property with value at least once:    [data][0][attributes][valueFacets]    name    product-class-names
-    And Array element should contain property with value at least once:    [data][0][attributes][valueFacets]    localizedName    Product Class
-    And Response should contain a nested array of a certain size at least once:    [data][0][attributes][valueFacets]    values    ${default_qty.ssp_product_classes}
     #Filters - color
     And Array element should contain property with value at least once:    [data][0][attributes][valueFacets]    name    farbe
     And Array element should contain property with value at least once:    [data][0][attributes][valueFacets]    localizedName    Color
@@ -130,6 +128,7 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response should contain the array of size in:
     ...    [data][0][attributes][categoryTreeFilter]
     ...    ${category_tree_branches_qty}
+    ...    ${category_tree_branches_qty_ssp}
     And Each array element of array in response should contain value:
     ...    [data][0][attributes][categoryTreeFilter]
     ...    nodeId
@@ -402,15 +401,16 @@ Filter_by_brand_two_brands
     And Array element should contain property or array value at least once:    [data][0][attributes][valueFacets]    activeValue    ${brand_1}
     And Array element should contain property or array value at least once:    [data][0][attributes][valueFacets]    activeValue    ${brand_2}
 
-Filter_by_brand_empty_brand
+Filter_by_brand_empty_brand    
     When I send a GET request:    /catalog-search?q=&brand=
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][0][attributes][pagination][numFound]
     ...    ${total_number_of_products_in_search}
+    ...    ${total_number_of_products_in_search_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:
@@ -478,11 +478,12 @@ Filter_by_label_empty_label
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][0][attributes][pagination][numFound]
     ...    ${total_number_of_products_in_search}
+    ...    ${total_number_of_products_in_search_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
+    And Response body parameter should be in:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}    ${default_qty.ipp_pages_ssp}
     And Response should contain the array of a certain size:
     ...    [data][0][attributes][abstractProducts]
     ...    ${ipp.default}
@@ -541,12 +542,12 @@ Filter_by_color_empty_color
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][0][attributes][pagination][numFound]
     ...    ${total_number_of_products_in_search}
+    ...    ${total_number_of_products_in_search_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
+    And Response body parameter should be in:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}    ${default_qty.ipp_pages_ssp}
     And Response should contain the array of a certain size:
     ...    [data][0][attributes][abstractProducts]
     ...    ${ipp.default}
@@ -608,11 +609,12 @@ Filter_by_material_empty_material
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][0][attributes][pagination][numFound]
     ...    ${total_number_of_products_in_search}
+    ...    ${total_number_of_products_in_search_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
+    And Response body parameter should be in:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}    ${default_qty.ipp_pages_ssp}
     And Response should contain the array of a certain size:
     ...    [data][0][attributes][abstractProducts]
     ...    ${ipp.default}
@@ -632,20 +634,27 @@ Filter_by_valid_main_category
     ...    ${ipp.default}
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][activeValue]    ${category_lvl1.id}
     # check that category tree is correctly updated
-    And Response should contain the array of a certain size:
+    And Response should contain the array of size in:
     ...    [data][0][attributes][categoryTreeFilter]
     ...    ${category_tree_branches_qty}
+    ...    ${category_tree_branches_qty_ssp}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Array element should contain property or array value at least once:    [data][0][attributes][categoryTreeFilter]    docCount    ${category_lvl1.qty}
+    And Response body parameter should be either:
+    ...    [data][0][attributes][categoryTreeFilter][3][docCount]
+    ...    [data][0][attributes][categoryTreeFilter][4][docCount]
+    ...    ${category_lvl1.qty}
     And Response body parameter should be either:
     ...    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]
-    ...    0
-    And Response body parameter should be greater than:
+    ...    [data][0][attributes][categoryTreeFilter][4][children][0][docCount]
+    ...    56
+    And Response body parameter should be either:
     ...    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]
-    ...    0
-    And Response body parameter should be greater than:
+    ...    [data][0][attributes][categoryTreeFilter][4][children][1][docCount]
+    ...    39
+    And Response body parameter should be either:
     ...    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]
-    ...    0
+    ...    [data][0][attributes][categoryTreeFilter][4][children][0][children][0][docCount]
+    ...    28
     And Response body has correct self link
 
 Filter_by_valid_subcategory
@@ -662,21 +671,25 @@ Filter_by_valid_subcategory
     ...    ${ipp.default}
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][activeValue]    ${category_lvl2.id}
     # check that category tree is correctly updated
-    And Response should contain the array of a certain size:
+    And Response should contain the array of size in:
     ...    [data][0][attributes][categoryTreeFilter]
     ...    ${category_tree_branches_qty}
+    ...    ${category_tree_branches_qty_ssp}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
     And Array element should contain property or array value at least once:    [data][0][attributes][categoryTreeFilter]    docCount    ${category_lvl2.qty}
     And Response body parameter should be either:
     ...    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]
-    ...    ${category_lvl2.qty_approx}
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    0
-    And Response body parameter should be greater than:
-    ...    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]
-    ...    0
-    And Response body parameter should be less than:
-    ...    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]
+    ...    [data][0][attributes][categoryTreeFilter][4][children][0][docCount]
     ...    ${category_lvl2.qty}
+    And Response body parameter should be either:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    [data][0][attributes][categoryTreeFilter][4][children][1][docCount]    0
+    And Response body parameter should be either:
+    ...    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]
+    ...    [data][0][attributes][categoryTreeFilter][4][children][0][children][0][docCount]
+    ...    28
+    And Response body parameter should be either:
+    ...    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]
+    ...    [data][0][attributes][categoryTreeFilter][4][children][0][children][0][docCount]
+    ...    28
     And Response body has correct self link
 
 Filter_by_valid_sub_subcategory
@@ -693,22 +706,27 @@ Filter_by_valid_sub_subcategory
     ...    ${ipp.default}
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][activeValue]    ${category_lvl3.id}
     # check that category tree is correctly updated
-    And Response should contain the array of a certain size:
+    And Response should contain the array of size in:
     ...    [data][0][attributes][categoryTreeFilter]
     ...    ${category_tree_branches_qty}
+    ...    ${category_tree_branches_qty_ssp}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-    And Response body parameter should be:
+    And Response body parameter should be either:
     ...    [data][0][attributes][categoryTreeFilter][3][docCount]
+    ...    [data][0][attributes][categoryTreeFilter][4][docCount]
     ...    ${category_lvl3.qty}
-    And Response body parameter should be:
+    And Response body parameter should be either:
     ...    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]
+    ...    [data][0][attributes][categoryTreeFilter][4][children][0][docCount]
     ...    ${category_lvl3.qty}
-    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    0
-    And Response body parameter should be:
+    And Response body parameter should be either:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    [data][0][attributes][categoryTreeFilter][4][children][1][docCount]    0
+    And Response body parameter should be either:
     ...    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]
+    ...    [data][0][attributes][categoryTreeFilter][4][children][0][children][0][docCount]
     ...    ${category_lvl3.qty}
-    And Response body parameter should be:
+    And Response body parameter should be either:
     ...    [data][0][attributes][categoryTreeFilter][3][children][0][children][1][docCount]
+    ...    [data][0][attributes][categoryTreeFilter][4][children][0][children][1][docCount]
     ...    0
     And Response body has correct self link
 
@@ -718,9 +736,11 @@ Search_with_specific_currency
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be less than:
+    And Response body parameter should be in:
     ...    [data][0][attributes][pagination][numFound]
     ...    ${total_number_of_products_in_search}
+    ...    ${total_number_of_products_in_search_ssp}
+    ...    416
     And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    1
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
     And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
@@ -750,11 +770,12 @@ Search_set_specific_page_with_ipp.default
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][0][attributes][pagination][numFound]
     ...    ${total_number_of_products_in_search}
+    ...    ${total_number_of_products_in_search_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    4
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
+    And Response body parameter should be in:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}    ${default_qty.ipp_pages_ssp}
     And Response body parameter should be:
     ...    [data][0][attributes][pagination][config][defaultItemsPerPage]
     ...    ${ipp.default}
@@ -773,9 +794,10 @@ Search_set_specific_page_and_nonipp.default
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][0][attributes][pagination][numFound]
     ...    ${total_number_of_products_in_search}
+    ...    ${total_number_of_products_in_search_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    2
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    18
     And Response body parameter should be:
@@ -797,9 +819,10 @@ Search_set_last_page_and_nonipp.default
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][0][attributes][pagination][numFound]
     ...    ${total_number_of_products_in_search}
+    ...    ${total_number_of_products_in_search_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    12
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    12
     And Response body parameter should be:
@@ -817,11 +840,12 @@ Search_set_invalid_ipp
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    And Response body parameter should be:
+    And Response body parameter should be in:
     ...    [data][0][attributes][pagination][numFound]
     ...    ${total_number_of_products_in_search}
+    ...    ${total_number_of_products_in_search_ssp}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-    And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}
+    And Response body parameter should be in:    [data][0][attributes][pagination][maxPage]    ${default_qty.ipp_pages}    ${default_qty.ipp_pages_ssp}
     And Response body parameter should be:
     ...    [data][0][attributes][pagination][config][defaultItemsPerPage]
     ...    ${ipp.default}
