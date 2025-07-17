@@ -2351,7 +2351,7 @@ To JSON Boolean
     ${is_true}=    Run Keyword And Return Status    Should Be True    ${value}
     IF    ${is_true}
         RETURN    true
-    ELSE    
+    ELSE
         RETURN    false
     END
 

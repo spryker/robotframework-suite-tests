@@ -576,7 +576,7 @@ Filter_by_material_one_material
     ...    ${default_qty.brands}
     And Response body has correct self link
 
-Filter_by_material_two_materails
+Filter_by_material_two_materials
     When I send a GET request:    /catalog-search?q=&material[]=${material_1}&material[]=${material_2}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -591,7 +591,7 @@ Filter_by_material_two_materails
     And Array element should contain property or array value at least once:    [data][0][attributes][valueFacets]    activeValue    ${material_1}
     And Array element should contain property or array value at least once:    [data][0][attributes][valueFacets]    activeValue    ${material_2}
 
-Filter_by_material_non_existing_materail
+Filter_by_material_non_existing_material
     When I send a GET request:    /catalog-search?q=&material[]=test123
     Then Response status code should be:    200
     And Response reason should be:    OK
