@@ -60,7 +60,7 @@ Yves: select the following existing address on the checkout as 'shipping' addres
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
     IF    '${is_ssp}' == 'true'
-        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[ssp_b2b] 
+        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[ssp_b2b]
     ELSE
         Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
     END
@@ -68,7 +68,7 @@ Yves: select the following existing address on the checkout as 'shipping' addres
         IF    '${env}' in ['ui_b2c','ui_mp_b2c']
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
             Repeat Keyword    3    Wait For Load State
-            Sleep    1s
+            Sleep    500ms
             ${selected_address}=    Get Text    xpath=//select[contains(@name,'shippingAddress')][contains(@id,'addressesForm_shippingAddress_id')]/..//span[contains(@id,'shippingAddress_id')]
         ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
             IF    '${is_ssp}' == 'true'
@@ -77,18 +77,29 @@ Yves: select the following existing address on the checkout as 'shipping' addres
                 Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
             END
             Repeat Keyword    3    Wait For Load State
-            Sleep    1s
+            Sleep    500ms
             IF    '${is_ssp}' == 'true'
-                ${selected_address}=    Get Text    xpath=//address-item-form-field-list//select[@name='checkout-full-addresses' and not(ancestor::div[1][contains(@class, 'is-hidden')])]/..//span[contains(@id,'checkout-full-addresses')]
+                ${selected_address}=    Get Text    xpath=(//address-item-form-field-list//select[@name='checkout-full-addresses' and not(ancestor::div[1][contains(@class, 'is-hidden')])]/..//span[contains(@id,'checkout-full-addresses')])[1]
             ELSE
                 ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
             END
         ELSE
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
             Repeat Keyword    3    Wait For Load State
-            Sleep    1s
+            Sleep    500ms
             Exit For Loop
         END
+    END
+    IF    '${is_ssp}' == 'true'
+        ${ssp_checkout_delivery_address_dropdowns_count}=    Get Element Count    xpath=//address-item-form-field-list//select[@name='checkout-full-addresses' and not(ancestor::div[1][contains(@class, 'is-hidden')])]
+        IF    ${ssp_checkout_delivery_address_dropdowns_count} > 1
+            FOR    ${index}    IN RANGE    1    ${ssp_checkout_delivery_address_dropdowns_count}
+                Repeat Keyword    2    Select From List By Label    xpath=(//address-item-form-field-list//select[@name='checkout-full-addresses' and not(ancestor::div[1][contains(@class, 'is-hidden')])])[${index}+1]    ${addressToUse}
+                IF    ${index} == ${ssp_checkout_delivery_address_dropdowns_count}    BREAK
+            END
+        END
+        Repeat Keyword    3    Wait For Load State
+        Sleep    500ms
     END
     Click    ${submit_checkout_form_button}[${env}]
     Repeat Keyword    3    Wait For Load State
