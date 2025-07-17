@@ -268,7 +268,7 @@ Order_Cancellation
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: wait for order item to be in state:    005_30663301    canceled
+    Zed: wait for order item to be in state:    005_30663301    cancelled
     ### NOT FINISHED AS NO REQUIREMENTS FOR MP CASE
     # Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     # Yves: go to PDP of the product with sku:    005_30663301
