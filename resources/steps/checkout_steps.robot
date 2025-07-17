@@ -57,7 +57,6 @@ Yves: accept the terms and conditions:
 
 Yves: select the following existing address on the checkout as 'shipping' address and go next:
     [Arguments]    ${addressToUse}
-    Reload
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
     IF    '${is_ssp}' == 'true'
@@ -97,7 +96,6 @@ Yves: select the following existing address on the checkout as 'shipping' addres
 
 Yves: select the following existing address on the checkout as 'shipping':
     [Arguments]    ${addressToUse}
-    Reload
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
     IF    '${is_ssp}' == 'true'
