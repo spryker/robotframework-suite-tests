@@ -561,7 +561,7 @@ Response status code should be:
     Should Be Equal As Strings    ${response.status_code}    ${status_code}    Expected 'status code': '${status_code}' does not equal actual 'status code': '${response.status_code}'.
 
 Response body should contain:
-    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contsains the string passed as an argument.
+    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contains the string passed as an argument.
     ...
     ...    *Example:*
     ...
@@ -583,7 +583,7 @@ Response body should not contain:
     Should Not Contain    ${response_body}    ${value}    Response body contains not expected: '${value}'.
 
 Response body parameter should be:
-    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contsains the speficied parameter ``{json_path}`` with the specified value ``{expected_value}``.
+    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contains the specified parameter ``{json_path}`` with the specified value ``{expected_value}``.
     ...
     ...    *Example:*
     ...
@@ -638,7 +638,7 @@ Perform arithmetical calculation with two arguments:
     RETURN    ${variable_name}
 
 Response body parameter should be in:
-    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contsains the speficied parameter ``{json_path}`` with the value that matches one of the parameters ``{expected_value1}``, ``{expected_value2}``.
+    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contains the specified parameter ``{json_path}`` with the value that matches one of the parameters ``{expected_value1}``, ``{expected_value2}``.
     ...
     ...    The minimal number of arguments are 2, maximum is 4
     ...
@@ -658,7 +658,7 @@ Response body parameter should be in:
     END
 
 Response body parameter with rounding should be:
-    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contains the speficied parameter ``{json_path}`` that was rounded and can differ from the expected value by 1 more cent or 1 less cent.
+    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contains the specified parameter ``{json_path}`` that was rounded and can differ from the expected value by 1 more cent or 1 less cent.
     ...    It can be used if you need to check value with rounding for prices etg.
     ...
     ...    Range is calculated as
@@ -685,7 +685,7 @@ Response body parameter with rounding should be:
     Should Be Equal    ${result}    True    Actual ${data} is not in expected Range [${range_value_min}; ${range_value_max}], json_path: '${json_path}'
 
 Response body parameter should be NOT in:
-    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contsains the speficied parameter ``{json_path}`` with the value that matches one of the parameters ``{expected_value1}``, ``{expected_value2}``.
+    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contains the specified parameter ``{json_path}`` with the value that matches one of the parameters ``{expected_value1}``, ``{expected_value2}``.
     ...
     ...    The minimal number of arguments is 1, maximum is 4
     ...
@@ -705,7 +705,7 @@ Response body parameter should be NOT in:
     END
 
 Response body parameter should NOT be:
-    [Documentation]    This keyword checks that the response saved in ``{response_body}`` test variable contsains the speficied parameter ``{json_path}`` has a value that is DIFFERENT from the value passed as an argument ``{expected_value}``.
+    [Documentation]    This keyword checks that the response saved in ``{response_body}`` test variable contains the specified parameter ``{json_path}`` has a value that is DIFFERENT from the value passed as an argument ``{expected_value}``.
     ...
     ...    This keyword can be conveniently used when you need to make sure the parameter is not empty. To check for ``null`` value in robot Framework use ``None`` keyword as shown in the example below.
     ...
@@ -722,7 +722,7 @@ Response body parameter should NOT be:
     Should Not Be Equal    ${data}    ${expected_value}    '${data}' in '${json_path}' should be equal to '${expected_value}'.
 
 Response body parameter should have datatype:
-    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contsains the speficied parameter ``{parameter}`` and that parameter has the specified data type ``{expected_data_type}``.
+    [Documentation]    This keyword checks that the response saved  in ``{response_body}`` test variable contains the specified parameter ``{parameter}`` and that parameter has the specified data type ``{expected_data_type}``.
     ...
     ...    Some types that can be used are: ``int``, ``str``, ``list``. It uses a custom keyword ``Evaluate datatype of a variable:`` to evaluate the datatype.
     ...
@@ -872,7 +872,7 @@ Response body parameter should be less than:
 
 Response should contain the array of a certain size:
     [Documentation]    This keyword checks that the body array sent in ``{json_path}`` argument contains the specific number of items ``{expected_size}``. The expected size should be an integer value.
-    ...    It can be used to check how many products, adderesses, etc. were returned, if you know the exact number of emelents that should be returned.
+    ...    It can be used to check how many products, addresses, etc. were returned, if you know the exact number of elements that should be returned.
     ...
     ...    *Example:*
     ...
@@ -896,7 +896,7 @@ Response should contain the array larger than a certain size:
     [Documentation]    This keyword checks that the body array sent in ``{json_path}`` argument contains the number of items that is more than ``{expected_size}``.
     ...    The expected size should be an integer value that is less than you expect elements. So if you expect an array to have at least 2 elements, the ``{expected_size}`` should be 1.
     ...
-    ...    It can be used to check how many elements were returned, if you know the exact number of emelents that should be returned, but know there should be at least 1 for example.
+    ...    It can be used to check how many elements were returned, if you know the exact number of elements that should be returned, but know there should be at least 1 for example.
     ...
     ...    *Example:*
     ...
@@ -936,7 +936,7 @@ Response should contain the array smaller than a certain size:
     [Documentation]    This keyword checks that the body array sent in ``{json_path}`` argument contains the number of items that is fewer than ``{expected_size}``.
     ...    The expected size should be an integer value that is less than you expect elements. So if you expect an array to have 0 or 1 elements, the ``{expected_size}`` should be 2.
     ...
-    ...    It can be used to check how many elements were returned, if you know the exact number of emelents that should be returned, but know there should be fewer, than the default value for example.
+    ...    It can be used to check how many elements were returned, if you know the exact number of elements that should be returned, but know there should be fewer, than the default value for example.
     ...    It is useful when you check search and know how many values are there if there is no filtering, but you also know that with filtering, there should be fewer values than without it.
     ...
     ...    *Example:*
@@ -951,7 +951,7 @@ Response should contain the array smaller than a certain size:
     Should Be Equal    ${result}    True    Actual array length is '${list_length}' and it is not smaller than expected '${expected_size}' in '${json_path}'.
 
 Each array element of array in response should contain property:
-    [Documentation]    This keyword checks whether the array ``{json_path}`` that is present in the ``{response_body}`` test variable contsains a property with ``{expected_property}`` name in every of it's array elements.
+    [Documentation]    This keyword checks whether the array ``{json_path}`` that is present in the ``{response_body}`` test variable contains a property with ``{expected_property}`` name in every of it's array elements.
     ...
     ...    It does not take into account the property value, just checks it is there for every element. If some of the elements have this property and others do not, the keyword will fail.
     ...
@@ -959,7 +959,7 @@ Each array element of array in response should contain property:
     ...
     ...   ``Each array element of array in response should contain property:    [data][0][attributes][prices][0][volumePrices]    quantity``
     ...
-    ...    The example above checks if ALL prices returened in volumePrices array have quantity property, while quantity value can be any and even null.
+    ...    The example above checks if ALL prices returned in volumePrices array have quantity property, while quantity value can be any and even null.
     [Arguments]    ${json_path}    ${expected_property}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
@@ -970,7 +970,7 @@ Each array element of array in response should contain property:
     END
 
 Each array element of array in response should contain value:
-        [Documentation]    This keyword checks whether the array ``{json_path}`` that is present in the ``{response_body}`` test variable contsains a value ``{expected_value}`` in every of it's array elements.
+        [Documentation]    This keyword checks whether the array ``{json_path}`` that is present in the ``{response_body}`` test variable contains a value ``{expected_value}`` in every of it's array elements.
     ...
     ...    It does not take into account the property name, just checks if the value is there for every element. If some of the array elements have this value and others do not, the keyword will fail.
     ...
@@ -978,7 +978,7 @@ Each array element of array in response should contain value:
     ...
     ...   ``Each array element of array in response should contain value:    [data][0][attributes][prices]    ${currency.eur.code}``
     ...
-    ...    The example above checks if ALL prices returened in volumePrices array have currency code, regardless of which property has this value.
+    ...    The example above checks if ALL prices returned in volumePrices array have currency code, regardless of which property has this value.
     [Arguments]    ${json_path}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${list_length}=    Get Length    @{data}
@@ -991,7 +991,7 @@ Each array element of array in response should contain value:
     END
 
 Each array element of array in response should contain a nested array of a certain size:
-        [Documentation]    This keyword checks whether the array ``{paret_array}`` that is present in the ``{response_body}`` test variable contsains an array ``{nested_array}`` in every of it's array elements and for every its occurrence that nested array has sixe ``{array_expected_size}``.
+        [Documentation]    This keyword checks whether the array ``{parent_array}`` that is present in the ``{response_body}`` test variable contains an array ``{nested_array}`` in every of it's array elements and for every its occurrence that nested array has sixe ``{array_expected_size}``.
     ...
     ...    If the nested arrays are of different sizes, this keyword will fail.
     ...
@@ -1034,7 +1034,7 @@ Each array element of array in response should contain property with value:
     END
 
 Each array element of array in response should contain property with value in:
-    [Documentation]    This keyword checks that each array element contsains the speficied parameter ``{expected_property}`` with the value that matches one of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
+    [Documentation]    This keyword checks that each array element contains the specified parameter ``{expected_property}`` with the value that matches one of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
     ...
     ...    The minimal number of arguments are 2, maximum is 4
     ...
@@ -1084,7 +1084,7 @@ Each array in response should contain property with NOT EMPTY value:
     END
 
 Each array in response should contain property with value NOT in:
-    [Documentation]    This keyword checks that each array element contsains the speficied parameter ``{expected_property}`` with the value that does not match any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
+    [Documentation]    This keyword checks that each array element contains the specified parameter ``{expected_property}`` with the value that does not match any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
     ...
     ...    The minimal number of arguments is 1, maximum is 4
     ...
@@ -1111,7 +1111,7 @@ Each array in response should contain property with value NOT in:
     END
 
 Each array element of array in response should contain property with value NOT in:
-    [Documentation]    This keyword checks that each array element of array contsains the speficied parameter ``{expected_property}`` with the value that does not match any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
+    [Documentation]    This keyword checks that each array element of array contains the specified parameter ``{expected_property}`` with the value that does not match any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
     ...
     ...    The minimal number of arguments is 1, maximum is 4
     ...
@@ -1138,7 +1138,7 @@ Each array element of array in response should contain property with value NOT i
     END
 
 Each array element of array in response should NOT be empty:
-    [Documentation]    This keyword checks that each array element of array contsains the speficied parameter ``{expected_property}`` with the value that does not empty.
+    [Documentation]    This keyword checks that each array element of array contains the specified parameter ``{expected_property}`` with the value that does not empty.
     ...
     ...    *Example:*
     ...
@@ -1163,7 +1163,7 @@ Each array element of array in response should NOT be empty:
     END
 
 Each array element of nested array should contain property with value in:
-    [Documentation]    This keyword checks that each array element of ``{nested_array} that is inside the parent array ``{json_path}`` contains the speficied parameter ``{expected_property}`` with the value that matches any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
+    [Documentation]    This keyword checks that each array element of ``{nested_array} that is inside the parent array ``{json_path}`` contains the specified parameter ``{expected_property}`` with the value that matches any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
     ...
     ...    The minimal number of arguments is 1, maximum is 4
     ...
@@ -1195,7 +1195,7 @@ Each array element of nested array should contain property with value in:
     END
 
 Each array element of nested array should contain property with value NOT in:
-    [Documentation]    This keyword checks that each array element of ``{nested_array} that is inside the parent array ``{json_path}`` contsains the speficied parameter ``{expected_property}`` with the value that does not match any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
+    [Documentation]    This keyword checks that each array element of ``{nested_array} that is inside the parent array ``{json_path}`` contains the specified parameter ``{expected_property}`` with the value that does not match any of the parameters ``{expected_value1}``, ``{expected_value2}``, etc..
     ...
     ...    The minimal number of arguments is 1, maximum is 4
     ...
@@ -1535,7 +1535,7 @@ Response should contain certain number of values:
 
 Response include should contain certain entity type:
     [Documentation]    This keyword checks that a certain entity with type ``{expected_value}`` is included into the ``[included]`` section of the ``{response_body}`` test variable.
-    ...    It accepts the type of the included entity (usually can be found in [included][index][type]) and checks if such entity exists in the responce at least once.
+    ...    It accepts the type of the included entity (usually can be found in [included][index][type]) and checks if such entity exists in the response at least once.
     ...
     ...    *Example:*
     ...
@@ -2017,7 +2017,7 @@ Cleanup all availability notifications:
         END
 
 Get the first company user id and its' customer email
-    [Documentation]    This keyword sends the GET reguest to the ``/company-users?include=customers`` endpoint and returns first available company user id and its' customer email in
+    [Documentation]    This keyword sends the GET request to the ``/company-users?include=customers`` endpoint and returns first available company user id and its' customer email in
     ...    ``{companyUserId}``  and  ``{companyUserEmail}`` variables.
     ...    If the fist company user is anne.boleyn@spryker.com - the next one will be taken and Anna is a 'BoB' user
     ...
@@ -2030,7 +2030,7 @@ Get the first company user id and its' customer email
     END
 
 Array element should contain nested array at least once:
-    [Documentation]    This keyword checks whether the array ``{paret_array}`` that is present in the ``{response_body}`` test variable contsains an array ``{expected_nested_array}`` at least once.
+    [Documentation]    This keyword checks whether the array ``{parent_array}`` that is present in the ``{response_body}`` test variable contains an array ``{expected_nested_array}`` at least once.
     ...
     ...    *Example:*
     ...
@@ -2067,22 +2067,71 @@ Array element should contain property with value at least once:
     # ${log_list}=    Log List    @{data}
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
+        Log Many    ${list_element}
         ${result}=    Run Keyword And Ignore Error    Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}
         IF    'PASS' in ${result}    Exit For Loop
         IF    ${index} == ${list_length}-1
-            Fail    expected '${expected_property}' with value '${expected_value}' is not present in '@{data}' but should
+            Fail    expected '${expected_property}' with value '${expected_value}' is not present in '{data}' but should
         END
         IF    'FAIL' in ${result}    Continue For Loop
     END
 
+Array element should contain property or array value at least once:
+    [Documentation]    Verifies that at least one element in the array at JSON path ``{json_path}`` has the property ``{expected_property}`` whose value is either:
+    ...    - a scalar equal (as string) to ``{expected_value}``, or
+    ...    - a list/tuple containing ``{expected_value}``.
+    ...    *Usage:*
+    ...    ``And Array element should contain property or array value at least once    [data][0][attributes][valueFacets]    activeValue    ${brand_1}``
+    ...    ``And Array element should contain property or array value at least once    [data][0][attributes][valueFacets]    activeValue    ${brand_2}``
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
+    @{elements}=    Get Value From Json             ${response_body}    ${json_path}
+    ${count}=       Get Length                     @{elements}
+
+    FOR    ${idx}    IN RANGE    0    ${count}
+        ${elem}=    Get From List                  @{elements}    ${idx}
+        Dictionary Should Contain Key              ${elem}         ${expected_property}
+        ${value}=  Get From Dictionary             ${elem}         ${expected_property}
+
+        ${is_list}=    Run Keyword And Return Status    Should Be True    isinstance(${value}, (list, tuple))
+        IF    ${is_list}
+            ${match}=    Run Keyword And Return Status    Should Contain    ${value}    ${expected_value}
+        ELSE
+            ${match}=    Run Keyword And Return Status    Should Be Equal As Strings    ${value}    ${expected_value}
+        END
+
+        IF    ${match}
+            Exit For Loop
+        END
+
+        IF    ${idx} == ${count} - 1
+            Fail    Expected property '${expected_property}' with value '${expected_value}' was not found in any element of array at path '${json_path}'
+        END
+    END
+
+Each array element should contain property with value:
+    [Documentation]    This keyword checks that each element in the array at JSON path ``{json_path}`` contains the specified property ``{expected_property}`` with the specified value ``{expected_value}``, comparing both as strings.
+    ...    *Example:*    ``Each array element should contain property with value    [data][0][attributes][valueFacets]    activeValue    None``
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
+    @{data}=           Get Value From Json       ${response_body}    ${json_path}
+    ${list_length}=    Get Length               @{data}
+    FOR    ${index}    IN RANGE                 0    ${list_length}
+        ${element}=       Get From List            @{data}    ${index}
+        Log Many    ${element}
+        Dictionary Should Contain Key    ${element}    ${expected_property}
+        ${actual}=         Get From Dictionary      ${element}    ${expected_property}
+        ${actual_str}=     Convert To String        ${actual}
+        ${expected_str}=   Convert To String        ${expected_value}
+        Should Be Equal    ${actual_str}    ${expected_str}    ignore_case=True    msg=Property '${expected_property}' with value '${expected_value}' is not present in the array at JSON path '${json_path}' but should be.
+    END
+
 Nested array element should contain sub-array at least once:
-    [Documentation]    This keyword checks that nested array ``{parrent_array}`` in the array specified as ``{json_path}`` contains the specified sub-array ``{expected_nested_array}`` at least once.
+    [Documentation]    This keyword checks that nested array ``{parent_array}`` in the array specified as ``{json_path}`` contains the specified sub-array ``{expected_nested_array}`` at least once.
     ...
     ...    *Example:*
     ...
     ...    ``And Nested array element should contain sub-array at least once:      [data]    [relationships]    company-role``
     ...
-    [Arguments]    ${json_path}     ${parrent_array}    ${expected_nested_array}
+    [Arguments]    ${json_path}     ${parent_array}    ${expected_nested_array}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${result}=    Set Variable    'FALSE'
     ${list_length}=    Get Length    @{data}
@@ -2094,7 +2143,7 @@ Nested array element should contain sub-array at least once:
     FOR    ${index}    IN RANGE    0    ${list_length}
         IF    'PASS' in ${result}    BREAK
         ${list_element}=    Get From List    @{data}    ${index}
-        @{list_element2}=    Get Value From Json    ${list_element}    ${parrent_array}
+        @{list_element2}=    Get Value From Json    ${list_element}    ${parent_array}
         @{list_element}=    Get From List    ${list_element2}    0
         ${result}=    Run Keyword And Ignore Error    List Should Contain Sub List   ${list_element}    ${expected_nested_array}    ignore_case=True
         IF    'PASS' in ${result}    Exit For Loop
@@ -2105,13 +2154,13 @@ Nested array element should contain sub-array at least once:
     END
 
 Nested array element should contain sub-array with property and value at least once:
-    [Documentation]    This keyword checks whether the nested array ``{expected_nested_array}`` that is present in the parrent array ``{parrent_array}`` under the json path ``{json_path}``  contsains propery ``{expected_property}`` with value ``{expected_value}`` at least once.
+    [Documentation]    This keyword checks whether the nested array ``{expected_nested_array}`` that is present in the parent array ``{parent_array}`` under the json path ``{json_path}``  contains propery ``{expected_property}`` with value ``{expected_value}`` at least once.
     ...
     ...    *Example:*
     ...
     ...   ``Nested array element should contain sub-array with property and value at least once:    [included]    [attributes]    [productConfigurationInstance]    configuration    {"time_of_day":"4"}``
     ...
-    [Arguments]    ${json_path}     ${parrent_array}    ${expected_nested_array}    ${expected_property}    ${expected_value}
+    [Arguments]    ${json_path}     ${parent_array}    ${expected_nested_array}    ${expected_property}    ${expected_value}
     @{data}=    Get Value From Json    ${response_body}    ${json_path}
     ${result}=    Set Variable    'FALSE'
     ${list_length}=    Get Length    @{data}
@@ -2122,8 +2171,8 @@ Nested array element should contain sub-array with property and value at least o
     ${expected_nested_array}=    Convert To String    ${expected_nested_array}
     FOR    ${index}    IN RANGE    0    ${list_length}
         IF    'PASS' in ${result}    BREAK
-        ${parrent_array_element}=    Get From List    @{data}    ${index}
-        @{actual_parent_element}=    Get Value From Json    ${parrent_array_element}    ${parrent_array}
+        ${parent_array_element}=    Get From List    @{data}    ${index}
+        @{actual_parent_element}=    Get Value From Json    ${parent_array_element}    ${parent_array}
         # Log List    @{actual_parent_element}
         ${actual_nested_array}=    Get From List    ${actual_parent_element}    0
         ${actual_property_array}=    Get Value From Json    ${actual_nested_array}    ${expected_nested_array}
@@ -2142,7 +2191,7 @@ Nested array element should contain sub-array with property and value at least o
     END
 
 Array element should contain nested array with property and value at least once:
-    [Documentation]    This keyword checks whether the array ``{nested_array}`` that is present in the parrent array ``{json_path}``  contsains propery ``{expected_property}`` with value ``{expected_value}`` at least once.
+    [Documentation]    This keyword checks whether the array ``{nested_array}`` that is present in the parent array ``{json_path}``  contains propery ``{expected_property}`` with value ``{expected_value}`` at least once.
     ...
     ...    *Example:*
     ...
@@ -2174,8 +2223,35 @@ Array element should contain nested array with property and value at least once:
         END
     END
 
+Response should contain a nested array of a certain size at least once:
+    [Documentation]    This keyword checks whether the nested array ``{nested_array}`` present at the JSON path ``{json_path}`` in the ``{response_body}`` test variable contains at least one element whose size is at least ``{expected_size}``.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Response should contain a nested array of a certain size at least once:    [data][0][attributes][valueFacets]    values    5``
+    [Arguments]    ${json_path}    ${nested_array}    ${expected_size}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    FOR    ${index}    IN RANGE    0    ${list_length}
+        ${item}=    Get From List    @{data}    ${index}
+        @{sub_array}=    Get Value From Json    ${item}    ${nested_array}
+        ${sub_length}=    Get Length    @{sub_array}
+        ${sub_length}=    Convert To Integer    ${sub_length}
+        ${expected_size}=    Convert To Integer    ${expected_size}
+        ${result}=    Run Keyword And Ignore Error    Should Be True    ${sub_length} == ${expected_size}
+        IF    'PASS' in ${result}
+            Exit For Loop
+        END
+        IF    ${index} == ${list_length}-1
+            Fail    expected nested array '@{nested_array}' with size  '${expected_size}' is not present in '[data]'
+        END
+        IF    'FAIL' in ${result}
+            Continue For Loop
+        END
+    END
+
 Get company user id by customer reference:
-    [Documentation]    This keyword sends the GET reguest to the ``/company-users?include=customers`` endpoint and returns company user id by customer reference. Sets variable : ``{companyUserId}``
+    [Documentation]    This keyword sends the GET request to the ``/company-users?include=customers`` endpoint and returns company user id by customer reference. Sets variable : ``{companyUserId}``
     ...
     ...    *Example:*
     ...    ``Get company user id by customer reference:    ${yves_fifth_user.reference}``
@@ -2272,14 +2348,6 @@ Switch to BAPI
     Overwrite api variables
     Reset API Headers
 
-*** Keywords ***
-Array Element Should Contain Nested Property With Value At Least Once
-    [Arguments]    ${json_path}    ${nested_path}    ${property}    ${expected_value}
-    ${matches}=    Get Value From Json     ${response_body}    ${json_path}
-    ${exists}=    Evaluate
-    ...    any(item.get('${nested_path}', {}).get('${property}', None) == ${expected_value} for item in ${matches})
-    Should Be True    ${exists}    Expected property '${property}' with value '${expected_value}' not found in any array element.
-
 To JSON Boolean
     [Arguments]    ${value}
     ${is_true}=    Run Keyword And Return Status    Should Be True    ${value}
@@ -2293,3 +2361,11 @@ Get Json Value
     [Arguments]    ${body}    ${path}
     ${value}=    Get Value    ${body}    ${path}
     RETURN    ${value}
+
+Response body parameter should be either:
+    [Arguments]    ${json_path_1}    ${json_path_2}    ${expected}
+    ${status_1}=    Run Keyword And Return Status    Response body parameter should be:    ${json_path_1}    ${expected}
+    ${status_2}=    Run Keyword And Return Status    Response body parameter should be:    ${json_path_2}    ${expected}
+    IF    not ${status_1} and not ${status_2}
+        Fail    Neither '${json_path_1}' nor '${json_path_2}' equals expected value ${expected}.
+    END

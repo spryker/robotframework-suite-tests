@@ -212,7 +212,9 @@
           "materials":"10",
           "brands":"10",
           "ipp_pages":"35",
-          "sorting_options":"5"
+          "ipp_pages_ssp":"36",
+          "sorting_options":"5",
+          "ssp_product_classes":"2"
        },
        "ipp":{
           "default":"12",
