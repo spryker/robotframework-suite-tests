@@ -59,13 +59,13 @@ Fulfillment_app_e2e
     I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
     I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id  
+    Then Save value to a variable:    [data][id]   warehouse_assigment_id
     # #CREATE AN ORDER BY GLUE
     I set Headers:    Content-Type=${default_header_content_type}
     Remove Tags    *
     Set Tags    glue
     API_test_setup
-    When I get access token for the customer:    ${yves_user_email}    
+    When I get access token for the customer:    ${yves_user_email}
     Then I set Headers:    Authorization=${token}
     When Find or create customer cart
     Then Cleanup all items in the cart:    ${cart_id}
@@ -84,7 +84,8 @@ Fulfillment_app_e2e
     Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay 
+    Zed: trigger all matching states inside this order:    skip grace period
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: wait for order item to be in state:    091_25873091    confirmed
     Zed: wait for order item to be in state:    093_24495843    confirmed
     Zed: trigger all matching states inside this order:    Skip timeout
@@ -137,7 +138,7 @@ Fulfillment_app_e2e
     And Response body parameter should be:    [data][0][attributes][status]    picking-finished
     # #CLEAN SYSTEM, REMOVE CREATED RELATIONS IN DB
     [Teardown]     Run Keywords    Remove picking list item by uuid in DB:    ${item_id_1}
-    ...  AND    Remove picking list item by uuid in DB:    ${item_id_2} 
+    ...  AND    Remove picking list item by uuid in DB:    ${item_id_2}
     ...  AND    Remove picking list by uuid in DB:    ${picklist_id}
     ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
-    ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}     
+    ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}

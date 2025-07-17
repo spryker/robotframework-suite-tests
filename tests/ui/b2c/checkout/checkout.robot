@@ -118,6 +118,7 @@ Guest_Checkout
     Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
+    Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    skip picking
@@ -167,11 +168,12 @@ Guest_Checkout_Addresses
     Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: get the last placed order ID of the customer by email:    sonia+guest+new${random}@spryker.com
+    Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
-    Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany 
-    Zed: shipping address inside xxx shipment should be:    2    Dr First, Last, Second Street, 2, Additional street, Spryker, 10247, Berlin, Germany 
-    Zed: shipping address inside xxx shipment should be:    3    Dr First, Last, Third Street, 3, Additional street, Spryker, 10247, Berlin, Germany 
+    Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany
+    Zed: shipping address inside xxx shipment should be:    2    Dr First, Last, Second Street, 2, Additional street, Spryker, 10247, Berlin, Germany
+    Zed: shipping address inside xxx shipment should be:    3    Dr First, Last, Third Street, 3, Additional street, Spryker, 10247, Berlin, Germany
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    skip picking
     Zed: trigger all matching states inside this order:    Ship
@@ -181,7 +183,7 @@ Guest_Checkout_Addresses
 
 Checkout_Address_Management
     [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
-    [Setup]    Run Keywords    
+    [Setup]    Run Keywords
     ...    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
     ...    AND    Yves: check if cart is not empty and clear it
@@ -221,7 +223,7 @@ Checkout_Address_Management
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: billing address for the order should be:    New Billing, Changed Street 098, 09876 Berlin, Germany
-    Zed: shipping address inside xxx shipment should be:    1    Mr First, Last, Shipping Street, 7, Additional street, Spryker, 10247, Geneva, Switzerland 
+    Zed: shipping address inside xxx shipment should be:    1    Mr First, Last, Shipping Street, 7, Additional street, Spryker, 10247, Geneva, Switzerland
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
 
@@ -229,7 +231,7 @@ Login_during_checkout
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart  
+    Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
     Yves: fill in the following new shipping address:
@@ -251,7 +253,7 @@ Register_during_checkout
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
     Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
-    Yves: go to b2c shopping cart  
+    Yves: go to b2c shopping cart
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    ${default_secure_password}    ${default_secure_password}
     Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
@@ -303,7 +305,7 @@ Configurable_Product_Checkout
     ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten      ||
     ...    || 905        | 249        | 100          | 36         |  15         | 0.00       | 48           | 57           | 36          | German Keyboard ||
     Yves: save product configuration
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=1,346.00 
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=1,346.00
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -319,6 +321,7 @@ Configurable_Product_Checkout
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,361.00
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Skip timeout
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip picking
