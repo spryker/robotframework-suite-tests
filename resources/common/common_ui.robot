@@ -346,7 +346,7 @@ Verify the src attribute of the image is accessible:
 
 Try reloading page until element is/not appear:
     [Documentation]    will reload the page until an element is shown or disappears. The second argument is the expected condition (true[shown]/false[disappeared]) for the element.
-    [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=1s    ${message}='Timeout exceeded, element state doesn't match the expected'
+    [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=1s    ${message}=Timeout exceeded, element state doesn't match the expected. Check screenshot in logs
     ${shouldBeDisplayed}=    Convert To Lower Case    ${shouldBeDisplayed}
     FOR    ${index}    IN RANGE    0    ${tries}
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}

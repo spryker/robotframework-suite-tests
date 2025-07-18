@@ -155,7 +155,7 @@ Manage_Shipments
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    manageShipment+${random}
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
+    Yves: billing address same as shipping address:    false
     Yves: select delivery to multiple addresses
     Yves: fill in new delivery address for a product:
     ...    || product | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||

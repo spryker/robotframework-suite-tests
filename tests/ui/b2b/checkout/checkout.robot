@@ -252,7 +252,7 @@ Split_Delivery
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    splitDelivery+${random}
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
+    Yves: billing address same as shipping address:    false
     Yves: select delivery to multiple addresses
     Yves: fill in new delivery address for a product:
     ...    || product | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
@@ -311,7 +311,7 @@ Checkout_Address_Management
     Yves: fill in the following new shipping address:
     ...    || salutation | firstName | lastName | street          | houseNumber | postCode | city   | country     | company | phone     | additionalAddress ||
     ...    || Mr.        | First     | Last     | Shipping Street | 7           | 10247    | Geneva | Switzerland | Spryker | 123456789 | Additional street ||
-    Yves: save new deviery address to address book:    true
+    Yves: save new delivery address to address book:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
     Yves: select the following payment method on the checkout and go next:    Invoice

@@ -20,11 +20,11 @@ Yves: billing address same as shipping address:
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingSameAsShipping'][@checked]    timeout=1s
-    IF    '${checkboxState}'=='False' and '${state}' == 'true'    
+    IF    '${checkboxState}'=='False' and '${state}' == 'true'
         Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
         Repeat Keyword    3    Wait For Load State
     END
-    IF    '${checkboxState}'=='True' and '${state}' == 'false'    
+    IF    '${checkboxState}'=='True' and '${state}' == 'false'
         Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
         Repeat Keyword    3    Wait For Load State
     END
@@ -57,27 +57,49 @@ Yves: accept the terms and conditions:
 
 Yves: select the following existing address on the checkout as 'shipping' address and go next:
     [Arguments]    ${addressToUse}
-    Reload
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
-    Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
+    IF    '${is_ssp}' == 'true'
+        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[ssp_b2b]
+    ELSE
+        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
+    END
     WHILE  '${selected_address}' != '${addressToUse}'    limit=5
         IF    '${env}' in ['ui_b2c','ui_mp_b2c']
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
             Repeat Keyword    3    Wait For Load State
-            Sleep    1s
+            Sleep    500ms
             ${selected_address}=    Get Text    xpath=//select[contains(@name,'shippingAddress')][contains(@id,'addressesForm_shippingAddress_id')]/..//span[contains(@id,'shippingAddress_id')]
         ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-            Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+            IF    '${is_ssp}' == 'true'
+                Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[ssp_b2b]    ${addressToUse}
+            ELSE
+                Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+            END
             Repeat Keyword    3    Wait For Load State
-            Sleep    1s
-            ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+            Sleep    500ms
+            IF    '${is_ssp}' == 'true'
+                ${selected_address}=    Get Text    xpath=(//address-item-form-field-list//select[@name='checkout-full-addresses' and not(ancestor::div[1][contains(@class, 'is-hidden')])]/..//span[contains(@id,'checkout-full-addresses')])[1]
+            ELSE
+                ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+            END
         ELSE
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
             Repeat Keyword    3    Wait For Load State
-            Sleep    1s
+            Sleep    500ms
             Exit For Loop
         END
+    END
+    IF    '${is_ssp}' == 'true'
+        ${ssp_checkout_delivery_address_dropdowns_count}=    Get Element Count    xpath=//address-item-form-field-list//select[@name='checkout-full-addresses' and not(ancestor::div[1][contains(@class, 'is-hidden')])]
+        IF    ${ssp_checkout_delivery_address_dropdowns_count} > 1
+            FOR    ${index}    IN RANGE    1    ${ssp_checkout_delivery_address_dropdowns_count}
+                Repeat Keyword    2    Select From List By Label    xpath=(//address-item-form-field-list//select[@name='checkout-full-addresses' and not(ancestor::div[1][contains(@class, 'is-hidden')])])[${index}+1]    ${addressToUse}
+                IF    ${index} == ${ssp_checkout_delivery_address_dropdowns_count}    BREAK
+            END
+        END
+        Repeat Keyword    3    Wait For Load State
+        Sleep    500ms
     END
     Click    ${submit_checkout_form_button}[${env}]
     Repeat Keyword    3    Wait For Load State
@@ -85,10 +107,13 @@ Yves: select the following existing address on the checkout as 'shipping' addres
 
 Yves: select the following existing address on the checkout as 'shipping':
     [Arguments]    ${addressToUse}
-    Reload
     Repeat Keyword    3    Wait For Load State
     Wait For Load State    networkidle
-    Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
+    IF    '${is_ssp}' == 'true'
+        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[ssp_b2b] 
+    ELSE
+        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
+    END
     WHILE  '${selected_address}' != '${addressToUse}'    limit=5
         IF    '${env}' in ['ui_b2c','ui_mp_b2c']
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
@@ -96,10 +121,18 @@ Yves: select the following existing address on the checkout as 'shipping':
             Sleep    1s
             ${selected_address}=    Get Text    xpath=//select[contains(@name,'shippingAddress')][contains(@id,'addressesForm_shippingAddress_id')]/..//span[contains(@id,'shippingAddress_id')]
         ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-            Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+            IF    '${is_ssp}' == 'true'
+                Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[ssp_b2b]    ${addressToUse}
+            ELSE
+                Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
+            END
             Repeat Keyword    3    Wait For Load State
             Sleep    1s
-            ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+            IF    '${is_ssp}' == 'true'
+                ${selected_address}=    Get Text    xpath=//address-item-form-field-list//select[@name='checkout-full-addresses' and not(ancestor::div[1][contains(@class, 'is-hidden')])]/..//span[contains(@id,'checkout-full-addresses')]
+            ELSE
+                ${selected_address}=    Get Text    xpath=//div[contains(@class,'shippingAddress')]//select[@name='checkout-full-addresses'][contains(@class,'address__form')]/..//span[contains(@id,'checkout-full-address')]
+            END
         ELSE
             Repeat Keyword    2    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    ${addressToUse}
             Repeat Keyword    3    Wait For Load State
@@ -112,8 +145,26 @@ Yves: fill in the following new shipping address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
     [Arguments]    @{args}
     ${newAddressData}=    Set Up Keyword Arguments    @{args}
-    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Define new address
-    Wait Until Element Is Visible    ${checkout_new_shipping_address_form}
+    IF    '${is_ssp}' == 'true'
+        Select From List By Label    ${checkout_address_delivery_selector}[ssp_b2b]    Define new address
+        Wait Until Element Is Visible    xpath=//*[contains(@data-qa,'address-item-form')]//div[contains(@class,'address-content')][@data-qa='component form']
+    ELSE
+        Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Define new address
+        Wait Until Element Is Visible    ${checkout_new_shipping_address_form}
+    END
+    IF    '${is_ssp}' == 'true'
+        VAR    ${checkout_shipping_address_salutation_selector}    ${ssp_checkout_shipping_address_salutation_selector}
+        VAR    ${checkout_shipping_address_last_name_field}    ${ssp_checkout_shipping_address_last_name_field}
+        VAR    ${checkout_shipping_address_company_name_field}    ${ssp_checkout_shipping_address_company_name_field}
+        VAR    ${checkout_shipping_address_street_field}    ${ssp_checkout_shipping_address_street_field}
+        VAR    ${checkout_shipping_address_house_number_field}    ${ssp_checkout_shipping_address_house_number_field}
+        VAR    ${checkout_shipping_address_additional_address_field}    ${ssp_checkout_shipping_address_additional_address_field}
+        VAR    ${checkout_shipping_address_zip_code_field}    ${ssp_checkout_shipping_address_zip_code_field}
+        VAR    ${checkout_shipping_address_city_field}    ${ssp_checkout_shipping_address_city_field}
+        VAR    ${checkout_shipping_address_country_selector}    ${ssp_checkout_shipping_address_country_selector}
+        VAR    ${checkout_shipping_address_phone_field}    ${ssp_checkout_shipping_address_phone_field}
+        ${checkout_shipping_address_first_name_field}[${env}]=    Set Variable    ${ssp_checkout_shipping_address_first_name_field}
+    END
     FOR    ${key}    ${value}    IN    &{newAddressData}
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${checkout_shipping_address_salutation_selector}    ${value}
@@ -156,7 +207,16 @@ Yves: fill in the following new billing address:
     Sleep    1s
 
 Yves: select delivery to multiple addresses
-    Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Deliver to multiple addresses
+    IF    '${is_ssp}' == 'true'
+        VAR    ${single_address_per_shipment_type_checkbox_locator}    xpath=//toggler-checkbox[contains(@name,'isSingleAddressPerShipmentType')][1]
+        Wait Until Page Contains Element    ${single_address_per_shipment_type_checkbox_locator}
+        ${single_address_per_shipment_type_checkbox_is_checked}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//toggler-checkbox[contains(@name,'isSingleAddressPerShipmentType')][1][@checked]    timeout=1s
+        IF    '${single_address_per_shipment_type_checkbox_is_checked}'=='True'
+            Click    ${single_address_per_shipment_type_checkbox_locator}
+        END
+    ELSE
+        Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Deliver to multiple addresses
+    END
 
 Yves: select multiple addresses from toggler
     Wait Until Element Is Visible    ${checkout_address_multiple_addresses_toggler_button}
@@ -284,17 +344,17 @@ Yves: select the following payment method on the checkout and go next:
         Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=1s
         IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
-        Click    ${submit_checkout_form_button}[${env}]    
+        Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Invoice (Marketplace)'
         Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
         IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
-        Click    ${submit_checkout_form_button}[${env}]    
+        Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Marketplace Invoice'
         Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
         IF    'PASS' in ${date_of_birth_present}    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
-        Click    ${submit_checkout_form_button}[${env}]    
+        Click    ${submit_checkout_form_button}[${env}]
     ELSE
         IF    '${paymentMethod}' == 'Invoice' or '${paymentMethod}' == 'invoice'
             ${payment_method_index}=    Set Variable    last()
@@ -362,53 +422,66 @@ Yves: assert merchant of product in cart or list:
     [Arguments]    ${sku}    ${merchant_name_expected}
     Page Should Contain Element    xpath=(//*[@itemprop='sku' and (text()='${sku}' or @content='${sku}')]/ancestor::*[self::article or self::tr or self::product-item][contains(@itemtype,'Product')]//a[contains(@href,'merchant')][contains(text(),'${merchant_name_expected}')])[1]    timeout=${browser_timeout}
 
-Yves: save new deviery address to address book:
+Yves: save new delivery address to address book:
     [Arguments]    ${state}
     ${state}=    Convert To Lower Case    ${state}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
-    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped'][@checked]    timeout=1s
-    IF    '${checkboxState}'=='False' and '${state}' == 'true'    
-        Click    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
+    IF    '${is_ssp}' == 'true'
+        ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//*[contains(@data-qa,'address-item-form')]//input[contains(@name,'[shippingAddress][isAddressSavingSkipped]')][checked]    timeout=1s
+    ELSE
+        ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped'][@checked]    timeout=1s
+    END
+    IF    '${checkboxState}'=='False' and '${state}' == 'true'
+        IF    '${is_ssp}' == 'true'
+            Click    xpath=//*[contains(@data-qa,'address-item-form')]//input[contains(@name,'[shippingAddress][isAddressSavingSkipped]')]/ancestor::span[contains(@data-qa,'checkbox')]
+        ELSE
+            Click    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
+        END
         Repeat Keyword    3    Wait For Load State
     END
     IF    '${checkboxState}'=='True' and '${state}' == 'false'
-        Click    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
+        IF    '${is_ssp}' == 'true'
+            Click    xpath=//*[contains(@data-qa,'address-item-form')]//input[contains(@name,'[shippingAddress][isAddressSavingSkipped]')]/ancestor::span[contains(@data-qa,'checkbox')]
+        ELSE
+            Click    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
+        END
+        
         Repeat Keyword    3    Wait For Load State
     END
-    
+
 Yves: save new billing address to address book:
     [Arguments]    ${state}
     ${state}=    Convert To Lower Case    ${state}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
     ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped'][@checked]    timeout=1s
-    IF    '${checkboxState}'=='False' and '${state}' == 'true'    
+    IF    '${checkboxState}'=='False' and '${state}' == 'true'
         Click    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
         Repeat Keyword    3    Wait For Load State
     END
-    IF    '${checkboxState}'=='True' and '${state}' == 'false'    
+    IF    '${checkboxState}'=='True' and '${state}' == 'false'
         Click    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
         Repeat Keyword    3    Wait For Load State
     END
-    
+
 Yves: return to the previous checkout step:
     [Arguments]    ${checkoutStep}
     ${checkoutStep}=    Convert To Lower Case    ${checkoutStep}
     Click    //ul[@data-qa='component breadcrumb']//a[contains(@href,'${checkoutStep}')]
     Repeat Keyword    3    Wait For Load State
-    
+
 Yves: check that the payment method is/not present in the checkout process:
     [Arguments]    ${payment_method_locator}    ${condition}
     ${condition}=    Convert To Lower Case    ${condition}
     IF    '${condition}' == 'true'
         Page Should Contain Element    ${payment_method_locator}
     ELSE IF    '${condition}' == 'false'
-        Page Should not Contain Element    ${payment_method_locator}   
+        Page Should not Contain Element    ${payment_method_locator}
     END
 
  Yves: proceed as a guest user and login during checkout:
-    [Arguments]    ${email}    ${password}=${default_password}  
+    [Arguments]    ${email}    ${password}=${default_password}
     IF    '${env}' in ['ui_suite']
         Wait Until Page Contains Element    ${email_field}
         Type Text    ${email_field}    ${email}
@@ -416,8 +489,8 @@ Yves: check that the payment method is/not present in the checkout process:
         Click    ${form_login_button}
         Repeat Keyword    3    Wait For Load State
     ELSE
-        Wait Until Page Contains Element    ${yves_checkout_login_tab} 
-        Click    ${yves_checkout_login_tab} 
+        Wait Until Page Contains Element    ${yves_checkout_login_tab}
+        Click    ${yves_checkout_login_tab}
         Type Text    ${email_field}    ${email}
         Type Text    ${password_field}    ${password}
         Click    ${form_login_button}
@@ -425,8 +498,8 @@ Yves: check that the payment method is/not present in the checkout process:
     END
 
 Yves: signup guest user during checkout:
-    [Arguments]      ${firstName}    ${lastName}    ${email}     ${password}      ${confirmpassword} 
-    Wait Until Page Contains Element    ${yves_checkout_signup_button} 
+    [Arguments]      ${firstName}    ${lastName}    ${email}     ${password}      ${confirmpassword}
+    Wait Until Page Contains Element    ${yves_checkout_signup_button}
     Click    ${yves_checkout_signup_button}
     Type Text    ${yves_checkout_signup_first_name}    ${firstname}
     Type Text    ${yves_checkout_signup_last_name}    ${lastname}
@@ -435,7 +508,7 @@ Yves: signup guest user during checkout:
     Type Text    ${yves_checkout_signup_confirm_password}    ${confirmpassword}
     Wait Until Element Is Visible   ${yves_checkout_signup_accept_terms}
     Check Checkbox  ${yves_checkout_signup_accept_terms}
-    Click    ${yves_checkout_signup_tab}   
+    Click    ${yves_checkout_signup_tab}
 
 Yves: select xxx shipment type for item number xxx:
     [Arguments]    ${shipment_type}    ${item_number}
@@ -461,10 +534,10 @@ Yves: check store availability for item number xxx:
     ${item_number}=    Set Variable    1
     FOR    ${key}    ${value}    IN    &{availabilityData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='item_number' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='item_number' and '${value}' != '${EMPTY}'
             ${item_number}=    Set Variable    ${value}
         END
-        IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='store' and '${value}' != '${EMPTY}'
             IF    '${env}' in ['ui_suite']
                 Click    xpath=(//*[contains(@data-qa,'address-item-form')][contains(@class,'list')]/div)[${item_number}]//shipment-type-toggler//service-point-selector[contains(@data-qa,'service-point-selector')]/div[contains(@class,'no-location')]/button
                 Sleep    2s
@@ -498,10 +571,10 @@ Yves: select pickup service point store for item number xxx:
     ${item_number}=    Set Variable    1
     FOR    ${key}    ${value}    IN    &{servicePointData}
         Log    Key is '${key}' and value is '${value}'.
-        IF    '${key}'=='item_number' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='item_number' and '${value}' != '${EMPTY}'
             ${item_number}=    Set Variable    ${value}
         END
-        IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='store' and '${value}' != '${EMPTY}'
             IF    '${env}' in ['ui_suite']
                 Click    xpath=(//*[contains(@data-qa,'address-item-form')][contains(@class,'list')]/div)[${item_number}]//shipment-type-toggler//service-point-selector[contains(@data-qa,'service-point-selector')]/div[contains(@class,'no-location')]/button
                 Sleep    2s
@@ -529,7 +602,7 @@ Yves: checkout summary page contains product with unit price:
             Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=1s
         EXCEPT
             Page Should Contain Element    xpath=//div[contains(@class,'product-cart-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-cart-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=1s
-        END  
+        END
     ELSE IF    '${env}' in ['ui_suite']
         Page Should Contain Element    xpath=//*[contains(@data-qa,'summary-node')]//div[contains(.,'${productName}')]/ancestor::*[contains(@data-qa,'summary-node')]//strong[contains(.,'${productPrice}')]
     ELSE

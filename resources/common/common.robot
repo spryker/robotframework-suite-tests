@@ -43,6 +43,10 @@ ${verify_ssl}          false
 ${dms}
 ${default_dms}    ${False}
 
+# *** SSP VARIABLES ***
+${is_ssp}
+${default_is_ssp}    ${False}
+
 *** Keywords ***
 Common_suite_setup
     [Documentation]  Basic steps before each suite
@@ -51,7 +55,7 @@ Common_suite_setup
     Remove Files    resources/libraries/__pycache__/*
     Remove Files    ${OUTPUTDIR}/*.png
     Remove Files    ${OUTPUTDIR}/*.yml
-    
+
     Generate global random variable
     ${random_id}=    Generate Random String    5    [NUMBERS]
     ${random_str}=    Generate Random String    5    [LETTERS]
@@ -140,6 +144,14 @@ Overwrite env variables
             Set Global Variable    ${dms}    ${default_dms}
     ELSE
         Set Global Variable    ${dms}    ${dms}
+    END
+    IF    '${is_ssp}' == '${EMPTY}'
+            Set Global Variable    ${is_ssp}    ${default_is_ssp}
+    ELSE
+        ${is_ssp}=    Convert To String    ${is_ssp}
+        ${is_ssp}=    Convert To Lower Case    ${is_ssp}
+        IF    '${is_ssp}' == 'yes'    Set Global Variable    ${is_ssp}    true
+        Set Global Variable    ${is_ssp}    ${is_ssp}
     END
     ${dms}=    Convert To String    ${dms}
     ${dms}=    Convert To Lower Case    ${dms}
