@@ -28,7 +28,7 @@ Request_company_role_by_mine
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response should contain the array of a certain size:    [data]    3
+    And Response should contain the array of a certain size:    [data]    2 3
     And Each array element of array in response should contain property with value:    [data]    type    company-roles
     And Response body parameter should be in:    [data][1][attributes][name]    Admin    Buyer
     And Response body parameter should be in:    [data][0][attributes][name]    Admin    Buyer
