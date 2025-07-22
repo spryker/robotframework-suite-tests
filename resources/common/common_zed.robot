@@ -106,8 +106,8 @@ Zed: click Action Button in Variant table for row that contains:
 
 Zed: Check checkbox by Label:
     [Arguments]    ${checkbox_label}
-    wait until element is visible    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
-    Check checkbox    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
+    wait until element is visible    xpath=(//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input)[1]
+    Check checkbox    xpath=(//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input)[1]
 
 Zed: Check checkbox by Value:
     [Arguments]    ${checkbox_value}
