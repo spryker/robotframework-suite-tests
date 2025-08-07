@@ -2248,6 +2248,34 @@ Response should contain a nested array of a certain size at least once:
         END
     END
 
+Response body array element should contain property with value at least once:
+    [Documentation]    This keyword checks that in the response saved in ``{response_body}``,
+    ...    the array at JSON path ``{json_path}`` has at least one element whose
+    ...    property (itself at JSON path ``{property_path}``) equals ``{expected_value}``
+    ...    *Example:*
+    ...
+    ...    ``Response body array element should contain property with value at least once:    [data]    [attributes][name]    GTC``
+    [Arguments]    ${json_path}    ${property_path}    ${expected_value}
+    @{elements}=    Get Value From Json    ${response_body}    ${json_path}
+    ${length}=      Get Length             @{elements}
+    ${result}=      Set Variable          FALSE
+    FOR    ${i}    IN RANGE    0    ${length}
+        ${elem}=          Get From List            @{elements}    ${i}
+        ${actual}=        Get Value From Json      ${elem}          ${property_path}
+        ${actual}=        Convert To String        ${actual}
+        ${actual}=        Replace String           ${actual}    '    ${EMPTY}
+        ${actual}=        Replace String           ${actual}    [    ${EMPTY}
+        ${actual}=        Replace String           ${actual}    ]    ${EMPTY}
+        ${check}=         Run Keyword And Ignore Error    Should Be Equal As Strings
+        ...                                  ${actual}    ${expected_value}    ignore_case=True
+        IF    'PASS' in ${check}
+            ${result}=      Set Variable    TRUE
+            Exit For Loop
+        END
+    END
+    Should Be Equal As Strings    ${result}    TRUE
+    ...    Property '${property_path}' with value '${expected_value}' was not found in array at '${json_path}'
+
 Get company user id by customer reference:
     [Documentation]    This keyword sends the GET request to the ``/company-users?include=customers`` endpoint and returns company user id by customer reference. Sets variable : ``{companyUserId}``
     ...
