@@ -125,15 +125,16 @@ Guest_Checkout_and_Addresses
     Yves: 'Thank you' page is displayed
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
+    Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: go to my order page:    ${zedLastPlacedOrder}
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
-    Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany 
-    Zed: shipping address inside xxx shipment should be:    2    Dr First, Last, Second Street, 2, Additional street, Spryker, 10247, Berlin, Germany 
-    Zed: shipping address inside xxx shipment should be:    3    Dr First, Last, Third Street, 3, Additional street, Spryker, 10247, Berlin, Germany 
+    Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany
+    Zed: shipping address inside xxx shipment should be:    2    Dr First, Last, Second Street, 2, Additional street, Spryker, 10247, Berlin, Germany
+    Zed: shipping address inside xxx shipment should be:    3    Dr First, Last, Third Street, 3, Additional street, Spryker, 10247, Berlin, Germany
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
-    Zed: trigger matching state of xxx merchant's shipment:    1    Ship   
+    Zed: trigger matching state of xxx merchant's shipment:    1    Ship
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
@@ -193,7 +194,7 @@ Multiple_Merchants_Order
 
 Checkout_Address_Management
     [Documentation]    Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book
-    [Setup]    Run Keywords    
+    [Setup]    Run Keywords
     ...    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
     ...    AND    Yves: check if cart is not empty and clear it
@@ -242,12 +243,12 @@ Click_and_collect
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
-    MP: open navigation menu tab:    Products    
+    MP: open navigation menu tab:    Products
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
     ...    || product sku              | product name                 | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
     ...    || clickCollectSku${random} | clickCollectProduct${random} | packaging_unit       | Item                        | Box                          | series                | Ace Plus               ||
-    MP: perform search by:    clickCollectProduct${random} 
+    MP: perform search by:    clickCollectProduct${random}
     MP: click on a table row that contains:     clickCollectSku${random}
     MP: fill abstract product required fields:
     ...    || product name                 | store | tax set           ||
@@ -262,9 +263,9 @@ Click_and_collect
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Catalog    Products 
-    Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Approve 
-    Trigger p&s 
+    Zed: go to second navigation item level:    Catalog    Products
+    Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Approve
+    Trigger p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer
@@ -360,7 +361,7 @@ Click_and_collect
     ...    || 1          | Pickup          | Free Pickup     | €0.00          | ASAP                    ||
     [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: activate following discounts from Overview page:    Free Acer Notebook    Tu & Wed $5 off 5 or more    10% off $100+    Free smartphone    20% off cameras    Free Acer M2610    Free standard delivery    10% off Intel Core    5% off white    Tu & Wed €5 off 5 or more    10% off minimum order
-    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    ...    AND    Zed: go to second navigation item level:    Catalog    Products
     ...    AND    Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Deny
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all user addresses
@@ -389,7 +390,7 @@ Configurable_Product_Checkout
     ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten      ||
     ...    || 905        | 249        | 100          | 36         |  15         | 0.00       | 48           | 57           | 36          | German Keyboard ||
     Yves: save product configuration
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_attribute}    productName=${configurable_product_name}    productPrice=1,346.00 
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_attribute}    productName=${configurable_product_name}    productPrice=1,346.00
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -397,7 +398,7 @@ Configurable_Product_Checkout
     Yves: submit form on the checkout
     Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
     Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)  
+    Yves: select the following payment method on the checkout and go next:    Invoice (Marketplace)
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
@@ -405,6 +406,7 @@ Configurable_Product_Checkout
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,361.00
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}

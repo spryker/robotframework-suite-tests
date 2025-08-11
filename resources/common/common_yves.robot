@@ -122,7 +122,7 @@ Yves: go to PDP of the product with sku:
         ${result}=    Run Keyword And Ignore Error    Page Should Contain Element    ${catalog_product_card_locator}    timeout=1s
             IF    ${index} == ${iterations}-1
                 Take Screenshot    EMBED    fullPage=True
-                Fail    Product '${sku}' is not displayed in the search results
+                Fail    Product '${sku}' is not displayed in the search results or its PDP is not accessible
             END
             IF    ${index} == 5 or ${index} == 10  
                 Trigger multistore p&s

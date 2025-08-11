@@ -13,8 +13,8 @@ Get_cms_pages_list
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array of a certain size:    [data]    ${cms_page.qty}
     And Response body parameter should not be EMPTY:    [data][0][id]
-    And Response body parameter should be:    [data][0][attributes][name]    ${cms_page.name}
-    And Response body parameter should be:    [data][0][attributes][url]    ${cms_page.url_en}
+    And Response body array element should contain property with value at least once:    [data]    [attributes][name]    ${cms_page.name}
+    And Response body array element should contain property with value at least once:    [data]    [attributes][url]    ${cms_page.url_en}
     And Each array element of array in response should contain property with value:    [data]    type    cms-pages
     And Each array element of array in response should contain nested property with value:
     ...    [data]

@@ -124,7 +124,7 @@ Discontinued_Alternative_Products
     Yves: go to wishlist with name:    My wishlist
     Yves: product with sku is marked as discontinued in wishlist:    ${discontinued_product_concrete_sku}
     Yves: product with sku is marked as alternative in wishlist:    012
-    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}    
+    [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: undo discontinue the following product:    ${discontinued_product_abstract_sku}    ${discontinued_product_concrete_sku}
@@ -157,7 +157,7 @@ Back_in_Stock_Notification
 
 
 Product_Bundles
-    [Documentation]    Checks checkout with Bundle product. 
+    [Documentation]    Checks checkout with Bundle product.
     [Setup]    Run keywords    Repeat Keyword    3    Trigger multistore p&s
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
@@ -187,7 +187,7 @@ Product_Bundles
 Offer_Availability_Calculation
     [Documentation]    check offer availability
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
-    MP: open navigation menu tab:    Products    
+    MP: open navigation menu tab:    Products
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
     ...    || product sku      | product name          | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
@@ -203,7 +203,7 @@ Offer_Availability_Calculation
     MP: fill product price values:
     ...    || product type | row number  | store | currency | gross default | gross original ||
     ...    || abstract     | 2           | AT    | EUR      | 200           | 90             ||
-    MP: save abstract product 
+    MP: save abstract product
     Trigger multistore p&s
     MP: click on a table row that contains:    offAvProduct${random}
     MP: open concrete drawer by SKU:    offAvKU${random}-1
@@ -216,10 +216,10 @@ Offer_Availability_Calculation
     ...    || concrete     | 1          | DE    | EUR      | 50            ||
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
-    ...    || concrete     | 2          | AT    | EUR      | 50            || 
+    ...    || concrete     | 2          | AT    | EUR      | 50            ||
     MP: save concrete product
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to second navigation item level:    Catalog    Products
     Zed: click Action Button in a table for row that contains:     offAvProduct${random}     Approve
     Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
@@ -274,6 +274,7 @@ Offer_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 2.
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Cancel
@@ -291,7 +292,7 @@ Offer_Availability_Calculation
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    ...    AND    Zed: go to second navigation item level:    Catalog    Products
     ...    AND    Zed: click Action Button in a table for row that contains:      offAvProduct${random}     Deny
     ...    AND    Trigger multistore p&s
 
@@ -299,7 +300,7 @@ Product_Availability_Calculation
     [Documentation]    Check product availability + multistore.
     Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
-    MP: open navigation menu tab:    Products    
+    MP: open navigation menu tab:    Products
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
     ...    || product sku              | product name                 | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
@@ -315,7 +316,7 @@ Product_Availability_Calculation
     MP: fill product price values:
     ...    || product type | row number  | store | currency | gross default | gross original ||
     ...    || abstract     | 2           | AT    | EUR      | 200           | 90             ||
-    MP: save abstract product 
+    MP: save abstract product
     Trigger multistore p&s
     MP: click on a table row that contains:    availabilityProduct${random}
     MP: open concrete drawer by SKU:    availabilitySKU${random}-1
@@ -328,14 +329,14 @@ Product_Availability_Calculation
     ...    || concrete     | 1          | DE    | EUR      | 50            ||
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
-    ...    || concrete     | 2          | AT    | EUR      | 50            || 
+    ...    || concrete     | 2          | AT    | EUR      | 50            ||
     MP: save concrete product
     Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to second navigation item level:    Catalog    Products
     Zed: click Action Button in a table for row that contains:     availabilityProduct${random}     Approve
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${yves_second_user_email}   
+    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: delete all user addresses
     Yves: go to PDP of the product with sku:     availabilitySKU${random}    wait_for_p&s=true
     Yves: change quantity using '+' or '-' button № times:    +    5
@@ -363,6 +364,7 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-1 only has availability of 2.
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Cancel
@@ -380,8 +382,8 @@ Product_Availability_Calculation
     Yves: go to PDP of the product with sku:     availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
-    Zed: update warehouse:    
-    ...    || warehouse                                         | unselect store || 
+    Zed: update warehouse:
+    ...    || warehouse                                         | unselect store ||
     ...    || Spryker ${merchant_spryker_reference} Warehouse 1 | AT             ||
     Trigger multistore p&s
     Yves: go to AT store 'Home' page if other store not specified:
@@ -392,10 +394,10 @@ Product_Availability_Calculation
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    ...    AND    Zed: go to second navigation item level:    Catalog    Products
     ...    AND    Zed: click Action Button in a table for row that contains:      availabilitySKU${random}     Deny
-    ...    AND    Zed: update warehouse:    
-    ...    || warehouse                                         | store || 
+    ...    AND    Zed: update warehouse:
+    ...    || warehouse                                         | store ||
     ...    || Spryker ${merchant_spryker_reference} Warehouse 1 | AT    ||
     ...    AND    Repeat Keyword    3    Trigger multistore p&s
 
@@ -410,7 +412,7 @@ Product_Availability_Calculation
     Yves: change variant of the product on PDP on:    ${configurable_product_concrete_one_attribute}
     Yves: PDP contains/doesn't contain:    true    ${configureButton}
     Yves: product price on the PDP should be:    €25.00
-    Yves: product configuration status should be equal:      Configuration is not complete. 
+    Yves: product configuration status should be equal:      Configuration is not complete.
     Yves: check and go back that configuration page contains:
     ...    || store | locale | price_mode | currency | sku                                      ||
     ...    || DE    | en_US  | GROSS_MODE | EUR      | ${configurable_product_concrete_one_sku} ||
@@ -438,12 +440,12 @@ Product_Availability_Calculation
     Yves: change the product options in configurator to:
     ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten      ||
     ...    || 905        | 249        | 100          | 36         |  15         | 0.00       | 48           | 57           | 36          | German Keyboard ||
-    Yves: product configuration price should be:    €1,247.00 
+    Yves: product configuration price should be:    €1,247.00
     Yves: save product configuration
     Yves: add all available products from wishlist to cart
     Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=€1,347.00
     [Teardown]    Run Keywords    Yves: delete all wishlists
     ...    AND    Yves: check if cart is not empty and clear it
-    ...    AND    Yves: delete all user addresses  
-   
+    ...    AND    Yves: delete all user addresses
+

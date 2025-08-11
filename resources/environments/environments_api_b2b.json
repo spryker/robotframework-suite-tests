@@ -207,11 +207,13 @@
     "search":{
        "default_qty":{
           "categories":"37",
+          "categories_ssp":"38",
           "colors":"10",
           "labels":"5",
           "materials":"10",
           "brands":"10",
           "ipp_pages":"35",
+          "ipp_pages_ssp":"36",
           "sorting_options":"5"
        },
        "ipp":{
@@ -244,7 +246,9 @@
           "qty":"28"
        },
        "category_tree_branches_qty":"6",
+       "category_tree_branches_qty_ssp":"7",
        "total_number_of_products_in_search":"420",
+       "total_number_of_products_in_search_ssp":"424",
        "abstract_sku_highest_rating":"M1016129"
     },
     "products":{
@@ -557,6 +561,7 @@
        "test_cart_name":"Test-cart",
        "restricted_content_qty":"5",
        "qty_of_categories_in_category_trees":"6",
+       "qty_of_categories_in_category_trees_ssp":"7",
        "qty_of_subcategories_in_category_trees":"2",
        "color_name":"black",
        "payment_provider_name":"DummyPayment",
