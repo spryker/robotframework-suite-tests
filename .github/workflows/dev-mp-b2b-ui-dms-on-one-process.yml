@@ -1,4 +1,4 @@
-name: "[dev][b2b-mp][master][UI][DMS-ON]"
+name: "[dev][mp-b2b][UI][DMS-ON][single][standalone]"
 
 on:
     # schedule:
