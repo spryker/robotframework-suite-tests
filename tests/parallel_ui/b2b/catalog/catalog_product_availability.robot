@@ -46,11 +46,12 @@ Product_Availability_Calculation
     [Documentation]    Check product availability + multistore
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
-    Repeat Keyword    3    Trigger multistore p&s
+    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: update warehouse:
     ...    || warehouse  | store ||
     ...    || Warehouse1 | AT    ||
+    Repeat Keyword    3    Trigger multistore p&s
     Zed: start new abstract product creation:
     ...    || sku                      | store | store 2 | name en                      | name de                        | new from   | new to     ||
     ...    || availabilitySKU${random} | DE    | AT      | availabilityProduct${random} | DEavailabilityProduct${random} | 01.01.2020 | 01.01.2030 ||
@@ -63,7 +64,7 @@ Product_Availability_Calculation
     Zed: update abstract product price on:
     ...    || store | mode  | type    | currency | amount | tax set        ||
     ...    || AT    | gross | default | €        | 200.00 | Standard Taxes ||
-    Repeat Keyword    3    Trigger multistore p&s
+    Trigger multistore p&s
     Zed: change concrete product data:
     ...    || productAbstract          | productConcrete                     | active | searchable en | searchable de ||
     ...    || availabilitySKU${random} | availabilitySKU${random}-farbe-grey | true   | true          | true          ||

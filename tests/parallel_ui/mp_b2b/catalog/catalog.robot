@@ -92,7 +92,7 @@ Quick_Order
     Yves: 'Order Details' page is displayed
     ### Reorder ###
     Yves: reorder all items from 'Order Details' page
-    Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
+    Yves: go to the shopping cart through the header with name:    Reorder from Order ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:     213103    520561    421340    419871    419869    425073    425084
     Yves: assert merchant of product in cart or list:    213103    Spryker

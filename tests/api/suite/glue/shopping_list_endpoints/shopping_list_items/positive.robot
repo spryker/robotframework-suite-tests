@@ -437,14 +437,15 @@ Add_Configurable_products_and_regular_product
    And Response status code should be:    200
    And Response body parameter should be:    [data][attributes][numberOfItems]    3
    And Response should contain the array of a certain size:    [included]    2
-   And Response body parameter should be in:   [included][0][id]    ${shoppingListItemId1}    ${shoppingListItemId2}
-   And Response body parameter should be in:   [included][0][attributes][quantity]    2    1
-   And Response body parameter should be in:   [included][0][attributes][sku]    ${configurable_product.sku}    ${concrete_available_product.sku}
-   And Nested array element should contain sub-array with property and value at least once:    [included]    [attributes]    [productConfigurationInstance]    displayData    {\"Preferred time of the day\":\"Morning\",\"Date\":\"10.10.2040\"}
-   And Nested array element should contain sub-array with property and value at least once:    [included]    [attributes]    [productConfigurationInstance]    isComplete    True
-   And Response body parameter should be in:   [included][1][id]    ${shoppingListItemId2}    ${shoppingListItemId1}
-   And Response body parameter should be in:   [included][1][attributes][quantity]    1    2
-   And Response body parameter should be in:   [included][1][attributes][sku]    ${concrete_available_product.sku}    ${configurable_product.sku}
+   And Response body parameter should be:   [included][0][id]    ${shoppingListItemId1}
+   And Response body parameter should be:   [included][0][attributes][quantity]    2
+   And Response body parameter should be:   [included][0][attributes][sku]    ${configurable_product.sku}
+   And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][displayData]    {\"Preferred time of the day\":\"Morning\",\"Date\":\"10.10.2040\"}
+   And Response body parameter should be:    [included][0][attributes][productConfigurationInstance][isComplete]    True
+   And Response body parameter should be:   [included][1][id]    ${shoppingListItemId2}
+   And Response body parameter should be:   [included][1][attributes][quantity]    1
+   And Response body parameter should be:   [included][1][attributes][sku]    ${concrete_available_product.sku}
+   And Response body parameter should be:    [included][1][attributes][productConfigurationInstance]    None
    And Response include element has self link:   shopping-list-items
    [Teardown]    Run Keywords    I send a DELETE request:    /shopping-lists/${ShoppingListId}
     ...    AND    Response status code should be:    204

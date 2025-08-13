@@ -2123,53 +2123,6 @@ Each array element should contain property with value:
         Should Be Equal    ${actual_str}    ${expected_str}    ignore_case=True    msg=Property '${expected_property}' with value '${expected_value}' is not present in the array at JSON path '${json_path}' but should be.
     END
 
-Array element should contain property or array value at least once:
-    [Documentation]    Verifies that at least one element in the array at JSON path ``{json_path}`` has the property ``{expected_property}`` whose value is either:
-    ...    - a scalar equal (as string) to ``{expected_value}``, or
-    ...    - a list/tuple containing ``{expected_value}``.
-    ...    *Usage:*
-    ...    ``And Array element should contain property or array value at least once    [data][0][attributes][valueFacets]    activeValue    ${brand_1}``
-    ...    ``And Array element should contain property or array value at least once    [data][0][attributes][valueFacets]    activeValue    ${brand_2}``
-    [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
-    @{elements}=    Get Value From Json             ${response_body}    ${json_path}
-    ${count}=       Get Length                     @{elements}
-
-    FOR    ${idx}    IN RANGE    0    ${count}
-        ${elem}=    Get From List                  @{elements}    ${idx}
-        Dictionary Should Contain Key              ${elem}         ${expected_property}
-        ${value}=  Get From Dictionary             ${elem}         ${expected_property}
-
-        ${is_list}=    Run Keyword And Return Status    Should Be True    isinstance(${value}, (list, tuple))
-        IF    ${is_list}
-            ${match}=    Run Keyword And Return Status    Should Contain    ${value}    ${expected_value}
-        ELSE
-            ${match}=    Run Keyword And Return Status    Should Be Equal As Strings    ${value}    ${expected_value}
-        END
-
-        IF    ${match}
-            Exit For Loop
-        END
-
-        IF    ${idx} == ${count} - 1
-            Fail    Expected property '${expected_property}' with value '${expected_value}' was not found in any element of array at path '${json_path}'
-        END
-    END
-
-Each array element should contain property with value:
-    [Documentation]    This keyword checks that each element in the array at JSON path ``{json_path}`` contains the specified property ``{expected_property}`` with the specified value ``{expected_value}``, comparing both as strings.
-    ...    *Example:*    ``Each array element should contain property with value    [data][0][attributes][valueFacets]    activeValue    None``
-    [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
-    @{data}=           Get Value From Json       ${response_body}    ${json_path}
-    ${list_length}=    Get Length               @{data}
-    FOR    ${index}    IN RANGE                 0    ${list_length}
-        ${element}=       Get From List            @{data}    ${index}
-        Dictionary Should Contain Key    ${element}    ${expected_property}
-        ${actual}=         Get From Dictionary      ${element}    ${expected_property}
-        ${actual_str}=     Convert To String        ${actual}
-        ${expected_str}=   Convert To String        ${expected_value}
-        Should Be Equal    ${actual_str}    ${expected_str}    ignore_case=True    msg=Property '${expected_property}' with value '${expected_value}' is not present in the array at JSON path '${json_path}' but should be.
-    END
-
 Nested array element should contain sub-array at least once:
     [Documentation]    This keyword checks that nested array ``{parent_array}`` in the array specified as ``{json_path}`` contains the specified sub-array ``{expected_nested_array}`` at least once.
     ...
@@ -2217,8 +2170,8 @@ Nested array element should contain sub-array with property and value at least o
     ${expected_nested_array}=    Convert To String    ${expected_nested_array}
     FOR    ${index}    IN RANGE    0    ${list_length}
         IF    'PASS' in $result    BREAK
-        ${parrent_array_element}=    Get From List    @{data}    ${index}
-        @{actual_parent_element}=    Get Value From Json    ${parrent_array_element}    ${parrent_array}
+        ${parent_array_element}=    Get From List    @{data}    ${index}
+        @{actual_parent_element}=    Get Value From Json    ${parent_array_element}    ${parent_array}
         # Log List    @{actual_parent_element}
         ${actual_nested_array}=    Get From List    ${actual_parent_element}    0
         ${actual_property_array}=    Get Value From Json    ${actual_nested_array}    ${expected_nested_array}
