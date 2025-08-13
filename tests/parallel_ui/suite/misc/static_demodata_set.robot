@@ -138,8 +138,6 @@ Configurable_Product_RfQ_OMS
     Yves: reorder all items from 'Order Details' page
     Yves: go to the shopping cart through the header with name:    ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
-    # ### bug: https://spryker.atlassian.net/browse/CC-33647
-    # Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €766.00
     Yves: product configuration status should be equal:       Configuration is not complete.
     [Teardown]    Run Keywords    Restore all discounts in the database
     ...    AND    Delete dynamic admin user from DB

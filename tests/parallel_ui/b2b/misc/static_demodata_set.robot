@@ -126,11 +126,7 @@ Configurable_Product_RfQ_OMS
     Yves: reorder all items from 'Order Details' page
     Yves: go to shopping cart page
     Yves: 'Shopping Cart' page is displayed
-    # Yves: configuration should be equal:
-    # ...    || option one | option two ||
-    # ...    || 5 shelves  | 2 lockers  ||
-
-    # Yves: product configuration status should be equal:       Configuration is not complete.
+    Yves: product configuration status should be equal:       Configuration is not complete.
     [Teardown]    Run Keywords    Restore all discounts in the database
     ...    AND    Delete dynamic admin user from DB
 

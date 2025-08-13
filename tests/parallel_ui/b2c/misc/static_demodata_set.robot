@@ -422,5 +422,12 @@ Configurable_Product_OMS
     Yves: check that 'Print Slip' contains the following products:    ${configurable_product_concrete_one_sku}
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
+    Yves: go to the 'Home' page
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
+    Yves: go to user menu:    Orders History
+    ### Reorder ###
+    Yves: 'View Order/Reorder/Return' on the order history page:    Reorder    ${lastPlacedOrder}
+    Yves: go to shopping cart page
+    Yves: product configuration status should be equal:       Configuration is not complete.
     [Teardown]    Run Keywords    Restore all discounts in the database
     ...    AND    Delete dynamic admin user from DB

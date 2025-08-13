@@ -112,6 +112,7 @@ Configurable_Product_RfQ_OMS
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_spryker_merchant}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
@@ -128,13 +129,9 @@ Configurable_Product_RfQ_OMS
     Yves: 'Order Details' page is displayed
     ### Reorder ###
     Yves: reorder all items from 'Order Details' page
-    Yves: go to the shopping cart through the header with name:    Cart from order ${lastPlacedOrder}
+    Yves: go to the shopping cart through the header with name:    Reorder from Order ${lastPlacedOrder}
     Yves: 'Shopping Cart' page is displayed
-    # Yves: configuration should be equal:
-    # ...    || option one | option two ||
-    # ...    || 5 shelves  | 2 lockers  ||
-
-    # Yves: product configuration status should be equal:       Configuration is not complete.
+    Yves: product configuration status should be equal:       Configuration is not complete.
     [Teardown]    Run Keywords    Restore all discounts in the database
     ...    AND    Delete dynamic admin user from DB
 
@@ -173,6 +170,7 @@ Configurable_Product_Checkout
     Zed: login on Zed with provided credentials:    ${dynamic_spryker_merchant}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,492.44
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
@@ -248,6 +246,7 @@ Refunds
     Zed: login on Zed with provided credentials:    ${dynamic_spryker_merchant}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,762.85
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
