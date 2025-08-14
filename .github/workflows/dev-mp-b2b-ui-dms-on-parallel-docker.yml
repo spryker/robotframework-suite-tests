@@ -49,7 +49,7 @@ jobs:
               id: run_dynamic_tests
               continue-on-error: true
               run: |
-                  docker/sdk exec robot-framework pabot --processes 4 --ordering pabot_mp_b2b_ordering -v env:ui_mp_b2b -v dms:true -v headless:true -v ignore_console:false -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
+                  docker/sdk exec robot-framework pabot --processes 4 --ordering pabot_mp_b2b_ordering -v env:ui_mp_b2b -v dms:true -v headless:true -v docker:true -v ignore_console:false -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
             - name: Run Static Test Set
               id: run_static_tests
               continue-on-error: true
@@ -74,6 +74,6 @@ jobs:
               # if: always() && steps.merge_initial_results.outcome != 'success'
               if: always()
               run: |
-                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/debug/mp_b2b_parallel_docker/${GITHUB_RUN_ID}/PHP8.3MariaDBRobotUi/ \
+                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .robot/results/log.html s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/debug/mp_b2b_parallel_docker/${GITHUB_RUN_ID}/PHP8.3MariaDBRobotUi/ \
                     --recursive \
                     --expires "$(date -d '+4 days' --utc +'%Y-%m-%dT%H:%M:%SZ')"
