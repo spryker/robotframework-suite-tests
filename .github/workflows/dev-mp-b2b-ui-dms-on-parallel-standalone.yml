@@ -1,17 +1,15 @@
-name: "[dev][b2b-mp][master][UI][DMS-ON]"
+name: "[dev][mp-b2b][UI][DMS-ON][parallel][standalone]"
 
 on:
-    # schedule:
-    #     -   cron: '0 1 * * 1-5'
     workflow_dispatch:
 
 jobs:
-    docker-alpine-php-8-2-mariadb-robot-ui:
-        name: "Docker / Alpine / PHP 8.2 / MariaDB / Robot / UI / DMS ON"
+    docker-alpine-php-8-2-mariadb-robot-ui-standalone:
+        name: "[dev][mp-b2b][UI][DMS-ON][parallel][standalone]"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:8.2
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
             TRAVIS: 1
             ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
         steps:
@@ -22,17 +20,18 @@ jobs:
               with:
                   python-version: '3.9'
 
-            - name: Clone project (master)
+            - name: Clone project
               run: |
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
-                  git clone -b master --single-branch https://github.com/spryker-shop/b2b-demo-marketplace.git .
+                  git clone -b master --single-branch https://github.com/spryker-shop/b2b-demo-marketplace .
             - name: Install packages
               run: |
                   sudo apt-get install apache2-utils
                   sudo apt install awscli -q
                   python3 -m pip install --upgrade pip
                   python3 -m pip install -U robotframework
+                  python3 -m pip install -U robotframework-pabot
                   python3 -m pip install -U robotframework-requests
                   python3 -m pip install -U robotframework-jsonlibrary
                   python3 -m pip install -U robotframework-databaselibrary
@@ -44,7 +43,9 @@ jobs:
                   sudo chmod +x /usr/local/bin/docker-compose
             - name: Install Robot tests
               run: |
-                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch manage_company_users robotframework-tests
+                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch feature/frw-9914/master-enable-parallel-test-execution robotframework-tests
+                  cd robotframework-tests
+                  rfbrowser init chromium
             - name: Install Project
               continue-on-error: false
               run: |
@@ -57,27 +58,41 @@ jobs:
               run: |
                   docker/sdk cli composer dump-autoload -o -a --apcu
                   SPRYKER_CURRENT_REGION=EU docker/sdk console queue:worker:start --stop-when-empty
-            - name: Run Tests
-              id: run_tests
+            - name: Run Dynamic Test Set
+              id: run_dynamic_tests
               continue-on-error: true
               run: |
                   cd robotframework-tests
-                  rfbrowser init chromium
-                  robot -v env:ui_mp_b2b -v dms:true -v headless:true -v ignore_console:false -d results --exclude skip-due-to-issueORskip-due-to-refactoring --include group_oneORgroup_twoORgroup_tree -s '*'.tests.ui.mp_b2b .
+                  pabot --processes 4 --ordering pabot_mp_b2b_ordering -v env:ui_mp_b2b -v dms:true -v headless:true -v ignore_console:false -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
                   touch results/time.txt && echo $(date) > results/time.txt
-            - name: Rerun Failed Tests
-              if: steps.run_tests.outcome != 'success'
+            - name: Run Static Test Set
+              id: run_static_tests
+              continue-on-error: true
               run: |
                   cd robotframework-tests
-                  robot -v env:ui_mp_b2b -v dms:true -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.ui.mp_b2b .
-            - name: Merge Test Results
-              if: always() && steps.run_tests.outcome != 'success'
+                  robot -v env:ui_mp_b2b -v dms:true -v headless:true -v ignore_console:false -d results/static_set --exclude skip-due-to-issueORskip-due-to-refactoring --include static-set -s '*'.tests.parallel_ui.mp_b2b .
+            - name: Merge Initial Test Results
+              id: merge_initial_results
+              continue-on-error: true
+              run: |
+                  cd robotframework-tests
+                  rebot -d results --output output.xml --merge results/dynamic_set/output.xml results/static_set/output.xml
+            - name: Rerun Failed Tests
+              id: rerun_failed_tests
+              if: always() && steps.merge_initial_results.outcome != 'success'
+              continue-on-error: true
+              run: |
+                  cd robotframework-tests
+                  robot -v env:ui_mp_b2b -v dms:true -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.parallel_ui.mp_b2b .
+            - name: Merge Final Test Results
+              if: always() && steps.merge_initial_results.outcome != 'success'
               run: |
                   cd robotframework-tests
                   rebot -d results --merge results/output.xml results/rerun/rerun.xml
             - name: Upload artifacts
-              if: failure()
+              # if: always() && steps.merge_initial_results.outcome != 'success'
+              if: always()
               run: |
-                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/dev-robot-ui-ci/mp_b2b_regression-dms-on/${GITHUB_RUN_ID}/PHP8.2MariaDBRobotUi/ \
+                  AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp robotframework-tests/results s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/debug/mp_b2b_parallel_standalone/${GITHUB_RUN_ID}/PHP8.3MariaDBRobotUi/ \
                     --recursive \
                     --expires "$(date -d '+4 days' --utc +'%Y-%m-%dT%H:%M:%SZ')"
