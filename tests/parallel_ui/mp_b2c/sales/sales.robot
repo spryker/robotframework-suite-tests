@@ -73,6 +73,7 @@ Return_Management
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_spryker_second_merchant}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    skip picking
     Zed: go to my order page:    ${lastPlacedOrder}
@@ -150,7 +151,7 @@ Order_Cancellation
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: wait for order item to be in state:    005_30663301    canceled
+    Zed: wait for order item to be in state:    005_30663301    cancelled
     ### NOT FINISHED AS NO REQUIREMENTS FOR MP CASE
     # Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     # Yves: go to PDP of the product with sku:    005_30663301

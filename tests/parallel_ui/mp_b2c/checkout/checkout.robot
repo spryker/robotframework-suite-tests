@@ -126,7 +126,8 @@ Guest_Checkout_and_Addresses
     Yves: 'Thank you' page is displayed
     Zed: login on Zed with provided credentials:    ${dynamic_spryker_merchant}
     Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
-    Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
+    Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    skip grace period
+    Zed: trigger all matching states inside this order:    Pay
     Zed: go to my order page:    ${zedLastPlacedOrder}
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
     Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany 
