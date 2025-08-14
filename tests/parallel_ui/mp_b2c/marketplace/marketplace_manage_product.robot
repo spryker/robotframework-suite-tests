@@ -47,6 +47,7 @@ Manage_Merchant_Product
     [Setup]    Run Keywords    Repeat Keyword    3    Trigger multistore p&s
     ...    AND    Zed: create dynamic merchant user:    Budget Cameras
     ...    AND    Create dynamic customer in DB
+    ...    AND    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${dynamic_budget_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -62,7 +63,7 @@ Manage_Merchant_Product
     ...    || product type | row number  | store | currency | gross default | gross original ||
     ...    || abstract     | 1           | DE    | EUR      | 100           | 90             ||
     MP: save abstract product 
-    Trigger multistore p&s
+    Trigger p&s
     MP: click on a table row that contains:    manageProduct${random}
     MP: open concrete drawer by SKU:    manageSKU${random}-1
     MP: fill concrete product fields:
@@ -77,6 +78,7 @@ Manage_Merchant_Product
     ...    || product type | row number | store | currency | gross default ||
     ...    || concrete     | 1          | DE    | EUR      | 50            ||
     MP: save concrete product
+    Trigger p&s
     MP: open concrete drawer by SKU:    manageSKU${random}-2
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
@@ -85,7 +87,7 @@ Manage_Merchant_Product
     ...    || product type | row number | store | currency | gross default | quantity ||
     ...    || concrete     | 2          | DE    | EUR      | 10            | 2        ||
     MP: save concrete product
-    Trigger multistore p&s
+    Trigger p&s
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     manageProduct${random}     Approve
