@@ -110,7 +110,8 @@ Configurable_Product_RfQ_OMS
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,352.44
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
+    Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
     Zed: trigger all matching states inside this order:    Stock update
@@ -164,6 +165,7 @@ Configurable_Product_Checkout
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,352.44
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
@@ -243,7 +245,8 @@ Refunds
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,366.16
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
+    Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger matching state of order item inside xxx shipment:    107254    Ship
     Zed: trigger matching state of order item inside xxx shipment:    107254    Stock

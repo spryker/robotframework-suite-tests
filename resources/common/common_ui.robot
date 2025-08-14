@@ -420,6 +420,7 @@ Ping and go to URL:
 *** Keywords ***
 Click and retry if 5xx occurred:
     [Arguments]    ${selector}    ${timeout}=300ms
+    ${current_url}=    Get URL
     TRY
         Wait For Load State
         Wait For Load State    networkidle
@@ -463,7 +464,7 @@ Click and retry if 5xx occurred:
     # Retry click if 5xx occurred or exception
     Log    message=Clicking '${selector}' triggered a 5xx error. Retrying ...    level=WARN
     LocalStorage Clear
-    Reload
+    Go to    ${current_url}
     Click With Options    ${selector}    force=True
     ${statuses_retry}=    Create List
     FOR    ${i}    IN RANGE    10

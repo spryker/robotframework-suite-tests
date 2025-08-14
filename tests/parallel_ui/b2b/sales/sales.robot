@@ -65,7 +65,8 @@ Return_Management
     Trigger oms
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
+    Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -151,6 +152,7 @@ Order_Cancellation
     Yves: 'Order Details' page contains the cancel order button:    true
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger matching state of order item inside xxx shipment:    403125    Pay
     Zed: trigger matching state of order item inside xxx shipment:    403125    Skip timeout
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
