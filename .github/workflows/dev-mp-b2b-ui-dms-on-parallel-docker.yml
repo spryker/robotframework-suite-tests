@@ -24,7 +24,7 @@ jobs:
               run: |
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
-                  git clone -b master --single-branch https://github.com/spryker-shop/b2b-demo-marketplace .
+                  git clone -b feature/frw-9914/master-enable-parallel-test-execution --single-branch https://github.com/spryker-shop/b2b-demo-marketplace .
             - name: Install robotframework-suite-tests folder
               run: |
                   cd ./data && composer require "spryker/robotframework-suite-tests:dev-feature/frw-9914/master-enable-parallel-test-execution" --dev --no-interaction
