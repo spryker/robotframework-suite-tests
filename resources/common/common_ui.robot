@@ -98,7 +98,7 @@ Overwrite pyz variables
 
 Create default Main Context
     Log    ${device}
-    IF  '${device}' == '${EMPTY}'
+    IF    '${device}' == '${EMPTY}'
         ${main_context}=    New Context    viewport={'width': 1440, 'height': 1080}    acceptDownloads=True
     ELSE
         ${device}=    Get Device    ${device}
@@ -463,7 +463,11 @@ Click and retry if 5xx occurred:
     END
     # Retry click if 5xx occurred or exception
     Log    message=Clicking '${selector}' triggered a 5xx error. Retrying ...    level=WARN
-    LocalStorage Clear
+     TRY
+        LocalStorage Clear
+    EXCEPT
+        Log    Failed to clear LocalStorage
+    END
     Go to    ${current_url}
     Click With Options    ${selector}    force=True
     ${statuses_retry}=    Create List

@@ -33,7 +33,7 @@ Zed: create new Zed user with the following data:
 
 Yves: perform search by customer:
     [Arguments]    ${searchQuery}
-    Type Text    ${agent_customer_search_widget}    ${searchQuery}    delay=0.1s
+    Type Text    ${agent_customer_search_widget}    ${searchQuery}    delay=10ms
     TRY
         Repeat Keyword    3    Wait For Load State
     EXCEPT

@@ -19,7 +19,11 @@ ${mp_loading_icon}    xpath=//span[contains(@class,'spin-dot') and not(ancestor:
 MP: login on MP with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
     Delete All Cookies
-    LocalStorage Clear
+    TRY
+        LocalStorage Clear
+    EXCEPT
+        Log    Failed to clear LocalStorage
+    END
     MP: go to URL:    /
     Delete All Cookies
     Reload
@@ -33,7 +37,11 @@ MP: login on MP with provided credentials:
     IF    ${is_5xx}
         Reload
         Delete All Cookies
-        LocalStorage Clear
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         MP: go to URL:    /
         Wait Until Element Is Visible    ${mp_user_name_field}
         ${email_value}=    Convert To Lower Case   ${email}
@@ -204,7 +212,11 @@ MP: go to URL:
     ${page_title}=    Convert To Lower Case    ${page_title}
     ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
     IF    ${is_5xx} or not ${no_exception}
-        LocalStorage Clear
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         ${response_code}=    Go To    ${mp_url}${url}
         ${response_code}=    Convert To Integer    ${response_code}
         ${is_5xx}=    Evaluate    500 <= ${response_code} < 600

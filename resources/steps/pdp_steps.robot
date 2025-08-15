@@ -619,7 +619,11 @@ Yves: try to add product to wishlist as guest user
     END
     Wait Until Element Is Visible    ${pdp_add_to_wishlist_button}
     SessionStorage Clear
-    LocalStorage Clear
+    TRY
+        LocalStorage Clear
+    EXCEPT
+        Log    Failed to clear LocalStorage
+    END
     Delete All Cookies
     Click    ${pdp_add_to_wishlist_button}
     TRY

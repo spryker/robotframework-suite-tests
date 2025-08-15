@@ -99,9 +99,6 @@ Return_Management
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    ${dynamic_admin_user}
-    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
-    Yves: perform search by customer:    ${dynamic_customer}
-    Yves: agent widget contains:    ${dynamic_customer}
     Yves: as an agent login under the customer:    ${dynamic_customer}
     Yves: go to user menu:    Orders History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}

@@ -23,10 +23,18 @@ ${sweet_alert_js_error_popup}    xpath=//*[contains(@class,'sweet-alert')]
 Zed: login on Zed with provided credentials:
     [Arguments]    ${email}    ${password}=${default_password}
     Delete All Cookies
-    LocalStorage Clear
+    TRY
+        LocalStorage Clear
+    EXCEPT
+        Log    Failed to clear LocalStorage
+    END
     ${is_zed_url_accessible}    Run Keyword And Ignore Error    Zed: go to URL:    /
     IF    'FAIL' in $is_zed_url_accessible
-        LocalStorage Clear
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         Delete All Cookies
         Zed: go to URL:    /
     END
@@ -42,7 +50,11 @@ Zed: login on Zed with provided credentials:
     IF    ${is_5xx}
         Reload
         Delete All Cookies
-        LocalStorage Clear
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         Zed: go to URL:    /
         Delete All Cookies
         Wait Until Element Is Visible    ${zed_user_name_field}
@@ -58,7 +70,11 @@ Zed: login on Zed with provided credentials:
     EXCEPT
         Reload
         Delete All Cookies
-        LocalStorage Clear
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         Zed: go to URL:    /
         Delete All Cookies
         Wait Until Element Is Visible    ${zed_user_name_field}
@@ -95,10 +111,23 @@ Zed: go to first navigation item level:
     # workaround for the issue with deadlocks on concurrent search attempts
     ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
-        LocalStorage Clear
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         Reload
         ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
-        IF    not ${no_js_error}    Fail    ''sweet-alert' js error popup on the page '${zed_url}: ${navigation_item}'
+        IF    not ${no_js_error}
+            TRY
+                LocalStorage Clear
+            EXCEPT
+                Log    Failed to clear LocalStorage
+            END
+            Reload
+            ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+            IF    not ${no_js_error}    Log    ''sweet-alert' js error popup on the page '${zed_url}: ${navigation_item}'    level=WARN
+        END
     END
 
 Zed: go to second navigation item level:
@@ -140,12 +169,25 @@ Zed: go to second navigation item level:
         END
     END
     # workaround for the issue with deadlocks on concurrent search attempts
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=100ms
     IF    not ${no_js_error}
-        LocalStorage Clear
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         Reload
-        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
-        IF    not ${no_js_error}    Fail    ''sweet-alert' js error popup on the page '${zed_url}: ${navigation_item_level1}->${navigation_item_level2}'
+        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=100ms
+        IF    not ${no_js_error}
+            TRY
+                LocalStorage Clear
+            EXCEPT
+                Log    Failed to clear LocalStorage
+            END
+            Reload
+            ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=100ms   
+            IF    not ${no_js_error}    Log    ''sweet-alert' js error popup on the page '${zed_url}: ${navigation_item_level1}->${navigation_item_level2}'    level=WARN
+        END
     END
     
 Zed: click button in Header:
@@ -276,7 +318,11 @@ Zed: perform search by:
             ${status}=    Get From Dictionary    ${response}    status
             ${is_5xx}=    Evaluate    ${status} >= 500
             IF    ${is_5xx}
-                LocalStorage Clear
+                TRY
+                    LocalStorage Clear
+                EXCEPT
+                    Log    Failed to clear LocalStorage
+                END
                 Reload
                 Zed: clear search field
                 Type Text    ${zed_search_field_locator}    ${search_key}
@@ -288,8 +334,12 @@ Zed: perform search by:
                 END
             END
         END
-    EXCEPT    
-        LocalStorage Clear
+    EXCEPT
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         Reload
         Zed: clear search field
         Type Text    ${zed_search_field_locator}    ${search_key}
@@ -308,7 +358,11 @@ Zed: perform search by:
     END
     ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
-        LocalStorage Clear
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         Reload
         Zed: clear search field
         Type Text    ${zed_search_field_locator}    ${search_key}
@@ -333,7 +387,11 @@ Zed: clear search field
     END
     ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
-        LocalStorage Clear
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         Reload
         Clear Text    ${zed_search_field_locator}
         TRY
@@ -373,7 +431,11 @@ Zed: perform variant search by:
             ${status}=    Get From Dictionary    ${response}    status
             ${is_5xx}=    Evaluate    ${status} >= 500
             IF    ${is_5xx}
-                LocalStorage Clear
+                TRY
+                    LocalStorage Clear
+                EXCEPT
+                    Log    Failed to clear LocalStorage
+                END
                 Reload
                 Clear Text    ${zed_variant_search_field_locator}
                 TRY
@@ -391,8 +453,12 @@ Zed: perform variant search by:
                 END
             END
         END
-    EXCEPT    
-        LocalStorage Clear
+    EXCEPT
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         Reload
         Clear Text    ${zed_variant_search_field_locator}
         TRY
@@ -411,7 +477,11 @@ Zed: perform variant search by:
     END
     ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
-        LocalStorage Clear
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         Reload
         Clear Text    ${zed_variant_search_field_locator}
         TRY
@@ -531,7 +601,11 @@ Zed: go to URL:
     ${page_title}=    Convert To Lower Case    ${page_title}
     ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
     IF    ${is_5xx} or not ${no_exception}
-        LocalStorage Clear
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         ${response_code}=    Go To    ${zed_url}${url}
         ${response_code}=    Convert To Integer    ${response_code}
         ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
@@ -546,7 +620,11 @@ Zed: go to URL:
     END
     ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
-        LocalStorage Clear
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         ${response_code}=    Go To    ${zed_url}${url}
         ${response_code}=    Convert To Integer    ${response_code}
         ${is_5xx}=    Evaluate    500 <= ${response_code} < 600

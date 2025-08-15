@@ -42,14 +42,22 @@ Yves: login on Yves with provided credentials:
     ${currentURL}=    Get Url
     IF    '/login' not in '${currentURL}'
             Delete All Cookies
-            LocalStorage Clear
+            TRY
+                LocalStorage Clear
+            EXCEPT
+                Log    Failed to clear LocalStorage
+            END
             Reload
             Yves: go to URL:    /login
     END
     ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    locator=${email_field}    message=Login page is not displayed
     IF    'FAIL' in $is_login_page
         Delete All Cookies
-        LocalStorage Clear
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         Yves: go to the 'Home' page
         Yves: go to URL:    /login
     END
@@ -323,7 +331,11 @@ Yves: go to URL:
     ${page_title}=    Convert To Lower Case    ${page_title}
     ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
     IF    ${is_5xx} or not ${no_exception}
-        LocalStorage Clear
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         IF    '.at.' in '${currentURL}'
             ${response_code}=    Go To    ${yves_at_url}${url}
         ELSE
