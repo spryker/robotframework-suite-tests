@@ -43,6 +43,7 @@ Resource    ../../../../resources/pages/zed/zed_order_details_page.robot
 Product_PDP
     [Tags]    smoke
     [Documentation]    Checks that PDP contains required elements
+    Delete All Cookies
     Yves: go to PDP of the product with sku:    135
     Yves: change variant of the product on PDP on:    Flash
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]    ${relatedProducts}
@@ -90,7 +91,7 @@ Catalog_Actions
     Yves: 1st product card in catalog (not)contains:      Color selector   true
     Yves: mouse over color on product card:    D3D3D3
     Yves: quick add to cart for first item in catalog
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains the following products:    150_29554292    003_26138343
     Yves: shopping cart contains product with unit price:    sku=003    productName=Canon IXUS 160    productPrice=65.00
     [Teardown]    Yves: check if cart is not empty and clear it
@@ -129,7 +130,7 @@ Discontinued_Alternative_Products
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to 'Wishlist' page
     Yves: go to wishlist with name:    My wishlist
-    Yves: product with sku is marked as discountinued in wishlist:    ${discontinued_product_concrete_sku}
+    Yves: product with sku is marked as discontinued in wishlist:    ${discontinued_product_concrete_sku}
     Yves: product with sku is marked as alternative in wishlist:    012
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
@@ -321,7 +322,7 @@ Manage_Product
     Yves: change variant of the product on PDP on:    black
     Yves: change quantity on PDP:    3
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    zedManageSKU${random}-color-black    ENaddedConcrete${random}    25.00
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products
@@ -334,7 +335,7 @@ Manage_Product
     ...    AND    Yves: check if cart is not empty and clear it
 
 Product_Original_Price
-    [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
+    [Documentation]    checks that Original price is displayed on the PDP and in Catalog
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
     ...    || sku                     | store | name en                  | name de                    | new from   | new to     ||
@@ -436,7 +437,7 @@ Product_Availability_Calculation
     Yves: go to PDP of the product with sku:    availabilitySKU${random}
     Yves: change quantity on PDP:    3
     Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_company_user_buyer_address}
@@ -453,7 +454,7 @@ Product_Availability_Calculation
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 2.
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Cancel
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
@@ -484,7 +485,7 @@ Configurable_Product_PDP_Wishlist_Availability
     [Documentation]    Configure product from PDP and Wishlist + availability case.
     [Setup]    Run keywords   Delete All Cookies
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
-    ...    AND    Yves: create new 'Whistist' with name:    configProduct${random}
+    ...    AND    Yves: create new 'Wishlist' with name:    configProduct${random}
     ...    AND    Yves: check if cart is not empty and clear it
     ...    AND    Yves: delete all user addresses
     ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
@@ -528,7 +529,7 @@ Configurable_Product_PDP_Wishlist_Availability
     Yves: product configuration price should be:    ${configurable_product_price_with_options}
     Yves: save product configuration
     Yves: add all available products from wishlist to cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=${configurable_product_price_with_options}
     [Teardown]    Run Keywords    Yves: delete all wishlists
     ...    AND    Yves: check if cart is not empty and clear it

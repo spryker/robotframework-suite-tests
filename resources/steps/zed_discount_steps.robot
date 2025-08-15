@@ -8,6 +8,7 @@ Resource    ../common/common.robot
 Zed: create a discount and activate it:
     [Arguments]    ${discountType}    ${valueType}    ${discountValue}    ${applyToQuery}=    ${voucherCode}=    ${promotionalProductDiscount}=False    ${promotionalProductAbstractSku}=    ${promotionalProductQuantity}=    ${applyWhenQuery}=    ${discountName}=Test Discount    ${discountDescription}='Test Description'
     ${currentURL}=    Get Location
+    IF    '/discount' not in '${currentURL}'    Zed: go to URL:    /discount/index/list
     ### General information
     Zed: go to URL:    /discount/index/list
     Click    ${zed_discount_add_new_discount_button}
@@ -22,8 +23,12 @@ Zed: create a discount and activate it:
     Evaluate Javascript    ${None}  document.getElementById("discount_discountGeneral_valid_from").setAttribute("value", "01.01.2021 01:00")
     Evaluate JavaScript    ${None}   document.getElementById("discount_discountGeneral_valid_to").setAttribute("value", "01.01.2030 01:00")
     ### Discount calculation
-    Zed: go to tab:    Discount calculation
-    Wait For Load State
+    Zed: go to tab by link href that contains:    discount
+    TRY
+        Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Wait For Elements State    ${zed_discount_query_builder_first_calculation_group}    visible    ${browser_timeout}
     IF    '${valueType}'=='Percentage'    Run Keywords    Select From List By Label    ${zed_discount_calculator_type_drop_down}    Percentage
     ...    AND    Type Text    ${zed_discount_percentage_value_field}     ${discountValue}
@@ -42,8 +47,12 @@ Zed: create a discount and activate it:
     ...    AND    Type Text    ${zed_discount_promotional_product_abstract_quantity_field}     ${promotionalProductQuantity}
     END
     ### Discount condition
-    Zed: go to tab:    Conditions
-    Wait For Load State
+    Zed: go to tab by link href that contains:    conditions
+    TRY
+        Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Wait For Elements State    ${zed_discount_query_builder_first_condition_group}    visible    ${browser_timeout}
     Click    ${zed_discount_plain_query_apply_when__button}
     Wait Until Element Is Visible    ${zed_discount_plain_query_apply_when_field}
@@ -63,7 +72,7 @@ Zed: create a discount and activate it:
 Zed: generate vouchers:
     [Arguments]    ${quantity}    ${customCode}    ${addRandomLength}=    ${maxNumberOfUsages}=0
     ${currentURL}=    Get Location
-    IF    'tab-content-general' not in '${currentURL}'  Zed: go to tab:    Voucher codes
+    IF    'tab-content-general' not in '${currentURL}'  Zed: go to tab by link href that contains:    voucher
     Type Text    ${zed_discount_voucher_quantity_field}     ${quantity}
     Type Text    ${zed_discount_voucher_custom_code_field}     ${customCode}
     Type Text    ${zed_discount_voucher_max_usages_field}     ${maxNumberOfUsages}

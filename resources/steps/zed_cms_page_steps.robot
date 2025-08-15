@@ -49,7 +49,7 @@ Zed: create a cms page and publish it:
     Type Text    ${zed_cms_page_placeholder_title_enUS_field}    ${enTitlePlaceholder}    delay=50ms
     Clear Text    ${zed_cms_page_placeholder_title_deDE_field}
     Type Text    ${zed_cms_page_placeholder_title_deDE_field}    ${enTitlePlaceholder}    delay=50ms
-    Zed: go to tab:    Content
+    Zed: go to tab by link href that contains:    content-content
     Page Should Contain Element    ${zed_cms_page_placeholder_content_enUS_field}    message=EN section of Content tab is not visible
     Scroll Element Into View    ${zed_cms_page_content_second_locale_content_collapsed_section}
     Click    ${zed_cms_page_content_second_locale_content_collapsed_section}
@@ -78,7 +78,6 @@ Zed: update cms page and publish it:
     [Arguments]    @{args}
     ${cmsPageData}=    Set Up Keyword Arguments    @{args}
     Zed: go to URL:    /cms-gui/list-page
-    Zed: perform search by:    ${cmsPage}
     Zed: click Action Button in a table for row that contains:     ${cmsPage}     Edit
     Set Browser Timeout    5s
     TRY

@@ -49,9 +49,7 @@ New_Customer_Registration
     ...    || salutation | first name | last name | e-mail                       | password                   ||
     ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
-    [Teardown]    Zed: delete customer:
-    ...    || email                       ||
-    ...    || sonia+${random}@spryker.com ||
+    [Teardown]    Zed: delete customer:    sonia+ui+new${random}@spryker.com 
     
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users see products info and cart but not profile
@@ -59,7 +57,7 @@ Guest_User_Access_Restrictions
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:   002    Canon IXUS 160    37.50
     Yves: go to user menu:    Overview
     Yves: 'Login' page is displayed
@@ -73,7 +71,7 @@ Authorized_User_Access
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}     ${addToCartButton}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    002    Canon IXUS 160    37.50
     Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
@@ -154,7 +152,7 @@ Wishlist_List_Supports_Offers
     Yves: assert merchant of product in wishlist:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in wishlist:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
     Yves: add all available products from wishlist to cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in b2c cart:    ${product_with_multiple_offers_abstract_name}    Spryker
     Yves: assert merchant of product in b2c cart:    ${product_with_multiple_offers_abstract_name}    Budget Cameras
     [Teardown]    Run keywords    Yves: delete all wishlists    AND    Yves: check if cart is not empty and clear it
@@ -165,7 +163,7 @@ Reorder
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in b2c cart:    Canon IXUS 285    Spryker
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -227,6 +225,4 @@ Email_Confirmation
     ...    || Mr.        | New        | User      | sonia+fails+${random}@spryker.com  | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     Yves: login on Yves with provided credentials and expect error:     sonia+fails+${random}@spryker.com     ${default_secure_password}
-    [Teardown]    Zed: delete customer:
-    ...    || email                             ||
-    ...    || sonia+fails+${random}@spryker.com ||
+    [Teardown]    Zed: delete customer:    sonia+fails+${random}@spryker.com
