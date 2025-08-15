@@ -78,19 +78,15 @@ Guest_Checkout
     Trigger oms
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: get the last placed order ID of the customer by email:    sonia+guest+checkout${random}@spryker.com
-    Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
-    Zed: trigger all matching states inside this order:    Skip timeout
-    Zed: trigger all matching states inside this order:    skip picking
-    Zed: trigger all matching states inside this order:    Ship
-    Zed: trigger all matching states inside this order:    Stock update
-    Zed: trigger all matching states inside this order:    Close
+    Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    skip grace period
+    Zed: trigger all matching states inside this order:    Pay
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
     ...    AND    Delete dynamic admin user from DB
 
 Guest_Checkout_Addresses
-    [Documentation]    Guest checkout with different addresses and OMS. DMS-ON: https://spryker.atlassian.net/browse/FRW-7463
+    [Documentation]    Guest checkout with different addresses and OMS.
     [Setup]    Create dynamic admin user in DB
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
@@ -129,15 +125,10 @@ Guest_Checkout_Addresses
     Trigger oms
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: get the last placed order ID of the customer by email:    sonia+guest+new${random}@spryker.com
-    Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
+    Zed: go to order page:    ${zedLastPlacedOrder}
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
     Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany 
     Zed: shipping address inside xxx shipment should be:    2    Dr First, Last, Second Street, 2, Additional street, Spryker, 10247, Berlin, Germany 
     Zed: shipping address inside xxx shipment should be:    3    Dr First, Last, Third Street, 3, Additional street, Spryker, 10247, Berlin, Germany 
-    Zed: trigger all matching states inside this order:    Skip timeout
-    Zed: trigger all matching states inside this order:    skip picking
-    Zed: trigger all matching states inside this order:    Ship
-    Zed: trigger all matching states inside this order:    Stock update
-    Zed: trigger all matching states inside this order:    Close
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
     ...    AND    Delete dynamic admin user from DB

@@ -47,7 +47,7 @@ Merchant_Portal_Product_Volume_Prices
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
     ...    AND    Zed: create dynamic merchant user:    Office King
-    ...    AND    Trigger p&s
+    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -65,17 +65,19 @@ Merchant_Portal_Product_Volume_Prices
     MP: fill product price values:
     ...    || product type | row number | customer | store | currency | gross default | quantity ||
     ...    || abstract     | 2          | Default  | DE    | EUR      | 10            | 2        ||
-    MP: save abstract product 
+    MP: save abstract product
+    Trigger p&s
     MP: click on a table row that contains:    VPNewProduct${random}
     MP: open concrete drawer by SKU:    VPSKU${random}-2
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
+    Repeat Keyword    3    Trigger p&s
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     VPNewProduct${random}     Approve
     Zed: save abstract product:    VPNewProduct${random}
-    Repeat Keyword   3    Trigger p&s
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}  
     Yves: go to PDP of the product with sku:     VPSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
@@ -108,11 +110,12 @@ Merchant_Portal_Product_Volume_Prices
     ...    AND    Delete dynamic admin user from DB
 
 Merchant_Portal_Offer_Volume_Prices
+    [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Fallback to default price after delete
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
     ...    AND    Zed: create dynamic merchant user:    Office King
     ...    AND    Zed: create dynamic merchant user:    Spryker
-    [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Fallback to default price after delete
+    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
     MP: open navigation menu tab:    Products    
     MP: click on create new entity button:    Create Product
@@ -128,17 +131,18 @@ Merchant_Portal_Offer_Volume_Prices
     ...    || product type | row number | customer | store | currency | gross default ||
     ...    || abstract     | 1          | Default  | DE    | EUR      | 100           ||
     MP: save abstract product 
-    Trigger multistore p&s
+    Trigger p&s
     MP: click on a table row that contains:    OfferNewProduct${random}
     MP: open concrete drawer by SKU:    OfferSKU${random}-2
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
-    Trigger multistore p&s
+    Trigger p&s
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Approve
-    Trigger multistore p&s
+    Zed: save abstract product:    OfferNewProduct${random}
+    Trigger p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}  
     Yves: go to PDP of the product with sku:     OfferSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true

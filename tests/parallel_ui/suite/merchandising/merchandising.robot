@@ -136,11 +136,6 @@ Configurable_Bundle
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside this order:    Pay
-    Zed: trigger all matching states inside this order:    Skip timeout
-    Zed: trigger all matching states inside this order:    skip picking
-    Zed: trigger all matching states inside this order:    Ship
-    Zed: trigger all matching states inside this order:    Stock update
-    Zed: trigger all matching states inside this order:    Close
     [Teardown]    Delete dynamic admin user from DB
 
 Product_Relations

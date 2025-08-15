@@ -104,6 +104,7 @@ Product_Availability_Calculation
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: wait for order item to be in state:    sku=availabilitySKU${random}-color-grey    state=payment pending    iterations=7 
     Yves: go to PDP of the product with sku:    availabilitySKU${random}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False

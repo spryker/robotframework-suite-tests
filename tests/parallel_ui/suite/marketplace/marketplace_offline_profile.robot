@@ -89,6 +89,7 @@ Merchant_Profile_Set_to_Offline_from_MP
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     offlineMP${random}     Approve
+    Zed: save abstract product:    offlineMP${random}
     Repeat Keyword    3    Trigger multistore p&s
     Yves: go to newly created page by URL:    url=en/merchant/offline-from-mp${random}    delay=5s    iterations=26
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -153,6 +154,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     offlineBO${random}     Approve
+    Zed: save abstract product:    offlineBO${random}
     Repeat Keyword    3    Trigger multistore p&s
     Yves: go to newly created page by URL:    url=en/merchant/offline-from-bo${random}    delay=5s    iterations=26
     Yves: login on Yves with provided credentials:    ${dynamic_customer}

@@ -51,7 +51,7 @@ Zed: trigger all matching states inside this order:
         ELSE
             Exit For Loop
         END
-        IF    ${index} == 3 or ${index} == 6
+        IF    ${index} == 2 or ${index} == 5
             Trigger oms
         END
         IF    ${index} == ${iterations}-1
@@ -67,7 +67,7 @@ Zed: trigger all matching states inside this order:
             Fail    Expected order state transition '${status}' is not available. Only '${order_available_states}' is/are available. Check if OMS is functional
         END
     END
-    Click    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
+    Click and retry if 5xx occurred:    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
 
 Zed: trigger matching state of xxx merchant's shipment:
     [Documentation]    Marketplace specific method, suitable for My Orders of merchant. Triggers action for whole shipment
@@ -91,7 +91,7 @@ Zed: trigger matching state of xxx merchant's shipment:
         ELSE
             Exit For Loop
         END
-        IF    ${index} == 3 or ${index} == 6
+        IF    ${index} == 2 or ${index} == 5
             Trigger oms
         END
         IF    ${index} == ${iterations}-1
@@ -99,7 +99,7 @@ Zed: trigger matching state of xxx merchant's shipment:
             Fail    Expected shipment state transition '${event}' for shipment# '${shipment_number}' is not available. Only '${shipment_available_transitions}' is/are available. Check if OMS is functional
         END
     END
-    Click    ${elementSelector}
+    Click and retry if 5xx occurred:    ${elementSelector}
 
 Zed: trigger matching state of order item inside xxx shipment:
     [Arguments]    ${sku}    ${event}    ${shipment}=1    ${delay}=4s    ${iterations}=20
@@ -136,7 +136,7 @@ Zed: trigger matching state of order item inside xxx shipment:
         ELSE
             Exit For Loop
         END
-        IF    ${index} == 3 or ${index} == 6
+        IF    ${index} == 2 or ${index} == 5
             Trigger oms
         END
         IF    ${index} == ${iterations}-1
@@ -144,7 +144,7 @@ Zed: trigger matching state of order item inside xxx shipment:
             Fail    Expected item state transition '${event}' for item '${sku}' is not available. Only '${item_available_transitions}' is/are available. Check if OMS is functional
         END
     END
-    Click    ${elementSelector}
+    Click and retry if 5xx occurred:    ${elementSelector}
 
 Zed: trigger matching state of xxx order item inside xxx shipment:
     [Arguments]    ${event}    ${item_number}=1    ${shipment}=1    ${delay}=4s    ${iterations}=20
@@ -167,7 +167,7 @@ Zed: trigger matching state of xxx order item inside xxx shipment:
         ELSE
             Exit For Loop
         END
-        IF    ${index} == 3 or ${index} == 6
+        IF    ${index} == 2 or ${index} == 5
             Trigger oms
         END
         IF    ${index} == ${iterations}-1
@@ -175,7 +175,7 @@ Zed: trigger matching state of xxx order item inside xxx shipment:
             Fail    Expected item state transition '${event}' for item number '${item_number}' is not available in shipment# '${shipment}'. Only '${item_available_transitions}' is/are available. Check if OMS is functional
         END
     END
-    Click    ${elementSelector}
+    Click and retry if 5xx occurred:    ${elementSelector}
 
 Zed: wait for order item to be in state:
     [Arguments]    ${sku}    ${state}    ${shipment}=1    ${delay}=10s    ${iterations}=20

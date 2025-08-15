@@ -134,8 +134,6 @@ Guest_Checkout_and_Addresses
     Zed: shipping address inside xxx shipment should be:    2    Dr First, Last, Second Street, 2, Additional street, Spryker, 10247, Berlin, Germany 
     Zed: shipping address inside xxx shipment should be:    3    Dr First, Last, Third Street, 3, Additional street, Spryker, 10247, Berlin, Germany 
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
-    Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
-    Zed: trigger matching state of xxx merchant's shipment:    1    Ship   
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}

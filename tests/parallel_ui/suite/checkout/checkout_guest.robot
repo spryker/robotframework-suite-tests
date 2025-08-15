@@ -77,11 +77,6 @@ Guest_Checkout
     Zed: get the last placed order ID of the customer by email:    sonia+guest+checkout${random}@spryker.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside this order:    Pay
-    Zed: trigger all matching states inside this order:    Skip timeout
-    Zed: trigger all matching states inside this order:    skip picking
-    Zed: trigger all matching states inside this order:    Ship
-    Zed: trigger all matching states inside this order:    Stock update
-    Zed: trigger all matching states inside this order:    Close
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
@@ -127,16 +122,10 @@ Guest_Checkout_Addresses
     Trigger oms
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: get the last placed order ID of the customer by email:    sonia+guest+new${random}@spryker.com
-    Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    skip grace period
-    Zed: trigger all matching states inside this order:    Pay
+    Zed: go to order page:    ${zedLastPlacedOrder}
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
     Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany 
     Zed: shipping address inside xxx shipment should be:    2    Dr First, Last, Second Street, 2, Additional street, Spryker, 10247, Berlin, Germany 
     Zed: shipping address inside xxx shipment should be:    3    Dr First, Last, Third Street, 3, Additional street, Spryker, 10247, Berlin, Germany 
-    Zed: trigger all matching states inside this order:    Skip timeout
-    Zed: trigger all matching states inside this order:    skip picking
-    Zed: trigger all matching states inside this order:    Ship
-    Zed: trigger all matching states inside this order:    Stock update
-    Zed: trigger all matching states inside this order:    Close
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
     ...    AND    Delete dynamic admin user from DB

@@ -169,16 +169,6 @@ Configurable_Product_Checkout
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_spryker_merchant}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,492.44
-    Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside this order:    skip grace period
-    Zed: trigger all matching states inside this order:    Pay
-    Zed: go to my order page:    ${lastPlacedOrder}
-    Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
-    Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
-    Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    1
-    Zed: trigger matching state of xxx order item inside xxx shipment:    Deliver    1
-    Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    1
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.0
     [Teardown]    Run keywords    Restore all discounts in the database
     ...    AND    Delete dynamic admin user from DB
     

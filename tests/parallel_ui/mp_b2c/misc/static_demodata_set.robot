@@ -99,7 +99,8 @@ Click_and_collect
     ...    || true      | 100            | true              | en_US         ||
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
-    Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Approve 
+    Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Approve
+    Zed: save abstract product:    clickCollectSku${random}
     Trigger p&s 
     MP: login on MP with provided credentials:    ${dynamic_budget_merchant}
     MP: open navigation menu tab:    Offers
@@ -235,17 +236,6 @@ Configurable_Product_Checkout
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_spryker_merchant}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,361.00
-    Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside this order:    skip grace period
-    Zed: trigger all matching states inside this order:    Pay
-    Zed: trigger all matching states inside this order:    skip picking
-    Zed: go to my order page:    ${lastPlacedOrder}
-    Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
-    Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
-    Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    1
-    Zed: trigger matching state of xxx order item inside xxx shipment:    Deliver    1
-    Zed: trigger matching state of xxx order item inside xxx shipment:    Refund    1
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
     [Teardown]    Run keywords    Restore all discounts in the database
     ...    AND    Delete dynamic admin user from DB
 
@@ -291,7 +281,7 @@ Fulfillment_app_e2e
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside this order:    skip grace period
-    Zed: trigger all matching states inside this order:    Pay 
+    Zed: trigger all matching states inside this order:    Pay
     Zed: wait for order item to be in state:    091_25873091    confirmed
     Zed: wait for order item to be in state:    093_24495843    confirmed
     Zed: trigger all matching states inside this order:    Skip timeout

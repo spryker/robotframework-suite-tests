@@ -147,6 +147,7 @@ Merchant_Product_Original_Price
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     originalProduct${random}     Approve
+    Zed: save abstract product:    originalProduct${random}
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}   
     Yves: go to URL:    en/search?q=originalSKU${random}

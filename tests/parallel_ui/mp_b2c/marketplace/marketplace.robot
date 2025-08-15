@@ -256,7 +256,6 @@ Merchant_Product_Offer_in_Backoffice
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Approve
-    Trigger p&s
     MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Offers
     MP: click on create new entity button:    Add Offer

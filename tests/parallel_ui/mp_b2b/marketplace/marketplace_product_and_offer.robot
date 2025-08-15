@@ -73,6 +73,7 @@ Create_and_Approve_New_Merchant_Product
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     NewProduct${random}     Approve
+    Zed: save abstract product:    NewProduct${random}
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}   
     Yves: go to PDP of the product with sku:     SKU${random}    wait_for_p&s=true
@@ -116,6 +117,7 @@ Create_New_Offer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     SprykerSKU${random}     Approve
+    Zed: save abstract product:    SprykerSKU${random}
     Trigger p&s
     MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Offers

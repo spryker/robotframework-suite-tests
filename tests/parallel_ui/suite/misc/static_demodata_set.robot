@@ -173,7 +173,8 @@ Click_and_collect
     ...    || true      | 100            | true              | en_US         ||
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
-    Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Approve 
+    Zed: click Action Button in a table for row that contains:     clickCollectSku${random}     Approve
+    Zed: save abstract product:    clickCollectSku${random}
     Trigger p&s 
     MP: login on MP with provided credentials:    ${dynamic_budget_merchant}
     MP: open navigation menu tab:    Offers

@@ -85,6 +85,7 @@ Product_Availability_Calculation
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Catalog    Products 
     Zed: click Action Button in a table for row that contains:     availabilityProduct${random}     Approve
+    Zed: save abstract product:    availabilityProduct${random}
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}   
     Yves: go to PDP of the product with sku:     availabilitySKU${random}    wait_for_p&s=true
