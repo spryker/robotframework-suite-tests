@@ -450,6 +450,7 @@ Yves: select xxx merchant's offer:
             TRY
                 Repeat Keyword    3    Wait For Load State
                 Repeat Keyword    3    Wait For Load State    domcontentloaded
+                Repeat Keyword    3    Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -458,8 +459,8 @@ Yves: select xxx merchant's offer:
             Reload
             TRY
                 Repeat Keyword    3    Wait For Load State
-                Wait For Load State    domcontentloaded
-                Wait For Load State    networkidle
+                Repeat Keyword    3    Wait For Load State    domcontentloaded
+                Repeat Keyword    3    Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -470,6 +471,8 @@ Yves: select xxx merchant's offer:
                 TRY
                     Repeat Keyword    3    Wait For Load State
                     Repeat Keyword    3    Wait For Load State    domcontentloaded
+                    Repeat Keyword    3    Wait For Load State    networkidle
+                    Sleep    50ms
                 EXCEPT
                     Log    Page is not loaded
                 END
