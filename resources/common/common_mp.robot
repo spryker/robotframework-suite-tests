@@ -50,6 +50,20 @@ MP: login on MP with provided credentials:
         Type Text    ${mp_password_field}    ${password}
         Click    ${mp_login_button}
     END
+    ${login_success}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    ${mp_user_menu_button}    MP: Login failed! Retrying...    timeout=5s
+    IF    'FAIL' in $login_success
+        Delete All Cookies
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
+        MP: go to URL:    /
+        Wait Until Element Is Visible    ${mp_user_name_field}
+        Type Text    ${mp_user_name_field}    ${email}
+        Type Text    ${mp_password_field}    ${password}
+        Click    ${mp_login_button}
+    END
     Wait Until Element Is Visible    ${mp_user_menu_button}    MP: Login failed!    timeout=15s
 
 MP: login on MP with provided credentials and expect error:

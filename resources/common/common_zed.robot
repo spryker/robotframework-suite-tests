@@ -126,7 +126,7 @@ Zed: go to first navigation item level:
             END
             Reload
             ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
-            IF    not ${no_js_error}    Log    ''sweet-alert' js error popup on the page '${zed_url}: ${navigation_item}'    level=WARN
+            IF    not ${no_js_error}    Log    ''sweet-alert' js error popup on the page '${zed_url}: ${navigation_item}'
         END
     END
 
@@ -169,7 +169,7 @@ Zed: go to second navigation item level:
         END
     END
     # workaround for the issue with deadlocks on concurrent search attempts
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=100ms
+    ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=100ms
     IF    not ${no_js_error}
         TRY
             LocalStorage Clear
@@ -177,7 +177,7 @@ Zed: go to second navigation item level:
             Log    Failed to clear LocalStorage
         END
         Reload
-        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=100ms
+        ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=100ms
         IF    not ${no_js_error}
             TRY
                 LocalStorage Clear
@@ -185,8 +185,8 @@ Zed: go to second navigation item level:
                 Log    Failed to clear LocalStorage
             END
             Reload
-            ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=100ms   
-            IF    not ${no_js_error}    Log    ''sweet-alert' js error popup on the page '${zed_url}: ${navigation_item_level1}->${navigation_item_level2}'    level=WARN
+            ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=100ms   
+            IF    not ${no_js_error}    Log    ''sweet-alert' js error popup on the page '${zed_url}: ${navigation_item_level1}->${navigation_item_level2}'
         END
     END
     
