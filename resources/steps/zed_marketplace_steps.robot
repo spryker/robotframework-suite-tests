@@ -196,6 +196,7 @@ Zed: create dynamic merchant user:
         Log    Page is not loaded
     END
     Zed: click Action Button in a table for row that contains:     ${merchant}     Edit
+    Zed: Check checkbox by Label:    Active
     Zed: go to tab by link href that contains:    merchant-user
     Click and retry if 5xx occurred:    ${zed_add_merchant_user_button}
     Wait Until Element Is Visible    ${zed_create_merchant_user_email_field}
@@ -219,6 +220,11 @@ Zed: create dynamic merchant user:
         Zed: update Zed user:
         ...    || email                  | password                  ||
         ...    || ${merchant_user_email} | ${merchant_user_password} ||
+        # make sure that user is active
+        Zed: perform search by:    ${merchant_user_email}
+        Zed: table should contain non-searchable value:    Active
+        Zed: table should contain non-searchable value:    Deactivate
+        Zed: table should contain non-searchable value:    Delete
     END
 
 Zed: delete merchant user:

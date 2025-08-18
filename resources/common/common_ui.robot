@@ -444,6 +444,7 @@ Click and retry if 5xx occurred:
         ${is_5xx}=    Evaluate    ${status} >= 500
     END
     ${statuses}=    Create List
+    Set Browser Timeout    ${timeout}
     FOR    ${i}    IN RANGE    10
         ${result}=    Run Keyword And Ignore Error    Wait For Response    matcher=**    timeout=${timeout}
         IF    '${result}[0]'=='FAIL'
@@ -453,6 +454,7 @@ Click and retry if 5xx occurred:
         ${status}=    Get From Dictionary    ${response}    status
         Append To List    ${statuses}    ${status}
     END
+    Set Browser Timeout    ${browser_timeout}
     ${is_5xx_in_page_load}=    Evaluate    any(status >= 500 for status in ${statuses})
     ${page_title}=    Get Title
     ${page_title}=    Convert To Lower Case    ${page_title}
@@ -471,6 +473,7 @@ Click and retry if 5xx occurred:
     Go to    ${current_url}
     Click With Options    ${selector}    force=True
     ${statuses_retry}=    Create List
+    Set Browser Timeout    ${timeout}
     FOR    ${i}    IN RANGE    10
         ${result}=    Run Keyword And Ignore Error    Wait For Response    matcher=**    timeout=100ms
         IF    '${result}[0]'=='FAIL'
@@ -480,6 +483,7 @@ Click and retry if 5xx occurred:
         ${status}=    Get From Dictionary    ${response}    status
         Append To List    ${statuses_retry}    ${status}
     END
+    Set Browser Timeout    ${browser_timeout}
     ${second_5xx_error_in_page_load}=    Evaluate    any(status >= 500 for status in ${statuses_retry})
     Should Not Be True    ${second_5xx_error_in_page_load}    msg=Clicking '${selector}' triggered a 5xx error.
     ${page_title}=    Get Title
