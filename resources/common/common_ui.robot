@@ -544,7 +544,7 @@ Click and return True if 5xx occurred:
         ${response}=    Set Variable    ${result}[1]
         ${status}=    Get From Dictionary    ${response}    status
         ${is_5xx}=    Evaluate    ${status} >= 500
-        Take Screenshot    EMBED    fullPage=True
+        IF    ${is_5xx}    Take Screenshot    EMBED    fullPage=True
     END
     ${page_load_statuses}=    Create List
     FOR    ${i}    IN RANGE    10
