@@ -210,8 +210,14 @@ Zed: create dynamic merchant user:
         Zed: submit the form
         Wait Until Element Is Visible    ${zed_table_locator}
     END
-    Zed: click Action Button in Merchant Users table for row that contains:    ${merchant_user_email}    Activate
+    TRY
+        Zed: click Action Button in Merchant Users table for row that contains:    ${merchant_user_email}    Activate
+    EXCEPT
+        Log    Activation button not found
+    END
     Zed: table should contain non-searchable value:    Active
+    Zed: table should contain non-searchable value:    Deactivate
+    Zed: table should contain non-searchable value:    Delete
     IF    '${merchant_user_group}' != '${EMPTY}'
         Zed: update Zed user:
         ...    || email                  | password                  | group                  ||
@@ -220,11 +226,6 @@ Zed: create dynamic merchant user:
         Zed: update Zed user:
         ...    || email                  | password                  ||
         ...    || ${merchant_user_email} | ${merchant_user_password} ||
-        # make sure that user is active
-        Zed: perform search by:    ${merchant_user_email}
-        Zed: table should contain non-searchable value:    Active
-        Zed: table should contain non-searchable value:    Deactivate
-        Zed: table should contain non-searchable value:    Delete
     END
 
 Zed: delete merchant user:

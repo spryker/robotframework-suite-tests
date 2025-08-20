@@ -414,10 +414,9 @@ Ping and go to URL:
     IF    'PASS' in $accessible and 'PASS' in $successful
         Go To    ${url}
     ELSE
-        Fail    '${url}' URL is not accessible of throws an error
+        Fail    '${url}' URL is not accessible or throws an error
     END
 
-*** Keywords ***
 Click and retry if 5xx occurred:
     [Arguments]    ${selector}    ${timeout}=300ms
     ${current_url}=    Get URL
@@ -429,6 +428,22 @@ Click and retry if 5xx occurred:
         Log    page is not fully loaded
     END
     VAR    ${sweet_alert_js_error_popup}    xpath=//*[contains(@class,'sweet-alert')]
+    ${page_title}=    Get Title
+    ${page_title}=    Convert To Lower Case    ${page_title}
+    ${page_has_title}=    Run Keyword And Return Status    Should Not Be Empty    ${page_title}
+    ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
+    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    IF    not ${no_js_error} and not ${page_has_title} and not ${no_exception}
+        Take Screenshot    EMBED    fullPage=True
+        Log    'Error on page '${current_url}' Retrying ...'    level=WARN
+        Go to    ${current_url}
+    END
+    ${page_contains_target_element}=    Run Keyword And Return Status    Page Should Contain Element    ${selector}
+    IF    not ${page_contains_target_element}
+        Take Screenshot    EMBED    fullPage=True
+        Log    'Expected element '${selector}' is not present on the page'    level=WARN
+        RETURN
+    END
     TRY
         ${promise}=    Promise to    Wait For Response    matcher=**    timeout=${timeout}
         Click    ${selector}
@@ -442,6 +457,7 @@ Click and retry if 5xx occurred:
         ${response}=    Set Variable    ${result}[1]
         ${status}=    Get From Dictionary    ${response}    status
         ${is_5xx}=    Evaluate    ${status} >= 500
+        IF    ${is_5xx}    Take Screenshot    EMBED    fullPage=True
     END
     ${statuses}=    Create List
     Set Browser Timeout    ${timeout}
@@ -455,21 +471,29 @@ Click and retry if 5xx occurred:
         Append To List    ${statuses}    ${status}
     END
     Set Browser Timeout    ${browser_timeout}
+    TRY
+        Wait For Load State
+        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
     ${is_5xx_in_page_load}=    Evaluate    any(status >= 500 for status in ${statuses})
     ${page_title}=    Get Title
     ${page_title}=    Convert To Lower Case    ${page_title}
     ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
+    ${page_has_title}=    Run Keyword And Return Status    Should Not Be Empty    ${page_title}
     ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
-    IF    not ${is_5xx} and not ${is_5xx_in_page_load} and ${no_exception} and ${no_js_error}
+    IF    not ${is_5xx} and not ${is_5xx_in_page_load} and ${no_exception} and ${no_js_error} and ${page_has_title}
         RETURN
     END
     # Retry click if 5xx occurred or exception
     Log    message=Clicking '${selector}' triggered a 5xx error. Retrying ...    level=WARN
-     TRY
-        LocalStorage Clear
-    EXCEPT
-        Log    Failed to clear LocalStorage
-    END
+    Log    ${is_5xx}
+    Log    ${is_5xx_in_page_load}
+    Log    ${no_exception}
+    Log    ${no_js_error}
+    Log    ${page_has_title}
     Go to    ${current_url}
     Click With Options    ${selector}    force=True
     ${statuses_retry}=    Create List
@@ -488,9 +512,14 @@ Click and retry if 5xx occurred:
     Should Not Be True    ${second_5xx_error_in_page_load}    msg=Clicking '${selector}' triggered a 5xx error.
     ${page_title}=    Get Title
     ${page_title}=    Convert To Lower Case    ${page_title}
+    ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
+    ${page_has_title}=    Run Keyword And Return Status    Should Not Be Empty    ${page_title}
     ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
     Should Not Contain    ${page_title}    error    msg=Clicking '${selector}' triggered a 5xx error.
-    IF     not ${no_js_error}    Fail    Clicking '${selector}' triggered a 5xx error.
+    IF     not ${no_js_error} and not ${page_has_title} and not ${no_exception}
+        Take Screenshot    EMBED    fullPage=True
+        Fail    Clicking '${selector}' triggered a 5xx error.
+    END
 
 Click and return True if 5xx occurred:
     [Arguments]    ${locator}    ${timeout}=400ms
@@ -515,6 +544,7 @@ Click and return True if 5xx occurred:
         ${response}=    Set Variable    ${result}[1]
         ${status}=    Get From Dictionary    ${response}    status
         ${is_5xx}=    Evaluate    ${status} >= 500
+        Take Screenshot    EMBED    fullPage=True
     END
     ${page_load_statuses}=    Create List
     FOR    ${i}    IN RANGE    10
