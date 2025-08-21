@@ -299,19 +299,28 @@ Zed: submit the form
 
 Zed: perform search by:
     [Arguments]    ${search_key}
+    # Build two safe regex fragments for the search value:
+    # - enc1: percent-encoded, spaces -> %20
+    # - enc2: form-encoded, spaces -> +
+    ${enc1}=    Evaluate    re.escape(urllib.parse.quote("""${search_key}"""))    modules=re,urllib.parse
+    ${enc2}=    Evaluate    re.escape(urllib.parse.quote_plus("""${search_key}"""))    modules=re,urllib.parse
+
+    # Table-agnostic JS RegExp literal; match full search[value] (case-insensitive)
+    ${search_matcher}=    Set Variable    /[?&]search%5Bvalue%5D=(?:${enc1}|${enc2})(?:&|$)/i
     Zed: clear search field
-    # workaround for the issue with deadlocks on concurrent search attempts
+    # --- main attempt ---
     TRY
-        ${promise}=    Promise to    Wait For Response    matcher=**    timeout=10s
+        ${promise}=    Promise To    Wait For Response    matcher=${search_matcher}    timeout=5s
         Type Text    ${zed_search_field_locator}    ${search_key}
-        ${result}=    Run Keyword And Ignore Error    Wait for    ${promise}
+        ${result}=    Run Keyword And Ignore Error    Wait For    ${promise}
         TRY
             Repeat Keyword    3    Wait For Load State
             Wait For Load State    domcontentloaded
-        EXCEPT    
+        EXCEPT
             Log    Search event is not fired
         END
         IF    '${result}[0]'=='FAIL'
+            Log    Search event failed    level=WARN
             VAR    ${is_5xx}    ${False}
         ELSE
             ${response}=    Set Variable    ${result}[1]
@@ -325,8 +334,10 @@ Zed: perform search by:
                 END
                 Reload
                 Zed: clear search field
+                ${promise}=    Promise To    Wait For Response    matcher=${search_matcher}    timeout=5s
                 Type Text    ${zed_search_field_locator}    ${search_key}
                 TRY
+                    Wait For    ${promise}
                     Wait For Load State
                     Wait For Load State    domcontentloaded
                 EXCEPT
@@ -335,6 +346,7 @@ Zed: perform search by:
             END
         END
     EXCEPT
+        # --- recovery path if exception thrown ---
         TRY
             LocalStorage Clear
         EXCEPT
@@ -342,20 +354,24 @@ Zed: perform search by:
         END
         Reload
         Zed: clear search field
+        ${promise}=    Promise To    Wait For Response    matcher=${search_matcher}    timeout=5s
         Type Text    ${zed_search_field_locator}    ${search_key}
         TRY
+            Wait For    ${promise}
             Wait For Load State
             Wait For Load State    domcontentloaded
         EXCEPT
             Log    Search event is not fired
         END
     END
+    # Final settle
     TRY
         Wait For Load State
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    Search event is not fired
     END
+    # Handle any SweetAlert JS error popup with a re-attempt
     ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
         TRY
@@ -365,8 +381,10 @@ Zed: perform search by:
         END
         Reload
         Zed: clear search field
+        ${promise}=    Promise To    Wait For Response    matcher=${search_matcher}    timeout=5s
         Type Text    ${zed_search_field_locator}    ${search_key}
         TRY
+            Wait For    ${promise}
             Wait For Load State
             Wait For Load State    domcontentloaded
         EXCEPT
@@ -406,6 +424,14 @@ Zed: clear search field
 
 Zed: perform variant search by:
     [Arguments]    ${search_key}
+    # Two safe regex fragments for the full search term:
+    # enc1: percent-encoded (spaces -> %20)
+    # enc2: form-encoded   (spaces -> +)
+    ${enc1}=    Evaluate    re.escape(urllib.parse.quote("""${search_key}"""))    modules=re,urllib.parse
+    ${enc2}=    Evaluate    re.escape(urllib.parse.quote_plus("""${search_key}"""))    modules=re,urllib.parse
+
+    # Table-agnostic JS RegExp literal; matches full search[value] in URL (case-insensitive)
+    ${search_matcher}=     Set Variable    /[?&]search%5Bvalue%5D=(?:${enc1}|${enc2})(?:&|$)/i
     Clear Text    ${zed_variant_search_field_locator}
     TRY
         Wait For Load State
@@ -413,18 +439,21 @@ Zed: perform variant search by:
     EXCEPT
         Log    Search event is not fired
     END
-    # workaround for the issue with deadlocks on concurrent search attempts
+
+    # Main attempt: promise BEFORE typing to avoid race conditions
     TRY
-        ${promise}=    Promise to    Wait For Response    matcher=**    timeout=10s
+        ${promise}=    Promise To    Wait For Response    matcher=${search_matcher}    timeout=5s
         Type Text    ${zed_variant_search_field_locator}    ${search_key}
-        ${result}=    Run Keyword And Ignore Error    Wait for    ${promise}
+        ${result}=    Run Keyword And Ignore Error    Wait For    ${promise}
         TRY
             Wait For Load State
             Wait For Load State    domcontentloaded
         EXCEPT
             Log    Search event is not fired
         END
+
         IF    '${result}[0]'=='FAIL'
+            Log    Search by concrete event failed    level=WARN
             VAR    ${is_5xx}    ${False}
         ELSE
             ${response}=    Set Variable    ${result}[1]
@@ -444,8 +473,10 @@ Zed: perform variant search by:
                 EXCEPT
                     Log    Search event is not fired
                 END
+                ${promise}=    Promise To    Wait For Response    matcher=${search_matcher}    timeout=5s
                 Type Text    ${zed_variant_search_field_locator}    ${search_key}
                 TRY
+                    Wait For    ${promise}
                     Wait For Load State
                     Wait For Load State    domcontentloaded
                 EXCEPT
@@ -454,6 +485,7 @@ Zed: perform variant search by:
             END
         END
     EXCEPT
+        # Recovery path
         TRY
             LocalStorage Clear
         EXCEPT
@@ -467,14 +499,24 @@ Zed: perform variant search by:
         EXCEPT
             Log    Search event is not fired
         END
+        ${promise}=    Promise To    Wait For Response    matcher=${search_matcher}    timeout=5s
         Type Text    ${zed_variant_search_field_locator}    ${search_key}
         TRY
+            Wait For    ${promise}
             Wait For Load State
             Wait For Load State    domcontentloaded
         EXCEPT
             Log    Search event is not fired
         END
     END
+    # Final settle
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Search event is not fired
+    END
+    # JS error popup handling
     ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
         TRY
@@ -490,13 +532,10 @@ Zed: perform variant search by:
         EXCEPT
             Log    Search event is not fired
         END
+        ${promise}=    Promise To    Wait For Response    matcher=${search_matcher}    timeout=5s
         Type Text    ${zed_variant_search_field_locator}    ${search_key}
         TRY
-            Wait For Response    timeout=10s
-        EXCEPT    
-            Log    Search event is not fired
-        END
-        TRY
+            Wait For    ${promise}
             Wait For Load State
             Wait For Load State    domcontentloaded
         EXCEPT

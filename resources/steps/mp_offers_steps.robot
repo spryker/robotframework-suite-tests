@@ -14,7 +14,6 @@ MP: fill offer fields:
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='is active' and '${value}' != '${EMPTY}'    
             ${checkbox_state}=    Get Element Attribute    xpath=//web-spy-checkbox[@spy-id='productOffer_isActive']//span[@class='ant-checkbox-inner']/../../span[contains(@class,'checkbox')]    class
-            Log    ${checkbox_state}
             IF    'checked' in '${checkbox_state}' and '${value}' == 'false'
                 Click    ${offer_active_checkbox}
             ELSE IF    'checked' not in '${checkbox_state}' and '${value}' == 'true'
@@ -137,7 +136,6 @@ MP: change offer stock:
         END
         IF    '${key}'=='is never out of stock' and '${value}' != '${EMPTY}'    
             ${checkbox_state}=    Get Element Attribute    ${offer_always_in_stock_checkbox}    class
-            Log    ${checkbox_state}
             IF    'checked' in '${checkbox_state}' and '${value}' == 'false'
                 Click    ${offer_always_in_stock_checkbox}
             ELSE IF    'checked' not in '${checkbox_state}' and '${value}' == 'true'

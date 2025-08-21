@@ -508,7 +508,6 @@ Filter_by_valid_subcategory
     When I send a GET request:    /catalog-search?q=&category=${category_lvl2.id}
     Then Response status code should be:    200
     And Response reason should be:    OK
-    Log    ${response_body}
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
     And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${category_lvl2.qty}

@@ -88,8 +88,6 @@ Request_companies_users_with_include_customers_and_filtered_by_company_role
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    Log    ${token}
-    Log    ${company-role-uuid}
     And Each array element of array in response should contain property with value:    [data]    type    company-users
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain property:    [data]    attributes

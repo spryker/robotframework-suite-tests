@@ -79,7 +79,6 @@ Zed: create new Company Role with provided permissions:
     IF  '${is_default}'=='true'     Zed: Check checkbox by Label:  Is Default
     FOR    ${index}    IN RANGE    0    ${new_list_of_permissions}
         ${permission_to_set}=    Get From List    ${permissions_list}    ${index}
-        Log    ${permission_to_set}
         Zed: Check checkbox by Label:   ${permission_to_set}
     END
     ${is_company_dropdown_with_search}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_role_company_dropdown_with_search_locator}    timeout=0.5s
@@ -193,7 +192,6 @@ Yves: assign the following permissions to the company role:
     ${list_of_permissions}=    Get Length    ${permissions_list}
     FOR    ${index}    IN RANGE    0    ${list_of_permissions}
         ${permission_to_set}=    Get From List    ${permissions_list}    ${index}
-        Log    ${permission_to_set}
         Click    xpath=//*[contains(@data-qa,'permission-table')]//table//td[contains(.,'${permission_to_set}')]/ancestor::tr//td//button
         Sleep    0.5s
     END

@@ -278,7 +278,6 @@ Yves: Expand shopping cart accordion:
      ${accordionState}=    Replace String    ${accordionState}    -    ${SPACE}
      ${accordionState}=    Replace String    ${accordionState}    \r    ${EMPTY}
      ${accordionState}=    Replace String    ${accordionState}    \n    ${EMPTY}
-     Log    ${accordionState}
      IF    'active' not in '${accordionState}'
          Run Keywords
             Click With Options    xpath=//div[@data-qa='component cart-sidebar']//*[contains(@class,'cart-sidebar-item__title')][contains(.,'${accordionTitle}')]    delay=1s    force=True
@@ -328,9 +327,7 @@ Yves: delete all shopping carts
             END    
     END
     ${shoppingCartsCount}=    Get Element Count    xpath=//*[@data-qa='component quote-table']//table/tbody/tr//a[contains(.,'Delete')]
-    Log    ${shoppingCartsCount}
     FOR    ${index}    IN RANGE    0    ${shoppingCartsCount}-1
-        Log    ${index}
         Delete first available shopping cart
         Wait Until Element Is Visible    ${delete_shopping_cart_button}
         Click    ${delete_shopping_cart_button}

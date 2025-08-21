@@ -41,9 +41,6 @@ Zed: change product stock:
     Wait Until Element Is Visible    ${zed_save_button}
     ${checkBoxes}=    Get Element Count    ${zed_availability_never_out_of_stock_checkbox}
     FOR    ${index}    IN RANGE    1    ${checkBoxes}+1
-        Log    ${zed_availability_never_out_of_stock_checkbox}
-        Log    ${index}
-        Log    ${zed_availability_never_out_of_stock_checkbox}\[${index}\]
         IF    '${isNeverOutOfStock}'=='true'
             Check checkbox    \(//*[@type='checkbox' and contains(@id,'is_never_out_of_stock')]\)\[${index}\]
         ELSE

@@ -565,7 +565,6 @@ Yves: get index of the first available product on marketplace
         END
         Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]
         ${status}=    Run Keyword And Ignore Error     Page should contain element    &{pdp_add_to_cart_disabled_button}[${env}]    timeout=10ms
-        Log    ${index}
         IF    'PASS' in $status    Continue For Loop
         IF    'FAIL' in $status
             Run Keywords

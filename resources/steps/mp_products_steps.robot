@@ -11,7 +11,6 @@ MP: fill product price values:
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='product type' and '${value}' == 'concrete'
             ${checkbox_state}=    Get Element Attribute    ${mp_use_abstract_price_checkbox}    class
-            Log    ${checkbox_state}
             IF    'checked' in '${checkbox_state}'
                 Click    ${mp_use_abstract_price_checkbox}
             END
@@ -218,7 +217,6 @@ MP: fill concrete product fields:
         Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='is active' and '${value}' != '${EMPTY}'    
             ${checkbox_state}=    Get Element Attribute    xpath=//span[contains(text(),'Concrete Product is active')]/../span[contains(@class,'checkbox')]    class
-            Log    ${checkbox_state}
             IF    'checked' in '${checkbox_state}' and '${value}' == 'false'
                 Click    ${product_concrete_active_checkbox}
             ELSE IF    'checked' not in '${checkbox_state}' and '${value}' == 'true'
@@ -230,7 +228,6 @@ MP: fill concrete product fields:
         END
         IF    '${key}'=='use abstract name' and '${value}' != '${EMPTY}'
             ${checkbox_state}=    Get Element Attribute    xpath=//span[contains(text(),'Use Abstract Product name')]/../../span[contains(@class,'checkbox')]    class
-            Log    ${checkbox_state}
             IF    'checked' in '${checkbox_state}' and '${value}' == 'false'
                 Click    ${product_concrete_use_abstract_name_checkbox}
             ELSE IF    'checked' not in '${checkbox_state}' and '${value}' == 'true'

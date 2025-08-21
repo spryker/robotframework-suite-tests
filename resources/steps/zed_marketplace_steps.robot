@@ -288,16 +288,28 @@ Zed: update Merchant User on edit page with the following data:
 
 Zed: perform Merchant User search by:
     [Arguments]    ${search_key}
+    # Build two safe regex fragments:
+    # - enc1: URL-encoded with %20 for spaces
+    # - enc2: URL-encoded with + for spaces
+    ${enc1}=    Evaluate    re.escape(urllib.parse.quote("""${search_key}"""))    modules=re,urllib.parse
+    ${enc2}=    Evaluate    re.escape(urllib.parse.quote_plus("""${search_key}"""))    modules=re,urllib.parse
+    # JS RegExp literal (case-insensitive) for the Merchant User table path + full search[value]
+    ${search_matcher}=    Set Variable    /merchant-user-gui\/index\/table.*[?&]search%5Bvalue%5D=(?:${enc1}|${enc2})(?:&|$)/i
     Wait Until Page Contains Element    ${zed_table_locator}
     Clear Text    ${zed_merchant_user_search_field_locator}
-    Type Text    ${zed_merchant_user_search_field_locator}    ${search_key}
     TRY
-        Wait For Response    timeout=10s
-    EXCEPT    
+        # Create the waiter BEFORE typing to avoid race conditions
+        ${promise}=    Promise To    Wait For Response    matcher=${search_matcher}    timeout=5s
+        Type Text    ${zed_merchant_user_search_field_locator}    ${search_key}
+        ${result}=    Run Keyword And Ignore Error    Wait For    ${promise}
+        IF    '${result}[0]'=='FAIL'    Log    Search by MU event failed    level=WARN
+    EXCEPT
         Log    Search event is not fired
     END
+    # Let the table settle
     TRY
         Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END

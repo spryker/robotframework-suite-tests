@@ -170,8 +170,6 @@ Remove element from HTML with JavaScript
 
 Add/Edit element attribute with JavaScript:
     [Arguments]    ${xpath}    ${attribute}    ${attributeValue}
-    Log    ${attribute}
-    Log    ${attributeValue}
     Evaluate Javascript     ${None}    (document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).setAttribute("${attribute}", "${attributeValue}");
 
 Remove element attribute with JavaScript:
@@ -442,9 +440,9 @@ Click and retry if 5xx occurred:
         RETURN
     END
     TRY
-        ${promise}=    Promise to    Wait For Response    matcher=**    timeout=${timeout}
+        ${promise}=    Promise To    Wait For Response    matcher=**    timeout=${timeout}
         Click    ${selector}
-        ${result}=    Run Keyword And Ignore Error    Wait for    ${promise}
+        ${result}=    Run Keyword And Ignore Error    Wait For    ${promise}
     EXCEPT
         Log    No requests were fired
     END
@@ -527,9 +525,9 @@ Click and return True if 5xx occurred:
     END
     VAR    ${sweet_alert_js_error_popup}    xpath=//*[contains(@class,'sweet-alert')]
     TRY
-        ${promise}=    Promise to    Wait For Response    matcher=**    timeout=${timeout}
+        ${promise}=    Promise To    Wait For Response    matcher=**    timeout=${timeout}
         Click    ${locator}
-        ${result}=    Run Keyword And Ignore Error    Wait for    ${promise}
+        ${result}=    Run Keyword And Ignore Error    Wait For    ${promise}
     EXCEPT
         Log    No requests were fired
     END

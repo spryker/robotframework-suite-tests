@@ -40,7 +40,6 @@ Yves: 'Order Details' page contains the following product title N times:
         ${productTitleCount}=    Get Element Count    xpath=//div[@data-qa='component order-detail-table']//article//*[contains(@class,'title')][text()='${productTitle}']
     END
     ${productTitleCount}=    Convert To String    ${productTitleCount}
-    Log    ${productTitleCount}
     Should Be Equal    ${productTitleCount}    ${expectedQuantity}
 
 Yves: 'Order History' page contains the following order with a status:

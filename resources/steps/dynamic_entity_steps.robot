@@ -16,7 +16,6 @@ Zed: start creation of new data exchange api configuration for db table:
         Click    ${data_exchange_create_configuration_button}
         Wait Until Page Contains Element    ${data_exchange_resource_name_field}
     ELSE
-        Log    ${table_name} already exists in the configuration. Edit instead of create
         Zed: click Action Button in a table for row that contains:    ${table_name}    Edit
         Wait Until Page Contains Element    ${data_exchange_resource_name_field}
     END
