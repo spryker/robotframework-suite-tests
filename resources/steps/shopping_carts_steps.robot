@@ -58,7 +58,7 @@ Yves: go to the shopping cart through the header with name:
     [Arguments]    ${shoppingCartName}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -73,7 +73,7 @@ Yves: go to the shopping cart through the header with name:
     END
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -86,7 +86,7 @@ Yves: go to shopping cart page through the header
     Reload
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -96,7 +96,7 @@ Yves: go to shopping cart page
     Yves: go to URL:    /cart
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -107,7 +107,7 @@ Yves: shopping cart contains the following products:
     ${items_list_count}=   get length  ${items_list}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -125,7 +125,7 @@ Yves: preview shopping cart contains the following products:
     [Arguments]    @{items_list}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -143,7 +143,7 @@ Yves: click on the '${buttonName}' button in the shopping cart
     Yves: remove flash messages
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -156,7 +156,7 @@ Yves: click on the '${buttonName}' button in the shopping cart
     END
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -165,7 +165,7 @@ Yves: shopping cart contains product with unit price:
     [Arguments]    ${sku}    ${productName}    ${productPrice}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -185,7 +185,7 @@ Yves: shopping cart contains/doesn't contain the following elements:
     [Arguments]    ${condition}    @{shopping_cart_elements_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -213,14 +213,14 @@ Yves: delete product from the shopping cart with sku:
     [Arguments]    ${sku}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
     Click    xpath=//form[contains(@name,'removeFromCartForm_${sku}')]//button
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -230,14 +230,14 @@ Yves: delete product from the shopping cart with name:
     [Arguments]    ${productName}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
     Click    //main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/ancestor::article//form[contains(@name,'removeFromCartForm')]//button | //div[contains(@class,'box cart-items-list')]//a[contains(text(),'${productName}')]//ancestor::*[@data-qa='component product-cart-item']//button[contains(text(),'remove')]
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -247,7 +247,7 @@ Yves: shopping cart doesn't contain the following products:
     [Arguments]    @{sku_list}    ${sku1}=${EMPTY}     ${sku2}=${EMPTY}     ${sku3}=${EMPTY}     ${sku4}=${EMPTY}     ${sku5}=${EMPTY}     ${sku6}=${EMPTY}     ${sku7}=${EMPTY}     ${sku8}=${EMPTY}     ${sku9}=${EMPTY}     ${sku10}=${EMPTY}     ${sku11}=${EMPTY}     ${sku12}=${EMPTY}     ${sku13}=${EMPTY}     ${sku14}=${EMPTY}     ${sku15}=${EMPTY}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -295,7 +295,7 @@ Yves: change quantity of the configurable bundle in the shopping cart on:
     [Arguments]    ${confBundleTitle}    ${quantity}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -310,7 +310,7 @@ Yves: change quantity of the configurable bundle in the shopping cart on:
     Click With Options    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article    delay=1s
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -351,7 +351,7 @@ Yves: delete 'Shopping Cart' with name:
     Click    ${delete_shopping_cart_button}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -360,7 +360,7 @@ Yves: delete from b2c cart products with name:
     [Arguments]    @{productNameList}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -379,7 +379,7 @@ Yves: apply discount voucher to cart:
     [Arguments]    ${voucherCode}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -390,7 +390,7 @@ Yves: apply discount voucher to cart:
     Click    ${shopping_cart_voucher_code_redeem_button}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -401,7 +401,7 @@ Yves: discount is applied:
     [Arguments]    ${discountType}    ${discountName}    ${expectedDiscountSum}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -420,7 +420,7 @@ Yves: promotional product offer is/not shown in cart:
     ${isShown}=    Convert To Lower Case    ${isShown}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -437,7 +437,7 @@ Yves: change quantity of promotional product and add to cart:
     [Arguments]    ${action}    ${clicksCount}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -451,7 +451,7 @@ Yves: change quantity of promotional product and add to cart:
     Click    ${shopping_cart_promotional_product_add_to_cart_button}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -463,7 +463,7 @@ Yves: add promotional product to the cart
     Click    ${shopping_cart_promotional_product_add_to_cart_button}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END

@@ -153,7 +153,7 @@ Yves: delete all user addresses
     END
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END

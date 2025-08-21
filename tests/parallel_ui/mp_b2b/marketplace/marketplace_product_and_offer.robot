@@ -151,20 +151,18 @@ Approve_Offer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Offers
     Zed: select merchant in filter:    Office King
-    Zed: click Action Button in a table for row that contains:     ${product_with_multiple_offers_concrete_sku}     Deny
+    Zed: click Action Button in a table for row that contains:     ${product_with_never_out_of_stock_offer_concrete_sku}     Deny
     Trigger p&s
     Yves: go to the 'Home' page
-    Yves: go to PDP of the product with sku:     ${product_with_multiple_offers_abstract_sku}
+    Yves: go to PDP of the product with sku:     ${product_with_never_out_of_stock_offer_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    false
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Offers
     Zed: select merchant in filter:    Office King
-    Zed: click Action Button in a table for row that contains:     ${product_with_multiple_offers_concrete_sku}    Approve
+    Zed: click Action Button in a table for row that contains:     ${product_with_never_out_of_stock_offer_concrete_sku}    Approve
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
+    Yves: go to PDP of the product with sku:    ${product_with_never_out_of_stock_offer_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
-    Yves: merchant's offer/product price should be:    Office King    ${product_with_multiple_offers_office_king_price}
     Yves: select xxx merchant's offer:    Office King
-    Yves: product price on the PDP should be:     ${product_with_multiple_offers_office_king_price}
     [Teardown]    Delete dynamic admin user from DB

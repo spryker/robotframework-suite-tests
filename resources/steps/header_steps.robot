@@ -35,7 +35,7 @@ Yves: perform search by:
     Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT    
         Log    Page is not loaded
     END

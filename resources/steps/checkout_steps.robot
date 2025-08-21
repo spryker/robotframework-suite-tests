@@ -71,7 +71,7 @@ Yves: select the following existing address on the checkout as 'shipping' addres
     [Arguments]    ${addressToUse}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -132,7 +132,7 @@ Yves: select the following existing address on the checkout as 'shipping' addres
     Click    ${submit_checkout_form_button}[${env}]
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -141,7 +141,7 @@ Yves: select the following existing address on the checkout as 'shipping':
     [Arguments]    ${addressToUse}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -370,7 +370,7 @@ Yves: submit form on the checkout
     Click    ${submit_checkout_form_button}[${env}]
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -447,7 +447,7 @@ Yves: select the following payment method on the checkout and go next:
     END
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -463,7 +463,7 @@ Yves: '${checkoutAction}' on the summary page
     END
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END

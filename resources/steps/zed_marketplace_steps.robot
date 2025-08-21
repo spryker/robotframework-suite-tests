@@ -191,7 +191,7 @@ Zed: create dynamic merchant user:
     END
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -264,7 +264,7 @@ Zed: delete merchant user:
     END
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END

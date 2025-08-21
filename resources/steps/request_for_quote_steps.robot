@@ -69,7 +69,6 @@ Yves: change price for the product in the quote request with sku xxx on:
         TRY
             Wait For Load State
             Wait For Load State    domcontentloaded
-            Wait For Load State    networkidle
         EXCEPT
             Log    Page is not loaded
         END
@@ -82,7 +81,6 @@ Yves: change price for the product in the quote request with sku xxx on:
         TRY
             Wait For Load State
             Wait For Load State    domcontentloaded
-            Wait For Load State    networkidle
         EXCEPT
             Log    Page is not loaded
         END

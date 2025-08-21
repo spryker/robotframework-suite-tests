@@ -32,7 +32,6 @@ Zed: create new Company Business Unit for the following company:
         Select From List By Label Contains    ${zed_bu_company_dropdown_locator}    ${company_name}
         TRY
             Wait For Load State
-            Wait For Load State    networkidle
             Wait For Load State    domcontentloaded
         EXCEPT
             Log    page is not fully loaded
@@ -45,7 +44,6 @@ Zed: create new Company Business Unit for the following company:
     Type Text    ${zed_bu_bic_field}    testbic+${random}
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    page is not fully loaded

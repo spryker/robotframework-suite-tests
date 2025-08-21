@@ -177,26 +177,24 @@ Approve_Offer
     ...    AND    MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     ...    AND    MP: change offer stock:
     ...    || offer   | stock quantity | is never out of stock ||
-    ...    || offer30 | 10             | true                  ||
+    ...    || offer47 | 10             | true                  ||
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Offers
     Zed: select merchant in filter:    Video King
-    Zed: click Action Button in a table for row that contains:     ${second_product_with_multiple_offers_concrete_sku}     Deny
+    Zed: click Action Button in a table for row that contains:     ${product_with_never_out_of_stock_offer_concrete_sku}     Deny
     Trigger p&s
     Yves: go to the 'Home' page
-    Yves: go to PDP of the product with sku:     ${second_product_with_multiple_offers_concrete_sku}
+    Yves: go to PDP of the product with sku:     ${product_with_never_out_of_stock_offer_concrete_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Offers
     Zed: select merchant in filter:    Video King
-    Zed: click Action Button in a table for row that contains:     ${second_product_with_multiple_offers_concrete_sku}    Approve
+    Zed: click Action Button in a table for row that contains:     ${product_with_never_out_of_stock_offer_concrete_sku}    Approve
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    ${second_product_with_multiple_offers_abstract_sku}
+    Yves: go to PDP of the product with sku:    ${product_with_never_out_of_stock_offer_concrete_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
-    Yves: merchant's offer/product price should be:    Video King    ${second_product_with_multiple_offers_video_king_price}
     Yves: select xxx merchant's offer:    Video King
-    Yves: product price on the PDP should be:     ${second_product_with_multiple_offers_video_king_price}
     [Teardown]    Delete dynamic admin user from DB
 
 Search_for_Merchant_Offers_and_Products

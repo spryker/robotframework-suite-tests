@@ -89,7 +89,6 @@ Zed: create new product set:
             TRY
                 Wait For Load State
                 Wait For Load State    domcontentloaded
-                Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -98,7 +97,6 @@ Zed: create new product set:
             TRY
                 Wait For Load State
                 Wait For Load State    domcontentloaded
-                Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -110,7 +108,6 @@ Zed: create new product set:
             TRY
                 Wait For Load State
                 Wait For Load State    domcontentloaded
-                Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -119,7 +116,6 @@ Zed: create new product set:
             TRY
                 Wait For Load State
                 Wait For Load State    domcontentloaded
-                Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -131,7 +127,6 @@ Zed: create new product set:
             TRY
                 Wait For Load State
                 Wait For Load State    domcontentloaded
-                Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -140,7 +135,6 @@ Zed: create new product set:
             TRY
                 Wait For Load State
                 Wait For Load State    domcontentloaded
-                Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END

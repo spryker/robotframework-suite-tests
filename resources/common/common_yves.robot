@@ -67,7 +67,6 @@ Yves: login on Yves with provided credentials:
     Click    ${form_login_button}
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    page is not fully loaded
@@ -192,7 +191,7 @@ Yves: go to PDP of the product with sku:
 Yves: '${pageName}' page is displayed
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -605,7 +604,7 @@ Helper: delete all items in cart
         Yves: remove flash messages     
         TRY
             Repeat Keyword    3    Wait For Load State
-            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Page is not loaded
         END

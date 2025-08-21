@@ -152,7 +152,9 @@
       "available_never_out_of_stock_abstract_name":"Canon IXUS 285",
       "product_with_sale_price_abstract_sku":"006",
       "product_with_sale_price_concrete_sku":"006_30692993",
-      "product_with_sale_price_abstract_name":"Canon IXUS 175"
+      "product_with_sale_price_abstract_name":"Canon IXUS 175",
+      "product_with_never_out_of_stock_offer_abstract_sku": "040",
+      "product_with_never_out_of_stock_offer_concrete_sku": "040_25904665"
    },
    "misc":{
       "grant_type":{

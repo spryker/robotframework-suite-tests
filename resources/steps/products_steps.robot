@@ -198,7 +198,6 @@ Zed: update abstract product data:
     Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    page is not fully loaded
@@ -238,7 +237,6 @@ Zed: update abstract product data:
     Click    ${zed_pdp_save_button}
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT    
         Log    Load event was not fired
@@ -248,7 +246,6 @@ Zed: update abstract product price on:
     [Arguments]    @{args}
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT    
         Log    Load event was not fired
@@ -294,7 +291,6 @@ Zed: update abstract product price on:
     Click and retry if 5xx occurred:    ${zed_pdp_save_button}
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT    
         Log    Load event was not fired
@@ -341,7 +337,6 @@ Zed: start new abstract product creation:
     Click    ${zed_pdp_save_button}
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT    
         Log    Load event was not fired
@@ -383,7 +378,6 @@ Zed: select abstract product variants:
     Click    ${zed_pdp_save_button}
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT    
         Log    Load event was not fired

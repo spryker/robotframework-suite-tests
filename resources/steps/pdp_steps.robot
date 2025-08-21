@@ -60,7 +60,7 @@ Yves: add product to the shopping cart
                 Reload
                 TRY
                     Repeat Keyword    3    Wait For Load State
-                    Wait For Load State    networkidle
+                    Wait For Load State    domcontentloaded
                 EXCEPT
                     Log    Page is not loaded
                 END
@@ -68,14 +68,14 @@ Yves: add product to the shopping cart
             ELSE
                 TRY
                     Repeat Keyword    3    Wait For Load State
-                    Wait For Load State    networkidle
+                    Wait For Load State    domcontentloaded
                 EXCEPT
                     Log    Page is not loaded
                 END
                 Click    ${pdp_add_to_cart_button}
                 TRY
                     Repeat Keyword    3    Wait For Load State
-                    Wait For Load State    networkidle
+                    Wait For Load State    domcontentloaded
                 EXCEPT
                     Log    Page is not loaded
                 END
@@ -86,14 +86,14 @@ Yves: add product to the shopping cart
         Click    ${pdp_add_to_cart_button}
         TRY
             Repeat Keyword    3    Wait For Load State
-            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Page is not loaded
         END
     END
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -122,7 +122,7 @@ Yves: change quantity using '+' or '-' button № times:
     FOR    ${index}    IN RANGE    0    ${clicksCount}
         TRY
             Repeat Keyword    3    Wait For Load State
-            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Page is not loaded
         END
@@ -133,7 +133,7 @@ Yves: change quantity using '+' or '-' button № times:
         END
         TRY
             Repeat Keyword    3    Wait For Load State
-            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Page is not loaded
         END
@@ -438,7 +438,6 @@ Yves: select xxx merchant's offer:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
-        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -450,7 +449,6 @@ Yves: select xxx merchant's offer:
             TRY
                 Repeat Keyword    3    Wait For Load State
                 Repeat Keyword    3    Wait For Load State    domcontentloaded
-                Repeat Keyword    3    Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -460,7 +458,6 @@ Yves: select xxx merchant's offer:
             TRY
                 Repeat Keyword    3    Wait For Load State
                 Repeat Keyword    3    Wait For Load State    domcontentloaded
-                Repeat Keyword    3    Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -471,7 +468,6 @@ Yves: select xxx merchant's offer:
                 TRY
                     Repeat Keyword    3    Wait For Load State
                     Repeat Keyword    3    Wait For Load State    domcontentloaded
-                    Repeat Keyword    3    Wait For Load State    networkidle
                     Sleep    50ms
                 EXCEPT
                     Log    Page is not loaded
@@ -483,7 +479,6 @@ Yves: select xxx merchant's offer:
         TRY
             Repeat Keyword    3    Wait For Load State
             Wait For Load State    domcontentloaded
-            Wait For Load State    networkidle
         EXCEPT
             Log    Page is not loaded
         END
@@ -495,7 +490,6 @@ Yves: select xxx merchant's offer with price:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
-        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -541,7 +535,6 @@ Yves: select xxx merchant's offer with price:
                 TRY
                     Repeat Keyword    3    Wait For Load State
                     Wait For Load State    domcontentloaded
-                    Wait For Load State    networkidle
                 EXCEPT
                     Log    Page is not loaded
                 END
@@ -561,7 +554,6 @@ Yves: select xxx merchant's offer with price:
                     TRY
                         Repeat Keyword    3    Wait For Load State
                         Wait For Load State    domcontentloaded
-                        Wait For Load State    networkidle
                     EXCEPT
                         Log    Page is not loaded
                     END
@@ -573,7 +565,7 @@ Yves: select xxx merchant's offer with price:
     Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -596,14 +588,14 @@ Yves: try add product to the cart from PDP and expect error:
     [Arguments]    ${expectedError}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
     Click    ${pdp_add_to_cart_button}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -616,7 +608,7 @@ Yves: product name on PDP should be:
 Yves: try to add product to wishlist as guest user
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -631,7 +623,7 @@ Yves: try to add product to wishlist as guest user
     Click    ${pdp_add_to_wishlist_button}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END

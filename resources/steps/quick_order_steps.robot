@@ -39,7 +39,6 @@ Yves: find and add new item in the quick order form:
     Click    ${quick_order_verify_button}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Repeat Keyword    3    Wait For Load State    networkidle
         Repeat Keyword    3    Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
@@ -55,7 +54,6 @@ Yves: find and add new item in the quick order form:
     Click    xpath=(//div[contains(@data-qa,'component quick-order-rows')]//*[contains(@class,'autocomplete')][@value=''])[1]/ancestor::quick-order-row//ul[@data-qa='component products-list']/li[@data-value='${searchQuery}']
     TRY
         Repeat Keyword    3    Wait For Load State
-        Repeat Keyword    3    Wait For Load State    networkidle
         Repeat Keyword    3    Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
@@ -66,7 +64,6 @@ Yves: find and add new item in the quick order form:
     Sleep    1s
     TRY
         Repeat Keyword    3    Wait For Load State
-        Repeat Keyword    3    Wait For Load State    networkidle
         Repeat Keyword    3    Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
@@ -77,7 +74,6 @@ Yves: find and add new item in the quick order form:
     Click    ${quick_order_verify_button}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Repeat Keyword    3    Wait For Load State    networkidle
         Repeat Keyword    3    Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded

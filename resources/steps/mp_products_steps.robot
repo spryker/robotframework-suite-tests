@@ -67,7 +67,7 @@ MP: fill product price values:
         END
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -98,7 +98,7 @@ MP: create multi sku product with following data:
             Click    ${new_product_super_attribute_first_row_name_selector}
             TRY
                 Repeat Keyword    3    Wait For Load State
-                Wait For Load State    networkidle
+                Wait For Load State    domcontentloaded
             EXCEPT
                 Log    Page is not loaded
             END
@@ -106,7 +106,7 @@ MP: create multi sku product with following data:
             Click    ${new_product_super_attribute_first_row_values_selector}
             TRY
                 Repeat Keyword    3    Wait For Load State
-                Wait For Load State    networkidle
+                Wait For Load State    domcontentloaded
             EXCEPT
                 Log    Page is not loaded
             END
@@ -118,14 +118,14 @@ MP: create multi sku product with following data:
             Click    ${new_product_add_super_attribute_button}
             TRY
                 Repeat Keyword    3    Wait For Load State
-                Wait For Load State    networkidle
+                Wait For Load State    domcontentloaded
             EXCEPT
                 Log    Page is not loaded
             END
             Click    ${new_product_super_attribute_second_row_name_selector}
             TRY
                 Repeat Keyword    3    Wait For Load State
-                Wait For Load State    networkidle
+                Wait For Load State    domcontentloaded
             EXCEPT
                 Log    Page is not loaded
             END
@@ -136,7 +136,7 @@ MP: create multi sku product with following data:
             Click    ${new_product_super_attribute_second_row_values_selector}
             TRY
                 Repeat Keyword    3    Wait For Load State
-                Wait For Load State    networkidle
+                Wait For Load State    domcontentloaded
             EXCEPT
                 Log    Page is not loaded
             END
@@ -199,7 +199,7 @@ MP: fill abstract product required fields:
         ...    AND    MP: select option in expanded dropdown:    ${value}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -250,7 +250,7 @@ MP: save concrete product
     MP: remove notification wrapper
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -265,7 +265,7 @@ MP: delete product price row that contains text:
     MP: remove notification wrapper
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -276,7 +276,7 @@ MP: open concrete drawer by SKU:
     MP: click on a table row that contains:    ${concreteSKU}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -291,7 +291,7 @@ MP: delete product price row that contains quantity:
         Wait Until Element Is Visible    ${product_price_deleted_popup}
         TRY
             Repeat Keyword    3    Wait For Load State
-            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Page is not loaded
         END
@@ -304,7 +304,7 @@ MP: delete product price row that contains quantity:
         Wait Until Element Is Visible    ${product_price_deleted_popup}
         TRY
             Repeat Keyword    3    Wait For Load State
-            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Page is not loaded
         END
@@ -316,14 +316,14 @@ MP: add new concrete product:
     Click    ${product_drawer_concretes_tab}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
     Click    ${mp_add_concrete_products_button}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -338,7 +338,7 @@ MP: add new concrete product:
             Sleep    0.5s
             TRY
                 Repeat Keyword    3    Wait For Load State
-                Wait For Load State    networkidle
+                Wait For Load State    domcontentloaded
             EXCEPT
                 Log    Page is not loaded
             END
@@ -346,7 +346,7 @@ MP: add new concrete product:
             Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
             TRY
                 Repeat Keyword    3    Wait For Load State
-                Wait For Load State    networkidle
+                Wait For Load State    domcontentloaded
             EXCEPT
                 Log    Page is not loaded
             END
@@ -359,7 +359,7 @@ MP: add new concrete product:
             Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${secondAttributeName}')]/../..//spy-select
             TRY
                 Repeat Keyword    3    Wait For Load State
-                Wait For Load State    networkidle
+                Wait For Load State    domcontentloaded
             EXCEPT
                 Log    Page is not loaded
             END
@@ -368,7 +368,7 @@ MP: add new concrete product:
             Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${secondAttributeName}')]/../..//spy-select
             TRY
                 Repeat Keyword    3    Wait For Load State
-                Wait For Load State    networkidle
+                Wait For Load State    domcontentloaded
             EXCEPT
                 Log    Page is not loaded
             END
@@ -377,7 +377,6 @@ MP: add new concrete product:
     END
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
@@ -385,7 +384,6 @@ MP: add new concrete product:
     Click    ${new_product_submit_create_button}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded

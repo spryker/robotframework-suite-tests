@@ -115,7 +115,9 @@
        "configurable_product_abstract_sku": "M636",
        "configurable_product_concrete_sku": "574601",
        "configurable_product_name": "CP steel cabinet, fire-resistant - 3 adjustable shelves - 1 locker - black gray / light gray",
-       "configurable_product_concrete_price": "1,826.54"
+       "configurable_product_concrete_price": "1,826.54",
+       "product_with_never_out_of_stock_offer_abstract_sku": "M23729",
+       "product_with_never_out_of_stock_offer_concrete_sku": "425087"
     },
     "misc":{
       "grant_type":{

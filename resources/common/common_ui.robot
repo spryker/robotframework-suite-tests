@@ -354,7 +354,6 @@ Try reloading page until element is/not appear:
             Reload
             TRY
                 Wait For Load State
-                Wait For Load State    networkidle
                 Wait For Load State    domcontentloaded
             EXCEPT
                 Log    page is not fully loaded
@@ -364,7 +363,6 @@ Try reloading page until element is/not appear:
             Reload
             TRY
                 Wait For Load State
-                Wait For Load State    networkidle
                 Wait For Load State    domcontentloaded
             EXCEPT
                 Log    page is not fully loaded
@@ -422,7 +420,6 @@ Click and retry if 5xx occurred:
     ${current_url}=    Get URL
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    page is not fully loaded
@@ -473,7 +470,6 @@ Click and retry if 5xx occurred:
     Set Browser Timeout    ${browser_timeout}
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    page is not fully loaded
@@ -525,7 +521,6 @@ Click and return True if 5xx occurred:
     [Arguments]    ${locator}    ${timeout}=400ms
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    page is not fully loaded

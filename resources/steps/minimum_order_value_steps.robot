@@ -16,7 +16,7 @@ Zed: change global threshold settings:
     Wait Until Element Is Visible    ${zed_global_threshold_store_currency_span}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT    
         Log    Page is not loaded
     END

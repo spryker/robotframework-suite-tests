@@ -17,7 +17,7 @@ Yves: add comment on cart:
     Click    ${shopping_cart_add_comment_button}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Repeat Keyword    3    Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -26,7 +26,7 @@ Yves: check comments are visible or not in cart:
     [Arguments]    ${condition}    @{comments}    
     TRY
         Repeat Keyword    3    Wait For Load State
-        Repeat Keyword    3    Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -86,7 +86,7 @@ Yves: edit comment on cart:
     IF    '${env}' not in ['ui_suite']    Click    ${shopping_cart_edit_comment_button}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Repeat Keyword    3    Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -95,7 +95,7 @@ Yves: edit comment on cart:
     Click    ${shopping_cart_update_comment_button}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Repeat Keyword    3    Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -104,7 +104,7 @@ Yves: delete comment on cart
     Click    ${shopping_cart_remove_comment_button}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Repeat Keyword    3    Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -117,7 +117,7 @@ Yves: add comment on order in order detail page:
     Click With Options    ${add_comment_button_order_details_page}    delay=0.5s
     TRY
         Repeat Keyword    3    Wait For Load State
-        Repeat Keyword    3    Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END

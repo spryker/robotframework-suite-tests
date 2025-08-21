@@ -307,7 +307,7 @@ Zed: perform search by:
         ${result}=    Run Keyword And Ignore Error    Wait for    ${promise}
         TRY
             Repeat Keyword    3    Wait For Load State
-            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
         EXCEPT    
             Log    Search event is not fired
         END
@@ -328,7 +328,7 @@ Zed: perform search by:
                 Type Text    ${zed_search_field_locator}    ${search_key}
                 TRY
                     Wait For Load State
-                    Wait For Load State    networkidle
+                    Wait For Load State    domcontentloaded
                 EXCEPT
                     Log    Search event is not fired
                 END
@@ -345,14 +345,14 @@ Zed: perform search by:
         Type Text    ${zed_search_field_locator}    ${search_key}
         TRY
             Wait For Load State
-            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Search event is not fired
         END
     END
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Search event is not fired
     END
@@ -368,7 +368,7 @@ Zed: perform search by:
         Type Text    ${zed_search_field_locator}    ${search_key}
         TRY
             Wait For Load State
-            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Search event is not fired
         END
@@ -381,7 +381,7 @@ Zed: clear search field
     # workaround for the issue with deadlocks on concurrent search attempts
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Search event is not fired
     END
@@ -396,7 +396,7 @@ Zed: clear search field
         Clear Text    ${zed_search_field_locator}
         TRY
             Wait For Load State
-            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Search event is not fired
         END
@@ -409,7 +409,7 @@ Zed: perform variant search by:
     Clear Text    ${zed_variant_search_field_locator}
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Search event is not fired
     END
@@ -420,7 +420,7 @@ Zed: perform variant search by:
         ${result}=    Run Keyword And Ignore Error    Wait for    ${promise}
         TRY
             Wait For Load State
-            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Search event is not fired
         END
@@ -440,14 +440,14 @@ Zed: perform variant search by:
                 Clear Text    ${zed_variant_search_field_locator}
                 TRY
                     Wait For Load State
-                    Wait For Load State    networkidle
+                    Wait For Load State    domcontentloaded
                 EXCEPT
                     Log    Search event is not fired
                 END
                 Type Text    ${zed_variant_search_field_locator}    ${search_key}
                 TRY
                     Wait For Load State
-                    Wait For Load State    networkidle
+                    Wait For Load State    domcontentloaded
                 EXCEPT
                     Log    Search event is not fired
                 END
@@ -463,14 +463,14 @@ Zed: perform variant search by:
         Clear Text    ${zed_variant_search_field_locator}
         TRY
             Wait For Load State
-            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Search event is not fired
         END
         Type Text    ${zed_variant_search_field_locator}    ${search_key}
         TRY
             Wait For Load State
-            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Search event is not fired
         END
@@ -486,7 +486,7 @@ Zed: perform variant search by:
         Clear Text    ${zed_variant_search_field_locator}
         TRY
             Wait For Load State
-            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Search event is not fired
         END
@@ -498,7 +498,7 @@ Zed: perform variant search by:
         END
         TRY
             Wait For Load State
-            Wait For Load State    networkidle
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Search event is not fired
         END
@@ -533,7 +533,6 @@ Zed: go to tab:
     END
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    page is not fully loaded
@@ -549,7 +548,6 @@ Zed: go to tab by link href that contains:
     END
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    page is not fully loaded
@@ -582,7 +580,7 @@ Zed: filter by merchant:
 Zed: is admin user is logged in
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT    
         Log    page is not loaded
     END

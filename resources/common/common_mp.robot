@@ -85,7 +85,6 @@ MP: open navigation menu tab:
     Click Element by xpath with JavaScript    xpath=//spy-navigation//span[contains(@class,'spy-navigation__title-text')][text()='${tabName}']
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    Navigation menu is not loaded
@@ -109,7 +108,6 @@ MP: click submit button
     [Arguments]    ${timeout}=${browser_timeout}
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    Submit button is not loaded
@@ -118,7 +116,6 @@ MP: click submit button
     Click    ${mp_submit_button}
     TRY
         Repeat Keyword    5    Wait For Load State
-        Repeat Keyword    5    Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    Form is not submitted
@@ -137,7 +134,6 @@ MP: perform search by:
     END
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
     EXCEPT
         Log    Search event is not fired
     END
@@ -150,7 +146,7 @@ MP: click on a table row that contains:
     Wait Until Page Contains Element    ${mp_close_drawer_button}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Drawler is not loaded
     END
@@ -167,7 +163,6 @@ MP: click on create new entity button:
     Click    xpath=//spy-headline//*[contains(text(),'${buttonName}')]
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
@@ -178,7 +173,7 @@ MP: select option in expanded dropdown:
     [Arguments]    ${optionName}
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Dropdown is not loaded
     END
@@ -186,7 +181,6 @@ MP: select option in expanded dropdown:
     Click    xpath=//nz-option-container[contains(@class,'ant-select-dropdown')]//span[contains(text(),'${optionName}')]
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    Dropdown is not loaded
@@ -199,7 +193,6 @@ MP: switch to the tab:
     Click    xpath=//web-spy-tabs[@class='spy-tabs']//div[@role='tablist'][contains(@class,'ant-tabs')]//div[contains(text(),'${tabName}')]
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    Tab is not loaded

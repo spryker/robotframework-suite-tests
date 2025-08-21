@@ -27,7 +27,6 @@ MP: change store status to:
     MP: click submit button
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
         Wait For Load State    domcontentloaded
     EXCEPT
         Log    page is not fully loaded

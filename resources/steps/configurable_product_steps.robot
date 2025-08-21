@@ -11,7 +11,7 @@ Yves: change the product options in configurator to:
     ${configurationData}=    Set Up Keyword Arguments    @{args}
     TRY
         Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -41,7 +41,7 @@ Yves: change the product options in configurator to:
     ### sleep 1 seconds to process background event
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
