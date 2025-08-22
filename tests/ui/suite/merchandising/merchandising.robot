@@ -66,7 +66,7 @@ Product_Sets
     Yves: 'Product Set' page contains the following products:    TomTom Golf    Samsung Galaxy S6 edge
     Yves: change variant of the product on CMS page on:    Samsung Galaxy S6 edge    128 GB
     Yves: add all products to the shopping cart from Product Set
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains the following products:     052_30614390    096_30856274
     Yves: delete product from the shopping cart with sku:    052_30614390
     Yves: delete product from the shopping cart with sku:    096_30856274
@@ -114,7 +114,7 @@ Configurable_Bundle
     Yves: select product in the bundle slot:    Slot 6    043_31040074
     Yves: go to 'Summary' step in the bundle configurator
     Yves: add products to the shopping cart in the bundle configurator
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: change quantity of the configurable bundle in the shopping cart on:    Smartstation Kit    2
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -173,13 +173,13 @@ Discounts
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    190
     Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: apply discount voucher to cart:    test${random}
     Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €8.73
     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €17.46
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €87.96
     Yves: promotional product offer is/not shown in cart:    true
     Yves: add promotional product to the cart

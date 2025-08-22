@@ -282,7 +282,7 @@ Split_Delivery
     ...    AND    Yves: delete all user addresses
 
 Multiple_Merchants_Order
-    [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
+    [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be split per merchant
     [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_computer_experts_email}
     ...    AND    MP: change offer stock:
@@ -448,7 +448,7 @@ Configurable_Product_Checkout
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,492.44
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside this order:    skip grace period
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
     Zed: trigger matching state of xxx merchant's shipment:    1    confirm at center
