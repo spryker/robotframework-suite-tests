@@ -67,6 +67,7 @@ MP: fill product price values:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -98,6 +99,7 @@ MP: create multi sku product with following data:
             TRY
                 Repeat Keyword    3    Wait For Load State
                 Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -106,6 +108,7 @@ MP: create multi sku product with following data:
             TRY
                 Repeat Keyword    3    Wait For Load State
                 Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -118,6 +121,7 @@ MP: create multi sku product with following data:
             TRY
                 Repeat Keyword    3    Wait For Load State
                 Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -125,6 +129,7 @@ MP: create multi sku product with following data:
             TRY
                 Repeat Keyword    3    Wait For Load State
                 Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -136,6 +141,7 @@ MP: create multi sku product with following data:
             TRY
                 Repeat Keyword    3    Wait For Load State
                 Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -199,6 +205,7 @@ MP: fill abstract product required fields:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -248,6 +255,7 @@ MP: save concrete product
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -263,6 +271,7 @@ MP: delete product price row that contains text:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -274,6 +283,7 @@ MP: open concrete drawer by SKU:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -289,6 +299,7 @@ MP: delete product price row that contains quantity:
         TRY
             Repeat Keyword    3    Wait For Load State
             Wait For Load State    domcontentloaded
+            Wait For Load State    networkidle
         EXCEPT
             Log    Page is not loaded
         END
@@ -314,6 +325,7 @@ MP: add new concrete product:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -321,6 +333,7 @@ MP: add new concrete product:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -336,6 +349,7 @@ MP: add new concrete product:
             TRY
                 Repeat Keyword    3    Wait For Load State
                 Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -344,6 +358,7 @@ MP: add new concrete product:
             TRY
                 Repeat Keyword    3    Wait For Load State
                 Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -357,6 +372,7 @@ MP: add new concrete product:
             TRY
                 Repeat Keyword    3    Wait For Load State
                 Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -366,6 +382,7 @@ MP: add new concrete product:
             TRY
                 Repeat Keyword    3    Wait For Load State
                 Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
             EXCEPT
                 Log    Page is not loaded
             END
@@ -375,6 +392,7 @@ MP: add new concrete product:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END

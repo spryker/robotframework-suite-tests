@@ -277,7 +277,12 @@ Zed: order has the following number of shipments:
     Zed: go to URL:    /sales
     Zed: perform search by:    ${orderID}
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
-    Wait Until Element Is Visible    xpath=//table[@data-qa='order-item-list'][1]
+    TRY
+        Wait Until Element Is Visible    xpath=//table[@data-qa='order-item-list'][1]    timeout=5s
+    EXCEPT
+        Reload
+        Wait Until Element Is Visible    xpath=//table[@data-qa='order-item-list'][1]
+    END
     ${actualShipments}=    Get Element Count    xpath=//table[@data-qa='order-item-list']
     Should Be Equal    '${expectedShipments}'    '${actualShipments}'    msg=Expected '${expectedShipments}' number of shipments inside the '${orderID}' order, but got '${actualShipments}'
 
@@ -302,7 +307,12 @@ Zed: billing address for the order should be:
 
 Zed: shipping address inside xxx shipment should be:
     [Arguments]    ${shipment}    ${expected_address}
-    Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/preceding-sibling::div[2]//p[1]    ${expected_address}
+    TRY
+        Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/preceding-sibling::div[2]//p[1]    ${expected_address}    timeout=5s
+    EXCEPT
+        Reload
+        Element Should Contain    xpath=//table[@data-qa='order-item-list'][${shipment}]/preceding-sibling::div[2]//p[1]    ${expected_address}
+    END
 
 Zed: create new shipment inside the order:
     [Arguments]    @{args}

@@ -97,6 +97,8 @@ Yves: go to shopping cart page
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
+        Wait Until Element Is Not Visible    ${shopping_cart_ajax_loader}
     EXCEPT
         Log    Page is not loaded
     END
@@ -144,6 +146,7 @@ Yves: click on the '${buttonName}' button in the shopping cart
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -166,6 +169,7 @@ Yves: shopping cart contains product with unit price:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -186,6 +190,7 @@ Yves: shopping cart contains/doesn't contain the following elements:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -214,6 +219,7 @@ Yves: delete product from the shopping cart with sku:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -221,6 +227,7 @@ Yves: delete product from the shopping cart with sku:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -231,6 +238,7 @@ Yves: delete product from the shopping cart with name:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -238,6 +246,7 @@ Yves: delete product from the shopping cart with name:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END

@@ -243,8 +243,10 @@ Table Should Not Contain
     Get Text    ${locator}    not contains    ${expected}    ${message}
 
 Element Should Contain
-    [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
+    [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}    ${timeout}=${browser_timeout}
+    Set Browser Timeout    ${timeout}
     Get Text    ${locator}    contains    ${expected}    ${message}
+    Set Browser Timeout    ${browser_timeout}
 
 Element Text Should Be
     [Arguments]    ${locator}    ${expected}    ${message}=${EMPTY}    ${ignore_case}=${EMPTY}
@@ -427,7 +429,7 @@ Click and retry if 5xx occurred:
     ${page_title}=    Convert To Lower Case    ${page_title}
     ${page_has_title}=    Run Keyword And Return Status    Should Not Be Empty    ${page_title}
     ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error} and not ${page_has_title} and not ${no_exception}
         Take Screenshot    EMBED    fullPage=True
         Log    'Error on page '${current_url}' Retrying ...'    level=WARN
@@ -477,7 +479,7 @@ Click and retry if 5xx occurred:
     ${page_title}=    Convert To Lower Case    ${page_title}
     ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
     ${page_has_title}=    Run Keyword And Return Status    Should Not Be Empty    ${page_title}
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${is_5xx} and not ${is_5xx_in_page_load} and ${no_exception} and ${no_js_error} and ${page_has_title}
         RETURN
     END
@@ -489,6 +491,12 @@ Click and retry if 5xx occurred:
     Log    ${no_js_error}
     Log    ${page_has_title}
     Go to    ${current_url}
+    ${page_contains_target_element}=    Run Keyword And Return Status    Page Should Contain Element    ${selector}
+    IF    not ${page_contains_target_element}
+        Take Screenshot    EMBED    fullPage=True
+        Log    'Expected element '${selector}' is not present on the page on retry attempt, might be already processed'    level=WARN
+        RETURN
+    END
     Click With Options    ${selector}    force=True
     ${statuses_retry}=    Create List
     Set Browser Timeout    ${timeout}
@@ -508,7 +516,7 @@ Click and retry if 5xx occurred:
     ${page_title}=    Convert To Lower Case    ${page_title}
     ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
     ${page_has_title}=    Run Keyword And Return Status    Should Not Be Empty    ${page_title}
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
     Should Not Contain    ${page_title}    error    msg=Clicking '${selector}' triggered a 5xx error.
     IF     not ${no_js_error} and not ${page_has_title} and not ${no_exception}
         Take Screenshot    EMBED    fullPage=True
@@ -553,7 +561,7 @@ Click and return True if 5xx occurred:
     ${page_title}=    Get Title
     ${page_title}=    Convert To Lower Case    ${page_title}
     ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    ${is_5xx} or ${is_5xx_in_page_load} or not ${no_exception} or not ${no_js_error}
         RETURN    ${True}
     ELSE

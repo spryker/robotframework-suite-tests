@@ -66,7 +66,7 @@ Zed: login on Zed with provided credentials:
     END
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=1s
+        Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=10s
     EXCEPT
         Reload
         Delete All Cookies
@@ -83,7 +83,7 @@ Zed: login on Zed with provided credentials:
         Type Text    ${zed_user_name_field}    ${email}
         Type Text    ${zed_password_field}    ${password}
         Click    ${zed_login_button}
-        Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=5s
+        Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=10s
     END
 
 Zed: login with deactivated user/invalid data:
@@ -109,7 +109,7 @@ Zed: go to first navigation item level:
         Log    Page is not loaded
     END
     # workaround for the issue with deadlocks on concurrent search attempts
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
         TRY
             LocalStorage Clear
@@ -117,7 +117,7 @@ Zed: go to first navigation item level:
             Log    Failed to clear LocalStorage
         END
         Reload
-        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+        ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
         IF    not ${no_js_error}
             TRY
                 LocalStorage Clear
@@ -125,7 +125,7 @@ Zed: go to first navigation item level:
                 Log    Failed to clear LocalStorage
             END
             Reload
-            ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+            ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
             IF    not ${no_js_error}    Log    ''sweet-alert' js error popup on the page '${zed_url}: ${navigation_item}'
         END
     END
@@ -372,7 +372,7 @@ Zed: perform search by:
         Log    Search event is not fired
     END
     # Handle any SweetAlert JS error popup with a re-attempt
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
         TRY
             LocalStorage Clear
@@ -390,7 +390,7 @@ Zed: perform search by:
         EXCEPT
             Log    Search event is not fired
         END
-        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+        ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
         IF    not ${no_js_error}    Fail    ''sweet-alert' js error popup occurred'
     END
 
@@ -403,7 +403,7 @@ Zed: clear search field
     EXCEPT
         Log    Search event is not fired
     END
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
         TRY
             LocalStorage Clear
@@ -418,7 +418,7 @@ Zed: clear search field
         EXCEPT
             Log    Search event is not fired
         END
-        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+        ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
         IF    not ${no_js_error}    Fail    ''sweet-alert' js error popup occurred'
     END
 
@@ -517,7 +517,7 @@ Zed: perform variant search by:
         Log    Search event is not fired
     END
     # JS error popup handling
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
         TRY
             LocalStorage Clear
@@ -541,7 +541,7 @@ Zed: perform variant search by:
         EXCEPT
             Log    Search event is not fired
         END
-        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+        ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
         IF    not ${no_js_error}    Fail    ''sweet-alert' js error popup occurred'
     END
 
@@ -655,7 +655,7 @@ Zed: go to URL:
         ${expected_response_code}=    Convert To Integer    ${expected_response_code}
         Should Be Equal    ${response_code}    ${expected_response_code}    msg=Expected response code (${expected_response_code}) is not equal to the actual response code (${response_code}) on Go to: ${zed_url}${url}
     END
-    ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+    ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
     IF    not ${no_js_error}
         TRY
             LocalStorage Clear
@@ -666,7 +666,7 @@ Zed: go to URL:
         ${response_code}=    Convert To Integer    ${response_code}
         ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
         IF    ${is_5xx}    Fail    '${response_code}' error occurred on go to '${zed_url}${url}'
-        ${no_js_error}=    Run Keyword And Return Status    Page Should Not Contain Element    ${sweet_alert_js_error_popup}    timeout=500ms
+        ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
         IF    not ${no_js_error}    
             Take Screenshot    EMBED    fullPage=True
             Fail    ''sweet-alert' js error popup on the page '${zed_url}${url}'

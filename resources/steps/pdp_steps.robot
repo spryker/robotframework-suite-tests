@@ -147,6 +147,7 @@ Yves: change variant of the product on PDP on:
     [Arguments]    ${variantToChoose}
     TRY
         Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -157,6 +158,7 @@ Yves: change variant of the product on PDP on:
         Click    ${pdp_variant_custom_selector}
         TRY
             Repeat Keyword    3    Wait For Load State
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Page is not loaded
         END
@@ -166,6 +168,7 @@ Yves: change variant of the product on PDP on:
             Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][contains(.,'${variantToChoose}')]
             TRY
                 Repeat Keyword    3    Wait For Load State
+                Wait For Load State    domcontentloaded
             EXCEPT
                 Log    Page is not loaded
             END
@@ -177,6 +180,7 @@ Yves: change variant of the product on PDP on:
             Set Browser Timeout    ${browser_timeout}
             TRY
                 Repeat Keyword    3    Wait For Load State
+                Wait For Load State    domcontentloaded
             EXCEPT
                 Log    Page is not loaded
             END
@@ -187,6 +191,7 @@ Yves: change variant of the product on PDP on:
         Set Browser Timeout    ${browser_timeout}
         TRY
             Repeat Keyword    3    Wait For Load State
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Page is not loaded
         END
@@ -203,6 +208,7 @@ Yves: change variant of the product on PDP on:
                 Set Browser Timeout    ${browser_timeout}
                 TRY
                     Repeat Keyword    3    Wait For Load State
+                    Wait For Load State    domcontentloaded
                 EXCEPT
                     Log    Page is not loaded
                 END
@@ -213,6 +219,7 @@ Yves: change variant of the product on PDP on:
                 Set Browser Timeout    ${browser_timeout}
                 TRY
                     Repeat Keyword    3    Wait For Load State
+                    Wait For Load State    domcontentloaded
                 EXCEPT
                     Log    Page is not loaded
                 END
@@ -221,6 +228,7 @@ Yves: change variant of the product on PDP on:
             ${final_try}=    Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
             TRY
                 Repeat Keyword    3    Wait For Load State
+                Wait For Load State    domcontentloaded
             EXCEPT
                 Log    Page is not loaded
             END
@@ -298,8 +306,10 @@ Yves: add product to the shopping list:
     [Arguments]    ${shoppingListName}=${EMPTY}
     TRY
         Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
+        Reload
     END
     ${variants_present_status}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=1s
     ${shopping_list_dropdown_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_shopping_list_selector}    timeout=5s
@@ -319,6 +329,8 @@ Yves: add product to the shopping list:
                 Log    Page is not loaded
             END
         EXCEPT
+            LocalStorage Clear
+            Reload
             Set Browser Timeout    ${browser_timeout}
             Click    xpath=//span[@class='select2-selection select2-selection--single']//span[contains(@id,'select2-idShoppingList')]
             Wait Until Element Is Visible    xpath=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
@@ -454,6 +466,7 @@ Yves: select xxx merchant's offer:
             END
             Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
         EXCEPT
+            LocalStorage Clear
             Reload
             TRY
                 Repeat Keyword    3    Wait For Load State
@@ -464,8 +477,8 @@ Yves: select xxx merchant's offer:
             ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input[@checked]    timeout=50ms
             IF    not ${merchant_offer_is_already_selected}
                 Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
-                Wait For Request
                 TRY
+                    Wait For Request
                     Repeat Keyword    3    Wait For Load State
                     Repeat Keyword    3    Wait For Load State    domcontentloaded
                     Sleep    50ms
@@ -609,6 +622,7 @@ Yves: try to add product to wishlist as guest user
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -624,6 +638,7 @@ Yves: try to add product to wishlist as guest user
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END

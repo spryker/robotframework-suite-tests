@@ -22,3 +22,4 @@ ${shopping_cart_update_comment_button}    xpath=(//comment-form//button[contains
 ${shopping_cart_remove_comment_button}    xpath=(//comment-form//button[contains(@formaction,"remove")])[1] | (//comment-form//button[contains(@action,"remove")])[1]
 ###xpath OR operator example###
 ${shopping_cart_checkout_error_message_locator}    xpath=(//div[@data-qa='component cart-summary']//div[@class='spacing-top'] | //div[@data-qa='component cart-summary']//div/strong)[1]
+${shopping_cart_ajax_loader}    xpath=(//cart-items-list/ajax-loader[@data-qa='component ajax-loader']//*[contains(@data-qa,'icon')] | //main//ajax-loader[contains(@data-qa,'ajax-loader')][contains(@data-qa,'cart')]//*[contains(@data-qa,'icon')])[1]

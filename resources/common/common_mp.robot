@@ -86,6 +86,7 @@ MP: open navigation menu tab:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Navigation menu is not loaded
     END
@@ -117,6 +118,7 @@ MP: click submit button
     TRY
         Repeat Keyword    5    Wait For Load State
         Wait For Load State    domcontentloaded
+        Repeat Keyword    5    Wait For Load State    networkidle
     EXCEPT
         Log    Form is not submitted
     END
@@ -134,6 +136,7 @@ MP: perform search by:
     END
     TRY
         Repeat Keyword    3    Wait For Load State
+        Wait For Load State    networkidle
     EXCEPT
         Log    Search event is not fired
     END
@@ -147,6 +150,7 @@ MP: click on a table row that contains:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Drawler is not loaded
     END
@@ -164,6 +168,7 @@ MP: click on create new entity button:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Page is not loaded
     END
@@ -174,6 +179,7 @@ MP: select option in expanded dropdown:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Dropdown is not loaded
     END
@@ -182,6 +188,7 @@ MP: select option in expanded dropdown:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Dropdown is not loaded
     END
@@ -194,6 +201,7 @@ MP: switch to the tab:
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Tab is not loaded
     END
