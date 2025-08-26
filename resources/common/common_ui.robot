@@ -117,12 +117,14 @@ UI_suite_setup
     Set Browser Timeout    ${browser_timeout}
     Create default Main Context
     New Page    ${yves_url}
+    Register Keyword To Run On Failure    Take Screenshot  EMBED  fullPage=True
 
 UI_suite_teardown
     Close Browser    ALL
 
 UI_test_setup
     Should Test Run
+    Register Keyword To Run On Failure    Take Screenshot  EMBED  fullPage=True
     Delete All Cookies
     Set Browser Timeout    ${browser_timeout}
     Go To    ${yves_url}
@@ -131,6 +133,7 @@ UI_test_teardown
     # Run Keyword If Test Failed    Pause Execution
     Delete All Cookies
     Set Browser Timeout    ${browser_timeout}
+    Register Keyword To Run On Failure    Take Screenshot  EMBED  fullPage=True
 
 Select Random Option From List
     [Arguments]    ${dropDownLocator}    ${dropDownOptionsLocator}
@@ -567,6 +570,16 @@ Click and return True if 5xx occurred:
     ELSE
         RETURN    ${False}
     END
+
+Disable Automatic Screenshots on Failure
+    # Save the current run-on-failure handler and disable it
+    ${prev}=    Register Keyword To Run On Failure    None
+    VAR    ${PREV_RUN_ON_FAILURE}    ${prev}    scope=SUITE
+
+Restore Automatic Screenshots on Failure
+    # Restore the saved run-on-failure handler
+    Register Keyword To Run On Failure    ${PREV_RUN_ON_FAILURE}
+    VAR    ${PREV_RUN_ON_FAILURE}    ${None}    scope=SUITE
 
 # *** Example of intercepting the network request ***
 #     [Arguments]    ${eventName}    ${timeout}=30s

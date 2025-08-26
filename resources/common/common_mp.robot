@@ -110,10 +110,25 @@ MP: click submit button
     TRY
         Wait For Load State
         Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
     EXCEPT
         Log    Submit button is not loaded
     END
+    Disable Automatic Screenshots on Failure
+    ${mp_flash_message_is_displayed}=    Run Keyword And Return Status    Element Should Be Visible    ${mp_notification_wrapper}    timeout=10ms
+    Restore Automatic Screenshots on Failure
+    IF    ${mp_flash_message_is_displayed}
+        TRY
+            Set Browser Timeout    200ms
+            Remove element from HTML with JavaScript    //spy-notification-wrapper
+            Set Browser Timeout    ${browser_timeout}
+        EXCEPT    
+            Log    Flash message is not visible
+            Set Browser Timeout    ${browser_timeout}
+        END
+    END
     Wait Until Element Is Visible    ${mp_submit_button}    timeout=${timeout}
+    Set Browser Timeout    ${browser_timeout}
     Click    ${mp_submit_button}
     TRY
         Repeat Keyword    5    Wait For Load State
@@ -209,9 +224,9 @@ MP: switch to the tab:
 
 MP: remove notification wrapper
     TRY
-        ${flash_massage_state}=    Page Should Contain Element    ${mp_notification_wrapper}    message=Notification wrapper message is not shown    timeout=1s
+        ${flash_massage_state}=    Page Should Contain Element    ${mp_notification_wrapper}    message=Notification wrapper message is not shown    timeout=50ms
         Remove element from HTML with JavaScript    //spy-notification-wrapper
-        Remove element from HTML with JavaScript    (//spy-notification-wrapper//div)[1]
+        # Remove element from HTML with JavaScript    (//spy-notification-wrapper//div)[1]
     EXCEPT
         Log    Flash message is not shown
     END
