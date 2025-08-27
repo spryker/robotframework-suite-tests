@@ -63,7 +63,7 @@ jobs:
               continue-on-error: true
               run: |
                   cd robotframework-tests
-                  pabot --processes 6 --ordering pabot_mp_b2b_ordering_standalone -v env:ui_mp_b2b -v dms:true -v headless:true -v ignore_console:false -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
+                  pabot --processes 4 --ordering pabot_mp_b2b_ordering_standalone -v env:ui_mp_b2b -v dms:true -v headless:true -v ignore_console:false -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
                   touch results/time.txt && echo $(date) > results/time.txt
             - name: Run Static Test Set
               id: run_static_tests
