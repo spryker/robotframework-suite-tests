@@ -49,7 +49,7 @@ jobs:
               id: run_dynamic_tests
               continue-on-error: true
               run: |
-                  docker/sdk exec robot-framework pabot --processes 4 --ordering pabot_mp_b2b_ordering -v env:ui_mp_b2b -v dms:true -v headless:true -v docker:true -v ignore_console:false -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
+                  docker/sdk exec robot-framework pabot --processes 3 --ordering pabot_mp_b2b_ordering -v env:ui_mp_b2b -v dms:true -v headless:true -v docker:true -v ignore_console:false -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
             - name: Run Static Test Set
               id: run_static_tests
               continue-on-error: true
