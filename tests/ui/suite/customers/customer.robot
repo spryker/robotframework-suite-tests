@@ -45,14 +45,14 @@ Resource    ../../../../resources/steps/customer_registration_steps.robot
 *** Test Cases ***
 
 Locale_Param_Changes_Locale_On_Restore_Password_Page
-    [Documentation]    Checks that when local param is present, the locale is changed accordingly
+    [Documentation]    Checks that when local param is present, the locale is changed accordingly on the restore password page
     Yves: go to URL:    /password/restore?token=11111&_locale=de_DE
     ${location}=    Get Location
     Should Contain    ${location}    /DE/de    msg=Failed to redirect to the correct locale on the restore password page
     Should Contain    ${location}    ?token=11111    msg=Failed to redirect to with the correct token on the restore password page
 
 Locale_Param_Changes_Locale_On_Confrim_Email_Page
-    [Documentation]    Checks that when local param is present, the locale is changed accordingly
+    [Documentation]    Checks that when local param is present, the locale is changed accordingly on the confirm email page
     Yves: go to URL:    /register/confirm?token=11111&_locale=de_DE
     ${location}=    Get Location
     Should Contain    ${location}    /DE/de    msg=Failed to redirect to the correct locale on the confirm email page
