@@ -50,7 +50,9 @@ Yves: login on Yves with provided credentials:
             Reload
             Yves: go to URL:    /login
     END
+    Disable Automatic Screenshots on Failure
     ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    locator=${email_field}    message=Login page is not displayed
+    Restore Automatic Screenshots on Failure
     IF    'FAIL' in $is_login_page
         Delete All Cookies
         TRY
@@ -97,7 +99,9 @@ Yves: login on Yves with provided credentials and expect error:
             Reload
             Yves: go to URL:    /login
     END
+    Disable Automatic Screenshots on Failure
     ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    locator=${email_field}    message=Login page is not displayed
+    Restore Automatic Screenshots on Failure
     IF    'FAIL' in $is_login_page
         Delete All Cookies
         Yves: go to the 'Home' page
@@ -126,7 +130,9 @@ Yves: go to PDP of the product with sku:
     END
     IF    ${wait_for_p&s}
         FOR    ${index}    IN RANGE    1    ${iterations}
+        Disable Automatic Screenshots on Failure
         ${result}=    Run Keyword And Ignore Error    Page Should Contain Element    ${catalog_product_card_locator}    timeout=1s
+        Restore Automatic Screenshots on Failure
             IF    ${index} == ${iterations}-1
                 Take Screenshot    EMBED    fullPage=True
                 Fail    Product '${sku}' is not displayed in the search results or its PDP is not accessible
@@ -146,7 +152,9 @@ Yves: go to PDP of the product with sku:
                 EXCEPT
                     Log    Page is not loaded
                 END
+                Disable Automatic Screenshots on Failure
                 ${pdp_available}=    Run Keyword And Ignore Error    Wait Until Page Contains Element    ${pdp_main_container_locator}[${env}]    timeout=0.5s
+                Restore Automatic Screenshots on Failure
                 IF    'PASS' in $pdp_available
                     Exit For Loop
                 ELSE
@@ -277,7 +285,9 @@ Yves: wait until store switcher contains:
     Go To    ${yves_url}
     Wait Until Element Is Visible    ${store_switcher_header_menu_item}
     FOR    ${index}    IN RANGE    0    ${tries}
+        Disable Automatic Screenshots on Failure
         ${storeAppears}=    Run Keyword And Return Status    Wait Until Element Contains    locator=${store_switcher_header_menu_item}    text=${store}    timeout=${timeout}
+        Restore Automatic Screenshots on Failure
         IF    '${storeAppears}'=='False'
             Run Keywords    Sleep    ${timeout}    AND    Reload
         ELSE
@@ -378,7 +388,9 @@ Yves: go to newly created page by URL:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
     FOR    ${index}    IN RANGE    1    ${iterations}
         Go To    ${yves_url}${url}?${index}
+        Disable Automatic Screenshots on Failure
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
+        Restore Automatic Screenshots on Failure
         IF    '${page_not_published}'=='True'
             Sleep    ${delay}
         ELSE
@@ -404,7 +416,9 @@ Yves: go to newly created page by URL on AT store if other store not specified:
             Wait Until Element Contains    ${store_switcher_selected_option}    ${store}
             Go To    ${yves_url}${url}?${index}
         END
+        Disable Automatic Screenshots on Failure
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
+        Restore Automatic Screenshots on Failure
         IF    '${page_not_published}'=='True'
             Sleep    ${delay}
         ELSE
@@ -430,7 +444,9 @@ Yves: navigate to specified AT store URL if no other store is specified and refr
             Wait Until Element Contains    ${store_switcher_selected_option}    ${store}
             Go To    ${url}
         END
+        Disable Automatic Screenshots on Failure
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
+        Restore Automatic Screenshots on Failure
         IF    '${page_not_published}'=='False'
             Run Keyword    Sleep    ${delay}
         ELSE
@@ -446,7 +462,9 @@ Yves: go to URL and refresh until 404 occurs:
     [Arguments]    ${url}    ${delay}=5s    ${iterations}=31
     FOR    ${index}    IN RANGE    1    ${iterations}
         Go To    ${url}
+        Disable Automatic Screenshots on Failure
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
+        Restore Automatic Screenshots on Failure
         IF    '${page_not_published}'=='False'
             Run Keyword    Sleep    ${delay}
         ELSE
@@ -613,7 +631,9 @@ Yves: try reloading page if element is/not appear:
     [Arguments]    ${element}    ${isDisplayed}    ${iterations}=26    ${sleep}=5s    ${message}=expected element state is not reached
     ${isDisplayed}=    Convert To Lower Case    ${isDisplayed}
     FOR    ${index}    IN RANGE    1    ${iterations}
+        Disable Automatic Screenshots on Failure
         ${elementAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
+        Restore Automatic Screenshots on Failure
         IF    '${isDisplayed}'=='true' and '${elementAppears}'=='False'
             Run Keywords    Sleep    ${sleep}    AND    Reload
         ELSE IF    '${isDisplayed}'=='false' and '${elementAppears}'=='True'

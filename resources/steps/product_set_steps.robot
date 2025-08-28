@@ -62,7 +62,9 @@ Zed: create new product set:
     Zed: click button in Header:    Create Product Set
     Wait Until Element Is Visible    ${zed_product_set_name_en_field}
     ${setData}=    Set Up Keyword Arguments    @{args}
+    Disable Automatic Screenshots on Failure
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_set_general_second_locale_expanded_section}    timeout=3s
+    Restore Automatic Screenshots on Failure
     IF    '${second_locale_section_expanded}'=='False'
         Scroll Element Into View    ${zed_product_set_general_second_locale_collapsed_section}
         Click    ${zed_product_set_general_second_locale_collapsed_section}

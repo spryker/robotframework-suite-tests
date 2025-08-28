@@ -19,7 +19,9 @@ Zed: go to my order page:
     Zed: go to URL:    /merchant-sales-order-merchant-user-gui
     Zed: perform search by:    ${orderID}
     FOR    ${index}    IN RANGE    1    ${iterations}
+        Disable Automatic Screenshots on Failure
         ${merchant_order_is_created}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${orderID}')]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]    timeout=1s
+        Restore Automatic Screenshots on Failure
         IF    '${merchant_order_is_created}'=='False'
             Run Keywords    Sleep    ${delay}    AND    Reload
         ELSE
@@ -45,7 +47,9 @@ Zed: trigger all matching states inside this order:
     Trigger oms
     Reload
     FOR    ${index}    IN RANGE    1    ${iterations}
+        Disable Automatic Screenshots on Failure
         ${order_state_reached}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
+        Restore Automatic Screenshots on Failure
         IF    '${order_state_reached}'=='False'
             Run Keywords    Sleep    ${delay}    AND    Reload
         ELSE
@@ -85,7 +89,9 @@ Zed: trigger matching state of xxx merchant's shipment:
     Set Browser Timeout    ${browser_timeout}
     ${shipment_available_transitions}=    Convert To String    ${shipment_available_transitions}
     FOR    ${index}    IN RANGE    1    ${iterations}
+        Disable Automatic Screenshots on Failure
         ${expected_oms_transition_is_available}=    Run Keyword And Return Status    Page Should Contain Element    ${elementSelector}    timeout=1s
+        Restore Automatic Screenshots on Failure
         IF    '${expected_oms_transition_is_available}'=='False'
             Run Keywords    Sleep    ${delay}    AND    Reload
         ELSE
@@ -130,7 +136,9 @@ Zed: trigger matching state of order item inside xxx shipment:
     Set Browser Timeout    ${browser_timeout}
     ${item_available_transition}=    Convert To String    ${item_available_transition}
     FOR    ${index}    IN RANGE    1    ${iterations}
+        Disable Automatic Screenshots on Failure
         ${expected_oms_transition_is_available}=    Run Keyword And Return Status    Page Should Contain Element    ${elementSelector}    timeout=1s
+        Restore Automatic Screenshots on Failure
         IF    '${expected_oms_transition_is_available}'=='False'
             Run Keywords    Sleep    ${delay}    AND    Reload
         ELSE
@@ -161,7 +169,9 @@ Zed: trigger matching state of xxx order item inside xxx shipment:
     Set Browser Timeout    ${browser_timeout}
     ${item_available_transitions}=    Convert To String    ${item_available_transitions}
     FOR    ${index}    IN RANGE    1    ${iterations}
+        Disable Automatic Screenshots on Failure
         ${expected_oms_transition_is_available}=    Run Keyword And Return Status    Page Should Contain Element    ${elementSelector}    timeout=1s
+        Restore Automatic Screenshots on Failure
         IF    '${expected_oms_transition_is_available}'=='False'
             Run Keywords    Sleep    ${delay}    AND    Reload
         ELSE
@@ -180,7 +190,9 @@ Zed: trigger matching state of xxx order item inside xxx shipment:
 Zed: wait for order item to be in state:
     [Arguments]    ${sku}    ${state}    ${shipment}=1    ${delay}=10s    ${iterations}=20
     FOR    ${index}    IN RANGE    1    ${iterations}
+        Disable Automatic Screenshots on Failure
         ${order_item_state_reached}=    Run Keyword And Return Status    Page Should Contain Element    xpath=(//table[@data-qa='order-item-list'][${shipment}]/tbody//td/div[@class='sku'][contains(text(),'${sku}')]/ancestor::tr/td[@class='state-history']//a[contains(text(),'${state}')])[1]    timeout=1s
+        Restore Automatic Screenshots on Failure
         IF    '${order_item_state_reached}'=='False'
             Run Keywords    Sleep    ${delay}    AND    Reload
         ELSE

@@ -351,7 +351,9 @@ Try reloading page until element is/not appear:
     [Arguments]    ${element}    ${shouldBeDisplayed}    ${tries}=20    ${timeout}=1s    ${message}=Timeout exceeded, element state doesn't match the expected. Check screenshot in logs
     ${shouldBeDisplayed}=    Convert To Lower Case    ${shouldBeDisplayed}
     FOR    ${index}    IN RANGE    0    ${tries}
+        Disable Automatic Screenshots on Failure
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
+        Restore Automatic Screenshots on Failure
         IF    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'
             Sleep    ${timeout}    
             Reload
@@ -384,7 +386,9 @@ Try reloading page until element does/not contain text:
     [Arguments]    ${element}    ${expectedText}    ${shouldContain}    ${tries}=20    ${timeout}=1s
     ${shouldContain}=    Convert To Lower Case    ${shouldContain}
     FOR    ${index}    IN RANGE    0    ${tries}
+        Disable Automatic Screenshots on Failure
         ${textAppears}=    Run Keyword And Return Status    Element Text Should Be    ${element}    ${expectedText}    timeout=${timeout} 
+        Restore Automatic Screenshots on Failure
         IF    '${shouldContain}'=='true' and '${textAppears}'=='False'
             Run Keywords    Sleep    ${timeout}    AND    Reload
         ELSE IF     '${shouldContain}'=='false' and '${textAppears}'=='True'

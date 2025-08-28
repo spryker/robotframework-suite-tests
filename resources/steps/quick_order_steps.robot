@@ -43,7 +43,9 @@ Yves: find and add new item in the quick order form:
     EXCEPT
         Log    Page is not loaded
     END
+    Disable Automatic Screenshots on Failure
     ${emptyRowAvailable}=    Run Keyword And Return Status    Page Should Contain Element    ${quick_order_first_empty_row}
+    Restore Automatic Screenshots on Failure
     IF    '${emptyRowAvailable}'=='False'    
         Click    ${quick_order_add_more_rows}
         Wait Until Element Is Visible    ${quick_order_first_empty_row}

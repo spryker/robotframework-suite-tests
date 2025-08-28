@@ -50,7 +50,9 @@ MP: login on MP with provided credentials:
         Type Text    ${mp_password_field}    ${password}
         Click    ${mp_login_button}
     END
+    Disable Automatic Screenshots on Failure
     ${login_success}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    ${mp_user_menu_button}    MP: Login failed! Retrying...    timeout=5s
+    Restore Automatic Screenshots on Failure
     IF    'FAIL' in $login_success
         Delete All Cookies
         TRY
@@ -93,7 +95,9 @@ MP: open navigation menu tab:
     Wait Until Element Is Visible    //div[@class='mp-layout-main-cnt__main']//span[contains(@class,'headline__title')]//*[text()='${tabName}']
 
 MP: Wait until loader is no longer visible
+    Disable Automatic Screenshots on Failure
     ${loader_displayed}=    Run Keyword And Ignore Error    Element Should Be Visible    ${mp_loading_icon}    timeout=1s
+    Restore Automatic Screenshots on Failure
     IF    'PASS' in $loader_displayed
         TRY
             Wait Until Element Is Not Visible    ${mp_loading_icon}
@@ -240,7 +244,9 @@ MP: go to URL:
     ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
     ${page_title}=    Get Title
     ${page_title}=    Convert To Lower Case    ${page_title}
+    Disable Automatic Screenshots on Failure
     ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
+    Restore Automatic Screenshots on Failure
     IF    ${is_5xx} or not ${no_exception}
         TRY
             LocalStorage Clear

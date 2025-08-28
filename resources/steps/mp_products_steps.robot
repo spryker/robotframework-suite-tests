@@ -86,7 +86,9 @@ MP: create multi sku product with following data:
             Type Text    ${new_product_name_field}    ${value}
             Click    ${new_product_multiple_concretes_option}
             MP: click submit button
+            Disable Automatic Screenshots on Failure
             ${is_form_submitted}=    Run Keyword And Ignore Error    Element Should Not Contain    ${mp_submit_button}    Next
+            Restore Automatic Screenshots on Failure
             IF    'FAIL' in $is_form_submitted
                 Sleep    0.5s
                 MP: click submit button

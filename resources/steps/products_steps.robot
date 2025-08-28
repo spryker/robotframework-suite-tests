@@ -162,7 +162,9 @@ Zed: view product page is displayed
 Zed: view abstract product page contains:
     [Arguments]    @{args}
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
+    Disable Automatic Screenshots on Failure
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_view_abstract_general_second_locale_expanded_section}    timeout=1s
+    Restore Automatic Screenshots on Failure
     IF    '${second_locale_section_expanded}'=='False'
         Scroll Element Into View    ${zed_view_abstract_general_second_locale_collapsed_section}
         Click    ${zed_view_abstract_general_second_locale_collapsed_section}
@@ -202,7 +204,9 @@ Zed: update abstract product data:
     EXCEPT
         Log    page is not fully loaded
     END
+    Disable Automatic Screenshots on Failure
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    100ms
+    Restore Automatic Screenshots on Failure
     IF    '${second_locale_section_expanded}'=='False'
     Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
     Click    ${zed_product_general_second_locale_collapsed_section}
@@ -252,7 +256,9 @@ Zed: update abstract product price on:
     END
     ${priceData}=    Set Up Keyword Arguments    @{args}
     ${productAbstractIsProvided}=    Run Keyword And Return Status    Variable Should Exist    ${productAbstract}
+    Disable Automatic Screenshots on Failure
     ${is_edit_abstract_price_tab_exists}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//a[contains(@data-toggle,'tab')][contains(@href,'content-price_and_tax')] | //*[contains(@data-toggle,'tab')]//a[contains(@href,'content-price_and_tax')]    timeout=100ms
+    Restore Automatic Screenshots on Failure
     IF    '${is_edit_abstract_price_tab_exists}'=='False' and ${productAbstractIsProvided}
         Zed: go to URL:    /product-management
         Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
@@ -301,7 +307,9 @@ Zed: start new abstract product creation:
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
     Zed: go to URL:    /product-management
     Zed: click button in Header:    Create Product
+    Disable Automatic Screenshots on Failure
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=1s
+    Restore Automatic Screenshots on Failure
     IF    '${second_locale_section_expanded}'=='False'
         Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
         Click    ${zed_product_general_second_locale_collapsed_section}
@@ -392,7 +400,9 @@ Zed: change concrete product data:
     Zed: go to tab by link href that contains:   variants
     Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
     Wait Until Element Is Visible    ${zed_pdp_concrete_main_content_locator}
+    Disable Automatic Screenshots on Failure
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=1s
+    Restore Automatic Screenshots on Failure
     IF    '${second_locale_section_expanded}'=='False'
         Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
         Click    ${zed_product_general_second_locale_collapsed_section}
@@ -408,10 +418,14 @@ Zed: change concrete product data:
             Type Text    ${zed_pdp_concrete_name_de_input}    ${value}
         END
         IF    '${key}'=='active' and '${value}' != '${EMPTY}'
+            Disable Automatic Screenshots on Failure
             ${is_active}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//div[@class='title-action']/a[contains(.,'Activate')]    timeout=1s
+            Restore Automatic Screenshots on Failure
             IF    '${is_active}'=='True' and '${value}'=='true'
                 Zed: click button in Header:    Activate
+                Disable Automatic Screenshots on Failure
                 ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=1s
+                Restore Automatic Screenshots on Failure
                 IF    '${second_locale_section_expanded}'=='False'
                     Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
                     Click    ${zed_product_general_second_locale_collapsed_section}
@@ -419,7 +433,9 @@ Zed: change concrete product data:
             END
             IF    '${is_active}'=='False' and '${value}'=='false'
                 Zed: click button in Header:    Deactivate
+                Disable Automatic Screenshots on Failure
                 ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=1s
+                Restore Automatic Screenshots on Failure
                 IF    '${second_locale_section_expanded}'=='False'
                     Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
                     Click    ${zed_product_general_second_locale_collapsed_section}
@@ -528,7 +544,9 @@ Zed: add new concrete product to abstract:
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
     Zed: click button in Header:    Add Variant
     Wait Until Element Is Visible    ${zed_pdp_add_concrete_main_content_locator}
+    Disable Automatic Screenshots on Failure
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=1s
+    Restore Automatic Screenshots on Failure
     IF    '${second_locale_section_expanded}'=='False'
         Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
         Click    ${zed_product_general_second_locale_collapsed_section}

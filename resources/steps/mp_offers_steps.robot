@@ -102,7 +102,9 @@ MP: save offer
     EXCEPT
         Log    page is not fully loaded
     END
+    Disable Automatic Screenshots on Failure
     ${offerSaved}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    ${offer_saved_popup}    timeout=1s
+    Restore Automatic Screenshots on Failure
     ### resave in case of error
     IF    'FAIL' in $offerSaved
         TRY

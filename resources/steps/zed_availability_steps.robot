@@ -75,7 +75,9 @@ Zed: check and restore product availability in Zed:
     END
     Zed: go to URL:    /availability-gui
     Zed: perform search by:    ${skuAbstract}
+    Disable Automatic Screenshots on Failure
     ${isProductAvailable}=    Run Keyword And Return Status    Element Text Should Be    ${zed_availability_product_availability_label}     Available
+    Restore Automatic Screenshots on Failure
     IF    '${expectedStatus}'=='available' and '${isProductAvailable}'=='False'
         Zed: change product stock:    ${skuAbstract}    ${skuConcrete}    true    10    0
     ELSE

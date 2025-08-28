@@ -17,7 +17,9 @@ Yves: go to wishlist with name:
 Yves: product with sku is marked as discontinued in wishlist:
     [Arguments]    ${productSku}
     FOR    ${index}    IN RANGE    0    21
+        Disable Automatic Screenshots on Failure
         ${discontinue_applied}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[contains(text(),'${productSku}')]/ancestor::td/following-sibling::td/span[contains(text(),'Discontinued')]
+        Restore Automatic Screenshots on Failure
         IF    '${discontinue_applied}'=='False'
             Run Keywords
                 Sleep    1s
@@ -31,11 +33,13 @@ Yves: product with sku is marked as discontinued in wishlist:
 Yves: product with sku is marked as alternative in wishlist:
     [Arguments]    ${productSku}
     FOR    ${index}    IN RANGE    0    21
+        Disable Automatic Screenshots on Failure
         IF    '${env}' in ['ui_suite']
             ${alternative_applied}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//*[contains(@data-qa,'wishlist-table')]//td//a/../*[contains(.,'${productSku}')]/following-sibling::*[contains(text(),'Alternative for')]
         ELSE
             ${alternative_applied}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[contains(text(),'${productSku}')]/ancestor::tr/preceding-sibling::tr//*[contains(text(),'Alternative for')]
         END
+        Restore Automatic Screenshots on Failure
         IF    '${alternative_applied}'=='False'
             Sleep    1s
             Reload

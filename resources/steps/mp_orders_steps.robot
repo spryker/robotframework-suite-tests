@@ -9,7 +9,9 @@ MP: wait for order to appear:
     Trigger oms
     FOR    ${index}    IN RANGE    0    ${tries}
         MP: perform search by:    ${orderReference}
+        Disable Automatic Screenshots on Failure
         ${elementAppears}=    Run Keyword And Return Status    Table Should Contain    ${mp_items_table}     ${orderReference}
+        Restore Automatic Screenshots on Failure
         IF    '${elementAppears}'=='False'
             Sleep    ${timeout}
             Reload

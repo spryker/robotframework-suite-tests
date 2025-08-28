@@ -20,7 +20,9 @@ Zed: create a cms page and publish it:
         Log    Second locale section of CMS is already open
     END
     Set Browser Timeout    ${browser_timeout}
+    Disable Automatic Screenshots on Failure
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_cms_page_general_second_locale_name_field}    message=DE section of CMS page is not open    timeout=3s
+    Restore Automatic Screenshots on Failure
     IF    '${second_locale_section_expanded}'=='False'
         Scroll Element Into View    ${zed_cms_page_general_second_locale_collapsed_section}
         Click    ${zed_cms_page_general_second_locale_collapsed_section}
@@ -34,12 +36,16 @@ Zed: create a cms page and publish it:
     Sleep    0.5s
     Click    ${zed_cms_page_save_button}
     ### Placeholder information input
+    Disable Automatic Screenshots on Failure
     ${page_was_created}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//body//*[contains(text(),'Edit Placeholders: ${enName}')]
+    Restore Automatic Screenshots on Failure
     IF    '${page_was_created}'=='False'    Click    ${zed_cms_page_save_button}
     Page Should Contain Element    xpath=//body//*[contains(text(),'Edit Placeholders: ${enName}')]    message=CMS page was not created
     Scroll Element Into View    ${zed_cms_page_content_second_locale_title_collapsed_section}
     Click    ${zed_cms_page_content_second_locale_title_collapsed_section}
+    Disable Automatic Screenshots on Failure
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_cms_page_placeholder_title_deDE_field}    message=DE section of CMS page is not open    timeout=3s
+    Restore Automatic Screenshots on Failure
     IF    '${second_locale_section_expanded}'=='False'
         Scroll Element Into View    ${zed_cms_page_content_second_locale_title_collapsed_section}
         Click    ${zed_cms_page_content_second_locale_title_collapsed_section}
@@ -53,7 +59,9 @@ Zed: create a cms page and publish it:
     Page Should Contain Element    ${zed_cms_page_placeholder_content_enUS_field}    message=EN section of Content tab is not visible
     Scroll Element Into View    ${zed_cms_page_content_second_locale_content_collapsed_section}
     Click    ${zed_cms_page_content_second_locale_content_collapsed_section}
+    Disable Automatic Screenshots on Failure
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${zed_cms_page_placeholder_content_deDE_field}    message=DE section of CMS page is not open    timeout=3s
+    Restore Automatic Screenshots on Failure
     IF    '${second_locale_section_expanded}'=='False'
         Scroll Element Into View    ${zed_cms_page_content_second_locale_content_collapsed_section}
         Click    ${zed_cms_page_content_second_locale_content_collapsed_section}

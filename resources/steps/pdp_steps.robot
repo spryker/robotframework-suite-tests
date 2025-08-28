@@ -38,7 +38,9 @@ Yves: PDP contains/doesn't contain:
 
 Yves: add product to the shopping cart
     [Arguments]    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=3s
+    Disable Automatic Screenshots on Failure
     ${variants_present_status}=    Run Keyword And Return Status    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=0:00:01
+    Restore Automatic Screenshots on Failure
     IF    '${variants_present_status}'=='False'    Yves: change variant of the product on PDP on random value
     ${wait_for_p&s}=    Convert To String    ${wait_for_p&s}
     ${wait_for_p&s}=    Convert To Lower Case    ${wait_for_p&s}
@@ -50,7 +52,9 @@ Yves: add product to the shopping cart
     END
     IF    ${wait_for_p&s}
         FOR    ${index}    IN RANGE    1    ${iterations}
+        Disable Automatic Screenshots on Failure
         ${result}=    Run Keyword And Ignore Error    Wait Until Element Is Enabled    ${pdp_add_to_cart_button}    timeout=1s
+        Restore Automatic Screenshots on Failure
             IF    ${index} == ${iterations}-1
                 Take Screenshot    EMBED    fullPage=True
                 Fail    'Add to cart' button is not actionable/available on PDP
@@ -197,7 +201,9 @@ Yves: change variant of the product on PDP on:
         END
     END
     Set Browser Timeout    ${browser_timeout}
+    Disable Automatic Screenshots on Failure
     ${variant_selected}=    Run Keyword And Return Status    Wait For Elements State    ${pdp_reset_selected_variant_locator}    attached    timeout=3s
+    Restore Automatic Screenshots on Failure
     IF    '${variant_selected}'=='False'
         TRY
             Set Browser Timeout    1s
@@ -262,11 +268,15 @@ Yves: product price on the PDP should be:
     Set Browser Timeout    1s
     IF    ${wait_for_p&s}
         FOR    ${index}    IN RANGE    1    ${iterations}
+            Disable Automatic Screenshots on Failure
             ${price_displayed}=    Run Keyword And Ignore Error    Page Should Contain Element    ${pdp_price_element_locator}    timeout=1s
+            Restore Automatic Screenshots on Failure
             IF    'PASS' in $price_displayed
                 ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
             END
+            Disable Automatic Screenshots on Failure
             ${result}=    Run Keyword And Ignore Error    Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
+            Restore Automatic Screenshots on Failure
             IF    ${index} == ${iterations}-1
                 Take Screenshot    EMBED    fullPage=True
                 Fail    Actual product price is ${actualProductPrice}, expected ${expectedProductPrice}
@@ -517,7 +527,9 @@ Yves: select xxx merchant's offer with price:
     END
     IF    ${wait_for_p&s}
         FOR    ${index}    IN RANGE    1    ${iterations}
+        Disable Automatic Screenshots on Failure
         ${result}=    Run Keyword And Ignore Error    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]    timeout=1s
+        Restore Automatic Screenshots on Failure
             IF    ${index} == ${iterations}-1
                 Take Screenshot    EMBED    fullPage=True
                 Fail    Expected '${merchantName}' merchant offer with '${price}' is not present on PDP

@@ -19,7 +19,9 @@ Zed: delete customer:
         END
         Zed: go to URL:    /customer        
         Zed: perform search by:    ${email}
+        Disable Automatic Screenshots on Failure
         ${customerExists}=    Run Keyword And Return Status    Element Text Should Be    xpath=//tbody//td[contains(@class,' column-email') and contains(text(),'${email}')]     ${email}
+        Restore Automatic Screenshots on Failure
         IF    '${customerExists}'=='True'
             Zed: click Action Button in a table for row that contains:    ${email}    Edit
             Wait Until Element Is Visible    ${zed_customer_edit_page_title}
@@ -33,7 +35,9 @@ Zed: update company customer data:
     [Arguments]    @{args}
     ${registrationData}=    Set Up Keyword Arguments    @{args}
     Zed: perform search by:    ${first_name}
+    Disable Automatic Screenshots on Failure
     ${customerExists}=    Run Keyword And Return Status    Zed: table should contain non-searchable value:    ${first_name}
+    Restore Automatic Screenshots on Failure
     IF    '${customerExists}'=='True'
         Zed: click Action Button in a table for row that contains:    ${first_name}    Edit
         FOR    ${key}    ${value}    IN    &{registrationData}

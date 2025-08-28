@@ -28,7 +28,9 @@ Zed: login on Zed with provided credentials:
     EXCEPT
         Log    Failed to clear LocalStorage
     END
+    Disable Automatic Screenshots on Failure
     ${is_zed_url_accessible}    Run Keyword And Ignore Error    Zed: go to URL:    /
+    Restore Automatic Screenshots on Failure
     IF    'FAIL' in $is_zed_url_accessible
         TRY
             LocalStorage Clear
@@ -150,7 +152,9 @@ Zed: go to second navigation item level:
         EXCEPT
             Log    Page is not loaded
         END
+        Disable Automatic Screenshots on Failure
         ${node_expanded}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']    timeout=1s
+        Restore Automatic Screenshots on Failure
         IF    '${node_expanded}'=='False'    
             Reload
             Click    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
@@ -284,7 +288,9 @@ Zed: submit the form
         END
         Wait Until Element Is Visible    ${zed_log_out_button}
     END
+    Disable Automatic Screenshots on Failure
     ${error_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_message}    1s
+    Restore Automatic Screenshots on Failure
     IF    'FAIL' in $error_message
         Click    ${zed_save_button}
         TRY

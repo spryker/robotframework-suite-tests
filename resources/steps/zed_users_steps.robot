@@ -56,7 +56,9 @@ Zed: update Zed user:
         END
     END
     Zed: submit the form
+    Disable Automatic Screenshots on Failure
     ${saved_successfully}    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_user_first_name_field}    timeout=1s
+    Restore Automatic Screenshots on Failure
     IF    not ${saved_successfully}
         Go To    ${currentURL}
         Wait Until Element Is Visible    ${zed_user_email_field}

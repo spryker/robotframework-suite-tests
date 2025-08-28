@@ -86,7 +86,9 @@ Zed: deactivate following discounts from Overview page:
         Zed: clear search field
         Zed: perform search by:    ${name}
         ${isDiscountActive}=    Set Variable    ${EMPTY}
+        Disable Automatic Screenshots on Failure
         ${isDiscountActive}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Deactivate')]    timeout=1s
+        Restore Automatic Screenshots on Failure
         IF    '${isDiscountActive}'=='True'    
             Click    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Deactivate')]
             Wait Until Element Is Visible    xpath=/descendant::button[@type='submit'][contains(.,'Activate')][1]
@@ -122,7 +124,9 @@ Zed: activate following discounts from Overview page:
         Zed: clear search field
         Zed: perform search by:    ${name}
         ${isDiscountInactive}=    Set Variable    ${EMPTY}
+        Disable Automatic Screenshots on Failure
         ${isDiscountInactive}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Activate')]
+        Restore Automatic Screenshots on Failure
         IF    '${isDiscountInactive}'=='True'   
             Click    xpath=//td[contains(text(),'${name}')]/following-sibling::td[contains(@class,'Action')]//button[contains(.,'Activate')]
             Wait Until Element Is Visible    xpath=/descendant::button[@type='submit'][contains(.,'Deactivate')][1]

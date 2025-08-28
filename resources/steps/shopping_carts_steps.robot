@@ -390,7 +390,9 @@ Yves: apply discount voucher to cart:
         Log    Page is not loaded
     END
     ${expanded}=    Set Variable    ${EMPTY}
+    Disable Automatic Screenshots on Failure
     ${expanded}=    IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Run Keyword And Return Status    Get Element States    ${shopping_cart_voucher_code_field}    ==    hidden    return_names=False
+    Restore Automatic Screenshots on Failure
     IF    '${env}' in ['ui_b2c','ui_mp_b2c'] and '${expanded}'=='False'    Click    ${shopping_cart_voucher_code_section_toggler}
     Type Text    ${shopping_cart_voucher_code_field}    ${voucherCode}
     Click    ${shopping_cart_voucher_code_redeem_button}
