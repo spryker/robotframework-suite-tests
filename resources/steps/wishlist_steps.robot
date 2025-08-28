@@ -14,10 +14,12 @@ Yves: go to wishlist with name:
     Click    xpath=//*[contains(@data-qa,'wishlist-overview')]//table//a[contains(text(),'${wishlistName}')]
     Element Should Be Visible    xpath=//main//*[contains(@class,'title')][contains(text(),'${wishlistName}')]
 
-Yves: product with sku is marked as discountinued in wishlist:
+Yves: product with sku is marked as discontinued in wishlist:
     [Arguments]    ${productSku}
     FOR    ${index}    IN RANGE    0    21
+        Disable Automatic Screenshots on Failure
         ${discontinue_applied}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[contains(text(),'${productSku}')]/ancestor::td/following-sibling::td/span[contains(text(),'Discontinued')]
+        Restore Automatic Screenshots on Failure
         IF    '${discontinue_applied}'=='False'
             Run Keywords
                 Sleep    1s
@@ -31,11 +33,13 @@ Yves: product with sku is marked as discountinued in wishlist:
 Yves: product with sku is marked as alternative in wishlist:
     [Arguments]    ${productSku}
     FOR    ${index}    IN RANGE    0    21
+        Disable Automatic Screenshots on Failure
         IF    '${env}' in ['ui_suite']
             ${alternative_applied}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//*[contains(@data-qa,'wishlist-table')]//td//a/../*[contains(.,'${productSku}')]/following-sibling::*[contains(text(),'Alternative for')]
         ELSE
             ${alternative_applied}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[contains(text(),'${productSku}')]/ancestor::tr/preceding-sibling::tr//*[contains(text(),'Alternative for')]
         END
+        Restore Automatic Screenshots on Failure
         IF    '${alternative_applied}'=='False'
             Sleep    1s
             Reload
@@ -51,6 +55,14 @@ Yves: product with sku is marked as alternative in wishlist:
 
 Yves: create wishlist with name:
     [Arguments]    ${wishlistName}
+    ${currentURL}=    Get Location
+    IF    '/wishlist/detail' in '${currentURL}' or '/wishlist' not in '${currentURL}'
+            IF    '.at.' in '${currentURL}'
+                Go To    ${yves_at_url}wishlist
+            ELSE
+                Go To    ${yves_url}wishlist
+            END    
+    END
     Type Text    ${wishlist_name_input_field}    ${wishlistName}
     Click    ${wishlist_add_new_button}
     Yves: flash message should be shown:    success    Wishlist created successfully.
@@ -82,10 +94,10 @@ Yves: add all available products from wishlist to cart
     Wait Until Element Is Visible    ${wishlist_add_all_to_cart_button}
     Click    ${wishlist_add_all_to_cart_button}
 
-Yves: create new 'Whistist' with name:
+Yves: create new 'Wishlist' with name:
     [Arguments]    ${wishlistName}
     ${currentURL}=    Get Location
-    IF    '/wishlist' not in '${currentURL}'    
+    IF    '/wishlist/detail' in '${currentURL}' or '/wishlist' not in '${currentURL}'
             IF    '.at.' in '${currentURL}'
                 Go To    ${yves_at_url}wishlist
             ELSE
