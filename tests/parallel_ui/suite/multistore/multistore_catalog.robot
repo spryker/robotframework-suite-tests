@@ -116,7 +116,7 @@ Multistore_Product
 
 Multistore_Product_Offer
     [Tags]    smoke
-    [Documentation]    check product and offer multistore functionality. DMS-ON: https://spryker.atlassian.net/browse/FRW-7484
+    [Documentation]    check product and offer multistore functionality.
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Zed: create dynamic merchant user:    Spryker
     ...    AND    Zed: create dynamic merchant user:    Video King

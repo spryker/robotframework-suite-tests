@@ -10,7 +10,6 @@ Zed: fill glossary form:
     [Arguments]    @{args}
     ${registrationData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{registrationData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='Name' and '${value}' != '${EMPTY}'   Type Text    ${zed_translation_name}    ${value}
         IF    '${key}'=='EN_US' and '${value}' != '${EMPTY}'   Type Text    ${zed_translation_EN_US}    ${value}
         IF    '${key}'=='DE_DE' and '${value}' != '${EMPTY}'   Type Text    ${zed_translation_DE_DE}     ${value}

@@ -16,6 +16,12 @@ Yves: go to wishlist with name:
 
 Yves: product with sku is marked as discontinued in wishlist:
     [Arguments]    ${productSku}
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
     FOR    ${index}    IN RANGE    0    21
         Disable Automatic Screenshots on Failure
         ${discontinue_applied}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[contains(text(),'${productSku}')]/ancestor::td/following-sibling::td/span[contains(text(),'Discontinued')]
@@ -24,14 +30,29 @@ Yves: product with sku is marked as discontinued in wishlist:
             Run Keywords
                 Sleep    1s
                 Reload
+                TRY
+                    Wait For Load State
+                    Wait For Load State    domcontentloaded
+                EXCEPT
+                    Log    page is not fully loaded
+                END
         ELSE
             Exit For Loop
+        END
+        IF    ${index} == 2 or ${index} == 5
+            Trigger p&s
         END
     END
     Element Should Be Visible    xpath=//li[contains(text(),'${productSku}')]/ancestor::td/following-sibling::td/span[contains(text(),'Discontinued')]
 
 Yves: product with sku is marked as alternative in wishlist:
     [Arguments]    ${productSku}
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
     FOR    ${index}    IN RANGE    0    21
         Disable Automatic Screenshots on Failure
         IF    '${env}' in ['ui_suite']
@@ -43,8 +64,17 @@ Yves: product with sku is marked as alternative in wishlist:
         IF    '${alternative_applied}'=='False'
             Sleep    1s
             Reload
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    page is not fully loaded
+            END
         ELSE
             Exit For Loop
+       END
+       IF    ${index} == 2 or ${index} == 5
+           Trigger p&s
        END
     END
     IF    '${env}' in ['ui_suite']

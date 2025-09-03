@@ -143,5 +143,4 @@ Product_Availability_Calculation
     ...    AND    Zed: update warehouse:
     ...    || warehouse                                         | store ||
     ...    || Spryker ${merchant_spryker_reference} Warehouse 1 | AT    ||
-    ...    AND    Repeat Keyword    3    Trigger multistore p&s
     ...    AND    Delete dynamic admin user from DB

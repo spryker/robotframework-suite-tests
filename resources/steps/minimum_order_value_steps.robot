@@ -21,7 +21,6 @@ Zed: change global threshold settings:
         Log    Page is not loaded
     END
     FOR    ${key}    ${value}    IN    &{thresholdData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='store & currency' and '${value}' != '${EMPTY}'    
             Select From List By Label    ${zed_global_threshold_store_currency_select}    ${value}
             ${second_local_minimum_hard_section_expanded}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_global_threshold_minimum_hard_second_locale_collapce_section}    timeout=500ms

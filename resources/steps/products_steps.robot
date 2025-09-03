@@ -37,7 +37,7 @@ Zed: check if at least one price exists for concrete and add if doesn't:
     [Arguments]    ${price}
     ${currentURL}=    Get Location
     IF    'content-price' not in '${currentURL}'    Zed: go to tab by link href that contains:   content-price
-    ${exists}=    BuiltIn.Run Keyword And Return Status    Element Should Exist    xpath=//table[@id='price-table-collection']//input[@id='product_concrete_form_edit_prices_1-93-DEFAULT-BOTH_moneyValue_gross_amount']
+    ${exists}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//table[@id='price-table-collection']//input[@id='product_concrete_form_edit_prices_1-93-DEFAULT-BOTH_moneyValue_gross_amount']
     IF        '${exists}'=='False'    Type Text    xpath=//table[@id='price-table-collection']//input[@id='product_concrete_form_edit_prices_1-93-DEFAULT-BOTH_moneyValue_gross_amount']    ${price}
     Click    ${zed_pdp_save_button}
 
@@ -52,7 +52,6 @@ Zed: change concrete product price on:
     Wait Until Element Is Visible    ${zed_pdp_concrete_main_content_locator}
     Zed: go to tab by link href that contains:   content-price
     FOR    ${key}    ${value}    IN    &{priceData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'
             ${store}=    Set Variable    ${value}
         END
@@ -91,7 +90,6 @@ Zed: change concrete product price on:
         Reload
         Sleep    1s
         FOR    ${key}    ${value}    IN    &{priceData}
-            Log    Key is '${key}' and value is '${value}'.
             IF    '${key}'=='store' and '${value}' != '${EMPTY}'
                 ${store}=    Set Variable    ${value}
             END
@@ -408,7 +406,6 @@ Zed: change concrete product data:
         Click    ${zed_product_general_second_locale_collapsed_section}
     END
     FOR    ${key}    ${value}    IN    &{priceData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='name en' and '${value}' != '${EMPTY}'  
             Wait Until Element Is Visible    ${zed_pdp_concrete_name_en_input}
             Type Text    ${zed_pdp_concrete_name_en_input}    ${value}
@@ -472,7 +469,6 @@ Zed: change concrete product stock:
     Wait Until Element Is Visible    ${zed_pdp_concrete_main_content_locator}
     Zed: go to tab by link href that contains:   content-price
     FOR    ${key}    ${value}    IN    &{stockData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='warehouse n1' and '${value}' != '${EMPTY}'    
             ${warehouse1}=    Set Variable    ${value}
         END
@@ -552,7 +548,6 @@ Zed: add new concrete product to abstract:
         Click    ${zed_product_general_second_locale_collapsed_section}
     END
     FOR    ${key}    ${value}    IN    &{productData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='sku' and '${value}' != '${EMPTY}'    Type Text    ${zed_add_concrete_sku_field}    ${value}
         IF    '${key}'=='autogenerate sku' and '${value}' != '${EMPTY}'
             IF    '${value}'=='true'

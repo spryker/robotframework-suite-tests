@@ -12,6 +12,7 @@
   },
    "dms_env":{
        "yves_dms_url":"http://yves.eu.spryker.local/",
+       "yves_at_dms_url":"http://yves.eu.spryker.local/AT/",
        "zed_dms_url":"http://backoffice.eu.spryker.local/",
        "mp_dms_url":"http://mp.eu.spryker.local/security-merchant-portal-gui/login/",
        "mp_root_dms_url":"http://mp.eu.spryker.local/",

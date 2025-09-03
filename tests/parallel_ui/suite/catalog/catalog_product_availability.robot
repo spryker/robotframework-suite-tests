@@ -132,5 +132,4 @@ Product_Availability_Calculation
     ...    AND    Zed: update warehouse:    
     ...    || warehouse  | unselect store || 
     ...    || Warehouse1 | AT             ||
-    ...    AND    Repeat Keyword    3    Trigger multistore p&s
     ...    AND    Delete dynamic admin user from DB

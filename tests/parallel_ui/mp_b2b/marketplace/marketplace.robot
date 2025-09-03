@@ -191,17 +191,17 @@ Search_for_Merchant_Offers_and_Products
     Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: perform search by:    Office King
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first available product on current catalog page
     Yves: select random varian if variant selector is available
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: perform search by:    Spryker
     Yves: change sorting order on catalog page:    Sort by name ascending
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first available product on current catalog page
     Yves: select random varian if variant selector is available
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: perform search by:    ${EMPTY}
     Yves: select filter value:    Merchant    Budget Stationery
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first available product on current catalog page
     Yves: select random varian if variant selector is available
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Stationery    true
 

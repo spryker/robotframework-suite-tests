@@ -105,7 +105,6 @@ Zed: Create new Company User with provided details:
     Zed: click button in Header:    Add User
     FOR    ${key}    ${value}    IN    &{company_user_data}
         ${key}=   Convert To Lower Case   ${key}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='email' and '${value}' != '${EMPTY}'   Type Text    ${zed_create_company_user_email_field}    ${value}
         IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'   Select From List By Value    ${zed_create__company_user_salutation_dropdown}    ${value}
         IF    '${key}'=='first_name' and '${value}' != '${EMPTY}'   Type Text    ${zed_create_company_user_first_name_field}    ${value}

@@ -41,7 +41,6 @@ Zed: update company customer data:
     IF    '${customerExists}'=='True'
         Zed: click Action Button in a table for row that contains:    ${first_name}    Edit
         FOR    ${key}    ${value}    IN    &{registrationData}
-            Log    Key is '${key}' and value is '${value}'.
             IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'
                 Select From List By Label    ${zed_edit_company_user_salutation}    ${value}
             END

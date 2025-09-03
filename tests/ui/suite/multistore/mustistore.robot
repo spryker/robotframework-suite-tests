@@ -117,7 +117,7 @@ Multistore_Product
 
 Multistore_Product_Offer
     [Tags]    smoke
-    [Documentation]    check product and offer multistore functionality. DMS-ON: https://spryker.atlassian.net/browse/FRW-7484
+    [Documentation]    check product and offer multistore functionality.
     Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products

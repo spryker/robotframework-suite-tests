@@ -18,7 +18,6 @@ Yves: change the product options in configurator to:
     Click    ${pdp_configure_button}
     FOR    ${key}    ${value}    IN    &{configurationData}
         ${key}=   Convert To Lower Case   ${key}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${env}' in ['ui_suite']
             IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Option One']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]    
             IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Click    xpath=//div[contains(@class, 'configurator')]//app-configurator-group/div[@class='group__heading'][h3='Option Two']/following-sibling::div[@class='group__section']//label[contains(@class,'tile__inner')]/span[contains(text(), '${value}')]
@@ -54,7 +53,6 @@ Yves: change the product configuration to:
     Click    ${pdp_configure_button}
     Wait Until Element Is Visible    ${configurator_date_input}
     FOR    ${key}    ${value}    IN    &{configurationData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='date' and '${value}' != '${EMPTY}'   Type Text    ${configurator_date_input}    ${value}
             IF    '${key}'=='date' and '${value}' == '${EMPTY}'   Clear Text    ${configurator_date_input}
         IF    '${key}'=='date_time' and '${value}' != '${EMPTY}'   Select From List By Label    ${configurator_day_time_selector}    ${value}
@@ -95,7 +93,7 @@ Yves: back to PDP and not save configuration
 
 Yves: product configuration price should be:
     [Arguments]    ${expectedProductPrice}
-        ${price_displayed}=    Run Keyword And Ignore Error    Page Should Contain Element    ${configurator_price_element_locator}    timeout=1s  
+        ${price_displayed}=    Run Keyword And Ignore Error    Page Should Contain Element    ${configurator_price_element_locator}    timeout=400ms
         ${actualProductPrice}=    Get Text    ${configurator_price_element_locator}
         ${result}=    Run Keyword And Ignore Error    Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}
 
@@ -108,7 +106,6 @@ Yves: configuration should be equal:
     ${configurationData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${pdp_configure_button}
     FOR    ${key}    ${value}    IN    &{configurationData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${env}' in ['ui_suite']
             IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_option_one}[${env}]    ${value}
             IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_option_two}[${env}]    ${value}
@@ -123,7 +120,6 @@ Yves: configuration for concrete product should be equal:
     ${configurationData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${pdp_configure_button}
     FOR    ${key}    ${value}    IN    &{configurationData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${env}' in ['ui_suite']
             IF    '${key}'=='option one' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_option_one}[${env}]    ${value}
             IF    '${key}'=='option two' and '${value}' != '${EMPTY}'   Element Should Contain    ${pdp_configuration_option_two}[${env}]    ${value}
@@ -139,7 +135,6 @@ Yves: check and go back that configuration page contains:
     Wait Until Element Is Visible    ${pdp_configure_button}
     Click    ${pdp_configure_button}
     FOR    ${key}    ${value}    IN    &{configuratorData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'   Element Should Contain    ${configurator_store}    ${value}
         IF    '${key}'=='locale' and '${value}' != '${EMPTY}'   Element Should Contain    ${configurator_locale}    ${value}
         IF    '${key}'=='price_mode' and '${value}' != '${EMPTY}'   Element Should Contain    ${configurator_price_mode}    ${value}
@@ -154,7 +149,6 @@ Zed: product configuration should be equal:
     [Arguments]    @{args}
     ${configurationData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{configurationData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='shipment' and '${value}' != '${EMPTY}'   
             ${shipment}=    Set Variable    ${shipment}
         ELSE IF    '${key}'=='shipment' and '${value}' == '${EMPTY}'
@@ -182,7 +176,6 @@ Zed: new product configuration should be equal:
     [Arguments]    @{args}
     ${configurationData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{configurationData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='shipment' and '${value}' != '${EMPTY}'   
             ${shipment}=    Set Variable    ${shipment}
         ELSE IF    '${key}'=='shipment' and '${value}' == '${EMPTY}'

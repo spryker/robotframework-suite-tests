@@ -11,7 +11,6 @@ MP: fill offer fields:
     ${productData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${offer_active_checkbox}
     FOR    ${key}    ${value}    IN    &{productData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='is active' and '${value}' != '${EMPTY}'    
             ${checkbox_state}=    Get Element Attribute    xpath=//web-spy-checkbox[@spy-id='productOffer_isActive']//span[@class='ant-checkbox-inner']/../../span[contains(@class,'checkbox')]    class
             IF    'checked' in '${checkbox_state}' and '${value}' == 'false'

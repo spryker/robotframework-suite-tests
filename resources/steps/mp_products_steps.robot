@@ -8,7 +8,6 @@ MP: fill product price values:
     [Arguments]    @{args}
     ${priceData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{priceData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='product type' and '${value}' == 'concrete'
             ${checkbox_state}=    Get Element Attribute    ${mp_use_abstract_price_checkbox}    class
             IF    'checked' in '${checkbox_state}'
@@ -79,7 +78,6 @@ MP: create multi sku product with following data:
     ${productData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${mp_submit_button}
     FOR    ${key}    ${value}    IN    &{productData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='product sku' and '${value}' != '${EMPTY}'    Type Text    ${new_product_sku_field}    ${value}
         IF    '${key}'=='product name' and '${value}' != '${EMPTY}'    
         Run keywords    
@@ -162,7 +160,6 @@ MP: fill abstract product required fields:
     ${productData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${product_name_de_field}
     FOR    ${key}    ${value}    IN    &{productData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='product name' and '${value}' != '${EMPTY}'
             Click    ${mp_product_name_field_de_tab}
             Sleep    1s
@@ -223,7 +220,6 @@ MP: fill concrete product fields:
     [Arguments]    @{args}
     ${productData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{productData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='is active' and '${value}' != '${EMPTY}'    
             ${checkbox_state}=    Get Element Attribute    xpath=//span[contains(text(),'Concrete Product is active')]/../span[contains(@class,'checkbox')]    class
             IF    'checked' in '${checkbox_state}' and '${value}' == 'false'
@@ -341,7 +337,6 @@ MP: add new concrete product:
     END
     ${productData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{productData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='first attribute' and '${value}' != '${EMPTY}'    
             Set Test Variable    ${firstAttributeName}    ${value}
         END

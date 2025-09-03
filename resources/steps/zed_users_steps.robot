@@ -31,7 +31,6 @@ Zed: update Zed user:
     Wait Until Element Is Visible    ${zed_user_email_field}
     ${currentURL}=    Get Location
     FOR    ${key}    ${value}    IN    &{newUserData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='newEmail' and '${value}' != '${EMPTY}'    Type Text    ${zed_user_email_field}    ${value}
         IF    '${key}'=='password' and '${value}' != '${EMPTY}'
             Type Text    ${zed_user_password_filed}    ${value}
@@ -63,7 +62,6 @@ Zed: update Zed user:
         Go To    ${currentURL}
         Wait Until Element Is Visible    ${zed_user_email_field}
         FOR    ${key}    ${value}    IN    &{newUserData}
-            Log    Key is '${key}' and value is '${value}'.
             IF    '${key}'=='newEmail' and '${value}' != '${EMPTY}'    Type Text    ${zed_user_email_field}    ${value}
             IF    '${key}'=='password' and '${value}' != '${EMPTY}'
                 Type Text    ${zed_user_password_filed}    ${value}

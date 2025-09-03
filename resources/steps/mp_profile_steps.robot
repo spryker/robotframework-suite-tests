@@ -39,7 +39,6 @@ MP: update profile fields with following data:
     ${profileData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${store_status_checkbox}
     FOR    ${key}    ${value}    IN    &{profileData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_email_field}    ${value}    delay=50ms
         IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_phone_field}    ${value}    delay=50ms
         IF    '${key}'=='delivery time' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_delivery_time_en_field}    ${value}    delay=50ms

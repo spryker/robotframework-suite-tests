@@ -121,7 +121,6 @@ Load Variables
     IF    not ${variables_already_loaded}
         &{vars}=   Define Environment Variables From Json File    ${env}
         FOR    ${key}    ${value}    IN    &{vars}
-            Log    Key is '${key}' and value is '${value}'.
             ${var_value}=   Get Variable Value  ${${key}}   ${value}
             Set Global Variable    ${${key}}    ${var_value}
         END
@@ -360,7 +359,7 @@ Run console command
     END
 
 Trigger p&s
-    [Arguments]    ${timeout}=200ms    ${storeName}=DE
+    [Arguments]    ${timeout}=0ms    ${storeName}=DE
     Run console command    console queue:worker:start --stop-when-empty    ${storeName}
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
@@ -374,7 +373,7 @@ Trigger API specification update
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger multistore p&s
-    [Arguments]    ${timeout}=200ms
+    [Arguments]    ${timeout}=0ms
     IF    ${dms}
         Trigger p&s    ${timeout}    DE
     ELSE
@@ -383,7 +382,7 @@ Trigger multistore p&s
     END
 
 Trigger oms
-    [Arguments]    ${timeout}=0.5s
+    [Arguments]    ${timeout}=10ms
     IF    ${dms}
         Run console command    console oms:check-timeout    DE
         Run console command    console oms:check-condition    DE
@@ -401,7 +400,7 @@ Trigger publish trigger-events
         ...
         ...    ``Trigger publish trigger-events    resource=service_point    storeName=DE    timeout=5s``
         ...
-    [Arguments]    ${resource}    ${storeName}=DE    ${timeout}=0.5s
+    [Arguments]    ${resource}    ${storeName}=DE    ${timeout}=0ms
     Run console command    console publish:trigger-events -r ${resource}    ${storeName}
     Trigger p&s    ${timeout}    ${storeName}
 

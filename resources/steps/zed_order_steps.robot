@@ -11,7 +11,6 @@ Zed: Enter shipment details for order:
     [Arguments]    @{args}          
     ${registrationData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{registrationData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='fname'    Type Text    ${shipment_address_first_name}    ${value}
         IF    '${key}'=='lname'    Type Text    ${shipment_address_last_name}    ${value}
         IF    '${key}'=='email'    Type Text    ${shipment_address_email}    ${value}

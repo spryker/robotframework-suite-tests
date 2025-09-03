@@ -40,8 +40,8 @@ Zed: login on Zed with provided credentials:
         Delete All Cookies
         Zed: go to URL:    /
     END
-    Delete All Cookies
-    Reload
+    # Delete All Cookies
+    # Reload
     Wait Until Element Is Visible    ${zed_user_name_field}
     ${email_value}=    Convert To Lower Case   ${email}
     IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
@@ -68,7 +68,7 @@ Zed: login on Zed with provided credentials:
     END
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=10s
+        Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=5s
     EXCEPT
         Reload
         Delete All Cookies
@@ -149,11 +149,12 @@ Zed: go to second navigation item level:
         Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
         TRY
             Repeat Keyword    3    Wait For Load State
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Page is not loaded
         END
         Disable Automatic Screenshots on Failure
-        ${node_expanded}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']    timeout=1s
+        ${node_expanded}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']    timeout=500ms
         Restore Automatic Screenshots on Failure
         IF    '${node_expanded}'=='False'    
             Reload

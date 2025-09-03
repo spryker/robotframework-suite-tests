@@ -18,7 +18,6 @@ Zed: create new Merchant with the following data:
     Wait Until Element Is Visible    ${zed_create_merchant_name_field}
     VAR    ${approve}    False
     FOR    ${key}    ${value}    IN    &{merchantData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='merchant name' and '${value}' != '${EMPTY}'    
             Type Text    ${zed_create_merchant_name_field}    ${value}
             VAR    ${merchant_name}    ${value}
@@ -64,7 +63,6 @@ Zed: update Merchant on edit page with the following data:
     ${merchantData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${zed_create_merchant_name_field}
     FOR    ${key}    ${value}    IN    &{merchantData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='merchant name' and '${value}' != '${EMPTY}'    Run Keywords    
         ...    Type Text    ${zed_create_merchant_name_field}    ${value}
         ...    AND    Set Test Variable    ${zedMerchantNewName}    ${value}
@@ -108,7 +106,6 @@ Zed: create new Merchant User with the following data:
     Click    ${zed_add_merchant_user_button}
     Wait Until Element Is Visible    ${zed_create_merchant_user_email_field}
     FOR    ${key}    ${value}    IN    &{merchantUerData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='e-mail' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_email_field}    ${value}
         IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_first_name_field}    ${value}
         IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_last_name_field}    ${value}
@@ -278,7 +275,6 @@ Zed: update Merchant User on edit page with the following data:
     ${merchantUerData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${zed_create_merchant_user_first_name_field}
     FOR    ${key}    ${value}    IN    &{merchantUerData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='e-mail' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_email_field}    ${value}
         IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_first_name_field}    ${value}
         IF    '${key}'=='last name' and '${value}' != '${EMPTY}'    Type Text    ${zed_create_merchant_user_last_name_field}    ${value}

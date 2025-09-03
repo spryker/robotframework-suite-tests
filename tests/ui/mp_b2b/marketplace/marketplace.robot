@@ -104,7 +104,7 @@ Merchant_Profile_Set_to_Offline_from_MP
     Yves: go to URL:    en/merchant/office-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
     Yves: perform search by:    Office King
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    false
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    false
@@ -141,7 +141,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     Yves: go to URL:    en/merchant/office-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
     Yves: perform search by:    Office King
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    false
     Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    false
@@ -466,17 +466,17 @@ Search_for_Merchant_Offers_and_Products
     [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: perform search by:    Office King
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: select random varian if variant selector is available
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: perform search by:    Spryker
     Yves: change sorting order on catalog page:    Sort by name ascending
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: select random varian if variant selector is available
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: perform search by:    ${EMPTY}
     Yves: select filter value:    Merchant    Budget Stationery
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: select random varian if variant selector is available
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Stationery    true
 

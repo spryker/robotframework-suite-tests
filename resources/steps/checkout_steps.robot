@@ -17,13 +17,20 @@ Yves: billing address same as shipping address:
     [Arguments]    ${state}
     ${state}=    Convert To Lower Case    ${state}
     Wait Until Page Contains Element    xpath=//form[@name='addressesForm']
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
-    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingSameAsShipping'][@checked]    timeout=1s
+    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingSameAsShipping'][@checked]    timeout=100ms
     IF    '${checkboxState}'=='False' and '${state}' == 'true'
         Click Element by xpath with JavaScript    //input[@id='addressesForm_billingSameAsShipping']
         TRY
             Repeat Keyword    3    Wait For Load State
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Page is not loaded
         END
@@ -214,7 +221,6 @@ Yves: fill in the following new shipping address:
         ${checkout_shipping_address_first_name_field}[${env}]=    Set Variable    ${ssp_checkout_shipping_address_first_name_field}
     END
     FOR    ${key}    ${value}    IN    &{newAddressData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${checkout_shipping_address_salutation_selector}    ${value}
         IF    '${key}'=='firstName' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_first_name_field}[${env}]    ${value}
         IF    '${key}'=='lastName' and '${value}' != '${EMPTY}'    Type Text    ${checkout_shipping_address_last_name_field}    ${value}
@@ -242,7 +248,6 @@ Yves: fill in the following new billing address:
     Select From List By Label    ${checkout_address_billing_selector}[${env}]    Define new address
     Wait Until Element Is Visible    ${checkout_new_billing_address_form}
     FOR    ${key}    ${value}    IN    &{newAddressData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${checkout_billing_address_salutation_selector}    ${value}
         IF    '${key}'=='firstName' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_first_name_field}    ${value}
         IF    '${key}'=='lastName' and '${value}' != '${EMPTY}'    Type Text    ${checkout_billing_address_last_name_field}    ${value}
@@ -263,10 +268,16 @@ Yves: fill in the following new billing address:
     Sleep    1s
 
 Yves: select delivery to multiple addresses
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
     IF    '${is_ssp}' == 'true'
         VAR    ${single_address_per_shipment_type_checkbox_locator}    xpath=//toggler-checkbox[contains(@name,'isSingleAddressPerShipmentType')][1]
         Wait Until Page Contains Element    ${single_address_per_shipment_type_checkbox_locator}
-        ${single_address_per_shipment_type_checkbox_is_checked}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//toggler-checkbox[contains(@name,'isSingleAddressPerShipmentType')][1][@checked]    timeout=1s
+        ${single_address_per_shipment_type_checkbox_is_checked}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//toggler-checkbox[contains(@name,'isSingleAddressPerShipmentType')][1][@checked]    timeout=100ms
         IF    '${single_address_per_shipment_type_checkbox_is_checked}'=='True'
             Click    ${single_address_per_shipment_type_checkbox_locator}
         END
@@ -297,7 +308,6 @@ Yves: fill in new delivery address for a product:
     [Arguments]    @{args}
     ${newAddressData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{newAddressData}
-        Log    Key is '${key}' and value is '${value}'.
         ${item}=    Set Variable If    '${key}'=='product'    ${value}    ${item}
         IF    '${key}'=='product' and '${value}' != '${EMPTY}'
             IF    '${env}' in ['ui_mp_b2c']    Yves: select xxx shipment type for item xxx:    shipment_type=Delivery    item=${item}
@@ -388,28 +398,28 @@ Yves: select the following payment method on the checkout and go next:
     IF    '${env}'=='ui_b2b' and '${paymentMethod}'=='Invoice'
         Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Disable Automatic Screenshots on Failure
-        ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=1s
+        ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
         IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
         Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Invoice'
         Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Disable Automatic Screenshots on Failure
-        ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
+        ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
         IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
         Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Invoice (Marketplace)'
         Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Disable Automatic Screenshots on Failure
-        ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
+        ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
         IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
         Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Marketplace Invoice'
         Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Disable Automatic Screenshots on Failure
-        ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
+        ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
         IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
         Click    ${submit_checkout_form_button}[${env}]
@@ -427,21 +437,21 @@ Yves: select the following payment method on the checkout and go next:
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Invoice'
         Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Disable Automatic Screenshots on Failure
-        ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=1s
+        ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
         IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
         Click    ${submit_checkout_form_button}[${env}]    
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Invoice (Marketplace)'
         Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Disable Automatic Screenshots on Failure
-        ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
+        ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
         IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
         Click    ${submit_checkout_form_button}[${env}]    
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Marketplace Invoice'
         Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Disable Automatic Screenshots on Failure
-        ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
+        ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
         IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
         Click    ${submit_checkout_form_button}[${env}]    
@@ -450,14 +460,14 @@ Yves: select the following payment method on the checkout and go next:
             ${payment_method_index}=    Set Variable    last()
             Click    xpath=(//form[@name='paymentForm']//span[contains(@class,'toggler') and contains(text(),'${paymentMethod}')]/preceding-sibling::span[@class='toggler-radio__box'])[${payment_method_index}]
             Disable Automatic Screenshots on Failure
-            ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=1s
+            ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=400ms
             Restore Automatic Screenshots on Failure
             IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
         ELSE
             ${payment_method_index}=    Set Variable    position()=1
             Click    xpath=(//form[@name='paymentForm']//span[contains(@class,'toggler') and contains(text(),'Invoice')]/preceding-sibling::span[@class='toggler-radio__box'])[${payment_method_index}]
             Disable Automatic Screenshots on Failure
-            ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=1s
+            ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=400ms
             Restore Automatic Screenshots on Failure
             IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
         END
@@ -527,12 +537,18 @@ Yves: assert merchant of product in cart or list:
 Yves: save new delivery address to address book:
     [Arguments]    ${state}
     ${state}=    Convert To Lower Case    ${state}
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
     IF    '${is_ssp}' == 'true'
-        ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//*[contains(@data-qa,'address-item-form')]//input[contains(@name,'[shippingAddress][isAddressSavingSkipped]')][checked]    timeout=1s
+        ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//*[contains(@data-qa,'address-item-form')]//input[contains(@name,'[shippingAddress][isAddressSavingSkipped]')][checked]    timeout=100ms
     ELSE
-        ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped'][@checked]    timeout=1s
+        ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped'][@checked]    timeout=100ms
     END
     IF    '${checkboxState}'=='False' and '${state}' == 'true'
         IF    '${is_ssp}' == 'true'
@@ -563,9 +579,15 @@ Yves: save new delivery address to address book:
 Yves: save new billing address to address book:
     [Arguments]    ${state}
     ${state}=    Convert To Lower Case    ${state}
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
-    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped'][@checked]    timeout=1s
+    ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped'][@checked]    timeout=100ms
     IF    '${checkboxState}'=='False' and '${state}' == 'true'
         Click    xpath=//input[@id='addressesForm_billingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
         TRY
@@ -675,7 +697,6 @@ Yves: check store availability for item number xxx:
     ${availabilityData}=    Set Up Keyword Arguments    @{args}
     ${item_number}=    Set Variable    1
     FOR    ${key}    ${value}    IN    &{availabilityData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='item_number' and '${value}' != '${EMPTY}'
             ${item_number}=    Set Variable    ${value}
         END
@@ -720,7 +741,6 @@ Yves: select pickup service point store for item number xxx:
     ${servicePointData}=    Set Up Keyword Arguments    @{args}
     ${item_number}=    Set Variable    1
     FOR    ${key}    ${value}    IN    &{servicePointData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='item_number' and '${value}' != '${EMPTY}'
             ${item_number}=    Set Variable    ${value}
         END
@@ -756,14 +776,15 @@ Yves: checkout summary page contains product with unit price:
     Reload
     TRY
         Wait For Load State
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         TRY
-            Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=1s
+            Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=100ms
         EXCEPT
-            Page Should Contain Element    xpath=//div[contains(@class,'product-cart-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-cart-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=1s
+            Page Should Contain Element    xpath=//div[contains(@class,'product-cart-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-cart-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=100ms
         END
     ELSE IF    '${env}' in ['ui_suite']
         Page Should Contain Element    xpath=//*[contains(@data-qa,'summary-node')]//div[contains(.,'${productName}')]/ancestor::*[contains(@data-qa,'summary-node')]//strong[contains(.,'${productPrice}')]

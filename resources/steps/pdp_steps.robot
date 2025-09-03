@@ -53,7 +53,7 @@ Yves: add product to the shopping cart
     IF    ${wait_for_p&s}
         FOR    ${index}    IN RANGE    1    ${iterations}
         Disable Automatic Screenshots on Failure
-        ${result}=    Run Keyword And Ignore Error    Wait Until Element Is Enabled    ${pdp_add_to_cart_button}    timeout=1s
+        ${result}=    Run Keyword And Ignore Error    Wait Until Element Is Enabled    ${pdp_add_to_cart_button}    timeout=400ms
         Restore Automatic Screenshots on Failure
             IF    ${index} == ${iterations}-1
                 Take Screenshot    EMBED    fullPage=True
@@ -202,7 +202,7 @@ Yves: change variant of the product on PDP on:
     END
     Set Browser Timeout    ${browser_timeout}
     Disable Automatic Screenshots on Failure
-    ${variant_selected}=    Run Keyword And Return Status    Wait For Elements State    ${pdp_reset_selected_variant_locator}    attached    timeout=3s
+    ${variant_selected}=    Run Keyword And Return Status    Wait For Elements State    ${pdp_reset_selected_variant_locator}    attached    timeout=400ms
     Restore Automatic Screenshots on Failure
     IF    '${variant_selected}'=='False'
         TRY
@@ -268,8 +268,11 @@ Yves: product price on the PDP should be:
     Set Browser Timeout    1s
     IF    ${wait_for_p&s}
         FOR    ${index}    IN RANGE    1    ${iterations}
+            IF    ${index} == 2 or ${index} == 5
+                Trigger multistore p&s
+            END
             Disable Automatic Screenshots on Failure
-            ${price_displayed}=    Run Keyword And Ignore Error    Page Should Contain Element    ${pdp_price_element_locator}    timeout=1s
+            ${price_displayed}=    Run Keyword And Ignore Error    Page Should Contain Element    ${pdp_price_element_locator}    timeout=400ms
             Restore Automatic Screenshots on Failure
             IF    'PASS' in $price_displayed
                 ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
@@ -284,6 +287,12 @@ Yves: product price on the PDP should be:
             IF    'FAIL' in $result or 'FAIL' in $price_displayed
                 Sleep    ${delay}
                 Reload
+                TRY
+                    Repeat Keyword    3    Wait For Load State
+                    Wait For Load State    domcontentloaded
+                EXCEPT
+                    Log    Page is not loaded
+                END
                 Continue For Loop
             ELSE
                 Set Browser Timeout    ${browser_timeout}
@@ -296,7 +305,8 @@ Yves: product price on the PDP should be:
             ${actualProductPrice}=    Get Text    ${pdp_price_element_locator}
             Should Be Equal    ${expectedProductPrice}    ${actualProductPrice}    message=Actual product price is ${actualProductPrice}, expected ${expectedProductPrice}
         EXCEPT
-            Sleep    ${browser_timeout}
+            Trigger multistore p&s
+            Sleep    3s
             Set Browser Timeout    ${browser_timeout}
             Reload
             Take Screenshot    EMBED    fullPage=True
@@ -321,7 +331,7 @@ Yves: add product to the shopping list:
         Log    Page is not loaded
         Reload
     END
-    ${variants_present_status}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=1s
+    ${variants_present_status}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=400ms
     ${shopping_list_dropdown_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_shopping_list_selector}    timeout=5s
     IF    'FAIL' in $variants_present_status    Yves: change variant of the product on PDP on random value
     IF    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in $shopping_list_dropdown_status)
@@ -528,7 +538,7 @@ Yves: select xxx merchant's offer with price:
     IF    ${wait_for_p&s}
         FOR    ${index}    IN RANGE    1    ${iterations}
         Disable Automatic Screenshots on Failure
-        ${result}=    Run Keyword And Ignore Error    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]    timeout=1s
+        ${result}=    Run Keyword And Ignore Error    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]    timeout=400ms
         Restore Automatic Screenshots on Failure
             IF    ${index} == ${iterations}-1
                 Take Screenshot    EMBED    fullPage=True

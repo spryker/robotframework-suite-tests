@@ -333,7 +333,6 @@ Zed: create new shipment inside the order:
     Click    ${create_shipment_button}
     Wait Until Element Is Visible    ${create_shipment_delivery_address_dropdown}
     FOR    ${key}    ${value}    IN    &{newShipmentData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='delivery address' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_delivery_address_dropdown}    ${value}
         IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_salutation_dropdown}    ${value}
         IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_first_name_field}    ${value}
@@ -362,7 +361,6 @@ Zed: edit xxx shipment inside the order:
     Click    ${create_shipment_button}
     Wait Until Element Is Visible    ${create_shipment_delivery_address_dropdown}
     FOR    ${key}    ${value}    IN    &{newShipmentData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='delivery address' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_delivery_address_dropdown}    ${value}
         IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_salutation_dropdown}    ${value}
         IF    '${key}'=='first name' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_first_name_field}    ${value}
@@ -388,7 +386,6 @@ Zed: shipment data inside xxx shipment should be:
     [Arguments]    @{args}
     ${shipmentData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{shipmentData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='shipment n' and '${value}' != '${EMPTY}'    
         ${shipment}=    Set Variable    ${value}
         END

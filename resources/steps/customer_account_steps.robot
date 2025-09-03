@@ -235,11 +235,11 @@ Zed: create a new customer address in profile:
         IF    '${key}'=='company' and '${value}' != '${EMPTY}'    Type Text    ${zed_customer_edit_address_company_field}    ${value}
     END
     Click    ${zed_customer_edit_address_submit_button}
-    ${error_flash_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_flash_message}    1s
+    ${error_flash_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_flash_message}    400ms
     IF    'FAIL' in $error_flash_message
         Click    ${zed_customer_edit_address_submit_button}
     END
-    ${error_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_message}    1s
+    ${error_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_message}    400ms
     IF    'FAIL' in $error_message
         Click    ${zed_customer_edit_address_submit_button}
     END

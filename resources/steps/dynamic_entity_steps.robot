@@ -9,7 +9,7 @@ Zed: start creation of new data exchange api configuration for db table:
     [Arguments]    ${table_name}
     Zed: go to URL:    /dynamic-entity-gui/configuration-list
     Zed: perform search by:    ${table_name}
-    ${is_table_empty}=    Run Keyword And Ignore Error    Page Should Contain Element    xpath=//table//td[contains(@class,'empty')]    timeout=1s
+    ${is_table_empty}=    Run Keyword And Ignore Error    Page Should Contain Element    xpath=//table//td[contains(@class,'empty')]    timeout=400ms
     IF    'PASS' in $is_table_empty
         Zed: click button in Header:    Data Exchange API Configuration
         Select From List By Value    ${data_exchange_table_select_locator}    ${table_name}
@@ -24,7 +24,6 @@ Zed: edit data exchange api configuration:
     [Arguments]    @{args}
     ${configurationData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{configurationData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='table_name' and '${value}' != '${EMPTY}'
             ${currentURL}=    Get Location
             IF    '/configuration-list' not in '${currentURL}'    Zed: go to URL:    /dynamic-entity-gui/configuration-list

@@ -96,7 +96,7 @@ MP: open navigation menu tab:
 
 MP: Wait until loader is no longer visible
     Disable Automatic Screenshots on Failure
-    ${loader_displayed}=    Run Keyword And Ignore Error    Element Should Be Visible    ${mp_loading_icon}    timeout=1s
+    ${loader_displayed}=    Run Keyword And Ignore Error    Element Should Be Visible    ${mp_loading_icon}    timeout=500ms
     Restore Automatic Screenshots on Failure
     IF    'PASS' in $loader_displayed
         TRY
