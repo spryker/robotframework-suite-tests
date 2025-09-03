@@ -5,15 +5,13 @@ Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
 Test Tags    robot:recursive-stop-on-failure    static-set
 Resource    ../../../../resources/common/common_ui.robot
+Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/common/common_zed.robot
-Resource    ../../../../resources/steps/zed_discount_steps.robot
 Resource    ../../../../resources/steps/minimum_order_value_steps.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
 Resource    ../../../../resources/steps/orders_management_steps.robot
-Resource    ../../../../resources/steps/users_steps.robot
-Resource    ../../../../resources/steps/configurable_product_steps.robot
-Resource    ../../../../resources/steps/agent_assist_steps.robot
 Resource    ../../../../resources/steps/zed_availability_steps.robot
+Resource    ../../../../resources/steps/zed_discount_steps.robot
 
 *** Test Cases ***
 Minimum_Order_Value

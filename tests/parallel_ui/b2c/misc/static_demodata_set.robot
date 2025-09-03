@@ -5,6 +5,7 @@ Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
 Test Tags    robot:recursive-stop-on-failure    static-set
 Resource    ../../../../resources/common/common_ui.robot
+Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/common/common_zed.robot
 Resource    ../../../../resources/steps/minimum_order_value_steps.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
