@@ -2,8 +2,12 @@
 --suite Robotframework.Tests.Parallel Ui.B2C.Catalog.Catalog
 --suite Robotframework.Tests.Parallel Ui.B2C.Catalog.Catalog Product Availability
 --suite Robotframework.Tests.Parallel Ui.B2C.Catalog.Catalog Prices
+--suite Robotframework.Tests.Parallel Ui.B2C.Catalog.Catalog Configurable Product
+--suite Robotframework.Tests.Parallel Ui.B2C.Catalog.Catalog Volume Prices
 --suite Robotframework.Tests.Parallel Ui.B2C.Multistore.Multistore Catalog
 --suite Robotframework.Tests.Parallel Ui.B2C.Sales.Sales
+--suite Robotframework.Tests.Parallel Ui.B2C.Sales.Manage Shipments
+--suite Robotframework.Tests.Parallel Ui.B2C.Sales.Refunds
 --suite Robotframework.Tests.Parallel Ui.B2C.Checkout.Checkout Guest
 --suite Robotframework.Tests.Parallel Ui.B2C.Checkout.Checkout
 --suite Robotframework.Tests.Parallel Ui.B2C.Content.Content

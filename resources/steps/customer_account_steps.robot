@@ -5,6 +5,7 @@ Resource    ../steps/header_steps.robot
 Resource    ../steps/quick_order_steps.robot
 Resource    ../pages/yves/yves_customer_account_page.robot
 Resource    ../common/common_zed.robot
+Resource    ../pages/zed/zed_customer_page.robot
 
 *** Keywords ***
 Yves: go to 'Customer Account' page

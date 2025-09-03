@@ -6,15 +6,14 @@ Suite Teardown    UI_suite_teardown
 Test Tags    robot:recursive-stop-on-failure    static-set
 Resource    ../../../../resources/common/common_ui.robot
 Resource    ../../../../resources/common/common_zed.robot
-Resource    ../../../../resources/steps/zed_discount_steps.robot
 Resource    ../../../../resources/steps/minimum_order_value_steps.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
 Resource    ../../../../resources/steps/orders_management_steps.robot
-Resource    ../../../../resources/steps/configurable_product_steps.robot
-Resource    ../../../../resources/steps/picking_list_steps.robot
 Resource    ../../../../resources/steps/warehouse_user_assignment_steps.robot
 Resource    ../../../../resources/steps/zed_users_steps.robot
+Resource    ../../../../resources/steps/picking_list_steps.robot
 Resource    ../../../../resources/steps/zed_availability_steps.robot
+Resource    ../../../../resources/steps/zed_discount_steps.robot
 
 *** Test Cases ***
 Minimum_Order_Value
@@ -57,76 +56,10 @@ Minimum_Order_Value
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €153.38
-    [Teardown]    Run keywords    Restore all discounts in the database
-    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: change global threshold settings:
     ...    || store & currency | minimum hard value | minimum hard en message | minimum hard de message | maximum hard value | maximum hard en message                                                                                   | maximum hard de message                                                                                                              | soft threshold | soft threshold value | soft threshold en message | soft threshold de message ||
     ...    || DE - Euro [EUR]  | ${SPACE}           | ${SPACE}                | ${SPACE}                | 10000.00           | The cart value cannot be higher than {{threshold}}. Please remove some items to proceed with the order    | Der Warenkorbwert darf nicht höher als {{threshold}} sein. Bitte entfernen Sie einige Artikel, um mit der Bestellung fortzufahren    | None           | ${EMPTY}             | ${EMPTY}                  | ${EMPTY}                  ||
-    ...    AND    Delete dynamic admin user from DB
-
-Volume_Prices
-    [Documentation]    Checks volume prices are applied
-    [Setup]    Run Keywords    Create dynamic admin user in DB
-    ...    AND    Create dynamic customer in DB
-    ...    AND    Deactivate all discounts in the database
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    193
-    Yves: change quantity using '+' or '-' button № times:    +    4
-    Yves: product price on the PDP should be:    €165.00
-    Yves: add product to the shopping cart
-    Yves: go to shopping cart page
-    Yves: shopping cart contains product with unit price:    193    Sony FDR-AX40    825.00
-    Yves: delete from b2c cart products with name:    Sony FDR-AX40
-    [Teardown]    Run keywords    Restore all discounts in the database
-    ...    AND    Delete dynamic admin user from DB
-
-Configurable_Product_Checkout
-    [Setup]    Run keywords    Create dynamic admin user in DB
-    ...    AND    Create dynamic customer in DB
-    ...    AND    Deactivate all discounts in the database
-    ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    ...    AND    Yves: create new 'Wishlist' with name:    configProduct${random}
-    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
-    Yves: change variant of the product on PDP on:    ${configurable_product_concrete_one_attribute}
-    Yves: PDP contains/doesn't contain:    true    ${configureButton}
-    Yves: product configuration status should be equal:       Configuration is not complete.
-    Yves: change the product options in configurator to:
-    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten       ||
-    ...    || 517        | 473        | 100          | 0.00       |  51         | 19         | 367          | 46           | 72          | English Keyboard ||
-    Yves: save product configuration
-    Yves: product configuration status should be equal:      Configuration complete!
-    Yves: add product to the shopping cart
-    Yves: go to shopping cart page
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=1,599.00
-    Yves: change the product options in configurator to:
-    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten      ||
-    ...    || 905        | 249        | 100          | 36         |  15         | 0.00       | 48           | 57           | 36          | German Keyboard ||
-    Yves: save product configuration
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_sku}    productName=${configurable_product_name}    productPrice=1,346.00 
-    Yves: product configuration status should be equal:      Configuration complete!
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:   ${default_address.full_address}
-    Yves: submit form on the checkout
-    Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
-    Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,361.00
-    Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside this order:    skip grace period
-    Zed: trigger all matching states inside this order:    Pay
-    Zed: trigger all matching states inside this order:    Skip timeout
-    Zed: trigger all matching states inside this order:    skip picking
-    Zed: trigger all matching states inside this order:    Ship
-    Zed: trigger all matching states inside this order:    Stock update
-    Zed: trigger all matching states inside this order:    Refund
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
-    [Teardown]    Run keywords    Restore all discounts in the database
     ...    AND    Delete dynamic admin user from DB
 
 Fulfillment_app_e2e
@@ -259,182 +192,6 @@ Discounts
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €753.55
-    [Teardown]    Run keywords    Restore all discounts in the database
-    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    [Teardown]    Run keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: deactivate following discounts from Overview page:    Voucher Code 5% ${random}    Cart Rule 10% ${random}    Promotional Product 100% ${random}
-    ...    AND    Delete dynamic admin user from DB
-
-Refunds
-    [Documentation]    Checks that refund can be created for one item and the whole order. DMS-ON: https://spryker.atlassian.net/browse/FRW-7463
-    [Setup]    Run keywords    Create dynamic admin user in DB
-    ...    AND    Create dynamic customer in DB
-    ...    AND    Deactivate all discounts in the database
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    007
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    008
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    010
-    Yves: add product to the shopping cart
-    Yves: go to shopping cart page
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: fill in the following new shipping address:
-    ...    || salutation | firstName                      | lastName                      | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | ${yves_second_user_first_name} | ${yves_second_user_last_name} | Kirncher Str. | 7           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: submit form on the checkout
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Trigger oms
-    Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €394.41
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
-    Zed: trigger all matching states inside this order:    Pay
-    Zed: trigger all matching states inside this order:    Skip timeout
-    Zed: trigger all matching states inside this order:    skip picking
-    Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Ship
-    Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Stock
-    Zed: trigger matching state of order item inside xxx shipment:    008_30692992    Refund
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €265.03
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Ship
-    Zed: trigger all matching states inside this order:    Stock update
-    Zed: trigger all matching states inside this order:    Refund
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €0.00
-    [Teardown]    Run keywords    Restore all discounts in the database
-    ...    AND    Delete dynamic admin user from DB
-
-Manage_Shipments
-    [Documentation]    Checks create/edit shipment functions from backoffice
-    [Setup]    Run keywords    Create dynamic admin user in DB
-    ...    AND    Create dynamic customer in DB
-    ...    AND    Deactivate all discounts in the database
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    007
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    005
-    Yves: add product to the shopping cart
-    Yves: go to PDP of the product with sku:    012
-    Yves: add product to the shopping cart
-    Yves: go to shopping cart page
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: select delivery to multiple addresses
-    Yves: fill in new delivery address for a product:
-    ...    || product        | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Canon IXUS 285 | Dr.        | First     | Last     | First Street | 1           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: fill in new delivery address for a product:
-    ...    || product        | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Canon IXUS 175 | Dr.        | First     | Last     | First Street | 1           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: fill in new delivery address for a product:
-    ...    || product        | salutation | firstName | lastName | street       | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Canon IXUS 165 | Dr.        | First     | Last     | First Street | 1           | 10247    | Berlin | Germany | Spryker | 123456789 | Additional street ||
-    Yves: fill in the following new billing address:
-    ...    || salutation | firstName | lastName | street         | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
-    ...    || Mr.        | First     | Last     | Billing Street | 123         | 10247    | Berlin | Germany | Spryker | 987654321 | Additional street ||
-    Yves: submit form on the checkout
-    Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
-    Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Yves: get the last placed order ID by current customer
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €307.88
-    Zed: order has the following number of shipments:    ${lastPlacedOrder}    1
-    Zed: shipment data inside xxx shipment should be:
-    ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
-    ...    || 1          | Hermes          | Next Day        | €15.00         | ASAP                    ||
-    Zed: create new shipment inside the order:
-    ...    || delivery address | salutation | first name | last name | email               | country | address 1     | address 2 | city   | zip code | shipment method | sku          ||
-    ...    || New address      | Mr         | Evil       | Tester    | ${dynamic_customer} | Austria | Hartmanngasse | 1         | Vienna | 1050     | DHL - Standard  | 012_25904598 ||
-    Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
-    Zed: order has the following number of shipments:    ${lastPlacedOrder}    2
-    Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany
-    Zed: shipping address inside xxx shipment should be:    2    Mr Evil, Tester, Hartmanngasse, 1, 1050, Vienna, Austria
-    Zed: shipment data inside xxx shipment should be:
-    ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
-    ...    || 2          | DHL             | Standard        | €0.00          | ASAP                    ||
-    Zed: edit xxx shipment inside the order:
-    ...    || shipmentN | delivery address | salutation | first name | last name | email               | country | address 1     | address 2 | city   | zip code | shipment method | requested delivery date | sku          ||
-    ...    || 2         | New address      | Mr         | Edit       | Shipment  | ${dynamic_customer} | Germany | Hartmanngasse | 9         | Vienna | 0987     | DHL - Express   | 2025-01-25              | 005_30663301 ||
-    Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
-    Zed: shipment data inside xxx shipment should be:
-    ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
-    ...    || 2          | DHL             | Standard        |  €0.00         | ASAP                    ||
-    Zed: shipment data inside xxx shipment should be:
-    ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
-    ...    || 3          | DHL             | Express         |  €0.00         | 2025-01-25              ||
-    Zed: xxx shipment should/not contain the following products:    1    true    007_30691822
-    Zed: xxx shipment should/not contain the following products:    1    false    012_25904598
-    Zed: xxx shipment should/not contain the following products:    2    true    012_25904598
-    Zed: xxx shipment should/not contain the following products:    3    true    005_30663301
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €307.88
-    [Teardown]    Run Keywords    Restore all discounts in the database
-    ...    AND    Delete dynamic admin user from DB
-
-Configurable_Product_OMS
-    [Documentation]    Conf Product OMS check and reorder.
-    [Setup]    Run keywords    Create dynamic admin user in DB
-    ...    AND    Create dynamic customer in DB
-    ...    AND    Deactivate all discounts in the database
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
-    Yves: change variant of the product on PDP on:    ${configurable_product_concrete_one_attribute}
-    Yves: change the product options in configurator to:
-    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten       ||
-    ...    || 517        | 473        | 100          | 0.00       |  51         | 19         | 367          | 46           | 72          | English Keyboard ||
-    Yves: save product configuration
-    Yves: product configuration status should be equal:      Configuration complete!
-    Yves: add product to the shopping cart
-    Yves: go to shopping cart page
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_attribute}   productName=${configurable_product_name}    productPrice=1,599.00
-    Yves: change the product options in configurator to:
-    ...    || option one | option two | option three |option four | option five | option six | option seven | option eight | option nine | option ten      ||
-    ...    || 905        | 249        | 100          | 36         |  15         | 0.00       | 48           | 57           | 36          | German Keyboard ||
-    Yves: save product configuration
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_one_attribute}    productName=${configurable_product_name}    productPrice=1,346.00 
-    Yves: product configuration status should be equal:      Configuration complete!
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
-    Yves: submit form on the checkout
-    Yves: select the following shipping method for the shipment:    1    Hermes    Next Day
-    Yves: submit form on the checkout
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Yves: get the last placed order ID by current customer
-    Trigger oms
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,361.00
-    Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside this order:    skip grace period
-    Zed: trigger all matching states inside this order:    Pay
-    Zed: trigger all matching states inside this order:    Skip timeout
-    Zed: trigger all matching states inside this order:    skip picking
-    Zed: trigger matching state of xxx order item inside xxx shipment:    Ship    1
-    Zed: trigger matching state of xxx order item inside xxx shipment:    Stock-update    1
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to user menu:    Orders History
-    Yves: 'Order History' page is displayed
-    Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
-    Yves: 'Create Return' page is displayed
-    Yves: create return for the following products:    ${configurable_product_concrete_one_sku}
-    Yves: 'Return Details' page is displayed
-    Yves: check that 'Print Slip' contains the following products:    ${configurable_product_concrete_one_sku}
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Execute return
-    Yves: go to the 'Home' page
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to user menu:    Orders History
-    ### Reorder ###
-    Yves: 'View Order/Reorder/Return' on the order history page:    Reorder    ${lastPlacedOrder}
-    Yves: go to shopping cart page
-    Yves: product configuration status should be equal:       Configuration is not complete.
-    [Teardown]    Run Keywords    Restore all discounts in the database
     ...    AND    Delete dynamic admin user from DB
