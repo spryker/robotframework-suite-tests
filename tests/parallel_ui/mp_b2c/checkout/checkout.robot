@@ -5,41 +5,13 @@ Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
 Test Tags    robot:recursive-stop-on-failure    group_one
 Resource    ../../../../resources/common/common.robot
-Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
-Resource    ../../../../resources/common/common_zed.robot
-Resource    ../../../../resources/common/common_mp.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
-Resource    ../../../../resources/steps/shopping_lists_steps.robot
-Resource    ../../../../resources/steps/checkout_steps.robot
-Resource    ../../../../resources/steps/order_history_steps.robot
-Resource    ../../../../resources/steps/product_set_steps.robot
-Resource    ../../../../resources/steps/catalog_steps.robot
-Resource    ../../../../resources/steps/agent_assist_steps.robot
-Resource    ../../../../resources/steps/company_steps.robot
-Resource    ../../../../resources/steps/customer_account_steps.robot
-Resource    ../../../../resources/steps/zed_users_steps.robot
-Resource    ../../../../resources/steps/products_steps.robot
 Resource    ../../../../resources/steps/orders_management_steps.robot
-Resource    ../../../../resources/steps/zed_customer_steps.robot
-Resource    ../../../../resources/steps/zed_discount_steps.robot
-Resource    ../../../../resources/steps/zed_availability_steps.robot
-Resource    ../../../../resources/steps/zed_cms_page_steps.robot
-Resource    ../../../../resources/steps/merchant_profile_steps.robot
 Resource    ../../../../resources/steps/zed_marketplace_steps.robot
-Resource    ../../../../resources/steps/mp_profile_steps.robot
-Resource    ../../../../resources/steps/mp_orders_steps.robot
+Resource    ../../../../resources/steps/zed_availability_steps.robot
+Resource    ../../../../resources/common/common_mp.robot
 Resource    ../../../../resources/steps/mp_offers_steps.robot
-Resource    ../../../../resources/steps/mp_products_steps.robot
-Resource    ../../../../resources/steps/mp_account_steps.robot
-Resource    ../../../../resources/steps/mp_dashboard_steps.robot
-Resource    ../../../../resources/steps/zed_root_menus_steps.robot
-Resource    ../../../../resources/steps/minimum_order_value_steps.robot
-Resource    ../../../../resources/steps/availability_steps.robot
-Resource    ../../../../resources/steps/glossary_steps.robot
-Resource    ../../../../resources/steps/order_comments_steps.robot
-Resource    ../../../../resources/steps/configurable_product_steps.robot
-Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 
 *** Test Cases ***
 Split_Delivery
@@ -87,8 +59,6 @@ Guest_Checkout_and_Addresses
     [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Zed: create dynamic merchant user:    merchant=Spryker    merchant_user_group=Root group
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: create a discount and activate it:    voucher    Percentage    5    sku = '*'    guestTest${random}    discountName=Guest Voucher Code 5% ${random}
-    ...    AND    Zed: create a discount and activate it:    cart rule    Percentage    10    sku = '*'    discountName=Guest Cart Rule 10% ${random}
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to PDP of the product with sku:    007
@@ -135,8 +105,6 @@ Guest_Checkout_and_Addresses
     Zed: shipping address inside xxx shipment should be:    3    Dr First, Last, Third Street, 3, Additional street, Spryker, 10247, Berlin, Germany 
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
-    ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
     ...    AND    Delete dynamic admin user from DB
 
 Multiple_Merchants_Order

@@ -597,7 +597,7 @@ Yves: get index of the first available product
         IF    'bundle' in '${pdp_url}' and '${env}' in ['ui_b2b','ui_suite']    Continue For Loop
         IF    'FAIL' in $status and '${env}' in ['ui_b2b','ui_suite']
             Return From Keyword  ${index}
-            Log ${index}
+            Log    ${index}
             Exit For Loop
         END
         ${pdp_url}=    IF    '${env}' in ['ui_b2c','ui_mp_b2c']    Get Element Attribute    xpath=(//product-item[@data-qa='component product-item'])[${index}]//div[contains(@class,'product-item__image')]//a[contains(@class,'link-detail-page')]    href
@@ -605,7 +605,7 @@ Yves: get index of the first available product
         IF    'bundle' in '${pdp_url}' and '${env}' in ['ui_b2c','ui_mp_b2c']    Continue For Loop
         IF    'PASS' in $status and '${env}' in ['ui_b2c','ui_mp_b2c']
             Return From Keyword    ${index}
-            Log ${index}
+            Log    ${index}
             Exit For Loop
         END
     END
@@ -635,7 +635,7 @@ Yves: get index of the first available product on marketplace
         IF    'FAIL' in $status
             Run Keywords
                 Return From Keyword  ${index}
-                Log ${index}
+                Log    ${index}
                 Exit For Loop
         END
     END

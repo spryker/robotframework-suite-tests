@@ -13,14 +13,14 @@ Resource    ../../../../resources/steps/mp_profile_steps.robot
 
 *** Test Cases ***
 Merchant_Profile_Update
+    [Documentation]    Checks that merchant profile could be updated from merchant portal and that changes will be displayed on Yves
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: create dynamic merchant user:    Office King
-    [Documentation]    Checks that merchant profile could be updated from merchant portal and that changes will be displayed on Yves
-    Yves: go to URL:    en/merchant/office-king
+    ...    AND    Zed: create dynamic merchant user:    Video King
+    Yves: go to URL:    en/merchant/Video-king
     Yves: assert merchant profile fields:
-    ...    || name | email             | phone           | delivery time | data privacy                                          ||
-    ...    ||      | hi@office-king.nl | +31 123 345 777 | 2-4 days      | Office King values the privacy of your personal data. ||
+    ...    || name | email            | phone           | delivery time | data privacy                                         ||
+    ...    ||      | hi@video-king.nl | +31 123 345 777 | 2-4 days      | Video King values the privacy of your personal data. ||
     MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Profile  
     MP: open profile tab:    Online Profile
@@ -28,8 +28,8 @@ Merchant_Profile_Update
     ...    || email                  | phone           | delivery time | data privacy              ||
     ...    || updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text ||
     MP: click submit button
-    Trigger p&s
-    Yves: go to URL:    en/merchant/office-king
+    Trigger multistore p&s
+    Yves: go to URL:    en/merchant/video-king
     Yves: assert merchant profile fields:
     ...    || name | email                  | phone           | delivery time | data privacy              ||
     ...    ||      | updated@office-king.nl | +11 222 333 444 | 2-4 weeks     | Data privacy updated text ||
@@ -37,10 +37,10 @@ Merchant_Profile_Update
     ...    AND    MP: open navigation menu tab:    Profile
     ...    AND    MP: open profile tab:    Online Profile  
     ...    AND    MP: update profile fields with following data:
-    ...    || email             | phone           | delivery time | data privacy                                          ||
-    ...    || hi@office-king.nl | +31 123 345 777 | 2-4 days      | Office King values the privacy of your personal data. ||
+    ...    || email            | phone           | delivery time | data privacy                                         ||
+    ...    || hi@video-king.nl | +31 123 345 777 | 2-4 days      | Video King values the privacy of your personal data. ||
     ...    AND    MP: click submit button
-    ...    AND    Trigger p&s
+    ...    AND    Trigger multistore p&s
     ...    AND    Delete dynamic admin user from DB
 
 Manage_Merchants_from_Backoffice
@@ -87,7 +87,7 @@ Manage_Merchant_Users
     Create dynamic admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Merchants
-    Zed: click Action Button in a table for row that contains:     Office King     Edit
+    Zed: click Action Button in a table for row that contains:     Video King     Edit
     Zed: create new Merchant User with the following data:
     ...    || e-mail                         | first name     | last name      ||
     ...    || sonia+mu+${random}@spryker.com | FName${random} | LName${random} ||
@@ -102,19 +102,19 @@ Manage_Merchant_Users
     Zed: perform merchant user search by:    sonia+mu+${random}@spryker.com
     Zed: table should contain non-searchable value:    UpdatedName${random}
     Zed: update Zed user:
-    ...    || oldEmail                       | newEmail | password                   | firstName | lastName ||
+    ...    || oldEmail                       | newEmail | password      | firstName | lastName ||
     ...    || sonia+mu+${random}@spryker.com |          | ${default_secure_password} |           |          ||
     MP: login on MP with provided credentials:    sonia+mu+${random}@spryker.com    ${default_secure_password}
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Merchants
-    Zed: click Action Button in a table for row that contains:     Office King     Edit
+    Zed: click Action Button in a table for row that contains:     Video King     Edit
     Zed: go to tab by link href that contains:    merchant-user
     Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Deactivate
     Zed: table should contain non-searchable value:    Deactivated
     MP: login on MP with provided credentials and expect error:    sonia+mu+${random}@spryker.com    ${default_secure_password}
     [Teardown]    Run Keywords     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants
-    ...    AND    Zed: click Action Button in a table for row that contains:     Office King     Edit
+    ...    AND    Zed: click Action Button in a table for row that contains:     Video King     Edit
     ...    AND    Zed: go to tab by link href that contains:    merchant-user
     ...    AND    Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Delete
     ...    AND    Zed: submit the form
