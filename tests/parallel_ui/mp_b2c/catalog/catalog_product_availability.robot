@@ -101,7 +101,7 @@ Product_Availability_Calculation
     Yves: assert merchant of product in b2c cart:    availabilityProduct${random}    Spryker
     Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
-    Yves: go to PDP of the product with sku:     availabilitySKU${random}
+    Yves: go to PDP of the product with sku:     availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Zed: login on Zed with provided credentials:    ${dynamic_spryker_second_merchant}
     Zed: update warehouse:    

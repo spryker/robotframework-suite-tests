@@ -5,45 +5,19 @@ Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
 Test Tags    robot:recursive-stop-on-failure    group_two
 Resource    ../../../../resources/common/common.robot
-Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
-Resource    ../../../../resources/common/common_zed.robot
-Resource    ../../../../resources/common/common_mp.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
-Resource    ../../../../resources/steps/shopping_lists_steps.robot
-Resource    ../../../../resources/steps/checkout_steps.robot
-Resource    ../../../../resources/steps/order_history_steps.robot
-Resource    ../../../../resources/steps/product_set_steps.robot
-Resource    ../../../../resources/steps/catalog_steps.robot
-Resource    ../../../../resources/steps/agent_assist_steps.robot
-Resource    ../../../../resources/steps/company_steps.robot
-Resource    ../../../../resources/steps/customer_account_steps.robot
-Resource    ../../../../resources/steps/zed_users_steps.robot
-Resource    ../../../../resources/steps/products_steps.robot
-Resource    ../../../../resources/steps/orders_management_steps.robot
-Resource    ../../../../resources/steps/zed_customer_steps.robot
-Resource    ../../../../resources/steps/zed_discount_steps.robot
-Resource    ../../../../resources/steps/zed_availability_steps.robot
-Resource    ../../../../resources/steps/zed_cms_page_steps.robot
-Resource    ../../../../resources/steps/merchant_profile_steps.robot
-Resource    ../../../../resources/steps/zed_marketplace_steps.robot
-Resource    ../../../../resources/steps/mp_profile_steps.robot
-Resource    ../../../../resources/steps/mp_orders_steps.robot
-Resource    ../../../../resources/steps/mp_offers_steps.robot
-Resource    ../../../../resources/steps/mp_products_steps.robot
-Resource    ../../../../resources/steps/mp_account_steps.robot
-Resource    ../../../../resources/steps/mp_dashboard_steps.robot
-Resource    ../../../../resources/steps/zed_root_menus_steps.robot
-Resource    ../../../../resources/steps/minimum_order_value_steps.robot
-Resource    ../../../../resources/steps/availability_steps.robot
-Resource    ../../../../resources/steps/glossary_steps.robot
-Resource    ../../../../resources/steps/order_comments_steps.robot
-Resource    ../../../../resources/steps/configurable_product_steps.robot
-Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 Resource    ../../../../resources/steps/customer_registration_steps.robot
+Resource    ../../../../resources/steps/zed_customer_steps.robot
+Resource    ../../../../resources/steps/zed_marketplace_steps.robot
+Resource    ../../../../resources/common/common_mp.robot
+Resource    ../../../../resources/steps/mp_offers_steps.robot
+Resource    ../../../../resources/steps/zed_availability_steps.robot
+Resource    ../../../../resources/steps/company_steps.robot
 
 *** Test Cases ***
 Guest_User_Access_Restrictions
+    [Tags]    smoke
     [Documentation]    Checks that guest users see products info and cart but not profile
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
@@ -125,6 +99,7 @@ User_Account
     [Teardown]    Delete dynamic admin user from DB
 
 Update_Customer_Data
+    [Tags]    smoke
     [Documentation]    Checks customer data can be updated from Yves and Zed
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Create dynamic admin user in DB
@@ -326,6 +301,7 @@ Quick_Order
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
 
 Reorder
+    [Tags]    smoke
     [Documentation]    Checks that merchant relation is saved with reorder
     Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -346,6 +322,7 @@ Reorder
     Yves: assert merchant of product in cart or list:    ${available_never_out_of_stock_concrete_sku}    Spryker
 
 Business_on_Behalf
+    [Tags]    smoke
     [Documentation]    Check that BoB user has possibility to change the business unit
     Create dynamic customer in DB    first_name=Oryx${random}    last_name=Bob
     Create dynamic admin user in DB
@@ -361,6 +338,7 @@ Business_on_Behalf
     ...    AND    Delete dynamic admin user from DB
 
 Wishlist_List_Supports_Offers
+    [Tags]    smoke
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -381,6 +359,7 @@ Wishlist_List_Supports_Offers
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
 
 Shopping_List_Contains_Offers
+    [Tags]    smoke
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
     [Setup]    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}

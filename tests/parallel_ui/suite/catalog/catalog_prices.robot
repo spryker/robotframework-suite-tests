@@ -5,42 +5,15 @@ Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
 Test Tags    robot:recursive-stop-on-failure    group_one
 Resource    ../../../../resources/common/common.robot
-Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
-Resource    ../../../../resources/common/common_zed.robot
-Resource    ../../../../resources/common/common_mp.robot
-Resource    ../../../../resources/steps/pdp_steps.robot
-Resource    ../../../../resources/steps/shopping_lists_steps.robot
-Resource    ../../../../resources/steps/checkout_steps.robot
-Resource    ../../../../resources/steps/order_history_steps.robot
-Resource    ../../../../resources/steps/product_set_steps.robot
-Resource    ../../../../resources/steps/catalog_steps.robot
-Resource    ../../../../resources/steps/agent_assist_steps.robot
-Resource    ../../../../resources/steps/company_steps.robot
-Resource    ../../../../resources/steps/customer_account_steps.robot
-Resource    ../../../../resources/steps/zed_users_steps.robot
-Resource    ../../../../resources/steps/products_steps.robot
-Resource    ../../../../resources/steps/orders_management_steps.robot
-Resource    ../../../../resources/steps/zed_customer_steps.robot
-Resource    ../../../../resources/steps/zed_discount_steps.robot
 Resource    ../../../../resources/steps/zed_availability_steps.robot
-Resource    ../../../../resources/steps/zed_cms_page_steps.robot
-Resource    ../../../../resources/steps/zed_marketplace_steps.robot
-Resource    ../../../../resources/steps/zed_root_menus_steps.robot
-Resource    ../../../../resources/steps/minimum_order_value_steps.robot
-Resource    ../../../../resources/steps/availability_steps.robot
-Resource    ../../../../resources/steps/glossary_steps.robot
-Resource    ../../../../resources/steps/order_comments_steps.robot
-Resource    ../../../../resources/steps/configurable_product_steps.robot
-Resource    ../../../../resources/steps/dynamic_entity_steps.robot
-Resource    ../../../../resources/steps/merchants_steps.robot
-Resource    ../../../../resources/steps/configurable_product_steps.robot
-Resource    ../../../../resources/pages/yves/yves_product_configurator_page.robot
-Resource    ../../../../resources/pages/yves/yves_product_details_page.robot
-Resource    ../../../../resources/pages/zed/zed_order_details_page.robot
+Resource    ../../../../resources/steps/pdp_steps.robot
+Resource    ../../../../resources/steps/products_steps.robot
+Resource    ../../../../resources/steps/catalog_steps.robot
 
 *** Test Cases ***
 Volume_Prices
+    [Tags]    smoke
     [Documentation]    Checks that volume prices are applied in cart
     [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
@@ -114,6 +87,7 @@ Product_Original_Price
     [Teardown]    Delete dynamic admin user from DB
 
 Customer_Specific_Prices
+    [Tags]    smoke
     [Documentation]    Checks that product price can be different for different customers
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Create dynamic customer in DB    based_on=${yves_test_company_user_email}

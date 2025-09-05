@@ -5,41 +5,13 @@ Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
 Test Tags    robot:recursive-stop-on-failure    group_two
 Resource    ../../../../resources/common/common.robot
-Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
-Resource    ../../../../resources/common/common_zed.robot
-Resource    ../../../../resources/common/common_mp.robot
-Resource    ../../../../resources/steps/pdp_steps.robot
-Resource    ../../../../resources/steps/shopping_lists_steps.robot
-Resource    ../../../../resources/steps/checkout_steps.robot
-Resource    ../../../../resources/steps/order_history_steps.robot
-Resource    ../../../../resources/steps/product_set_steps.robot
-Resource    ../../../../resources/steps/catalog_steps.robot
-Resource    ../../../../resources/steps/agent_assist_steps.robot
-Resource    ../../../../resources/steps/company_steps.robot
-Resource    ../../../../resources/steps/customer_account_steps.robot
-Resource    ../../../../resources/steps/zed_users_steps.robot
-Resource    ../../../../resources/steps/products_steps.robot
-Resource    ../../../../resources/steps/orders_management_steps.robot
-Resource    ../../../../resources/steps/zed_customer_steps.robot
-Resource    ../../../../resources/steps/zed_discount_steps.robot
-Resource    ../../../../resources/steps/zed_availability_steps.robot
-Resource    ../../../../resources/steps/zed_cms_page_steps.robot
-Resource    ../../../../resources/steps/merchant_profile_steps.robot
 Resource    ../../../../resources/steps/zed_marketplace_steps.robot
-Resource    ../../../../resources/steps/mp_profile_steps.robot
-Resource    ../../../../resources/steps/mp_orders_steps.robot
-Resource    ../../../../resources/steps/mp_offers_steps.robot
+Resource    ../../../../resources/common/common_mp.robot
 Resource    ../../../../resources/steps/mp_products_steps.robot
-Resource    ../../../../resources/steps/mp_account_steps.robot
-Resource    ../../../../resources/steps/mp_dashboard_steps.robot
-Resource    ../../../../resources/steps/zed_root_menus_steps.robot
-Resource    ../../../../resources/steps/minimum_order_value_steps.robot
-Resource    ../../../../resources/steps/availability_steps.robot
-Resource    ../../../../resources/steps/glossary_steps.robot
-Resource    ../../../../resources/steps/order_comments_steps.robot
-Resource    ../../../../resources/steps/configurable_product_steps.robot
-Resource    ../../../../resources/steps/dynamic_entity_steps.robot
+Resource    ../../../../resources/steps/products_steps.robot
+Resource    ../../../../resources/steps/pdp_steps.robot
+Resource    ../../../../resources/steps/catalog_steps.robot
 
 *** Test Cases ***
 Merchant_Portal_Customer_Specific_Prices
@@ -90,7 +62,7 @@ Merchant_Portal_Customer_Specific_Prices
     Yves: go to PDP of the product with sku:    PriceSKU${random}    wait_for_p&s=true
     Yves: merchant's offer/product price should be:    Budget Cameras     €100.00
     Yves: login on Yves with provided credentials:     ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    PriceSKU${random}
+    Yves: go to PDP of the product with sku:    PriceSKU${random}    wait_for_p&s=true
     Yves: merchant's offer/product price should be:    Budget Cameras     €500.00
     MP: login on MP with provided credentials:    ${dynamic_budget_merchant}
     MP: open navigation menu tab:    Products
@@ -101,7 +73,7 @@ Merchant_Portal_Customer_Specific_Prices
     MP: save concrete product
     Repeat Keyword    3    Trigger p&s
     Yves: login on Yves with provided credentials:     ${dynamic_second_customer}
-    Yves: go to PDP of the product with sku:    PriceSKU${random}
+    Yves: go to PDP of the product with sku:    PriceSKU${random}    wait_for_p&s=true
     Yves: merchant's offer/product price should be:    Budget Cameras     €500.00
     [Teardown]    Delete dynamic admin user from DB
 

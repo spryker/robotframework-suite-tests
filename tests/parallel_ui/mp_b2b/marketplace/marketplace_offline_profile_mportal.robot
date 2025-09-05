@@ -66,7 +66,7 @@ Merchant_Profile_Set_to_Offline_from_MP
     Repeat Keyword    3    Trigger multistore p&s
     Yves: go to newly created page by URL:    url=en/merchant/offline-from-mp${random}    delay=5s    iterations=26
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    offlineMP${random}
+    Yves: go to PDP of the product with sku:    offlineMP${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    offline_from_MP${random}    true
     MP: login on MP with provided credentials:    sonia+offline+mp${random}@spryker.com    ${default_secure_password}
     MP: open navigation menu tab:    Profile

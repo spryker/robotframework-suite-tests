@@ -5,39 +5,9 @@ Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
 Test Tags    robot:recursive-stop-on-failure    group_one
 Resource    ../../../../resources/common/common.robot
-Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
-Resource    ../../../../resources/common/common_zed.robot
-Resource    ../../../../resources/common/common_mp.robot
-Resource    ../../../../resources/steps/pdp_steps.robot
-Resource    ../../../../resources/steps/shopping_lists_steps.robot
-Resource    ../../../../resources/steps/checkout_steps.robot
-Resource    ../../../../resources/steps/order_history_steps.robot
-Resource    ../../../../resources/steps/product_set_steps.robot
-Resource    ../../../../resources/steps/catalog_steps.robot
-Resource    ../../../../resources/steps/agent_assist_steps.robot
-Resource    ../../../../resources/steps/company_steps.robot
-Resource    ../../../../resources/steps/customer_account_steps.robot
-Resource    ../../../../resources/steps/zed_users_steps.robot
 Resource    ../../../../resources/steps/products_steps.robot
-Resource    ../../../../resources/steps/orders_management_steps.robot
-Resource    ../../../../resources/steps/zed_customer_steps.robot
-Resource    ../../../../resources/steps/zed_discount_steps.robot
-Resource    ../../../../resources/steps/zed_availability_steps.robot
-Resource    ../../../../resources/steps/zed_cms_page_steps.robot
-Resource    ../../../../resources/steps/zed_marketplace_steps.robot
-Resource    ../../../../resources/steps/zed_root_menus_steps.robot
-Resource    ../../../../resources/steps/minimum_order_value_steps.robot
-Resource    ../../../../resources/steps/availability_steps.robot
-Resource    ../../../../resources/steps/glossary_steps.robot
-Resource    ../../../../resources/steps/order_comments_steps.robot
-Resource    ../../../../resources/steps/configurable_product_steps.robot
-Resource    ../../../../resources/steps/dynamic_entity_steps.robot
-Resource    ../../../../resources/steps/merchants_steps.robot
-Resource    ../../../../resources/steps/configurable_product_steps.robot
-Resource    ../../../../resources/pages/yves/yves_product_configurator_page.robot
-Resource    ../../../../resources/pages/yves/yves_product_details_page.robot
-Resource    ../../../../resources/pages/zed/zed_order_details_page.robot
+Resource    ../../../../resources/steps/pdp_steps.robot
 
 *** Test Cases ***
 Manage_Product
@@ -134,7 +104,7 @@ Manage_Product
     Yves: product price on the PDP should be:    €25.00    wait_for_p&s=true
     Yves: change quantity on PDP:    6
     Yves: try add product to the cart from PDP and expect error:    Item zedManageSKU${random}-color-black only has availability of 5.
-    Yves: go to PDP of the product with sku:    zedManageSKU${random}
+    Yves: go to PDP of the product with sku:    zedManageSKU${random}    wait_for_p&s=true
     Yves: change variant of the product on PDP on:    black
     Yves: change quantity on PDP:    3
     Yves: add product to the shopping cart

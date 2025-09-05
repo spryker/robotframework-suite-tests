@@ -65,7 +65,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     Repeat Keyword    3    Trigger multistore p&s
     Yves: go to newly created page by URL:    url=en/merchant/offline-from-bo${random}    delay=5s    iterations=26
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:    offlineBO${random}
+    Yves: go to PDP of the product with sku:    offlineBO${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    offline_from_BO${random}    true
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Marketplace    Merchants  

@@ -20,7 +20,7 @@ ${shopping_list_sub_navigation_create_list_button}    xpath=//*[contains(@class,
 ${shopping_cart_sub_navigation_widget}    xpath=//header//cart-counter//a[contains(@href,'/cart')]/ancestor::li//ul[contains(@class,'menu')][contains(@class,'wide')]
 ${shopping_cart_sub_navigation_all_carts_button}    //*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//a[contains(.,'All Carts')]
 ${shopping_cart_sub_navigation_create_cart_button}    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//a[contains(.,'Create New Cart')]
-${search_form_header_menu_item}    xpath=//div[@data-qa='component search-form'][@data-search-id='desktop']//input[@name='q']
+${search_form_header_menu_item}    xpath=//div[@data-qa='component search-form'][@data-search-id='desktop']//input[@name='q' and not(ancestor::asset-finder)]
 ${search_form_open_menu_item}    xpath=//div[(contains(@class,'header'))][(contains(@class,'search-open'))]
 ${agent_customer_search_widget}    xpath=//autocomplete-form[@data-qa='component autocomplete-form']//input[contains(@class,'autocomplete-form')][@type='text']
 ${agent_confirm_login_button}    xpath=//agent-control-bar[@data-qa='component agent-control-bar']//button[contains(@class,'button--success')]

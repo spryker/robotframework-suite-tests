@@ -5,41 +5,15 @@ Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
 Test Tags    robot:recursive-stop-on-failure    group_one
 Resource    ../../../../resources/common/common.robot
-Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
-Resource    ../../../../resources/common/common_zed.robot
-Resource    ../../../../resources/common/common_mp.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
-Resource    ../../../../resources/steps/shopping_lists_steps.robot
-Resource    ../../../../resources/steps/checkout_steps.robot
-Resource    ../../../../resources/steps/order_history_steps.robot
-Resource    ../../../../resources/steps/product_set_steps.robot
-Resource    ../../../../resources/steps/catalog_steps.robot
-Resource    ../../../../resources/steps/agent_assist_steps.robot
-Resource    ../../../../resources/steps/company_steps.robot
-Resource    ../../../../resources/steps/customer_account_steps.robot
-Resource    ../../../../resources/steps/zed_users_steps.robot
-Resource    ../../../../resources/steps/products_steps.robot
-Resource    ../../../../resources/steps/orders_management_steps.robot
 Resource    ../../../../resources/steps/zed_customer_steps.robot
-Resource    ../../../../resources/steps/zed_discount_steps.robot
-Resource    ../../../../resources/steps/zed_availability_steps.robot
-Resource    ../../../../resources/steps/zed_cms_page_steps.robot
-Resource    ../../../../resources/steps/merchant_profile_steps.robot
+Resource    ../../../../resources/steps/orders_management_steps.robot
 Resource    ../../../../resources/steps/zed_marketplace_steps.robot
-Resource    ../../../../resources/steps/mp_profile_steps.robot
-Resource    ../../../../resources/steps/mp_orders_steps.robot
+Resource    ../../../../resources/steps/zed_availability_steps.robot
+Resource    ../../../../resources/common/common_mp.robot
 Resource    ../../../../resources/steps/mp_offers_steps.robot
-Resource    ../../../../resources/steps/mp_products_steps.robot
-Resource    ../../../../resources/steps/mp_account_steps.robot
-Resource    ../../../../resources/steps/mp_dashboard_steps.robot
-Resource    ../../../../resources/steps/zed_root_menus_steps.robot
-Resource    ../../../../resources/steps/minimum_order_value_steps.robot
-Resource    ../../../../resources/steps/availability_steps.robot
-Resource    ../../../../resources/steps/glossary_steps.robot
 Resource    ../../../../resources/steps/order_comments_steps.robot
-Resource    ../../../../resources/steps/configurable_product_steps.robot
-Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 
 *** Test Cases ***
 Login_during_checkout
@@ -274,7 +248,6 @@ Checkout_Address_Management
     Zed: shipping address inside xxx shipment should be:    1    Mr First, Last, Shipping Street, 7, Additional street, Spryker, 10247, Geneva, Switzerland
     [Teardown]    Delete dynamic admin user from DB
 
-
 Multiple_Merchants_Order
     [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be split per merchant
     [Setup]    Run Keywords    Create dynamic admin user in DB
@@ -367,6 +340,7 @@ Comments_in_Cart
     [Teardown]    Delete dynamic admin user from DB
 
 Comment_Management_in_the_Cart
+    [Tags]    smoke
     [Documentation]    Editing and deleting comments in carts
     Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}

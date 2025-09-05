@@ -29,6 +29,12 @@ Yves: view the following Product Set:
     ELSE
         Click    xpath=//*[contains(@class,'title')][text()="${productSetName}"]/ancestor::article
     END
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: 'Product Set' page contains the following products:
     [Arguments]    @{product_name_list}    ${productName1}=${EMPTY}     ${productName2}=${EMPTY}     ${productName3}=${EMPTY}     ${productName4}=${EMPTY}     ${productName5}=${EMPTY}     ${productName6}=${EMPTY}     ${productName7}=${EMPTY}     ${productName8}=${EMPTY}     ${productName9}=${EMPTY}     ${productName10}=${EMPTY}     ${productName11}=${EMPTY}     ${productName12}=${EMPTY}     ${productName13}=${EMPTY}     ${productName14}=${EMPTY}     ${productName15}=${EMPTY}
@@ -49,6 +55,12 @@ Yves: change variant of the product on CMS page on:
         Click    xpath=//*[contains(@class,'product-item__container') and descendant::a[contains(.,'${productName}')]]/ancestor::product-item//span[contains(@class,'selection--single')]
         Wait Until Element Is Visible    xpath=//span[contains(@class,'select2-results')]//li[contains(text(),'${variantToSet}')]
         Click    xpath=//span[contains(@class,'select2-results')]//li[contains(text(),'${variantToSet}')]
+    END
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
     END
 
 Yves: add all products to the shopping cart from Product Set

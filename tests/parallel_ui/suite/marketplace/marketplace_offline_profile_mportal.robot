@@ -76,6 +76,6 @@ Merchant_Profile_Set_to_Offline_from_MP
     Yves: go to URL:    en/merchant/offline-from-mp${random}
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
-    Yves: go to PDP of the product with sku:    offlineMP${random}
+    Yves: go to PDP of the product with sku:    offlineMP${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    offline_from_MP${random}    false
     [Teardown]    Delete dynamic admin user from DB

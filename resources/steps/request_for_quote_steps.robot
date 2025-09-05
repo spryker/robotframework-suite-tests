@@ -75,6 +75,22 @@ Yves: change price for the product in the quote request with sku xxx on:
             Log    Page is not loaded
         END
         Sleep    1s
+        TRY
+            Wait Until Element Is Visible    xpath=//product-item[contains(@data-qa,'product-cart-item')]//*[@itemprop='sku' and (text()='${sku}' or @content='${sku}')]/ancestor::product-item//input[contains(@id,'UnitGrossPrice')]    timeout=5s
+        EXCEPT
+            Reload
+            Disable Automatic Screenshots on Failure
+            ${use_default_price_state}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//product-item[contains(@data-qa,'product-cart-item')]//*[@itemprop='sku' and (text()='${sku}' or @content='${sku}')]/ancestor::product-item//input[@type='checkbox'][@checked]
+            Restore Automatic Screenshots on Failure
+            IF    '${use_default_price_state}'=='True'    Uncheck Checkbox    xpath=//product-item[contains(@data-qa,'product-cart-item')]//*[@itemprop='sku' and (text()='${sku}' or @content='${sku}')]/ancestor::product-item//input[@type='checkbox']    force=True
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    Page is not loaded
+            END
+            Sleep    1s
+        END
         Wait Until Element Is Visible    xpath=//product-item[contains(@data-qa,'product-cart-item')]//*[@itemprop='sku' and (text()='${sku}' or @content='${sku}')]/ancestor::product-item//input[contains(@id,'UnitGrossPrice')]
         Type Text    xpath=//product-item[contains(@data-qa,'product-cart-item')]//*[@itemprop='sku' and (text()='${sku}' or @content='${sku}')]/ancestor::product-item//input[contains(@id,'UnitGrossPrice')]    ${priceToSet}
     ELSE
@@ -89,6 +105,22 @@ Yves: change price for the product in the quote request with sku xxx on:
             Log    Page is not loaded
         END
         Sleep    1s
+        TRY
+            Wait Until Element Is Visible    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@id]//ancestor::div[contains(@id,'quote_request_agent_form')]    timeout=5s
+        EXCEPT
+            Reload
+            Disable Automatic Screenshots on Failure
+            ${use_default_price_state}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@type='checkbox'][@checked]
+            Restore Automatic Screenshots on Failure
+            IF    '${use_default_price_state}'=='True'    Click    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//span[@data-qa='component checkbox use_default_price']
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    Page is not loaded
+            END
+            Sleep    1s
+        END
         Wait Until Element Is Visible    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@id]//ancestor::div[contains(@id,'quote_request_agent_form')]
         Type Text    xpath=//article[@data-qa='component quote-request-cart-item']//div[contains(@class,'quote-request-cart-item__column--content')][contains(.,'${sku}')]/ancestor::article//*[contains(@class,'quote-request-cart-item__column--total')]//input[@id]    ${priceToSet}
     END
