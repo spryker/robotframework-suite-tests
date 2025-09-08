@@ -41,7 +41,7 @@ ${verify_ssl}          false
 
 # *** DMS VARIABLES ***
 ${dms}
-${default_dms}    ${True}
+${default_dms}    ${False}
 
 # *** SSP VARIABLES ***
 ${is_ssp}
