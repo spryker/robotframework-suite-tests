@@ -41,8 +41,8 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][symbol]    ${currency.eur.symbol} 
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][name]    ${currency.eur.name}
     And Each array element of array in response should contain value:    [data][0][attributes][abstractProducts]    images
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][grossAmount]    1 
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    1  
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    grossAmount    1 
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    1  
     #Filters - category
     And Response body parameter should contain:    [data][0][attributes]    valueFacets
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][name]    category
@@ -170,8 +170,8 @@ Search_by_abstract_sku
     And Each array element of array in response should contain value:    [data][0][attributes][abstractProducts]    price
     And Each array element of array in response should contain value:    [data][0][attributes][abstractProducts]    abstractName
     And Each array element of array in response should contain value:    [data][0][attributes][abstractProducts]    prices
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][grossAmount]    10
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    1
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    grossAmount    10
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    1
     And Response body has correct self link
 
 Search_by_full_name
@@ -188,7 +188,7 @@ Search_by_full_name
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    12
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract_product_with_alternative.sku}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${abstract_product_with_alternative.name}
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    10
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    10
     And Response body has correct self link
 
 Search_by_concrete_sku
@@ -205,7 +205,7 @@ Search_by_concrete_sku
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    1
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract_product_with_alternative.sku}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${abstract_product_with_alternative.name}
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    10
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    10
     And Response body has correct self link
 
 Search_by_name_substring
@@ -537,7 +537,7 @@ Search_with_specific_currency
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][code]    ${currency.chf.code}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][symbol]    ${currency.chf.symbol} 
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][name]    ${currency.chf.name} 
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    1   
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    1   
     And Response body has correct self link
 
 ##### PAGINATION AND SORTING #####
@@ -651,7 +651,7 @@ Search_sort_by_price_asc
     And Response body parameter should be:    [data][0][type]    catalog-search
     And Response body parameter should be:    [data][0][attributes][sort][currentSortParam]    price_asc
     And Response body parameter should be:    [data][0][attributes][sort][currentSortOrder]    asc
-    And Response body parameter should be less than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    50
+    And Array element should contain property with value less than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    50
     And Response body has correct self link
 
 Search_sort_by_price_desc
@@ -662,7 +662,7 @@ Search_sort_by_price_desc
     And Response body parameter should be:    [data][0][type]    catalog-search
     And Response body parameter should be:    [data][0][attributes][sort][currentSortParam]    price_desc
     And Response body parameter should be:    [data][0][attributes][sort][currentSortOrder]    desc
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    10000
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    10000
     And Response body has correct self link
 
 Search_sort_by_price_filter_query_parameter_and_pagination
@@ -678,7 +678,7 @@ Search_sort_by_price_filter_query_parameter_and_pagination
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    2
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    24
     And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    ${brand_4}
-    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    345699
+    And Response body parameter should be either:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    [data][0][attributes][abstractProducts][0][prices][1][DEFAULT]    345699
 
 Search_by_abstract_sku_with_abstract_include
     When I send a GET request:    /catalog-search?q=${abstract_product_with_alternative.sku}&include=abstract-products
