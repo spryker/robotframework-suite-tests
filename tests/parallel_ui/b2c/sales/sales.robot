@@ -54,7 +54,7 @@ Return_Management
     Yves: check that 'Print Slip' contains the following products:    010_30692994
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    ${dynamic_admin_user}
+    Yves: login on Yves with provided credentials:    ${dynamic_admin_user}    agent_assist=${True}
     Yves: as an agent login under the customer:    ${dynamic_customer}
     Yves: go to user menu:    Orders History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}

@@ -40,8 +40,24 @@ Zed: login on Zed with provided credentials:
         Delete All Cookies
         Zed: go to URL:    /
     END
-    # Delete All Cookies
-    # Reload
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not fully loaded
+    END
+    Disable Automatic Screenshots on Failure
+    ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    ${zed_user_name_field}    timeout=10ms
+    Restore Automatic Screenshots on Failure
+    IF    'FAIL' in $is_login_page
+        Delete All Cookies
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
+        Zed: go to URL:    /
+    END
     Wait Until Element Is Visible    ${zed_user_name_field}
     ${email_value}=    Convert To Lower Case   ${email}
     IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
@@ -50,7 +66,6 @@ Zed: login on Zed with provided credentials:
     # workaround for the issue with deadlocks on concurrent login attempts
     ${is_5xx}=    Click and return True if 5xx occurred:    ${zed_login_button}
     IF    ${is_5xx}
-        Reload
         Delete All Cookies
         TRY
             LocalStorage Clear
@@ -58,7 +73,6 @@ Zed: login on Zed with provided credentials:
             Log    Failed to clear LocalStorage
         END
         Zed: go to URL:    /
-        Delete All Cookies
         Wait Until Element Is Visible    ${zed_user_name_field}
         ${email_value}=    Convert To Lower Case   ${email}
         IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
@@ -70,15 +84,15 @@ Zed: login on Zed with provided credentials:
         Repeat Keyword    3    Wait For Load State
         Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=5s
     EXCEPT
-        Reload
         Delete All Cookies
+        Reload
         TRY
             LocalStorage Clear
         EXCEPT
             Log    Failed to clear LocalStorage
         END
-        Zed: go to URL:    /
         Delete All Cookies
+        Zed: go to URL:    /
         Wait Until Element Is Visible    ${zed_user_name_field}
         ${email_value}=    Convert To Lower Case   ${email}
         IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}

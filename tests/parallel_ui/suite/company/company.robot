@@ -25,7 +25,7 @@ Create_new_company_with_linked_entities_and_customer_in_backoffice
     ...    || sonia+created+cuser+${random}@spryker.com | Ms         | Robot      | User      | Female | ${created_company}| ${created_business_unit} | RobotRole ||
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    ${dynamic_admin_user}
+    Yves: login on Yves with provided credentials:    ${dynamic_admin_user}    agent_assist=${True}
     Yves: as an agent login under the customer:    sonia+created+cuser+${random}@spryker.com
     Yves: go to URL:    /company/user    
     ${location}=    Get Location
@@ -47,7 +47,7 @@ Create_new_company_user_with_linked_entities_in_storefront
     Yves: create new company user:    business_unit=RobotYvesBusinessUnit+${random}    email=sonia+sf+new+cuser+${random}@spryker.com    role=RobotYvesRole+${random}    first_name=Sonia    last_name=NewUser    
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    ${dynamic_admin_user}
+    Yves: login on Yves with provided credentials:    ${dynamic_admin_user}    agent_assist=${True}
     Yves: as an agent login under the customer:    sonia+sf+new+cuser+${random}@spryker.com
     Yves: go to URL:    /company/user    
     ${location}=    Get Location

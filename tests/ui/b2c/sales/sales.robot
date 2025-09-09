@@ -87,7 +87,7 @@ Return_Management
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    returnagent+${random}@spryker.com    ${default_secure_password}
+    Yves: login on Yves with provided credentials:    returnagent+${random}@spryker.com    ${default_secure_password}    agent_assist=${True}
     Yves: as an agent login under the customer:    ${yves_user_email}
     Yves: go to user menu:    Orders History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}

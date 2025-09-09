@@ -25,8 +25,24 @@ MP: login on MP with provided credentials:
         Log    Failed to clear LocalStorage
     END
     MP: go to URL:    /
-    Delete All Cookies
-    Reload
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not fully loaded
+    END
+    Disable Automatic Screenshots on Failure
+    ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    ${mp_user_name_field}    timeout=10ms
+    Restore Automatic Screenshots on Failure
+    IF    'FAIL' in $is_login_page
+        Delete All Cookies
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
+        MP: go to URL:    /
+    END
     Wait Until Element Is Visible    ${mp_user_name_field}
     ${email_value}=    Convert To Lower Case   ${email}
     IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
@@ -35,7 +51,6 @@ MP: login on MP with provided credentials:
     # workaround for the issue with deadlocks on concurrent login attempts
     ${is_5xx}=    Click and return True if 5xx occurred:    ${mp_login_button}
     IF    ${is_5xx}
-        Reload
         Delete All Cookies
         TRY
             LocalStorage Clear

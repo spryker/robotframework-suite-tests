@@ -37,7 +37,7 @@ ${footer_section}=    xpath=//*[@class='footer']
 
 *** Keywords ***
 Yves: login on Yves with provided credentials:
-    [Arguments]    ${email}    ${password}=${default_password}
+    [Arguments]    ${email}    ${password}=${default_password}    ${agent_assist}=${False}
     Set Browser Timeout    ${browser_timeout}
     ${currentURL}=    Get Url
     IF    '/login' not in '${currentURL}'
@@ -47,11 +47,20 @@ Yves: login on Yves with provided credentials:
             EXCEPT
                 Log    Failed to clear LocalStorage
             END
-            # Reload
-            Yves: go to URL:    /login
+            IF    'agent' in '${currentURL}' or ${agent_assist}
+                Yves: go to URL:    /agent/login
+            ELSE
+                Yves: go to URL:    /login
+            END
+    END
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
     END
     Disable Automatic Screenshots on Failure
-    ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    locator=${email_field}    message=Login page is not displayed    timeout=400ms
+    ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    locator=${email_field}    timeout=400ms
     Restore Automatic Screenshots on Failure
     IF    'FAIL' in $is_login_page
         Delete All Cookies
@@ -60,8 +69,11 @@ Yves: login on Yves with provided credentials:
         EXCEPT
             Log    Failed to clear LocalStorage
         END
-        Yves: go to the 'Home' page
-        Yves: go to URL:    /login
+        IF    'agent' in '${currentURL}' or ${agent_assist}
+            Yves: go to URL:    /agent/login
+        ELSE
+            Yves: go to URL:    /login
+        END
     END
     ${currentURL}=    Get Url
     Type Text    ${email_field}    ${email}
@@ -137,7 +149,7 @@ Yves: go to PDP of the product with sku:
                 Take Screenshot    EMBED    fullPage=True
                 Fail    Product '${sku}' is not displayed in the search results or its PDP is not accessible
             END
-            IF    ${index} == 5 or ${index} == 10  
+            IF    ${index} == 5 or ${index} == 10 or ${index} == 15
                 Trigger multistore p&s
             END
             IF    'FAIL' in ${result}   

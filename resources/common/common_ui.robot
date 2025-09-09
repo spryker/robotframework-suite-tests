@@ -3,6 +3,7 @@ Library    Browser    run_on_failure=Take Screenshot \ EMBED \ fullPage=True
 Resource    common.robot
 Resource    ../pages/yves/yves_header_section.robot
 Resource    ../pages/yves/yves_login_page.robot
+Resource    ../pages/yves/yves_catalog_page.robot
 Resource    common_api.robot
 
 *** Variables ***
@@ -357,6 +358,9 @@ Try reloading page until element is/not appear:
         Log    page is not fully loaded
     END
     FOR    ${index}    IN RANGE    0    ${tries}
+        IF    (${index} == 5 or ${index} == 10 or ${index} == 15) and $element == $catalog_product_card_locator
+            Trigger multistore p&s
+        END
         Disable Automatic Screenshots on Failure
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
         Restore Automatic Screenshots on Failure

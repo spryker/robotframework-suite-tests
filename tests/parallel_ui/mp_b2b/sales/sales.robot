@@ -69,7 +69,7 @@ Return_Management
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    ${dynamic_admin_user}
+    Yves: login on Yves with provided credentials:    ${dynamic_admin_user}    agent_assist=${True}
     Yves: as an agent login under the customer:    ${dynamic_customer}
     Yves: go to user menu:    Order History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}

@@ -28,6 +28,19 @@ Zed: update Zed user:
     ELSE
         Zed: click Action Button in a table for row that contains:    ${email}    Edit
     END
+    ${currentURL}=    Get Location
+    TRY
+        Wait Until Element Is Visible    ${zed_user_email_field}
+    EXCEPT
+        Go To    ${currentURL}
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+        IF    ${variable_exists}
+            Zed: click Action Button in a table for row that contains:    ${oldEmail}    Edit
+        ELSE
+            Zed: click Action Button in a table for row that contains:    ${email}    Edit
+        END
+    END
     Wait Until Element Is Visible    ${zed_user_email_field}
     ${currentURL}=    Get Location
     FOR    ${key}    ${value}    IN    &{newUserData}
