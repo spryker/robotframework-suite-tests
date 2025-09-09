@@ -2276,6 +2276,87 @@ Response body array element should contain property with value at least once:
     Should Be Equal As Strings    ${result}    TRUE
     ...    Property '${property_path}' with value '${expected_value}' was not found in array at '${json_path}'
 
+Array element should contain property with value greater than at least once:
+    [Documentation]    Checks that within the array at ${json_path}, at least one element has
+    ...                property ${expected_property} whose numeric value is > ${expected_value}.
+    ...                Elements lacking the property are ignored.
+    ...
+    ...    *Example:*
+    ...    Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    1
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
+    @{arr}=    Get Value From Json    ${response_body}    ${json_path}
+    ${length}=    Get Length    @{arr}
+    Should Be True    ${length} > 0    No elements found at path '${json_path}'.
+
+    ${hit}=    Set Variable    ${False}
+    FOR    ${i}    IN RANGE    0    ${length}
+        ${el}=    Get From List    @{arr}    ${i}
+        ${got}=    Run Keyword And Ignore Error    Get From Dictionary    ${el}    ${expected_property}
+        ${status}=    Set Variable    ${got}[0]
+        ${raw}=       Set Variable    ${got}[1]
+        IF    '${status}' == 'PASS'
+            # Coerce both sides to numbers (int/float or numeric strings)
+            ${act_conv}=    Run Keyword And Ignore Error    Convert To Number    ${raw}
+            IF    '${act_conv}[0]' == 'PASS'
+                ${actual}=    Set Variable    ${act_conv}[1]
+            ELSE
+                ${actual}=    Evaluate    float(${raw})
+            END
+            ${exp_conv}=    Run Keyword And Ignore Error    Convert To Number    ${expected_value}
+            IF    '${exp_conv}[0]' == 'PASS'
+                ${expected}=    Set Variable    ${exp_conv}[1]
+            ELSE
+                ${expected}=    Evaluate    float(${expected_value})
+            END
+
+            IF    ${actual} > ${expected}
+                ${hit}=    Set Variable    ${True}
+                Exit For Loop
+            END
+        END
+    END
+    Should Be True    ${hit}    No element at '${json_path}' has property '${expected_property}' greater than '${expected_value}'.
+
+Array element should contain property with value less than at least once:
+    [Documentation]    Checks that within the array at ${json_path}, at least one element has
+    ...                property ${expected_property} whose numeric value is < ${expected_value}.
+    ...                Elements lacking the property are ignored.
+    ...
+    ...    *Example:*
+    ...    Array element should contain property with value less than at least once:    [data][0][attributes][abstractProducts][0][prices]    ORIGINAL    200000
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
+    @{arr}=    Get Value From Json    ${response_body}    ${json_path}
+    ${length}=    Get Length    @{arr}
+    Should Be True    ${length} > 0    No elements found at path '${json_path}'.
+
+    ${hit}=    Set Variable    ${False}
+    FOR    ${i}    IN RANGE    0    ${length}
+        ${el}=    Get From List    @{arr}    ${i}
+        ${got}=    Run Keyword And Ignore Error    Get From Dictionary    ${el}    ${expected_property}
+        ${status}=    Set Variable    ${got}[0]
+        ${raw}=       Set Variable    ${got}[1]
+        IF    '${status}' == 'PASS'
+            ${act_conv}=    Run Keyword And Ignore Error    Convert To Number    ${raw}
+            IF    '${act_conv}[0]' == 'PASS'
+                ${actual}=    Set Variable    ${act_conv}[1]
+            ELSE
+                ${actual}=    Evaluate    float(${raw})
+            END
+            ${exp_conv}=    Run Keyword And Ignore Error    Convert To Number    ${expected_value}
+            IF    '${exp_conv}[0]' == 'PASS'
+                ${expected}=    Set Variable    ${exp_conv}[1]
+            ELSE
+                ${expected}=    Evaluate    float(${expected_value})
+            END
+
+            IF    ${actual} < ${expected}
+                ${hit}=    Set Variable    ${True}
+                Exit For Loop
+            END
+        END
+    END
+    Should Be True    ${hit}    No element at '${json_path}' has property '${expected_property}' less than '${expected_value}'.
+
 Get company user id by customer reference:
     [Documentation]    This keyword sends the GET request to the ``/company-users?include=customers`` endpoint and returns company user id by customer reference. Sets variable : ``{companyUserId}``
     ...
