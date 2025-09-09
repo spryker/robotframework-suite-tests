@@ -662,7 +662,7 @@ Search_sort_by_price_asc
     And Response body parameter should be:    [data][0][type]    catalog-search
     And Response body parameter should be:    [data][0][attributes][sort][currentSortParam]    price_asc
     And Response body parameter should be:    [data][0][attributes][sort][currentSortOrder]    asc
-    And Array element should contain property with value less than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    50
+    And Array element should contain property with value less than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    1800
     And Response body has correct self link
 
 Search_sort_by_price_desc
