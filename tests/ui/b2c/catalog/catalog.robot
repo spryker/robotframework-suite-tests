@@ -375,7 +375,10 @@ Product_Availability_Calculation
     ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | AT    | gross | default | €        | 75.00  ||
     Zed: change concrete product stock:
     ...    || productAbstract          | productConcrete                     | warehouse n1 | warehouse n1 qty | warehouse n1 never out of stock ||
-    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | Warehouse1   | 5                | false                            ||
+    ...    || availabilitySKU${random} | availabilitySKU${random}-color-grey | Warehouse1   | 5                | false                           ||
+    Zed: update abstract product data:
+    ...    || productAbstract          | name de                              ||
+    ...    || availabilitySKU${random} | DEavailabilityProduct${random} force ||
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: check if cart is not empty and clear it
