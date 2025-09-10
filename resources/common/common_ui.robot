@@ -387,6 +387,12 @@ Try reloading page until element is/not appear:
         END
     END
     IF    ('${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False') or ('${shouldBeDisplayed}'=='false' and '${elementAppears}'=='True')
+        TRY
+            Wait For Load State
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    page is not fully loaded
+        END
         Take Screenshot    EMBED    fullPage=True
         Fail    ${message}
     END

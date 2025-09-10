@@ -614,11 +614,11 @@ Yves: merchant is (not) displaying in Sold By section of PDP:
     [Arguments]    ${merchantName}    ${condition}
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     TRY
-        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]     ${condition}    4    10s
+        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(@data-qa,'merchant-product')]//*[contains(text(),'${merchantName}')]     ${condition}    4    10s
     EXCEPT
         Trigger multistore p&s
         ${currentURL}=    Get Url
-        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]     ${condition}    6    10s
+        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(@data-qa,'merchant-product')]//*[contains(text(),'${merchantName}')]     ${condition}    6    10s
     END
 
 Yves: select random varian if variant selector is available
