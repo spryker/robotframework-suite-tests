@@ -95,6 +95,7 @@ Minimum_Order_Value
 Zed_navigation_ordering_and_naming
     [Tags]    smoke
     [Documentation]    Verifies each left navigation node can be opened. DMS ON: https://spryker.atlassian.net/browse/FRW-7394
+    raise Exception("Force fail")
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: verify first navigation root menus
     Zed: verify root menu icons
