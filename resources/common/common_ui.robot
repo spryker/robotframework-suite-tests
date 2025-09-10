@@ -516,6 +516,7 @@ Click and retry if 5xx occurred:
     Log    ${no_js_error}
     Log    ${page_has_title}
     Go to    ${current_url}
+    Reload
     TRY
         Wait For Load State
         Wait For Load State    domcontentloaded

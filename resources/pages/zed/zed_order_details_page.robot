@@ -16,3 +16,4 @@ ${create_shipment_requested_delivery_date}    id=shipment_group_form_shipment_re
 ${zed_order_details_page_comments}    xpath=//p[@class="comment-title"]//following-sibling::p
 ${create_shipment_button}    xpath=//a[contains(@href,'shipment-gui/create?')]
 ${edit_shipment_button}    xpath=//a[contains(@href,'shipment-gui/edit?')]
+${zed_order_details_main_content_locator}    id=customer

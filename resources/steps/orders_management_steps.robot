@@ -12,6 +12,12 @@ Zed: go to order page:
     [Arguments]    ${orderID}
     Zed: go to URL:    /sales
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
+    ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}    timeout=10ms
+    IF    not ${is_order_page_loaded}
+        Zed: go to URL:    /sales
+        Zed: click Action Button in a table for row that contains:    ${orderID}    View
+        Wait Until Page Contains Element    ${zed_order_details_main_content_locator}    message=Order details page is not loaded
+    END
 
 Zed: go to my order page:
     [Documentation]    Marketplace specific method, to see this page you should be logged in as zed_spryker_merchant_admin_email
@@ -36,16 +42,28 @@ Zed: go to my order page:
         END
     END
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
+    ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}    timeout=10ms
+    IF    not ${is_order_page_loaded}
+        Zed: go to URL:    /merchant-sales-order-merchant-user-gui
+        Zed: perform search by:    ${orderID}
+        Wait Until Page Contains Element    ${zed_order_details_main_content_locator}    message=Order details page is not loaded
+    END
 
 Zed: trigger all matching states inside xxx order:
     [Arguments]    ${orderID}    ${status}
     Zed: go to order page:    ${orderID}
+    ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}    timeout=10ms
+    IF    not ${is_order_page_loaded}
+        Zed: go to order page:    ${orderID}
+        Wait Until Page Contains Element    ${zed_order_details_main_content_locator}    message=Order details page is not loaded
+    END
     Zed: trigger all matching states inside this order:    ${status}
 
 Zed: trigger all matching states inside this order:
     [Arguments]    ${status}    ${delay}=3s    ${iterations}=21
     Trigger oms
     Reload
+    Page Should Contain Element    ${zed_order_details_main_content_locator}    message=Order details page is not loaded
     FOR    ${index}    IN RANGE    1    ${iterations}
         Disable Automatic Screenshots on Failure
         ${order_state_reached}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//div[@id='order-overview']//form[@name='oms_trigger_form']//button[@id='oms_trigger_form_submit'][text()='${status}']
@@ -255,8 +273,13 @@ Yves: check that 'Print Slip' contains the following products:
 Zed: create a return for the following order and product in it:
     [Arguments]    ${orderID}    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     Zed: go to URL:    /sales
-    Zed: perform search by:    ${orderID}
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
+    ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}    timeout=10ms
+    IF    not ${is_order_page_loaded}
+        Zed: go to URL:    /sales
+        Zed: click Action Button in a table for row that contains:    ${orderID}    View
+        Wait Until Page Contains Element    ${zed_order_details_main_content_locator}    message=Order details page is not loaded
+    END
     Wait Until Page Contains Element    xpath=//div[@class='title-action']/a[contains(.,'Return')]
     Click Element by xpath with JavaScript    //div[@class='title-action']/a[contains(.,'Return')]
     Wait Until Page Contains Element    ${zed_create_return_main_content_locator}
@@ -287,8 +310,13 @@ Zed: get the last placed order ID of the customer by email:
 Zed: order has the following number of shipments:
     [Arguments]    ${orderID}    ${expectedShipments}
     Zed: go to URL:    /sales
-    Zed: perform search by:    ${orderID}
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
+    ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}    timeout=10ms
+    IF    not ${is_order_page_loaded}
+        Zed: go to URL:    /sales
+        Zed: click Action Button in a table for row that contains:    ${orderID}    View
+        Wait Until Page Contains Element    ${zed_order_details_main_content_locator}    message=Order details page is not loaded
+    END
     TRY
         Wait Until Element Is Visible    xpath=//table[@data-qa='order-item-list'][1]    timeout=5s
     EXCEPT

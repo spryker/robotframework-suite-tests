@@ -1073,7 +1073,7 @@ Create dynamic customer in DB
             ${unique_id}=    Convert To Integer    ${unique_id}
             ${new_id_customer}=    Evaluate    ${new_id_customer} + ${unique_id}
             ${new_customer_reference}=    Set Variable    dynamic--${new_id_customer}
-            IF    '${email}' == '${EMPTY}'
+            IF    '${email}' == '${EMPTY}' or 'sonia+robot' in '${email}'
                 ${unique}=    Generate Random String    5    [NUMBERS]
                 IF    ${dynamic_second_customer_exists}
                     VAR    ${email}    sonia+robot${unique}@spryker.com

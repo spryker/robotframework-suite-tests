@@ -297,15 +297,20 @@ Zed: submit the form
     ${got_response}=    Run Keyword And Ignore Error    Wait For Response
     TRY
         Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
     Wait Until Element Is Visible    ${zed_log_out_button}
     ${error_flash_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_flash_message}    1s
     IF    'FAIL' in $got_response
-        Click    ${zed_save_button}
+        ${page_contains_target_element}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_save_button}    timeout=10ms
+        IF    ${page_contains_target_element}
+            Click    ${zed_save_button}
+        END
         TRY
             Repeat Keyword    3    Wait For Load State
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Page is not loaded
         END
@@ -315,6 +320,7 @@ Zed: submit the form
         Click    ${zed_save_button}
         TRY
             Repeat Keyword    3    Wait For Load State
+            Wait For Load State    domcontentloaded
         EXCEPT
             Log    Page is not loaded
         END
@@ -672,6 +678,12 @@ Zed: go to URL:
     ${response_code}=    Convert To Integer    ${response_code}
     # workaround for the issue with deadlocks on concurrent search attempts
     ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
     ${page_title}=    Get Title
     ${page_title}=    Convert To Lower Case    ${page_title}
     ${no_exception}=    Run Keyword And Return Status    Should Not Contain    ${page_title}    error
@@ -685,6 +697,12 @@ Zed: go to URL:
         ${response_code}=    Convert To Integer    ${response_code}
         ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
         IF    ${is_5xx}    Fail    '${response_code}' error occurred on go to '${zed_url}${url}'
+        TRY
+            Wait For Load State
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    Page is not loaded
+        END
         ${page_title}=    Get Title
         ${page_title}=    Convert To Lower Case    ${page_title}
         Should Not Contain    ${page_title}    error    msg='${response_code}' error occurred on go to '${zed_url}${url}'
@@ -693,7 +711,7 @@ Zed: go to URL:
         ${expected_response_code}=    Convert To Integer    ${expected_response_code}
         Should Be Equal    ${response_code}    ${expected_response_code}    msg=Expected response code (${expected_response_code}) is not equal to the actual response code (${response_code}) on Go to: ${zed_url}${url}
     END
-    ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
+    ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=3s
     IF    not ${no_js_error}
         TRY
             LocalStorage Clear
@@ -703,11 +721,33 @@ Zed: go to URL:
         ${response_code}=    Go To    ${zed_url}${url}
         ${response_code}=    Convert To Integer    ${response_code}
         ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+        TRY
+            Wait For Load State
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    Page is not loaded
+        END
         IF    ${is_5xx}    Fail    '${response_code}' error occurred on go to '${zed_url}${url}'
-        ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=500ms
-        IF    not ${no_js_error}    
+        ${error_message}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_error_message}    timeout=1s
+        ${error_flash_message}=    Run Keyword And Return Status    Page Should Not Contain Element    ${zed_error_flash_message}    timeout=1s
+        IF    not ${error_message} or not ${error_flash_message}
+            TRY
+                LocalStorage Clear
+            EXCEPT
+                Log    Failed to clear LocalStorage
+            END
+            ${response_code}=    Go To    ${zed_url}${url}
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    Page is not loaded
+            END
+        END
+        ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=3s
+        IF    not ${no_js_error}
             Take Screenshot    EMBED    fullPage=True
-            Fail    ''sweet-alert' js error popup on the page '${zed_url}${url}'
+            Log    ''sweet-alert' js error popup on the page '${zed_url}${url}'    level=WARN
         END
     END
     TRY

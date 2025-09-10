@@ -15,7 +15,13 @@ Zed: create new Merchant with the following data:
     ${merchantData}=    Set Up Keyword Arguments    @{args}
     Zed: go to URL:    /merchant-gui/list-merchant
     Zed: click button in Header:    Add Merchant
-    Wait Until Element Is Visible    ${zed_create_merchant_name_field}
+    TRY
+        Wait Until Element Is Visible    ${zed_create_merchant_name_field}    timeout=10s
+    EXCEPT
+        Zed: go to URL:    /merchant-gui/list-merchant
+        Zed: click button in Header:    Add Merchant
+        Wait Until Element Is Visible    ${zed_create_merchant_name_field}
+    END
     VAR    ${approve}    False
     FOR    ${key}    ${value}    IN    &{merchantData}
         IF    '${key}'=='merchant name' and '${value}' != '${EMPTY}'    
