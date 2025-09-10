@@ -76,6 +76,12 @@ Yves: login on Yves with provided credentials:
         END
     END
     ${currentURL}=    Get Url
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
     Type Text    ${email_field}    ${email}
     Type Text    ${password_field}    ${password}
     Click    ${form_login_button}

@@ -58,6 +58,12 @@ Zed: login on Zed with provided credentials:
         END
         Zed: go to URL:    /
     END
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not fully loaded
+    END
     Wait Until Element Is Visible    ${zed_user_name_field}
     ${email_value}=    Convert To Lower Case   ${email}
     IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
@@ -73,6 +79,12 @@ Zed: login on Zed with provided credentials:
             Log    Failed to clear LocalStorage
         END
         Zed: go to URL:    /
+        TRY
+            Wait For Load State
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    Page is not fully loaded
+        END
         Wait Until Element Is Visible    ${zed_user_name_field}
         ${email_value}=    Convert To Lower Case   ${email}
         IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
@@ -82,10 +94,8 @@ Zed: login on Zed with provided credentials:
     END
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=5s
+        Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=15s
     EXCEPT
-        Delete All Cookies
-        Reload
         TRY
             LocalStorage Clear
         EXCEPT
@@ -93,13 +103,19 @@ Zed: login on Zed with provided credentials:
         END
         Delete All Cookies
         Zed: go to URL:    /
+        TRY
+            Wait For Load State
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    Page is not fully loaded
+        END
         Wait Until Element Is Visible    ${zed_user_name_field}
         ${email_value}=    Convert To Lower Case   ${email}
         IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
         Type Text    ${zed_user_name_field}    ${email}
         Type Text    ${zed_password_field}    ${password}
         Click    ${zed_login_button}
-        Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=10s
+        Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=15s
     END
 
 Zed: login with deactivated user/invalid data:

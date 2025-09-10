@@ -35,13 +35,19 @@ MP: login on MP with provided credentials:
     ${is_login_page}=    Run Keyword And Ignore Error    Page Should Contain Element    ${mp_user_name_field}    timeout=10ms
     Restore Automatic Screenshots on Failure
     IF    'FAIL' in $is_login_page
-        Delete All Cookies
         TRY
             LocalStorage Clear
         EXCEPT
             Log    Failed to clear LocalStorage
         END
+        Delete All Cookies
         MP: go to URL:    /
+    END
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not fully loaded
     END
     Wait Until Element Is Visible    ${mp_user_name_field}
     ${email_value}=    Convert To Lower Case   ${email}
@@ -51,13 +57,19 @@ MP: login on MP with provided credentials:
     # workaround for the issue with deadlocks on concurrent login attempts
     ${is_5xx}=    Click and return True if 5xx occurred:    ${mp_login_button}
     IF    ${is_5xx}
-        Delete All Cookies
         TRY
             LocalStorage Clear
         EXCEPT
             Log    Failed to clear LocalStorage
         END
+        Delete All Cookies
         MP: go to URL:    /
+        TRY
+            Wait For Load State
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    Page is not fully loaded
+        END
         Wait Until Element Is Visible    ${mp_user_name_field}
         ${email_value}=    Convert To Lower Case   ${email}
         IF    '+merchant+' in '${email_value}'    VAR    ${password}    ${default_secure_password}
@@ -66,20 +78,32 @@ MP: login on MP with provided credentials:
         Click    ${mp_login_button}
     END
     Disable Automatic Screenshots on Failure
-    ${login_success}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    ${mp_user_menu_button}    MP: Login failed! Retrying...    timeout=5s
+    ${login_success}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    ${mp_user_menu_button}    MP: Login failed! Retrying...    timeout=15s
     Restore Automatic Screenshots on Failure
     IF    'FAIL' in $login_success
-        Delete All Cookies
         TRY
             LocalStorage Clear
         EXCEPT
             Log    Failed to clear LocalStorage
         END
+        Delete All Cookies
         MP: go to URL:    /
+        TRY
+            Wait For Load State
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    Page is not fully loaded
+        END
         Wait Until Element Is Visible    ${mp_user_name_field}
         Type Text    ${mp_user_name_field}    ${email}
         Type Text    ${mp_password_field}    ${password}
         Click    ${mp_login_button}
+    END
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not fully loaded
     END
     Wait Until Element Is Visible    ${mp_user_menu_button}    MP: Login failed!    timeout=15s
 
