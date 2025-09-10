@@ -241,6 +241,7 @@ Zed: click Action Button in a table for row that contains:
     Click and retry if 5xx occurred:    xpath=(//table[contains(@class,'dataTable')]/tbody//td[contains(text(),'${row_content}') and not(contains(text(),'service'))]/../td[contains(@class,'column-Action') or contains(@class,'column-action')]/*[contains(.,'${zed_table_action_button_locator}')])[1]
     TRY
         Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
     EXCEPT
         Log    Page is not loaded
     END
@@ -708,5 +709,11 @@ Zed: go to URL:
             Take Screenshot    EMBED    fullPage=True
             Fail    ''sweet-alert' js error popup on the page '${zed_url}${url}'
         END
+    END
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
     END
     RETURN    ${response_code}

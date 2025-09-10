@@ -192,8 +192,21 @@ Zed: create dynamic merchant user:
     EXCEPT
         Log    Page is not loaded
     END
-    Zed: click Action Button in a table for row that contains:     ${merchant}     Edit
-    Zed: Check checkbox by Label:    Active
+    TRY
+        Zed: click Action Button in a table for row that contains:     ${merchant}     Edit
+    EXCEPT
+        # Retry once, in case of a transient issue
+        Zed: go to URL:    /merchant-gui/list-merchant
+        Zed: click Action Button in a table for row that contains:     ${merchant}     Edit
+    END
+    TRY
+        Zed: Check checkbox by Label:    Active
+    EXCEPT
+        # Retry once, in case of a transient issue
+        Zed: go to URL:    /merchant-gui/list-merchant
+        Zed: click Action Button in a table for row that contains:     ${merchant}     Edit
+        Zed: Check checkbox by Label:    Active
+    END
     Zed: go to tab by link href that contains:    merchant-user
     Click and retry if 5xx occurred:    ${zed_add_merchant_user_button}
     Wait Until Element Is Visible    ${zed_create_merchant_user_email_field}
