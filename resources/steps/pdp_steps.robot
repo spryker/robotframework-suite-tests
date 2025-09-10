@@ -617,6 +617,7 @@ Yves: merchant is (not) displaying in Sold By section of PDP:
         Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]     ${condition}    4    10s
     EXCEPT
         Trigger multistore p&s
+        ${currentURL}=    Get Url
         Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]     ${condition}    6    10s
     END
 
