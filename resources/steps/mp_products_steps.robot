@@ -248,7 +248,15 @@ MP: fill concrete product fields:
 
 MP: save concrete product
     Click    ${product_concrete_submit_button}
-    Wait Until Element Is Visible    ${product_updated_popup}
+    TRY
+        Wait Until Element Is Visible    ${product_updated_popup}
+    EXCEPT
+        ${page_contains_submit_button}=    Run Keyword And Return Status    Page Should Contain Element    ${product_concrete_submit_button}    timeout=10ms
+        IF    ${page_contains_submit_button}
+            Click With Options    ${product_concrete_submit_button}    force=True
+            Wait Until Element Is Visible    ${product_updated_popup}
+        END
+    END
     MP: remove notification wrapper
     TRY
         Repeat Keyword    3    Wait For Load State

@@ -12,7 +12,7 @@ Zed: go to order page:
     [Arguments]    ${orderID}
     Zed: go to URL:    /sales
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
-    ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}    timeout=10ms
+    ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}
     IF    not ${is_order_page_loaded}
         Zed: go to URL:    /sales
         Zed: click Action Button in a table for row that contains:    ${orderID}    View
@@ -42,17 +42,23 @@ Zed: go to my order page:
         END
     END
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
-    ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}    timeout=10ms
+    ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}
     IF    not ${is_order_page_loaded}
+        TRY
+            LocalStorage Clear
+        EXCEPT
+            Log    Failed to clear LocalStorage
+        END
         Zed: go to URL:    /merchant-sales-order-merchant-user-gui
         Zed: perform search by:    ${orderID}
+        Zed: click Action Button in a table for row that contains:    ${orderID}    View
         Wait Until Page Contains Element    ${zed_order_details_main_content_locator}    message=Order details page is not loaded
     END
 
 Zed: trigger all matching states inside xxx order:
     [Arguments]    ${orderID}    ${status}
     Zed: go to order page:    ${orderID}
-    ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}    timeout=10ms
+    ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}
     IF    not ${is_order_page_loaded}
         Zed: go to order page:    ${orderID}
         Wait Until Page Contains Element    ${zed_order_details_main_content_locator}    message=Order details page is not loaded
@@ -274,7 +280,7 @@ Zed: create a return for the following order and product in it:
     [Arguments]    ${orderID}    @{sku_list}    ${element1}=${EMPTY}     ${element2}=${EMPTY}     ${element3}=${EMPTY}     ${element4}=${EMPTY}     ${element5}=${EMPTY}     ${element6}=${EMPTY}     ${element7}=${EMPTY}     ${element8}=${EMPTY}     ${element9}=${EMPTY}     ${element10}=${EMPTY}     ${element11}=${EMPTY}     ${element12}=${EMPTY}     ${element13}=${EMPTY}     ${element14}=${EMPTY}     ${element15}=${EMPTY}
     Zed: go to URL:    /sales
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
-    ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}    timeout=10ms
+    ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}
     IF    not ${is_order_page_loaded}
         Zed: go to URL:    /sales
         Zed: click Action Button in a table for row that contains:    ${orderID}    View
@@ -311,7 +317,7 @@ Zed: order has the following number of shipments:
     [Arguments]    ${orderID}    ${expectedShipments}
     Zed: go to URL:    /sales
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
-    ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}    timeout=10ms
+    ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}
     IF    not ${is_order_page_loaded}
         Zed: go to URL:    /sales
         Zed: click Action Button in a table for row that contains:    ${orderID}    View

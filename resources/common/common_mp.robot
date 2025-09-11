@@ -295,7 +295,22 @@ MP: go to URL:
         ${response_code}=    Go To    ${mp_url}${url}
         ${response_code}=    Convert To Integer    ${response_code}
         ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
-        IF    ${is_5xx}    Fail    '${response_code}' error occurred on go to '${mp_url}${url}'
+        IF    ${is_5xx}
+        # final attempt
+            TRY
+                LocalStorage Clear
+                Reload
+            EXCEPT
+                Log    Failed to clear LocalStorage
+            END
+            ${response_code}=    Go To    ${mp_url}${url}
+            ${response_code}=    Convert To Integer    ${response_code}
+            ${is_5xx}=    Evaluate    500 <= ${response_code} < 600
+            IF    ${is_5xx}
+                Take Screenshot    EMBED    fullPage=True
+                Fail    '${response_code}' error occurred on go to '${mp_url}${url}'
+            END
+        END
         ${page_title}=    Get Title
         ${page_title}=    Convert To Lower Case    ${page_title}
         Should Not Contain    ${page_title}    error    msg='${response_code}' error occurred on go to '${mp_url}${url}'
