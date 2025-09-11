@@ -35,12 +35,29 @@ Zed: create a cms page and publish it:
     Type Text    ${zed_cms_page_general_second_locale_url_field}    ${enURL}    delay=50ms
     Sleep    0.5s
     Click    ${zed_cms_page_save_button}
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is already loaded
+    END
     ### Placeholder information input
     Disable Automatic Screenshots on Failure
     ${page_was_created}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//body//*[contains(text(),'Edit Placeholders: ${enName}')]
     Restore Automatic Screenshots on Failure
     IF    '${page_was_created}'=='False'    Click    ${zed_cms_page_save_button}
-    Page Should Contain Element    xpath=//body//*[contains(text(),'Edit Placeholders: ${enName}')]    message=CMS page was not created
+    TRY    
+        Page Should Contain Element    xpath=//body//*[contains(text(),'Edit Placeholders: ${enName}')]    message=CMS page was not created
+    EXCEPT
+        Click    ${zed_cms_page_save_button}
+        TRY
+            Wait For Load State
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    Page is already loaded
+        END
+        Page Should Contain Element    xpath=//body//*[contains(text(),'Edit Placeholders: ${enName}')]    message=CMS page was not created    timeout=10s
+    END
     Scroll Element Into View    ${zed_cms_page_content_second_locale_title_collapsed_section}
     Click    ${zed_cms_page_content_second_locale_title_collapsed_section}
     Disable Automatic Screenshots on Failure

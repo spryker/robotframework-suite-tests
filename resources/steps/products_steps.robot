@@ -12,6 +12,13 @@ Zed: discontinue the following product:
     Zed: go to URL:    /product-management
     Zed: perform search by:    ${productAbstract}
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
+    TRY
+        Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
+    EXCEPT
+        Zed: go to URL:    /product-management
+        Zed: perform search by:    ${productAbstract}
+        Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
+    END
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
     Zed: go to tab by link href that contains:   variants
     Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
@@ -25,6 +32,13 @@ Zed: undo discontinue the following product:
     Zed: go to URL:    /product-management
     Zed: perform search by:    ${productAbstract}
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
+    TRY
+        Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
+    EXCEPT
+        Zed: go to URL:    /product-management
+        Zed: perform search by:    ${productAbstract}
+        Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
+    END
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
     Zed: go to tab by link href that contains:   variants
     Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
@@ -46,6 +60,12 @@ Zed: change concrete product price on:
     ${priceData}=    Set Up Keyword Arguments    @{args}
     Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
+    TRY
+        Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
+    EXCEPT
+        Zed: go to URL:    /product-management
+        Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
+    END
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
     Zed: go to tab by link href that contains:   variants
     Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
@@ -202,6 +222,19 @@ Zed: update abstract product data:
     EXCEPT
         Log    page is not fully loaded
     END
+    TRY
+        Page Should Contain Element    ${zed_pdp_save_button}
+    EXCEPT
+        Zed: go to URL:    /product-management 
+        Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
+        TRY
+            Wait For Load State
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    page is not fully loaded
+        END
+        Page Should Contain Element    ${zed_pdp_save_button}
+    END
     Disable Automatic Screenshots on Failure
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    100ms
     Restore Automatic Screenshots on Failure
@@ -305,6 +338,13 @@ Zed: start new abstract product creation:
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
     Zed: go to URL:    /product-management
     Zed: click button in Header:    Create Product
+    TRY
+        Page Should Contain Element    ${zed_pdp_save_button}
+    EXCEPT
+        Zed: go to URL:    /product-management
+        Zed: click button in Header:    Create Product
+        Page Should Contain Element    ${zed_pdp_save_button}
+    END
     Disable Automatic Screenshots on Failure
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_general_second_locale_expanded_section}    timeout=1s
     Restore Automatic Screenshots on Failure
@@ -394,6 +434,12 @@ Zed: change concrete product data:
     ${priceData}=    Set Up Keyword Arguments    @{args}
     Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
+    TRY
+        Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
+    EXCEPT
+        Zed: go to URL:    /product-management
+        Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
+    END
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
     Zed: go to tab by link href that contains:   variants
     Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
@@ -463,6 +509,12 @@ Zed: change concrete product stock:
     ${stockData}=    Set Up Keyword Arguments    @{args}
     Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
+    TRY
+        Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
+    EXCEPT
+        Zed: go to URL:    /product-management
+        Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
+    END
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
     Zed: go to tab by link href that contains:   variants
     Zed: click Action Button in Variant table for row that contains:    ${productConcrete}    Edit
@@ -537,6 +589,12 @@ Zed: add new concrete product to abstract:
     ${productData}=    Set Up Keyword Arguments    @{args}
     Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
+    TRY
+        Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
+    EXCEPT
+        Zed: go to URL:    /product-management
+        Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
+    END
     Wait Until Element Is Visible    ${zed_pdp_abstract_main_content_locator}
     Zed: click button in Header:    Add Variant
     Wait Until Element Is Visible    ${zed_pdp_add_concrete_main_content_locator}
