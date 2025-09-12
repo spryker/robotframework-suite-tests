@@ -13,7 +13,6 @@ MP: update merchant personal details with data:
     ${personalData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${mp_account_first_name_field}
     FOR    ${key}    ${value}    IN    &{personalData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='firstName' and '${value}' != '${EMPTY}'    Type Text    ${mp_account_first_name_field}    ${value}
         IF    '${key}'=='lastName' and '${value}' != '${EMPTY}'    Type Text    ${mp_account_last_name_field}    ${value}
         IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Type Text    ${mp_account_email_field}    ${value}

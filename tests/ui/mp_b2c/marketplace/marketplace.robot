@@ -91,7 +91,7 @@ Merchant_Profile_Set_to_Offline_from_MP
     Yves: go to URL:    en/merchant/video-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
     Yves: perform search by:    Video King
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
@@ -118,7 +118,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     ...    AND    Trigger oms
     Yves: go to the 'Home' page
     Yves: perform search by:    Video King
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
@@ -132,7 +132,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     Yves: go to URL:    en/merchant/video-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
     Yves: perform search by:    Video King
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
@@ -200,19 +200,19 @@ Manage_Merchant_Users
     Zed: table should contain non-searchable value:    UpdatedName${random}
     Zed: update Zed user:
     ...    || oldEmail                       | newEmail | password      | firstName | lastName ||
-    ...    || sonia+mu+${random}@spryker.com |          | Change123!321 |           |          ||
-    MP: login on MP with provided credentials:    sonia+mu+${random}@spryker.com    Change123!321
+    ...    || sonia+mu+${random}@spryker.com |          | ${default_secure_password} |           |          ||
+    MP: login on MP with provided credentials:    sonia+mu+${random}@spryker.com    ${default_secure_password}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: click Action Button in a table for row that contains:     Video King     Edit
-    Zed: go to tab:     Users
+    Zed: go to tab by link href that contains:    merchant-user
     Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Deactivate
     Zed: table should contain non-searchable value:    Deactivated
-    MP: login on MP with provided credentials and expect error:    sonia+mu+${random}@spryker.com    Change123!321
+    MP: login on MP with provided credentials and expect error:    sonia+mu+${random}@spryker.com    ${default_secure_password}
     [Teardown]    Run Keywords     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants
     ...    AND    Zed: click Action Button in a table for row that contains:     Video King     Edit
-    ...    AND    Zed: go to tab:     Users
+    ...    AND    Zed: go to tab by link href that contains:    merchant-user
     ...    AND    Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Delete
     ...    AND    Zed: submit the form
 
@@ -306,7 +306,7 @@ Create_New_Offer
     Yves: merchant's offer/product price should be:    Budget Cameras    €200.00
     Yves: select xxx merchant's offer:    Budget Cameras
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in b2c cart:    SprykerProduct${random}    Budget Cameras
     Yves: shopping cart contains product with unit price:    SprykerSKU${random}-2    SprykerProduct${random}    200
@@ -380,7 +380,7 @@ Fulfill_Order_from_Merchant_Portal
     Yves: go to PDP of the product with sku:    104
     Yves: select xxx merchant's offer:    Budget Cameras
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in b2c cart:    ${one_variant_product_of_main_merchant_abstract_name}    Spryker
     Yves: assert merchant of product in b2c cart:    ${product_with_multiple_offers_abstract_name}    Budget Cameras
     Yves: assert merchant of product in b2c cart:    ${second_product_with_multiple_offers_abstract_name}    Video King
@@ -425,22 +425,22 @@ Search_for_Merchant_Offers_and_Products
     [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers
     Yves: go to the 'Home' page
     Yves: perform search by:    Video King
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: select random varian if variant selector is available
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: perform search by:    Spryker
     Yves: change sorting order on catalog page:    Sort by name ascending
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: select random varian if variant selector is available
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: perform search by:    ${EMPTY}
     Yves: select filter value:    Merchant    Budget Cameras
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: select random varian if variant selector is available
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
 
 Merchant_Portal_Product_Volume_Prices
-    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete
+    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Fallback to default price after delete
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products
     MP: click on create new entity button:    Create Product
@@ -479,7 +479,7 @@ Merchant_Portal_Product_Volume_Prices
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Video King     €10.00
     Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    VPNewProduct${random}    VPNewProduct${random}    40.00
     Yves: assert merchant of product in b2c cart:    VPNewProduct${random}    Video King
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -494,7 +494,7 @@ Merchant_Portal_Product_Volume_Prices
     Yves: change quantity using '+' or '-' button № times:    +    3
     Yves: product price on the PDP should be:    €100.00
     Yves: merchant's offer/product price should be:    Video King     €100.00
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    VPNewProduct${random}    VPNewProduct${random}    400.00
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -503,7 +503,7 @@ Merchant_Portal_Product_Volume_Prices
     ...    AND    Trigger p&s
 
 Merchant_Portal_Offer_Volume_Prices
-    [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Falback to default price after delete.
+    [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Fallback to default price after delete.
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products
@@ -565,7 +565,7 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Video King     €10.00
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in b2c cart:    OfferNewProduct${random}    Video King
     Yves: shopping cart contains product with unit price:    OfferNewProduct${random}    OfferNewProduct${random}    40
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -582,7 +582,7 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: change quantity using '+' or '-' button № times:    +    3
     Yves: product price on the PDP should be:    €200.00
     Yves: merchant's offer/product price should be:    Video King     €200.00
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    OfferNewProduct${random}    OfferNewProduct${random}    800
     [Teardown]    Run Keywords    Yves: check if cart is not empty and clear it
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -604,13 +604,13 @@ Merchant_Portal_My_Account
     Zed: table should contain non-searchable value:    Active
     Zed: update Zed user:
     ...    || oldEmail                           | newEmail | password      | firstName | lastName ||
-    ...    || sonia+editmu+${random}@spryker.com |          | Change123!321 |           |          ||
-    MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    Change123!321
+    ...    || sonia+editmu+${random}@spryker.com |          | ${default_secure_password} |           |          ||
+    MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    ${default_secure_password}
     MP: update merchant personal details with data:
     ...    || firstName               | lastName                | email | currentPassword | newPassword          ||
-    ...    || MPUpdatedFName${random} | MPUpdatedLName${random} |       | Change123!321   | UpdatedChange123!321 ||
+    ...    || MPUpdatedFName${random} | MPUpdatedLName${random} |       | ${default_secure_password}   | Updated${default_secure_password} ||
     MP: click submit button
-    MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    UpdatedChange123!321
+    MP: login on MP with provided credentials:    sonia+editmu+${random}@spryker.com    Updated${default_secure_password}
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Users    Users
     Zed: table should contain:    MPUpdatedFName${random}
@@ -632,9 +632,9 @@ Merchant_Portal_Dashboard
     Zed: table should contain non-searchable value:    Active
     Zed: update Zed user:
     ...    || oldEmail                             | newEmail | password      | firstName | lastName ||
-    ...    || sonia+dahboard+${random}@spryker.com |          | Change123!321 |           |          ||
+    ...    || sonia+dahboard+${random}@spryker.com |          | ${default_secure_password} |           |          ||
     Trigger multistore p&s
-    MP: login on MP with provided credentials:    sonia+dahboard+${random}@spryker.com    Change123!321
+    MP: login on MP with provided credentials:    sonia+dahboard+${random}@spryker.com    ${default_secure_password}
     MP: click button on dashboard page and check url:    Manage Offers    /product-offers
     MP: click button on dashboard page and check url:    Add Offer    /product-list
     MP: click button on dashboard page and check url:    Manage Orders    /orders
@@ -773,7 +773,7 @@ Manage_Merchant_Product
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Budget Cameras     €10.00
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    manageProduct${random}    manageProduct${random}    30.00
     Yves: assert merchant of product in b2c cart:    manageProduct${random}    Budget Cameras
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
@@ -829,7 +829,7 @@ Manage_Merchant_Product
     ...    AND    Trigger multistore p&s
 
 Merchant_Product_Original_Price
-    [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
+    [Documentation]    checks that Original price is displayed on the PDP and in Catalog
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products
     MP: click on create new entity button:    Create Product

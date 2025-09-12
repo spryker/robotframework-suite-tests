@@ -57,15 +57,30 @@ Zed: create new Store:
 
 Zed: perform store search by:
     [Arguments]    ${search_key}
+    # Build two safe regex fragments for the full term:
+    # - enc1: percent-encoded (spaces -> %20)
+    # - enc2: form-encoded   (spaces -> +)
+    ${enc1}=    Evaluate    re.escape(urllib.parse.quote("""${search_key}"""))    modules=re,urllib.parse
+    ${enc2}=    Evaluate    re.escape(urllib.parse.quote_plus("""${search_key}"""))    modules=re,urllib.parse
+
+    # Table-agnostic JS RegExp literal for full search[value] (case-insensitive)
+    ${search_matcher}=    Set Variable    /[?&]search%5Bvalue%5D=(?:${enc1}|${enc2})(?:&|$)/i
     Clear Text    ${zed_store_search_field}
-    Type Text    ${zed_store_search_field}    ${search_key}
-    Keyboard Key    press    Enter
     TRY
-        Wait For Response    timeout=10s
-    EXCEPT    
+        ${promise}=    Promise To    Wait For Response    matcher=${search_matcher}    timeout=5s
+        Type Text    ${zed_store_search_field}    ${search_key}
+        Press Keys    ${zed_store_search_field}    Enter
+        ${result}=    Run Keyword And Ignore Error    Wait For    ${promise}
+        IF    '${result}[0]'=='FAIL'    Log    Search by store event failed    level=WARN
+    EXCEPT
         Log    Search event is not fired
     END
-    Repeat Keyword    2    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Zed: store context add timezone:
     [Arguments]    ${timezone}

@@ -13,7 +13,6 @@ Register a new customer with data:
     ${registrationData}=    Set Up Keyword Arguments    @{args}
     Yves: go to user menu:    Sign Up
     FOR    ${key}    ${value}    IN    &{registrationData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='first name'    Type Text    ${registration_first_name_field}    ${value}
         IF    '${key}'=='last name'    Type Text    ${registration_last_name_field}    ${value}
         IF    '${key}'=='e-mail'    Type Text    ${registration_email_field}     ${value}

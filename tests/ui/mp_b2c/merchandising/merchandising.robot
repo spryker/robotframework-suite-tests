@@ -47,11 +47,11 @@ Product_labels
     Trigger product labels update
     Yves: go to first navigation item level:    Sale
     Yves: 1st product card in catalog (not)contains:     Sale label    true
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: PDP contains/doesn't contain:    true    ${pdp_sales_label}[${env}]
     Yves: go to first navigation item level:    New
     Yves: 1st product card in catalog (not)contains:     New label    true
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: PDP contains/doesn't contain:    true    ${pdp_new_label}[${env}]
     [Teardown]    Yves: check if cart is not empty and clear it
 
@@ -72,13 +72,13 @@ Discounts
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    190
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: apply discount voucher to cart:    test${random}
     Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €8.73
     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €17.46
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €87.96
     Yves: promotional product offer is/not shown in cart:    true
     Yves: change quantity of promotional product and add to cart:    +    1
@@ -115,7 +115,7 @@ Product_Relations
     Yves: go to PDP of the product with sku:    ${product_with_relations_upselling_sku}
     Yves: PDP contains/doesn't contain:    false    ${relatedProducts}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
     [Teardown]    Yves: check if cart is not empty and clear it
 
@@ -130,7 +130,7 @@ Product_Relations
 #     Yves: 'Product Set' page contains the following products:    TomTom Golf    Samsung Galaxy S6 edge
 #     Yves: change variant of the product on CMS page on:    Samsung Galaxy S6 edge    128 GB
 #     Yves: add all products to the shopping cart from Product Set
-#     Yves: go to b2c shopping cart
+#     Yves: go to shopping cart page
 #     Yves: shopping cart contains the following products:    TomTom Golf    Samsung Galaxy S6 edge
 #     Yves: delete from b2c cart products with name:    TomTom Golf    Samsung Galaxy S6 edge
 #     [Teardown]    Yves: check if cart is not empty and clear it
@@ -154,7 +154,7 @@ Product_Relations
 #     Yves: select product in the bundle slot:    Slot 6    Sony HDR-MV1
 #     Yves: go to 'Summary' step in the bundle configurator
 #     Yves: add products to the shopping cart in the bundle configurator
-#     Yves: go to b2c shopping cart
+#     Yves: go to shopping cart page
 #     Yves: change quantity of the configurable bundle in the shopping cart on:    Smartstation Kit    2
 #     Yves: click on the 'Checkout' button in the shopping cart
 #     Yves: billing address same as shipping address:    true

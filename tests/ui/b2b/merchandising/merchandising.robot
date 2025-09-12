@@ -109,11 +109,11 @@ Product_labels
     Trigger product labels update
     Yves: go to first navigation item level:    Sale %
     Yves: 1st product card in catalog (not)contains:     Sale label    true
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: PDP contains/doesn't contain:    true    ${pdp_sales_label}[${env}]
     Yves: go to first navigation item level:    New
     Yves: 1st product card in catalog (not)contains:     New label    true
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: PDP contains/doesn't contain:    true    ${pdp_new_label}[${env}] 
 
 Discounts

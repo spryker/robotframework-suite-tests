@@ -8,10 +8,8 @@ MP: fill product price values:
     [Arguments]    @{args}
     ${priceData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{priceData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='product type' and '${value}' == 'concrete'
             ${checkbox_state}=    Get Element Attribute    ${mp_use_abstract_price_checkbox}    class
-            Log    ${checkbox_state}
             IF    'checked' in '${checkbox_state}'
                 Click    ${mp_use_abstract_price_checkbox}
             END
@@ -65,8 +63,13 @@ MP: fill product price values:
             IF    '${key}'=='gross original' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[7]//input    ${value}
             IF    '${key}'=='quantity' and '${value}' != '${EMPTY}'    Type Text    xpath=//web-spy-card[@spy-title='Price']//tbody/tr[${rowNumber}]/td[8]//input    ${value}
         END
-    Repeat Keyword    3    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
     END  
     
 MP: create multi sku product with following data:
@@ -75,15 +78,16 @@ MP: create multi sku product with following data:
     ${productData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${mp_submit_button}
     FOR    ${key}    ${value}    IN    &{productData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='product sku' and '${value}' != '${EMPTY}'    Type Text    ${new_product_sku_field}    ${value}
         IF    '${key}'=='product name' and '${value}' != '${EMPTY}'    
         Run keywords    
             Type Text    ${new_product_name_field}    ${value}
             Click    ${new_product_multiple_concretes_option}
             MP: click submit button
+            Disable Automatic Screenshots on Failure
             ${is_form_submitted}=    Run Keyword And Ignore Error    Element Should Not Contain    ${mp_submit_button}    Next
-            IF    'FAIL' in ${is_form_submitted}   
+            Restore Automatic Screenshots on Failure
+            IF    'FAIL' in $is_form_submitted
                 Sleep    0.5s
                 MP: click submit button
             END
@@ -92,30 +96,55 @@ MP: create multi sku product with following data:
         IF    '${key}'=='first attribute name' and '${value}' != '${EMPTY}'    
         Run keywords    
             Click    ${new_product_super_attribute_first_row_name_selector}
-            Repeat Keyword    3    Wait For Load State
-            Wait For Load State    networkidle
+            TRY
+                Repeat Keyword    3    Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             MP: select option in expanded dropdown:    ${value}
             Click    ${new_product_super_attribute_first_row_values_selector}
-            Repeat Keyword    3    Wait For Load State
-            Wait For Load State    networkidle
+            TRY
+                Repeat Keyword    3    Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
         END
         IF    '${key}'=='first attribute first value' and '${value}' != '${EMPTY}'    MP: select option in expanded dropdown:    ${value}
         IF    '${key}'=='first attribute second value' and '${value}' != '${EMPTY}'    
         Run Keywords
             MP: select option in expanded dropdown:    ${value}
             Click    ${new_product_add_super_attribute_button}
-            Repeat Keyword    3    Wait For Load State
-            Wait For Load State    networkidle
+            TRY
+                Repeat Keyword    3    Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Click    ${new_product_super_attribute_second_row_name_selector}
-            Repeat Keyword    3    Wait For Load State
-            Wait For Load State    networkidle
+            TRY
+                Repeat Keyword    3    Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
         END
         IF    '${key}'=='second attribute name' and '${value}' != '${EMPTY}'    
         Run Keywords
             MP: select option in expanded dropdown:    ${value}
             Click    ${new_product_super_attribute_second_row_values_selector}
-            Repeat Keyword    3    Wait For Load State
-            Wait For Load State    networkidle
+            TRY
+                Repeat Keyword    3    Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
         END
         IF    '${key}'=='second attribute value' and '${value}' != '${EMPTY}'    MP: select option in expanded dropdown:    ${value}
     END
@@ -131,16 +160,23 @@ MP: fill abstract product required fields:
     ${productData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${product_name_de_field}
     FOR    ${key}    ${value}    IN    &{productData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='product name' and '${value}' != '${EMPTY}'
             Click    ${mp_product_name_field_de_tab}
             Sleep    1s
-            Wait For Load State
+            TRY
+                Wait For Load State
+            EXCEPT
+                Log    Page is not loaded
+            END
             Wait Until Element Is Visible    ${product_name_field}
             Type Text    ${product_name_field}    ${value}
             Click    ${mp_product_name_field_en_tab}
             Sleep    1s
-            Wait For Load State
+            TRY
+                Wait For Load State
+            EXCEPT
+                Log    Page is not loaded
+            END
             Wait Until Element Is Visible    ${product_name_field}
             Type Text    ${product_name_field}    ${value}
         END
@@ -165,8 +201,13 @@ MP: fill abstract product required fields:
         IF    '${key}'=='tax set' and '${value}' != '${EMPTY}'    Run Keywords
         ...    Click    ${product_tax_selector}
         ...    AND    MP: select option in expanded dropdown:    ${value}
-    Repeat Keyword    2    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
     END  
 
 MP: save abstract product    
@@ -179,10 +220,8 @@ MP: fill concrete product fields:
     [Arguments]    @{args}
     ${productData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{productData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='is active' and '${value}' != '${EMPTY}'    
             ${checkbox_state}=    Get Element Attribute    xpath=//span[contains(text(),'Concrete Product is active')]/../span[contains(@class,'checkbox')]    class
-            Log    ${checkbox_state}
             IF    'checked' in '${checkbox_state}' and '${value}' == 'false'
                 Click    ${product_concrete_active_checkbox}
             ELSE IF    'checked' not in '${checkbox_state}' and '${value}' == 'true'
@@ -194,7 +233,6 @@ MP: fill concrete product fields:
         END
         IF    '${key}'=='use abstract name' and '${value}' != '${EMPTY}'
             ${checkbox_state}=    Get Element Attribute    xpath=//span[contains(text(),'Use Abstract Product name')]/../../span[contains(@class,'checkbox')]    class
-            Log    ${checkbox_state}
             IF    'checked' in '${checkbox_state}' and '${value}' == 'false'
                 Click    ${product_concrete_use_abstract_name_checkbox}
             ELSE IF    'checked' not in '${checkbox_state}' and '${value}' == 'true'
@@ -210,10 +248,23 @@ MP: fill concrete product fields:
 
 MP: save concrete product
     Click    ${product_concrete_submit_button}
-    Wait Until Element Is Visible    ${product_updated_popup}
+    TRY
+        Wait Until Element Is Visible    ${product_updated_popup}
+    EXCEPT
+        ${page_contains_submit_button}=    Run Keyword And Return Status    Page Should Contain Element    ${product_concrete_submit_button}    timeout=10ms
+        IF    ${page_contains_submit_button}
+            Click With Options    ${product_concrete_submit_button}    force=True
+            Wait Until Element Is Visible    ${product_updated_popup}
+        END
+    END
     MP: remove notification wrapper
-    Repeat Keyword    3    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
     MP: Wait until loader is no longer visible
 
 MP: delete product price row that contains text:
@@ -223,15 +274,25 @@ MP: delete product price row that contains text:
     Click    ${product_delete_price_row_button}
     Wait Until Element Is Visible    ${product_price_deleted_popup}
     MP: remove notification wrapper
-    Repeat Keyword    3    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 MP: open concrete drawer by SKU:
     [Arguments]    ${concreteSKU}
     Click    ${product_drawer_concretes_tab}    
     MP: click on a table row that contains:    ${concreteSKU}
-    Repeat Keyword    3    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
     MP: Wait until loader is no longer visible
 
 MP: delete product price row that contains quantity:
@@ -241,8 +302,13 @@ MP: delete product price row that contains quantity:
         Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
         Click    ${product_delete_price_row_button}
         Wait Until Element Is Visible    ${product_price_deleted_popup}
-        Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        TRY
+            Repeat Keyword    3    Wait For Load State
+            Wait For Load State    domcontentloaded
+            Wait For Load State    networkidle
+        EXCEPT
+            Log    Page is not loaded
+        END
         MP: remove notification wrapper
     END
     IF    '${env}' in ['ui_mp_b2c']
@@ -250,34 +316,57 @@ MP: delete product price row that contains quantity:
         Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[7][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
         Click    ${product_delete_price_row_button}
         Wait Until Element Is Visible    ${product_price_deleted_popup}
-        Repeat Keyword    3    Wait For Load State
-        Wait For Load State    networkidle
+        TRY
+            Repeat Keyword    3    Wait For Load State
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    Page is not loaded
+        END
         MP: remove notification wrapper
     END
 
 MP: add new concrete product:
     [Arguments]    @{args}
     Click    ${product_drawer_concretes_tab}
-    Repeat Keyword    2    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
     Click    ${mp_add_concrete_products_button}
-    Repeat Keyword    2    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
     ${productData}=    Set Up Keyword Arguments    @{args}
     FOR    ${key}    ${value}    IN    &{productData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='first attribute' and '${value}' != '${EMPTY}'    
             Set Test Variable    ${firstAttributeName}    ${value}
         END
         IF    '${key}'=='first attribute value' and '${value}' != '${EMPTY}'
             Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
             Sleep    0.5s
-            Repeat Keyword    2    Wait For Load State
-            Wait For Load State    networkidle
+            TRY
+                Repeat Keyword    3    Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             MP: select option in expanded dropdown:    ${value}
             Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${firstAttributeName}')]/../..//spy-select
-            Repeat Keyword    2    Wait For Load State
-            Wait For Load State    networkidle
+            TRY
+                Repeat Keyword    3    Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    0.5s
         END
         IF    '${key}'=='second attribute' and '${value}' != '${EMPTY}'    
@@ -285,19 +374,40 @@ MP: add new concrete product:
         END
         IF    '${key}'=='second attribute value' and '${value}' != '${EMPTY}'
             Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${secondAttributeName}')]/../..//spy-select
-            Repeat Keyword    2    Wait For Load State
-            Wait For Load State    networkidle
+            TRY
+                Repeat Keyword    3    Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    0.5s
             MP: select option in expanded dropdown:    ${value}
             Click    xpath=//mp-concrete-product-attributes-selector[@class='mp-concrete-product-attributes-selector']//spy-form-item//label[contains(text(),'${secondAttributeName}')]/../..//spy-select
-            Repeat Keyword    2    Wait For Load State
-            Wait For Load State    networkidle
+            TRY
+                Repeat Keyword    3    Wait For Load State
+                Wait For Load State    domcontentloaded
+                Wait For Load State    networkidle
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    0.5s
         END
     END
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+        Wait For Load State    networkidle
+    EXCEPT
+        Log    Page is not loaded
+    END
     Click    ${new_product_submit_create_button}
-    Repeat Keyword    3    Wait For Load State
-    Wait For Load State    networkidle
-    Wait Until Element Is Visible    ${mp_add_concrete_products_button}
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
+    ${is_form_submitted}=    Run Keyword And Return Status    Wait Until Element Is Not Visible    ${new_product_submit_create_button}
+    IF    not ${is_form_submitted}    Click With Options    selector=${new_product_submit_create_button}    force=True
     MP: remove notification wrapper

@@ -29,6 +29,12 @@ Yves: view the following Product Set:
     ELSE
         Click    xpath=//*[contains(@class,'title')][text()="${productSetName}"]/ancestor::article
     END
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: 'Product Set' page contains the following products:
     [Arguments]    @{product_name_list}    ${productName1}=${EMPTY}     ${productName2}=${EMPTY}     ${productName3}=${EMPTY}     ${productName4}=${EMPTY}     ${productName5}=${EMPTY}     ${productName6}=${EMPTY}     ${productName7}=${EMPTY}     ${productName8}=${EMPTY}     ${productName9}=${EMPTY}     ${productName10}=${EMPTY}     ${productName11}=${EMPTY}     ${productName12}=${EMPTY}     ${productName13}=${EMPTY}     ${productName14}=${EMPTY}     ${productName15}=${EMPTY}
@@ -50,6 +56,12 @@ Yves: change variant of the product on CMS page on:
         Wait Until Element Is Visible    xpath=//span[contains(@class,'select2-results')]//li[contains(text(),'${variantToSet}')]
         Click    xpath=//span[contains(@class,'select2-results')]//li[contains(text(),'${variantToSet}')]
     END
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: add all products to the shopping cart from Product Set
     Wait Until Element Is Enabled    ${add_all_product_to_the_shopping_cart}
@@ -61,13 +73,15 @@ Zed: create new product set:
     Zed: go to URL:    /product-set-gui
     Zed: click button in Header:    Create Product Set
     Wait Until Element Is Visible    ${zed_product_set_name_en_field}
-    ${seteData}=    Set Up Keyword Arguments    @{args}
+    ${setData}=    Set Up Keyword Arguments    @{args}
+    Disable Automatic Screenshots on Failure
     ${second_locale_section_expanded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_product_set_general_second_locale_expanded_section}    timeout=3s
+    Restore Automatic Screenshots on Failure
     IF    '${second_locale_section_expanded}'=='False'
         Scroll Element Into View    ${zed_product_set_general_second_locale_collapsed_section}
         Click    ${zed_product_set_general_second_locale_collapsed_section}
     END
-    FOR    ${key}    ${value}    IN    &{seteData}
+    FOR    ${key}    ${value}    IN    &{setData}
         ${key}=    Convert To Lower Case    ${key}
         IF    '${key}'=='name en' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_set_name_en_field}    ${value}
         IF    '${key}'=='name de' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_set_name_de_field}    ${value}
@@ -86,22 +100,58 @@ Zed: create new product set:
             Zed: switch to tab in product set:    Products
             Wait Until Element Is Visible    ${zed_product_set_search_product_table_field}
             Input Text    ${zed_product_set_search_product_table_field}    ${value}
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    3s
             Check Checkbox    ${zed_product_set_search_product_table_select_first_checkbox}
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
         END
         IF    '${key}'=='product 2' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_product_set_search_product_table_field}
             Input Text    ${zed_product_set_search_product_table_field}    ${value}
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    3s
             Check Checkbox    ${zed_product_set_search_product_table_select_first_checkbox}
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
         END
         IF    '${key}'=='product 3' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_product_set_search_product_table_field}
             Input Text    ${zed_product_set_search_product_table_field}    ${value}
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    3s
             Check Checkbox    ${zed_product_set_search_product_table_select_first_checkbox}
+            TRY
+                Wait For Load State
+                Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    Page is not loaded
+            END
             Sleep    1s
         END
     END

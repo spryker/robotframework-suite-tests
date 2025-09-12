@@ -84,6 +84,7 @@ Multistore_Product_Offer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products
     Zed: click Action Button in a table for row that contains:     multistoreProduct${random}     Approve
+    Zed: save abstract product:    multistoreProduct${random}
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     Yves: check if cart is not empty and clear it
@@ -234,7 +235,4 @@ Dynamic_multistore
     ...    AND    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    New Page Store${random}   Deactivate
-    ...    AND    Trigger multistore p&s
-    Zed: delete customer:
-    ...    || email                          ||
-    ...    || sonia+dms${random}@spryker.com ||
+    ...    AND    Zed: delete customer:    sonia+ui+dms${random}@spryker.com

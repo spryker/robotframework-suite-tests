@@ -1,0 +1,27 @@
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Multistore.Multistore Catalog
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace Manage Product
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace Product And Offer
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace Offline Profile Mportal
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace Offline Profile Boffice
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Catalog.Catalog
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace Product Volume Prices
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace Offer Volume Prices
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace Prices
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace Oms
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace Manage Merchant
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Marketplace.Marketplace
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Checkout.Checkout
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Sales.Sales
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Catalog.Catalog Product Availability
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Catalog.Catalog Offer Availability
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Catalog.Catalog Configurable Product
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Customers.Customer
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Company.Company
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Content.Content
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Users.Users
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Administration.Administration
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Merchandising.Merchandising
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Sales.Manage Shipments
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Sales.Refunds
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Data Exchange.Data Exchange
+--suite Robotframework.Tests.Parallel Ui.Mp B2B.Multistore.Multistore Dms

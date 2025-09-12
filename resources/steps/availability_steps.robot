@@ -12,7 +12,6 @@ Zed: update warehouse:
     Zed: click Action Button in a table for row that contains:    ${warehouse}    Edit
     Wait Until Element Is Visible    ${zed_warehouse_name}
     FOR    ${key}    ${value}    IN    &{warehouseData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='name' and '${value}' != '${EMPTY}'    Type Text    ${zed_warehouse_name}    ${value}
         IF    '${key}'=='available' and '${value}' != '${EMPTY}'    Click    xpath=//label[contains(text(),'${value}')]
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'

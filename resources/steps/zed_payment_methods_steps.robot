@@ -21,7 +21,7 @@ Zed: activate/deactivate payment method:
     ELSE
         Zed: uncheck checkbox by label:    Is the Payment Method active?
     END
-    Zed: go to tab:    Store Relation
+    Zed: go to tab by link href that contains:    store-relation
     ${storesList}=    split string    ${stores}    ,
     ${storesListLength}=    get length    ${storesList}
     FOR    ${index}    IN RANGE    0    ${storesListLength}

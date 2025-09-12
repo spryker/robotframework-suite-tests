@@ -6,35 +6,41 @@ Resource    ../common/common.robot
 *** Keywords ***
 Zed: delete customer:
     [Documentation]    Possible argument names: email
-        [Arguments]    @{args}
-        Zed: login on Zed with provided credentials:    ${zed_admin_email}
-        ${registrationData}=    Set Up Keyword Arguments    @{args}
+        [Arguments]    ${email}    ${admin_email}=${zed_admin_email}
         ${currentURL}=    Get Location
-        IF    '/customer' not in '${currentURL}'    Zed: go to URL:    /customer
-        FOR    ${key}    ${value}    IN    &{registrationData}
-            Log    Key is '${key}' and value is '${value}'.
-            Zed: perform search by:    ${value}
-            ${customerExists}=    Run Keyword And Return Status    Element Text Should Be    xpath=//tbody//td[contains(@class,' column-email') and contains(text(),'${value}')]     ${value}
-            IF    '${customerExists}'=='True'
-                Run keywords
-                    Zed: click Action Button in a table for row that contains:    ${value}    Edit
-                    Wait Until Element Is Visible    ${zed_customer_edit_page_title}
-                    Click    ${zed_customer_delete_button}
-                    Wait Until Element Is Visible     ${zed_customer_delete_confirm_button}
-                    Click    ${zed_customer_delete_confirm_button}
-                    Zed: message should be shown:    Customer successfully deleted
-            END
+        ${dynamic_admin_user_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_admin_user}
+        IF    ${dynamic_admin_user_exists} and '${admin_email}' == '${zed_admin_email}'
+            VAR    ${admin_email}    ${dynamic_admin_user}
+        ELSE IF    not ${dynamic_admin_user_exists}
+            VAR    ${admin_email}    ${zed_admin_email}
+        END
+        IF    '${zed_url}' not in '${currentURL}' or '${zed_url}security-gui/login' in '${currentURL}'
+            Zed: login on Zed with provided credentials:    ${admin_email}
+        END
+        Zed: go to URL:    /customer        
+        Zed: perform search by:    ${email}
+        Disable Automatic Screenshots on Failure
+        ${customerExists}=    Run Keyword And Return Status    Element Text Should Be    xpath=//tbody//td[contains(@class,' column-email') and contains(text(),'${email}')]     ${email}
+        Restore Automatic Screenshots on Failure
+        IF    '${customerExists}'=='True'
+            Zed: click Action Button in a table for row that contains:    ${email}    Edit
+            Wait Until Element Is Visible    ${zed_customer_edit_page_title}
+            Click    ${zed_customer_delete_button}
+            Wait Until Element Is Visible     ${zed_customer_delete_confirm_button}
+            Click    ${zed_customer_delete_confirm_button}                    
+            Zed: message should be shown:    Customer successfully deleted
         END
 
 Zed: update company customer data:
     [Arguments]    @{args}
     ${registrationData}=    Set Up Keyword Arguments    @{args}
     Zed: perform search by:    ${first_name}
+    Disable Automatic Screenshots on Failure
     ${customerExists}=    Run Keyword And Return Status    Zed: table should contain non-searchable value:    ${first_name}
+    Restore Automatic Screenshots on Failure
     IF    '${customerExists}'=='True'
         Zed: click Action Button in a table for row that contains:    ${first_name}    Edit
         FOR    ${key}    ${value}    IN    &{registrationData}
-            Log    Key is '${key}' and value is '${value}'.
             IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'
                 Select From List By Label    ${zed_edit_company_user_salutation}    ${value}
             END

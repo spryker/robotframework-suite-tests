@@ -9,7 +9,11 @@ MP: open profile tab:
     [Arguments]    ${profileTabName}
     Wait Until Element Is Visible    xpath=//div[@class='ant-tabs-nav-list']//div[contains(text(),'${profileTabName}')]
     Click    xpath=//div[@class='ant-tabs-nav-list']//div[contains(text(),'${profileTabName}')]
-    Wait For Load State
+    TRY
+        Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 MP: change store status to:
     [Arguments]    ${store_status}
@@ -21,6 +25,12 @@ MP: change store status to:
         Click    ${store_status_checkbox}
     END
     MP: click submit button
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
     Wait Until Element Is Visible    ${mp_success_flyout}    timeout=5s
     Trigger multistore p&s
 
@@ -29,7 +39,6 @@ MP: update profile fields with following data:
     ${profileData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${store_status_checkbox}
     FOR    ${key}    ${value}    IN    &{profileData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_email_field}    ${value}    delay=50ms
         IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_phone_field}    ${value}    delay=50ms
         IF    '${key}'=='delivery time' and '${value}' != '${EMPTY}'    Type Text    ${merchant_profile_delivery_time_en_field}    ${value}    delay=50ms
