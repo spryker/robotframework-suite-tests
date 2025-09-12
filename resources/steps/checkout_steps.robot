@@ -64,6 +64,13 @@ Yves: accept the terms and conditions:
     [Documentation]    ${state} can be true or false
     [Arguments]    ${state}    ${isGuest}=false
     ${state}=    Convert To Lower Case    ${state}
+    ${is_invoice_dob_present}=    Run Keyword And Return Status    Element Should Not Be Visible    ${checkout_payment_invoice_date_of_birth_field}
+    ${is_marketplace_invoice_dob_present}=    Run Keyword And Return Status    Element Should Not Be Visible    ${checkout_payment_marketplace_invoice_date_field}
+    IF    not ${is_invoice_dob_present} or not ${is_marketplace_invoice_dob_present}
+        IF    not ${is_invoice_dob_present}    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.2000
+        IF    not ${is_marketplace_invoice_dob_present}    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.2000
+        Click    ${submit_checkout_form_button}[${env}]
+    END
     IF    '${state}' == 'true' and '${isGuest}'=='false'
         Run keywords
             Wait Until Page Contains Element    xpath=//input[@name='acceptTermsAndConditions']
@@ -387,6 +394,12 @@ Yves: submit form on the checkout
 
 Yves: select the following shipping method for the shipment:
     [Arguments]    ${shipment}    ${shippingProvider}    ${shippingMethod}
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
     IF    '${env}' in ['ui_suite']
         Click    //form[@name='shipmentCollectionForm']/descendant::article[contains(@class,'grid')][${shipment}]/div[last()]//h5[contains(.,'${shippingProvider}')]/following-sibling::ul[1]//label[contains(.,'${shippingMethod}')]/span[contains(@class,'radio__box')]
     ELSE
@@ -395,33 +408,39 @@ Yves: select the following shipping method for the shipment:
 
 Yves: select the following payment method on the checkout and go next:
     [Arguments]    ${paymentMethod}    ${paymentProvider}=${EMPTY}
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
     IF    '${env}'=='ui_b2b' and '${paymentMethod}'=='Invoice'
         Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Disable Automatic Screenshots on Failure
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
-        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
+        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.2000
         Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Invoice'
         Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Disable Automatic Screenshots on Failure
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
-        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.2000
         Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Invoice (Marketplace)'
         Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Disable Automatic Screenshots on Failure
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
-        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.2000
         Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2b'] and '${paymentMethod}'=='Marketplace Invoice'
         Click    //form[@id='payment-form']//li[@class='checkout-list__item'][contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Disable Automatic Screenshots on Failure
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
-        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.2000
         Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    ('${env}'=='ui_suite' and '${paymentProvider}'!='${EMPTY}')
         Click    //form[@name='paymentForm']//h5[contains(text(), '${paymentProvider}')]/following-sibling::ul//label/span[contains(text(), '${paymentMethod}')]
@@ -439,21 +458,21 @@ Yves: select the following payment method on the checkout and go next:
         Disable Automatic Screenshots on Failure
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
-        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
+        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.2000
         Click    ${submit_checkout_form_button}[${env}]    
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Invoice (Marketplace)'
         Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Disable Automatic Screenshots on Failure
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
-        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.2000
         Click    ${submit_checkout_form_button}[${env}]    
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Marketplace Invoice'
         Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Disable Automatic Screenshots on Failure
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
-        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+        IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.2000
         Click    ${submit_checkout_form_button}[${env}]    
     ELSE
         IF    '${paymentMethod}' == 'Invoice' or '${paymentMethod}' == 'invoice'
@@ -462,14 +481,14 @@ Yves: select the following payment method on the checkout and go next:
             Disable Automatic Screenshots on Failure
             ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=400ms
             Restore Automatic Screenshots on Failure
-            IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.1111
+            IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.2000
         ELSE
             ${payment_method_index}=    Set Variable    position()=1
             Click    xpath=(//form[@name='paymentForm']//span[contains(@class,'toggler') and contains(text(),'Invoice')]/preceding-sibling::span[@class='toggler-radio__box'])[${payment_method_index}]
             Disable Automatic Screenshots on Failure
             ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=400ms
             Restore Automatic Screenshots on Failure
-            IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.1111
+            IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.2000
         END
         Click    ${submit_checkout_form_button}[${env}]
     END
