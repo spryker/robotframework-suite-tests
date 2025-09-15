@@ -30,18 +30,24 @@ Zed: create new Company Business Unit for the following company:
     ELSE
         Click    ${zed_bu_company_dropdown_locator}
         Select From List By Label Contains    ${zed_bu_company_dropdown_locator}    ${company_name}
-        Wait For Load State
-        Wait For Load State    domcontentloaded
-        Wait For Load State    networkidle
+        TRY
+            Wait For Load State
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    page is not fully loaded
+        END
         Select From List By Label Contains    ${zed_bu_parent_bu_dropdown_locator}    ${parent_business_unit}
     END
     VAR    ${created_business_unit}    ${business_unit_name}+${random}    scope=TEST
     Type Text    ${zed_bu_name_field}    ${created_business_unit}
     Type Text    ${zed_bu_iban_field}    testiban+${random}
     Type Text    ${zed_bu_bic_field}    testbic+${random}
-    Wait For Load State
-    Wait For Load State    domcontentloaded
-    Wait For Load State    networkidle
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    page is not fully loaded
+    END
     Zed: submit the form
     Wait Until Element Is Visible    ${zed_success_flash_message}
     Wait Until Element Is Visible    ${zed_table_locator}
@@ -73,7 +79,6 @@ Zed: create new Company Role with provided permissions:
     IF  '${is_default}'=='true'     Zed: Check checkbox by Label:  Is Default
     FOR    ${index}    IN RANGE    0    ${new_list_of_permissions}
         ${permission_to_set}=    Get From List    ${permissions_list}    ${index}
-        Log    ${permission_to_set}
         Zed: Check checkbox by Label:   ${permission_to_set}
     END
     ${is_company_dropdown_with_search}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_role_company_dropdown_with_search_locator}    timeout=0.5s
@@ -100,7 +105,6 @@ Zed: Create new Company User with provided details:
     Zed: click button in Header:    Add User
     FOR    ${key}    ${value}    IN    &{company_user_data}
         ${key}=   Convert To Lower Case   ${key}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='email' and '${value}' != '${EMPTY}'   Type Text    ${zed_create_company_user_email_field}    ${value}
         IF    '${key}'=='salutation' and '${value}' != '${EMPTY}'   Select From List By Value    ${zed_create__company_user_salutation_dropdown}    ${value}
         IF    '${key}'=='first_name' and '${value}' != '${EMPTY}'   Type Text    ${zed_create_company_user_first_name_field}    ${value}
@@ -135,7 +139,7 @@ Zed: attach company user to the following BU with role:
         Type Text    ${zed_edit_company_user_search_select_field}    ${business_unit}
         Click    xpath=(//input[@type='search']/../..//ul[contains(.,'${business_unit}')])[1]
     ELSE
-        Select From List By Label    ${zed_business_unit_selector}    ${business_unit}
+        Select From List By Label Contains    ${zed_business_unit_selector}    ${business_unit}
     END
     Zed: Check checkbox by Label:    ${role_checkbox}
     Zed: submit the form
@@ -151,10 +155,18 @@ Yves: 'Business Unit' dropdown contains:
 
 Zed: delete company user xxx withing xxx company business unit:
     [Documentation]    Possible argument names: company user name
-    [Arguments]    ${companyUserName}    ${companyBusinessUnit}
-    Zed: login on Zed with provided credentials:    ${zed_admin_email}
+    [Arguments]    ${companyUserName}    ${companyBusinessUnit}    ${admin_email}=${zed_admin_email}
     ${currentURL}=    Get Location
-    IF    '/customer' not in '${currentURL}'    Zed: go to URL:    /company-user-gui/list-company-user
+    ${dynamic_admin_user_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_admin_user}
+    IF    ${dynamic_admin_user_exists} and '${admin_email}' == '${zed_admin_email}'
+        VAR    ${admin_email}    ${dynamic_admin_user}
+    ELSE IF    not ${dynamic_admin_user_exists}
+        VAR    ${admin_email}    ${zed_admin_email}
+    END
+    IF    '${zed_url}' not in '${currentURL}' or '${zed_url}security-gui/login' in '${currentURL}'
+        Zed: login on Zed with provided credentials:    ${admin_email}
+    END
+    Zed: go to URL:    /company-user-gui/list-company-user
     Zed: perform search by:    ${companyUserName}
     ${customerExists}=    Run Keyword And Return Status    Table should contain    ${zed_table_locator}    ${companyBusinessUnit}
     IF    '${customerExists}'=='True'
@@ -179,7 +191,6 @@ Yves: assign the following permissions to the company role:
     ${list_of_permissions}=    Get Length    ${permissions_list}
     FOR    ${index}    IN RANGE    0    ${list_of_permissions}
         ${permission_to_set}=    Get From List    ${permissions_list}    ${index}
-        Log    ${permission_to_set}
         Click    xpath=//*[contains(@data-qa,'permission-table')]//table//td[contains(.,'${permission_to_set}')]/ancestor::tr//td//button
         Sleep    0.5s
     END

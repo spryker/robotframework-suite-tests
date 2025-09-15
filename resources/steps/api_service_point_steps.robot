@@ -107,7 +107,6 @@ Create service point with address and store relations in DB
         ...
     [Arguments]    ${servicePointUuid}    ${servicePointAddressUuid}=${None}    ${storeName}=DE
     Create service point in DB    uuid=${servicePointUuid}    storeName=${storeName}
-    Log    ${servicePointAddressUuid}
     Create service point address in DB    servicePointUuid=${servicePointUuid}    uuid=${servicePointAddressUuid}
 
 Create service in DB

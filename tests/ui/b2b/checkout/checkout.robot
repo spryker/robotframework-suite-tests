@@ -164,7 +164,7 @@ Request_for_Quote
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    ${default_secure_password}
+    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    ${default_secure_password}    agent_assist=${True}
     Yves: header contains/doesn't contain:    true    ${quoteRequestsWidget}
     Yves: go to 'Agent Quote Requests' page through the header
     Yves: 'Quote Requests' page is displayed
@@ -189,7 +189,7 @@ Request_for_Quote
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    ${default_secure_password}
+    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    ${default_secure_password}    agent_assist=${True}
     Yves: move mouse over header menu item:     ${quoteRequestsWidget}
     Yves: 'Quote Requests' widget is shown
     Yves: go to the quote request through the header with reference:    ${lastCreatedRfQ}
@@ -402,7 +402,7 @@ Configurable_Product_Checkout
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,352.44
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    Ship
     Zed: trigger all matching states inside this order:    Stock update

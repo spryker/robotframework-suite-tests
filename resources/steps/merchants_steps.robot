@@ -12,7 +12,7 @@ Zed: assign product list to merchant relation:
     Zed: perform search by:    ${business_unit_owner}
     Zed: click Action Button(without search) in a table for row that contains:    ${merchant_relation}    Edit
     ${is_list_already_selected}=    Run Keyword And Ignore Error    Page Should Contain Element    xpath=//*[@id='merchant-relationship_productListIds']//option[contains(.,'${product_list}')][@selected]    timeout=0.5s
-    IF    'FAIL' in ${is_list_already_selected}
+    IF    'FAIL' in $is_list_already_selected
         Type Text    xpath=//select[@id="merchant-relationship_productListIds"]/following-sibling::*//input[contains(@class,'select2-search')]    ${product_list}    delay=50ms
         Wait Until Element Is Visible    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${product_list}')]
         Click    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${product_list}')]
@@ -28,7 +28,7 @@ Zed: unassign all product lists from merchant relation:
     Zed: perform search by:    ${business_unit_owner}
     Zed: click Action Button(without search) in a table for row that contains:    ${merchant_relation}    Edit
     ${are_lists_already_selected}=    Run Keyword And Ignore Error    Page Should Contain Element    xpath=(//select[@id="merchant-relationship_productListIds"]/following-sibling::*//*[contains(@class,'remove')][contains(@class,'choice')])[1]    timeout=0.5s
-    IF    'PASS' in ${are_lists_already_selected}
+    IF    'PASS' in $are_lists_already_selected
         ${iterations}=    Get Element Count    xpath=//select[@id="merchant-relationship_productListIds"]/following-sibling::*//*[contains(@class,'remove')][contains(@class,'choice')]
         FOR    ${index}    IN RANGE    1    ${iterations}+1
             Click    xpath=(//select[@id="merchant-relationship_productListIds"]/following-sibling::*//*[contains(@class,'remove')][contains(@class,'choice')])[${index}]
@@ -65,7 +65,7 @@ Zed: remove product list with title:
     Go To    ${zed_url}product-list-gui
     Zed: perform search by:    ${product_list_title}
     ${is_product_list_exists}=    Run Keyword And Ignore Error    Zed: table should contain non-searchable value:    ${product_list_title}
-    IF    'PASS' in ${is_product_list_exists}
+    IF    'PASS' in $is_product_list_exists
         Zed: click Action Button(without search) in a table for row that contains:    ${product_list_title}    Remove List
         Wait Until Element Is Visible    ${zed_product_list_confirm_removal_button}
         Click    ${zed_product_list_confirm_removal_button}

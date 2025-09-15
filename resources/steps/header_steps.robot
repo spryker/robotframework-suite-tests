@@ -33,8 +33,12 @@ Yves: perform search by:
     Type Text    ${search_form_header_menu_item}    ${searchTerm}
     Keyboard Key    press    Enter
     Wait Until Page Contains Element    ${catalog_main_page_locator}[${env}]
-    Repeat Keyword    3    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT    
+        Log    Page is not loaded
+    END
 
 Yves: go to company menu item:
     [Arguments]    ${company_menu_item}

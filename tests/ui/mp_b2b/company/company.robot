@@ -25,8 +25,7 @@ Create_new_company_with_linked_entities_and_customer_in_backoffice
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent+company_user_bo${random}@spryker.com    ${default_secure_password}
-    Yves: perform search by customer:    sonia+created+cuser+${random}@spryker.com
+    Yves: login on Yves with provided credentials:    agent+company_user_bo${random}@spryker.com    ${default_secure_password}    agent_assist=${True}
     Yves: as an agent login under the customer:    sonia+created+cuser+${random}@spryker.com
     Yves: go to URL:    /company/user    
     ${location}=    Get Location
@@ -47,8 +46,7 @@ Create_new_company_user_with_linked_entities_in_storefront
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent+company_user_yves${random}@spryker.com    ${default_secure_password}
-    Yves: perform search by customer:    sonia+sf+new+cuser+${random}@spryker.com
+    Yves: login on Yves with provided credentials:    agent+company_user_yves${random}@spryker.com    ${default_secure_password}    agent_assist=${True}
     Yves: as an agent login under the customer:    sonia+sf+new+cuser+${random}@spryker.com
     Yves: go to URL:    /company/user    
     ${location}=    Get Location
