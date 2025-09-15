@@ -565,7 +565,7 @@ Yves: save new delivery address to address book:
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
     IF    '${is_ssp}' == 'true'
-        ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//*[contains(@data-qa,'address-item-form')]//input[contains(@name,'[shippingAddress][isAddressSavingSkipped]')][checked]    timeout=100ms
+        ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//*[contains(@data-qa,'address-item-form')]//input[contains(@name,'[shippingAddress][isAddressSavingSkipped]')][@checked]    timeout=100ms
     ELSE
         ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped'][@checked]    timeout=100ms
     END
