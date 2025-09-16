@@ -100,7 +100,7 @@ Zed: change concrete product price on:
     Set Browser Timeout    1s
     TRY
         Click    ${zed_pdp_save_button}
-    EXCEPT    
+    EXCEPT
         Log    Form is already submitted
     END
     Set Browser Timeout    ${browser_timeout}
@@ -163,11 +163,11 @@ Zed: concrete product has the following alternative products:
 
 Zed: switch to the tab on 'Edit product' page:
     [Arguments]    ${tabToUse}
-    Click    xpath=//form[contains(@name,'form_edit')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-toggle='tab'][text()='${tabToUse}']
+    Click    xpath=//form[contains(@name,'form_edit')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-bs-toggle='tab'][text()='${tabToUse}']
 
 Zed: switch to the tab on 'Add product' page:
     [Arguments]    ${tabToUse}
-    Click    xpath=//form[contains(@name,'form_add')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-toggle='tab'][text()='${tabToUse}']
+    Click    xpath=//form[contains(@name,'form_add')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-bs-toggle='tab'][text()='${tabToUse}']
 
 Zed: product is successfully discontinued
     ${currentURL}=    Get Location
@@ -188,19 +188,19 @@ Zed: view abstract product page contains:
         Click    ${zed_view_abstract_general_second_locale_collapsed_section}
     END
     FOR    ${key}    ${value}    IN    &{abstractProductData}
-        IF    '${key}'=='merchant' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='merchant' and '${value}' != '${EMPTY}'
             Element Should Contain    ${zed_view_abstract_product_merchant}    ${value}
         END
-        IF    '${key}'=='status' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='status' and '${value}' != '${EMPTY}'
             Element Should Contain    ${zed_view_abstract_product_status}    ${value}
         END
-        IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='store' and '${value}' != '${EMPTY}'
             Element Should Contain    ${zed_view_abstract_product_store}[${env}]    ${value}
         END
-        IF    '${key}'=='sku' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='sku' and '${value}' != '${EMPTY}'
             Element Should Contain    ${zed_view_abstract_product_sku}[${env}]    ${value}
         END
-        IF    '${key}'=='name' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='name' and '${value}' != '${EMPTY}'
             Element Should Contain    ${zed_view_abstract_product_name}[${env}]    ${value}
         END
         IF    '${key}'=='variants count' and '${value}' != '${EMPTY}'
@@ -214,7 +214,7 @@ Zed: view abstract product page contains:
 Zed: update abstract product data:
     [Arguments]    @{args}
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
-    Zed: go to URL:    /product-management 
+    Zed: go to URL:    /product-management
     Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
     TRY
         Wait For Load State
@@ -225,7 +225,7 @@ Zed: update abstract product data:
     TRY
         Page Should Contain Element    ${zed_pdp_save_button}
     EXCEPT
-        Zed: go to URL:    /product-management 
+        Zed: go to URL:    /product-management
         Zed: click Action Button in a table for row that contains:     ${productAbstract}     Edit
         TRY
             Wait For Load State
@@ -241,30 +241,30 @@ Zed: update abstract product data:
     IF    '${second_locale_section_expanded}'=='False'
     Scroll Element Into View    ${zed_product_general_second_locale_collapsed_section}
     Click    ${zed_product_general_second_locale_collapsed_section}
-    END  
+    END
     FOR    ${key}    ${value}    IN    &{abstractProductData}
-        IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='store' and '${value}' != '${EMPTY}'
             Zed: Check checkbox by Label:    ${value}
         END
-        IF    '${key}'=='store 2' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='store 2' and '${value}' != '${EMPTY}'
             Zed: Check checkbox by Label:    ${value}
         END
-        IF    '${key}'=='unselect store' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='unselect store' and '${value}' != '${EMPTY}'
             Zed: Uncheck Checkbox by Label:    ${value}
         END
-        IF    '${key}'=='name en' and '${value}' != '${EMPTY}'  
+        IF    '${key}'=='name en' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_product_edit_name_en_input}
             Type Text    ${zed_product_edit_name_en_input}    ${value}
         END
-        IF    '${key}'=='name de' and '${value}' != '${EMPTY}'  
+        IF    '${key}'=='name de' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_product_edit_name_de_input}
             Type Text    ${zed_product_edit_name_de_input}    ${value}
         END
-        IF    '${key}'=='new from' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='new from' and '${value}' != '${EMPTY}'
             Type Text    ${zed_product_edit_new_from}    ${value}
             Keyboard Key    press    Enter
         END
-        IF    '${key}'=='new to' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='new to' and '${value}' != '${EMPTY}'
             Type Text    ${zed_product_edit_new_to}    ${value}
             Keyboard Key    press    Enter
         END
@@ -273,7 +273,7 @@ Zed: update abstract product data:
     TRY
         Wait For Load State
         Wait For Load State    domcontentloaded
-    EXCEPT    
+    EXCEPT
         Log    Load event was not fired
     END
 
@@ -282,13 +282,13 @@ Zed: update abstract product price on:
     TRY
         Wait For Load State
         Wait For Load State    domcontentloaded
-    EXCEPT    
+    EXCEPT
         Log    Load event was not fired
     END
     ${priceData}=    Set Up Keyword Arguments    @{args}
     ${productAbstractIsProvided}=    Run Keyword And Return Status    Variable Should Exist    ${productAbstract}
     Disable Automatic Screenshots on Failure
-    ${is_edit_abstract_price_tab_exists}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//a[contains(@data-toggle,'tab')][contains(@href,'content-price_and_tax')] | //*[contains(@data-toggle,'tab')]//a[contains(@href,'content-price_and_tax')]    timeout=100ms
+    ${is_edit_abstract_price_tab_exists}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//a[contains(@data-bs-toggle,'tab')][contains(@href,'content-price_and_tax')] | //*[contains(@data-bs-toggle,'tab')]//a[contains(@href,'content-price_and_tax')]    timeout=100ms
     Restore Automatic Screenshots on Failure
     IF    '${is_edit_abstract_price_tab_exists}'=='False' and ${productAbstractIsProvided}
         Zed: go to URL:    /product-management
@@ -329,7 +329,7 @@ Zed: update abstract product price on:
     TRY
         Wait For Load State
         Wait For Load State    domcontentloaded
-    EXCEPT    
+    EXCEPT
         Log    Load event was not fired
     END
 
@@ -354,28 +354,28 @@ Zed: start new abstract product creation:
     END
     FOR    ${key}    ${value}    IN    &{abstractProductData}
         IF    '${key}'=='sku' and '${value}' != '${EMPTY}'    Type Text    ${zed_product_add_sku_input}    ${value}
-        IF    '${key}'=='store' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='store' and '${value}' != '${EMPTY}'
             Zed: Check checkbox by Label:    ${value}
         END
-        IF    '${key}'=='store 2' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='store 2' and '${value}' != '${EMPTY}'
             Zed: Check checkbox by Label:    ${value}
         END
-        IF    '${key}'=='unselect store' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='unselect store' and '${value}' != '${EMPTY}'
             Zed: Uncheck Checkbox by Label:    ${value}
         END
-        IF    '${key}'=='name en' and '${value}' != '${EMPTY}'  
+        IF    '${key}'=='name en' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_product_add_name_en_input}
             Type Text    ${zed_product_add_name_en_input}    ${value}
         END
-        IF    '${key}'=='name de' and '${value}' != '${EMPTY}'  
+        IF    '${key}'=='name de' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_product_add_name_de_input}
             Type Text    ${zed_product_add_name_de_input}    ${value}
         END
-        IF    '${key}'=='new from' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='new from' and '${value}' != '${EMPTY}'
             Type Text    ${zed_product_add_new_from}    ${value}
             Keyboard Key    press    Enter
         END
-        IF    '${key}'=='new to' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='new to' and '${value}' != '${EMPTY}'
             Type Text    ${zed_product_add_new_to}    ${value}
             Keyboard Key    press    Enter
         END
@@ -384,10 +384,10 @@ Zed: start new abstract product creation:
     TRY
         Wait For Load State
         Wait For Load State    domcontentloaded
-    EXCEPT    
+    EXCEPT
         Log    Load event was not fired
     END
-    
+
 Zed: select abstract product variants:
     [Arguments]    @{args}
     ${abstractProductData}=    Set Up Keyword Arguments    @{args}
@@ -425,7 +425,7 @@ Zed: select abstract product variants:
     TRY
         Wait For Load State
         Wait For Load State    domcontentloaded
-    EXCEPT    
+    EXCEPT
         Log    Load event was not fired
     END
 
@@ -452,11 +452,11 @@ Zed: change concrete product data:
         Click    ${zed_product_general_second_locale_collapsed_section}
     END
     FOR    ${key}    ${value}    IN    &{priceData}
-        IF    '${key}'=='name en' and '${value}' != '${EMPTY}'  
+        IF    '${key}'=='name en' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_pdp_concrete_name_en_input}
             Type Text    ${zed_pdp_concrete_name_en_input}    ${value}
         END
-        IF    '${key}'=='name de' and '${value}' != '${EMPTY}'  
+        IF    '${key}'=='name de' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_pdp_concrete_name_de_input}
             Type Text    ${zed_pdp_concrete_name_de_input}    ${value}
         END
@@ -485,7 +485,7 @@ Zed: change concrete product data:
                 END
             END
         END
-        IF    '${key}'=='searchable en' and '${value}' != '${EMPTY}'  
+        IF    '${key}'=='searchable en' and '${value}' != '${EMPTY}'
             IF    '${value}'=='true'
                 Check Checkbox    ${zed_pdp_concrete_searchable_en}
             END
@@ -521,19 +521,19 @@ Zed: change concrete product stock:
     Wait Until Element Is Visible    ${zed_pdp_concrete_main_content_locator}
     Zed: go to tab by link href that contains:   content-price
     FOR    ${key}    ${value}    IN    &{stockData}
-        IF    '${key}'=='warehouse n1' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='warehouse n1' and '${value}' != '${EMPTY}'
             ${warehouse1}=    Set Variable    ${value}
         END
-        IF    '${key}'=='warehouse n2' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='warehouse n2' and '${value}' != '${EMPTY}'
             ${warehouse2}=    Set Variable    ${value}
         END
-        IF    '${key}'=='warehouse n3' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='warehouse n3' and '${value}' != '${EMPTY}'
             ${warehouse3}=    Set Variable    ${value}
         END
-        IF    '${key}'=='warehouse n4' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='warehouse n4' and '${value}' != '${EMPTY}'
             ${warehouse4}=    Set Variable    ${value}
         END
-        IF    '${key}'=='warehouse n5' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='warehouse n5' and '${value}' != '${EMPTY}'
             ${warehouse5}=    Set Variable    ${value}
         END
         IF    '${key}'=='warehouse n1 qty' and '${value}' != '${EMPTY}'    Type Text    xpath=//*[@id="tab-content-price"]//input[@value='${warehouse1}']/../following-sibling::div[1]//input[@id]    ${value}
@@ -541,7 +541,7 @@ Zed: change concrete product stock:
         IF    '${key}'=='warehouse n3 qty' and '${value}' != '${EMPTY}'    Type Text    xpath=//*[@id="tab-content-price"]//input[@value='${warehouse3}']/../following-sibling::div[1]//input[@id]    ${value}
         IF    '${key}'=='warehouse n4 qty' and '${value}' != '${EMPTY}'    Type Text    xpath=//*[@id="tab-content-price"]//input[@value='${warehouse4}']/../following-sibling::div[1]//input[@id]    ${value}
         IF    '${key}'=='warehouse n5 qty' and '${value}' != '${EMPTY}'    Type Text    xpath=//*[@id="tab-content-price"]//input[@value='${warehouse5}']/../following-sibling::div[1]//input[@id]    ${value}
-        IF    '${key}'=='warehouse n1 never out of stock' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='warehouse n1 never out of stock' and '${value}' != '${EMPTY}'
             IF    '${value}'=='true'
                 Check Checkbox    xpath=//*[@id="tab-content-price"]//input[@value='${warehouse1}']/../following-sibling::div[2]//input[@type='checkbox']
             END
@@ -549,7 +549,7 @@ Zed: change concrete product stock:
                 Uncheck Checkbox    xpath=//*[@id="tab-content-price"]//input[@value='${warehouse1}']/../following-sibling::div[2]//input[@type='checkbox']
             END
         END
-        IF    '${key}'=='warehouse n2 never out of stock' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='warehouse n2 never out of stock' and '${value}' != '${EMPTY}'
             IF    '${value}'=='true'
                 Check Checkbox    xpath=//*[@id="tab-content-price"]//input[@value='${warehouse2}']/../following-sibling::div[2]//input[@type='checkbox']
             END
@@ -557,7 +557,7 @@ Zed: change concrete product stock:
                 Uncheck Checkbox    xpath=//*[@id="tab-content-price"]//input[@value='${warehouse2}']/../following-sibling::div[2]//input[@type='checkbox']
             END
         END
-        IF    '${key}'=='warehouse n3 never out of stock' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='warehouse n3 never out of stock' and '${value}' != '${EMPTY}'
             IF    '${value}'=='true'
                 Check Checkbox    xpath=//*[@id="tab-content-price"]//input[@value='${warehouse3}']/../following-sibling::div[2]//input[@type='checkbox']
             END
@@ -565,7 +565,7 @@ Zed: change concrete product stock:
                 Uncheck Checkbox    xpath=//*[@id="tab-content-price"]//input[@value='${warehouse3}']/../following-sibling::div[2]//input[@type='checkbox']
             END
         END
-        IF    '${key}'=='warehouse n4 never out of stock' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='warehouse n4 never out of stock' and '${value}' != '${EMPTY}'
             IF    '${value}'=='true'
                 Check Checkbox    xpath=//*[@id="tab-content-price"]//input[@value='${warehouse4}']/../following-sibling::div[2]//input[@type='checkbox']
             END
@@ -573,7 +573,7 @@ Zed: change concrete product stock:
                 Uncheck Checkbox    xpath=//*[@id="tab-content-price"]//input[@value='${warehouse4}']/../following-sibling::div[2]//input[@type='checkbox']
             END
         END
-        IF    '${key}'=='warehouse n5 never out of stock' and '${value}' != '${EMPTY}'    
+        IF    '${key}'=='warehouse n5 never out of stock' and '${value}' != '${EMPTY}'
             IF    '${value}'=='true'
                 Check Checkbox    xpath=//*[@id="tab-content-price"]//input[@value='${warehouse5}']/../following-sibling::div[2]//input[@type='checkbox']
             END
@@ -630,15 +630,15 @@ Zed: add new concrete product to abstract:
             Wait Until Element Is Visible    xpath=//li[contains(@id,'select2-product_concrete_form_add_container_product_concrete_super_attributes_form_product_concrete_super_attributes')][contains(@id,'${value}')]
             Click    xpath=//li[contains(@id,'select2-product_concrete_form_add_container_product_concrete_super_attributes_form_product_concrete_super_attributes')][contains(@id,'${value}')]
         END
-        IF    '${key}'=='name en' and '${value}' != '${EMPTY}'  
+        IF    '${key}'=='name en' and '${value}' != '${EMPTY}'
             Wait Until Element Is Visible    ${zed_add_concrete_name_en_input}
             Type Text    ${zed_add_concrete_name_en_input}    ${value}
         END
-        IF    '${key}'=='name de' and '${value}' != '${EMPTY}'  
+        IF    '${key}'=='name de' and '${value}' != '${EMPTY}'
                 Wait Until Element Is Visible    ${zed_add_concrete_name_de_input}
                 Type Text    ${zed_add_concrete_name_de_input}    ${value}
         END
-        IF    '${key}'=='use prices from abstract' and '${value}' != '${EMPTY}'  
+        IF    '${key}'=='use prices from abstract' and '${value}' != '${EMPTY}'
             Zed: go to tab by link href that contains:   content-price
             Wait Until Element Is Visible    ${zed_add_concrete_use_price_from_abstract}
             IF    '${value}'=='true'
