@@ -107,8 +107,8 @@ Update_permissions_of_shared_shopping_cart_by_Cart_owner
 
 Add_an_item_to_the_shared_shopping_cart_by_user_with_access
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Authorization=${token}  
-    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /carts_not_here    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
     ...    AND    Save value to a variable:    [data][id]    cartId
     ...    AND    Get the first company user id and its' customer email
     ...    AND    I send a POST request:    /carts/${cartId}/shared-carts    {"data":{"type":"shared-carts","attributes":{"idCompanyUser":"${companyUserId}","idCartPermissionGroup":2}}}
