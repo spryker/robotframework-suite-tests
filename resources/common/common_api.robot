@@ -910,6 +910,36 @@ Response should contain the array larger than a certain size:
     ${result}=    Convert To String    ${result}
     Should Be Equal    ${result}    True    Actual array length is '${list_length}' and it is not greater than expected '${expected_size}' in '${json_path}'.
 
+Response should contain the array larger or equal than a certain size:
+    [Documentation]    This keyword checks that the body array sent in ``{json_path}`` argument contains the number of items that is more than ``{expected_size}`` or equals.
+    ...    *Example:*
+    ...
+    ...    `` Response should contain the array larger or equal than a certain size:    Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][1][values]    ${default_qty.labels}+1``
+    [Arguments]    ${json_path}    ${expected_size}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${list_length}=    Convert To Integer    ${list_length}
+    ${expected_size}=    Evaluate    ${expected_size}
+    ${expected_size}=    Convert To Integer    ${expected_size}
+    ${result}=    Evaluate   ${list_length} >= ${expected_size}
+    ${result}=    Convert To String    ${result}
+    Should Be Equal    ${result}    True    Actual array length is '${list_length}' and it is not greater (or equal) than expected '${expected_size}' in '${json_path}'.
+
+Response should contain the array less or equal than a certain size:
+    [Documentation]    This keyword checks that the body array sent in ``{json_path}`` argument contains the number of items that is less than ``{expected_size}`` or equals.
+    ...    *Example:*
+    ...
+    ...    `` Response should contain the array less or equal than a certain size:    [data][0][attributes][valueFacets][1][values]    ${default_qty.labels}``
+    [Arguments]    ${json_path}    ${expected_size}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${list_length}=    Convert To Integer    ${list_length}
+    ${expected_size}=    Evaluate    ${expected_size}
+    ${expected_size}=    Convert To Integer    ${expected_size}
+    ${result}=    Evaluate   ${list_length} <= ${expected_size}
+    ${result}=    Convert To String    ${result}
+    Should Be Equal    ${result}    True    Actual array length is '${list_length}' and it is not less (or equal) than expected '${expected_size}' in '${json_path}'.
+
 Each array element of the array in response should contain a nested array larger than a certain size:
     [Documentation]    This keyword checks that each element in the array specified as ``{json_path}`` contains the `` ${nested_array}` with certain size greater than ``{expected_size}``.
     ...

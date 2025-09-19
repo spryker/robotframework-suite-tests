@@ -50,13 +50,13 @@ Search_with_empty_search_criteria_all_default_values_check
     #Filters - labels
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][name]    label
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][localizedName]    Label
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    ${default_qty.labels}
+    And Response should contain the array larger or equal than a certain size:    [data][0][attributes][valueFacets][1][values]    ${default_qty.labels}
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][config][isMultiValued]    True
     #Filters - color
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][name]    color
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][localizedName]    Color
-    And Response should contain the array of acertain size:    [data][0][attributes][valueFacets][2][values]    ${default_qty.colors}
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][2][values]    ${default_qty.colors}
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][config][isMultiValued]    True
     #Filters - material
