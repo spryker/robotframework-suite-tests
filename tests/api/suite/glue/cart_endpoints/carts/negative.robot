@@ -8,6 +8,7 @@ Test Tags    glue
 #GET requests
 Get_cart_by_cart_id_with_invalid_access_token
     [Setup]    I set Headers:    Authorization=3485h7
+    raise Exception("Force fail")
     When I send a GET request:    /carts/not-existing-cart
     Then Response status code should be:    401
     And Response reason should be:    Unauthorized
