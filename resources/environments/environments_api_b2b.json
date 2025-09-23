@@ -210,11 +210,12 @@
           "categories_ssp":"38",
           "colors":"10",
           "labels":"5",
+          "labels_ssp":"8",
           "materials":"10",
           "brands":"10",
           "ipp_pages":"35",
           "ipp_pages_ssp":"36",
-          "sorting_options_ssp":"8",
+          "sorting_options":"5",
        },
        "ipp":{
           "default":"12",
