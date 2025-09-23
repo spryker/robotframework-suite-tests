@@ -98,9 +98,10 @@ Search_with_empty_search_criteria_all_default_values_check
     #Filters - labels
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][name]    label
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][localizedName]    Product Labels
-    And Response should contain the array of a certain size:
+    And Response should contain the array of size in:
     ...    [data][0][attributes][valueFacets][1][values]
     ...    ${default_qty.labels}
+    ...    ${default_qty.labels_ssp}
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][config][isMultiValued]    True
     #Filters - color
