@@ -301,7 +301,6 @@ Quick_Order
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
 
 Reorder
-    [Tags]    smoke
     [Documentation]    Checks that merchant relation is saved with reorder
     Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -338,7 +337,6 @@ Business_on_Behalf
     ...    AND    Delete dynamic admin user from DB
 
 Wishlist_List_Supports_Offers
-    [Tags]    smoke
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
