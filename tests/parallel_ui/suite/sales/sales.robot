@@ -93,7 +93,6 @@ Return_Management
     [Teardown]    Delete dynamic admin user from DB
 
 Order_Cancellation
-    [Tags]    smoke
     [Documentation]    Check that customer is able to cancel order.
     Create dynamic admin user in DB
     Create dynamic customer in DB
