@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_one
+Test Tags    robot:recursive-stop-on-failure    group_one    catalog    product    search    spryker-core-back-office    spryker-core    cart    
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -74,6 +74,7 @@ Catalog
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Catalog_Actions
+    [Tags]    product-groups    quick-add-to-cart
     [Documentation]    Checks quick add to cart and product groups
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: change concrete product price on:
@@ -97,6 +98,7 @@ Catalog_Actions
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Volume_Prices
+    [Tags]    prices   
     [Documentation]    Checks that volume prices are applied in cart
     [Setup]    Run keywords    Zed: check and restore product availability in Zed:    ${volume_prices_product_abstract_sku}    Available    ${volume_prices_product_concrete_sku}
     ...    AND    Trigger p&s
@@ -113,6 +115,7 @@ Volume_Prices
     [Teardown]    Yves: delete 'Shopping Cart' with name:    VolumePriceCart+${random}
 
 Discontinued_Alternative_Products
+    [Tags]    discontinued-products    alternative-products    wishlist
     [Documentation]    Checks discontinued and alternative products
     Yves: go to PDP of the product with sku:    ${product_with_relations_alternative_products_sku}
     Yves: change variant of the product on PDP on:    2.3 GHz
@@ -139,7 +142,7 @@ Discontinued_Alternative_Products
     ...    AND    Trigger p&s
 
 Measurement_Units
-    [Tags]    smoke
+    [Tags]    smoke    marketplace-packaging-units    measurement-units    packaging-units    checkout
     [Documentation]    Checks checkout with Measurement Unit product
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    measurementUnitsCart+${random}
@@ -162,7 +165,7 @@ Measurement_Units
     Yves: 'Thank you' page is displayed
 
 Packaging_Units
-    [Tags]    smoke
+    [Tags]    smoke     marketplace-packaging-units    measurement-units    packaging-units    checkout
     [Documentation]    Checks checkout with Packaging Unit product
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    packagingUnitsCart+${random}
@@ -184,7 +187,7 @@ Packaging_Units
     Yves: 'Thank you' page is displayed
 
 Product_Bundles
-    [Tags]    smoke
+    [Tags]    smoke    checkout    product-bundles
     [Documentation]    Checks checkout with Bundle product
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
@@ -206,6 +209,7 @@ Product_Bundles
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Back_in_Stock_Notification
+    [Tags]    availability-notification    
     [Documentation]    Back in stock notification is sent and availability check
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
@@ -227,7 +231,7 @@ Back_in_Stock_Notification
     [Teardown]    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}
 
 Manage_Product
-    [Tags]    smoke
+    [Tags]    smoke    prices    marketplace-product
     [Documentation]    checks that BO user can manage abstract and concrete products + create new
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
@@ -335,6 +339,7 @@ Manage_Product
     ...    AND    Yves: check if cart is not empty and clear it
 
 Product_Original_Price
+    [Tags]    prices    
     [Documentation]    checks that Original price is displayed on the PDP and in Catalog
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
@@ -485,6 +490,7 @@ Product_Availability_Calculation
     ...    AND    Repeat Keyword    3    Trigger multistore p&s
 
 Configurable_Product_PDP_Wishlist_Availability
+    [Tags]    wishlist    configurable-product    configurable-product-wishlist
     [Documentation]    Configure product from PDP and Wishlist + availability case.
     [Setup]    Run keywords   Delete All Cookies
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -540,7 +546,7 @@ Configurable_Product_PDP_Wishlist_Availability
     ...    AND    Delete All Cookies
 
 Configurable_Product_PDP_Shopping_List
-    [Tags]    smoke
+    [Tags]    smoke    configurable-product    shopping-lists    configurable-product-shopping-lists
     [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of five items. Ensure that products that have not been configured cannot be purchased.
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    configProduct+${random}
@@ -604,6 +610,7 @@ Configurable_Product_PDP_Shopping_List
     ...    AND    Yves: delete 'Shopping Cart' with name:    configProduct+${random}
 
 Configurable_Product_RfQ_OMS
+    [Tags]    order-management    marketplace-order-management    configurable-product    reorder    quotation-process    checkout
     [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder.
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_config+${random}@spryker.com   ${default_secure_password}   Config    Product    Root group    This user is an agent in Storefront    en_US
@@ -682,6 +689,7 @@ Configurable_Product_RfQ_OMS
     ...    AND    Zed: delete Zed user with the following email:    agent_config+${random}@spryker.com
 
 Product_Restrictions
+    [Tags]    product-customer-restrictions    product-lists
     [Documentation]    Checks White and Black lists
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create product list with the following assigned category:    list_name=White${random}    list_type=white    category=Smartwatches
@@ -715,6 +723,7 @@ Product_Restrictions
     ...    AND    Trigger multistore p&s
 
 Customer_Specific_Prices
+    [Tags]    prices    merchant-custom-prices
     [Documentation]    Checks that product price can be different for different customers
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: perform search by:    ${product_with_merchant_price_abstract_sku}

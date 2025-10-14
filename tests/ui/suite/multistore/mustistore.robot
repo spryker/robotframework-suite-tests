@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_tree
+Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office   spryker-core    marketplace-merchantportal-core    customer-account-management    acl    search    catalog    product    prices
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -116,7 +116,7 @@ Multistore_Product
     ...    AND    Yves: check if cart is not empty and clear it
 
 Multistore_Product_Offer
-    [Tags]    smoke
+    [Tags]    smoke    marketplace-product-offer    marketplace-product-offer-prices    marketplace-merchant-portal-product-offer-management    marketplace-merchant-portal-product-management    product-offer-shipment
     [Documentation]    check product and offer multistore functionality.
     Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -224,6 +224,7 @@ Multistore_Product_Offer
     ...    AND    Trigger multistore p&s
 
 Multistore_CMS
+    [Tags]    cms    content-item
     [Documentation]    check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
@@ -242,6 +243,7 @@ Multistore_CMS
     ...    AND    Trigger multistore p&s
 
 Dynamic_multistore
+    [Tags]    cms    content-item
     [Documentation]    This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
     [Tags]    dms-on    smoke
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
