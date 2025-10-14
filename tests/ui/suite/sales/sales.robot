@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office   spryker-core    marketplace-merchantportal-core    order-management    cart    checkout    return-management
+Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office   spryker-core    order-management    cart    checkout    return-management    marketplace-return-management    marketplace-order-management    
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -121,7 +121,7 @@ Return_Management
     ...    AND    Zed: delete Zed user with the following email:    returnagent+${random}@spryker.com
 
 Refunds
-    [Tags]    smoke
+    [Tags]    smoke    refunds
     [Documentation]    Checks that refund can be created for one item and the whole order
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
@@ -243,6 +243,7 @@ Order_Cancellation
     ...    AND    Yves: delete all user addresses
 
 Manage_Shipments
+    [Tags]    shipment    marketplace-shipment
     [Documentation]    Checks create/edit shipment functions from backoffice
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
