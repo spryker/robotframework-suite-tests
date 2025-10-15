@@ -41,7 +41,7 @@ Resource    ../../../../resources/pages/zed/zed_order_details_page.robot
 
 *** Test Cases ***
 Product_PDP
-    [Tags]    smoke
+    [Tags]    smoke    product-options
     [Documentation]    Checks that PDP contains required elements
     Delete All Cookies
     Yves: go to PDP of the product with sku:    135
@@ -209,7 +209,7 @@ Product_Bundles
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Back_in_Stock_Notification
-    [Tags]    availability-notification    
+    [Tags]    availability-notification    mailing-notifications    
     [Documentation]    Back in stock notification is sent and availability check
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
@@ -231,7 +231,7 @@ Back_in_Stock_Notification
     [Teardown]    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}
 
 Manage_Product
-    [Tags]    smoke    prices    marketplace-product
+    [Tags]    smoke    prices    marketplace-product    product-approval-process    marketplace-product-approval-process
     [Documentation]    checks that BO user can manage abstract and concrete products + create new
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:
@@ -395,6 +395,7 @@ Product_Original_Price
     Yves: product original price on the PDP should be:    €50.00
 
 Product_Availability_Calculation
+    [Tags]    product-approval-process
     [Documentation]    Check product availability + multistore
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${zed_admin_email}

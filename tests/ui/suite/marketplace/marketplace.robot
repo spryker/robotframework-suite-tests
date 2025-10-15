@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_two    merchant    marketplace-merchant    spryker-core-back-office   spryker-core    marketplace-merchantportal-core    product    marketplace-product    marketplace-product-offer    marketplace-merchant-portal-product-management    marketplace-merchant-portal-product-offer-management
+Test Tags    robot:recursive-stop-on-failure    group_two    merchant    marketplace-merchant    spryker-core-back-office   spryker-core    marketplace-merchantportal-core    product    marketplace-product    marketplace-product-offer    marketplace-merchant-portal-product-management    marketplace-merchant-portal-product-offer-management    marketplace-inventory-management    inventory-management
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -226,7 +226,7 @@ Manage_Merchant_Users
     ...    AND    Zed: submit the form
 
 Approve_Offer
-    [Tags]    approval-process
+    [Tags]    approval-process    product-approval-process    marketplace-product-approval-process
     [Documentation]    Checks that marketplace operator is able to approve or deny merchant's offer and it will be available or not in store due to this status
     [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -254,7 +254,7 @@ Approve_Offer
     Yves: product price on the PDP should be:     ${second_product_with_multiple_offers_video_king_price}
 
 Fulfill_Order_from_Merchant_Portal
-    [Tags]    smoke    cart    warehouse-user-management    warehouse-picking    checkout    order-management    order-amendment    marketplace-order-management
+    [Tags]    smoke    cart    marketplace-cart    warehouse-user-management    warehouse-picking    checkout    order-management    order-amendment    marketplace-order-management
     [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
     [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -355,7 +355,7 @@ Search_for_Merchant_Offers_and_Products
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
 
 Merchant_Portal_Product_Volume_Prices
-    [Tags]    prices    marketplace-merchant-custom-prices    merchant-custom-prices    cart
+    [Tags]    prices    marketplace-merchant-custom-prices    merchant-custom-prices    cart    marketplace-cart
     [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Fallback to default price after delete
     [Setup]    Repeat Keyword    5    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -422,7 +422,7 @@ Merchant_Portal_Product_Volume_Prices
     ...    AND    Trigger p&s
 
 Merchant_Portal_Offer_Volume_Prices
-    [Tags]    prices    marketplace-merchant-custom-prices    merchant-custom-prices    cart
+    [Tags]    prices    marketplace-merchant-custom-prices    merchant-custom-prices    cart    marketplace-cart
     [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Fallback to default price after delete.
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
@@ -512,7 +512,7 @@ Merchant_Portal_Offer_Volume_Prices
     ...    AND    Trigger p&s
 
 Merchant_Portal_Customer_Specific_Prices
-    [Tags]    prices    marketplace-merchant-custom-prices    merchant-custom-prices    cart
+    [Tags]    prices    marketplace-merchant-custom-prices    merchant-custom-prices    cart    marketplace-cart
     [Documentation]    Checks that customer will see product/offer prices specified by merchant for his business unit
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
@@ -692,7 +692,7 @@ Merchant_Product_Offer_in_Backoffice
     ...    AND    Trigger p&s
 
 Manage_Merchant_Product
-    [Tags]    cart    prices    marketplace-merchant-custom-prices    merchant-custom-prices
+    [Tags]    cart    marketplace-cart    prices    marketplace-merchant-custom-prices    merchant-custom-prices
     [Documentation]    Checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product
     Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
@@ -813,7 +813,7 @@ Manage_Merchant_Product
     ...    AND    Trigger multistore p&s
 
 Merchant_Product_Original_Price
-    [Tags]    cart    prices    marketplace-merchant-custom-prices    merchant-custom-prices    catalog    search
+    [Tags]    cart    marketplace-cart    prices    marketplace-merchant-custom-prices    merchant-custom-prices    catalog    search
     [Documentation]    checks that Original price is displayed on the PDP and in Catalog
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
@@ -873,7 +873,7 @@ Merchant_Product_Original_Price
     ...    AND    Trigger p&s
 
 Offer_Availability_Calculation
-    [Tags]    smoke    product-offer-shipment-availability    cart    checkout    prices
+    [Tags]    smoke    product-offer-shipment-availability    cart    marketplace-cart    checkout    prices    marketplace-product-approval-process    product-approval-process
     [Documentation]    check offer availability
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}

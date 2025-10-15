@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office   spryker-core
+Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office   spryker-core    inventory-management
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -156,7 +156,7 @@ Product_Relations
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Discounts
-    [Tags]    smoke    promotions-discounts    cart    checkout    order-management    prices
+    [Tags]    smoke    promotions-discounts    marketplace-promotions-discounts    cart    checkout    order-management    prices
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page

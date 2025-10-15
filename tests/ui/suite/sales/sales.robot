@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office   spryker-core    order-management    cart    checkout    return-management    marketplace-return-management    marketplace-order-management    
+Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office   spryker-core    order-management    state-machine    cart    checkout    return-management    marketplace-return-management    marketplace-order-management    inventory-management    
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -317,6 +317,7 @@ Manage_Shipments
     ...    AND    Yves: delete all user addresses
 
 Comment_Management_in_Order
+    [Tags]    comments
     [Documentation]    Add comments in Yves and check in Zed.
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    comments+${random}

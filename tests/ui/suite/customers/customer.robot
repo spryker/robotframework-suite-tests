@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_two    spryker-core-back-office    spryker-core    acl    customer-account-management    customer-access
+Test Tags    robot:recursive-stop-on-failure    group_two    spryker-core-back-office    spryker-core    acl    customer-account-management    customer-access    cart    multiple-carts
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -209,7 +209,7 @@ Share_Shopping_Lists
     [Teardown]    Run Keywords    Close Current Context    AND    Yves: delete 'Shopping List' with name:    shareShoppingList+${random}
 
 Share_Shopping_Carts
-    [Tags]    smoke    cart    checkout
+    [Tags]    smoke    checkout    shared-carts    persistent-cart-sharing
     [Documentation]    Checks that cart can be shared and used for checkout
     [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_sony_experts_email}
@@ -358,7 +358,7 @@ Business_on_Behalf
     [Teardown]    Zed: delete company user xxx withing xxx company business unit:    Donald    Spryker Systems Zurich
 
 Wishlist_List_Supports_Offers
-    [Tags]    wishlist    product    marketplace-product    marketplace-product-offer
+    [Tags]    wishlist    marketplace-wishlist    product    marketplace-product    marketplace-product-offer
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
     [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all wishlists

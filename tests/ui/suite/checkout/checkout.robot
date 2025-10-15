@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_one    checkout    spryker-core-back-office    spryker-core    marketplace-merchantportal-core    cart    marketplace-shipment    shipment
+Test Tags    robot:recursive-stop-on-failure    group_one    checkout    spryker-core-back-office    spryker-core    marketplace-merchantportal-core    cart    multiple-carts    marketplace-shipment    shipment    inventory-management
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -96,7 +96,7 @@ Register_during_checkout
     [Teardown]    Zed: delete customer:    sonia+guest${random}@spryker.com
 
 Guest_Checkout
-    [Tags]    smoke    product-bundles    promotions-discounts    order-management    marketplace-order-management    
+    [Tags]    smoke    product-bundles    promotions-discounts    marketplace-promotions-discounts    order-management    marketplace-order-management    
     [Documentation]    Guest checkout with bundles, discounts and OMS
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
@@ -378,7 +378,7 @@ Checkout_Address_Management
     ...    AND    Yves: delete all user addresses
 
 Click_and_collect
-    [Tags]    smoke    product    marketplace-product    marketplace-product-offer    marketplace-product-offer-prices    marketplace-merchant-portal-product-offer-management    product-offer-shipment    product-offer-shipment-availability
+    [Tags]    smoke    product    product-approval-process    marketplace-product-approval-process    marketplace-product    marketplace-product-offer    marketplace-product-offer-prices    marketplace-merchant-portal-product-offer-management    product-offer-shipment    product-offer-shipment-availability
     [Documentation]    checks that product offer is successfully replaced with a target product offer
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
@@ -563,6 +563,7 @@ Multiple_Merchants_Order
     ...    AND    Yves: delete all user addresses
 
 Unique_URL
+    [Tags]    shared-carts    persistent-cart-sharing
     [Documentation]
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
@@ -579,6 +580,7 @@ Unique_URL
     ...    AND    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
 Comments_in_Cart
+    [Tags]    comments
     [Documentation]    Add comments to cart and verify comments in Yves and Zed
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    commentCart+${random}
@@ -601,6 +603,7 @@ Comments_in_Cart
     Zed: check comment appears at order detailed page in zed:    abc${random}    ${lastPlacedOrder}
 
 Comment_Management_in_the_Cart
+    [Tags]    comments
     [Documentation]    Editing and deleting comments in carts
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    commentManagement+${random}
