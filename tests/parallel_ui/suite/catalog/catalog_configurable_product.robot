@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_one
+Test Tags    robot:recursive-stop-on-failure    group_one    cart    checkout    spryker-core-back-office    spryker-core    configurable-product    product    
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/steps/zed_marketplace_steps.robot
@@ -13,6 +13,7 @@ Resource    ../../../../resources/steps/orders_management_steps.robot
 
 *** Test Cases ***
 Configurable_Product_RfQ_OMS
+    [Tags]    quotation-process    order-management    marketplace-order-management    reorder    agent-assist
     [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder. 
     [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB

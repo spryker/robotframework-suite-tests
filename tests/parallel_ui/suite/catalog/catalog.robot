@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_one
+Test Tags    robot:recursive-stop-on-failure    group_one    search    catalog    spryker-core    product
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
@@ -49,7 +49,7 @@ Catalog
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Catalog_Actions
-    [Tags]    smoke
+    [Tags]    smoke    quick-add-to-cart     cart
     [Documentation]    Checks quick add to cart and product groups
     [Setup]    Create dynamic admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
@@ -75,6 +75,7 @@ Catalog_Actions
     ...    AND    Delete dynamic admin user from DB
 
 Discontinued_Alternative_Products
+    [Tags]    wishlist    discontinued-products    alternative-products
     [Documentation]    Checks discontinued and alternative products
     [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
@@ -101,7 +102,7 @@ Discontinued_Alternative_Products
     ...    AND    Delete dynamic admin user from DB
 
 Measurement_Units
-    [Tags]    smoke
+    [Tags]    smoke    measurement-units    cart    checkout
     [Documentation]    Checks checkout with Measurement Unit product
     [Setup]    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -124,7 +125,7 @@ Measurement_Units
     Yves: 'Thank you' page is displayed
 
 Packaging_Units
-    [Tags]    smoke
+    [Tags]    smoke    packaging-units    cart    checkout
     [Documentation]    Checks checkout with Packaging Unit product
     [Setup]    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
