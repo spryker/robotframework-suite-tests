@@ -165,7 +165,7 @@ Request_for_Quote
     [Teardown]    Delete dynamic admin user from DB
 
 Split_Delivery
-    [Tags]    smoke    shipments    
+    [Tags]    smoke    shipment    
     [Documentation]    Checks split delivery in checkout
     [Setup]    Run Keywords    Create dynamic customer in DB    based_on=${yves_user_email}
     ...    AND    Create dynamic admin user in DB

@@ -125,7 +125,7 @@ Measurement_Units
     Yves: 'Thank you' page is displayed
 
 Packaging_Units
-    [Tags]    smoke    packaging-units    cart    checkout
+    [Tags]    smoke    packaging-units    marketplace-packaging-units    cart    checkout
     [Documentation]    Checks checkout with Packaging Unit product
     [Setup]    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}

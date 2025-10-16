@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_tree
+Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office    spryker-core    
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/steps/catalog_steps.robot
@@ -14,7 +14,7 @@ Resource    ../../../../resources/steps/orders_management_steps.robot
 
 *** Test Cases ***
 Product_labels
-    [Tags]    smoke
+    [Tags]    smoke    product-labels    search    catalog
     [Documentation]    Checks that products have labels on PLP and PDP
     Trigger product labels update
     Yves: go to first navigation item level:    Sale
@@ -28,6 +28,7 @@ Product_labels
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Product_Sets
+    [Tags]    product-sets    cart
     [Documentation]    Check the usage of product sets
     [Setup]    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -43,7 +44,7 @@ Product_Sets
     Yves: delete product from the shopping cart with sku:    096_30856274
 
 CRUD_Product_Set
-    [Tags]    smoke
+    [Tags]    smoke    product-sets    product
     [Documentation]    CRUD operations for product sets
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Create dynamic admin user in DB
@@ -67,7 +68,7 @@ CRUD_Product_Set
     [Teardown]    Delete dynamic admin user from DB
 
 Configurable_Bundle
-    [Tags]    smoke
+    [Tags]    smoke    product-bundles    configurable-bundle    cart    checkout    product
     [Documentation]    Check the usage of configurable bundles (includes authorized checkout)
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
@@ -109,7 +110,7 @@ Configurable_Bundle
     [Teardown]    Delete dynamic admin user from DB
 
 Product_Relations
-    [Tags]    smoke
+    [Tags]    smoke    product-relations    cart
     [Documentation]    Checks related product on PDP and upsell products in cart
     Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}

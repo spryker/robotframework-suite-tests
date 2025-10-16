@@ -135,7 +135,7 @@ Update_Customer_Data
     [Teardown]    Delete dynamic admin user from DB
 
 Add_to_Wishlist
-    [Tags]    smoke    wishlist
+    [Tags]    smoke    wishlist    marketplace-wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
     Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -154,7 +154,7 @@ Add_to_Wishlist
     Yves: try to add product to wishlist as guest user
 
 Share_Shopping_Lists
-    [Tags]    smoke
+    [Tags]    smoke    shopping-lists    marketplace-shopping-lists
     [Documentation]    Checks that shopping list can be shared
     [Setup]    Run Keywords    Create dynamic customer in DB    based_on=${yves_company_user_shared_permission_owner_email}    email=sonia+sharelist${random}@spryker.com    first_name=Share${random}    last_name=List${random}
     ...    AND    Create dynamic customer in DB    based_on=${yves_company_user_shared_permission_receiver_email}    email=sonia+receivelist${random}@spryker.com    first_name=Receive${random}    last_name=List${random}
@@ -185,6 +185,7 @@ Share_Shopping_Lists
     [Teardown]    Run Keywords    Close Current Context    
 
 Share_Shopping_Carts
+    [Tags]    cart   shared-carts    multiple-carts    checkout
     [Documentation]    Checks that cart can be shared and used for checkout
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB    based_on=${yves_company_user_shared_permission_owner_email}    email=sonia+sharecart${random}@spryker.com    first_name=Share${random}    last_name=Cart${random}
@@ -240,7 +241,7 @@ Share_Shopping_Carts
     [Teardown]    Delete dynamic admin user from DB
 
 Quick_Order
-    [Tags]    smoke
+    [Tags]    smoke    cart    checkout    reorder    marketplace-product-offer   marketplace-product    product
     [Documentation]    Checks Quick Order, checkout and Reorder
     [Setup]    Run keywords    Create dynamic customer in DB
     ...    AND    Create dynamic admin user in DB
@@ -301,6 +302,7 @@ Quick_Order
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
 
 Reorder
+    [Tags]    reorder    checkout    cart    order-management    state-machine
     [Documentation]    Checks that merchant relation is saved with reorder
     Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -321,7 +323,7 @@ Reorder
     Yves: assert merchant of product in cart or list:    ${available_never_out_of_stock_concrete_sku}    Spryker
 
 Business_on_Behalf
-    [Tags]    smoke
+    [Tags]    smoke    company-account
     [Documentation]    Check that BoB user has possibility to change the business unit
     Create dynamic customer in DB    first_name=Oryx${random}    last_name=Bob
     Create dynamic admin user in DB
@@ -337,6 +339,7 @@ Business_on_Behalf
     ...    AND    Delete dynamic admin user from DB
 
 Wishlist_List_Supports_Offers
+    [Tags]    wishlist    marketplace-wishlist    marketplace-product-offer   marketplace-product    product
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -357,7 +360,7 @@ Wishlist_List_Supports_Offers
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
 
 Shopping_List_Contains_Offers
-    [Tags]    smoke
+    [Tags]    smoke    shopping-lists    marketplace-shopping-lists    marketplace-product-offer   marketplace-product    product
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
     [Setup]    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -375,7 +378,7 @@ Shopping_List_Contains_Offers
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
 
 Email_Confirmation
-    [Tags]    smoke
+    [Tags]    smoke    mailing-notifications
     [Documentation]    Check that a new user cannot login if the email is not verified
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                                | password                   ||

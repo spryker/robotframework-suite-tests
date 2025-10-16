@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    static-set
+Test Tags    robot:recursive-stop-on-failure    static-set    spryker-core-back-office    spryker-core
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/steps/minimum_order_value_steps.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
@@ -16,6 +16,7 @@ Resource    ../../../../resources/steps/zed_discount_steps.robot
 
 *** Test Cases ***
 Minimum_Order_Value
+    [Tags]    order-threshold    cart    checkout
     [Documentation]    checks that global minimum and maximum order thresholds can be applied
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
@@ -61,7 +62,7 @@ Minimum_Order_Value
     ...    AND    Delete dynamic admin user from DB
 
 Fulfillment_app_e2e
-    [Tags]   smoke
+    [Tags]   smoke    cart    warehouse-user-management    warehouse-picking    checkout    order-management    state-machine    order-amendment    marketplace-order-management    inventory-management
     # #LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
     Remove all warehouse user assignments by user uuid:    ${warehouse_user[0].de_admin_user_uuid}
     Make user a warehouse user/ not a warehouse user:    ${warehouse_user[0].de_admin_user_uuid}    0
@@ -162,7 +163,7 @@ Fulfillment_app_e2e
     ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assignment_id}     
 
 Discounts
-    [Tags]    smoke    group_tree
+    [Tags]    smoke    group_tree    promotions-discounts    marketplace-promotions-discounts    cart    checkout    shipment
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
     [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB

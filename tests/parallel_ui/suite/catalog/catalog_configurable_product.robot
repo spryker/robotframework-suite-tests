@@ -13,7 +13,7 @@ Resource    ../../../../resources/steps/orders_management_steps.robot
 
 *** Test Cases ***
 Configurable_Product_RfQ_OMS
-    [Tags]    quotation-process    order-management    marketplace-order-management    reorder    agent-assist
+    [Tags]    quotation-process    order-management    state-machine    marketplace-order-management    reorder    agent-assist
     [Documentation]    Conf Product in RfQ, OMS, Merchant OMS and reorder. 
     [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB

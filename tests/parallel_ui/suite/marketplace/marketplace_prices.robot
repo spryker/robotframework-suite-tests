@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_two
+Test Tags    robot:recursive-stop-on-failure    group_two    spryker-core-back-office    merchant    marketplace-merchantportal-core    marketplace-merchant    product    merchant-product    marketplace-product-offer    prices    marketplace-product-offer-prices    merchant-custom-prices    company-account    marketplace-merchant-custom-prices
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/steps/zed_marketplace_steps.robot
@@ -78,6 +78,7 @@ Merchant_Portal_Customer_Specific_Prices
     [Teardown]    Delete dynamic admin user from DB
 
 Merchant_Product_Original_Price
+    [Tags]    search    catalog
     [Documentation]    checks that Original price is displayed on the PDP and in Catalog
     [Setup]    Run Keywords    Zed: create dynamic merchant user:    Budget Cameras
     ...    AND    Create dynamic customer in DB
