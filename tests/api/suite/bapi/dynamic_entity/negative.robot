@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../resources/common/common_api.robot
-Test Tags    bapi
+Test Tags    bapi    spryker-core    spryker-core-back-office
 
 *** Test Cases ***
 Get_list_of_country_with_invalid_token

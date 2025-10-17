@@ -3,7 +3,7 @@ Suite Setup       API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../resources/common/common_api.robot
 Resource    ../../../../../resources/steps/shipment_type_steps.robot
-Test Tags    bapi
+Test Tags    bapi    shipment    spryker-core    spryker-core-back-office
 
 *** Test Cases ***
 Create_shipment_type

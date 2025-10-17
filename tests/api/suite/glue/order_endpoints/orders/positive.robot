@@ -2,7 +2,7 @@
 Suite Setup    API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue
+Test Tags    glue    cart    checkout    order-management    marketplace-order-management    marketplace-product    merchant    product    product-bundles    marketplace-packaging-units    measurement-units    packaging-units    non-splittable-products    shipment    configurable-bundle    configurable-product    gift-cards    spryker-core    customer-access
 
 *** Test Cases ***
 ### Important CHECKOUT and CHECKOUT-DATA endpoints require Item ID and NOT intem sku. To get item id and include to the cart endpoint.
