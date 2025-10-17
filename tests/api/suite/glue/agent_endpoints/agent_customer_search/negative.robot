@@ -1,7 +1,7 @@
 *** Settings ***
 Suite Setup    API_suite_setup
 Test Setup        API_test_setup
-Test Tags    glue    customer-access    search
+Test Tags    glue    spryker-core    customer-access    acl    agent-assist
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***

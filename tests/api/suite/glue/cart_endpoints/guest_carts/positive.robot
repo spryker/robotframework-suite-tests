@@ -2,7 +2,7 @@
 Suite Setup    API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue    cart    price    tax
+Test Tags    glue    cart    prices    tax    spryker-core    customer-access    marketplace-promotions-discounts    promotions-discounts
 
 *** Test Cases ***
 Create_guest_cart

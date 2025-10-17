@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue    customer-access    customer-account-management
+Test Tags    glue    spryker-core    customer-access    acl    agent-assist
 
 *** Test Cases ***
 Get_agent_token_for_user_who_is_not_agent
