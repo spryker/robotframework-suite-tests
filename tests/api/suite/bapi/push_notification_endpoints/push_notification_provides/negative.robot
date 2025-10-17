@@ -4,7 +4,7 @@ Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Resource    ../../../../../../resources/steps/push_notifications_steps.robot
-Test Tags    bapi
+Test Tags    bapi    push-notification    spryker-core    spryker-core-back-office
 
 *** Test Cases ***
 Retrieve_push_notification_providers_without_authorization

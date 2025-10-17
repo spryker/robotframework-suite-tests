@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    bapi
+Test Tags    bapi    product    category-management    merchant-category    prices    spryker-core    spryker-core-back-office
 
 *** Test Cases ***
 Get_product_abstract_collection_with_invalid_query_parameter:
