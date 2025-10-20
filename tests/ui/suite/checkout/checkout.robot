@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_one
+Test Tags    robot:recursive-stop-on-failure    group_one    checkout    spryker-core-back-office    spryker-core    marketplace-merchantportal-core    cart    multiple-carts    marketplace-shipment    shipment    inventory-management
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -96,7 +96,7 @@ Register_during_checkout
     [Teardown]    Zed: delete customer:    sonia+guest${random}@spryker.com
 
 Guest_Checkout
-    [Tags]    smoke
+    [Tags]    smoke    product-bundles    promotions-discounts    marketplace-promotions-discounts    order-management    marketplace-order-management    
     [Documentation]    Guest checkout with bundles, discounts and OMS
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
@@ -139,6 +139,7 @@ Guest_Checkout
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
 
 Guest_Checkout_Addresses
+    [Tags]    smoke    order-management    marketplace-order-management    product        
     [Documentation]    Guest checkout with different addresses and OMS
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
@@ -191,6 +192,7 @@ Guest_Checkout_Addresses
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
 
 Business_Unit_Address_on_Checkout
+    [Tags]    company-account
     [Documentation]    Checks that business unit address can be used during checkout
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    businessAddressCart+${random}
@@ -214,7 +216,7 @@ Business_Unit_Address_on_Checkout
     Yves: shipping address on the order details page is:    Mr. Armando Richi Spryker Systems GmbH Gurmont Str. 23 8002 Barcelona, Spain 3490284322
 
 Request_for_Quote
-    [Tags]    smoke
+    [Tags]    smoke    quotation-process    order-management    marketplace-order-management    agent-assist
     [Documentation]    Checks user can request and receive quote.
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com   ${default_secure_password}   Request    Quote    Root group    This user is an agent in Storefront    en_US
@@ -287,7 +289,7 @@ Request_for_Quote
     ...    AND    Zed: delete Zed user with the following email:    agent_quote+${random}@spryker.com
 
 Split_Delivery
-    [Tags]    smoke
+    [Tags]    smoke    product
     [Documentation]    Checks split delivery in checkout
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
@@ -376,7 +378,7 @@ Checkout_Address_Management
     ...    AND    Yves: delete all user addresses
 
 Click_and_collect
-    [Tags]    smoke
+    [Tags]    smoke    product    product-approval-process    marketplace-product-approval-process    marketplace-product    marketplace-product-offer    marketplace-product-offer-prices    marketplace-merchant-portal-product-offer-management    product-offer-shipment    product-offer-shipment-availability
     [Documentation]    checks that product offer is successfully replaced with a target product offer
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
@@ -507,6 +509,7 @@ Click_and_collect
     ...    AND    Trigger p&s
 
 Multiple_Merchants_Order
+    [Tags]    product    marketplace-product    non-splittable-products    marketplace-product-offer    marketplace-product-offer-prices    product-offer-shipment
     [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be split per merchant
     [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -560,6 +563,7 @@ Multiple_Merchants_Order
     ...    AND    Yves: delete all user addresses
 
 Unique_URL
+    [Tags]    shared-carts    persistent-cart-sharing
     [Documentation]
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
@@ -576,6 +580,7 @@ Unique_URL
     ...    AND    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
 Comments_in_Cart
+    [Tags]    comments
     [Documentation]    Add comments to cart and verify comments in Yves and Zed
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    commentCart+${random}
@@ -598,6 +603,7 @@ Comments_in_Cart
     Zed: check comment appears at order detailed page in zed:    abc${random}    ${lastPlacedOrder}
 
 Comment_Management_in_the_Cart
+    [Tags]    comments
     [Documentation]    Editing and deleting comments in carts
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    commentManagement+${random}
@@ -613,6 +619,7 @@ Comment_Management_in_the_Cart
     [Teardown]    Run Keyword    Yves: delete 'Shopping Cart' with name:    commentManagement+${random}
 
 Configurable_Product_Checkout
+    [Tags]    product    configurable-product    prices
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}

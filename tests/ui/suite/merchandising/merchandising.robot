@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_tree
+Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office   spryker-core    inventory-management
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -44,7 +44,7 @@ Resource    ../../../../resources/steps/configurable_bundle_steps.robot
 
 *** Test Cases ***
 Product_labels
-    [Tags]    smoke
+    [Tags]    smoke    product-labels    search    catalog
     [Documentation]    Checks that products have labels on PLP and PDP
     Trigger product labels update
     Yves: go to first navigation item level:    Sale
@@ -58,6 +58,7 @@ Product_labels
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Product_Sets
+    [Tags]    product-sets    cart
     [Documentation]    Check the usage of product sets
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to URL:    en/product-sets
@@ -73,7 +74,7 @@ Product_Sets
     [Teardown]    Yves: check if cart is not empty and clear it
 
 CRUD_Product_Set
-    [Tags]    smoke
+    [Tags]    smoke    product    product-sets    cart
     [Documentation]    CRUD operations for product sets. DMS-ON: https://spryker.atlassian.net/browse/FRW-7393 
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new product set:
@@ -96,7 +97,7 @@ CRUD_Product_Set
     Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/test-set-${random}
 
 Configurable_Bundle
-    [Tags]    smoke
+    [Tags]    smoke    product    configurable-bundle    cart    checkout    shipment    order-management
     [Documentation]    Check the usage of configurable bundles (includes authorized checkout)
     Yves: login on Yves with provided credentials:    ${yves_default_user_email}
     Yves: check if cart is not empty and clear it
@@ -143,6 +144,7 @@ Configurable_Bundle
     ...    AND    Yves: check if cart is not empty and clear it
 
 Product_Relations
+    [Tags]    product-relations    product    cart
     [Documentation]    Checks related product on PDP and upsell products in cart
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    ${product_with_relations_related_products_sku}
@@ -154,7 +156,7 @@ Product_Relations
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Discounts
-    [Tags]    smoke
+    [Tags]    smoke    promotions-discounts    marketplace-promotions-discounts    cart    checkout    order-management    prices
     [Documentation]    Discounts, Promo Products, and Coupon Codes (includes guest checkout)
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page

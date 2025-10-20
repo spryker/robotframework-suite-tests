@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_one
+Test Tags    robot:recursive-stop-on-failure    group_one    navigation    spryker-core-back-office    payments    
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/steps/zed_root_menus_steps.robot
@@ -52,6 +52,7 @@ Glossary
     ...    AND    Delete dynamic admin user from DB
 
 Payment_method_update
+    [Tags]    cart    checkout
     [Documentation]    Deactivate payment method, unset payment method for stores in zed and check its impact on yves.
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Create dynamic admin user in DB

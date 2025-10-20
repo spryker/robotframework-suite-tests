@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_two
+Test Tags    robot:recursive-stop-on-failure    group_two    spryker-core-back-office    spryker-core    acl    customer-account-management    customer-access    cart    multiple-carts
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -158,7 +158,7 @@ Update_Customer_Data
     ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name} | ${yves_second_user_last_name} ||
 
 Add_to_Wishlist
-    [Tags]    smoke
+    [Tags]    smoke    wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: delete all wishlists
@@ -180,7 +180,7 @@ Add_to_Wishlist
     ...    AND    Yves: check if cart is not empty and clear it
 
 Share_Shopping_Lists
-    [Tags]    smoke
+    [Tags]    smoke    shopping-lists
     [Documentation]    Checks that shopping list can be shared
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: go to 'Shopping Lists' page
@@ -209,6 +209,7 @@ Share_Shopping_Lists
     [Teardown]    Run Keywords    Close Current Context    AND    Yves: delete 'Shopping List' with name:    shareShoppingList+${random}
 
 Share_Shopping_Carts
+    [Tags]    smoke    checkout    shared-carts    persistent-cart-sharing
     [Documentation]    Checks that cart can be shared and used for checkout
     [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_sony_experts_email}
@@ -260,7 +261,7 @@ Share_Shopping_Carts
     Yves: 'Order Details' page is displayed
 
 Quick_Order
-    [Tags]    smoke
+    [Tags]    smoke    checkout    reorder    cart    order-management
     [Documentation]    Checks Quick Order, checkout and Reorder
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
@@ -321,6 +322,7 @@ Quick_Order
     [Teardown]    Yves: delete 'Shopping List' with name:    quickOrderList+${random}
 
 Reorder
+    [Tags]    reorder    checkout    cart    order-management
     [Documentation]    Checks that merchant relation is saved with reorder
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
@@ -343,6 +345,7 @@ Reorder
     ...    AND    Yves: delete all user addresses
 
 Business_on_Behalf
+    [Tags]    company-account
     [Documentation]    Check that BoB user has possibility to change the business unit
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Customers    Company Users
@@ -355,6 +358,7 @@ Business_on_Behalf
     [Teardown]    Zed: delete company user xxx withing xxx company business unit:    Donald    Spryker Systems Zurich
 
 Wishlist_List_Supports_Offers
+    [Tags]    wishlist    marketplace-wishlist    product    marketplace-product    marketplace-product-offer
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
     [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all wishlists
@@ -377,6 +381,7 @@ Wishlist_List_Supports_Offers
     [Teardown]    Run keywords    Yves: delete all wishlists    AND    Yves: check if cart is not empty and clear it
 
 Shopping_List_Contains_Offers
+    [Tags]    shopping-lists    marketplace-shopping-lists    cart    product    marketplace-product    marketplace-product-offer
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
     [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts

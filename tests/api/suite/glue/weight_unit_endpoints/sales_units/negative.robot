@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue
+Test Tags    glue    product    measurement-units    packaging-units    marketplace-packaging-units
 
 *** Test Cases ***
 Get_a_measurement_unit_with_non_existent_sku

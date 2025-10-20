@@ -3,7 +3,7 @@ Suite Setup       API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../resources/common/common_api.robot
 Resource    ../../../../../resources/steps/warehouse_user_assignment_steps.robot
-Test Tags    bapi
+Test Tags    bapi    spryker-core    spryker-core-back-office    warehouse-user-management
 
 *** Test Cases ***
 Assign_user_to_warehouse

@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_one
+Test Tags    robot:recursive-stop-on-failure    group_one    spryker-core    cart    checkout    orders-management    acl    customer-account-management    customer-access   
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
@@ -73,6 +73,7 @@ Register_during_checkout
     ...    AND    Delete dynamic admin user from DB
 
 Business_Unit_Address_on_Checkout
+    [Tags]    company-account
     [Documentation]    Checks that business unit address can be used during checkout
     Create dynamic customer in DB    based_on=${yves_company_user_buyer_email}
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -95,7 +96,7 @@ Business_Unit_Address_on_Checkout
     Yves: shipping address on the order details page is:    Mr. Dynamic Customer Spryker Systems GmbH Gurmont Str. 23 8002 Barcelona, Spain 3490284322
 
 Request_for_Quote
-    [Tags]    smoke
+    [Tags]    smoke    quotation-process    agent-assist
     [Documentation]    Checks user can request and receive quote.
     [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB    based_on=${yves_company_user_buyer_email}
@@ -164,7 +165,7 @@ Request_for_Quote
     [Teardown]    Delete dynamic admin user from DB
 
 Split_Delivery
-    [Tags]    smoke
+    [Tags]    smoke    shipment    
     [Documentation]    Checks split delivery in checkout
     [Setup]    Run Keywords    Create dynamic customer in DB    based_on=${yves_user_email}
     ...    AND    Create dynamic admin user in DB
@@ -249,6 +250,7 @@ Checkout_Address_Management
     [Teardown]    Delete dynamic admin user from DB
 
 Multiple_Merchants_Order
+    [Tags]    marketplace-product-offer    marketplace-merchant    merchant    marketplace-product
     [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be split per merchant
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB
@@ -300,7 +302,7 @@ Multiple_Merchants_Order
     [Teardown]    Delete dynamic admin user from DB
     
 Unique_URL
-    [Tags]    dms-on
+    [Tags]    dms-on    shared-carts
     [Documentation]    Bug: https://spryker.atlassian.net/browse/CC-12380
     Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}

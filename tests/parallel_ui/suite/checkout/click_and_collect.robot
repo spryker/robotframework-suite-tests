@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_one
+Test Tags    robot:recursive-stop-on-failure    group_one    marketplace-merchantportal-core    spryker-core-back-office    spryker-core    cart    marketplace-product-offer-prices    marketplace-product-offer    marketplace-merchant    marketplace-product    checkout    
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/steps/orders_management_steps.robot
