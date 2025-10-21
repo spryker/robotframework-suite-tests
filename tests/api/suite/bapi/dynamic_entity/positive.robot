@@ -3,7 +3,7 @@ Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../resources/common/common_api.robot
 Resource    ../../../../../resources/steps/api_dynamic_entity_steps.robot
-Test Tags    bapi    spryker-core    spryker-core-back-office
+Test Tags    bapi    spryker-core    spryker-core-back-office    inventory-management    marketplace-inventory-management    data-exchange-api 
 
 *** Test Cases ***
 Get_country_collection

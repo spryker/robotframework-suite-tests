@@ -2,7 +2,7 @@
 Resource    ../../../../../../resources/common/common_api.robot
 Suite Setup    API_suite_setup
 Test Setup    API_test_setup
-Test Tags    glue    product    marketplace-product-offer    marketplace-product-offer-prices    prices    marketplace-product    merchant    marketplace-merchant
+Test Tags    glue    product    marketplace-product-offer    product-offer-shipment    marketplace-product-offer-prices    prices    marketplace-product    merchant    marketplace-merchant
 
 *** Test Cases ***
 Retrieve_prices_of_a_product_offer
