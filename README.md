@@ -242,5 +242,5 @@ Several output files are created when tests are executed, and all of them are so
 The command line option `--log (-l)` determines where log files are created. Unless the special value NONE is used, log files are always created and their default name is log.html.
 
 ---
-## Tast Tagging
+## Test Tagging
 When adding a new test or extending the coverage of an existing test (UI or API) - add the tag for the covered feature. The tag should be named the same as the corresponding feature in the Release App. E.g. if you create a new test that touches Marketplace Agent Assist feature, you should add tags `marketplace-agent-assist` and `marketplace-merchantportal-core`.
