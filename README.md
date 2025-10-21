@@ -243,4 +243,4 @@ The command line option `--log (-l)` determines where log files are created. Unl
 
 ---
 ## Tast Tagging
-When adding a new test or extending the coverage of an existing test (UI or API) - add the tag for the covered feature. The tag should be named the same as the corresponding feature in the Release App. E.g. if you create a new test that touches Marketplace Agent Assist feature, you sould add tags `marketplace-agent-assist` and `marketplace-merchantportal-core`.
+When adding a new test or extending the coverage of an existing test (UI or API) - add the tag for the covered feature. The tag should be named the same as the corresponding feature in the Release App. E.g. if you create a new test that touches Marketplace Agent Assist feature, you should add tags `marketplace-agent-assist` and `marketplace-merchantportal-core`.
