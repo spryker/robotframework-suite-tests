@@ -2,7 +2,7 @@
 Resource    ../../../../../../resources/common/common_api.robot
 Suite Setup    API_suite_setup
 Test Setup    API_test_setup
-Test Tags    glue    availability-notification    spryker-core    mailing-notifications    customer-access    acl
+Test Tags    glue    availability-notification    spryker-core    mailing-notifications    customer-access    acl    inventory-management    marketplace-inventory-management 
 
 *** Test Cases ***
 Get_my_availability_notifications

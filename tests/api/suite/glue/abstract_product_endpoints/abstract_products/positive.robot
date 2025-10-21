@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue    product    tax    product-labels    product-options
+Test Tags    glue    product    tax    product-labels    product-options    inventory-management    marketplace-inventory-management 
 
 *** Test Cases ***
 Abstract_product_with_one_concrete

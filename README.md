@@ -240,3 +240,7 @@ Several output files are created when tests are executed, and all of them are so
 **Log** files contain details about the executed test cases in HTML format. They have a hierarchical structure showing test suite, test case and keyword details. Log files are needed nearly every time when test results are to be investigated in detail. Even though log files also have statistics, reports are better for getting an higher-level overview.
 
 The command line option `--log (-l)` determines where log files are created. Unless the special value NONE is used, log files are always created and their default name is log.html.
+
+---
+## Test Tagging
+When adding a new test or extending the coverage of an existing test (UI or API) - add the tag for the covered feature. The tag should be named the same as the corresponding feature in the Release App. E.g. if you create a new test that touches Marketplace Agent Assist feature, you should add tags `marketplace-agent-assist` and `marketplace-merchantportal-core`.

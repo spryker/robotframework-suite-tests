@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue    product
+Test Tags    glue    product    inventory-management    marketplace-inventory-management 
 
 *** Test Cases ***
 Get_abstract_availability_by_concrete_SKU

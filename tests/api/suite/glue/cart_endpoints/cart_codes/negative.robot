@@ -1,7 +1,7 @@
 *** Settings ***
 Suite Setup    API_suite_setup
 Test Setup    API_test_setup
-Test Tags    glue    cart    spryker-core    customer-access    acl    promotions-discounts    gift-cards
+Test Tags    glue    cart    spryker-core    customer-access    acl    promotions-discounts    marketplace-promotions-discounts    gift-cards
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
