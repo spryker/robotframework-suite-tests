@@ -608,11 +608,11 @@ Zed: table should contain xxx N times:
 
 Zed: go to tab:
     [Arguments]    ${tabName}
-    ${is_5xx}=    Click and return True if 5xx occurred:    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]
+    ${is_5xx}=    Click and return True if 5xx occurred:    xpath=//*[contains(@data-bs-toggle,'tab') and contains(text(),'${tabName}')]
     # workaround for the issue with deadlocks on concurrent click attempts
     IF    ${is_5xx}
         Reload
-        Click With Options    xpath=//*[contains(@data-toggle,'tab') and contains(text(),'${tabName}')]    force=True    noWaitAfter=True
+        Click With Options    xpath=//*[contains(@data-bs-toggle,'tab') and contains(text(),'${tabName}')]    force=True    noWaitAfter=True
     END
     TRY
         Wait For Load State
@@ -623,11 +623,11 @@ Zed: go to tab:
 
 Zed: go to tab by link href that contains:
     [Arguments]    ${href}
-    ${is_5xx}=    Click and return True if 5xx occurred:    xpath=//a[contains(@data-toggle,'tab')][contains(@href,'${href}')] | //*[contains(@data-toggle,'tab')]//a[contains(@href,'${href}')]
+    ${is_5xx}=    Click and return True if 5xx occurred:    xpath=//a[contains(@data-bs-toggle,'tab')][contains(@href,'${href}')] | //*[contains(@data-bs-toggle,'tab')]//a[contains(@href,'${href}')]
     # workaround for the issue with deadlocks on concurrent click attempts
     IF    ${is_5xx}
         Reload
-        Click With Options    xpath=//a[contains(@data-toggle,'tab')][contains(@href,'${href}')] | //*[contains(@data-toggle,'tab')]//a[contains(@href,'${href}')]    force=True    noWaitAfter=True
+        Click With Options    xpath=//a[contains(@data-bs-toggle,'tab')][contains(@href,'${href}')] | //*[contains(@data-bs-toggle,'tab')]//a[contains(@href,'${href}')]    force=True    noWaitAfter=True
     END
     TRY
         Wait For Load State
