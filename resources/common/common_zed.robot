@@ -623,11 +623,11 @@ Zed: go to tab:
 
 Zed: go to tab by link href that contains:
     [Arguments]    ${href}
-    ${is_5xx}=    Click and return True if 5xx occurred:    xpath=//a[contains(@data-bs-toggle,'tab')][contains(@href,'${href}')] | //*[contains(@data-bs-toggle,'tab')]//a[contains(@href,'${href}')]
+    ${is_5xx}=    Click and return True if 5xx occurred:    xpath=//*[contains(@data-bs-toggle,'tab')][contains(@data-bs-target,'${href}')] | //*[contains(@data-bs-toggle,'tab')]//li[contains(@data-bs-target,'${href}')]
     # workaround for the issue with deadlocks on concurrent click attempts
     IF    ${is_5xx}
         Reload
-        Click With Options    xpath=//a[contains(@data-bs-toggle,'tab')][contains(@href,'${href}')] | //*[contains(@data-bs-toggle,'tab')]//a[contains(@href,'${href}')]    force=True    noWaitAfter=True
+        Click With Options    xpath=//*[contains(@data-bs-toggle,'tab')][contains(@data-bs-target,'${href}')] | //*[contains(@data-bs-toggle,'tab')]//li[contains(@data-bs-target,'${href}')]    force=True    noWaitAfter=True
     END
     TRY
         Wait For Load State
