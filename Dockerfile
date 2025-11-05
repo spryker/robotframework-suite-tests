@@ -5,7 +5,6 @@ RUN mkdir -p ${ROBOT_WORK_DIR}
 RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt install -y \
     python3  \
     python3-pip \
-    python3-tk \
     make \
     && rm -rf /var/lib/apt/lists/*
 
@@ -13,15 +12,12 @@ RUN pip3 install  \
     --no-cache-dir  \
     robotframework  \
     robotframework-pabot  \
-    robotframework-browser==19.7.2  \
+    robotframework-browser  \
     robotframework-databaselibrary  \
     robotframework-requests \
     PyMySQL \
     psycopg2-binary \
-    robotframework-jsonlibrary \
-    tk
-
-RUN rfbrowser init chromium
+    robotframework-jsonlibrary
 
 WORKDIR ${ROBOT_WORK_DIR}
 

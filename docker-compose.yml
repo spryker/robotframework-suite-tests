@@ -1,7 +1,7 @@
 services:
     robot-framework:
         build:
-            context: ./.robot
+            context: ./vendor/spryker/robotframework-suite-tests
             dockerfile: Dockerfile
         networks:
             - private
