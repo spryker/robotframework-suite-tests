@@ -163,11 +163,11 @@ Zed: concrete product has the following alternative products:
 
 Zed: switch to the tab on 'Edit product' page:
     [Arguments]    ${tabToUse}
-    Click    xpath=//form[contains(@name,'form_edit')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//li[@data-bs-toggle='tab'][text()='${tabToUse}']
+    Click    xpath=//form[contains(@name,'form_edit')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//li[@data-bs-toggle='tab']//*[text()='${tabToUse}']
 
 Zed: switch to the tab on 'Add product' page:
     [Arguments]    ${tabToUse}
-    Click    xpath=//form[contains(@name,'form_add')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//li[@data-bs-toggle='tab'][text()='${tabToUse}']
+    Click    xpath=//form[contains(@name,'form_add')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//li[@data-bs-toggle='tab']//*[text()='${tabToUse}']
 
 Zed: product is successfully discontinued
     ${currentURL}=    Get Location

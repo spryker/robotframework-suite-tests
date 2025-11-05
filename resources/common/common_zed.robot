@@ -277,8 +277,8 @@ Zed: click Action Button in Variant table for row that contains:
 
 Zed: Check checkbox by Label:
     [Arguments]    ${checkbox_label}
-    wait until element is visible    xpath=(//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input)[1]
-    Check checkbox    xpath=(//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input)[1]
+    wait until element is visible    //label[normalize-space(.)='${checkbox_label}']//input[@type='checkbox']
+    Check checkbox    //label[normalize-space(.)='${checkbox_label}']//input[@type='checkbox']
 
 Zed: Check checkbox by Value:
     [Arguments]    ${checkbox_value}
@@ -287,8 +287,8 @@ Zed: Check checkbox by Value:
 
 Zed: Uncheck Checkbox by Label:
     [Arguments]    ${checkbox_label}
-    wait until element is visible    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
-    Uncheck Checkbox    xpath=//input[@type='checkbox']/../../label[contains(text(),'${checkbox_label}')]//input
+    wait until element is visible    //label[normalize-space(.)='${checkbox_label}']//input[@type='checkbox']
+    Uncheck Checkbox    //label[normalize-space(.)='${checkbox_label}']//input[@type='checkbox']
 
 Zed: submit the form
     Wait until element is visible    ${zed_save_button}
