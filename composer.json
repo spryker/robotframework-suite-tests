@@ -3,5 +3,8 @@
     "description": "Automated tests for the Robot Framework",
     "type": "library",
     "license": "MIT",
-    "require": {}
+    "require": {},
+    "bin": [
+        "bin/run-robot-suite-tests.sh"
+    ]
 }
