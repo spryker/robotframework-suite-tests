@@ -62,7 +62,12 @@ echo ""
 mkdir -p "$RESULTS_DIR"
 
 # Determine number of CPUs and number of parallel processes for pabot
-CPU_COUNT=$(nproc)
+if command -v nproc > /dev/null 2>&1; then
+    CPU_COUNT=$(nproc)
+else
+    # macOS fallback
+    CPU_COUNT=$(sysctl -n hw.ncpu)
+fi
 if [ "$CPU_COUNT" -le 2 ]; then
     PROCESSES=$CPU_COUNT
 else
