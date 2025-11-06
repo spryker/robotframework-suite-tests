@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Script to run Spryker Robot Framework tests without Docker (requires Spryker running via DockerSDK and /etc/hosts configuration)
-# Usage: ./.robot/run-tests-native.sh [api|ui]
+# Usage: ./vendor/bin/run-tests-native.sh or vendor/spryker/robotframework-suite-tests/bin/run-robot-suite-tests.sh [api|ui]
 
 set -e
 
