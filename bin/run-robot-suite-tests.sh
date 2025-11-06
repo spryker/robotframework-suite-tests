@@ -137,9 +137,9 @@ case "$TEST_TYPE" in
         echo "Merging test results..."
         rebot -d "$RESULTS_DIR" --output output.xml --merge \
             "$RESULTS_DIR/dynamic_set/output.xml" \
-            "$RESULTS_DIR/static_set/output.xml"
+            "$RESULTS_DIR/static_set/output.xml" || true
 
-        echo "Some tests could fail. Rerunning failed tests..."
+        echo "Rerunning failed tests..."
         robot \
             -v env:ui_suite \
             -v docker:false \
@@ -158,7 +158,7 @@ case "$TEST_TYPE" in
             echo "Merging rerun results..."
             rebot -d "$RESULTS_DIR" --merge \
                 "$RESULTS_DIR/output.xml" \
-                "$RESULTS_DIR/rerun/rerun.xml"
+                "$RESULTS_DIR/rerun/rerun.xml" || true
         else
             echo "✅ All tests passed on first run, no rerun needed"
         fi
