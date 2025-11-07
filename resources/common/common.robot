@@ -1,6 +1,6 @@
 *** Settings ***
 Library    String
-Library    Dialogs
+# Library    Dialogs
 Library    OperatingSystem
 Library    Process
 Library    Collections
@@ -9,7 +9,7 @@ Library    DateTime
 Library    RequestsLibrary
 Library    DatabaseLibrary
 Library    ../../resources/libraries/common.py
-Library    Telnet
+# Library    Telnet
 
 *** Variables ***
 # *** DB VARIABLES ***
@@ -386,7 +386,7 @@ Trigger oms
     IF    ${dms}
         Run console command    console oms:check-timeout    DE
         Run console command    console oms:check-condition    DE
-    ELSE  
+    ELSE
         Run console command    console oms:check-timeout    DE
         Run console command    console oms:check-timeout    AT
         Run console command    console oms:check-condition    DE
@@ -881,14 +881,14 @@ Create dynamic admin user in DB
     ${existing_user_data_password}=    Query    SELECT spy_user.password FROM spy_user WHERE username = '${based_on}'
     ${existing_user_data_created_at}=    Query    SELECT spy_user.created_at FROM spy_user WHERE username = '${based_on}'
     ${existing_user_data_updated_at}=    Query    SELECT spy_user.updated_at FROM spy_user WHERE username = '${based_on}'
-    
+
     # Step 1: Extract fields from the existing user
     ${existing_id_user}=    Set Variable    ${existing_user_data_id[0][0]}
     ${existing_fk_locale}=    Set Variable    ${existing_user_data_locale[0][0]}
     ${existing_password}=    Set Variable    ${existing_user_data_password[0][0]}
     ${existing_created_at}=    Set Variable    ${existing_user_data_created_at[0][0]}
     ${existing_updated_at}=    Set Variable    ${existing_user_data_updated_at[0][0]}
-    
+
     # Step 2: Get the maximum id_user and increment it
     ${max_id_user}=    Query    SELECT MAX(id_user) FROM spy_user
     IF    '${None}' in '${max_id_user}'    VAR    ${max_id_user}    0
@@ -917,7 +917,7 @@ Create dynamic admin user in DB
         ${is_uuid_present}=    Run Keyword And Return Status    Should Contain    ${spy_user_column_names}    uuid
         VAR    ${is_uuid_present}    ${is_uuid_present}
     END
-    
+
     # Step 5: Insert the new user into the spy_user table using correct variables
     ${attempt}=    Set Variable    1
     WHILE    ${attempt} <= 3
@@ -947,7 +947,7 @@ Create dynamic admin user in DB
 
     # Step 6: Get the ACL group of the existing user from spy_acl_user_has_group
     ${existing_acl_group}=    Query    SELECT fk_acl_group FROM spy_acl_user_has_group WHERE fk_user = ${existing_id_user}
-    
+
     # Step 7: Insert the new user’s ID and the same ACL group into spy_acl_user_has_group
     Execute Sql String    INSERT INTO spy_acl_user_has_group (fk_user, fk_acl_group) VALUES (${new_id_user}, ${existing_acl_group[0][0]})
 
@@ -978,14 +978,14 @@ Delete dynamic admin user from DB
 
     IF    ${user_exists}
         ${user_id}=    Set Variable    ${user_data[0][0]}
-    
+
         # Step 2: Delete entries in related tables
         IF    '${db_engine}' == 'pymysql'
             Execute Sql String    DELETE FROM spy_acl_user_has_group WHERE fk_user = ${user_id}
         ELSE
             Execute Sql String    DELETE FROM spy_acl_user_has_group WHERE fk_user = ${user_id}
         END
-        
+
         # Step 3: Delete the user from spy_user table
         IF    '${db_engine}' == 'pymysql'
             Execute Sql String    DELETE FROM spy_user WHERE id_user = ${user_id}
@@ -993,7 +993,7 @@ Delete dynamic admin user from DB
             Execute Sql String    DELETE FROM spy_user WHERE id_user = ${user_id}
         END
     END
-    
+
     Disconnect From Database
 
 Create dynamic customer in DB
@@ -1024,7 +1024,7 @@ Create dynamic customer in DB
     # Step 1: Fetch the existing customer data (${based_on})
     Connect to Spryker DB
     ${existing_customer_data}=    Query    SELECT * FROM spy_customer WHERE email = '${based_on}'
-    
+
     # Extract all columns from the existing customer with Set Variable If for conditional handling of None values
     VAR    ${existing_customer_id}    ${existing_customer_data[0][0]}
     ${existing_fk_locale}=                 Set Variable If    ${existing_customer_data[0][1]}    ${existing_customer_data[0][1]}    NULL
@@ -1044,7 +1044,7 @@ Create dynamic customer in DB
     ${existing_salutation}=                Set Variable    ${existing_customer_data[0][19]}
     ${existing_created_at}=                Set Variable    ${existing_customer_data[0][20]}
     ${existing_updated_at}=                Set Variable    ${existing_customer_data[0][21]}
-    
+
     # Step 2: Get the maximum id_customer and increment it
     ${max_id_customer}=    Query    SELECT MAX(id_customer) FROM spy_customer
     IF    '${None}' in '${max_id_customer}'    VAR    ${max_id_customer}    0
@@ -1056,7 +1056,7 @@ Create dynamic customer in DB
         # new ID will be max + 5001 not to intersect with real IDs
         ${new_id_customer}=    Evaluate    ${max_id_customer[0][0]} + 5001
     END
-    
+
     # Step 3: Generate new values for customer_reference
     ${new_customer_reference}=    Set Variable    dynamic--${new_id_customer}
 
@@ -1123,7 +1123,7 @@ Create dynamic customer in DB
             ${attempt}=    Set Variable    1
             WHILE    ${attempt} <= 3
                 TRY
-                    IF    '${db_engine}' == 'pymysql' 
+                    IF    '${db_engine}' == 'pymysql'
                         Execute Sql String    INSERT INTO spy_company_user (id_company_user, fk_company, fk_company_business_unit, fk_customer, is_active, is_default, \`key\`, uuid) VALUES (${new_id_company_user}, ${existing_fk_company}, ${existing_fk_company_business_unit}, ${new_id_customer}, True, False, '${new_key}', '${new_uuid}')
                     ELSE
                         Execute Sql String    INSERT INTO spy_company_user (id_company_user, fk_company, fk_company_business_unit, fk_customer, is_active, is_default, key, uuid) VALUES (${new_id_company_user}, ${existing_fk_company}, ${existing_fk_company_business_unit}, ${new_id_customer}, True, False, '${new_key}', '${new_uuid}')
@@ -1142,7 +1142,7 @@ Create dynamic customer in DB
                 END
             END
             IF    ${attempt} > 3    Fail    Unable to insert company user into spy_company_user after 3 attempts.
-            
+
             # Insert the new company role to company user entry in the spy_company_role_to_company_user table
             ${existing_company_role_to_user_data}=    Query    SELECT * FROM spy_company_role_to_company_user WHERE fk_company_user = ${existing_id_company_user}
             FOR    ${roles}    IN    @{existing_company_role_to_user_data}
@@ -1184,7 +1184,7 @@ Create dynamic customer in DB
             Log    message=Selected customer is not a company user. Skipping company user creation.    level=INFO
         END
     END
-    
+
     IF    ${create_default_address}
         # Step 9: Check if an address exists for the new customer
         ${address_exists}=    Query    SELECT COUNT(*) FROM spy_customer_address WHERE fk_customer = ${new_id_customer}
@@ -1231,7 +1231,7 @@ Create dynamic customer in DB
 Deactivate all discounts in the database
     [Documentation]    This keyword retrieves all existing discounts in the database, saves their keys and activation status,
     ...               and then sets each discount's `is_active` status to `False`.
-    
+
     # Step 1: Fetch all existing discounts
     Connect to Spryker DB
     ${existing_discounts}=    Query    SELECT discount_key, is_active FROM spy_discount
