@@ -1,0 +1,12 @@
+# Robot Framework and core dependencies
+robotframework
+robotframework-pabot
+robotframework-browser
+robotframework-databaselibrary
+robotframework-requests
+robotframework-jsonlibrary
+
+# Database drivers
+PyMySQL
+psycopg2-binary
+
