@@ -1,12 +1,10 @@
-FROM mcr.microsoft.com/playwright:jammy
+FROM mcr.microsoft.com/playwright/python:latest
 ENV ROBOT_WORK_DIR /opt/robotframework
 RUN mkdir -p ${ROBOT_WORK_DIR}
 
-RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt install -y \
-    python3  \
-    python3-pip \
-    make \
-    && rm -rf /var/lib/apt/lists/*
+#RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt install -y \
+#    make \
+#    && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install  \
     --no-cache-dir  \
@@ -18,6 +16,8 @@ RUN pip3 install  \
     PyMySQL \
     psycopg2-binary \
     robotframework-jsonlibrary
+
+RUN rfbrowser init chromium
 
 WORKDIR ${ROBOT_WORK_DIR}
 
