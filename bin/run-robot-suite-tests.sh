@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Script to run Spryker Robot Framework tests without Docker (requires Spryker running via DockerSDK and /etc/hosts configuration)
-# Usage: ./vendor/bin/run-tests-native.sh or vendor/spryker/robotframework-suite-tests/bin/run-robot-suite-tests.sh [api|ui]
+# Usage from robotframework-suite-tests/ folder: ./bin/run-tests-native.sh [api|ui]
+# Usage form suite/ folder: ./vendor/bin/run-tests-native.sh or vendor/spryker/robotframework-suite-tests/bin/run-robot-suite-tests.sh [api|ui]
 
 set -e
 
@@ -46,7 +47,7 @@ fi
 if [ ! -f "$VENV_DIR/bin/robot" ]; then
     echo "📦 Installing Robot Framework dependencies..."
     "$VENV_DIR/bin/pip" install --upgrade pip
-    "$VENV_DIR/bin/pip" install -r "$TESTS_DIR/requirements.txt"
+    "$VENV_DIR/bin/pip" install -U -r "$TESTS_DIR/requirements.txt"
     echo "✅ Dependencies installed"
     echo ""
 fi

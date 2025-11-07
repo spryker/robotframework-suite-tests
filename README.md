@@ -9,56 +9,35 @@ Robot Framework requires Python 3.6 or newer.
 
 1. Install [Robot Framework](https://github.com/robotframework/robotframework/blob/master/INSTALL.rst)
 ```sh
-python3 -m pip install -U robotframework
+./install.sh
 ```
-2. Install [RequestsLibrary](https://github.com/MarketSquare/robotframework-requests)
-```sh
-python3 -m pip install -U robotframework-requests
-```
-3. Install [DatabaseLibrary](https://github.com/franz-see/Robotframework-Database-Library)
- ```sh
- python3 -m pip install -U robotframework-databaselibrary
- ```
-4. Install Python SQL library, depending on your configuration
-   * Engine: **MySQL**
-   ```sh
-    python3 -m pip install PyMySQL
-    ```
-   * Engine: **PostgreSQL**
-    ```sh
-    python3 -m pip install psycopg2-binary
-    ```
+
 ### Installation for UI tests
 ##### For UI testing installation requires Robot Framework, [RequestsLibrary](https://github.com/MarketSquare/robotframework-requests), [DatabaseLibrary](https://github.com/franz-see/Robotframework-Database-Library) and [Browser library](https://robotframework-browser.org/) powered by Playwright.
-If you installed everything from the [prerequisites](#Prerequisites), all you need to install is Node.js and the Browser library.
+If you installed everything from the [prerequisites](#Prerequisites), all you need to install is Node.js and the Browser binaries.
 
 1. Install [Node.js®](https://nodejs.org/en/download)
 2. Install [Browser library](https://robotframework-browser.org/#installation)
-```sh
-python3 -m pip install -U robotframework-browser
-```
 3. Initialize the Browser library
 ```sh
-rfbrowser init
+rfbrowser init chromium
 ```
 ### Installation for API tests
 
 ##### For API testing installation requires Robot Framework, [RequestsLibrary](https://github.com/MarketSquare/robotframework-requests), [JSONLibrary](https://github.com/robotframework-thailand/robotframework-jsonlibrary) and [DatabaseLibrary](https://github.com/franz-see/Robotframework-Database-Library).
-If you installed everything from the [prerequisites](#Prerequisites), all you need to install is the JSONLibrary.
-
-1. Install JSONLibrary
-```sh
-python3 -m pip install -U robotframework-jsonlibrary
-```
-
-### Automated installation
-
-You can also run all of the installation steps in one go by executing the shell script `install.sh`.
+If you installed everything from the [prerequisites](#Prerequisites), all is already installed.
 
 ## How to run tests
+
 Robot Framework test cases are executed from the command line, and the end result is, by default, an output file in XML format and an HTML report and log. After the execution, output files can be combined and otherwise post-processed with the Rebot tool.
 
-**Note**: If you prefer to run test using the default configuration of your local environment, you can navigate to the **[Helper](#Helper)** section
+>**Note**: If you prefer to run test using the default configuration of your local environment, you can navigate to the **[Helper](#Helper)** section
+
+> **Note** 2: If you use locally installed internal Spryker `suite` project (with the help of [DockerSDK](https://github.com/spryker/docker-sdk)), you can use automated runner that will take care of installing dependencies and running tests with proper parameters.
+> ```shell
+> ./bin/run-robot-suite-tests.sh api
+> ./bin/run-robot-suite-tests.sh ui
+> ```
 
 Synopsis
 ```
