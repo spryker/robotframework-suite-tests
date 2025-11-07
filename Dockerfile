@@ -2,9 +2,9 @@ FROM mcr.microsoft.com/playwright/python:latest
 ENV ROBOT_WORK_DIR /opt/robotframework
 RUN mkdir -p ${ROBOT_WORK_DIR}
 
-#RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt install -y \
-#    make \
-#    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y nodejs npm make && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install  \
     --no-cache-dir  \
