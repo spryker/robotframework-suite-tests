@@ -25,7 +25,7 @@ rfbrowser init chromium
 ### Installation for API tests
 
 ##### For API testing installation requires Robot Framework, [RequestsLibrary](https://github.com/MarketSquare/robotframework-requests), [JSONLibrary](https://github.com/robotframework-thailand/robotframework-jsonlibrary) and [DatabaseLibrary](https://github.com/franz-see/Robotframework-Database-Library).
-If you installed everything from the [prerequisites](#Prerequisites), all is already installed.
+You do not need to install anything additionally to be able to run API tests, if you already installed everything from the [prerequisites](#Prerequisites).
 
 ## How to run tests
 
