@@ -163,11 +163,11 @@ Zed: concrete product has the following alternative products:
 
 Zed: switch to the tab on 'Edit product' page:
     [Arguments]    ${tabToUse}
-    Click    xpath=//form[contains(@name,'form_edit')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-toggle='tab'][text()='${tabToUse}']
+    Click    xpath=//form[contains(@name,'form_edit')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//li[@data-bs-toggle='tab']//*[text()='${tabToUse}']
 
 Zed: switch to the tab on 'Add product' page:
     [Arguments]    ${tabToUse}
-    Click    xpath=//form[contains(@name,'form_add')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-toggle='tab'][text()='${tabToUse}']
+    Click    xpath=//form[contains(@name,'form_add')]/div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//li[@data-bs-toggle='tab']//*[text()='${tabToUse}']
 
 Zed: product is successfully discontinued
     ${currentURL}=    Get Location
@@ -288,7 +288,7 @@ Zed: update abstract product price on:
     ${priceData}=    Set Up Keyword Arguments    @{args}
     ${productAbstractIsProvided}=    Run Keyword And Return Status    Variable Should Exist    ${productAbstract}
     Disable Automatic Screenshots on Failure
-    ${is_edit_abstract_price_tab_exists}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//a[contains(@data-toggle,'tab')][contains(@href,'content-price_and_tax')] | //*[contains(@data-toggle,'tab')]//a[contains(@href,'content-price_and_tax')]    timeout=100ms
+    ${is_edit_abstract_price_tab_exists}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//*[contains(@data-bs-toggle,'tab')][contains(@data-bs-target,'content-price_and_tax')] | //*[contains(@data-bs-toggle,'tab')]//*[contains(@data-bs-target,'content-price_and_tax')]    timeout=100ms
     Restore Automatic Screenshots on Failure
     IF    '${is_edit_abstract_price_tab_exists}'=='False' and ${productAbstractIsProvided}
         Zed: go to URL:    /product-management

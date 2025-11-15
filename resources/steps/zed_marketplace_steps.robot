@@ -211,7 +211,7 @@ Zed: create dynamic merchant user:
         # Retry once, in case of a transient issue
         Zed: go to URL:    /merchant-gui/list-merchant
         Zed: click Action Button in a table for row that contains:     ${merchant}     Edit
-        Zed: Check checkbox by Label:    Active
+        Zed: Check checkbox by Label:    Is Active
     END
     Zed: go to tab by link href that contains:    merchant-user
     Click and retry if 5xx occurred:    ${zed_add_merchant_user_button}

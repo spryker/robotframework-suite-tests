@@ -15,19 +15,19 @@ Zed: update warehouse:
         IF    '${key}'=='name' and '${value}' != '${EMPTY}'    Type Text    ${zed_warehouse_name}    ${value}
         IF    '${key}'=='available' and '${value}' != '${EMPTY}'    Click    xpath=//label[contains(text(),'${value}')]
         IF    '${key}'=='store' and '${value}' != '${EMPTY}'
-            Click    xpath=//div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-toggle='tab'][text()='Store Relation']
+            Click    xpath=//div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//li[@data-bs-toggle='tab']//*[text()='Store Relation']
             Zed: Check checkbox by Label:    ${value}
-            Click    xpath=//div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-toggle='tab'][text()='Configuration']
+            Click    xpath=//div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//li[@data-bs-toggle='tab']//*[text()='Configuration']
         END
         IF    '${key}'=='store 2' and '${value}' != '${EMPTY}'
-            Click    xpath=//div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-toggle='tab'][text()='Store Relation']
+            Click    xpath=//div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//li[@data-bs-toggle='tab']//*[text()='Store Relation']
             Zed: Check checkbox by Label:    ${value}
-            Click    xpath=//div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-toggle='tab'][text()='Configuration']
+            Click    xpath=//div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//li[@data-bs-toggle='tab']//*[text()='Configuration']
         END
         IF    '${key}'=='unselect store' and '${value}' != '${EMPTY}'
-            Click    xpath=//div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-toggle='tab'][text()='Store Relation']
+            Click    xpath=//div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//li[@data-bs-toggle='tab']//*[text()='Store Relation']
             Zed: Uncheck Checkbox by Label:    ${value}
-            Click    xpath=//div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//a[@data-toggle='tab'][text()='Configuration']
+            Click    xpath=//div[@class='tabs-container']/ul[contains(@class,'nav-tabs')]//li[@data-bs-toggle='tab']//*[text()='Configuration']
         END
     END
     Zed: submit the form
