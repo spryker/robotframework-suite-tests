@@ -292,7 +292,7 @@ Zed: create a return for the following order and product in it:
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}
         ${sku_to_check}=    Get From List    ${sku_list}    ${index}
-        Click    xpath=//table[@data-qa='order-item-list']//td/div[contains(@class,'sku')][contains(.,'${sku_to_check}')]/ancestor::tr//div[@class='checkbox']//input
+        Click    xpath=//table[@data-qa='order-item-list']//td/div[contains(@class,'sku')][contains(.,'${sku_to_check}')]/ancestor::tr//div[@class='form-check']//input
     END
     Click    ${zed_create_return_button}
     Wait Until Page Contains Element    ${zed_return_details_main_content_locator}
