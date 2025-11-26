@@ -39,7 +39,7 @@ Login_during_checkout
 
 Register_during_checkout
     [Documentation]    Guest user email should be whitelisted from the AWS side before running the test
-    [Tags]    glue    smoke
+    [Tags]    glue    smoke    default-run-feature
     [Setup]    Create dynamic admin user in DB
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
