@@ -206,9 +206,9 @@
        },
        "default_qty":{
           "ipp_pages":"35",
-          "categories":"33",
+          "categories":"34",
           "colors":"10",
-          "labels":"5",
+          "labels":"8",
           "materials":"10",
           "brands":"10",
           "sorting_options":"5"
