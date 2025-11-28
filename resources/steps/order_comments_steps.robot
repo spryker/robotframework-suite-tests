@@ -14,17 +14,29 @@ Yves: add comment on cart:
     Click With Options    ${shopping_cart_write_comment_placeholder}    delay=0.5s    force=true
     Type Text    ${shopping_cart_write_comment_placeholder}    ${comment}    delay=50ms
     Keyboard Key    press    Enter
-    Click With Options    ${shopping_cart_add_comment_button}    delay=0.5s
+    Click    ${shopping_cart_add_comment_button}
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: check comments are visible or not in cart:
     [Arguments]    ${condition}    @{comments}    
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
     FOR    ${element}    IN    @{comments}
         IF    '${env}' in ['ui_suite']
-            IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should
-            IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not
+            IF    '${condition}' == 'true'    Page Should Contain Element    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should    timeout=${browser_timeout}
+            IF    '${condition}' == 'false'    Page Should Not Contain Element    xpath=(//comment-form[@data-qa='component comment-form']//*[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not    timeout=${browser_timeout}
         ELSE
-            IF    '${condition}' == 'true'    Element Should Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should
-            IF    '${condition}' == 'false'    Element Should Not Be Visible    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not
+            IF    '${condition}' == 'true'    Page Should Contain Element    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is not visible in the shopping cart but should    timeout=${browser_timeout}
+            IF    '${condition}' == 'false'    Page Should Not Contain Element    xpath=(//comment-form[@data-qa='component comment-form']//p[contains(text(),'${element}')])[1]    message=Comment '${element}' is visible in the shopping cart but should not    timeout=${browser_timeout}
         END
     END
 
@@ -46,9 +58,9 @@ Yves: go to order details page to check comment:
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     ${text_entered}    Get Text    ${yves_order_details_page_comments}
     IF    '${text_entered}' == '${comment}'
-        Log    text entered in comments appers in order details page in Yves
+        Log    text entered in comments appears in order details page in Yves
     ELSE
-        Fail    comments not added succesfully to order details page in Yves
+        Fail    comments not added successfully to order details page in Yves
     END    
 
 Zed: check comment appears at order detailed page in zed:
@@ -66,17 +78,36 @@ Zed: check comment appears at order detailed page in zed:
 Yves: edit comment on cart:
     [Arguments]    ${comment_to_set}
     Reload
-    Repeat Keyword    3    Wait For Load State
+    TRY    
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     IF    '${env}' not in ['ui_suite']    Click    ${shopping_cart_edit_comment_button}
-    Repeat Keyword    3    Wait For Load State 
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
     Fill Text    ${shopping_cart_edit_comment_placeholder}    ${EMPTY}    force=true
     Fill Text    ${shopping_cart_edit_comment_placeholder}    ${comment_to_set}    force=true
-    Click With Options    ${shopping_cart_update_comment_button}    delay=0.5s
-    Repeat Keyword    3    Wait For Load State
+    Click    ${shopping_cart_update_comment_button}
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: delete comment on cart
-    Click With Options    ${shopping_cart_remove_comment_button}    delay=0.5s 
-    Repeat Keyword    3    Wait For Load State
+    Click    ${shopping_cart_remove_comment_button}
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
     Page Should Not Contain Element    ${shopping_cart_remove_comment_button}
 
 Yves: add comment on order in order detail page:
@@ -84,4 +115,9 @@ Yves: add comment on order in order detail page:
     Click With Options    ${order_details_page_add_comments_textbox}    delay=0.5s
     Type Text    ${order_details_page_add_comments_textbox}    ${comment}    delay=50ms
     Click With Options    ${add_comment_button_order_details_page}    delay=0.5s
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END

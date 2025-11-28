@@ -5,6 +5,7 @@ Resource    ../steps/header_steps.robot
 Resource    ../steps/quick_order_steps.robot
 Resource    ../pages/yves/yves_customer_account_page.robot
 Resource    ../common/common_zed.robot
+Resource    ../pages/zed/zed_customer_page.robot
 
 *** Keywords ***
 Yves: go to 'Customer Account' page
@@ -43,6 +44,35 @@ Yves: create a new customer address in profile:
     Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
     Click    ${customer_account_add_new_address_button}[${env}]
     Wait Until Element Is Visible    ${customer_account_address_form}
+    Select From List By Value    ${customer_account_address_salutation_select}    ${salutation}
+    Type Text    ${customer_account_address_first_name_field}     ${firstName}
+    Type Text    ${customer_account_address_last_name_field}     ${lastName}
+    Type Text    ${customer_account_address_company_name_field}     ${company}
+    Type Text    ${customer_account_address_street_field}     ${street}
+    Type Text    ${customer_account_address_house_number_field}     ${houseNumber}
+    Type Text    ${customer_account_address_additional_address_field}     ${additionalAddress}
+    Type Text    ${customer_account_address_zip_code_field}     ${postCode}
+    Type Text    ${customer_account_address_city_field}     ${city}
+    Type Text    ${customer_account_address_phone_field}     ${phone}
+    Select From List By Text    ${customer_account_address_country}    ${country}
+    Click    ${customer_account_address_submit_button}
+    Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
+
+Yves: create new default customer address in profile
+    [Arguments]    ${salutation}=${default_address.salutation}    ${firstName}=${default_address.first_name}    ${lastName}=${default_address.last_name}    ${street}=${default_address.street}    ${houseNumber}=${default_address.house_number}    ${postCode}=${default_address.post_code}    ${city}=${default_address.city}    ${country}=${default_address.country}    ${isDefaultShipping}=True     ${isDefaultBilling}=True       ${company}=${EMPTY}    ${phone}=${EMPTY}    ${additionalAddress}=${EMPTY}
+    Yves: remove flash messages
+    ${currentURL}=    Get Location
+    IF    'customer/address' not in '${currentURL}'    
+            IF    '.at.' in '${currentURL}'
+                Go To    ${yves_at_url}customer/address
+            ELSE
+                Go To    ${yves_url}customer/address
+            END    
+    END
+    Wait Until Element Is Visible    ${customer_account_add_new_address_button}[${env}]
+    Click    ${customer_account_add_new_address_button}[${env}]
+    Wait Until Element Is Visible    ${customer_account_address_form}
+    Select From List By Value    ${customer_account_address_salutation_select}    ${salutation}
     Type Text    ${customer_account_address_first_name_field}     ${firstName}
     Type Text    ${customer_account_address_last_name_field}     ${lastName}
     Type Text    ${customer_account_address_company_name_field}     ${company}
@@ -92,10 +122,13 @@ Yves: delete user address:
     Yves: go to user menu item in the left bar:    Addresses
     IF    '${env}' in ['ui_b2c','ui_mp_b2c']
         Click    xpath=//li[contains(text(),'${street}')]/ancestor::div/div[@data-qa='component title-box']//form[contains(@action,'address/delete')]//button
+        Page Should Not Contain Element    xpath=//li[contains(text(),'${street}')]/ancestor::div/div[@data-qa='component title-box']//form[contains(@action,'address/delete')]//button
     ELSE IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Click    xpath=//li[contains(text(),'${street}')]/ancestor::div[@data-qa="component action-card"]//form[contains(@action,'address/delete')]//button
+        Page Should Not Contain Element    xpath=//li[contains(text(),'${street}')]/ancestor::div[@data-qa="component action-card"]//form[contains(@action,'address/delete')]//button
     ELSE
-        Click    xpath=//li[contains(text(),'${street}')]/ancestor::div//form[contains(@action,'delete')]//button
+        Click    xpath=//li[contains(text(),'${street}')]/ancestor::div[1]//form[contains(@action,'delete')]//button
+        Page Should Not Contain Element    xpath=//li[contains(text(),'${street}')]/ancestor::div[1]//form[contains(@action,'delete')]//button
     END
 
 Yves: delete all user addresses
@@ -119,8 +152,12 @@ Yves: delete all user addresses
             END
         END   
     END
-    Repeat Keyword    3    Wait For Load State
-    Wait For Load State    networkidle
+    TRY
+        Repeat Keyword    3    Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: assert customer profile data:
     [Arguments]    @{args}
@@ -199,6 +236,14 @@ Zed: create a new customer address in profile:
         IF    '${key}'=='company' and '${value}' != '${EMPTY}'    Type Text    ${zed_customer_edit_address_company_field}    ${value}
     END
     Click    ${zed_customer_edit_address_submit_button}
+    ${error_flash_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_flash_message}    400ms
+    IF    'FAIL' in $error_flash_message
+        Click    ${zed_customer_edit_address_submit_button}
+    END
+    ${error_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_message}    400ms
+    IF    'FAIL' in $error_message
+        Click    ${zed_customer_edit_address_submit_button}
+    END
     Wait Until Element Is Not Visible    ${zed_customer_edit_address_submit_button}
 
 Yves: go to user menu:

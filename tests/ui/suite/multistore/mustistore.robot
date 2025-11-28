@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_tree
+Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office   spryker-core    marketplace-merchantportal-core    customer-account-management    acl    search    catalog    product    prices
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -99,7 +99,7 @@ Multistore_Product
     Yves: product price on the PDP should be:    €25.00    wait_for_p&s=true
     Save current URL
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    multiSKU${random}-color-grey    multiProduct${random}    25.00
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update abstract product data:
@@ -116,8 +116,8 @@ Multistore_Product
     ...    AND    Yves: check if cart is not empty and clear it
 
 Multistore_Product_Offer
-    [Tags]    smoke
-    [Documentation]    check product and offer multistore functionality. DMS-ON: https://spryker.atlassian.net/browse/FRW-7484
+    [Tags]    smoke    marketplace-product-offer    marketplace-product-offer-prices    marketplace-merchant-portal-product-offer-management    marketplace-merchant-portal-product-management    product-offer-shipment
+    [Documentation]    check product and offer multistore functionality.
     Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products
@@ -155,6 +155,7 @@ Multistore_Product_Offer
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Catalog    Products
     Zed: click Action Button in a table for row that contains:     multistoreProduct${random}     Approve
+    Zed: save abstract product:    multistoreProduct${random}
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
@@ -223,6 +224,7 @@ Multistore_Product_Offer
     ...    AND    Trigger multistore p&s
 
 Multistore_CMS
+    [Tags]    cms    content-item
     [Documentation]    check CMS multistore functionality
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create a cms page and publish it:    Multistore Page${random}    multistore-page${random}    Multistore Page    Page text
@@ -241,6 +243,7 @@ Multistore_CMS
     ...    AND    Trigger multistore p&s
 
 Dynamic_multistore
+    [Tags]    cms    content-item
     [Documentation]    This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store.
     [Tags]    dms-on    smoke
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
@@ -306,6 +309,4 @@ Dynamic_multistore
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    New Page Store${random}   Deactivate
     ...    AND    Trigger multistore p&s
-    Zed: delete customer:
-    ...    || email                          ||
-    ...    || sonia+dms${random}@spryker.com ||
+    ...    AND    Zed: delete customer:    sonia+dms${random}@spryker.com

@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue
+Test Tags    glue    shopping-lists    marketplace-shopping-lists    product    bundle-products    marketplace-product   configurable-product    configurable-product-shopping-lists    customer-access    customer-account-management    acl
 
 *** Test Cases ***
 Add_a_concrete_product_to_the_shopping_list_without_access_token

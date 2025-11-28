@@ -26,11 +26,4 @@ else
 fi
 
 # Execute the installation
-$python_cmd -m pip install -U robotframework
-$python_cmd -m pip install -U robotframework-requests
-$python_cmd -m pip install -U robotframework-databaselibrary
-$python_cmd -m pip install PyMySQL
-$python_cmd -m pip install psycopg2-binary
-$python_cmd -m pip install -U robotframework-browser
-rfbrowser init
-$python_cmd -m pip install -U robotframework-jsonlibrary
+$python_cmd -m pip install -U -r requirements.txt

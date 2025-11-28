@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_two
+Test Tags    robot:recursive-stop-on-failure    group_two    merchant    marketplace-merchant    spryker-core-back-office   spryker-core    marketplace-merchantportal-core    product    marketplace-product    marketplace-product-offer    marketplace-merchant-portal-product-management    marketplace-merchant-portal-product-offer-management    marketplace-inventory-management    inventory-management
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -51,6 +51,7 @@ Merchant_Portal_Unauthorized_Access_Redirects_To_Login_Page
     Should Match    ${url}/    ${mp_url}
 
 Default_Merchants
+    [Tags]    navigation
     [Documentation]    Checks that default merchants are present in Zed
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Marketplace    Merchants
@@ -99,7 +100,7 @@ Merchant_Profile_Set_to_Offline_from_MP
     Yves: go to URL:    en/merchant/video-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
     Yves: perform search by:    Video King
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
@@ -126,7 +127,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     ...    AND    Trigger oms
     Yves: go to the 'Home' page
     Yves: perform search by:    Video King
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
@@ -140,7 +141,7 @@ Merchant_Profile_Set_to_Inactive_from_Backoffice
     Yves: go to URL:    en/merchant/video-king
     Yves: try reloading page if element is/not appear:    ${merchant_profile_main_content_locator}    false
     Yves: perform search by:    Video King
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    false
@@ -225,6 +226,7 @@ Manage_Merchant_Users
     ...    AND    Zed: submit the form
 
 Approve_Offer
+    [Tags]    approval-process    product-approval-process    marketplace-product-approval-process
     [Documentation]    Checks that marketplace operator is able to approve or deny merchant's offer and it will be available or not in store due to this status
     [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -252,7 +254,7 @@ Approve_Offer
     Yves: product price on the PDP should be:     ${second_product_with_multiple_offers_video_king_price}
 
 Fulfill_Order_from_Merchant_Portal
-    [Tags]    smoke
+    [Tags]    smoke    cart    marketplace-cart    warehouse-user-management    warehouse-picking    checkout    order-management    order-amendment    marketplace-order-management
     [Documentation]    Checks that merchant is able to process his order through OMS from merchant portal
     [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -289,7 +291,7 @@ Fulfill_Order_from_Merchant_Portal
     Yves: go to PDP of the product with sku:     015
     Yves: select xxx merchant's offer:    Budget Cameras
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in cart or list:    ${one_variant_product_of_main_merchant_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
     Yves: assert merchant of product in cart or list:    015_25904009    Budget Cameras
@@ -334,25 +336,27 @@ Fulfill_Order_from_Merchant_Portal
     ...    AND    Yves: delete all user addresses
 
 Search_for_Merchant_Offers_and_Products
+    [Tags]    catalog    search
     [Documentation]    Checks that through search customer is able to see the list of merchant's products and offers
     Yves: go to the 'Home' page
     Yves: perform search by:    Video King
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: select random varian if variant selector is available
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: perform search by:    Spryker
     Yves: change sorting order on catalog page:    Sort by name ascending
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: select random varian if variant selector is available
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: perform search by:    ${EMPTY}
     Yves: select filter value:    Merchant    Budget Cameras
-    Yves: go to the PDP of the first available product on open catalog page
+    Yves: go to the PDP of the first product on open catalog page
     Yves: select random varian if variant selector is available
     Yves: merchant is (not) displaying in Sold By section of PDP:    Budget Cameras    true
 
 Merchant_Portal_Product_Volume_Prices
-    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Falback to default price after delete
+    [Tags]    prices    marketplace-merchant-custom-prices    merchant-custom-prices    cart    marketplace-cart
+    [Documentation]    Checks that merchant is able to create new multi-SKU product with volume prices. Fallback to default price after delete
     [Setup]    Repeat Keyword    5    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
     MP: open navigation menu tab:    Products
@@ -393,7 +397,7 @@ Merchant_Portal_Product_Volume_Prices
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Video King     €10.00
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=VPSKU${random}-2    productName=VPNewProduct${random}    productPrice=10.00
     Yves: assert merchant of product in cart or list:    VPSKU${random}-2    Video King
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -408,7 +412,7 @@ Merchant_Portal_Product_Volume_Prices
     Yves: change quantity on PDP:    4
     Yves: product price on the PDP should be:    €100.00
     Yves: merchant's offer/product price should be:    Video King     €100.00
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=VPSKU${random}-2    productName=VPNewProduct${random}    productPrice=100.00
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
@@ -418,7 +422,8 @@ Merchant_Portal_Product_Volume_Prices
     ...    AND    Trigger p&s
 
 Merchant_Portal_Offer_Volume_Prices
-    [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Falback to default price after delete.
+    [Tags]    prices    marketplace-merchant-custom-prices    merchant-custom-prices    cart    marketplace-cart
+    [Documentation]    Checks that merchant is able to create new offer with volume prices and it will be displayed on Yves. Fallback to default price after delete.
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
     MP: open navigation menu tab:    Products
@@ -480,7 +485,7 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Video King     €10.00
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in cart or list:    OfferSKU${random}-2    Video King
     Yves: shopping cart contains product with unit price:    sku=OfferSKU${random}-2    productName=OfferNewProduct${random}    productPrice=10.00
     MP: login on MP with provided credentials:    ${merchant_video_king_email}
@@ -497,7 +502,7 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: change quantity on PDP:    4
     Yves: product price on the PDP should be:    €200.00
     Yves: merchant's offer/product price should be:    Video King     €200.00
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=OfferSKU${random}-2    productName=OfferNewProduct${random}    productPrice=200.00
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     ...    AND    Yves: check if cart is not empty and clear it
@@ -507,6 +512,7 @@ Merchant_Portal_Offer_Volume_Prices
     ...    AND    Trigger p&s
 
 Merchant_Portal_Customer_Specific_Prices
+    [Tags]    prices    marketplace-merchant-custom-prices    merchant-custom-prices    cart    marketplace-cart
     [Documentation]    Checks that customer will see product/offer prices specified by merchant for his business unit
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
@@ -686,6 +692,7 @@ Merchant_Product_Offer_in_Backoffice
     ...    AND    Trigger p&s
 
 Manage_Merchant_Product
+    [Tags]    cart    marketplace-cart    prices    marketplace-merchant-custom-prices    merchant-custom-prices
     [Documentation]    Checks that MU and BO user can manage merchant abstract and concrete products + add new concrete product
     Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
@@ -750,7 +757,7 @@ Manage_Merchant_Product
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Budget Cameras     €10.00
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=manageSKU${random}-2    productName=manageProduct${random}    productPrice=10.00
     Yves: assert merchant of product in cart or list:    manageSKU${random}-2    Budget Cameras
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
@@ -806,7 +813,8 @@ Manage_Merchant_Product
     ...    AND    Trigger multistore p&s
 
 Merchant_Product_Original_Price
-    [Documentation]    checks that Orignal price is displayed on the PDP and in Catalog
+    [Tags]    cart    marketplace-cart    prices    marketplace-merchant-custom-prices    merchant-custom-prices    catalog    search
+    [Documentation]    checks that Original price is displayed on the PDP and in Catalog
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_budget_cameras_email}
     MP: open navigation menu tab:    Products
@@ -865,7 +873,7 @@ Merchant_Product_Original_Price
     ...    AND    Trigger p&s
 
 Offer_Availability_Calculation
-    [Tags]    smoke
+    [Tags]    smoke    product-offer-shipment-availability    cart    marketplace-cart    checkout    prices    marketplace-product-approval-process    product-approval-process
     [Documentation]    check offer availability
     [Setup]    Repeat Keyword    3    Trigger multistore p&s
     MP: login on MP with provided credentials:    ${merchant_video_king_email}

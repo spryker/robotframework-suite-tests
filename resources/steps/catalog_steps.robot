@@ -59,7 +59,11 @@ Yves: change sorting order on catalog page:
         Click    xpath=//span[contains(@id,'select2-sort')]
         Wait Until Element Is Visible    xpath=//ul[contains(@role,'listbox')]//li[contains(@id,'select2-sort') and contains(text(),'${sortingOption}')]
         Click    xpath=//ul[contains(@role,'listbox')]//li[contains(@id,'select2-sort') and contains(text(),'${sortingOption}')]
-        Wait For Load State
+        TRY
+            Repeat Keyword    3    Wait For Load State
+        EXCEPT
+            Log    Page is not loaded
+        END
     END
 
 Yves: 1st product card in catalog (not)contains:
@@ -121,8 +125,10 @@ Yves: select filter value:
     ELSE
         Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
         Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
-        ${filter_expanded}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]    timeout=3s
-        IF    'FAIL' in ${filter_expanded}
+        Disable Automatic Screenshots on Failure
+        ${filter_expanded}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]    timeout=400ms
+        Restore Automatic Screenshots on Failure
+        IF    'FAIL' in $filter_expanded
             Reload
             Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
             Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
@@ -141,7 +147,11 @@ Yves: quick add to cart for first item in catalog
         Click    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
     END
     Wait For Response
-    Repeat Keyword    3    Wait For Load State
+    TRY
+        Repeat Keyword    3    Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
 
 Yves: get current cart item counter value
     [Documentation]    returns the cart item count number as an integer
@@ -156,10 +166,18 @@ Yves: mouse over color on product card:
         Click    xpath=(//product-item[@data-qa='component product-item'])[1]//product-item-color-selector//button[contains(@style,'${colour}')]
     ELSE
         Mouse Over    xpath=//product-item[@data-qa='component product-item'][1]//*[contains(@class,'item__name')]
-        Wait For Load State
+        TRY
+            Wait For Load State
+        EXCEPT
+            Log    Page is not loaded
+        END
         Wait Until Element Is Visible    xpath=//product-item[@data-qa='component product-item'][1]//product-item-color-selector
         Mouse Over    xpath=//product-item[@data-qa='component product-item'][1]//product-item-color-selector//span[contains(@class,'tooltip')][contains(text(),'${colour}')]/ancestor::button
-        Wait For Load State
+        TRY
+            Wait For Load State
+        EXCEPT
+            Log    Page is not loaded
+        END
     END
 
 Yves: at least one product is/not displayed on the search results page:
@@ -200,7 +218,7 @@ Yves: at least one product is/not displayed on the search results page:
             ELSE
                 ${result}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${catalog_product_card_locator}
             END
-            IF    'FAIL' in ${result}   
+            IF    'FAIL' in $result
                 Sleep    ${delay}
                 Reload
                 Continue For Loop

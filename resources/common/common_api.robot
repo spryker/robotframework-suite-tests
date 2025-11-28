@@ -9,6 +9,7 @@ Resource    common.robot
 ${api_timeout}    15
 ${max_retries}    0
 ${default_password}    change123
+${default_secure_password}    qweRTY_123456
 ${default_allow_redirects}     true
 ${default_auth}    ${NONE}
 &{default_headers}
@@ -908,6 +909,36 @@ Response should contain the array larger than a certain size:
     ${result}=    Evaluate   ${list_length} > ${expected_size}
     ${result}=    Convert To String    ${result}
     Should Be Equal    ${result}    True    Actual array length is '${list_length}' and it is not greater than expected '${expected_size}' in '${json_path}'.
+
+Response should contain the array larger or equal than a certain size:
+    [Documentation]    This keyword checks that the body array sent in ``{json_path}`` argument contains the number of items that is more than ``{expected_size}`` or equals.
+    ...    *Example:*
+    ...
+    ...    `` Response should contain the array larger or equal than a certain size:    Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][1][values]    ${default_qty.labels}+1``
+    [Arguments]    ${json_path}    ${expected_size}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${list_length}=    Convert To Integer    ${list_length}
+    ${expected_size}=    Evaluate    ${expected_size}
+    ${expected_size}=    Convert To Integer    ${expected_size}
+    ${result}=    Evaluate   ${list_length} >= ${expected_size}
+    ${result}=    Convert To String    ${result}
+    Should Be Equal    ${result}    True    Actual array length is '${list_length}' and it is not greater (or equal) than expected '${expected_size}' in '${json_path}'.
+
+Response should contain the array less or equal than a certain size:
+    [Documentation]    This keyword checks that the body array sent in ``{json_path}`` argument contains the number of items that is less than ``{expected_size}`` or equals.
+    ...    *Example:*
+    ...
+    ...    `` Response should contain the array less or equal than a certain size:    [data][0][attributes][valueFacets][1][values]    ${default_qty.labels}``
+    [Arguments]    ${json_path}    ${expected_size}
+    @{data}=    Get Value From Json    ${response_body}    ${json_path}
+    ${list_length}=    Get Length    @{data}
+    ${list_length}=    Convert To Integer    ${list_length}
+    ${expected_size}=    Evaluate    ${expected_size}
+    ${expected_size}=    Convert To Integer    ${expected_size}
+    ${result}=    Evaluate   ${list_length} <= ${expected_size}
+    ${result}=    Convert To String    ${result}
+    Should Be Equal    ${result}    True    Actual array length is '${list_length}' and it is not less (or equal) than expected '${expected_size}' in '${json_path}'.
 
 Each array element of the array in response should contain a nested array larger than a certain size:
     [Documentation]    This keyword checks that each element in the array specified as ``{json_path}`` contains the `` ${nested_array}` with certain size greater than ``{expected_size}``.
@@ -2047,11 +2078,11 @@ Array element should contain nested array at least once:
     FOR    ${index}    IN RANGE    0    ${list_length}
         @{list_element}=    Get From List    @{data}    ${index}
         ${result}=    Run Keyword And Ignore Error    List Should Contain Sub List    ${list_element}    ${expected_nested_array}
-        IF    'PASS' in ${result}    Exit For Loop
+        IF    'PASS' in $result    Exit For Loop
         IF    ${index} == ${list_length}-1
             Fail    expected '${expected_nested_array}' array is not present in '@{data}'
         END
-        IF    'FAIL' in ${result}    Continue For Loop
+        IF    'FAIL' in $result    Continue For Loop
     END
 
 Array element should contain property with value at least once:
@@ -2068,11 +2099,11 @@ Array element should contain property with value at least once:
     FOR    ${index}    IN RANGE    0    ${list_length}
         ${list_element}=    Get From List    @{data}    ${index}
         ${result}=    Run Keyword And Ignore Error    Dictionary Should Contain Item    ${list_element}    ${expected_property}    ${expected_value}
-        IF    'PASS' in ${result}    Exit For Loop
+        IF    'PASS' in $result    Exit For Loop
         IF    ${index} == ${list_length}-1
             Fail    expected '${expected_property}' with value '${expected_value}' is not present in '{data}' but should
         END
-        IF    'FAIL' in ${result}    Continue For Loop
+        IF    'FAIL' in $result    Continue For Loop
     END
 
 Array element should contain property or array value at least once:
@@ -2139,16 +2170,16 @@ Nested array element should contain sub-array at least once:
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    '   ${EMPTY}
     ${expected_nested_array}=    Create List    ${expected_nested_array}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        IF    'PASS' in ${result}    BREAK
+        IF    'PASS' in $result    BREAK
         ${list_element}=    Get From List    @{data}    ${index}
         @{list_element2}=    Get Value From Json    ${list_element}    ${parent_array}
         @{list_element}=    Get From List    ${list_element2}    0
         ${result}=    Run Keyword And Ignore Error    List Should Contain Sub List   ${list_element}    ${expected_nested_array}    ignore_case=True
-        IF    'PASS' in ${result}    Exit For Loop
+        IF    'PASS' in $result    Exit For Loop
         IF    ${index} == ${list_length}-1
                 Fail    expected '${expected_nested_array}' array is not present in '@{data}'
         END
-        IF    'FAIL' in ${result}    Continue For Loop
+        IF    'FAIL' in $result    Continue For Loop
     END
 
 Nested array element should contain sub-array with property and value at least once:
@@ -2168,7 +2199,7 @@ Nested array element should contain sub-array with property and value at least o
     ${expected_nested_array}=    Replace String    ${expected_nested_array}    '   ${EMPTY}
     ${expected_nested_array}=    Convert To String    ${expected_nested_array}
     FOR    ${index}    IN RANGE    0    ${list_length}
-        IF    'PASS' in ${result}    BREAK
+        IF    'PASS' in $result    BREAK
         ${parent_array_element}=    Get From List    @{data}    ${index}
         @{actual_parent_element}=    Get Value From Json    ${parent_array_element}    ${parent_array}
         # Log List    @{actual_parent_element}
@@ -2181,11 +2212,11 @@ Nested array element should contain sub-array with property and value at least o
         ${actual_property_value}=    Replace String    ${actual_property_value}    [   ${EMPTY}
         ${actual_property_value}=    Replace String    ${actual_property_value}    ]   ${EMPTY}
         ${result}=    Run Keyword And Ignore Error    Should Contain   ${actual_property_value}    ${expected_value}    ignore_case=True
-            IF    'PASS' in ${result}    BREAK
+            IF    'PASS' in $result    BREAK
             IF    ${index} == ${list_length}-1
                 Fail    expected '${expected_property}' with value '${expected_value}' is not present in '${expected_nested_array}' but should
             END
-            IF    'FAIL' in ${result}    Continue For Loop
+            IF    'FAIL' in $result    Continue For Loop
     END
 
 Array element should contain nested array with property and value at least once:
@@ -2201,7 +2232,7 @@ Array element should contain nested array with property and value at least once:
     # ${log_list}=    Log List    @{data}
     ${result}=    Set Variable    'FALSE'
     FOR    ${index1}    IN RANGE    0    ${list_length1}
-        IF    'PASS' in ${result}    BREAK
+        IF    'PASS' in $result    BREAK
         ${list_element}=    Get From List    @{data}    ${index1}
         @{list_element2}=    Get Value From Json    ${list_element}    ${nested_array}
         ${list_length2}=    Get Length    @{list_element2}
@@ -2213,11 +2244,11 @@ Array element should contain nested array with property and value at least once:
             ${list_element}=    Replace String    ${list_element}    [   ${EMPTY}
             ${list_element}=    Replace String    ${list_element}    ]   ${EMPTY}
             ${result}=    Run Keyword And Ignore Error    Should Contain   ${list_element}    ${expected_value}    ignore_case=True
-            IF    'PASS' in ${result}    BREAK
+            IF    'PASS' in $result    BREAK
             IF    ${index1} == ${list_length1}-1 and ${index2} == ${list_length2}-1
                 Fail    expected '${expected_property}' with value '${expected_value}' is not present in '${nested_array}' but should
             END
-            IF    'FAIL' in ${result}    Continue For Loop
+            IF    'FAIL' in $result    Continue For Loop
         END
     END
 
@@ -2275,6 +2306,87 @@ Response body array element should contain property with value at least once:
     END
     Should Be Equal As Strings    ${result}    TRUE
     ...    Property '${property_path}' with value '${expected_value}' was not found in array at '${json_path}'
+
+Array element should contain property with value greater than at least once:
+    [Documentation]    Checks that within the array at ${json_path}, at least one element has
+    ...                property ${expected_property} whose numeric value is > ${expected_value}.
+    ...                Elements lacking the property are ignored.
+    ...
+    ...    *Example:*
+    ...    Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    1
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
+    @{arr}=    Get Value From Json    ${response_body}    ${json_path}
+    ${length}=    Get Length    @{arr}
+    Should Be True    ${length} > 0    No elements found at path '${json_path}'.
+
+    ${hit}=    Set Variable    ${False}
+    FOR    ${i}    IN RANGE    0    ${length}
+        ${el}=    Get From List    @{arr}    ${i}
+        ${got}=    Run Keyword And Ignore Error    Get From Dictionary    ${el}    ${expected_property}
+        ${status}=    Set Variable    ${got}[0]
+        ${raw}=       Set Variable    ${got}[1]
+        IF    '${status}' == 'PASS'
+            # Coerce both sides to numbers (int/float or numeric strings)
+            ${act_conv}=    Run Keyword And Ignore Error    Convert To Number    ${raw}
+            IF    '${act_conv}[0]' == 'PASS'
+                ${actual}=    Set Variable    ${act_conv}[1]
+            ELSE
+                ${actual}=    Evaluate    float(${raw})
+            END
+            ${exp_conv}=    Run Keyword And Ignore Error    Convert To Number    ${expected_value}
+            IF    '${exp_conv}[0]' == 'PASS'
+                ${expected}=    Set Variable    ${exp_conv}[1]
+            ELSE
+                ${expected}=    Evaluate    float(${expected_value})
+            END
+
+            IF    ${actual} > ${expected}
+                ${hit}=    Set Variable    ${True}
+                Exit For Loop
+            END
+        END
+    END
+    Should Be True    ${hit}    No element at '${json_path}' has property '${expected_property}' greater than '${expected_value}'.
+
+Array element should contain property with value less than at least once:
+    [Documentation]    Checks that within the array at ${json_path}, at least one element has
+    ...                property ${expected_property} whose numeric value is < ${expected_value}.
+    ...                Elements lacking the property are ignored.
+    ...
+    ...    *Example:*
+    ...    Array element should contain property with value less than at least once:    [data][0][attributes][abstractProducts][0][prices]    ORIGINAL    200000
+    [Arguments]    ${json_path}    ${expected_property}    ${expected_value}
+    @{arr}=    Get Value From Json    ${response_body}    ${json_path}
+    ${length}=    Get Length    @{arr}
+    Should Be True    ${length} > 0    No elements found at path '${json_path}'.
+
+    ${hit}=    Set Variable    ${False}
+    FOR    ${i}    IN RANGE    0    ${length}
+        ${el}=    Get From List    @{arr}    ${i}
+        ${got}=    Run Keyword And Ignore Error    Get From Dictionary    ${el}    ${expected_property}
+        ${status}=    Set Variable    ${got}[0]
+        ${raw}=       Set Variable    ${got}[1]
+        IF    '${status}' == 'PASS'
+            ${act_conv}=    Run Keyword And Ignore Error    Convert To Number    ${raw}
+            IF    '${act_conv}[0]' == 'PASS'
+                ${actual}=    Set Variable    ${act_conv}[1]
+            ELSE
+                ${actual}=    Evaluate    float(${raw})
+            END
+            ${exp_conv}=    Run Keyword And Ignore Error    Convert To Number    ${expected_value}
+            IF    '${exp_conv}[0]' == 'PASS'
+                ${expected}=    Set Variable    ${exp_conv}[1]
+            ELSE
+                ${expected}=    Evaluate    float(${expected_value})
+            END
+
+            IF    ${actual} < ${expected}
+                ${hit}=    Set Variable    ${True}
+                Exit For Loop
+            END
+        END
+    END
+    Should Be True    ${hit}    No element at '${json_path}' has property '${expected_property}' less than '${expected_value}'.
 
 Get company user id by customer reference:
     [Documentation]    This keyword sends the GET request to the ``/company-users?include=customers`` endpoint and returns company user id by customer reference. Sets variable : ``{companyUserId}``
@@ -2373,6 +2485,37 @@ Switch to BAPI
     Set Tags    bapi
     Overwrite api variables
     Reset API Headers
+
+*** Keywords ***
+Array Element Should Contain Nested Property With Value At Least Once
+    [Arguments]    ${json_path}    ${nested_path}    ${property}    ${expected_value}
+    ${matches}=    Get Value From Json     ${response_body}    ${json_path}
+    ${exists}=    Evaluate
+    ...    any(item.get('${nested_path}', {}).get('${property}', None) == ${expected_value} for item in ${matches})
+    Should Be True    ${exists}    Expected property '${property}' with value '${expected_value}' not found in any array element.
+
+Delete dynamic customer via API
+    [Arguments]    ${customer_email}=${EMPTY}
+
+    ${dynamic_customer_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_customer}
+
+    IF    '${customer_email}' == '${EMPTY}'
+        IF    ${dynamic_customer_exists}
+            VAR    ${customer_email}    ${dynamic_customer}
+        ELSE
+            Log    message=No dynamic (doesn't exist) or static customer was provided for deletion    level=INFO
+            RETURN
+        END
+    END
+    Set Tags    glue
+    API_test_setup
+    I get access token for the customer:    ${customer_email}
+    I set Headers:    Authorization=${token}
+    I send a GET request:    /customers
+    Save value to a variable:    [data][0][id]    userId
+    I send a DELETE request:    /customers/${userId}
+    Response status code should be:    204
+    Remove Tags    glue
 
 To JSON Boolean
     [Arguments]    ${value}

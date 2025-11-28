@@ -2,7 +2,7 @@
 Resource    ../../../../../../resources/common/common_api.robot
 Suite Setup    API_suite_setup
 Test Setup     API_test_setup
-Test Tags    sapi
+Test Tags    sapi    spryker-core    spryker-core-back-office
 
 *** Test Cases ***
 Get_all_availiable_stores

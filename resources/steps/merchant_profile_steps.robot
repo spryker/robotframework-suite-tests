@@ -11,7 +11,6 @@ Yves: assert merchant profile fields:
     ${profileData}=    Set Up Keyword Arguments    @{args}
     Wait Until Element Is Visible    ${merchant_profile_main_content_locator}
     FOR    ${key}    ${value}    IN    &{profileData}
-        Log    Key is '${key}' and value is '${value}'.
         IF    '${key}'=='email' and '${value}' != '${EMPTY}'    Run Keywords    
         ...    Try reloading page until element does/not contain text:    ${merchant_profile_email_locator}    ${value}    true    26    5s
         ...    AND    Element Text Should Be    ${merchant_profile_email_locator}    ${value}

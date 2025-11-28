@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_tree
+Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office   spryker-core    order-management    state-machine    cart    checkout    return-management    marketplace-return-management    marketplace-order-management    inventory-management    
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -54,7 +54,7 @@ Return_Management
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_default_user_address}
@@ -96,10 +96,7 @@ Return_Management
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    returnagent+${random}@spryker.com    ${default_secure_password}
-    Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
-    Yves: perform search by customer:    ${yves_default_user_email}
-    Yves: agent widget contains:    ${yves_default_user_email}
+    Yves: login on Yves with provided credentials:    returnagent+${random}@spryker.com    ${default_secure_password}    agent_assist=${True}
     Yves: as an agent login under the customer:    ${yves_default_user_email}
     Yves: go to user menu:    Orders History
     Yves: 'View Order/Reorder/Return' on the order history page:     Return    ${lastPlacedOrder}
@@ -124,7 +121,7 @@ Return_Management
     ...    AND    Zed: delete Zed user with the following email:    returnagent+${random}@spryker.com
 
 Refunds
-    [Tags]    smoke
+    [Tags]    smoke    refunds
     [Documentation]    Checks that refund can be created for one item and the whole order
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
@@ -138,7 +135,7 @@ Refunds
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    010
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${yves_user_address}
@@ -152,7 +149,7 @@ Refunds
     Zed: login on Zed with provided credentials:   ${zed_admin_email}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,041.90
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
+    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
     Zed: trigger all matching states inside this order:    skip picking
@@ -176,7 +173,7 @@ Order_Cancellation
     Yves: delete all user addresses
     Yves: go to PDP of the product with sku:    005
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
@@ -205,7 +202,7 @@ Order_Cancellation
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    007_30691822
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
@@ -246,6 +243,7 @@ Order_Cancellation
     ...    AND    Yves: delete all user addresses
 
 Manage_Shipments
+    [Tags]    shipment    marketplace-shipment
     [Documentation]    Checks create/edit shipment functions from backoffice
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
@@ -258,7 +256,7 @@ Manage_Shipments
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select delivery to multiple addresses
     Yves: fill in new delivery address for a product:
@@ -288,7 +286,7 @@ Manage_Shipments
     ...    || shipment n | delivery method        | shipping method | shipping costs | requested delivery date ||
     ...    || 1          | Spryker Dummy Shipment | Standard        | €4.90          | ASAP                    ||
     Zed: create new shipment inside the order:
-    ...    || delivert address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method                  | sku          ||
+    ...    || delivery address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method                  | sku          ||
     ...    || New address      | Mr         | Evil       | Tester    | ${yves_user_email} | Austria | Hartmanngasse | 1         | Vienna | 1050     | Spryker Dummy Shipment - Express | 012_25904598 ||
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    2
@@ -298,7 +296,7 @@ Manage_Shipments
     ...    || shipment n | delivery method        | shipping method | shipping costs | requested delivery date ||
     ...    || 2          | Spryker Dummy Shipment | Express         | €0.00          | ASAP                    ||
     Zed: edit xxx shipment inside the order:
-    ...    || shipmentN | delivert address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method                    | requested delivery date | sku          ||
+    ...    || shipmentN | delivery address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method                    | requested delivery date | sku          ||
     ...    || 2         | New address      | Mr         | Edit       | Shipment  | ${yves_user_email} | Germany | Hartmanngasse | 9         | Vienna | 0987     | Spryker Drone Shipment - Air Light | 2025-01-25              | 005_30663301 ||
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
     Zed: shipment data inside xxx shipment should be:
@@ -319,6 +317,7 @@ Manage_Shipments
     ...    AND    Yves: delete all user addresses
 
 Comment_Management_in_Order
+    [Tags]    comments
     [Documentation]    Add comments in Yves and check in Zed.
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    comments+${random}

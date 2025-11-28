@@ -1,6 +1,6 @@
 *** Settings ***
 Library    String
-Library    Dialogs
+# Library    Dialogs
 Library    OperatingSystem
 Library    Process
 Library    Collections
@@ -9,7 +9,7 @@ Library    DateTime
 Library    RequestsLibrary
 Library    DatabaseLibrary
 Library    ../../resources/libraries/common.py
-Library    Telnet
+# Library    Telnet
 
 *** Variables ***
 # *** DB VARIABLES ***
@@ -52,7 +52,6 @@ Common_suite_setup
     [Documentation]  Basic steps before each suite
     [Arguments]    ${skip_if_already_executed}=False
     Remove Files    ${OUTPUTDIR}/selenium-screenshot-*.png
-    Remove Files    resources/libraries/__pycache__/*
     Remove Files    ${OUTPUTDIR}/*.png
     Remove Files    ${OUTPUTDIR}/*.yml
 
@@ -110,7 +109,7 @@ Load Variables
     [Documentation]    Keyword is used to load variable values from the environment file passed during execution. This Keyword is used during suite setup.
     ...    It accepts the name of the environment as specified at the beginning of an environment file e.g. ``"environment": "api_suite"``.
     ...
-    ...    These variables are loaded and usable throughtout all tests of the test suite, if this keyword is called during suite setup.
+    ...    These variables are loaded and usable throughout all tests of the test suite, if this keyword is called during suite setup.
     ...
     ...    *Example:*
     ...
@@ -118,10 +117,16 @@ Load Variables
     ...
     ...    ``Load Variables    api_suite``
     [Arguments]    ${env}
-    &{vars}=   Define Environment Variables From Json File    ${env}
-    FOR    ${key}    ${value}    IN    &{vars}
-        ${var_value}=   Get Variable Value  ${${key}}   ${value}
-        Set Global Variable    ${${key}}    ${var_value}
+    ${variables_already_loaded}=    Run Keyword And Return Status    Variable Should Exist    ${env_variables_loaded}
+    IF    not ${variables_already_loaded}
+        &{vars}=   Define Environment Variables From Json File    ${env}
+        FOR    ${key}    ${value}    IN    &{vars}
+            ${var_value}=   Get Variable Value  ${${key}}   ${value}
+            Set Global Variable    ${${key}}    ${var_value}
+        END
+        VAR    ${env_variables_loaded}    ${True}    scope=GLOBAL
+    ELSE
+        Log    Environment variables are already loaded
     END
 
 Overwrite env variables
@@ -193,7 +198,7 @@ Evaluate datatype of a variable:
     # ${is int}=      Evaluate     isinstance($variable, int)    # will be True
     # ${is string}=   Evaluate     isinstance($variable, str)    # will be False
 
-Conver string to List by separator:
+Convert string to List by separator:
     [Arguments]    ${string}    ${separator}=,
     ${convertedList}=    Split String    ${string}    ${separator}
     ${convertedList}=    Set Test Variable    ${convertedList}
@@ -209,12 +214,13 @@ Connect to Spryker DB
     [Documentation]    This keyword allows to connect to Spryker DB.
     ...        Supports both MariaDB and PostgeSQL.
     ...
-    ...        To specify the expected DB engine, use ``db_engine`` variabl. Default one -> *MariaDB*
+    ...        To specify the expected DB engine, use ``db_engine`` variable. Default one -> *MariaDB*
     ...
     ...    *Example:*
     ...    ``robot -v env:api_suite -v db_engine:psycopg2``
     ...
     ...    with the example above you'll use PostgreSQL DB engine
+    Set Log Level    NONE
     ${db_name}=    Set Variable If    '${db_name}' == '${EMPTY}'    ${default_db_name}    ${db_name}
     ${db_user}=    Set Variable If    '${db_user}' == '${EMPTY}'    ${default_db_user}    ${db_user}
     ${db_password}=    Set Variable If    '${db_password}' == '${EMPTY}'    ${default_db_password}    ${db_password}
@@ -222,6 +228,10 @@ Connect to Spryker DB
     ${db_engine}=    Set Variable If    '${db_engine}' == '${EMPTY}'    ${default_db_engine}    ${db_engine}
     ${db_engine}=    Convert To Lower Case    ${db_engine}
     IF    '${db_engine}' == 'mysql'
+        ${db_engine}=    Set Variable    pymysql
+    ELSE IF    '${db_engine}' == 'mariadb'
+        ${db_engine}=    Set Variable    pymysql
+    ELSE IF    '${db_engine}' == 'maria'
         ${db_engine}=    Set Variable    pymysql
     ELSE IF    '${db_engine}' == 'postgresql'
         ${db_engine}=    Set Variable    psycopg2
@@ -242,6 +252,7 @@ Connect to Spryker DB
     Set Test Variable    ${db_engine}
     Disconnect From Database
     Connect To Database    ${db_engine}    ${db_name}    ${db_user}    ${db_password}    ${db_host}    ${db_port}
+    Reset Log Level
 
 Save the result of a SELECT DB query to a variable:
     [Documentation]    This keyword saves any value which you receive from DB using SQL query ``{sql_query}`` to a test variable called ``{variable_name}``.
@@ -294,38 +305,66 @@ Run console command
         ${consoleCommand}=    Set Variable    cd ${cli_path} && SPRYKER_CURRENT_REGION=${storeName} docker/sdk ${command}
         IF    ${docker}
             ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "SPRYKER_CURRENT_REGION='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
-            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-            Log   ${output}
-            Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
+            TRY
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
+            EXCEPT
+                Sleep    1s
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
+            END
         END
         Log    ${ignore_console}
-        IF    ${ignore_console} != True
-            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-            Log   ${output}
-            Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+        IF    ${ignore_console} != True and not ${docker}
+            TRY
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+            EXCEPT
+                Sleep    1s
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+            END
         END
     ELSE
         ${consoleCommand}=    Set Variable    cd ${cli_path} && APPLICATION_STORE=${storeName} docker/sdk ${command}
         IF    ${docker}
             ${consoleCommand}=    Set Variable    curl --request POST -LsS --data "APPLICATION_STORE='${storeName}' COMMAND='${command}' cli.sh" --max-time 1000 --url "${docker_cli_url}/console"
-            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-            Log   ${output}
-            Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
+            TRY
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
+            EXCEPT
+                Sleep    1s
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'.
+            END
         END
-        IF    ${ignore_console} != True
-            ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
-            Log   ${output}
-            Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+        IF    ${ignore_console} != True and not ${docker}
+            TRY
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+            EXCEPT
+                Sleep    200ms
+                ${rc}    ${output}=    Run And Return RC And Output    ${consoleCommand}
+                Log   ${output}
+                Should Be Equal As Integers    ${rc}    0    message=CLI output:"${output}". CLI command can't be executed. Check '{docker}', '{ignore_console}' variables value and cli execution path: '{cli_path}'
+            END
         END
     END
 
 Trigger p&s
-    [Arguments]    ${timeout}=1s    ${storeName}=DE
+    [Arguments]    ${timeout}=0ms    ${storeName}=DE
     Run console command    console queue:worker:start --stop-when-empty    ${storeName}
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger API specification update
-    [Arguments]    ${timeout}=1s    ${storeName}=DE
+    [Arguments]    ${timeout}=200ms    ${storeName}=DE
     IF    ${docker}
         Run console command    glue api:generate:documentation --invalidated-after-interval 90sec    ${storeName}
     ELSE
@@ -334,18 +373,25 @@ Trigger API specification update
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger multistore p&s
-    [Arguments]    ${timeout}=1s
-    Trigger p&s    ${timeout}    DE
-    Trigger p&s    ${timeout}    AT
+    [Arguments]    ${timeout}=0ms
+    IF    ${dms}
+        Trigger p&s    ${timeout}    DE
+    ELSE
+        Trigger p&s    ${timeout}    DE
+        Trigger p&s    ${timeout}    AT
+    END
 
 Trigger oms
-    [Arguments]    ${timeout}=1s
-    Run console command    console order:invoice:send    DE
-    Run console command    console order:invoice:send    AT
-    Run console command    console oms:check-timeout    DE
-    Run console command    console oms:check-timeout    AT
-    Run console command    console oms:check-condition    DE
-    Run console command    console oms:check-condition    AT
+    [Arguments]    ${timeout}=10ms
+    IF    ${dms}
+        Run console command    console oms:check-timeout    DE
+        Run console command    console oms:check-condition    DE
+    ELSE
+        Run console command    console oms:check-timeout    DE
+        Run console command    console oms:check-timeout    AT
+        Run console command    console oms:check-condition    DE
+        Run console command    console oms:check-condition    AT
+    END
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
 Trigger publish trigger-events
@@ -354,7 +400,7 @@ Trigger publish trigger-events
         ...
         ...    ``Trigger publish trigger-events    resource=service_point    storeName=DE    timeout=5s``
         ...
-    [Arguments]    ${resource}    ${storeName}=DE    ${timeout}=1s
+    [Arguments]    ${resource}    ${storeName}=DE    ${timeout}=0ms
     Run console command    console publish:trigger-events -r ${resource}    ${storeName}
     Trigger p&s    ${timeout}    ${storeName}
 
@@ -556,6 +602,7 @@ I add 'admin' role to company user and get company_user_uuid:
     ...    ``Add 'admin' role to company user and return company_user_uuid:    anne.boleyn@spryker.com    BoB-Hotel-Jim    business-unit-jim-1``
     [Arguments]    ${email}    ${company_key}    ${business_unit_key}
     Connect to Spryker DB
+    Set Log Level    NONE
     ${id_customer}=    Query    select id_customer from spy_customer WHERE email='${email}'
     ${id_customer}=    Evaluate    ${id_customer[0][0]}+0
     IF    '${db_engine}' == 'pymysql'
@@ -590,6 +637,7 @@ I add 'admin' role to company user and get company_user_uuid:
     ${company_user_uuid}=    Replace String    ${company_user_uuid}    [   ${EMPTY}
     ${company_user_uuid}=    Replace String    ${company_user_uuid}    ]   ${EMPTY}
     Set Test Variable    ${company_user_uuid}    ${company_user_uuid}
+    Reset Log Level
     RETURN    ${company_user_uuid}
 
 Get voucher code by discountId from Database:
@@ -805,10 +853,423 @@ Delete product_price by id_price_product in Database:
     Disconnect From Database
 
 Trigger product labels update
-    [Arguments]    ${timeout}=1s
+    [Arguments]    ${timeout}=0.5s
     Run console command    console product-label:relations:update -vvv --no-touch    DE
     Run console command    console product-label:validity    DE
     Run console command    console product-label:relations:update -vvv --no-touch    AT
     Run console command    console product-label:validity    AT
     Repeat Keyword    2    Trigger multistore p&s
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
+
+Create dynamic admin user in DB
+    [Documentation]    This keyword creates a new admin user in the DB using data from an existing admin.
+        ...    It works for both MariaDB and PostgreSQL.
+    [Arguments]    ${user_name}=${EMPTY}    ${first_name}=Dynamic    ${last_name}=Admin    ${based_on}=${zed_admin_email}
+
+    IF    '${user_name}' == '${EMPTY}'
+        ${unique}=    Generate Random String    5    [NUMBERS]
+        VAR    ${user_name}    admin+robot${unique}@spryker.com
+        VAR    ${dynamic_admin_user}    ${user_name}    scope=TEST
+    ELSE
+        VAR    ${dynamic_admin_user}    ${user_name}    scope=TEST
+    END
+
+    # Step 1: Fetch the existing user data (admin@spryker.com)
+    Connect to Spryker DB
+    ${existing_user_data_id}=    Query    SELECT spy_user.id_user FROM spy_user WHERE username = '${based_on}'
+    ${existing_user_data_locale}=    Query    SELECT spy_user.fk_locale FROM spy_user WHERE username = '${based_on}'
+    ${existing_user_data_password}=    Query    SELECT spy_user.password FROM spy_user WHERE username = '${based_on}'
+    ${existing_user_data_created_at}=    Query    SELECT spy_user.created_at FROM spy_user WHERE username = '${based_on}'
+    ${existing_user_data_updated_at}=    Query    SELECT spy_user.updated_at FROM spy_user WHERE username = '${based_on}'
+
+    # Step 1: Extract fields from the existing user
+    ${existing_id_user}=    Set Variable    ${existing_user_data_id[0][0]}
+    ${existing_fk_locale}=    Set Variable    ${existing_user_data_locale[0][0]}
+    ${existing_password}=    Set Variable    ${existing_user_data_password[0][0]}
+    ${existing_created_at}=    Set Variable    ${existing_user_data_created_at[0][0]}
+    ${existing_updated_at}=    Set Variable    ${existing_user_data_updated_at[0][0]}
+
+    # Step 2: Get the maximum id_user and increment it
+    ${max_id_user}=    Query    SELECT MAX(id_user) FROM spy_user
+    IF    '${None}' in '${max_id_user}'    VAR    ${max_id_user}    0
+
+    IF    ${max_id_user[0][0]} > 5000
+        # new ID will be max +1 not to intersect with real IDs
+        ${new_id_user}=    Evaluate    ${max_id_user[0][0]} + 1
+    ELSE
+        # new ID will be max + 5001 not to intersect with real IDs
+        ${new_id_user}=    Evaluate    ${max_id_user[0][0]} + 5001
+    END
+    # Step 3: Generate new UUID
+    ${new_uuid}=   Generate Random String	4	[UPPER]
+    VAR    ${new_uuid}    ${new_uuid}-${random}-${random_str}-${random_id}
+
+    # Step 4: Check table structure before the insert
+
+    IF    '${db_engine}' == 'pymysql'
+        ${spy_user_column_names}=    Query    SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spy_user' AND TABLE_SCHEMA = DATABASE()
+        ${spy_user_column_names}=    Convert To String    ${spy_user_column_names}
+        ${is_uuid_present}=    Run Keyword And Return Status    Should Contain    ${spy_user_column_names}    uuid
+        VAR    ${is_uuid_present}    ${is_uuid_present}
+    ELSE
+        ${spy_user_column_names}=    Query    SELECT column_name FROM information_schema.columns WHERE table_name = 'spy_user' AND table_schema = current_schema
+        ${spy_user_column_names}=    Convert To String    ${spy_user_column_names}
+        ${is_uuid_present}=    Run Keyword And Return Status    Should Contain    ${spy_user_column_names}    uuid
+        VAR    ${is_uuid_present}    ${is_uuid_present}
+    END
+
+    # Step 5: Insert the new user into the spy_user table using correct variables
+    ${attempt}=    Set Variable    1
+    WHILE    ${attempt} <= 3
+        TRY
+            IF    ${is_uuid_present}
+                Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, uuid, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${new_uuid}', '${existing_created_at}', '${existing_updated_at}')
+            ELSE
+                Execute Sql String    INSERT INTO spy_user (id_user, fk_locale, is_agent, first_name, last_name, password, status, username, created_at, updated_at) VALUES (${new_id_user}, ${existing_fk_locale}, True, '${first_name}', '${last_name}', '${existing_password}', 0, '${user_name}', '${existing_created_at}', '${existing_updated_at}')
+            END
+            Exit For Loop
+        EXCEPT
+            Log    Attempt ${attempt} failed due to duplicate entry in spy_user. Retrying...
+            ${unique_id}=    Generate Random String    3    [NUMBERS]
+            ${unique_id}=    Replace String    ${unique_id}    0    9
+            ${unique_id}=    Convert To Integer    ${unique_id}
+            ${new_id_user}=    Evaluate    ${new_id_user} + ${unique_id}
+            ${unique}=    Generate Random String    5    [NUMBERS]
+            VAR    ${new_uuid}    ${unique}-${random}-${random_str}-${random_id}
+            IF    '${user_name}' == '${EMPTY}'
+                VAR    ${user_name}    admin+robot${unique}@spryker.com
+                VAR    ${dynamic_admin_user}    ${user_name}    scope=TEST
+            END
+            ${attempt}=    Evaluate    ${attempt} + 1
+        END
+    END
+    IF    ${attempt} > 3    Fail    Unable to insert user into spy_users after 3 attempts.
+
+    # Step 6: Get the ACL group of the existing user from spy_acl_user_has_group
+    ${existing_acl_group}=    Query    SELECT fk_acl_group FROM spy_acl_user_has_group WHERE fk_user = ${existing_id_user}
+
+    # Step 7: Insert the new user’s ID and the same ACL group into spy_acl_user_has_group
+    Execute Sql String    INSERT INTO spy_acl_user_has_group (fk_user, fk_acl_group) VALUES (${new_id_user}, ${existing_acl_group[0][0]})
+
+    Disconnect From Database
+
+Delete dynamic admin user from DB
+    [Documentation]    This keyword deletes a dynamic admin user from the DB based on the provided username.
+        ...           It works for both MariaDB and PostgreSQL.
+    [Arguments]    ${user_name}=${EMPTY}
+
+    ${dynamic_admin_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_admin_user}
+
+    # Step 2: Decide action based on existence of discount states and the argument
+
+    IF    '${user_name}' == '${EMPTY}'
+        IF    ${dynamic_admin_exists}
+            VAR    ${user_name}    ${dynamic_admin_user}
+        ELSE
+            Log    message=No dynamic (doesn't exist) or static user was provided for deletion    level=INFO
+            RETURN
+        END
+    END
+
+    # Step 1: Fetch the ID of the user to be deleted
+    Connect to Spryker DB
+    ${user_data}=    Query    SELECT id_user FROM spy_user WHERE username = '${user_name}'
+    ${user_exists}=    Evaluate    len(${user_data}) > 0
+
+    IF    ${user_exists}
+        ${user_id}=    Set Variable    ${user_data[0][0]}
+
+        # Step 2: Delete entries in related tables
+        IF    '${db_engine}' == 'pymysql'
+            Execute Sql String    DELETE FROM spy_acl_user_has_group WHERE fk_user = ${user_id}
+        ELSE
+            Execute Sql String    DELETE FROM spy_acl_user_has_group WHERE fk_user = ${user_id}
+        END
+
+        # Step 3: Delete the user from spy_user table
+        IF    '${db_engine}' == 'pymysql'
+            Execute Sql String    DELETE FROM spy_user WHERE id_user = ${user_id}
+        ELSE
+            Execute Sql String    DELETE FROM spy_user WHERE id_user = ${user_id}
+        END
+    END
+
+    Disconnect From Database
+
+Create dynamic customer in DB
+    [Documentation]    This keyword creates a new approved dynamic customer in the DB based on an existing customer (sonia@spryker.com) and assigns the customer to a company.
+    ...               It works for both MariaDB and PostgreSQL.
+    [Arguments]    ${first_name}=Dynamic    ${last_name}=Customer    ${email}=${EMPTY}    ${based_on}=${EMPTY}    ${create_default_address}=True
+    ${dynamic_customer_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_customer}
+    ${dynamic_second_customer_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_second_customer}
+
+    IF    '${email}' == '${EMPTY}'
+        ${unique}=    Generate Random String    5    [NUMBERS]
+        IF    ${dynamic_second_customer_exists}
+            VAR    ${email}    sonia+robot${unique}@spryker.com
+            VAR    ${dynamic_third_customer}    ${email}    scope=TEST
+        ELSE IF    ${dynamic_customer_exists}
+            VAR    ${email}    sonia+robot${unique}@spryker.com
+            VAR    ${dynamic_second_customer}    ${email}    scope=TEST
+        ELSE
+            VAR    ${email}    sonia+robot${unique}@spryker.com
+            VAR    ${dynamic_customer}    ${email}    scope=TEST
+        END
+    END
+
+    IF    '${based_on}' == '${EMPTY}'
+        VAR    ${based_on}    sonia@spryker.com
+    END
+
+    # Step 1: Fetch the existing customer data (${based_on})
+    Connect to Spryker DB
+    ${existing_customer_data}=    Query    SELECT * FROM spy_customer WHERE email = '${based_on}'
+
+    # Extract all columns from the existing customer with Set Variable If for conditional handling of None values
+    VAR    ${existing_customer_id}    ${existing_customer_data[0][0]}
+    ${existing_fk_locale}=                 Set Variable If    ${existing_customer_data[0][1]}    ${existing_customer_data[0][1]}    NULL
+    ${existing_fk_user}=                   Set Variable If    ${existing_customer_data[0][2]}    ${existing_customer_data[0][2]}    NULL
+    ${existing_anonymized_at}=             Set Variable If    ${existing_customer_data[0][3]}    ${existing_customer_data[0][3]}    NULL
+    ${existing_company}=                   Set Variable If    '${existing_customer_data[0][4]}' != '${EMPTY}'    ${existing_customer_data[0][4]}    ${EMPTY}
+    ${existing_date_of_birth}=             Set Variable If    ${existing_customer_data[0][6]}    ${existing_customer_data[0][6]}    NULL
+    VAR    ${existing_default_billing_address}    NULL
+    VAR    ${existing_default_shipping_address}    NULL
+    ${existing_gender}=                    Set Variable If    ${existing_customer_data[0][11]}   ${existing_customer_data[0][11]}   NULL
+    ${existing_password}=                  Set Variable    ${existing_customer_data[0][13]}
+    ${existing_phone}=                     Set Variable If    '${existing_customer_data[0][14]}' != '${EMPTY}'   ${existing_customer_data[0][14]}   ${EMPTY}
+    ${existing_registered}=                Set Variable If    ${existing_customer_data[0][15]}   ${existing_customer_data[0][15]}   '2020-06-24'
+    ${existing_registration_key}=          Set Variable If    ${existing_customer_data[0][16]}   ${existing_customer_data[0][16]}   NULL
+    VAR    ${existing_restore_password_date}    NULL
+    VAR    ${existing_restore_password_key}    NULL
+    ${existing_salutation}=                Set Variable    ${existing_customer_data[0][19]}
+    ${existing_created_at}=                Set Variable    ${existing_customer_data[0][20]}
+    ${existing_updated_at}=                Set Variable    ${existing_customer_data[0][21]}
+
+    # Step 2: Get the maximum id_customer and increment it
+    ${max_id_customer}=    Query    SELECT MAX(id_customer) FROM spy_customer
+    IF    '${None}' in '${max_id_customer}'    VAR    ${max_id_customer}    0
+
+    IF    ${max_id_customer[0][0]} > 5000
+        # new ID will be max +1 not to intersect with real IDs
+        ${new_id_customer}=    Evaluate    ${max_id_customer[0][0]} + 1
+    ELSE
+        # new ID will be max + 5001 not to intersect with real IDs
+        ${new_id_customer}=    Evaluate    ${max_id_customer[0][0]} + 5001
+    END
+
+    # Step 3: Generate new values for customer_reference
+    ${new_customer_reference}=    Set Variable    dynamic--${new_id_customer}
+
+    # Step 4: Insert the new customer into the spy_customer table using all columns
+    ${attempt}=    Set Variable    1
+    WHILE    ${attempt} <= 3
+        TRY
+            Execute Sql String    INSERT INTO spy_customer (id_customer, fk_locale, fk_user, anonymized_at, company, customer_reference, date_of_birth, default_billing_address, default_shipping_address, email, first_name, gender, last_name, password, phone, registered, registration_key, restore_password_date, restore_password_key, salutation, created_at, updated_at) VALUES (${new_id_customer}, ${existing_fk_locale}, ${existing_fk_user}, ${existing_anonymized_at}, '${existing_company}', '${new_customer_reference}', ${existing_date_of_birth}, ${existing_default_billing_address}, ${existing_default_shipping_address}, '${email}', '${first_name}', ${existing_gender}, '${last_name}', '${existing_password}', '${existing_phone}', '${existing_registered}', ${existing_registration_key}, ${existing_restore_password_date}, ${existing_restore_password_key}, ${existing_salutation}, '${existing_created_at}', '${existing_updated_at}')
+            Exit For Loop
+        EXCEPT
+            Log    Attempt ${attempt} failed due to duplicate entry in spy_customer. Retrying...
+            ${unique_id}=    Generate Random String    3    [NUMBERS]
+            ${unique_id}=    Replace String    ${unique_id}    0    9
+            ${unique_id}=    Convert To Integer    ${unique_id}
+            ${new_id_customer}=    Evaluate    ${new_id_customer} + ${unique_id}
+            ${new_customer_reference}=    Set Variable    dynamic--${new_id_customer}
+            IF    '${email}' == '${EMPTY}' or 'sonia+robot' in '${email}'
+                ${unique}=    Generate Random String    5    [NUMBERS]
+                IF    ${dynamic_second_customer_exists}
+                    VAR    ${email}    sonia+robot${unique}@spryker.com
+                    VAR    ${dynamic_third_customer}    ${email}    scope=TEST
+                ELSE IF    ${dynamic_customer_exists}
+                    VAR    ${email}    sonia+robot${unique}@spryker.com
+                    VAR    ${dynamic_second_customer}    ${email}    scope=TEST
+                ELSE
+                    VAR    ${email}    sonia+robot${unique}@spryker.com
+                    VAR    ${dynamic_customer}    ${email}    scope=TEST
+                END
+            END
+            ${attempt}=    Evaluate    ${attempt} + 1
+        END
+    END
+    IF    ${attempt} > 3    Fail    Unable to insert customer into spy_customer after 3 attempts.
+
+    IF    '${env}' in ['ui_b2b','ui_mp_b2b','ui_suite']
+        # Step 5: Fetch the existing company user data associated with the existing customer
+        ${existing_company_user_data}=    Query    SELECT * FROM spy_company_user WHERE fk_customer = ${existing_customer_id}
+        ${existing_company_user_data_length}=    Get Length    ${existing_company_user_data}
+        IF    ${existing_company_user_data_length} > 0
+            # Extract the relevant fields for inserting a new company user
+            VAR    ${existing_id_company_user}    ${existing_company_user_data[0][0]}
+            VAR    ${existing_fk_company}    ${existing_company_user_data[0][1]}
+            VAR    ${existing_fk_company_business_unit}    ${existing_company_user_data[0][2]}
+            VAR    ${existing_key}    ${existing_company_user_data[0][6]}
+
+            # Step 6: Get the maximum id_company_user and increment it
+            ${max_id_company_user}=    Query    SELECT MAX(id_company_user) FROM spy_company_user
+            IF    '${None}' in '${max_id_company_user}'    VAR    ${max_id_company_user}    0
+
+            IF    ${max_id_company_user[0][0]} > 5000
+                # new ID will be max +1 not to intersect with real IDs
+                ${new_id_company_user}=    Evaluate    ${max_id_company_user[0][0]} + 1
+            ELSE
+                # new ID will be max + 5001 not to intersect with real IDs
+                ${new_id_company_user}=    Evaluate    ${max_id_company_user[0][0]} + 5001
+            END
+
+            # Step 7: Generate unique values for `key` and `uuid`
+            VAR    ${new_key}    ${existing_key}--${new_id_company_user}
+            ${new_uuid}=   Generate Random String	4	[UPPER]
+            VAR    ${new_uuid}    ${new_uuid}-${random}-${random_str}-${random_id}
+
+            # Step 8: Insert the new company user entry in the spy_company_user table
+            ${attempt}=    Set Variable    1
+            WHILE    ${attempt} <= 3
+                TRY
+                    IF    '${db_engine}' == 'pymysql'
+                        Execute Sql String    INSERT INTO spy_company_user (id_company_user, fk_company, fk_company_business_unit, fk_customer, is_active, is_default, \`key\`, uuid) VALUES (${new_id_company_user}, ${existing_fk_company}, ${existing_fk_company_business_unit}, ${new_id_customer}, True, False, '${new_key}', '${new_uuid}')
+                    ELSE
+                        Execute Sql String    INSERT INTO spy_company_user (id_company_user, fk_company, fk_company_business_unit, fk_customer, is_active, is_default, key, uuid) VALUES (${new_id_company_user}, ${existing_fk_company}, ${existing_fk_company_business_unit}, ${new_id_customer}, True, False, '${new_key}', '${new_uuid}')
+                    END
+                    Exit For Loop
+                EXCEPT
+                    Log    Attempt ${attempt} failed due to duplicate entry in spy_company_user. Retrying...
+                    ${unique_id}=    Generate Random String    3    [NUMBERS]
+                    ${unique_id}=    Replace String    ${unique_id}    0    9
+                    ${unique_id}=    Convert To Integer    ${unique_id}
+                    ${new_id_company_user}=    Evaluate    ${new_id_company_user} + ${unique_id}
+                    ${new_key}=    Set Variable    ${existing_key}--${new_id_company_user}
+                    ${unique}=    Generate Random String    5    [NUMBERS]
+                    VAR    ${new_uuid}    ${unique}-${random}-${random_str}-${random_id}
+                    ${attempt}=    Evaluate    ${attempt} + 1
+                END
+            END
+            IF    ${attempt} > 3    Fail    Unable to insert company user into spy_company_user after 3 attempts.
+
+            # Insert the new company role to company user entry in the spy_company_role_to_company_user table
+            ${existing_company_role_to_user_data}=    Query    SELECT * FROM spy_company_role_to_company_user WHERE fk_company_user = ${existing_id_company_user}
+            FOR    ${roles}    IN    @{existing_company_role_to_user_data}
+
+                VAR    ${existing_fk_company_role}    ${roles[1]}
+                VAR    ${existing_created_at}    ${roles[3]}
+                VAR    ${existing_updated_at}    ${roles[4]}
+
+                # Get the maximum id_company_role_to_company_user and increment it
+                ${max_id_company_role_to_company_user}=    Query    SELECT MAX(id_company_role_to_company_user) FROM spy_company_role_to_company_user
+                IF    '${None}' in '${max_id_company_role_to_company_user}'    VAR    ${max_id_company_role_to_company_user}    0
+
+                IF    ${max_id_company_role_to_company_user[0][0]} > 5000
+                    # new ID will be max +1 not to intersect with real IDs
+                    ${new_id_company_role_to_company_user}=    Evaluate    ${max_id_company_role_to_company_user[0][0]} + 1
+                ELSE
+                    # new ID will be max + 5001 not to intersect with real IDs
+                    ${new_id_company_role_to_company_user}=    Evaluate    ${max_id_company_role_to_company_user[0][0]} + 5001
+                END
+
+                # Insert the new company role to company user entry in the spy_company_role_to_company_user table
+                ${attempt}=    Set Variable    1
+                WHILE    ${attempt} <= 3
+                    TRY
+                        Execute Sql String    INSERT INTO spy_company_role_to_company_user (id_company_role_to_company_user, fk_company_role, fk_company_user, created_at, updated_at) VALUES (${new_id_company_role_to_company_user}, ${existing_fk_company_role}, ${new_id_company_user}, '${existing_created_at}', '${existing_updated_at}')
+                        Exit For Loop
+                    EXCEPT
+                        Log    Attempt ${attempt} failed due to duplicate entry in spy_company_role_to_company_user. Retrying...
+                        ${unique_id}=    Generate Random String    3    [NUMBERS]
+                        ${unique_id}=    Replace String    ${unique_id}    0    9
+                        ${unique_id}=    Convert To Integer    ${unique_id}
+                        ${new_id_company_role_to_company_user}=    Evaluate    ${new_id_company_role_to_company_user} + ${unique_id}
+                        ${attempt}=    Evaluate    ${attempt} + 1
+                    END
+                END
+                IF    ${attempt} > 3    Fail    Unable to insert company role to company user into spy_company_role_to_company_user after 3 attempts.
+            END
+        ELSE
+            Log    message=Selected customer is not a company user. Skipping company user creation.    level=INFO
+        END
+    END
+
+    IF    ${create_default_address}
+        # Step 9: Check if an address exists for the new customer
+        ${address_exists}=    Query    SELECT COUNT(*) FROM spy_customer_address WHERE fk_customer = ${new_id_customer}
+
+        # Step 10: Handle address creation or update
+        IF    ${address_exists[0][0]} == 0
+            # No address exists, so create a new address
+            ${max_id_customer_address}=    Query    SELECT MAX(id_customer_address) FROM spy_customer_address
+            IF    '${None}' in '${max_id_customer_address}'    VAR    ${max_id_customer_address}    0
+            IF    ${max_id_customer_address[0][0]} > 5000
+                # new ID will be max +1 not to intersect with real IDs
+                ${new_id_customer_address}=    Evaluate    ${max_id_customer_address[0][0]} + 1
+            ELSE
+                # new ID will be max + 5001 not to intersect with real IDs
+                ${new_id_customer_address}=    Evaluate    ${max_id_customer_address[0][0]} + 5001
+            END
+            ${address_uuid}=   Generate Random String	4	[UPPER]
+            VAR    ${address_uuid}    ${address_uuid}-${random}-${random_str}-${random_id}
+            ${attempt}=    Set Variable    1
+            WHILE    ${attempt} <= 3
+                TRY
+                    Execute Sql String    INSERT INTO spy_customer_address (id_customer_address, fk_country, fk_customer, fk_region, address1, address2, address3, anonymized_at, city, comment, company, deleted_at, first_name, last_name, phone, salutation, uuid, zip_code, created_at, updated_at) VALUES (${new_id_customer_address}, 60, ${new_id_customer}, NULL, '${default_address.street}', '${default_address.house_number}', NULL, NULL, '${default_address.city}', NULL, NULL, NULL, '${default_address.first_name}', '${default_address.last_name}', NULL, 0, '${address_uuid}', '${default_address.post_code}', NOW(), NOW())
+                    Exit For Loop
+                EXCEPT
+                    Log    Attempt ${attempt} failed due to duplicate entry in spy_customer_address. Retrying...
+                    ${unique_id}=    Generate Random String    3    [NUMBERS]
+                    ${unique_id}=    Replace String    ${unique_id}    0    9
+                    ${unique_id}=    Convert To Integer    ${unique_id}
+                    ${new_id_customer_address}=    Evaluate    ${new_id_customer_address} + ${unique_id}
+                    ${unique}=    Generate Random String    5    [NUMBERS]
+                    VAR    ${address_uuid}    ${unique}-${random}-${random_str}-${random_id}
+                    ${attempt}=    Evaluate    ${attempt} + 1
+                END
+            END
+            IF    ${attempt} > 3    Fail    Unable to insert customer address into spy_customer_address after 3 attempts.
+        ELSE
+            # Address exists, so update it
+            ${existing_address_id}=    Query    SELECT id_customer_address FROM spy_customer_address WHERE fk_customer = ${new_id_customer}
+            Execute Sql String    UPDATE spy_customer_address SET fk_country = 60, fk_region = NULL, address1 = '${default_address.street}', address2 = '${default_address.house_number}', address3 = NULL, anonymized_at = NULL, city = '${default_address.city}', first_name = '${default_address.first_name}', last_name = '${default_address.last_name}', phone = NULL, salutation = 0, zip_code = '${default_address.post_code}', updated_at = NOW() WHERE id_customer_address = ${existing_address_id[0][0]}
+        END
+    END
+    Disconnect From Database
+
+Deactivate all discounts in the database
+    [Documentation]    This keyword retrieves all existing discounts in the database, saves their keys and activation status,
+    ...               and then sets each discount's `is_active` status to `False`.
+
+    # Step 1: Fetch all existing discounts
+    Connect to Spryker DB
+    ${existing_discounts}=    Query    SELECT discount_key, is_active FROM spy_discount
+
+    # Step 2: Store the current discount states with scope TEST
+    VAR    ${discount_states}    ${existing_discounts}    scope=TEST
+
+    # Step 3: Deactivate all discounts
+    Execute Sql String    UPDATE spy_discount SET is_active = False
+
+    Disconnect From Database
+
+Restore all discounts in the database
+    [Documentation]    This keyword restores the activation status of all discounts based on the previously saved data.
+    ...               It must be called after `Deactivate all discounts in the database` to ensure data is available for restoration.
+    [Arguments]    ${enable_all_if_no_previous_state}=True
+
+    # Step 1: Check if discount states were saved
+    ${state_exists}=    Run Keyword And Return Status    Variable Should Exist    ${discount_states}
+
+    # Step 2: Decide action based on existence of discount states and the argument
+    IF    ${state_exists}
+        Log    Restoring each discount's original state based on saved data.
+        Connect to Spryker DB
+        FOR    ${discount_data}    IN    @{discount_states}
+            ${discount_key}=    Set Variable    ${discount_data[0]}
+            ${status}=    Set Variable    ${discount_data[1]}
+            Execute Sql String    UPDATE spy_discount SET is_active = ${status} WHERE discount_key = '${discount_key}'
+        END
+        Disconnect From Database
+    ELSE
+        Log    No saved discount state data available.
+        IF    ${enable_all_if_no_previous_state}
+            Log    Enabling all discounts as per the argument.
+            Connect to Spryker DB
+            Execute Sql String    UPDATE spy_discount SET is_active = True
+            Disconnect From Database
+        ELSE
+            Fail    No saved discount state data available and 'enable_all_if_no_previous_state' is set to False. Cannot proceed.
+        END
+    END

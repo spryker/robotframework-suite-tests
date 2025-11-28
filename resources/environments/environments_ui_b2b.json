@@ -12,6 +12,7 @@
   },
    "dms_env":{
        "yves_dms_url":"http://yves.eu.spryker.local/",
+       "yves_at_dms_url":"http://yves.eu.spryker.local/AT/",
        "zed_dms_url":"http://backoffice.eu.spryker.local/",
        "mp_dms_url":"http://mp.eu.spryker.local/security-merchant-portal-gui/login/",
        "mp_root_dms_url":"http://mp.eu.spryker.local/",
@@ -37,7 +38,7 @@
        "yves_company_user_manager_and_buyer_firstname":"Andrew",
        "yves_company_user_manager_and_buyer_lastname":"Wedner",
        "yves_company_user_manager_and_buyer_address":"Mr Andrew Wedner, Seeburger Str. 270, 10115 Berlin",
-       "yves_company_user_approver_email":"lilu@ottom.de",
+       "yves_company_user_approver_email":"Lilu@ottom.de",
        "yves_company_user_approver_firstname":"Lilu",
        "yves_company_user_approver_lastname":"Dallas",
        "yves_company_user_shared_permission_owner_email":"andrew@ottom.de",
@@ -113,6 +114,17 @@
       "grant_type":{
          "password":"password",
          "refresh_token":"refresh_token"
+      },
+      "default_address":{
+         "salutation":"Mr",
+         "first_name":"RobotF",
+         "last_name":"RobotL",
+         "street":"Kirncher Str.",
+         "house_number":"7",
+         "post_code":"10247",
+         "city":"Berlin",
+         "country":"Germany",
+         "full_address":"Mr RobotF RobotL, Kirncher Str. 7, 10247 Berlin"
       }
    }
  }

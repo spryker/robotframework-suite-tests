@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_one
+Test Tags    robot:recursive-stop-on-failure    group_one    checkout    spryker-core-back-office    spryker-core    marketplace-merchantportal-core    cart    multiple-carts    marketplace-shipment    shipment    inventory-management
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -47,7 +47,7 @@ Login_during_checkout
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
     Yves: fill in the following new shipping address:
@@ -69,7 +69,7 @@ Register_during_checkout
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
     Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    ${default_secure_password}    ${default_secure_password}
     Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
@@ -93,12 +93,10 @@ Register_during_checkout
     Yves: assert customer profile data:
     ...    || salutation    | first name               | last name               | email                            ||
     ...    || ${salutation} | ${guest_user_first_name} | ${guest_user_last_name} | sonia+guest${random}@spryker.com ||
-    [Teardown]    Zed: delete customer:
-    ...    || email                            ||
-    ...    || sonia+guest${random}@spryker.com ||
+    [Teardown]    Zed: delete customer:    sonia+guest${random}@spryker.com
 
 Guest_Checkout
-    [Tags]    smoke
+    [Tags]    smoke    product-bundles    promotions-discounts    marketplace-promotions-discounts    order-management    marketplace-order-management    
     [Documentation]    Guest checkout with bundles, discounts and OMS
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
@@ -111,7 +109,7 @@ Guest_Checkout
     Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
     Yves: PDP contains/doesn't contain:    true    ${bundleItemsSmall}
     Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: apply discount voucher to cart:    guestTest${random}
     Yves: shopping cart contains the following products:    ${bundle_product_concrete_sku}
     Yves: click on the 'Checkout' button in the shopping cart
@@ -141,6 +139,7 @@ Guest_Checkout
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
 
 Guest_Checkout_Addresses
+    [Tags]    smoke    order-management    marketplace-order-management    product        
     [Documentation]    Guest checkout with different addresses and OMS
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
@@ -150,7 +149,7 @@ Guest_Checkout_Addresses
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest+new${random}@spryker.com
     Yves: billing address same as shipping address:    true
@@ -193,6 +192,7 @@ Guest_Checkout_Addresses
     [Teardown]    Run keywords    Yves: check if cart is not empty and clear it
 
 Business_Unit_Address_on_Checkout
+    [Tags]    company-account
     [Documentation]    Checks that business unit address can be used during checkout
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    businessAddressCart+${random}
@@ -216,7 +216,7 @@ Business_Unit_Address_on_Checkout
     Yves: shipping address on the order details page is:    Mr. Armando Richi Spryker Systems GmbH Gurmont Str. 23 8002 Barcelona, Spain 3490284322
 
 Request_for_Quote
-    [Tags]    smoke
+    [Tags]    smoke    quotation-process    order-management    marketplace-order-management    agent-assist
     [Documentation]    Checks user can request and receive quote.
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: create new Zed user with the following data:    agent_quote+${random}@spryker.com   ${default_secure_password}   Request    Quote    Root group    This user is an agent in Storefront    en_US
@@ -233,7 +233,7 @@ Request_for_Quote
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    ${default_secure_password}
+    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    ${default_secure_password}    agent_assist=${True}
     Yves: header contains/doesn't contain:    true    ${quoteRequestsWidget}
     Yves: go to 'Agent Quote Requests' page through the header
     Yves: 'Quote Requests' page is displayed
@@ -258,7 +258,7 @@ Request_for_Quote
     Yves: click 'Send to Agent' button on the 'Quote Request Details' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    ${default_secure_password}
+    Yves: login on Yves with provided credentials:    agent_quote+${random}@spryker.com    ${default_secure_password}    agent_assist=${True}
     Yves: move mouse over header menu item:     ${quoteRequestsWidget}
     Yves: 'Quote Requests' widget is shown
     Yves: go to the quote request through the header with reference:    ${lastCreatedRfQ}
@@ -289,7 +289,7 @@ Request_for_Quote
     ...    AND    Zed: delete Zed user with the following email:    agent_quote+${random}@spryker.com
 
 Split_Delivery
-    [Tags]    smoke
+    [Tags]    smoke    product
     [Documentation]    Checks split delivery in checkout
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
@@ -299,7 +299,7 @@ Split_Delivery
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select delivery to multiple addresses
     Yves: fill in new delivery address for a product:
@@ -340,7 +340,7 @@ Checkout_Address_Management
     ...    AND    Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     Yves: go to PDP of the product with sku:    ${available_never_out_of_stock_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    false
     Yves: fill in the following new billing address:
@@ -378,7 +378,7 @@ Checkout_Address_Management
     ...    AND    Yves: delete all user addresses
 
 Click_and_collect
-    [Tags]    smoke
+    [Tags]    smoke    product    product-approval-process    marketplace-product-approval-process    marketplace-product    marketplace-product-offer    marketplace-product-offer-prices    marketplace-merchant-portal-product-offer-management    product-offer-shipment    product-offer-shipment-availability
     [Documentation]    checks that product offer is successfully replaced with a target product offer
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
@@ -456,7 +456,7 @@ Click_and_collect
     Yves: go to PDP of the product with sku:     clickCollectSku${random}
     Yves: select xxx merchant's offer with price:    Budget Cameras    €150.00
     Yves: add product to the shopping cart    wait_for_p&s=true
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: select multiple addresses from toggler
     Yves: select xxx shipment type for item number xxx:    shipment_type=Pickup    item_number=1
@@ -509,7 +509,8 @@ Click_and_collect
     ...    AND    Trigger p&s
 
 Multiple_Merchants_Order
-    [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be splitted per merchant
+    [Tags]    product    marketplace-product    non-splittable-products    marketplace-product-offer    marketplace-product-offer-prices    product-offer-shipment
+    [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be split per merchant
     [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
     ...    AND    MP: change offer stock:
@@ -539,7 +540,7 @@ Multiple_Merchants_Order
     Yves: select xxx merchant's offer:    Video King
     Yves: product price on the PDP should be:    ${second_product_with_multiple_offers_video_king_price}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in cart or list:    ${one_variant_product_of_main_merchant_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
     Yves: assert merchant of product in cart or list:    ${second_product_with_multiple_offers_concrete_sku}    Video King
@@ -562,6 +563,7 @@ Multiple_Merchants_Order
     ...    AND    Yves: delete all user addresses
 
 Unique_URL
+    [Tags]    shared-carts    persistent-cart-sharing
     [Documentation]
     Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     Yves: create new 'Shopping Cart' with name:    externalCart+${random}
@@ -578,6 +580,7 @@ Unique_URL
     ...    AND    Yves: delete 'Shopping Cart' with name:    externalCart+${random}
 
 Comments_in_Cart
+    [Tags]    comments
     [Documentation]    Add comments to cart and verify comments in Yves and Zed
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    commentCart+${random}
@@ -600,6 +603,7 @@ Comments_in_Cart
     Zed: check comment appears at order detailed page in zed:    abc${random}    ${lastPlacedOrder}
 
 Comment_Management_in_the_Cart
+    [Tags]    comments
     [Documentation]    Editing and deleting comments in carts
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: create new 'Shopping Cart' with name:    commentManagement+${random}
@@ -615,6 +619,7 @@ Comment_Management_in_the_Cart
     [Teardown]    Run Keyword    Yves: delete 'Shopping Cart' with name:    commentManagement+${random}
 
 Configurable_Product_Checkout
+    [Tags]    product    configurable-product    prices
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: deactivate all discounts from Overview page
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -630,7 +635,7 @@ Configurable_Product_Checkout
     Yves: save product configuration
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
     ...    || 389.50     | 249        ||
