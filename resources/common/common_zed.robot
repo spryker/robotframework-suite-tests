@@ -128,7 +128,13 @@ Zed: login with deactivated user/invalid data:
     Type Text    ${zed_user_name_field}    ${email}
     Type Text    ${zed_password_field}    ${password}
     Click    ${zed_login_button}
-    Wait Until Page Contains Element    ${zed_error_flash_message}
+    TRY
+        Wait For Load State
+        Wait For Load State    domcontentloaded
+    EXCEPT
+        Log    Page is not fully loaded
+    END
+    Wait Until Element Is Visible    ${zed_error_flash_message}    timeout=10s
 
 Zed: go to first navigation item level:
     [Documentation]     example: "Zed: Go to First Navigation Item Level  Customers"
@@ -186,7 +192,7 @@ Zed: go to second navigation item level:
         Disable Automatic Screenshots on Failure
         ${node_expanded}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}']    timeout=500ms
         Restore Automatic Screenshots on Failure
-        IF    '${node_expanded}'=='False'    
+        IF    '${node_expanded}'=='False'
             Reload
             Click    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
             TRY
@@ -220,11 +226,11 @@ Zed: go to second navigation item level:
                 Log    Failed to clear LocalStorage
             END
             Reload
-            ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=100ms   
+            ${no_js_error}=    Run Keyword And Return Status    Element Should Not Be Visible    ${sweet_alert_js_error_popup}    timeout=100ms
             IF    not ${no_js_error}    Log    ''sweet-alert' js error popup on the page '${zed_url}: ${navigation_item_level1}->${navigation_item_level2}'
         END
     END
-    
+
 Zed: click button in Header:
     [Arguments]    ${button_name}
     Wait Until Element Is Visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
@@ -597,7 +603,7 @@ Zed: table should contain:
 Zed: table should contain non-searchable value:
     [Arguments]    ${search_key}
     Wait Until Element Is Visible    ${zed_table_locator}
-    Table Should Contain    ${zed_table_locator}  ${search_key}  
+    Table Should Contain    ${zed_table_locator}  ${search_key}
 
 Zed: table should contain xxx N times:
     [Arguments]    ${search_key}    ${expected_count}
@@ -664,7 +670,7 @@ Zed: is admin user is logged in
     TRY
         Wait For Load State
         Wait For Load State    domcontentloaded
-    EXCEPT    
+    EXCEPT
         Log    page is not loaded
     END
     ${adminIsLoggedIn}=    Run Keyword And Return Status    Page Should Contain Element    locator=${zed_log_out_button}    timeout=0.1s
