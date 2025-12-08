@@ -128,13 +128,7 @@ Zed: login with deactivated user/invalid data:
     Type Text    ${zed_user_name_field}    ${email}
     Type Text    ${zed_password_field}    ${password}
     Click    ${zed_login_button}
-    TRY
-        Wait For Load State
-        Wait For Load State    domcontentloaded
-    EXCEPT
-        Log    Page is not fully loaded
-    END
-    Wait Until Element Is Visible    ${zed_error_flash_message}    timeout=10s
+    Wait Until Page Contains Element    ${zed_error_flash_message}
 
 Zed: go to first navigation item level:
     [Documentation]     example: "Zed: Go to First Navigation Item Level  Customers"
