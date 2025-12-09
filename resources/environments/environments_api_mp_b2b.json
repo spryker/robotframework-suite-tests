@@ -205,8 +205,8 @@
           "biggest":"36"
        },
        "default_qty":{
-          "ipp_pages":"35",
-          "categories":"34",
+          "ipp_pages":"37",
+          "categories":"43",
           "colors":"10",
           "labels":"6",
           "materials":"10",
@@ -236,7 +236,7 @@
           "id":"13",
           "qty":"28"
        },
-       "category_tree_branches_qty":"7",
+       "category_tree_branches_qty":"12",
        "abstract_sku_highest_rating":"M1016129"
     },
     "products":{
@@ -703,7 +703,7 @@
        "urlencoded_header_content_type":"application/x-www-form-urlencoded",
        "test_cart_name":"Test-cart",
        "restricted_content_qty":"5",
-       "qty_of_categories_in_category_trees":"7",
+       "qty_of_categories_in_category_trees":"12",
        "qty_of_subcategories_in_category_trees":"2",
        "color_name":"black",
        "payment":{
