@@ -12,10 +12,8 @@ Resource    ../../../../resources/steps/agent_assist_steps.robot
 Resource    ../../../../resources/steps/order_comments_steps.robot
 
 *** Test Cases ***
-#### Return Management test requires the integration of https://docs.spryker.com/docs/pbc/all/back-office/latest/base-shop/install-and-upgrade/upgrade-the-back-office-to-bootstrap-5 ####
 Return_Management
     [Documentation]    Checks OMS and that Yves and Zed users can create returns.
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Create dynamic admin user in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}

@@ -42,10 +42,8 @@ Resource    ../../../../resources/steps/configurable_product_steps.robot
 Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 
 *** Test Cases ***
-#### Return Management test requires the integration of https://docs.spryker.com/docs/pbc/all/back-office/latest/base-shop/install-and-upgrade/upgrade-the-back-office-to-bootstrap-5 ####
 Return_Management
     [Documentation]    Checks OMS and that Yves and Zed users can create returns.
-    [Tags]    skip-due-to-issue
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    returnCart+${random}
     Yves: go to PDP of the product with sku:    M90802
