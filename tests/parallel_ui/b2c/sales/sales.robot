@@ -11,10 +11,8 @@ Resource    ../../../../resources/steps/orders_management_steps.robot
 Resource    ../../../../resources/steps/agent_assist_steps.robot
 
 *** Test Cases ***
-#### Return Management test requires the integration of https://docs.spryker.com/docs/pbc/all/back-office/latest/base-shop/install-and-upgrade/upgrade-the-back-office-to-bootstrap-5 ####
 Return_Management
     [Documentation]    Checks that returns work and oms process is checked. DMS-ON: https://spryker.atlassian.net/browse/FRW-7463
-    [Tags]    skip-due-to-issue
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Create dynamic admin user in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
