@@ -38,21 +38,23 @@ Get_abstract_product_with_category_nodes_included
     And Response reason should be:    OK
     And Response body parameter should be:    [data][type]    abstract-products
     And Response body parameter should be:    [data][id]    ${abstract_available_product_with_stock.sku}
-    And Response should contain the array of a certain size:    [included]    3
+    And Response should contain the array of a certain size:    [included]    4
     And Response should contain the array of a certain size:    [data][relationships]    1
     And Each array element of array in response should contain property with value:    [data][relationships][category-nodes][data]    type    category-nodes
     And Each array element of array in response should contain property:    [data][relationships][category-nodes][data]    id
-    And Response body parameter should be:    [data][relationships][category-nodes][data][0][id]    ${abstract_available_product_with_stock.category_nodes.category_node_14.id}
-    And Response body parameter should be:    [data][relationships][category-nodes][data][1][id]    ${abstract_available_product_with_stock.category_nodes.category_node_12.id}
-    And Response body parameter should be:    [data][relationships][category-nodes][data][2][id]    ${abstract_available_product_with_stock.category_nodes.category_node_11.id}
+    And Response body parameter should be:    [data][relationships][category-nodes][data][0][id]    ${abstract_available_product_with_stock.category_nodes.category_node_15.id}
+    And Response body parameter should be:    [data][relationships][category-nodes][data][1][id]    ${abstract_available_product_with_stock.category_nodes.category_node_13.id}
+    And Response body parameter should be:    [data][relationships][category-nodes][data][2][id]    ${abstract_available_product_with_stock.category_nodes.category_node_12.id}
+    And Response body parameter should be:    [data][relationships][category-nodes][data][3][id]    ${abstract_available_product_with_stock.category_nodes.category_node_2.id}
     And Each array element of array in response should contain property:    [included]    id
     And Each array element of array in response should contain property:    [included]    attributes
     And Each array element of array in response should contain property:    [included]    links
     And Each array element of array in response should contain nested property:    [included]    [links]    self
     And Each array element of array in response should contain property with value:    [included]    type    category-nodes
-    And Response body parameter should be:    [included][0][attributes][name]    ${abstract_available_product_with_stock.category_nodes.category_node_14.name}
-    And Response body parameter should be:    [included][1][attributes][name]    ${abstract_available_product_with_stock.category_nodes.category_node_12.name}
-    And Response body parameter should be:    [included][2][attributes][name]    ${abstract_available_product_with_stock.category_nodes.category_node_11.name}
+    And Response body parameter should be:    [included][0][attributes][name]    ${abstract_available_product_with_stock.category_nodes.category_node_15.name}
+    And Response body parameter should be:    [included][1][attributes][name]    ${abstract_available_product_with_stock.category_nodes.category_node_13.name}
+    And Response body parameter should be:    [included][2][attributes][name]    ${abstract_available_product_with_stock.category_nodes.category_node_12.name}
+    And Response body parameter should be:    [included][3][attributes][name]    ${abstract_available_product_with_stock.category_nodes.category_node_2.name}
     And Each array element of array in response should contain nested property:    [included]    attributes    nodeId
     And Each array element of array in response should contain nested property:    [included]    attributes    name
     And Each array element of array in response should contain nested property:    [included]    attributes    metaTitle
@@ -134,7 +136,7 @@ Get_abstract_product_with_product_options_included
     And Response body parameter should be:    [included][0][attributes][optionGroupName]    ${abstract_available_product_with_stock.product_options.OP_1.option_group_name}
     And Response body parameter should be:    [included][0][attributes][sku]    ${abstract_available_product_with_stock.product_options.OP_1.sku}
     And Response body parameter should be:    [included][0][attributes][optionName]    ${abstract_available_product_with_stock.product_options.OP_1.option_name}
-    And Response body parameter should be:    [included][0][attributes][price]    None    
+    And Response body parameter should be:    [included][0][attributes][price]    None
     And Each array element of array in response should contain property with value in:    [included]    [attributes][currencyIsoCode]    ${currency.eur.code}    ${currency.dollar.code}
     And Response body parameter should be:    [included][1][id]    ${abstract_available_product_with_stock.product_options.OP_2.id}
     And Response body parameter should be:    [included][1][attributes][optionGroupName]    ${abstract_available_product_with_stock.product_options.OP_2.option_group_name}
@@ -172,12 +174,12 @@ Get_abstract_product_with_product_labels_included
     And Each array element of array in response should contain property:    [included]    links
     And Each array element of array in response should contain nested property:    [included]    [links]    self
     And Response body parameter should be:    [included][0][id]    ${label_new.id}
-    And Response body parameter should be:    [included][0][type]    product-labels    
+    And Response body parameter should be:    [included][0][type]    product-labels
     And Response body parameter should be:    [included][0][attributes][name]    ${label_new.name}
     And Response body parameter should be:    [included][0][attributes][isExclusive]    False
     And Response body parameter should be:    [included][0][attributes][position]    2
     And Response body parameter should be:    [included][0][attributes][frontEndReference]    new
-    
+
 Get_abstract_product_with_merchants_included
     When I send a GET request:    /abstract-products/${abstract_available_product_with_stock.sku}?include=merchants
     Then Response status code should be:    200
