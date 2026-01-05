@@ -41,7 +41,7 @@ MP: update order state using header button:
     Wait For Response
     TRY
         Wait For Load State
-    EXCEPT    
+    EXCEPT
         Log    Page is not loaded
     END
     Wait Until Element Is Visible    ${mp_success_flyout}
@@ -51,12 +51,12 @@ MP: update order state using header button:
 MP: change order item state on:
     [Arguments]    ${sku}    ${state}
     Wait Until Element Is Visible    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody
-    Click    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody//orc-render-item//*[contains(text(),'${sku}')]/ancestor::tr/td//spy-checkbox
+    Click    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody//td[contains(@class,'ant-table-cell')]//*[contains(text(),'${sku}')]/ancestor::tr/td//spy-checkbox
     Click    xpath=//*[contains(@class,'table-features')]//*[contains(@class,'batch-actions')]//button[.//text()[normalize-space()='${state}']]
     Wait For Response
     TRY
         Wait For Load State
-    EXCEPT    
+    EXCEPT
         Log    Page is not loaded
     END
     Wait Until Element Is Visible    ${mp_success_flyout}
@@ -66,4 +66,4 @@ MP: change order item state on:
 MP: order item state should be:
     [Arguments]    ${sku}    ${state}
     Wait Until Element Is Visible    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody
-    Page Should Contain Element    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody//orc-render-item//*[contains(text(),'${sku}')]/ancestor::tr/td//spy-chips[contains(text(),'${state}')]
+    Page Should Contain Element    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody//td[contains(@class,'ant-table-cell')]//*[contains(text(),'${sku}')]/ancestor::tr/td//spy-chips[contains(text(),'${state}')]
