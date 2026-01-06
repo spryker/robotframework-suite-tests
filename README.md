@@ -39,6 +39,14 @@ Robot Framework test cases are executed from the command line, and the end resul
 > ./bin/run-robot-suite-tests.sh ui
 > ```
 
+> **Note** 3: Narrow down the test to be executed with the path option.
+> ```shell
+> ./bin/run-robot-suite-tests.sh api tests/api/b2b
+> ./bin/run-robot-suite-tests.sh api tests/api/b2b/glue/access_token_endpoints
+> ```
+
+
+
 Synopsis
 ```
 robot [options] data
