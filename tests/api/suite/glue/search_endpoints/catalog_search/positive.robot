@@ -51,7 +51,7 @@ Search_with_empty_search_criteria_all_default_values_check
     #Filters - labels
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][name]    label
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][localizedName]    Product Labels
-    And Response should contain the array larger or equal than a certain size:    [data][0][attributes][valueFacets][1][values]    ${default_qty.labels}
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    ${default_qty.labels}
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][config][isMultiValued]    True
     #Filters - product class
@@ -60,18 +60,24 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response should contain the array of size in:    [data][0][attributes][valueFacets][2][values]    ${default_qty.colors}    ${default_qty.product_classes}
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][config][isMultiValued]    True
-    #Filters - material
-    And Response body parameter should be in:    [data][0][attributes][valueFacets][3][name]    storage_capacity    color
-    And Response body parameter should be in:    [data][0][attributes][valueFacets][3][localizedName]    Storage Capacity    Color
-    And Response should contain the array of size in:    [data][0][attributes][valueFacets][3][values]    ${default_qty.material}    ${default_qty.colors}
+    #Filters - color
+    And Response body parameter should be:    [data][0][attributes][valueFacets][3][name]    color
+    And Response body parameter should be:    [data][0][attributes][valueFacets][3][localizedName]    Color
+    And Response should contain the array of acertain size:    [data][0][attributes][valueFacets][3][values]    ${default_qty.colors}
     And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][3][config][isMultiValued]    True
-    #Filters - brand
-    And Response body parameter should be in:    [data][0][attributes][valueFacets][4][name]    brand    storage_capacity
-    And Response body parameter should be in:    [data][0][attributes][valueFacets][4][localizedName]    Brand    Storage Capacity
-    And Response should contain the array of size in:    [data][0][attributes][valueFacets][4][values]    ${default_qty.brands}    ${default_qty.material}
+    #Filters - material
+    And Response body parameter should be:    [data][0][attributes][valueFacets][4][name]    storage_capacity
+    And Response body parameter should be:    [data][0][attributes][valueFacets][4][localizedName]    Storage Capacity
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    ${default_qty.material}
     And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    None
-    And Response body parameter should be in:    [data][0][attributes][valueFacets][4][config][isMultiValued]    False    True
+    And Response body parameter should be:    [data][0][attributes][valueFacets][4][config][isMultiValued]    True
+    #Filters - brand
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][name]    brand
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][localizedName]    Brand
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][5][values]    ${default_qty.brands}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][activeValue]    None
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][config][isMultiValued]    False
     #Filters - rating
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][name]    price-DEFAULT-EUR-GROSS_MODE
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][localizedName]    Price range
