@@ -314,7 +314,7 @@ Zed: get the last placed order ID of the customer by email:
     RETURN    ${zedLastPlacedOrder}
 
 Zed: order has the following number of shipments:
-    [Arguments]    ${orderID}    ${expectedShipments}
+    [Arguments]    ${orderID}    ${expectedShipments}    ${timeout}=5s
     Zed: go to URL:    /sales
     Zed: click Action Button in a table for row that contains:    ${orderID}    View
     ${is_order_page_loaded}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_order_details_main_content_locator}
@@ -324,7 +324,7 @@ Zed: order has the following number of shipments:
         Wait Until Page Contains Element    ${zed_order_details_main_content_locator}    message=Order details page is not loaded
     END
     TRY
-        Wait Until Element Is Visible    xpath=//table[@data-qa='order-item-list'][1]    timeout=5s
+        Wait Until Element Is Visible    xpath=//table[@data-qa='order-item-list'][1]    timeout=${timeout}
     EXCEPT
         Reload
         Wait Until Element Is Visible    xpath=//table[@data-qa='order-item-list'][1]

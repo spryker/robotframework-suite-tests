@@ -23,7 +23,7 @@ Retrieve_list_of_company_users
     And Each array element of array in response should contain property with value in:    [data]    attributes.isDefault    True    False
     And Response body has correct self link
 
-Retrieve_company_user_by_id 
+Retrieve_company_user_by_id
     When I get access token for the customer:    ${yves_user.email}
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a GET request:    /company-users/${company_user_id}
@@ -85,7 +85,7 @@ Retrieve_company_user_including_company_roles
     And Each array element of array in response should contain nested property:    [data]    [attributes]    isActive
     And Each array element of array in response should contain nested property:    [data]    [attributes]    isDefault
     And Array element should contain nested array at least once:    [data]    [relationships]
-    And Response should contain the array of a certain size:    [included]    4
+    And Response should contain the array of a certain size:    [included]    6
     And Response include should contain certain entity type:    company-roles
     And Response include element has self link:    company-roles
 
@@ -112,9 +112,9 @@ Retrieve_company_users_by_mine
     And I send a GET request:    /company-users/mine
     Then Response status code should be:    200
     And Response reason should be:    OK
-    And Response header parameter should be:    Content-Type    ${default_header_content_type}   
+    And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array of a certain size:    [data]  1
-    And Response body parameter should be:    [data][0][type]   company-users   
+    And Response body parameter should be:    [data][0][type]   company-users
     And Response body parameter should not be EMPTY:    [data][0][id]
     And Response body parameter should be:    [data][0][attributes][isActive]    True
     And Response body parameter should be:    [data][0][attributes][isDefault]    False
@@ -122,14 +122,14 @@ Retrieve_company_users_by_mine
 
 Retrieve_list_of_company_users_with_include_customers_and_filtered_by_company_role
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a GET request:    /company-roles/mine
-    ...    AND    Save value to a variable:    [data][0][id]    company-role-uuid   
+    ...    AND    Save value to a variable:    [data][0][id]    company-role-uuid
     When I send a GET request:    /company-users?include=customers&filter[company-roles.id]=${company-role-uuid}
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Each array element of array in response should contain property with value:    [data]    type   company-users   
+    And Each array element of array in response should contain property with value:    [data]    type   company-users
     And Each array element of array in response should contain property:    [data]    id
     And Each array element of array in response should contain property:    [data]    attributes
     And Each array element of array in response should contain property:    [data]    relationships

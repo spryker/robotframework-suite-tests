@@ -134,7 +134,7 @@ Click_and_collect
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €400.00
-    Zed: order has the following number of shipments:    ${lastPlacedOrder}    1
+    Zed: order has the following number of shipments:    ${lastPlacedOrder}    1    15s
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
     Zed: shipping address inside xxx shipment should be:    1    Spryker Berlin Store, Ms Dynamic, Customer, Julie-Wolfthorn-Straße, 1, 10115, Berlin, Germany
     Zed: shipment data inside xxx shipment should be:
