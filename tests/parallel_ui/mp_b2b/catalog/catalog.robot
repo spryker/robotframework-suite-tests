@@ -153,15 +153,15 @@ Product_Restrictions
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: perform search by:    Soennecken
     Yves: 'Catalog' page should show products:    18
-    Yves: go to URL:    en/office/office-furniture/storage
-    Yves: 'Catalog' page should show products:    77
+    Yves: go to URL:    en/office-furniture/storage/lockers
+    Yves: 'Catalog' page should show products:    34
     Yves: logout on Yves as a customer
     Yves: login on Yves with provided credentials:    ${dynamic_second_customer}
     Yves: perform search by:    Soennecken
     Yves: 'Catalog' page should show products:    0
     Yves: logout on Yves as a customer
     Yves: login on Yves with provided credentials:    ${dynamic_third_customer}
-    Yves: go to URL:    en/office/office-furniture/storage/lockers
+    Yves: go to URL:    en/office-furniture/storage/lockers
     Yves: 'Catalog' page should show products:    0
     Yves: go to URL:    en/transport/lift-carts
     Yves: 'Catalog' page should show products:    16
@@ -211,19 +211,19 @@ Catalog
     Yves: catalog page contains filter:    Product Ratings     Product Labels     Brand    Color    Merchant
     Yves: select filter value:    Color    blue
     Yves: 'Catalog' page should show products:    1
-    Yves: go to first navigation item level:    Services
-    Yves: 'Catalog' page should show products:    5
-    Yves: select filter value:    Merchant    Computer Experts
-#    Yves: page contains CMS element:    CMS Block    Build a Space That Spurs Creativity
-#    Yves: page contains CMS element:    CMS Block    Tackle Your To-Do's
-#    Yves: change sorting order on catalog page:    Sort by price ascending
-#    Yves: 1st product card in catalog (not)contains:     Price    0.48
-#    Yves: change sorting order on catalog page:    Sort by price descending
-#    Yves: 1st product card in catalog (not)contains:      Price    €41.68
-#    Yves: go to catalog page:    2
-#    Yves: catalog page contains filter:    Product Ratings     Product Labels     Brand    Color
-#    Yves: select filter value:    Color    blue
-#    Yves: 'Catalog' page should show products:    3
+    Yves: go to first navigation item level:    Stationery
+    Yves: 'Catalog' page should show products:    114
+    Yves: select filter value:    Merchant    Spryker
+    Yves: page contains CMS element:    CMS Block    Build a Space That Spurs Creativity
+    Yves: page contains CMS element:    CMS Block    Tackle Your To-Do's
+    Yves: change sorting order on catalog page:    Sort by price ascending
+    Yves: 1st product card in catalog (not)contains:     Price    0.48
+    Yves: change sorting order on catalog page:    Sort by price descending
+    Yves: 1st product card in catalog (not)contains:      Price    €41.68
+    Yves: go to catalog page:    2
+    Yves: catalog page contains filter:    Product Ratings     Product Labels     Brand    Color
+    Yves: select filter value:    Color    blue
+    Yves: 'Catalog' page should show products:    3
 
 Back_in_Stock_Notification
     [Documentation]    Back in stock notification is sent and availability check
