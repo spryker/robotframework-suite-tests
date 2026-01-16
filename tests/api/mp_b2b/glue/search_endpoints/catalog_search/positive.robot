@@ -125,7 +125,7 @@ Search_by_concrete_sku
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${abstract_product_with_alternative.name}
     And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    10
     #categories
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][0][values]    5
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][0][values]    4
     #labels
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    2
     #brand
@@ -146,7 +146,7 @@ Search_by_abstract_sku
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${abstract_product_with_alternative.name}
     And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    10
     #categories
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][0][values]    5
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][0][values]    4
     #labels
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    2
     #brand
@@ -492,10 +492,10 @@ Filter_by_valid_main_category
     # check that category tree is correctly updated
     And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
     And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
- #   And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][docCount]    ${category_lvl1.qty}
- #   And Response body parameter should be greater than:    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]    0
- #   And Response body parameter should be greater than:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    0
- #   And Response body parameter should be greater than:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    0
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][docCount]    ${category_lvl1.qty}
+    And Response body parameter should be greater than:    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]    0
+    And Response body parameter should be greater than:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    0
+    And Response body parameter should be greater than:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    0
     And Response body has correct self link
 
 Filter_by_valid_subcategory
@@ -504,19 +504,19 @@ Filter_by_valid_subcategory
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-#    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${category_lvl2.qty}
-#    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-#    And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
-#    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
-#    And Response body parameter should be:    [data][0][attributes][valueFacets][0][activeValue]    ${category_lvl2.id}
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${category_lvl2.qty}
+    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
+    And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][0][activeValue]    ${category_lvl2.id}
     # check that category tree is correctly updated
-#    And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
-#    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-#    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][docCount]    ${category_lvl2.qty}
-#    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]    ${category_lvl2.qty}
-#    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    0
-#    And Response body parameter should be greater than:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    0
-#    And Response body parameter should be less than:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    ${category_lvl2.qty}
+    And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][docCount]    ${category_lvl2.qty}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]    ${category_lvl2.qty}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    0
+    And Response body parameter should be greater than:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    0
+    And Response body parameter should be less than:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    ${category_lvl2.qty}
     And Response body has correct self link
 
 Filter_by_valid_sub_subcategory
@@ -525,20 +525,20 @@ Filter_by_valid_sub_subcategory
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-#    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${category_lvl3.qty}
-#    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
-#    And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
-#    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
-#    And Response body parameter should be:    [data][0][attributes][valueFacets][0][activeValue]    ${category_lvl3.id}
+    And Response body parameter should be:    [data][0][attributes][pagination][numFound]    ${category_lvl3.qty}
+    And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
+    And Response body parameter should be greater than:    [data][0][attributes][pagination][maxPage]    1
+    And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][0][activeValue]    ${category_lvl3.id}
     # check that category tree is correctly updated
-#   And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
-#    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
-#    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][docCount]    ${category_lvl3.qty}
-#    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]    ${category_lvl3.qty}
-#    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    0
-#    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    ${category_lvl3.qty}
-#    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][0][children][1][docCount]    0
-#    And Response body has correct self link
+    And Response should contain the array of a certain size:    [data][0][attributes][categoryTreeFilter]    ${category_tree_branches_qty}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][0][docCount]    0
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][docCount]    ${category_lvl3.qty}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][0][docCount]    ${category_lvl3.qty}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][1][docCount]    0
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][0][children][0][docCount]    ${category_lvl3.qty}
+    And Response body parameter should be:    [data][0][attributes][categoryTreeFilter][3][children][0][children][1][docCount]    0
+    And Response body has correct self link
 
 Search_with_specific_currency
     When I send a GET request:    /catalog-search?q=&currency=${currency.chf.code}
