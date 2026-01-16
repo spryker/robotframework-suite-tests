@@ -198,46 +198,46 @@
         }
     },
     "search":{
-        "total_number_of_products_in_search":"438",
-        "ipp":{
-            "default":"12",
-            "middle":"24",
-            "biggest":"36"
-        },
-        "default_qty":{
-            "ipp_pages":"37",
-            "categories":"45",
-            "colors":"10",
-            "labels":"6",
-            "materials":"10",
-            "brands":"10",
-            "sorting_options":"5"
-        },
-        "default_rating":{
-            "min":"4",
-            "max":"5"
-        },
-        "label":{
-            "new":"New",
-            "sale":"SALE %",
-            "manual":"Top",
-            "discontinued":"Discontinued",
-            "alternatives":"Alternatives available"
-        },
-        "category_lvl1":{
-            "id":"12",
-            "qty":"172"
-        },
-        "category_lvl2":{
-            "id":"12",
-            "qty":"56"
-        },
-        "category_lvl3":{
-            "id":"13",
-            "qty":"28"
-        },
-        "category_tree_branches_qty":"8",
-        "abstract_sku_highest_rating":"M1016129"
+       "total_number_of_products_in_search":"438",
+       "ipp":{
+          "default":"12",
+          "middle":"24",
+          "biggest":"36"
+       },
+       "default_qty":{
+          "ipp_pages":"37",
+          "categories":"43",
+          "colors":"10",
+          "labels":"6",
+          "materials":"10",
+          "brands":"10",
+          "sorting_options":"5"
+       },
+       "default_rating":{
+          "min":"4",
+          "max":"5"
+       },
+       "label":{
+          "new":"New",
+          "sale":"SALE %",
+          "manual":"Top",
+          "discontinued":"Discontinued",
+          "alternatives":"Alternatives available"
+       },
+       "category_lvl1":{
+          "id":"11",
+          "qty":"172"
+       },
+       "category_lvl2":{
+          "id":"12",
+          "qty":"56"
+       },
+       "category_lvl3":{
+          "id":"13",
+          "qty":"28"
+       },
+       "category_tree_branches_qty":"12",
+       "abstract_sku_highest_rating":"M1016129"
     },
     "products":{
         "bundle_product":{
