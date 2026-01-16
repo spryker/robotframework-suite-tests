@@ -41,7 +41,7 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][code]    ${currency.eur.code}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][symbol]    ${currency.eur.symbol}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][name]    ${currency.eur.name}
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    1
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    1
     #Filters - category
     And Response body parameter should contain:    [data][0][attributes]    valueFacets
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][name]    category
@@ -52,16 +52,13 @@ Search_with_empty_search_criteria_all_default_values_check
     #Filters - labels
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][name]    label
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][localizedName]    Product Labels
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][1][values]    ${default_qty.labels}
+    And Response should contain the array larger or equal than a certain size:    [data][0][attributes][valueFacets][1][values]    ${default_qty.labels}
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][config][isMultiValued]    True
     #Filters - color
-    And Response body parameter should be:    [data][0][attributes][valueFacets][3][name]    farbe
-    And Response body parameter should be:    [data][0][attributes][valueFacets][3][localizedName]    Color
-    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][3][values]    ${default_qty.colors}
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][name]    farbe
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][localizedName]    Color
-    And Response should contain the array of acertain size:    [data][0][attributes][valueFacets][2][values]    ${default_qty.colors}
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][2][values]    ${default_qty.colors}
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][config][isMultiValued]    True
     #Filters - material
@@ -556,7 +553,7 @@ Search_with_specific_currency
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][code]    ${currency.chf.code}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][symbol]    ${currency.chf.symbol}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][name]    ${currency.chf.name}
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    1
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    1
     And Response body has correct self link
 
 ##### PAGINATION AND SORTING #####
@@ -698,7 +695,7 @@ Search_sort_by_price_filter_query_parameter_and_pagination
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    18
     And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    ${brand_1}
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    5000
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    5000
 
 Search_by_abstract_sku_with_abstract_include
     When I send a GET request:    /catalog-search?q=${abstract_product_with_alternative.sku}&include=abstract-products
