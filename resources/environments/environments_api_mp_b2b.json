@@ -211,7 +211,8 @@
           "labels":"5",
           "materials":"10",
           "brands":"10",
-          "sorting_options":"5"
+          "sorting_options":"5",
+          "product_classes":"0"
        },
        "default_rating":{
           "min":"4",

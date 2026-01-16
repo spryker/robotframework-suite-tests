@@ -57,7 +57,7 @@ Search_with_empty_search_criteria_all_default_values_check
     #Filters - product class
     And Response body parameter should be in:    [data][0][attributes][valueFacets][2][name]    Product Class    product-class
     And Response body parameter should be in:    [data][0][attributes][valueFacets][2][localizedName]    Product Class    Product Classes
-    And Response should contain the array of size in:    [data][0][attributes][valueFacets][2][values]    ${default_qty.colors}    ${default_qty.product_classes}
+    And Response should contain the array of size:    [data][0][attributes][valueFacets][2][values]    ${default_qty.product_classes}
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][config][isMultiValued]    True
     #Filters - color
