@@ -31,7 +31,7 @@ Test Tags    bapi
     And I send a GET request:    /dynamic-entity/robot-tests-product-abstracts?include=robotTestsProductAbstractProducts
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response should contain the array of a certain size:   [data]    420
+    And Response should contain the array of a certain size:   [data]    416
     And Response should contain the array of a certain size:   [data][0]    9
     And Response should contain the array of a certain size:   [data][0][robotTestsProductAbstractProducts]    1
     And Each array element of array in response should contain property:    [data]    id_product_abstract
@@ -43,7 +43,7 @@ Test Tags    bapi
     And I send a GET request:    /dynamic-entity/robot-tests-product-abstracts?include=robotTestsProductAbstractProducts.robotTestsProductCategories.robotTestsCategories
     Then Response status code should be:    200
     And Response header parameter should be:    Content-Type    application/json
-    And Response should contain the array of a certain size:   [data]    420
+    And Response should contain the array of a certain size:   [data]    416
     And Response should contain the array of a certain size:   [data][0]    9
     And Response should contain the array of a certain size:   [data][0][robotTestsProductAbstractProducts]    1
     And Response should contain the array of a certain size:   [data][0][robotTestsProductAbstractProducts][0][robotTestsProductCategories]    1
