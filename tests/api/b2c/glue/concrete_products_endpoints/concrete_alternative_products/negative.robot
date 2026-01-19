@@ -2,7 +2,7 @@
 Suite Setup    API_suite_setup
 Test Setup     API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue
+Test Tags    glue    alternative-products
 
 *** Test Cases ***
 Get_abstract_product_alternative_for_concrete_product_with_invalid_sku_of_product
