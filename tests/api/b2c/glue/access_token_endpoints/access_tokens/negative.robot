@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Setup    API_test_setup
-Test Tags    glue
+Test Tags    glue    spryker-core    customer-access    acl
 
 *** Test Cases ***
 Get_access_token_with_invalid_password
