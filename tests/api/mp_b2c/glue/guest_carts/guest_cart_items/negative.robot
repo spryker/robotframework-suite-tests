@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Setup        API_test_setup
-Test Tags    glue
+Test Tags    glue    cart    spryker-core    product    configurable-product    product-bundles    non-splittable-products    proces
 
 *** Test Cases ***
 Add_an_item_to_the_guest_cart_without_x_anonymous_customer_unique_id

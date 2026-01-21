@@ -1,7 +1,7 @@
 *** Settings ***
 Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue
+Test Tags    glue    customer-access    customer-account-management    spryker-core    mailing-notifications
 
 *** Test Cases ***
 Create_customer

@@ -2,7 +2,8 @@
 Resource    ../../../../../../resources/common/common_api.robot
 Test Setup    API_test_setup
 Suite Setup    API_suite_setup
-Test Tags    glue
+Test Tags    glue    customer-access    customer-account-management    spryker-core    mailing-notifications
+
 *** Test Cases ***
 Update_customer_password_with_all_required_fields_and_valid_data
     [Setup]    Run Keywords    I send a POST request:    /access-tokens    {"data":{"type":"access-tokens","attributes":{"username":"${yves_eighth_user.email}","password":"${yves_eighth_user.password}"}}}

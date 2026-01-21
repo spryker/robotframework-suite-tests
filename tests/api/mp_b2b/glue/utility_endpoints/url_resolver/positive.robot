@@ -1,7 +1,7 @@
 *** Settings ***
 Suite Setup    API_suite_setup
 Test Setup    API_test_setup
-Test Tags    glue
+Test Tags    glue    spryker-core
 
 Resource    ../../../../../../resources/common/common_api.robot
 

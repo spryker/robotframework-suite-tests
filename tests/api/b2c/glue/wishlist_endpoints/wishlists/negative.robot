@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue
+Test Tags    glue    wishlist    marketplace-wishlist    customer-access    customer-account-management    acl
 
 *** Test Cases ***
 #Get_request
