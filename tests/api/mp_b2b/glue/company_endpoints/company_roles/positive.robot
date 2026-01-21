@@ -2,7 +2,7 @@
 Test Setup    API_test_setup
 Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue
+Test Tags    glue    spryker-core    company-account
 
 *** Test Cases ***
 Request_company_role_by_id
