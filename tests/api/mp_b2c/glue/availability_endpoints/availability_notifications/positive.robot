@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Setup        API_test_setup
-Test Tags    glue
+Test Tags    glue    availability-notification    spryker-core    mailing-notifications    customer-access    acl    inventory-management    marketplace-inventory-management
 
 *** Test Cases ***
 #GET requests
