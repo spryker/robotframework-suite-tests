@@ -198,20 +198,21 @@
         }
     },
     "search":{
-        "total_number_of_products_in_search":"438",
+        "total_number_of_products_in_search":"414",
         "ipp":{
             "default":"12",
             "middle":"24",
             "biggest":"36"
         },
         "default_qty":{
-            "ipp_pages":"37",
-            "categories":"45",
+            "ipp_pages":"35",
+            "categories":"33",
             "colors":"10",
-            "labels":"6",
+            "labels":"5",
             "materials":"10",
             "brands":"10",
-            "sorting_options":"5"
+            "sorting_options":"5",
+            "product_classes":"0"
         },
         "default_rating":{
             "min":"4",
@@ -225,7 +226,7 @@
             "alternatives":"Alternatives available"
         },
         "category_lvl1":{
-            "id":"12",
+            "id":"11",
             "qty":"172"
         },
         "category_lvl2":{
@@ -236,7 +237,7 @@
             "id":"13",
             "qty":"28"
         },
-        "category_tree_branches_qty":"8",
+        "category_tree_branches_qty":"6",
         "abstract_sku_highest_rating":"M1016129"
     },
     "products":{
@@ -403,12 +404,12 @@
                 }
             },
             "category_nodes":{
-                "category_node_24":{
-                    "id":"24",
+                "category_node_23":{
+                    "id":"23",
                     "name":"Office equipment"
                 },
-                "category_node_26":{
-                    "id":"26",
+                "category_node_25":{
+                    "id":"25",
                     "name":"Money Counters and Validators"
                 }
             }
@@ -433,7 +434,6 @@
             "name_lower_case":"verbatim usb stick store n go v3 49173 32gb usb3.0 gray",
             "abstract_sku":"M90810"
         },
-
         "concrete_product_with_discontinued":{
             "sku":"421540"
         },
@@ -465,21 +465,17 @@
                 "meta_description":" Pflegeleichter Stoffbezug. Gestell in Graphitschwarz RAL 9011.<br/>Standardmäßig Rollen für weiche Böden.<br/>Die Rückenlehne verfügt über eine höhenverstellbare Lendenwirbelstütze.  "
             },
             "category_nodes":{
-                "category_node_15":{
-                    "id":"15",
+                "category_node_14":{
+                    "id":"14",
                     "name":"Swivel Chairs"
                 },
-                "category_node_13":{
-                    "id":"13",
-                    "name":"Chairs"
+                "category_node_11":{
+                    "id":"11",
+                    "name":"Office furniture"
                 },
                 "category_node_12":{
                     "id":"12",
-                    "name":"Office furniture"
-                },
-                "category_node_2":{
-                    "id":"2",
-                    "name":"Office"
+                    "name":"Chairs"
                 }
             },
             "product_options":{
@@ -544,9 +540,11 @@
                 "concrete_unavailable_product":"212447",
                 "product_2":{
                     "abstract_available_with_stock_and_never_out_of_stock":"M24632",
-                    "concrete_available_with_stock_and_never_out_of_stock":"426615"},
+                    "concrete_available_with_stock_and_never_out_of_stock":"426615"
+                },
                 "product_3":{
-                    "abstract_available_with_stock_and_never_out_of_stock":"M87416"}
+                    "abstract_available_with_stock_and_never_out_of_stock":"M87416"
+                }
             },
             "abstract_product_with_variants":{
                 "concretes_3":"M29456",
@@ -682,14 +680,14 @@
             }
         },
         "category_collection_name":"Sticky Notes",
-        "category_collection_url":"/en/office/stationery/paper/sticky-notes",
+        "category_collection_url":"/en/stationery/paper/sticky-notes",
         "category_node_is_root_id":"1",
-        "category_node_has_only_parent_id":"35",
+        "category_node_has_only_parent_id":"37",
         "category_node_has_children_id":"11",
-        "category_nodes_storage_name":"Smart Energy & Monitoring",
-        "category_nodes_storage_url":"/en/smart-energy-&-monitoring",
-        "subcategory_nodes_storage_name":"Energy Management Software",
-        "subcategory_nodes_storage_url":"/en/smart-energy-&-monitoring/energy-management-software",
+        "category_nodes_storage_name":"Foods",
+        "category_nodes_storage_url":"/en/foods",
+        "subcategory_nodes_storage_name":"Vegetables",
+        "subcategory_nodes_storage_url":"/en/foods/vegetables",
         "cms_page_collection_name":"GTC",
         "cms_page_collection_url":"/en/gtc",
         "brand_name":"verbatim",
@@ -707,8 +705,8 @@
         "urlencoded_header_content_type":"application/x-www-form-urlencoded",
         "test_cart_name":"Test-cart",
         "restricted_content_qty":"5",
-        "qty_of_categories_in_category_trees":"8",
-        "qty_of_subcategories_in_category_trees":"3",
+        "qty_of_categories_in_category_trees":"6",
+        "qty_of_subcategories_in_category_trees":"2",
         "color_name":"black",
         "payment":{
             "provider_name":"dummyMarketplacePayment",
@@ -747,9 +745,9 @@
             "example":"/en/clairefontaine-collegeblock-8272c-din-a5-90blatt-kariert-M21692",
             "entity_type":"abstract-products",
             "entity_id":"M21692",
-            "category_nodes":"/en/office/stationery",
+            "category_nodes":"/en/stationery",
             "category_nodes_entity":"category-nodes",
-            "category_nodes_id":"3",
+            "category_nodes_id":"2",
             "cms":"/en/privacy",
             "cms_entity":"cms-pages",
             "cms_id":"1e9fb640-9073-55f4-a2d2-535090c92025",
