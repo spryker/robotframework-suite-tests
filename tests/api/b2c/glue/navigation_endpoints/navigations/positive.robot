@@ -1,7 +1,7 @@
 *** Settings ***
 Suite Setup    API_suite_setup
 Test Setup    API_test_setup
-Test Tags    glue    spryker-core    navigation    category-management    merchant-category
+Test Tags    glue    spryker-core    navigation    category-management
 Resource    ../../../../../../resources/common/common_api.robot
 
 *** Test Cases ***
