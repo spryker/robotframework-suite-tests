@@ -2,7 +2,7 @@
 Suite Setup    API_suite_setup
 Test Setup     API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue    spryker-core    cart    checkout    shipment    marketplace-shipment    order-management    configurable-bundle    promotions-discounts    marketplace-promotions-discounts    gift-cards    configurable-product    payments    inventory-management    marketplace-inventory-management    default-run-feature
+Test Tags    glue    spryker-core    cart    checkout    shipment    order-management    configurable-bundle    promotions-discounts    gift-cards    configurable-product    payments    inventory-management     default-run-feature
 
 *** Test Cases ***
 #POST requests
