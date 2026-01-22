@@ -4,7 +4,7 @@ Resource        ../../../../../../resources/common/common_api.robot
 Suite Setup     API_suite_setup
 Test Setup      API_test_setup
 
-Test Tags    glue    cart    prices    tax    promotions-discounts    marketplace-promotions-discounts    spryker-core    customer-access    multiple-carts
+Test Tags    glue    cart    prices    tax    promotions-discounts    spryker-core    customer-access    multiple-carts
 
 
 *** Test Cases ***

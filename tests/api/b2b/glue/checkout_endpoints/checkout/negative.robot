@@ -4,7 +4,7 @@ Resource        ../../../../../../resources/common/common_api.robot
 Suite Setup     API_suite_setup
 Test Setup      API_test_setup
 
-Test Tags    glue    cart    checkout    shipment    marketplace-shipment    order-management    configurable-bundle    promotions-discounts    marketplace-promotions-discounts    gift-cards    configurable-product    spryker-core
+Test Tags    glue    cart    checkout    shipment    order-management    configurable-bundle    promotions-discounts    gift-cards    configurable-product    spryker-core
 
 
 *** Test Cases ***
