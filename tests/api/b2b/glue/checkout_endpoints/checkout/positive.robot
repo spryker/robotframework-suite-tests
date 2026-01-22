@@ -4,7 +4,7 @@ Resource        ../../../../../../resources/common/common_api.robot
 Suite Setup     API_suite_setup
 Test Setup      API_test_setup
 
-Test Tags    glue
+Test Tags    glue    spryker-core    cart    checkout    shipment    order-management    configurable-bundle    promotions-discounts    gift-cards    configurable-product    payments    inventory-management    default-run-feature
 
 
 *** Test Cases ***

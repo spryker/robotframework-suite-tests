@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Setup        API_test_setup
-Test Tags    glue
+Test Tags    glue    merchant    marketplace-merchant    marketplace-merchantportal-core
 
 *** Test Cases ***
 Retrieves_merchant_addresses_by_non_exist_merchant_id

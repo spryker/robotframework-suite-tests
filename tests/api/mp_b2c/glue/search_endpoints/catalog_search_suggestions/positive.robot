@@ -2,7 +2,7 @@
 Suite Setup    API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue
+Test Tags    glue    search    catalog    product    discontinued-products
 
 *** Test Cases ***
 Get_search_suggestions_without_query_parameter

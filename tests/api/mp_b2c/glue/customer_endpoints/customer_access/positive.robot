@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Setup        API_test_setup
-Test Tags    glue
+Test Tags    glue    customer-access    customer-account-management    spryker-core
 
 *** Test Cases ***
 Resources_list_which_customer_can_access

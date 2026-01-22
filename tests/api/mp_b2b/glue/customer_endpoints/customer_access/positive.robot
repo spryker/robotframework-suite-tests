@@ -1,7 +1,7 @@
 *** Settings ***
 Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue
+Test Tags    glue    customer-access    customer-account-management    spryker-core
 
 *** Test Cases ***
 ##### all negative and positive tests for this endpoint are already covered with other tests (e.g. abstract-product-prices checks that without token proces are not accessible)

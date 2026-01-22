@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Setup        API_test_setup
-Test Tags    glue
+Test Tags    glue    spryker-core    navigation    category-management    merchant-category
 
 *** Test Cases ***
 To_retrieve_a_navigation_tree
