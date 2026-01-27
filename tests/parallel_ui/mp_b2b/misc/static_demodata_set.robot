@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    static-set
+Test Tags    robot:recursive-stop-on-failure    static-set    spryker-core-back-office    spryker-core    promotions-discounts    marketplace-promotions-discounts    checkout    cart    order-management
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/common/common_zed.robot
 Resource    ../../../../resources/steps/minimum_order_value_steps.robot

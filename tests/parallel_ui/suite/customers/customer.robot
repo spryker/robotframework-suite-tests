@@ -17,7 +17,7 @@ Resource    ../../../../resources/steps/company_steps.robot
 
 *** Test Cases ***
 Guest_User_Access_Restrictions
-    [Tags]    smoke
+    [Tags]    smoke    spryker-core    acl    customer-account-management    customer-access
     [Documentation]    Checks that guest users see products info and cart but not profile
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
@@ -50,7 +50,7 @@ Authorized_User_Access
     Yves: 'Wishlist' page is displayed
 
 New_Customer_Registration
-    [Tags]    smoke
+    [Tags]    smoke    spryker-core    acl    customer-account-management    customer-access
     [Documentation]    Check that a new user can be registered in the system
     Create dynamic admin user in DB
     Register a new customer with data:
@@ -61,7 +61,7 @@ New_Customer_Registration
     ...    AND    Delete dynamic admin user from DB
 
 User_Account
-    [Tags]    smoke
+    [Tags]    smoke    spryker-core    acl    customer-account-management    customer-access
     [Documentation]    Checks user account pages work + address management
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Create dynamic admin user in DB
@@ -99,7 +99,7 @@ User_Account
     [Teardown]    Delete dynamic admin user from DB
 
 Update_Customer_Data
-    [Tags]    smoke
+    [Tags]    smoke    spryker-core    acl    customer-account-management    customer-access
     [Documentation]    Checks customer data can be updated from Yves and Zed
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Create dynamic admin user in DB
@@ -135,7 +135,7 @@ Update_Customer_Data
     [Teardown]    Delete dynamic admin user from DB
 
 Add_to_Wishlist
-    [Tags]    smoke    wishlist    marketplace-wishlist
+    [Tags]    smoke    spryker-core    acl    customer-account-management    customer-access    wishlist    marketplace-wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
     Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
@@ -154,7 +154,7 @@ Add_to_Wishlist
     Yves: try to add product to wishlist as guest user
 
 Share_Shopping_Lists
-    [Tags]    smoke    shopping-lists    marketplace-shopping-lists
+    [Tags]    smoke    spryker-core    acl    customer-account-management    customer-access    shopping-lists    marketplace-shopping-lists
     [Documentation]    Checks that shopping list can be shared
     [Setup]    Run Keywords    Create dynamic customer in DB    based_on=${yves_company_user_shared_permission_owner_email}    email=sonia+sharelist${random}@spryker.com    first_name=Share${random}    last_name=List${random}
     ...    AND    Create dynamic customer in DB    based_on=${yves_company_user_shared_permission_receiver_email}    email=sonia+receivelist${random}@spryker.com    first_name=Receive${random}    last_name=List${random}
@@ -185,7 +185,7 @@ Share_Shopping_Lists
     [Teardown]    Run Keywords    Close Current Context    
 
 Share_Shopping_Carts
-    [Tags]    cart   shared-carts    multiple-carts    checkout
+    [Tags]    cart    spryker-core    acl    customer-account-management    customer-access   shared-carts    multiple-carts    checkout
     [Documentation]    Checks that cart can be shared and used for checkout
     [Setup]    Run Keywords    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB    based_on=${yves_company_user_shared_permission_owner_email}    email=sonia+sharecart${random}@spryker.com    first_name=Share${random}    last_name=Cart${random}
@@ -241,7 +241,7 @@ Share_Shopping_Carts
     [Teardown]    Delete dynamic admin user from DB
 
 Quick_Order
-    [Tags]    smoke    cart    checkout    reorder    marketplace-product-offer   marketplace-product    product
+    [Tags]    smoke    spryker-core    acl    customer-account-management    customer-access    cart    checkout    reorder    marketplace-product-offer   marketplace-product    product
     [Documentation]    Checks Quick Order, checkout and Reorder
     [Setup]    Run keywords    Create dynamic customer in DB
     ...    AND    Create dynamic admin user in DB
@@ -378,7 +378,7 @@ Shopping_List_Contains_Offers
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
 
 Email_Confirmation
-    [Tags]    smoke    mailing-notifications
+    [Tags]    smoke     mailing-notifications
     [Documentation]    Check that a new user cannot login if the email is not verified
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                                | password                   ||
