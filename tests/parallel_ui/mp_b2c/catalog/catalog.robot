@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_one    search    catalog    spryker-core    product
+Test Tags    robot:recursive-stop-on-failure    group_one    search    prices    spryker-core-back-office    spryker-core    catalog    product    configurable-product    alternative-products    inventory-management    product-bundles    wishlist
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/steps/catalog_steps.robot
@@ -159,7 +159,7 @@ Product_Bundles
     Yves: 'Thank you' page is displayed
     [Teardown]    Delete dynamic admin user from DB
 
- Configurable_Product_PDP_Wishlist_Availability
+Configurable_Product_PDP_Wishlist_Availability
     [Documentation]    Configure product from PDP and Wishlist + availability case.
     [Setup]    Run keywords   Create dynamic customer in DB
     ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}

@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_one    cart    checkout    spryker-core-back-office    spryker-core    configurable-product    product    
+Test Tags    robot:recursive-stop-on-failure    group_one    cart    checkout    spryker-core-back-office    spryker-core    configurable-product    product    quotation-process    approval-process    order-management    agent-assist
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/steps/zed_marketplace_steps.robot

@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_one    search    catalog    spryker-core    product
+Test Tags    robot:recursive-stop-on-failure    group_one    search    catalog    spryker-core    product    acl    customer-account-management    customer-access    order-management    reorder    cart    prices    alternative-products    measurement-units    packaging-units    product-customer-restrictions    merchant-custom-prices    shopping-lists    configurable-product-shopping-lists    configurable-product    product-bundles    inventory-management
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
