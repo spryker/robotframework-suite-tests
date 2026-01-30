@@ -504,7 +504,7 @@ Delete_country_collection:
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a DELETE request:    /dynamic-entity/robot-test-countries?filter[countries.iso2_code]={"in": ["${xxa_iso2_code}","${xxb_iso2_code}","${xxc_iso2_code}"]}
     Then Response status code should be:    204
-    And Response header parameter should be:    Content-Type    application/json
+    And Response reason should be:    No Content
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/robot-test-countries?filter[countries.iso2_code]={"in": ["${xxa_iso2_code}","${xxb_iso2_code}","${xxc_iso2_code}"]}
     Then Response status code should be:    200
@@ -540,7 +540,7 @@ Delete_country_by_id:
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a DELETE request:    /dynamic-entity/robot-test-countries/${xxa_id}
     Then Response status code should be:    204
-    And Response header parameter should be:    Content-Type    application/json
+    And Response reason should be:    No Content
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/robot-test-countries/${xxa_id}
     Then Response status code should be:    404

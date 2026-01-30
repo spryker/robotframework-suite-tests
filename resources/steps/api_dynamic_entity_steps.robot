@@ -58,7 +58,7 @@ Find first available product via data exchange api
     FOR    ${index}    IN RANGE    ${start_from_index}    ${end_index}
         I send a GET request:    /dynamic-entity/stock-products/${index}
         ${is_200}=    Run Keyword And Ignore Error    Response status code should be:    200
-        IF    'FAIL' in ${is_200}    Continue For Loop
+        IF    'FAIL' in $is_200    Continue For Loop
         Save value to a variable:    [data][is_never_out_of_stock]    initial_is_never_out_of_stock
         Save value to a variable:    [data][quantity]    initial_quantity
         IF    '${initial_is_never_out_of_stock}' == 'False'
@@ -87,7 +87,7 @@ Make sure that concrete product is available:
     I set Headers:    Content-Type==application/json
     I send a GET request:    /concrete-products/${concrete_sku}/concrete-product-availabilities
     ${is_available}=    Run Keyword And Ignore Error    Response body parameter should be:    [data][0][attributes][availability]   True
-    IF    'FAIL' in ${is_available}
+    IF    'FAIL' in $is_available
         ${index}=    Evaluate    ${index}+1
         Find first available product via data exchange api    ${index}
     END
@@ -106,10 +106,10 @@ Product availability status should be changed on:
         IF    ${index} == ${iterations}-1
             Fail    Expected product availability is not reached. Check P&S
         END
-        IF    'PASS' in ${actual_availability}
+        IF    'PASS' in $actual_availability
             Exit For Loop
         END
-        IF    'FAIL' in ${actual_availability}
+        IF    'FAIL' in $actual_availability
             Sleep    ${sleep_time}
             Continue For Loop
         END

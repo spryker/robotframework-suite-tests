@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue
+Test Tags    glue    shared-carts    product-relations    customer-access    spryker-core
 
 *** Test Cases ***
 Create_a_shared_shopping_cart_with_read_only_permissions_with_includes

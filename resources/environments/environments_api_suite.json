@@ -239,10 +239,6 @@
             }
          }
       },
-      "warehouse_user":{
-         "name":"",
-         "password":""
-      },
       "admin_not_warehouse_user":{
         "email":"admin_de@spryker.com",
         "password":"change123"
@@ -603,7 +599,7 @@
          "ipp_pages":"19",
          "categories":"20",
          "colors":"10",
-         "labels":"5",
+         "labels":"8",
          "materials":"7",
          "material":"5",
          "brands":"10",
@@ -894,8 +890,8 @@
       "shipment_type_uuid":"174d9dc0-55ae-5c4b-a2f2-a419027029ef",
       "shipment_type_name":"Pickup"
    },
-   "warehouse_user_assigment":{
-      "warehous_user":[
+   "warehouse_user_assignment":{
+      "warehouse_user":[
          {
             "user_uuid":"48a6c610-693e-5d88-bdce-3c6018b3abd2",
             "admin_user_uuid":"c0e244d4-03e8-556f-aa8d-174be9d236e5",

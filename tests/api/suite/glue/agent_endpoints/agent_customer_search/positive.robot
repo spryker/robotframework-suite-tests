@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue
+Test Tags    glue    spryker-core    customer-access    acl    agent-assist    customer-account-management
 
 *** Test Cases ***
 Agent_can_get_search_for_customers_without_search_parameters
@@ -11,7 +11,6 @@ Agent_can_get_search_for_customers_without_search_parameters
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${agent_token}
-    ...    AND    Log    ${agent_token}
     When I send a GET request:    /agent-customer-search
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -35,7 +34,6 @@ Agent_can_get_search_for_customers_by_email
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${agent_token}
-    ...    AND    Log    ${agent_token}
     When I send a GET request:    /agent-customer-search?q=${yves_user.email}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -55,7 +53,6 @@ Agent_can_get_search_for_customers_by_first_name
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${agent_token}
-    ...    AND    Log    ${agent_token}
     When I send a GET request:    /agent-customer-search?q=${yves_second_user.first_name}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -75,7 +72,6 @@ Agent_can_get_search_for_customers_by_last_name
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${agent_token}
-    ...    AND    Log    ${agent_token}
     When I send a GET request:    /agent-customer-search?q=${yves_second_user.last_name}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -95,7 +91,6 @@ Agent_can_get_search_for_customers_with_changed_page_limit
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${agent_token}
-    ...    AND    Log    ${agent_token}
     When I send a GET request:    /agent-customer-search?page[offset]=0&page[limit]=20
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -118,7 +113,6 @@ Agent_can_get_search_for_customers_by_substring
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${agent_token}
-    ...    AND    Log    ${agent_token}
     When I send a GET request:    /agent-customer-search?q=mar
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -146,7 +140,6 @@ Agent_can_get_search_for_customers_by_incorrect_keyword
     ...    AND    Response reason should be:    Created
     ...    AND    Save value to a variable:    [data][attributes][accessToken]    agent_token
     ...    AND    I Set Headers:    Content-Type=${default_header_content_type}    Authorization=Bearer ${agent_token}
-    ...    AND    Log    ${agent_token}
     When I send a GET request:    /agent-customer-search?q=qqqq
     Then Response status code should be:    200
     And Response reason should be:    OK

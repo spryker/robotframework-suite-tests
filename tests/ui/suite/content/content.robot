@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_two
+Test Tags    robot:recursive-stop-on-failure    group_two    spryker-core-back-office    spryker-core    cms    content-item
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -53,4 +53,3 @@ Content_Management
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: go to second navigation item level:    Content    Pages
     ...    AND    Zed: click Action Button in a table for row that contains:    Test Page${random}    Deactivate
-    ...    AND    Trigger multistore p&s

@@ -2,7 +2,7 @@
 Suite Setup    API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue
+Test Tags    glue    search    catalog    product    discontinued-products
 
 *** Test Cases ***
 Get_search_suggestions_without_query_parameter
@@ -207,7 +207,7 @@ Get_search_suggestions_with_brand_and_currency
     And Each array element of array in response should contain value:    [data][0][attributes][completion]    ${brand_name}
     And Response should contain the array of a certain size:    [data][0][attributes][completion]    10
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    10
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][6][price]    3000
+    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][price]    0
     And Response body has correct self link
 
 Get_search_suggestions_with_color

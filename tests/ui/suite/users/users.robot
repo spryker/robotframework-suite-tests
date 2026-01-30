@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_tree
+Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office   spryker-core    acl
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -43,13 +43,13 @@ Resource    ../../../../resources/steps/dynamic_entity_steps.robot
 
 *** Test Cases ***
 Agent_Assist
-    [Tags]    smoke
+    [Tags]    smoke    cart    checkout    agent-assist
     [Documentation]    Checks customer data and checkout as an agent
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+${random}@spryker.com    ${default_secure_password}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
     Yves: go to the 'Home' page
     Yves: go to URL:    agent/login
-    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    ${default_secure_password}
+    Yves: login on Yves with provided credentials:    agent+${random}@spryker.com    ${default_secure_password}    agent_assist=${True}
     Yves: header contains/doesn't contain:    true    ${customerSearchWidget}
     Yves: perform search by customer:    ${yves_second_user_first_name}
     Yves: agent widget contains:    ${yves_second_user_email}

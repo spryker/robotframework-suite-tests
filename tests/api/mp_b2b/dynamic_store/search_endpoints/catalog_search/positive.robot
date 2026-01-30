@@ -16,9 +16,9 @@ Search_by_abstract_sku_per_store
     Then I send a GET request:    /catalog-search?q=${abstract_available_product_with_stock.sku}
     And Response status code should be:    200
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract_available_product_with_stock.sku}
-    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    ${abstract_available_product_with_stock.price_de}
+    And Response body parameter should be either:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    [data][0][attributes][abstractProducts][0][prices][1][DEFAULT]    ${abstract_available_product_with_stock.price_de}
     When I set Headers:    store=AT
     Then I send a GET request:    /catalog-search?q=${abstract_available_product_with_stock.sku}
     And Response status code should be:    200
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${abstract_available_product_with_stock.sku}
-    And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    ${abstract_available_product_with_stock.price_at}
+    And Response body parameter should be either:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    [data][0][attributes][abstractProducts][0][prices][1][DEFAULT]    ${abstract_available_product_with_stock.price_at}

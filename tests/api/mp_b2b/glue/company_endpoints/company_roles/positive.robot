@@ -2,14 +2,14 @@
 Test Setup    API_test_setup
 Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue
+Test Tags    glue    spryker-core    company-account
 
 *** Test Cases ***
 Request_company_role_by_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a GET request:    /company-roles/mine
-    ...    AND    Save value to a variable:    [data][0][id]    company_role_id  
+    ...    AND    Save value to a variable:    [data][0][id]    company_role_id
     When I send a GET request:    /company-roles/${company_role_id}
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -17,18 +17,18 @@ Request_company_role_by_id
     And Response body parameter should be:    [data][type]    company-roles
     And Response body parameter should be:    [data][id]    ${company_role_id}
     And Response body parameter should be in:    [data][attributes][name]    Buyer    Admin
-    And Response body parameter should be in:    [data][attributes][isDefault]    True    False  
+    And Response body parameter should be in:    [data][attributes][isDefault]    True    False
     And Response body has correct self link internal
 
 Request_company_role_by_mine
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:    /company-roles/mine
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response should contain the array of a certain size:    [data]  2  
-    And Each array element of array in response should contain property with value:    [data]    type   company-roles    
+    And Response should contain the array of a certain size:    [data]  3
+    And Each array element of array in response should contain property with value:    [data]    type   company-roles
     And Response body parameter should not be EMPTY:    [data][0][id]
     And Response body parameter should not be EMPTY:    [data][1][id]
     And Response body parameter should be in:    [data][0][attributes][name]    Buyer    Admin
@@ -39,12 +39,12 @@ Request_company_role_by_mine
 
 Request_company_role_by_mine_with_include_companies
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     When I send a GET request:    /company-roles/mine?include=companies
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response should contain the array of a certain size:    [data]  2  
+    And Response should contain the array of a certain size:    [data]  3
     And Each array element of array in response should contain property with value:    [data]    type   company-roles
     And Response body parameter should not be EMPTY:    [data][0][id]
     And Response body parameter should be in:    [data][0][attributes][name]    Buyer    Admin
@@ -64,9 +64,9 @@ Request_company_role_by_mine_with_include_companies
 
 Request_company_role_by_id_with_include_companies
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}  
+    ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     ...    AND    I send a GET request:    /company-roles/mine
-    ...    AND    Save value to a variable:    [data][0][id]    company_role_id  
+    ...    AND    Save value to a variable:    [data][0][id]    company_role_id
     When I send a GET request:    /company-roles/${company_role_id}?include=companies
     Then Response status code should be:    200
     And Response reason should be:    OK

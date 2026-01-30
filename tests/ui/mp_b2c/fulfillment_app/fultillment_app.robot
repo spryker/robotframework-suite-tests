@@ -40,13 +40,13 @@ Resource    ../../../../resources/steps/glossary_steps.robot
 Resource    ../../../../resources/steps/order_comments_steps.robot
 Resource    ../../../../resources/steps/configurable_product_steps.robot
 Resource    ../../../../resources/steps/dynamic_entity_steps.robot
-Resource    ../../../../resources/steps/warehouse_user_assigment_steps.robot
+Resource    ../../../../resources/steps/warehouse_user_assignment_steps.robot
 Resource    ../../../../resources/steps/picking_list_steps.robot
 
 *** Test Cases ***
 Fulfillment_app_e2e
     # #LOGGED IN TO BO and SET CHECKBOX is a warehouse user = true FOR admin_de USER. UI TEST
-    Make user a warehouse user/ not a warehouse user:    ${warehous_user[0].de_admin_user_uuid}    0
+    Make user a warehouse user/ not a warehouse user:    ${warehouse_user[0].de_admin_user_uuid}    0
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: update Zed user:
     ...    || oldEmail             | user_is_warehouse_user ||
@@ -57,9 +57,9 @@ Fulfillment_app_e2e
     # #ASSIGN admin_de user TO WAREHOUSE [Spryker Mer 000001 Warehouse 1] MAKE WAREHOUSE ACTIVE BY BAPI
     And I get access token by user credentials:   ${zed_admin_email}
     I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer ${token}
-    I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehous_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
+    I send a POST request:    /warehouse-user-assignments    {"data": {"type": "warehouse-user-assignments", "attributes":{"userUuid": "${warehouse_user[0].de_admin_user_uuid}","warehouse" :{"uuid": "${warehouse[0].warehouse_uuid}"},"isActive":"true"}}}
     Then Response status code should be:    201
-    Then Save value to a variable:    [data][id]   warehouse_assigment_id
+    Then Save value to a variable:    [data][id]   warehouse_assignment_id  
     # #CREATE AN ORDER BY GLUE
     I set Headers:    Content-Type=${default_header_content_type}
     Remove Tags    *
@@ -85,7 +85,7 @@ Fulfillment_app_e2e
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside this order:    skip grace period
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    Pay
+    Zed: trigger all matching states inside this order:    Pay
     Zed: wait for order item to be in state:    091_25873091    confirmed
     Zed: wait for order item to be in state:    093_24495843    confirmed
     Zed: trigger all matching states inside this order:    Skip timeout
@@ -140,5 +140,5 @@ Fulfillment_app_e2e
     [Teardown]     Run Keywords    Remove picking list item by uuid in DB:    ${item_id_1}
     ...  AND    Remove picking list item by uuid in DB:    ${item_id_2}
     ...  AND    Remove picking list by uuid in DB:    ${picklist_id}
-    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehous_user[0].de_admin_user_uuid}    0
-    ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assigment_id}
+    ...  AND    Make user a warehouse user/ not a warehouse user:   ${warehouse_user[0].de_admin_user_uuid}    0
+    ...  AND    I send a DELETE request:    /warehouse-user-assignments/${warehouse_assignment_id}     

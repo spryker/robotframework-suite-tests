@@ -2,7 +2,7 @@
 Suite Setup    API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue
+Test Tags    glue    marketplace-return-management    return-management    checkout    cart    spryker-core    refunds
 
 *** Test Cases ***
 Create_a_return_with_order_is_not_returnable

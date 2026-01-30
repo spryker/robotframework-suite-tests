@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource          ../../../../../../resources/common/common_api.robot
-Test Tags      glue
+Test Tags      glue    spryker-core    cart    product    marketplace-product-options    product-options    non-splittable-products    configurable-product    promotions-discounts    marketplace-promotions-discounts    inventory-management    marketplace-inventory-management
 
 *** Test Cases ***
 ####POST#####

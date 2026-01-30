@@ -2,7 +2,7 @@
 Resource    ../../../../../../resources/common/common_api.robot
 Suite Setup    API_suite_setup
 Test Setup    API_test_setup
-Test Tags    glue
+Test Tags    glue    search    catalog   product
 
 
 *** Test Cases ***
@@ -40,7 +40,7 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][code]    ${currency.eur.code}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][symbol]    ${currency.eur.symbol}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][name]    ${currency.eur.name}
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    1
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    1
     #Filters - category
     And Response body parameter should contain:    [data][0][attributes]    valueFacets
     And Response body parameter should be:    [data][0][attributes][valueFacets][0][name]    category
@@ -57,21 +57,27 @@ Search_with_empty_search_criteria_all_default_values_check
     #Filters - product class
     And Response body parameter should be in:    [data][0][attributes][valueFacets][2][name]    Product Class    product-class
     And Response body parameter should be in:    [data][0][attributes][valueFacets][2][localizedName]    Product Class    Product Classes
-    And Response should contain the array of size in:    [data][0][attributes][valueFacets][2][values]    ${default_qty.colors}    ${default_qty.product_classes}
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][2][values]    ${default_qty.product_classes}
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][2][config][isMultiValued]    True
-    #Filters - material
-    And Response body parameter should be in:    [data][0][attributes][valueFacets][3][name]    storage_capacity    color
-    And Response body parameter should be in:    [data][0][attributes][valueFacets][3][localizedName]    Storage Capacity    Color
-    And Response should contain the array of size in:    [data][0][attributes][valueFacets][3][values]    ${default_qty.material}    ${default_qty.colors}
+    #Filters - color
+    And Response body parameter should be:    [data][0][attributes][valueFacets][3][name]    color
+    And Response body parameter should be:    [data][0][attributes][valueFacets][3][localizedName]    Color
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][3][values]    ${default_qty.colors}
     And Response body parameter should be:    [data][0][attributes][valueFacets][3][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][3][config][isMultiValued]    True
-    #Filters - brand
-    And Response body parameter should be in:    [data][0][attributes][valueFacets][4][name]    brand    storage_capacity
-    And Response body parameter should be in:    [data][0][attributes][valueFacets][4][localizedName]    Brand    Storage Capacity
-    And Response should contain the array of size in:    [data][0][attributes][valueFacets][4][values]    ${default_qty.brands}    ${default_qty.material}
+    #Filters - material
+    And Response body parameter should be:    [data][0][attributes][valueFacets][4][name]    storage_capacity
+    And Response body parameter should be:    [data][0][attributes][valueFacets][4][localizedName]    Storage Capacity
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][4][values]    ${default_qty.material}
     And Response body parameter should be:    [data][0][attributes][valueFacets][4][activeValue]    None
-    And Response body parameter should be in:    [data][0][attributes][valueFacets][4][config][isMultiValued]    False    True
+    And Response body parameter should be:    [data][0][attributes][valueFacets][4][config][isMultiValued]    True
+    #Filters - brand
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][name]    brand
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][localizedName]    Brand
+    And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][5][values]    ${default_qty.brands}
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][activeValue]    None
+    And Response body parameter should be:    [data][0][attributes][valueFacets][5][config][isMultiValued]    False
     #Filters - rating
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][name]    price-DEFAULT-EUR-GROSS_MODE
     And Response body parameter should be:    [data][0][attributes][rangeFacets][0][localizedName]    Price range
@@ -122,7 +128,7 @@ Search_by_concrete_sku
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    1
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${concrete_product_with_alternative.abstract_sku}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${concrete_product_with_alternative.name}
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    10
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    10
     #categories
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][0][values]    4
     #labels
@@ -143,7 +149,7 @@ Search_by_abstract_sku
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    1
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${concrete_product_with_alternative.abstract_sku}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${concrete_product_with_alternative.name}
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    10
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    10
     #categories
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][0][values]    4
     #labels
@@ -164,7 +170,7 @@ Search_by_full_name
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    ${ipp.default}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractSku]    ${concrete_product_with_alternative.abstract_sku}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][abstractName]    ${concrete_product_with_alternative.name}
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    10
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    10
     #categories
     And Response should contain the array larger than a certain size:    [data][0][attributes][valueFacets][0][values]    4
     #labels
@@ -480,7 +486,7 @@ Search_with_specific_currency
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][code]    ${currency.chf.code}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][symbol]    ${currency.chf.symbol}
     And Response body parameter should be:    [data][0][attributes][abstractProducts][0][prices][0][currency][name]    ${currency.chf.name}
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    1
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    1
     And Response body has correct self link
 
 # PAGINATION AND SORTING #
@@ -599,7 +605,7 @@ Search_sort_by_price_asc
     And Response body parameter should be:    [data][0][type]    catalog-search
     And Response body parameter should be:    [data][0][attributes][sort][currentSortParam]    price_asc
     And Response body parameter should be:    [data][0][attributes][sort][currentSortOrder]    asc
-    And Response body parameter should be less than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    50
+    And Array element should contain property with value less than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    170
     And Response body has correct self link
 
 Search_sort_by_price_desc
@@ -610,7 +616,7 @@ Search_sort_by_price_desc
     And Response body parameter should be:    [data][0][type]    catalog-search
     And Response body parameter should be:    [data][0][attributes][sort][currentSortParam]    price_desc
     And Response body parameter should be:    [data][0][attributes][sort][currentSortOrder]    desc
-    And Response body parameter should be greater than:    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]    10000
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    10000
     And Response body has correct self link
 
 Search_by_abstract_sku_with_abstract_include

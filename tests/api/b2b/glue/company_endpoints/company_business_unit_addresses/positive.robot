@@ -4,14 +4,13 @@ Resource        ../../../../../../resources/common/common_api.robot
 Suite Setup     API_suite_setup
 Test Setup      API_test_setup
 
-Test Tags    glue
+Test Tags    glue    spryker-core    company-account
 
 
 *** Test Cases ***
 Request_business_units_address_by_id
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
-    Log    ${token}
     When I send a GET request:    /company-business-unit-addresses/${busines_unit_address_id}
     Then Response status code should be:    200
     And Response reason should be:    OK

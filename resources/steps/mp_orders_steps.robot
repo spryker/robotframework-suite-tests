@@ -9,7 +9,9 @@ MP: wait for order to appear:
     Trigger oms
     FOR    ${index}    IN RANGE    0    ${tries}
         MP: perform search by:    ${orderReference}
+        Disable Automatic Screenshots on Failure
         ${elementAppears}=    Run Keyword And Return Status    Table Should Contain    ${mp_items_table}     ${orderReference}
+        Restore Automatic Screenshots on Failure
         IF    '${elementAppears}'=='False'
             Sleep    ${timeout}
             Reload
@@ -37,7 +39,11 @@ MP: update order state using header button:
     Wait Until Element Is Enabled    xpath=//div[@class='mp-manage-order__transitions']//button[.//text()[normalize-space()='${buttonName}']]
     Click    xpath=//div[@class='mp-manage-order__transitions']//button[.//text()[normalize-space()='${buttonName}']]
     Wait For Response
-    Wait For Load State
+    TRY
+        Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Wait Until Element Is Visible    ${mp_success_flyout}
     MP: remove notification wrapper
     Trigger oms
@@ -45,10 +51,14 @@ MP: update order state using header button:
 MP: change order item state on:
     [Arguments]    ${sku}    ${state}
     Wait Until Element Is Visible    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody
-    Click    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody//orc-render-item//*[contains(text(),'${sku}')]/ancestor::tr/td//spy-checkbox
+    Click    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody//td[contains(@class,'ant-table-cell')]//*[contains(text(),'${sku}')]/ancestor::tr/td//spy-checkbox
     Click    xpath=//*[contains(@class,'table-features')]//*[contains(@class,'batch-actions')]//button[.//text()[normalize-space()='${state}']]
     Wait For Response
-    Wait For Load State
+    TRY
+        Wait For Load State
+    EXCEPT
+        Log    Page is not loaded
+    END
     Wait Until Element Is Visible    ${mp_success_flyout}
     MP: remove notification wrapper
     Trigger oms
@@ -56,4 +66,4 @@ MP: change order item state on:
 MP: order item state should be:
     [Arguments]    ${sku}    ${state}
     Wait Until Element Is Visible    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody
-    Page Should Contain Element    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody//orc-render-item//*[contains(text(),'${sku}')]/ancestor::tr/td//spy-chips[contains(text(),'${state}')]
+    Page Should Contain Element    xpath=//web-mp-order-items-table[@table-id='web-mp-order-items-table']//spy-table[@class='spy-table']//tbody//td[contains(@class,'ant-table-cell')]//*[contains(text(),'${sku}')]/ancestor::tr/td//spy-chips[contains(text(),'${state}')]

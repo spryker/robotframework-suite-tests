@@ -8,8 +8,7 @@ Resource    ../pages/yves/yves_order_details_page.robot
 
 *** Keywords ***
 Yves: go to 'Order History' page
-    ${lang}=    Yves: get current lang
-    Yves: go to URL:    ${lang}/customer/order
+    Yves: go to URL:    /customer/order
         
 Yves: 'View Order/Reorder/Return' on the order history page:
     [Arguments]    ${orderAction}    ${lastPlacedOrder}=${lastPlacedOrder}
@@ -41,13 +40,16 @@ Yves: 'Order Details' page contains the following product title N times:
         ${productTitleCount}=    Get Element Count    xpath=//div[@data-qa='component order-detail-table']//article//*[contains(@class,'title')][text()='${productTitle}']
     END
     ${productTitleCount}=    Convert To String    ${productTitleCount}
-    Log    ${productTitleCount}
     Should Be Equal    ${productTitleCount}    ${expectedQuantity}
 
 Yves: 'Order History' page contains the following order with a status:
     [Arguments]    ${orderID}    ${expectedStatus}
     ${actualOrderStatus}=    Get Text    xpath=//div[contains(@data-qa,'component order-table')]//td[contains(text(),'${orderID}')]/..//*[@data-qa='component status']/..//ancestor::td
     Should Contain    ${actualOrderStatus}    ${expectedStatus}    msg=None    values=True    ignore_case=True
+
+Yves: 'Order History' page contains the following order:
+    [Arguments]    ${expectedOrderReference}
+    Page Should Contain Element    xpath=//div[contains(@data-qa,'component order-table')]//td[contains(text(),'${expectedOrderReference}')]
 
 Yves: 'Order Details' page contains the cancel order button:
     [Arguments]    ${condition}
@@ -61,8 +63,8 @@ Yves: 'Order Details' page contains the cancel order button:
 Yves: filter order history by business unit:
     [Arguments]    ${business_unit}
     Wait Until Element Is Visible    ${order_history_search_filter_button}
-    ${is_form_open}=    Run Keyword And Ignore Error    Page Should Contain Element    ${order_history_apply_filter_button}    timeout=1s
-    IF    'PASS' in ${is_form_open}    
+    ${is_form_open}=    Run Keyword And Ignore Error    Page Should Contain Element    ${order_history_apply_filter_button}    timeout=400ms
+    IF    'PASS' in $is_form_open
         Log    Form is active
     ELSE
         Click    ${order_history_search_filter_button}

@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_two
+Test Tags    robot:recursive-stop-on-failure    group_two    spryker-core-back-office    spryker-core    acl    customer-account-management    customer-access    cart    multiple-carts
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -49,7 +49,7 @@ Guest_User_Access_Restrictions
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:   sku=002    productPrice=99.99    productName=Canon IXUS 160
     Yves: go to user menu:    Overview
     Yves: 'Login' page is displayed
@@ -64,7 +64,7 @@ Authorized_User_Access
     Yves: go to PDP of the product with sku:    002
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}     ${addToCartButton}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    sku=002    productPrice=99.99    productName=Canon IXUS 160
     Yves: go to user menu:    Overview
     Yves: 'Overview' page is displayed
@@ -81,9 +81,7 @@ New_Customer_Registration
     ...    || salutation | first name | last name | e-mail                       | password                   ||
     ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
-    [Teardown]    Zed: delete customer:
-    ...    || email                       ||
-    ...    || sonia+${random}@spryker.com ||
+    [Teardown]    Zed: delete customer:    sonia+${random}@spryker.com
 
 User_Account
     [Tags]    smoke
@@ -160,7 +158,7 @@ Update_Customer_Data
     ...    || ${yves_second_user_email} | Mr         | ${yves_second_user_first_name} | ${yves_second_user_last_name} ||
 
 Add_to_Wishlist
-    [Tags]    smoke
+    [Tags]    smoke    wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: delete all wishlists
@@ -182,7 +180,7 @@ Add_to_Wishlist
     ...    AND    Yves: check if cart is not empty and clear it
 
 Share_Shopping_Lists
-    [Tags]    smoke
+    [Tags]    smoke    shopping-lists
     [Documentation]    Checks that shopping list can be shared
     Yves: login on Yves with provided credentials:    ${yves_company_user_shared_permission_owner_email}
     Yves: go to 'Shopping Lists' page
@@ -211,6 +209,7 @@ Share_Shopping_Lists
     [Teardown]    Run Keywords    Close Current Context    AND    Yves: delete 'Shopping List' with name:    shareShoppingList+${random}
 
 Share_Shopping_Carts
+    [Tags]    smoke    checkout    shared-carts    persistent-cart-sharing
     [Documentation]    Checks that cart can be shared and used for checkout
     [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_sony_experts_email}
@@ -262,7 +261,7 @@ Share_Shopping_Carts
     Yves: 'Order Details' page is displayed
 
 Quick_Order
-    [Tags]    smoke
+    [Tags]    smoke    checkout    reorder    cart    order-management
     [Documentation]    Checks Quick Order, checkout and Reorder
     [Setup]    Run keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
@@ -323,12 +322,13 @@ Quick_Order
     [Teardown]    Yves: delete 'Shopping List' with name:    quickOrderList+${random}
 
 Reorder
+    [Tags]    reorder    checkout    cart    order-management
     [Documentation]    Checks that merchant relation is saved with reorder
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    ${available_never_out_of_stock_abstract_sku}
     Yves: add product to the shopping cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in cart or list:    ${available_never_out_of_stock_concrete_sku}    Spryker
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
@@ -345,6 +345,7 @@ Reorder
     ...    AND    Yves: delete all user addresses
 
 Business_on_Behalf
+    [Tags]    company-account
     [Documentation]    Check that BoB user has possibility to change the business unit
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Customers    Company Users
@@ -357,6 +358,7 @@ Business_on_Behalf
     [Teardown]    Zed: delete company user xxx withing xxx company business unit:    Donald    Spryker Systems Zurich
 
 Wishlist_List_Supports_Offers
+    [Tags]    wishlist    marketplace-wishlist    product    marketplace-product    marketplace-product-offer
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
     [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_user_email}
     ...    AND    Yves: delete all wishlists
@@ -373,12 +375,13 @@ Wishlist_List_Supports_Offers
     Yves: assert merchant of product in wishlist:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in wishlist:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
     Yves: add all available products from wishlist to cart
-    Yves: go to b2c shopping cart
+    Yves: go to shopping cart page
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
     [Teardown]    Run keywords    Yves: delete all wishlists    AND    Yves: check if cart is not empty and clear it
 
 Shopping_List_Contains_Offers
+    [Tags]    shopping-lists    marketplace-shopping-lists    cart    product    marketplace-product    marketplace-product-offer
     [Documentation]    Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart
     [Setup]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: delete all shopping carts
@@ -406,6 +409,4 @@ Email_Confirmation
     ...    || Mr.        | New        | User      | sonia+fails+${random}@spryker.com  | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
     Yves: login on Yves with provided credentials and expect error:     sonia+fails+${random}@spryker.com     ${default_secure_password}
-    [Teardown]    Zed: delete customer:
-    ...    || email                             ||
-    ...    || sonia+fails+${random}@spryker.com ||
+    [Teardown]    Zed: delete customer:    sonia+fails+${random}@spryker.com

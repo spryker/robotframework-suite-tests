@@ -4,7 +4,7 @@ Resource        ../../../../../../resources/common/common_api.robot
 Suite Setup     API_suite_setup
 Test Setup      API_test_setup
 
-Test Tags    glue
+Test Tags    glue    search    catalog    product
 
 
 *** Test Cases ***
@@ -80,8 +80,8 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should be:
     ...    [data][0][attributes][abstractProducts][0][prices][0][currency][name]
     ...    ${currency.eur.name}
-    And Response body parameter should be greater than:
-    ...    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]
+    And Array element should contain property with value greater than at least once:
+    ...    [data][0][attributes][abstractProducts][0][prices]    DEFAULT
     ...    1
     # FIlters - all filters are NOT applied
     And Each array element should contain property with value:    [data][0][attributes][valueFacets]    activeValue    None
@@ -98,9 +98,10 @@ Search_with_empty_search_criteria_all_default_values_check
     #Filters - labels
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][name]    label
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][localizedName]    Product Labels
-    And Response should contain the array of a certain size:
+    And Response should contain the array of size in:
     ...    [data][0][attributes][valueFacets][1][values]
     ...    ${default_qty.labels}
+    ...    ${default_qty.labels_ssp}
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][activeValue]    None
     And Response body parameter should be:    [data][0][attributes][valueFacets][1][config][isMultiValued]    True
     #Filters - color
@@ -183,9 +184,7 @@ Search_by_concrete_sku
     And Response body parameter should be:
     ...    [data][0][attributes][abstractProducts][0][abstractName]
     ...    ${abstract.alternative_products.product_1.name}
-    And Response body parameter should be greater than:
-    ...    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]
-    ...    10
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    10
     #categories
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][0][values]    4
     #labels
@@ -210,9 +209,7 @@ Search_by_abstract_sku
     And Response body parameter should be:
     ...    [data][0][attributes][abstractProducts][0][abstractName]
     ...    ${abstract.alternative_products.product_1.name}
-    And Response body parameter should be greater than:
-    ...    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]
-    ...    10
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    10
     #categories
     And Response should contain the array of a certain size:    [data][0][attributes][valueFacets][0][values]    4
     #labels
@@ -241,9 +238,7 @@ Search_by_full_name
     And Response body parameter should be:
     ...    [data][0][attributes][abstractProducts][0][abstractName]
     ...    ${abstract.alternative_products.product_1.name}
-    And Response body parameter should be greater than:
-    ...    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]
-    ...    10
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    10
     #categories
     And Response should contain the array larger than a certain size:
     ...    [data][0][attributes][valueFacets][0][values]
@@ -756,9 +751,7 @@ Search_with_specific_currency
     And Response body parameter should be:
     ...    [data][0][attributes][abstractProducts][0][prices][0][currency][name]
     ...    ${currency.chf.name}
-    And Response body parameter should be greater than:
-    ...    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]
-    ...    1
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    1
     And Response body has correct self link
 
 ##### PAGINATION AND SORTING #####
@@ -900,9 +893,7 @@ Search_sort_by_price_asc
     And Response body parameter should be:    [data][0][type]    catalog-search
     And Response body parameter should be:    [data][0][attributes][sort][currentSortParam]    price_asc
     And Response body parameter should be:    [data][0][attributes][sort][currentSortOrder]    asc
-    And Response body parameter should be less than:
-    ...    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]
-    ...    50
+    And Array element should contain property with value less than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    50
     And Response body has correct self link
 
 Search_sort_by_price_desc
@@ -913,9 +904,7 @@ Search_sort_by_price_desc
     And Response body parameter should be:    [data][0][type]    catalog-search
     And Response body parameter should be:    [data][0][attributes][sort][currentSortParam]    price_desc
     And Response body parameter should be:    [data][0][attributes][sort][currentSortOrder]    desc
-    And Response body parameter should be greater than:
-    ...    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]
-    ...    10000
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    10000
     And Response body has correct self link
 
 Search_sort_by_price_filter_query_parameter_and_pagination
@@ -932,9 +921,7 @@ Search_sort_by_price_filter_query_parameter_and_pagination
     And Response body parameter should be:    [data][0][attributes][pagination][maxPage]    1
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    18
     And Array element should contain property with value at least once:    [data][0][attributes][valueFacets]    activeValue    ${brand_1}
-    And Response body parameter should be greater than:
-    ...    [data][0][attributes][abstractProducts][0][prices][0][DEFAULT]
-    ...    5000
+    And Array element should contain property with value greater than at least once:    [data][0][attributes][abstractProducts][0][prices]    DEFAULT    5000
 
 Search_by_abstract_sku_with_abstract_include
     When I send a GET request:

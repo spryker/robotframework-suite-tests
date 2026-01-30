@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Test Setup        API_test_setup
-Test Tags    glue
+Test Tags    glue    merchant-category    category-management
 
 *** Test Cases ***
 Get_category_node_by_invalid_id

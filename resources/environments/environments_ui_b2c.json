@@ -12,6 +12,7 @@
   },
     "dms_env":{
        "yves_dms_url":"http://yves.eu.spryker.local/",
+       "yves_at_dms_url":"http://yves.eu.spryker.local/AT/",
        "zed_dms_url":"http://backoffice.eu.spryker.local/",
        "mp_dms_url":"http://mp.eu.spryker.local/security-merchant-portal-gui/login/",
        "mp_root_dms_url":"http://mp.eu.spryker.local/",
@@ -165,6 +166,17 @@
        "grant_type":{
          "password":"password",
          "refresh_token":"refresh_token"
+      },
+      "default_address":{
+         "salutation":"Mr",
+         "first_name":"RobotF",
+         "last_name":"RobotL",
+         "street":"Kirncher Str.",
+         "house_number":"7",
+         "post_code":"10247",
+         "city":"Berlin",
+         "country":"Germany",
+         "full_address":"Mr RobotF RobotL, Kirncher Str. 7, 10247 Berlin"
       }
     }
     ,
@@ -175,8 +187,8 @@
        "payment_provider_name_1":"DummyPayment",
        "payment_method_name_1":"Credit Card"
     },
-    "warehouse_user_assigment":{
-       "warehous_user":[
+    "warehouse_user_assignment":{
+       "warehouse_user":[
          { 
              "admin_user_uuid":"c0e244d4-03e8-556f-aa8d-174be9d236e5",
              "de_admin_user_uuid":"92cd431f-96e3-5259-91cb-ab9f6d14829f"

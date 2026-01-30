@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    glue
+Test Tags    glue    product    alternative-products
 
 *** Test Cases ***    
 Product_has_abstract_alternative
@@ -11,7 +11,6 @@ Product_has_abstract_alternative
     When I send a GET request:    /concrete-products/${concrete_product_with_abstract_product_alternative.sku}/abstract-alternative-products
     Then Response status code should be:    200
     And Response reason should be:    OK
-    Log    ${response_body}
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response should contain the array of a certain size:    [data]    1
     And Response body parameter should be:    [data][0][type]    abstract-products

@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
-Test Tags    bapi
+Test Tags    bapi    product    category-management    merchant-category    prices    spryker-core    spryker-core-back-office
 
 *** Test Cases ***
 Get_product_abstract_collection_with_invalid_query_parameter:
@@ -316,7 +316,7 @@ Delete_country_collection_with_existing_child_entity
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a DELETE request:    /dynamic-entity/robot-test-countries?filter[countries.iso2_code]={"in": ["${xxa_iso2_code}","${xxb_iso2_code}","${xxc_iso2_code}"]}
     Then Response status code should be:    204
-    And Response header parameter should be:    Content-Type    application/json
+    And Response reason should be:    No Content
     And I set Headers:    Content-Type=application/json    Authorization=Bearer ${token}
     And I send a GET request:    /dynamic-entity/robot-test-countries?filter[countries.iso2_code]={"in": ["${xxa_iso2_code}","${xxb_iso2_code}","${xxc_iso2_code}"]}
     Then Response status code should be:    200

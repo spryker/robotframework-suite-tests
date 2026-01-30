@@ -4,7 +4,7 @@ Resource        ../../../../../../resources/common/common_api.robot
 Suite Setup     API_suite_setup
 Test Setup      API_test_setup
 
-Test Tags    glue
+Test Tags    glue    search    catalog    product    discontinued-products
 
 
 *** Test Cases ***
@@ -243,7 +243,7 @@ Get_search_suggestions_with_brand_and_currency
     ...    ${brand_name}
     And Response should contain the array of a certain size:    [data][0][attributes][completion]    10
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    10
-    Array element should contain property with value at least once:    [data][0][attributes][abstractProducts]    price    ${${abstract.alternative_products.product_3.price_chf}}
+    And Array element should contain property with value at least once:    [data][0][attributes][abstractProducts]    price    ${${abstract.alternative_products.product_3.price_chf}}
     And Response body has correct self link
 
 Get_search_suggestions_with_color

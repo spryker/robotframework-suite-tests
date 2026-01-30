@@ -2,7 +2,7 @@
 Suite Setup       API_suite_setup
 Test Setup    API_test_setup
 Resource    ../../../../../resources/common/common_api.robot
-Resource    ../../../../../resources/steps/warehouse_user_assigment_steps.robot
+Resource    ../../../../../resources/steps/warehouse_user_assignment_steps.robot
 Test Tags    bapi
 
 *** Test Cases ***

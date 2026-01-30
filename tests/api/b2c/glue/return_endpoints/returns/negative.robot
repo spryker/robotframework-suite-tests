@@ -1,6 +1,6 @@
 *** Settings ***
 Suite Setup       API_suite_setup
-Test Tags      glue
+Test Tags      glue    return-management    checkout    cart    spryker-core    refunds
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 

@@ -3,7 +3,7 @@ Resource        ../../../../../../resources/common/common_api.robot
 
 Suite Setup     API_suite_setup
 
-Test Tags    glue
+Test Tags    glue    customer-access    customer-account-management    spryker-core    mailing-notifications
 
 
 *** Test Cases ***
