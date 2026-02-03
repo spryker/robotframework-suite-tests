@@ -130,10 +130,13 @@ Refunds
     Yves: create a new customer address in profile:     Mr    ${yves_user_first_name}    ${yves_user_last_name}    Kirncher Str.    7    10247    Berlin    Germany
     Yves: check if cart is not empty and clear it
     Yves: go to PDP of the product with sku:    007
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    008
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    010
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart

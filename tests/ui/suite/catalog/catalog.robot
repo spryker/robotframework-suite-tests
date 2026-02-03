@@ -50,7 +50,8 @@ Product_PDP
     Yves: PDP contains/doesn't contain:    false    ${pdp_add_to_wishlist_button}
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    135
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
+    Yves: PDP contains/doesn't contain:    false    ${addToCartButton}
     Yves: change variant of the product on PDP on:    Flash
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
 
@@ -107,6 +108,7 @@ Volume_Prices
     ...    AND    Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
     Yves: go to PDP of the product with sku:    ${volume_prices_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+    Yves: select xxx merchant's offer:    Spryker
     Yves: change quantity on PDP:    5
     Yves: product price on the PDP should be:    €16.50
     Yves: add product to the shopping cart
