@@ -18,7 +18,7 @@ Product_has_abstract_alternative
     And Response body parameter should be:    [data][0][type]    abstract-products
     And Response body parameter should have datatype:    [data][0][attributes][name]    str
     And Response body parameter should be:
-    ...    [data][0][attributes][sku]
+    ...    [data][2][attributes][sku]
     ...    ${abstract.alternative_products.product_2.sku}
     And Response body has correct self link
 
