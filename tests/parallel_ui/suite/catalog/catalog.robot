@@ -25,7 +25,8 @@ Product_PDP
     Yves: PDP contains/doesn't contain:    false    ${pdp_add_to_wishlist_button}
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    135
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${pdp_add_to_wishlist_button}    ${relatedProducts}
+    Yves: PDP contains/doesn't contain:    false    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]
     Yves: change variant of the product on PDP on:    Flash
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
 
@@ -235,7 +236,7 @@ Configurable_Product_PDP_Wishlist_Availability
     Yves: change the product options in configurator to:
     ...    || option one    | option two ||
     ...    || 389.50        | 275        ||
-    Yves: product configuration price should be:    ${configurable_product_price_with_options} 
+    Yves: product configuration price should be:    ${configurable_product_price_with_options}
     Yves: save product configuration
     Yves: add all available products from wishlist to cart
     Yves: go to shopping cart page
@@ -266,13 +267,13 @@ Configurable_Product_PDP_Shopping_List
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
     ...    || 517        | 167        ||
-    Yves: product configuration notification is:     Only 5 items available 
+    Yves: product configuration notification is:     Only 5 items available
     Yves: save product configuration
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: configuration should be equal:
     ...    || option one                 | option two                     ||
     ...    || Option One: Option title 2 | Option Two: Option Two title 1 ||
-    Yves: product configuration status should be equal:      Configuration complete! 
+    Yves: product configuration status should be equal:      Configuration complete!
     Yves: change quantity on PDP:    6
     Yves: try add product to the cart from PDP and expect error:    Item ${configurable_product_concrete_sku} only has availability of 5.
     Yves: go to PDP of the product with sku:   ${configurable_product_abstract_sku}
