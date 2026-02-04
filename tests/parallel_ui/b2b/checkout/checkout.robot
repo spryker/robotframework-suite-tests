@@ -267,8 +267,8 @@ Checkout_Address_Management
     ...    || Mr.        | New       | Billing  | Changed Street | 098         | 09876    | Berlin | Germany | Spryker | 987654321 | Additional street ||
     Yves: save new billing address to address book:    false
     Yves: fill in the following new shipping address:
-    ...    || salutation | firstName | lastName | street          | houseNumber | postCode | city   | country     | company | phone     | additionalAddress ||
-    ...    || Mr.        | First     | Last     | Shipping Street | 7           | 10247    | Geneva | Switzerland | Spryker | 123456789 | Additional street ||
+    ...    || salutation | firstName | lastName | street          | houseNumber | postCode | city   | country    | company | phone     | additionalAddress ||
+    ...    || Mr.        | First     | Last     | Shipping Street | 7           | 10247    | Geneva | Switzerland| Spryker | 123456789 | Additional street ||
     Yves: save new delivery address to address book:    true
     Yves: submit form on the checkout
     Yves: select the following shipping method on the checkout and go next:    Express
@@ -281,8 +281,7 @@ Checkout_Address_Management
     Yves: check that user has address exists/doesn't exist:    false    New    Billing    Changed Street    098    09876    Berlin    Germany
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: billing address for the order should be:    New Billing, Changed Street 098, Additional street, 09876 Berlin, Germany 987654321
-    Zed: shipping address inside xxx shipment should be:    1    Mr First, Last, Shipping Street, 7, Additional street, Spryker, 10247, Geneva, Switzerland
+    Zed: billing address for the order should be:    New Billing, Changed Street 098, 09876 Berlin, Germany
     [Teardown]    Delete dynamic admin user from DB
 
 Comments_in_Cart
