@@ -17,7 +17,7 @@ Yves: select product in the bundle slot:
     ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c']    
         Click    xpath=(//product-item-list[@data-qa='component configurator-product']//span[contains(text(),'${sku}')]/ancestor::product-item-list//button)[1]
     ELSE
-        Click    xpath=//product-item//*[@itemprop='sku'][contains(text(),'${sku}')]/ancestor::product-item//button[1]
+        Click    xpath=(//product-item//*[@itemprop='sku'][contains(text(),'${sku}')]/ancestor::product-item//button)[1]
     END
 
 Yves: go to 'Summary' step in the bundle configurator
