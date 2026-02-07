@@ -89,7 +89,7 @@ Yves: select the following existing address on the checkout as 'shipping' addres
     EXCEPT
         Log    Page is not loaded
     END
-    IF    '${is_ssp}' == 'true' and '${env}' == 'ui_b2b'
+    IF    '${is_ssp}' == 'true' and '${env}' in ['ui_b2b','ui_mp_b2b']
         Wait Until Element Is Visible    ${checkout_address_delivery_selector}[ssp_b2b]
     ELSE
         Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}]
@@ -132,7 +132,7 @@ Yves: select the following existing address on the checkout as 'shipping' addres
             Exit For Loop
         END
     END
-    IF    '${is_ssp}' == 'true'
+    IF    '${is_ssp}' == 'true' and '${env}' in ['ui_b2b','ui_mp_b2b']
         ${ssp_checkout_delivery_address_dropdowns_count}=    Get Element Count    xpath=//address-item-form-field-list//select[@name='checkout-full-addresses' and not(ancestor::div[1][contains(@class, 'is-hidden')])]
         IF    ${ssp_checkout_delivery_address_dropdowns_count} > 1
             FOR    ${index}    IN RANGE    1    ${ssp_checkout_delivery_address_dropdowns_count}
@@ -159,7 +159,7 @@ Yves: select the following existing address on the checkout as 'shipping':
     EXCEPT
         Log    Page is not loaded
     END
-    IF    '${is_ssp}' == 'true'
+    IF    '${is_ssp}' == 'true' and '${env}' in ['ui_b2b','ui_mp_b2b']
         Wait Until Element Is Visible    ${checkout_address_delivery_selector}[ssp_b2b]
     ELSE
         Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}]
@@ -207,14 +207,14 @@ Yves: fill in the following new shipping address:
     [Documentation]    Possible argument names: salutation, firstName, lastName, street, houseNumber, postCode, city, country, company, phone, additionalAddress
     [Arguments]    @{args}
     ${newAddressData}=    Set Up Keyword Arguments    @{args}
-    IF    '${is_ssp}' == 'true'
+    IF    '${is_ssp}' == 'true' and '${env}' in ['ui_b2b','ui_mp_b2b']
         Select From List By Label    ${checkout_address_delivery_selector}[ssp_b2b]    Define new address
         Wait Until Element Is Visible    xpath=//*[contains(@data-qa,'address-item-form')]//div[contains(@class,'address-content')][@data-qa='component form']
     ELSE
         Select From List By Label    ${checkout_address_delivery_selector}[${env}]    Define new address
         Wait Until Element Is Visible    ${checkout_new_shipping_address_form}
     END
-    IF    '${is_ssp}' == 'true'
+    IF    '${is_ssp}' == 'true' and '${env}' in ['ui_b2b','ui_mp_b2b']
         VAR    ${checkout_shipping_address_salutation_selector}    ${ssp_checkout_shipping_address_salutation_selector}
         VAR    ${checkout_shipping_address_last_name_field}    ${ssp_checkout_shipping_address_last_name_field}
         VAR    ${checkout_shipping_address_company_name_field}    ${ssp_checkout_shipping_address_company_name_field}
@@ -281,7 +281,7 @@ Yves: select delivery to multiple addresses
     EXCEPT
         Log    Page is not loaded
     END
-    IF    '${is_ssp}' == 'true'
+    IF    '${is_ssp}' == 'true' and '${env}' in ['ui_b2b','ui_mp_b2b'] and '${env}' in ['ui_b2b','ui_mp_b2b']
         VAR    ${single_address_per_shipment_type_checkbox_locator}    xpath=//toggler-checkbox[contains(@name,'isSingleAddressPerShipmentType')][1]
         Wait Until Page Contains Element    ${single_address_per_shipment_type_checkbox_locator}
         ${single_address_per_shipment_type_checkbox_is_checked}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//toggler-checkbox[contains(@name,'isSingleAddressPerShipmentType')][1][@checked]    timeout=100ms
@@ -564,13 +564,13 @@ Yves: save new delivery address to address book:
     END
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']    Wait Until Page Contains Element    ${manage_your_addresses_link}
     ${checkboxState}=    Set Variable    ${EMPTY}
-    IF    '${is_ssp}' == 'true'
+    IF    '${is_ssp}' == 'true' and '${env}' in ['ui_b2b','ui_mp_b2b']
         ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//*[contains(@data-qa,'address-item-form')]//input[contains(@name,'[shippingAddress][isAddressSavingSkipped]')][@checked]    timeout=100ms
     ELSE
         ${checkboxState}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped'][@checked]    timeout=100ms
     END
     IF    '${checkboxState}'=='False' and '${state}' == 'true'
-        IF    '${is_ssp}' == 'true'
+        IF    '${is_ssp}' == 'true' and '${env}' in ['ui_b2b','ui_mp_b2b']
             Click    xpath=//*[contains(@data-qa,'address-item-form')]//input[contains(@name,'[shippingAddress][isAddressSavingSkipped]')]/ancestor::span[contains(@data-qa,'checkbox')]
         ELSE
             Click    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
@@ -582,7 +582,7 @@ Yves: save new delivery address to address book:
         END
     END
     IF    '${checkboxState}'=='True' and '${state}' == 'false'
-        IF    '${is_ssp}' == 'true'
+        IF    '${is_ssp}' == 'true' and '${env}' in ['ui_b2b','ui_mp_b2b']
             Click    xpath=//*[contains(@data-qa,'address-item-form')]//input[contains(@name,'[shippingAddress][isAddressSavingSkipped]')]/ancestor::span[contains(@data-qa,'checkbox')]
         ELSE
             Click    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
