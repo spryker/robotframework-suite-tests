@@ -89,10 +89,10 @@ Yves: select the following existing address on the checkout as 'shipping' addres
     EXCEPT
         Log    Page is not loaded
     END
-    IF    '${is_ssp}' == 'true'
+    IF    '${is_ssp}' == 'true' and '${env}' == 'ui_b2b'
         Wait Until Element Is Visible    ${checkout_address_delivery_selector}[ssp_b2b]
     ELSE
-        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
+        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}]
     END
     WHILE  '${selected_address}' != '${addressToUse}'    limit=5
         IF    '${env}' in ['ui_b2c','ui_mp_b2c']
@@ -160,9 +160,9 @@ Yves: select the following existing address on the checkout as 'shipping':
         Log    Page is not loaded
     END
     IF    '${is_ssp}' == 'true'
-        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[ssp_b2b] 
+        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[ssp_b2b]
     ELSE
-        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
+        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}]
     END
     WHILE  '${selected_address}' != '${addressToUse}'    limit=5
         IF    '${env}' in ['ui_b2c','ui_mp_b2c']
@@ -459,21 +459,21 @@ Yves: select the following payment method on the checkout and go next:
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_invoice_date_of_birth_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
         IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_invoice_date_of_birth_field}    11.11.2000
-        Click    ${submit_checkout_form_button}[${env}]    
+        Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Invoice (Marketplace)'
         Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Disable Automatic Screenshots on Failure
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
         IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.2000
-        Click    ${submit_checkout_form_button}[${env}]    
+        Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Marketplace Invoice'
         Click    //form[@name='paymentForm']//toggler-radio[contains(.,'${paymentMethod}')]//span[contains(@class,'toggler-radio__box')]
         Disable Automatic Screenshots on Failure
         ${date_of_birth_present}=    Run Keyword And Ignore Error    Page Should Contain Element    ${checkout_payment_marketplace_invoice_date_field}    timeout=400ms
         Restore Automatic Screenshots on Failure
         IF    'PASS' in $date_of_birth_present    Type Text    ${checkout_payment_marketplace_invoice_date_field}    11.11.2000
-        Click    ${submit_checkout_form_button}[${env}]    
+        Click    ${submit_checkout_form_button}[${env}]
     ELSE
         IF    '${paymentMethod}' == 'Invoice' or '${paymentMethod}' == 'invoice'
             ${payment_method_index}=    Set Variable    last()
@@ -587,7 +587,7 @@ Yves: save new delivery address to address book:
         ELSE
             Click    xpath=//input[@id='addressesForm_shippingAddress_isAddressSavingSkipped']/ancestor::span[contains(@data-qa,'checkbox')]
         END
-        
+
         TRY
             Repeat Keyword    3    Wait For Load State
         EXCEPT
@@ -633,7 +633,7 @@ Yves: return to the previous checkout step:
     EXCEPT
         Log    Page is not loaded
     END
-    
+
 Yves: check that the payment method is/not present in the checkout process:
     [Arguments]    ${payment_method_locator}    ${condition}
     ${condition}=    Convert To Lower Case    ${condition}
