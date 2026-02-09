@@ -52,8 +52,8 @@ Yves: find and add new item in the quick order form:
     END
     Type Text    ${quick_order_first_empty_row}    ${searchQuery}
     Wait Until Element Is Visible    ${quick_order_row_search_results}
-    Wait Until Page Contains Element    xpath=(//div[contains(@data-qa,'component quick-order-rows')]//*[contains(@class,'autocomplete')][@value=''])[1]/ancestor::quick-order-row//ul[@data-qa='component products-list']/li[@data-value='${searchQuery}']
-    Click    xpath=(//div[contains(@data-qa,'component quick-order-rows')]//*[contains(@class,'autocomplete')][@value=''])[1]/ancestor::quick-order-row//ul[@data-qa='component products-list']/li[@data-value='${searchQuery}']
+    Wait Until Page Contains Element    xpath=(//div[contains(@data-qa,'component quick-order-rows')]//*[contains(@class,'autocomplete')][@value=''])[1]/ancestor::quick-order-row//ul[@data-qa='component products-list']/li[@data-value='${searchQuery}'][1]
+    Click    xpath=(//div[contains(@data-qa,'component quick-order-rows')]//*[contains(@class,'autocomplete')][@value=''])[1]/ancestor::quick-order-row//ul[@data-qa='component products-list']/li[@data-value='${searchQuery}'][1]
     TRY
         Repeat Keyword    3    Wait For Load State
         Repeat Keyword    3    Wait For Load State    domcontentloaded
