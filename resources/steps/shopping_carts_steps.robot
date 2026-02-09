@@ -181,7 +181,7 @@ Yves: shopping cart contains product with unit price:
             Page Should Contain Element    xpath=//div[contains(@class,'product-cart-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-cart-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=300ms
         END  
     ELSE IF    '${env}' in ['ui_suite']
-        Page Should Contain Element    xpath=//main//*[@data-qa='cart-item-sku'][contains(text(),'${sku}')]/following::*[@data-qa='component cart-item-summary'][1]//span[contains(.,'${productPrice}')]    timeout=300ms
+        Page Should Contain Element    xpath=//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//*[@data-qa='cart-item-sku'][contains(text(),'${sku}')]/ancestor::product-item//*[contains(@data-qa,'cart-item-summary')]//span[contains(.,'${productPrice}')]    timeout=300ms
     ELSE
         Page Should Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]    timeout=300ms
     END
