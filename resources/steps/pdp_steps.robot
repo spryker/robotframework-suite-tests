@@ -466,6 +466,7 @@ Yves: unsubscribe from availability notifications
 
 Yves: select xxx merchant's offer:
     [Arguments]    ${merchantName}
+    ${offer_cls}=    Set Variable    ${offer_item_class}[${env}]
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     TRY
         Repeat Keyword    3    Wait For Load State
@@ -473,10 +474,10 @@ Yves: select xxx merchant's offer:
     EXCEPT
         Log    Page is not loaded
     END
-    ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input[@checked]    timeout=50ms
+    ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]/../input[@checked]    timeout=50ms
     IF    not ${merchant_offer_is_already_selected}
         TRY
-            Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+            Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]
             Wait For Request
             TRY
                 Repeat Keyword    3    Wait For Load State
@@ -484,7 +485,7 @@ Yves: select xxx merchant's offer:
             EXCEPT
                 Log    Page is not loaded
             END
-            Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
+            Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
         EXCEPT
             LocalStorage Clear
             Reload
@@ -494,9 +495,9 @@ Yves: select xxx merchant's offer:
             EXCEPT
                 Log    Page is not loaded
             END
-            ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input[@checked]    timeout=50ms
+            ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]/../input[@checked]    timeout=50ms
             IF    not ${merchant_offer_is_already_selected}
-                Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+                Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]
                 TRY
                     Wait For Request
                     Repeat Keyword    3    Wait For Load State
@@ -505,7 +506,7 @@ Yves: select xxx merchant's offer:
                 EXCEPT
                     Log    Page is not loaded
                 END
-                Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
+                Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
             END
         END
         Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
@@ -519,6 +520,7 @@ Yves: select xxx merchant's offer:
 
 Yves: select xxx merchant's offer with price:
     [Arguments]    ${merchantName}    ${price}    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=3s
+    ${offer_cls}=    Set Variable    ${offer_item_class}[${env}]
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     TRY
         Repeat Keyword    3    Wait For Load State
@@ -538,7 +540,7 @@ Yves: select xxx merchant's offer with price:
     IF    ${wait_for_p&s}
         FOR    ${index}    IN RANGE    1    ${iterations}
         Disable Automatic Screenshots on Failure
-        ${result}=    Run Keyword And Ignore Error    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]    timeout=400ms
+        ${result}=    Run Keyword And Ignore Error    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]    timeout=400ms
         Restore Automatic Screenshots on Failure
             IF    ${index} == ${iterations}-1
                 Take Screenshot    EMBED    fullPage=True
@@ -549,7 +551,7 @@ Yves: select xxx merchant's offer with price:
                 Reload
                 Continue For Loop
             ELSE
-                Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+                Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]
                 Wait For Request
                 TRY
                     Repeat Keyword    3    Wait For Load State
@@ -557,15 +559,15 @@ Yves: select xxx merchant's offer with price:
                 EXCEPT
                     Log    Page is not loaded
                 END
-                Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
+                Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
                 Exit For Loop
             END
         END
     ELSE
-        ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input[@checked]    timeout=50ms
+        ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]/../input[@checked]    timeout=50ms
         IF    not ${merchant_offer_is_already_selected}
             TRY
-                Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+                Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]
                 Wait For Request
                 TRY
                     Repeat Keyword    3    Wait For Load State
@@ -573,10 +575,10 @@ Yves: select xxx merchant's offer with price:
                 EXCEPT
                     Log    Page is not loaded
                 END
-                Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
+                Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
             EXCEPT
                 Reload
-                ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input[@checked]    timeout=50ms
+                ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]/../input[@checked]    timeout=50ms
                 IF    not ${merchant_offer_is_already_selected}
                     TRY
                         Repeat Keyword    3    Wait For Load State
@@ -584,7 +586,7 @@ Yves: select xxx merchant's offer with price:
                     EXCEPT
                         Log    Page is not loaded
                     END
-                    Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]
+                    Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]
                     Wait For Request
                     TRY
                         Repeat Keyword    3    Wait For Load State
@@ -593,7 +595,7 @@ Yves: select xxx merchant's offer with price:
                         Log    Page is not loaded
                     END
                 END
-                Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'offer-item')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
+                Wait For Elements State    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price'][contains(.,'${price}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]/../input    state=checked    timeout=3s
             END
         END
     END
@@ -612,13 +614,14 @@ Yves: merchant's offer/product price should be:
 
 Yves: merchant is (not) displaying in Sold By section of PDP:
     [Arguments]    ${merchantName}    ${condition}
+    ${merchant_cls}=    Set Variable    ${merchant_product_class}[${env}]
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     TRY
-        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(@data-qa,'merchant-product')]//*[contains(text(),'${merchantName}')]     ${condition}    4    10s
+        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//div[contains(@class,'${merchant_cls}')]//*[contains(text(),'${merchantName}')]     ${condition}    4    10s
     EXCEPT
         Trigger multistore p&s
         ${currentURL}=    Get Url
-        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(@data-qa,'merchant-product')]//*[contains(text(),'${merchantName}')]     ${condition}    6    10s
+        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//div[contains(@class,'${merchant_cls}')]//*[contains(text(),'${merchantName}')]     ${condition}    6    10s
     END
 
 Yves: select random varian if variant selector is available

@@ -21,7 +21,7 @@ Multistore_Product_Offer
     ...    AND    Zed: create dynamic merchant user:    Spryker
     ...    AND    Zed: create dynamic merchant user:    Video King
     MP: login on MP with provided credentials:    ${dynamic_king_merchant}
-    MP: open navigation menu tab:    Products    
+    MP: open navigation menu tab:    Products
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
     ...    || product sku            | product name               | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
@@ -37,7 +37,7 @@ Multistore_Product_Offer
     MP: fill product price values:
     ...    || product type | row number  | store | currency | gross default | gross original ||
     ...    || abstract     | 2           | AT    | EUR      | 300           | 90             ||
-    MP: save abstract product 
+    MP: save abstract product
     Trigger multistore p&s
     MP: click on a table row that contains:    multistoreProduct${random}
     MP: open concrete drawer by SKU:    multistoreSKU${random}-1
@@ -54,11 +54,11 @@ Multistore_Product_Offer
     MP: save concrete product
     Trigger multistore p&s
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to second navigation item level:    Catalog    Products
     Zed: click Action Button in a table for row that contains:     multistoreProduct${random}     Approve
     Zed: save abstract product:    multistoreProduct${random}
     Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}  
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: product price on the PDP should be:    €50.00    wait_for_p&s=true
@@ -90,16 +90,16 @@ Multistore_Product_Offer
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
-    Yves: product price on the PDP should be:    €55.00    wait_for_p&s=true
+    Yves: product price on the PDP should be:    €10.00   wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
-    Yves: merchant's offer/product price should be:    Spryker    €10.00
+    Yves: merchant's offer/product price should be:    Video King    €55.00
     MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
     MP: open navigation menu tab:    Offers
     MP: perform search by:    multistoreSKU${random}-1
     MP: click on a table row that contains:    multistoreSKU${random}-1
     MP: fill offer fields:
     ...    || is active | unselect store ||
-    ...    || true      | AT             ||         
+    ...    || true      | AT             ||
     MP: save offer
     Repeat Keyword    3    Trigger multistore p&s
     Yves: go to AT store 'Home' page if other store not specified:

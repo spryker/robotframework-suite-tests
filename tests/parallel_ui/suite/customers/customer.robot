@@ -23,6 +23,7 @@ Guest_User_Access_Restrictions
     Yves: logout on Yves as a customer
     Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]    ${shoppingCartIcon}
     Yves: go to PDP of the product with sku:    002
+    Yves: select xxx merchant's offer:    Spryker
     Yves: PDP contains/doesn't contain:     true    ${pdpPriceLocator}    ${addToCartButton}
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
@@ -165,6 +166,7 @@ Share_Shopping_Lists
     Yves: the following shopping list is shown:    shoppingListName=shareShoppingList+${random}    shoppingListOwner=Share${random} List${random}    shoppingListAccess=Full access
     Yves: share shopping list with user:    shoppingListName=shareShoppingList+${random}    customer=Receive${random} List${random}    accessLevel=Full access
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping list:    shareShoppingList+${random}
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: select xxx merchant's offer:    Budget Cameras
@@ -182,7 +184,7 @@ Share_Shopping_Lists
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Budget Cameras
-    [Teardown]    Run Keywords    Close Current Context    
+    [Teardown]    Run Keywords    Close Current Context
 
 Share_Shopping_Carts
     [Tags]    cart    spryker-core    acl    customer-account-management    customer-access   shared-carts    multiple-carts    checkout
@@ -366,6 +368,7 @@ Shopping_List_Contains_Offers
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: create new 'Shopping List' with name:    shoppingListName${random}
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping list:    shoppingListName${random}
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: select xxx merchant's offer:    Budget Cameras

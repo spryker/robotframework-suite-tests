@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_one    catalog    product    search    spryker-core-back-office    spryker-core    cart    
+Test Tags    robot:recursive-stop-on-failure    group_one    catalog    product    search    spryker-core-back-office    spryker-core    cart
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/steps/header_steps.robot
 Resource    ../../../../resources/common/common_yves.robot
@@ -50,7 +50,8 @@ Product_PDP
     Yves: PDP contains/doesn't contain:    false    ${pdp_add_to_wishlist_button}
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    135
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}   ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${pdp_add_to_wishlist_button}    ${relatedProducts}
+    Yves: PDP contains/doesn't contain:    false    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]
     Yves: change variant of the product on PDP on:    Flash
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]    ${pdp_gift_wrapping_option}[${env}]     ${pdp_add_to_wishlist_button}    ${relatedProducts}
 
@@ -98,7 +99,7 @@ Catalog_Actions
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Volume_Prices
-    [Tags]    prices   
+    [Tags]    prices
     [Documentation]    Checks that volume prices are applied in cart
     [Setup]    Run keywords    Zed: check and restore product availability in Zed:    ${volume_prices_product_abstract_sku}    Available    ${volume_prices_product_concrete_sku}
     ...    AND    Trigger p&s
@@ -107,6 +108,7 @@ Volume_Prices
     ...    AND    Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
     Yves: go to PDP of the product with sku:    ${volume_prices_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+    Yves: select xxx merchant's offer:    Spryker
     Yves: change quantity on PDP:    5
     Yves: product price on the PDP should be:    €16.50
     Yves: add product to the shopping cart
@@ -209,7 +211,7 @@ Product_Bundles
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Back_in_Stock_Notification
-    [Tags]    availability-notification    mailing-notifications    
+    [Tags]    availability-notification    mailing-notifications
     [Documentation]    Back in stock notification is sent and availability check
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
@@ -339,7 +341,7 @@ Manage_Product
     ...    AND    Yves: check if cart is not empty and clear it
 
 Product_Original_Price
-    [Tags]    prices    
+    [Tags]    prices
     [Documentation]    checks that Original price is displayed on the PDP and in Catalog
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: start new abstract product creation:

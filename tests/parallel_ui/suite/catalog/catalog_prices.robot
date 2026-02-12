@@ -21,6 +21,7 @@ Volume_Prices
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${volume_prices_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+    Yves: select xxx merchant's offer:    Spryker
     Yves: change quantity on PDP:    5
     Yves: product price on the PDP should be:    €16.50
     Yves: add product to the shopping cart
@@ -69,7 +70,7 @@ Product_Original_Price
     ...    || productAbstract         | name de                        ||
     ...    || zedOriginalSKU${random} | zedOriginalSKU${random} forced ||
     Trigger multistore p&s
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to second navigation item level:    Catalog    Products
     Zed: click Action Button in a table for row that contains:     zedOriginalSKU${random}     Approve
     Trigger p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}

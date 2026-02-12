@@ -3,7 +3,7 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_one    spryker-core    cart    checkout    order-management    acl    customer-account-management    customer-access   
+Test Tags    robot:recursive-stop-on-failure    group_one    spryker-core    cart    checkout    order-management    acl    customer-account-management    customer-access
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
@@ -22,7 +22,7 @@ Login_during_checkout
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
-    Yves: go to shopping cart page  
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: proceed as a guest user and login during checkout:   ${dynamic_customer}
     Yves: fill in the following new shipping address:
@@ -45,7 +45,7 @@ Register_during_checkout
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
     Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
-    Yves: go to shopping cart page  
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    Kj${random_str_password}!0${random_id_password}    Kj${random_str_password}!0${random_id_password}
     Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
@@ -165,16 +165,19 @@ Request_for_Quote
     [Teardown]    Delete dynamic admin user from DB
 
 Split_Delivery
-    [Tags]    smoke    shipment    
+    [Tags]    smoke    shipment
     [Documentation]    Checks split delivery in checkout
     [Setup]    Run Keywords    Create dynamic customer in DB    based_on=${yves_user_email}
     ...    AND    Create dynamic admin user in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    007
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    005
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    012
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
@@ -212,6 +215,7 @@ Checkout_Address_Management
     ...    AND    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${available_never_out_of_stock_abstract_sku}
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
@@ -300,7 +304,7 @@ Multiple_Merchants_Order
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
     [Teardown]    Delete dynamic admin user from DB
-    
+
 Unique_URL
     [Tags]    dms-on    shared-carts
     [Documentation]    Bug: https://spryker.atlassian.net/browse/CC-12380
@@ -337,7 +341,7 @@ Comments_in_Cart
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Yves: go to order details page to check comment:    abc${random}    ${lastPlacedOrder}
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}    
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: check comment appears at order detailed page in zed:    abc${random}    ${lastPlacedOrder}
     [Teardown]    Delete dynamic admin user from DB
 
@@ -350,9 +354,9 @@ Comment_Management_in_the_Cart
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
     Yves: add comment on cart:    abc${random}
-    Yves: check comments are visible or not in cart:    true    abc${random}    
+    Yves: check comments are visible or not in cart:    true    abc${random}
     Yves: edit comment on cart:    xyz${random}
-    Yves: check comments are visible or not in cart:    true    xyz${random}    
+    Yves: check comments are visible or not in cart:    true    xyz${random}
     Yves: delete comment on cart
     Yves: check comments are visible or not in cart:    false    xyz${random}
 

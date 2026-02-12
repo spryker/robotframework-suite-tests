@@ -31,6 +31,7 @@ Agent_Assist
     ...    || salutation | first name                       | last name                        | email               ||
     ...    || Mr.        | DynamicCustomerForAgent${random} | DynamicCustomerForAgent${random} | ${dynamic_customer} ||
     Yves: go to PDP of the product with sku:    ${available_never_out_of_stock_abstract_sku}
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
@@ -55,7 +56,7 @@ User_Control
     Zed: apply access permissions for user role:    ${full_access}    ${full_access}    ${full_access}   ${permission_allow}
     Zed: apply access permissions for user role:    ${bundle_access}    ${controller_access}    ${action_access}    ${permission_deny}
     Zed: create new group with role assigned:   controlGroup${random}    controlRole${random}
-    Zed: create new Zed user with the following data:    sonia+control${random}@spryker.com   ${default_secure_password}    First Control    Last Control    ControlGroup${random}    This user is an agent in Storefront    en_US    
+    Zed: create new Zed user with the following data:    sonia+control${random}@spryker.com   ${default_secure_password}    First Control    Last Control    ControlGroup${random}    This user is an agent in Storefront    en_US
     Zed: login on Zed with provided credentials:   sonia+control${random}@spryker.com    ${default_secure_password}
     Zed: go to second navigation item level:    Catalog    Attributes
     Zed: click button in Header:    Create Product Attribute
