@@ -83,6 +83,7 @@ Share_Shopping_Carts
     Yves: the following shopping cart is shown:    shoppingCartName+${random}    Owner access
     Yves: share shopping cart with user:    shoppingCartName+${random}    Cart${random} Receive${random}    Full access
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
+    Yves: select xxx merchant's offer:    Spryker
     Yves: change quantity on PDP:    2
     Yves: add product to the shopping cart
     Yves: select xxx merchant's offer:    Computer Experts

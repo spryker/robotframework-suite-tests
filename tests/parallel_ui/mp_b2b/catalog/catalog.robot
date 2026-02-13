@@ -77,6 +77,7 @@ Volume_Prices
     ...    AND    Zed: check and restore product availability in Zed:    ${volume_prices_product_abstract_sku}    Available    ${volume_prices_product_concrete_sku}    ${dynamic_admin_user}
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${volume_prices_product_abstract_sku}
+    Yves: select xxx merchant's offer:    Spryker
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity on PDP:    5
     Yves: product price on the PDP should be:    €4.20
@@ -103,6 +104,7 @@ Measurement_Units
     [Setup]    Create dynamic customer in DB
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    M23723
+    Yves: select xxx merchant's offer:    Spryker
     Yves: select the following 'Sales Unit' on PDP:    Meter
     Yves: change quantity using '+' or '-' button № times:    +    1
     Yves: PDP contains/doesn't contain:    true    ${measurementUnitSuggestion}
@@ -128,6 +130,7 @@ Packaging_Units
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    M21766
     Yves: change variant of the product on PDP on:    Box
+    Yves: select xxx merchant's offer:    Spryker
     Yves: change amount on PDP:    51
     Yves: PDP contains/doesn't contain:    true    ${packagingUnitSuggestion}
     Yves: change amount on PDP:    10
@@ -234,7 +237,7 @@ Back_in_Stock_Notification
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    false
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
+    Yves: try reloading page if element is/not appear:    ${pdp_add_to_cart_disabled_button}    True
     Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    false
     Yves: submit back in stock notification request for email:    ${dynamic_customer}
     Yves: unsubscribe from availability notifications
@@ -243,7 +246,7 @@ Back_in_Stock_Notification
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
-    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+    Yves: try reloading page if element is/not appear:    ${pdp_add_to_cart_disabled_button}    False
     Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    true
     [Teardown]    Run keywords    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}    ${dynamic_admin_user}
     ...    AND    Delete dynamic admin user from DB
