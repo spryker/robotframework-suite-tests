@@ -19,7 +19,7 @@ Guest_User_Access_Restrictions
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}[${env}]     ${quickOrderIcon}    ${accountIcon}    ${shopping_list_icon_header_menu_item}[${env}]    ${shoppingCartIcon}
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku} 
+    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: PDP contains/doesn't contain:     false    ${pdpPriceLocator}    ${addToCartButton}
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: header contains/doesn't contain:    true    ${priceModeSwitcher}    ${currencySwitcher}[${env}]    ${quickOrderIcon}    ${accountIcon}    ${shopping_list_icon_header_menu_item}[${env}]    ${shoppingCartIcon}
@@ -40,7 +40,9 @@ Share_Shopping_Lists
     Yves: the following shopping list is shown:    shoppingListName=shareShoppingList+${random}    shoppingListOwner=Share${random} List${random}    shoppingListAccess=Full access
     Yves: share shopping list with user:    shoppingListName=shareShoppingList+${random}    customer=Receive${random} List${random}    accessLevel=Full access
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping list:    shareShoppingList+${random}
+    Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
     Yves: select xxx merchant's offer:    Computer Experts
     Yves: add product to the shopping list:    shareShoppingList+${random}
     Create New Context
@@ -53,7 +55,7 @@ Share_Shopping_Lists
     Yves: view shopping list with name:    shareShoppingList+${random}
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
-    Yves: add all available products from list to cart  
+    Yves: add all available products from list to cart
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
@@ -61,7 +63,7 @@ Share_Shopping_Lists
 
 Share_Shopping_Carts
     [Documentation]    Checks that cart can be shared and used for checkout
-    [Setup]    Run Keywords    
+    [Setup]    Run Keywords
     ...    Create dynamic admin user in DB
     ...    AND    Create dynamic customer in DB    based_on=${yves_company_user_shared_permission_owner_email}    email=sonia+sharecart${random}@spryker.com    first_name=Share${random}    last_name=Cart${random}
     ...    AND    Create dynamic customer in DB    based_on=${yves_company_user_shared_permission_receiver_email}    email=sonia+receivecart${random}@spryker.com    first_name=Receive${random}    last_name=Cart${random}
@@ -70,7 +72,7 @@ Share_Shopping_Carts
     ...    AND    MP: change offer stock:
     ...    || offer    | stock quantity | is never out of stock ||
     ...    || offer395 | 10             | true                  ||
-    Trigger p&s      
+    Trigger p&s
     Yves: login on Yves with provided credentials:    sonia+sharecart${random}@spryker.com
     Yves: go to 'Shopping Carts' page through the header
     Yves: 'Shopping Carts' page is displayed
