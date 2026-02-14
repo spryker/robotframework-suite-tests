@@ -34,8 +34,8 @@ Fulfill_Order_from_Merchant_Portal
     ...    AND    Trigger p&s
     ...    AND    Deactivate all discounts in the database
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: select xxx merchant's offer:    Spryker
     Yves: go to PDP of the product with sku:     ${product_with_multiple_offers_abstract_sku}
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: select xxx merchant's offer:    Computer Experts
     Yves: add product to the shopping cart

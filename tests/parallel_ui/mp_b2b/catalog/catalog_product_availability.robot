@@ -99,7 +99,7 @@ Product_Availability_Calculation
     Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
     Yves: go to PDP of the product with sku:     availabilitySKU${random}    wait_for_p&s=true
-    Yves: try reloading page if element is/not appear:    ${pdp_add_to_cart_disabled_button}    False
+    Yves: try reloading page if element is/not appear:    ${pdp_product_is_out_of_stock}    False
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: update warehouse:
     ...    || warehouse                                         | unselect store ||
@@ -107,7 +107,7 @@ Product_Availability_Calculation
     Trigger multistore p&s
     Yves: go to AT store 'Home' page if other store not specified:
     Yves: go to PDP of the product with sku:     availabilitySKU${random}
-    Yves: try reloading page if element is/not appear:    ${pdp_add_to_cart_disabled_button}    True
+    Yves: try reloading page if element is/not appear:    ${pdp_product_is_out_of_stock}    True
     [Teardown]    Run Keywords    Should Test Run
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Catalog    Products
