@@ -71,7 +71,7 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
     Yves: merchant's offer/product price should be:    Office King    €200.00
     Yves: select xxx merchant's offer:    Office King
-    Yves: try reloading page if element is/not appear:    ${pdp_product_is_out_of_stock}    False
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity on PDP:    2
     Yves: product price on the PDP should be:    €10.00
     Yves: merchant's offer/product price should be:    Office King     €10.00

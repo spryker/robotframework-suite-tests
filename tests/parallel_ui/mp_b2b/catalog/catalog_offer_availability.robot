@@ -83,7 +83,7 @@ Offer_Availability_Calculation
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: merchant's offer/product price should be:    Spryker    €200.00
     Yves: select xxx merchant's offer:    Spryker
-    Yves: try reloading page if element is/not appear:    ${pdp_product_is_out_of_stock}    False
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity using '+' or '-' button № times:    +    5
     Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 5.
     Yves: change quantity using '+' or '-' button № times:    +    2

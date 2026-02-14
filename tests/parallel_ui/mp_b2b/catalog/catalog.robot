@@ -78,7 +78,7 @@ Volume_Prices
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${volume_prices_product_abstract_sku}
     Yves: select xxx merchant's offer:    Spryker
-    Yves: try reloading page if element is/not appear:    ${pdp_product_is_out_of_stock}    False
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity on PDP:    5
     Yves: product price on the PDP should be:    €4.20
     Yves: add product to the shopping cart
@@ -237,7 +237,7 @@ Back_in_Stock_Notification
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    false
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
-    Yves: try reloading page if element is/not appear:    ${pdp_product_is_out_of_stock}    True
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    True
     Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    false
     Yves: submit back in stock notification request for email:    ${dynamic_customer}
     Yves: unsubscribe from availability notifications
@@ -246,7 +246,7 @@ Back_in_Stock_Notification
     Zed: check if product is/not in stock:    ${stock_product_abstract_sku}    true
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:  ${stock_product_abstract_sku}
-    Yves: try reloading page if element is/not appear:    ${pdp_product_is_out_of_stock}    False
+    Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    true
     [Teardown]    Run keywords    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}    ${dynamic_admin_user}
     ...    AND    Delete dynamic admin user from DB
