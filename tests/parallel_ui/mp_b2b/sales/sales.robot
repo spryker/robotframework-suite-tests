@@ -25,6 +25,7 @@ Return_Management
     Yves: go to PDP of the product with sku:    M90802
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    M21711
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    M90737
     Yves: add product to the shopping cart

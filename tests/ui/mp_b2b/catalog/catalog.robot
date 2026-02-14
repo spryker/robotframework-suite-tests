@@ -107,6 +107,7 @@ Volume_Prices
     ...    AND    Yves: create new 'Shopping Cart' with name:    VolumePriceCart+${random}
     Yves: go to PDP of the product with sku:    ${volume_prices_product_abstract_sku}
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
+    Yves: select xxx merchant's offer:    Spryker
     Yves: change quantity on PDP:    5
     Yves: product price on the PDP should be:    €4.20
     Yves: add product to the shopping cart
@@ -220,7 +221,8 @@ Product_PDP
     Yves: PDP contains/doesn't contain:    false    ${pdpPriceLocator}   ${addToCartButton}
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: go to PDP of the product with sku:    ${multi_variant_product_abstract_sku}
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_limited_warranty_option}[${env}]    ${pdp_insurance_coverage_option}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}
+    Yves: PDP contains/doesn't contain:    false    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]    ${pdp_insurance_coverage_option}
     Yves: change variant of the product on PDP on:    500 x 930 x 400
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]     ${pdp_insurance_coverage_option}
 

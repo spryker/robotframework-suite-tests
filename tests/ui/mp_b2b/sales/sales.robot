@@ -123,10 +123,13 @@ Refunds
     ...    AND    Yves: login on Yves with provided credentials:    ${yves_company_user_buyer_email}
     ...    AND    Yves: create new 'Shopping Cart' with name:    refunds+${random}
     Yves: go to PDP of the product with sku:    ${one_variant_product_of_main_merchant_abstract_sku}
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    ${multi_color_product_abstract_sku}
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    ${product_with_relations_related_products_sku}
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: go to the shopping cart through the header with name:    refunds+${random}
     Yves: click on the 'Checkout' button in the shopping cart

@@ -92,9 +92,9 @@ Multistore_Product_Offer
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Office King    true
-    Yves: product price on the PDP should be:    €55.00    wait_for_p&s=true
+    Yves: product price on the PDP should be:    €10.00   wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
-    Yves: merchant's offer/product price should be:    Spryker    €10.00
+    Yves: merchant's offer/product price should be:    Office King    €55.00
     MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
     MP: open navigation menu tab:    Offers
     MP: perform search by:    multistoreSKU${random}-1

@@ -35,6 +35,7 @@ Fulfill_Order_from_Merchant_Portal
     ...    AND    Deactivate all discounts in the database
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     ${product_with_multiple_offers_abstract_sku}
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: select xxx merchant's offer:    Computer Experts
     Yves: add product to the shopping cart
@@ -49,7 +50,7 @@ Fulfill_Order_from_Merchant_Portal
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: billing address same as shipping address:    true
     Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
-    Yves: select the following shipping method for the shipment:    1    DHL    Standard    
+    Yves: select the following shipping method for the shipment:    1    DHL    Standard
     Yves: select the following shipping method for the shipment:    2    Hermes    Same Day
     Yves: select the following shipping method for the shipment:    3    Hermes    Next Day
     Yves: submit form on the checkout
@@ -60,10 +61,10 @@ Fulfill_Order_from_Merchant_Portal
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
-    Zed: trigger all matching states inside this order:    Pay 
+    Zed: trigger all matching states inside this order:    Pay
     Zed: wait for order item to be in state:    ${product_with_multiple_offers_concrete_sku}    sent to merchant    2
     MP: login on MP with provided credentials:    ${dynamic_king_merchant}
-    MP: open navigation menu tab:    Orders    
+    MP: open navigation menu tab:    Orders
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_office_king_reference}
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_office_king_reference}
     MP: order grand total should be:    €32.78

@@ -41,13 +41,14 @@ Shopping_List_Contains_Offers
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: create new 'Shopping List' with name:    shoppingListName${random}
     Yves: go to PDP of the product with sku:    ${product_with_multiple_offers_abstract_sku}
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping list:    shoppingListName${random}
     Yves: select xxx merchant's offer:    Computer Experts
     Yves: add product to the shopping list:    shoppingListName${random}
     Yves: view shopping list with name:    shoppingListName${random}
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
-    Yves: add all available products from list to cart  
+    Yves: add all available products from list to cart
     Yves: 'Shopping Cart' page is displayed
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Spryker
     Yves: assert merchant of product in cart or list:    ${product_with_multiple_offers_concrete_sku}    Computer Experts
@@ -100,7 +101,7 @@ Merchant_Portal_My_Account
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: delete Zed user with the following email:    sonia+editmu+${random}@spryker.com
     ...    AND    Delete dynamic admin user from DB
-    
+
 Merchant_Portal_Dashboard
     [Documentation]    Checks that merchant user is able to access the dashboard page
     Create dynamic admin user in DB
@@ -132,7 +133,7 @@ Merchant_Product_Offer_in_Backoffice
     ...    AND    Zed: create dynamic merchant user:    Spryker
     ...    AND    Zed: create dynamic merchant user:    Office King
     MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
-    MP: open navigation menu tab:    Products    
+    MP: open navigation menu tab:    Products
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
     ...    || product sku      | product name         | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
@@ -145,14 +146,14 @@ Merchant_Product_Offer_in_Backoffice
     MP: fill product price values:
     ...    || product type | row number | store | currency | gross default ||
     ...    || abstract     | 1          | DE    | EUR      | 100           ||
-    MP: save abstract product 
+    MP: save abstract product
     MP: click on a table row that contains:    ViewProduct${random}
     MP: open concrete drawer by SKU:    ViewSKU${random}-2
     MP: fill concrete product fields:
     ...    || is active | stock quantity | use abstract name | searchability ||
     ...    || true      | 100            | true              | en_US         ||
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to second navigation item level:    Catalog    Products
     Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Approve
     MP: login on MP with provided credentials:    ${dynamic_king_merchant}
     MP: open navigation menu tab:    Offers
@@ -184,6 +185,6 @@ Merchant_Product_Offer_in_Backoffice
     ...    || approval status | status | store | sku                | name                 | merchant    | merchant sku             ||
     ...    || Approved        | Active | DE    | ViewSKU${random}-2 | ViewProduct${random} | Office King | viewMerchantSKU${random} ||
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    ...    AND    Zed: go to second navigation item level:    Catalog    Products
     ...    AND    Zed: click Action Button in a table for row that contains:     ViewProduct${random}     Deny
     ...    AND    Delete dynamic admin user from DB

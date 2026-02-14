@@ -17,10 +17,13 @@ Manage_Shipments
     ...    AND    Deactivate all discounts in the database
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    420575
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    420836
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: go to PDP of the product with sku:    420845
+    Yves: select xxx merchant's offer:    Spryker
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
