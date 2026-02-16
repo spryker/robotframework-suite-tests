@@ -4,14 +4,15 @@ Resource    ../pages/zed/zed_login_page.robot
 Resource    ../pages/zed/zed_edit_product_page.robot
 
 *** Variables ***
-${zed_log_out_button}   xpath=//ul[@class='nav navbar-top-links navbar-right']//a[contains(@href,'logout')]
+${backoffice-user-navigation-toggler}   xpath=//a[@data-qa='backoffice-user-navigation']
+${zed_log_out_button}   xpath=//a[@data-qa='backoffice-logout-button']
 ${zed_save_button}      xpath=//input[contains(@class,'safe-submit')]
 ${zed_success_flash_message}    xpath=//div[@class='flash-messages']/div[@class='alert alert-success']
 ${zed_error_flash_message}    xpath=//div[@class='flash-messages']/div[@class='alert alert-danger']
 ${zed_info_flash_message}   [data-qa='alert-documentation-generation-in-progress']
 ${zed_error_message}    xpath=//div[@class='alert alert-danger']
 ${zed_table_locator}    xpath=//table[contains(@class,'dataTable')]/tbody
-${zed_search_field_locator}     xpath=//div[@class='dataTables_filter']//input[@type='search']
+${zed_search_field_locator}     xpath=//input[@id='dt-search-0']
 ${zed_variant_search_field_locator}     xpath=//*[@id='product-variant-table_filter']//input[@type='search']
 ${zed_processing_block_locator}     xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')]
 ${zed_merchants_dropdown_locator}    xpath=//select[@name='id-merchant']
@@ -94,7 +95,7 @@ Zed: login on Zed with provided credentials:
     END
     TRY
         Repeat Keyword    3    Wait For Load State
-        Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=15s
+        Wait Until Element Is Visible    ${backoffice-user-navigation-toggler}    Zed: Login failed!    timeout=15s
     EXCEPT
         TRY
             LocalStorage Clear
