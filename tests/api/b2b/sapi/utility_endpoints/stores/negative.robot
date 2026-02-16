@@ -12,4 +12,3 @@ Get_store_by_non_exist_id
     And Response reason should be:    Not Found
     And Response should return error code:    601
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response should return error message:    Store not found

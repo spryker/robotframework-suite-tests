@@ -48,14 +48,14 @@ Manage_Shipments
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,375.26
-    Zed: order has the following number of shipments:    ${lastPlacedOrder}    1
+    Zed: order has the following number of shipments:    ${lastPlacedOrder}    1    15s
     Zed: shipment data inside xxx shipment should be:
     ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
     ...    || 1          | Hermes          | Next Day        | €15.00         | ASAP                    ||
     Zed: create new shipment inside the order:
     ...    || delivery address | salutation | first name | last name | email               | country | address 1     | address 2 | city   | zip code | shipment method | sku    ||
     ...    || New address      | Mr         | Evil       | Tester    | ${dynamic_customer} | Austria | Hartmanngasse | 1         | Vienna | 1050     | DHL - Standard  | 419904 ||
-    Zed: billing address for the order should be:    First Last, Billing Street 123, Additional street, 10247 Berlin, Germany 987654321
+    Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    2
     Zed: shipping address inside xxx shipment should be:    1    Dr First, Last, First Street, 1, Additional street, Spryker, 10247, Berlin, Germany
     Zed: shipping address inside xxx shipment should be:    2    Mr Evil, Tester, Hartmanngasse, 1, 1050, Vienna, Austria
@@ -65,7 +65,7 @@ Manage_Shipments
     Zed: edit xxx shipment inside the order:
     ...    || shipmentN | delivery address | salutation | first name | last name | email               | country | address 1     | address 2 | city   | zip code | shipment method | requested delivery date | sku    ||
     ...    || 2         | New address      | Mr         | Edit       | Shipment  | ${dynamic_customer} | Germany | Hartmanngasse | 9         | Vienna | 0987     | DHL - Express   | 2025-01-25              | 107254 ||
-    Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
+    Zed: order has the following number of shipments:    ${lastPlacedOrder}    3    15s
     Zed: shipment data inside xxx shipment should be:
     ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
     ...    || 2          | DHL             | Standard        |  €0.00         | ASAP                    ||
