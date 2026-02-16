@@ -21,7 +21,7 @@ Merchant_Portal_Offer_Volume_Prices
     ...    AND    Zed: create dynamic merchant user:    Spryker
     Trigger multistore p&s
     MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
-    MP: open navigation menu tab:    Products    
+    MP: open navigation menu tab:    Products
     MP: click on create new entity button:    Create Product
     MP: create multi sku product with following data:
     ...    || product sku       | product name             | first attribute name | first attribute first value | first attribute second value | second attribute name | second attribute value ||
@@ -34,7 +34,7 @@ Merchant_Portal_Offer_Volume_Prices
     MP: fill product price values:
     ...    || product type | row number | customer | store | currency | gross default ||
     ...    || abstract     | 1          | Default  | DE    | EUR      | 100           ||
-    MP: save abstract product 
+    MP: save abstract product
     Trigger p&s
     MP: click on a table row that contains:    OfferNewProduct${random}
     MP: open concrete drawer by SKU:    OfferSKU${random}-2
@@ -43,11 +43,11 @@ Merchant_Portal_Offer_Volume_Prices
     ...    || true      | 100            | true              | en_US         ||
     Trigger p&s
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: go to second navigation item level:    Catalog    Products 
+    Zed: go to second navigation item level:    Catalog    Products
     Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Approve
     Zed: save abstract product:    OfferNewProduct${random}
     Trigger p&s
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}  
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     OfferSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     MP: login on MP with provided credentials:    ${dynamic_king_merchant}
@@ -96,6 +96,6 @@ Merchant_Portal_Offer_Volume_Prices
     Yves: go to shopping cart page
     Yves: shopping cart contains product with unit price:    OfferSKU${random}-2    OfferNewProduct${random}    200
     [Teardown]    Run Keywords    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    ...    AND    Zed: go to second navigation item level:    Catalog    Products 
+    ...    AND    Zed: go to second navigation item level:    Catalog    Products
     ...    AND    Zed: click Action Button in a table for row that contains:     OfferNewProduct${random}     Deny
     ...    AND    Delete dynamic admin user from DB
