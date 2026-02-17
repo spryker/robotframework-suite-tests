@@ -13,7 +13,7 @@ ${zed_info_flash_message}   [data-qa='alert-documentation-generation-in-progress
 ${zed_error_message}    xpath=//div[@class='alert alert-danger']
 ${zed_table_locator}    xpath=//table[contains(@class,'dataTable')]/tbody
 ${zed_search_field_locator}     xpath=//input[@id='dt-search-0']
-${zed_variant_search_field_locator}     xpath=//*[@id='product-variant-table_filter']//input[@type='search']
+${zed_variant_search_field_locator}     xpath=//div[@id='product-variant-table_wrapper']//input[@id='dt-search-0']
 ${zed_processing_block_locator}     xpath=//div[contains(@id,'processing')][contains(@class,'dataTables_processing')]
 ${zed_merchants_dropdown_locator}    xpath=//select[@name='id-merchant']
 ${zed_attribute_access_denied_header}    [data-qa='access-denied-title']
@@ -116,7 +116,7 @@ Zed: login on Zed with provided credentials:
         Type Text    ${zed_user_name_field}    ${email}
         Type Text    ${zed_password_field}    ${password}
         Click    ${zed_login_button}
-        Wait Until Element Is Visible    ${zed_log_out_button}    Zed: Login failed!    timeout=15s
+        Wait Until Element Is Visible    ${backoffice-user-navigation-toggler}    Zed: Login failed!    timeout=15s
     END
 
 Zed: login with deactivated user/invalid data:
@@ -140,8 +140,8 @@ Zed: login with deactivated user/invalid data:
 Zed: go to first navigation item level:
     [Documentation]     example: "Zed: Go to First Navigation Item Level  Customers"
     [Arguments]     ${navigation_item}
-    Wait Until Page Contains Element    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
-    Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
+    Wait Until Page Contains Element    xpath=//*[@data-qa='menu-item-label'][contains(text(),'${navigation_item}')]/../../a
+    Click Element by xpath with JavaScript    //*[@data-qa='menu-item-label'][contains(text(),'${navigation_item}')]/../../a
     TRY
         Repeat Keyword    3    Wait For Load State
     EXCEPT
@@ -172,18 +172,18 @@ Zed: go to first navigation item level:
 Zed: go to second navigation item level:
     [Documentation]     example: "Zed: Go to Second Navigation Item Level    Customers    Customer Access"
     [Arguments]     ${navigation_item_level1}   ${navigation_item_level2}
-    ${node_state}=    Get Element Attribute  xpath=(//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li)[1]    class
+    ${node_state}=    Get Element Attribute  xpath=(//span[contains(@data-qa,'menu-item-label')][text()='${navigation_item_level1}']/ancestor::li)[1]    class
     IF    'active' in '${node_state}'
-        wait until element is visible  xpath=(//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}'])[1]
-        Click Element by xpath with JavaScript    (//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}'])[1]
+        wait until element is visible  xpath=(//ul[contains(@data-qa,'menu-submenu')]//a/span[text()='${navigation_item_level2}'])[1]
+        Click Element by xpath with JavaScript    (//span[contains(@data-qa,'menu-item-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@data-qa,'menu-submenu')]//a/span[text()='${navigation_item_level2}'])[1]
         TRY
             Repeat Keyword    3    Wait For Load State
         EXCEPT
             Log    Page is not loaded
         END
     ELSE
-        Scroll Element Into View    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
-        Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
+        Scroll Element Into View    xpath=//*[@data-qa='menu-item-label'][contains(text(),'${navigation_item_level1}')]/../../a
+        Click Element by xpath with JavaScript    //*[@data-qa='menu-item-label'][contains(text(),'${navigation_item_level1}')]/../../a
         TRY
             Repeat Keyword    3    Wait For Load State
             Wait For Load State    domcontentloaded
@@ -195,7 +195,7 @@ Zed: go to second navigation item level:
         Restore Automatic Screenshots on Failure
         IF    '${node_expanded}'=='False'
             Reload
-            Click    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item_level1}')]/../../a
+            Click    xpath=//*[@data-qa='menu-item-label'][contains(text(),'${navigation_item_level1}')]/../../a
             TRY
                 Repeat Keyword    3    Wait For Load State
             EXCEPT
@@ -234,12 +234,12 @@ Zed: go to second navigation item level:
 
 Zed: click button in Header:
     [Arguments]    ${button_name}
-    Wait Until Element Is Visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
-    Click and retry if 5xx occurred:    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
+    Wait Until Element Is Visible    xpath=//div[@data-qa='title-action']/a[contains(.,'${button_name}')]
+    Click and retry if 5xx occurred:    xpath=//div[@data-qa='title-action']/a[contains(.,'${button_name}')]
 
 Zed: wait for button in Header to be visible:
     [Arguments]    ${button_name}    ${timeout}
-    Wait until element is visible    xpath=//div[@class='title-action']/a[contains(.,'${button_name}')]
+    Wait until element is visible    xpath=//div[@data-qa='title-action']/a[contains(.,'${button_name}')]
 
 Zed: click Action Button in a table for row that contains:
     [Arguments]    ${row_content}    ${zed_table_action_button_locator}
@@ -308,7 +308,7 @@ Zed: submit the form
     EXCEPT
         Log    Page is not loaded
     END
-    Wait Until Element Is Visible    ${zed_log_out_button}
+    Wait Until Element Is Visible    ${backoffice-user-navigation-toggler}
     ${error_flash_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_flash_message}    1s
     IF    'FAIL' in $got_response
         ${page_contains_target_element}=    Run Keyword And Return Status    Page Should Contain Element    ${zed_save_button}    timeout=10ms
@@ -321,7 +321,7 @@ Zed: submit the form
         EXCEPT
             Log    Page is not loaded
         END
-        Wait Until Element Is Visible    ${zed_log_out_button}
+        Wait Until Element Is Visible    ${backoffice-user-navigation-toggler}
     END
     IF    'FAIL' in $error_flash_message
         Click    ${zed_save_button}
@@ -331,7 +331,7 @@ Zed: submit the form
         EXCEPT
             Log    Page is not loaded
         END
-        Wait Until Element Is Visible    ${zed_log_out_button}
+        Wait Until Element Is Visible    ${backoffice-user-navigation-toggler}
     END
     Disable Automatic Screenshots on Failure
     ${error_message}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${zed_error_message}    1s
@@ -343,7 +343,7 @@ Zed: submit the form
         EXCEPT
             Log    Page is not loaded
         END
-        Wait Until Element Is Visible    ${zed_log_out_button}
+        Wait Until Element Is Visible    ${backoffice-user-navigation-toggler}
     END
     Page Should Not Contain Element    ${zed_error_message}    1s
     Page Should Not Contain Element    ${zed_error_flash_message}    1s
@@ -674,7 +674,7 @@ Zed: is admin user is logged in
     EXCEPT
         Log    page is not loaded
     END
-    ${adminIsLoggedIn}=    Run Keyword And Return Status    Page Should Contain Element    locator=${zed_log_out_button}    timeout=0.1s
+    ${adminIsLoggedIn}=    Run Keyword And Return Status    Page Should Contain Element    locator=${backoffice-user-navigation-toggler}    timeout=0.1s
     RETURN    ${adminIsLoggedIn}
 
 Zed: go to URL:

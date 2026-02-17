@@ -9,7 +9,7 @@ Zed: verify first navigation root menus
     ${first_navigation_count}=    Get Element Count    ${zed_first_navigation_menus_locator}
     WHILE  ${counter} <= ${first_navigation_count}
         Log    ${counter}
-        Click    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'/') and not (contains(@href,'javascript'))])[${counter}]
+        Click    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'/') and not (contains(@href,'#'))])[${counter}]
         TRY
             Repeat Keyword    3    Wait For Load State
         EXCEPT
@@ -21,7 +21,7 @@ Zed: verify first navigation root menus
         EXCEPT
             Log    Overlay is not displayed
         END
-        Wait Until Element Is Visible    locator=${zed_log_out_button}    timeout=${browser_timeout}    message=Some left navigation menu item throws an error.
+        Wait Until Element Is Visible    locator=${backoffice-user-navigation-toggler}    timeout=${browser_timeout}    message=Some left navigation menu item throws an error.
         ${counter}=    Evaluate    ${counter} + 1   
     END
 
@@ -40,21 +40,21 @@ Zed: verify second navigation root menus
     WHILE  ${counter} <= ${first_navigation_count}
         ${counter_1}=    Set Variable    1
         Log    ${counter}
-        Click Element by xpath with JavaScript    (//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]
-        Wait Until Element Is Visible    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')]/parent::li)[${counter}]    timeout=10s
-        ${second_navigation_count}=    Get Element Count    xpath=((//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]/ancestor::li//ul[contains(@class,'nav-second-level')]//a)
+        Click Element by xpath with JavaScript    (//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'#')])[${counter}]
+        Wait Until Element Is Visible    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'#')]/parent::li)[${counter}]    timeout=10s
+        ${second_navigation_count}=    Get Element Count    xpath=((//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'#')])[${counter}]/ancestor::li//ul[contains(@class,'nav-second-level')]//a)
             WHILE  ${counter_1} <= ${second_navigation_count}
-                ${node_state}=    Get Element Attribute    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')]/parent::li)[${counter}]    class
+                ${node_state}=    Get Element Attribute    xpath=(//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'#')]/parent::li)[${counter}]    class
                 log    ${node_state}
                 IF    'active' not in '${node_state}'     
-                    Click Element by xpath with JavaScript    (//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]
+                    Click Element by xpath with JavaScript    (//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'#')])[${counter}]
                     TRY
                         Repeat Keyword    3    Wait For Load State
                     EXCEPT
                         Log    Page is not loaded
                     END
                 END
-                Click Element by xpath with JavaScript    ((//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'javascript')])[${counter}]/ancestor::li//ul[contains(@class,'nav-second-level')]//a)[${counter_1}]
+                Click Element by xpath with JavaScript    ((//ul[@id='side-menu']/li/a/span[@class='nav-label']/../../a[contains(@href,'#')])[${counter}]/ancestor::li//ul[contains(@class,'nav-second-level')]//a)[${counter_1}]
                 TRY
                     Repeat Keyword    3    Wait For Load State
                 EXCEPT
@@ -64,6 +64,6 @@ Zed: verify second navigation root menus
                 Log    ${counter_1}
                 ${counter_1}=    Evaluate    ${counter_1} + 1   
             END        
-        Wait Until Element Is Visible    ${zed_log_out_button}    timeout=${browser_timeout}
+        Wait Until Element Is Visible    ${backoffice-user-navigation-toggler}    timeout=${browser_timeout}
         ${counter}=    Evaluate    ${counter} + 1  
     END

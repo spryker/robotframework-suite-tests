@@ -286,8 +286,8 @@ Zed: create a return for the following order and product in it:
         Zed: click Action Button in a table for row that contains:    ${orderID}    View
         Wait Until Page Contains Element    ${zed_order_details_main_content_locator}    message=Order details page is not loaded
     END
-    Wait Until Page Contains Element    xpath=//div[@class='title-action']/a[contains(.,'Return')]
-    Click Element by xpath with JavaScript    //div[@class='title-action']/a[contains(.,'Return')]
+    Wait Until Page Contains Element    xpath=//div[@data-qa='title-action']/a[contains(.,'Return')]
+    Click Element by xpath with JavaScript    //div[@data-qa='title-action']/a[contains(.,'Return')]
     Wait Until Page Contains Element    ${zed_create_return_main_content_locator}
     ${sku_list_count}=   get length  ${sku_list}
     FOR    ${index}    IN RANGE    0    ${sku_list_count}

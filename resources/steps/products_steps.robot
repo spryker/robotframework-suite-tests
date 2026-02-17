@@ -8,7 +8,7 @@ Resource    ../pages/zed/zed_view_concrete_product_page.robot
 *** Keywords ***
 Zed: discontinue the following product:
     [Arguments]    ${productAbstract}    ${productConcrete}
-    Wait Until Element Is Visible    ${zed_log_out_button}
+    Wait Until Element Is Visible    ${backoffice-user-navigation-toggler}
     Zed: go to URL:    /product-management
     Zed: perform search by:    ${productAbstract}
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit
@@ -204,7 +204,7 @@ Zed: view abstract product page contains:
             Element Should Contain    ${zed_view_abstract_product_name}[${env}]    ${value}
         END
         IF    '${key}'=='variants count' and '${value}' != '${EMPTY}'
-            Clear Text    xpath=//div[@id='product-variant-table_filter']//input[@type='search']
+            Clear Text    xpath=//div[@id='product-variant-table_wrapper']//input[@id='dt-search-0']
             Wait Until Element Is Visible    xpath=//table[@id='product-variant-table']//tbody/tr[1]
             ${actualVariantsCount}=    Get Element Count    xpath=//table[@id='product-variant-table']//tbody/tr
             Should Be Equal    '${actualVariantsCount}'    '${value}'
@@ -462,7 +462,7 @@ Zed: change concrete product data:
         END
         IF    '${key}'=='active' and '${value}' != '${EMPTY}'
             Disable Automatic Screenshots on Failure
-            ${is_active}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//div[@class='title-action']/a[contains(.,'Activate')]    timeout=1s
+            ${is_active}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//div[@data-qa='title-action']/a[contains(.,'Activate')]    timeout=1s
             Restore Automatic Screenshots on Failure
             IF    '${is_active}'=='True' and '${value}'=='true'
                 Zed: click button in Header:    Activate
