@@ -140,8 +140,8 @@ Zed: login with deactivated user/invalid data:
 Zed: go to first navigation item level:
     [Documentation]     example: "Zed: Go to First Navigation Item Level  Customers"
     [Arguments]     ${navigation_item}
-    Wait Until Page Contains Element    xpath=//*[@data-qa='menu-item-label'][contains(text(),'${navigation_item}')]/../../a
-    Click Element by xpath with JavaScript    //*[@data-qa='menu-item-label'][contains(text(),'${navigation_item}')]/../../a
+    Wait Until Page Contains Element    xpath=//ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
+    Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[@class='nav-label'][contains(text(),'${navigation_item}')]/../../a
     TRY
         Repeat Keyword    3    Wait For Load State
     EXCEPT
@@ -172,18 +172,19 @@ Zed: go to first navigation item level:
 Zed: go to second navigation item level:
     [Documentation]     example: "Zed: Go to Second Navigation Item Level    Customers    Customer Access"
     [Arguments]     ${navigation_item_level1}   ${navigation_item_level2}
-    ${node_state}=    Get Element Attribute  xpath=(//span[contains(@data-qa,'menu-item-label')][text()='${navigation_item_level1}']/ancestor::li)[1]    class
-    IF    'active' in '${node_state}'
-        wait until element is visible  xpath=(//ul[contains(@data-qa,'menu-submenu')]//a/span[text()='${navigation_item_level2}'])[1]
-        Click Element by xpath with JavaScript    (//span[contains(@data-qa,'menu-item-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@data-qa,'menu-submenu')]//a/span[text()='${navigation_item_level2}'])[1]
+    ${node_state}=    Get Element Attribute  xpath=(//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::a)[1]    class
+    Log To Console    Node state is is: ${node_state}
+    IF    not 'collapsed' in '${node_state}'
+        wait until element is visible  xpath=(//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}'])[1]
+        Click Element by xpath with JavaScript    (//span[contains(@class,'nav-label')][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'nav-second-level')]//a/span[text()='${navigation_item_level2}'])[1]
         TRY
             Repeat Keyword    3    Wait For Load State
         EXCEPT
             Log    Page is not loaded
         END
     ELSE
-        Scroll Element Into View    xpath=//*[@data-qa='menu-item-label'][contains(text(),'${navigation_item_level1}')]/../../a
-        Click Element by xpath with JavaScript    //*[@data-qa='menu-item-label'][contains(text(),'${navigation_item_level1}')]/../../a
+        Scroll Element Into View    xpath=//ul[@id='side-menu']/li/a/span[contains(@class,'nav-label')][contains(text(),'${navigation_item_level1}')]/../../a
+        Click Element by xpath with JavaScript    //ul[@id='side-menu']/li/a/span[contains(@class,'nav-label')][contains(text(),'${navigation_item_level1}')]/../../a
         TRY
             Repeat Keyword    3    Wait For Load State
             Wait For Load State    domcontentloaded
@@ -195,7 +196,7 @@ Zed: go to second navigation item level:
         Restore Automatic Screenshots on Failure
         IF    '${node_expanded}'=='False'
             Reload
-            Click    xpath=//*[@data-qa='menu-item-label'][contains(text(),'${navigation_item_level1}')]/../../a
+            Click    xpath=//ul[@id='side-menu']/li/a/span[contans(@class,'nav-label')][contains(text(),'${navigation_item_level1}')]/../../a
             TRY
                 Repeat Keyword    3    Wait For Load State
             EXCEPT
