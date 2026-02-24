@@ -131,7 +131,6 @@ UI_test_setup
     Go To    ${yves_url}
 
 UI_test_teardown
-    Run Keyword If Test Failed    Take Screenshot    EMBED    fullPage=True
     # Run Keyword If Test Failed    Pause Execution
     Delete All Cookies
     Set Browser Timeout    ${browser_timeout}
