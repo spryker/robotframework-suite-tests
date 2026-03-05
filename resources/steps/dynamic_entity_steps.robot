@@ -74,7 +74,7 @@ Zed: download data exchange api specification should be active:
 Zed: download data exchange api specification
     [Documentation]    Downloads BAPI spec file and returns file location (path) in '${specification_file_path}' variable
     ${dl_promise}    Promise To Wait For Download    saveAs=${OUTPUTDIR}/tmp.file
-    Click    ${data_exchange_download_spec_button}    force=True
+    Click With Options    ${data_exchange_download_spec_button}    force=True
     ${status}    ${file_object}=    Run Keyword And Ignore Error    Wait For  ${dl_promise}
     File Should Exist    ${file_object}[saveAs]
     Move File    ${file_object}[saveAs]    ${OUTPUTDIR}/${file_object.suggestedFilename}
