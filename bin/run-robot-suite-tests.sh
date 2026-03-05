@@ -26,6 +26,7 @@ fi
 VENV_DIR="$PROJECT_ROOT/.robot/.venv"
 
 TEST_TYPE="${1:-api}"
+TEST_PATH="${2:-}"
 
 echo "🤖 Robot Framework Native Test Runner"
 echo "======================================"
@@ -77,7 +78,19 @@ fi
 
 case "$TEST_TYPE" in
     api)
-        echo "🧪 Running API tests..."
+        if [ -z "$TEST_PATH" ]; then
+            # No path specified - run all API tests
+            TEST_TARGET="."
+            SUITE_OPTION="-s '*'.tests.api.suite"
+            echo "🧪 Running API tests (all)..."
+        else
+            # Path specified - run specific tests
+            TEST_TARGET="$TEST_PATH"
+            SUITE_OPTION=""
+            echo "🧪 Running API tests..."
+            echo "Target: $TEST_PATH"
+        fi
+
         cd $TESTS_DIR
         robot \
             -v env:api_suite \
@@ -87,8 +100,8 @@ case "$TEST_TYPE" in
             -v ignore_console:false \
             -d "$RESULTS_DIR" \
             --exclude skip-due-to-issueORskip-due-to-refactoring \
-            -s '*'.tests.api.suite \
-            .
+            $SUITE_OPTION \
+            $TEST_TARGET
         ;;
 
     ui)
@@ -172,7 +185,12 @@ case "$TEST_TYPE" in
 
     *)
         echo "❌ Unknown test type: $TEST_TYPE"
-        echo "Usage: $0 [api|ui]"
+        echo "Usage: $0 [api|ui] [optional-test-path]"
+        echo ""
+        echo "Examples:"
+        echo "  $0 api                                    # Run all API tests"
+        echo "  $0 api tests/api/mp_b2b/glue             # Run specific tests"
+        echo "  $0 api tests/api/mp_b2b/glue/cart_endpoints  # Run even more specific tests"
         exit 1
         ;;
 esac
