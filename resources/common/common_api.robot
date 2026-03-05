@@ -12,7 +12,7 @@ ${default_password}    change123
 ${default_secure_password}    qweRTY_123456
 ${default_allow_redirects}     true
 ${default_auth}    ${NONE}
-&{default_headers}
+&{default_headers}    Accept-Language=en
 ${api_session}    api
 
 # *** default headers example: applied to all requests if not empty ***
@@ -139,7 +139,7 @@ I set Headers:
     ...    ``I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}``
 
     [Arguments]    &{headers}
-    Set To Dictionary    ${headers}    &{headers}    &{default_headers}
+    Set To Dictionary    ${headers}    &{default_headers}    &{headers}
     Set Test Variable    &{headers}
     RETURN    &{headers}
 
