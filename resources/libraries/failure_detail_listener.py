@@ -10,7 +10,6 @@ Also logs full Python tracebacks at INFO level for visibility in log.html
 without requiring DEBUG log level.
 """
 
-import os
 import sys
 import traceback
 
@@ -57,10 +56,15 @@ def _print_failure_block(data, result):
             indent = '    ' + '   ' * depth
             lines.append('%s-> %s [%s]' % (indent, keyword_name, keyword_source))
 
-    reproduce_command = _build_reproduce_command(data, source)
-    if reproduce_command:
+    docker_command, native_command = _build_reproduce_commands(data, source)
+    if docker_command or native_command:
         lines.append('  Reproduce:')
-        lines.append('    %s' % reproduce_command)
+    if docker_command:
+        lines.append('    # Requires: docker/sdk boot deploy.ci.api.mariadb.robot.yml && docker/sdk up')
+        lines.append('    %s' % docker_command)
+    if native_command:
+        lines.append('    # Or run natively on an already-booted system:')
+        lines.append('    %s' % native_command)
 
     lines.append(separator)
     lines.append('')
@@ -69,25 +73,33 @@ def _print_failure_block(data, result):
     sys.stderr.flush()
 
 
-def _build_reproduce_command(data, source):
-    """Build a docker/sdk robot command to reproduce this specific test failure."""
+def _build_reproduce_commands(data, source):
+    """Build reproduce commands for both Docker and native execution.
+
+    Returns a tuple of (docker_command, native_command).
+    """
     try:
-        # Detect suite type from the source path
         source_str = str(source) if source else ''
+        test_name = getattr(data, 'longname', '') or getattr(data, 'name', '')
+
         if 'tests/api' in source_str:
             env = 'api_suite'
+            suite_type = 'api'
             suite_selector = "-s '*'.tests.api.suite"
         elif 'tests/parallel_ui' in source_str or 'tests/ui' in source_str:
             env = 'ui_suite'
+            suite_type = 'ui'
             suite_selector = "-s '*'.tests.parallel_ui.suite"
         else:
             env = 'api_suite'
+            suite_type = 'api'
             suite_selector = ''
 
-        # Use the test's longname for precise targeting
-        test_name = getattr(data, 'longname', '') or getattr(data, 'name', '')
+        # Extract the test directory path from source for native runner
+        native_test_path = _extract_native_test_path(source_str)
 
-        parts = [
+        # Docker command
+        docker_parts = [
             'docker/sdk exec robot-framework robot',
             '--listener resources/libraries/failure_detail_listener.py',
             '-v env:%s' % env,
@@ -96,19 +108,54 @@ def _build_reproduce_command(data, source):
         ]
 
         if env == 'ui_suite':
-            parts.extend(['-v headless:true', '-v ignore_console:false'])
+            docker_parts.extend(['-v headless:true', '-v ignore_console:false'])
 
-        parts.extend([
+        docker_parts.extend([
             '-d results',
             "--test '%s'" % test_name,
         ])
 
         if suite_selector:
-            parts.append(suite_selector)
+            docker_parts.append(suite_selector)
 
-        parts.append('.')
+        docker_parts.append('.')
+        docker_command = ' '.join(docker_parts)
 
-        return ' '.join(parts)
+        # Native command using the shell script runner
+        native_parts = [
+            'vendor/bin/run-robot-suite-tests.sh',
+            suite_type,
+        ]
+
+        if native_test_path:
+            native_parts.append(native_test_path)
+
+        native_command = ' '.join(native_parts)
+
+        return docker_command, native_command
+    except Exception:
+        return '', ''
+
+
+def _extract_native_test_path(source_str):
+    """Extract the vendor-relative test directory path from a source file path.
+
+    Converts a path like '/opt/robotframework/tests/api/suite/glue/carts/positive.robot'
+    into 'vendor/spryker/robotframework-suite-tests/tests/api/suite/glue/carts'.
+    """
+    try:
+        # Find the tests/ segment in the path
+        marker = '/tests/'
+        idx = source_str.find(marker)
+
+        if idx < 0:
+            return ''
+
+        # Get the relative path from tests/ onward, drop the filename
+        relative = 'tests/' + source_str[idx + len(marker):]
+        directory = relative.rsplit('/', 1)[0] if '/' in relative else relative
+
+        return 'vendor/spryker/robotframework-suite-tests/%s' % directory
     except Exception:
         return ''
 

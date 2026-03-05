@@ -80,6 +80,7 @@ case "$TEST_TYPE" in
         echo "🧪 Running API tests..."
         cd $TESTS_DIR
         robot \
+            --listener resources/libraries/failure_detail_listener.py \
             -v env:api_suite \
             -v dms:true \
             -v docker:false \
@@ -112,6 +113,7 @@ case "$TEST_TYPE" in
 
         echo "Running dynamic smoke tests with $PROCESSES parallel processes (detected $CPU_COUNT CPUs)..."
         pabot --processes "$PROCESSES" --testlevelsplit \
+            --listener resources/libraries/failure_detail_listener.py \
             -v env:ui_suite \
             -v docker:false \
             -v headless:true \
@@ -127,6 +129,7 @@ case "$TEST_TYPE" in
         echo ""
         echo "Running static smoke tests sequentially..."
         robot \
+            --listener resources/libraries/failure_detail_listener.py \
             -v env:ui_suite \
             -v docker:false \
             -v headless:true \
@@ -147,6 +150,7 @@ case "$TEST_TYPE" in
 
         echo "Rerunning failed tests..."
         robot \
+            --listener resources/libraries/failure_detail_listener.py \
             -v env:ui_suite \
             -v docker:false \
             -v dms:true \

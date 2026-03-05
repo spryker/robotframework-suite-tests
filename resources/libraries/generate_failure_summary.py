@@ -58,13 +58,13 @@ def _collect_failures(suite, failures):
             source = getattr(test, 'source', '') or ''
             lineno = getattr(test, 'lineno', '') or ''
             if source:
-                source_short = os.path.basename(source)
+                source_display = source
                 if lineno:
-                    source_short = '%s:%s' % (source_short, lineno)
+                    source_display = '%s:%s' % (source_display, lineno)
             else:
-                source_short = 'unknown'
+                source_display = 'unknown'
 
-            failures.append((test.name, source_short, test.message or 'No message'))
+            failures.append((test.name, source_display, test.message or 'No message'))
 
     for child_suite in suite.suites:
         _collect_failures(child_suite, failures)
