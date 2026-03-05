@@ -4,11 +4,13 @@ When a test fails, outputs:
 - Source file and line number
 - Failure message
 - Keyword call stack with source locations
+- A copy-pasteable robot command to reproduce the failure locally
 
 Also logs full Python tracebacks at INFO level for visibility in log.html
 without requiring DEBUG log level.
 """
 
+import os
 import sys
 import traceback
 
@@ -55,11 +57,60 @@ def _print_failure_block(data, result):
             indent = '    ' + '   ' * depth
             lines.append('%s-> %s [%s]' % (indent, keyword_name, keyword_source))
 
+    reproduce_command = _build_reproduce_command(data, source)
+    if reproduce_command:
+        lines.append('  Reproduce:')
+        lines.append('    %s' % reproduce_command)
+
     lines.append(separator)
     lines.append('')
 
     sys.stderr.write('\n'.join(lines) + '\n')
     sys.stderr.flush()
+
+
+def _build_reproduce_command(data, source):
+    """Build a docker/sdk robot command to reproduce this specific test failure."""
+    try:
+        # Detect suite type from the source path
+        source_str = str(source) if source else ''
+        if 'tests/api' in source_str:
+            env = 'api_suite'
+            suite_selector = "-s '*'.tests.api.suite"
+        elif 'tests/parallel_ui' in source_str or 'tests/ui' in source_str:
+            env = 'ui_suite'
+            suite_selector = "-s '*'.tests.parallel_ui.suite"
+        else:
+            env = 'api_suite'
+            suite_selector = ''
+
+        # Use the test's longname for precise targeting
+        test_name = getattr(data, 'longname', '') or getattr(data, 'name', '')
+
+        parts = [
+            'docker/sdk exec robot-framework robot',
+            '--listener resources/libraries/failure_detail_listener.py',
+            '-v env:%s' % env,
+            '-v dms:true',
+            '-v docker:true',
+        ]
+
+        if env == 'ui_suite':
+            parts.extend(['-v headless:true', '-v ignore_console:false'])
+
+        parts.extend([
+            '-d results',
+            "--test '%s'" % test_name,
+        ])
+
+        if suite_selector:
+            parts.append(suite_selector)
+
+        parts.append('.')
+
+        return ' '.join(parts)
+    except Exception:
+        return ''
 
 
 def _collect_failed_keywords(body, depth=0):
