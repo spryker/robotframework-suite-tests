@@ -139,7 +139,7 @@ I set Headers:
     ...    ``I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}``
 
     [Arguments]    &{headers}
-    Set To Dictionary    ${headers}    &{headers}    &{default_headers}
+    Set To Dictionary    ${headers}    &{default_headers}    &{headers}
     Set Test Variable    &{headers}
     RETURN    &{headers}
 
