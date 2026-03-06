@@ -24,5 +24,5 @@ ${zed_edit_company_user_company_select}    id=company-user_fk_company
 ${zed_edit_company_user_company_span}    id=select2-company-user_fk_company-container
 ${zed_edit_company_user_business_unit_select}    id=company-user_fk_company_business_unit
 ${zed_edit_company_user_business_unit_span}    id=select2-company-user_fk_company_business_unit-container
-${zed_edit_company_user_search_select_field}    xpath=//input[@type='search']
+${zed_edit_company_user_search_select_field}    xpath=//input[@type='search'][@aria-controls="select2-customer_business_unit_attach_fk_company_business_unit-results"]
 ${zed_attach_customer_to_bu_business_unit_span}    id=select2-customer_business_unit_attach_fk_company_business_unit-container

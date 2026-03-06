@@ -6,7 +6,7 @@ ${zed_product_set_name_de_field}    id=product_set_form_general_form_localized_g
 ${zed_product_set_url_de_field}    id=product_set_form_general_form_localized_general_form_collection_1_url
 ${zed_product_set_key_field}    id=product_set_form_general_form_product_set_key
 ${zed_product_set_is_active_checkbox}    id=product_set_form_general_form_is_active
-${zed_product_set_search_product_table_field}    xpath=//div[@id='product-table_filter']//input[@type='search']
+${zed_product_set_search_product_table_field}    xpath=//div[@id='product-table_wrapper']//input[@type='search']
 ${zed_product_set_search_product_table_select_first_checkbox}    xpath=(//input[contains(@id,'all_products_checkbox')])[1]
 ${zed_product_set_general_second_locale_collapsed_section}    xpath=(//div[@id='tab-content-general'][contains(@class,'active')]//ancestor::div[contains(@class,'ibox nested')]//i[contains(@class,'plus')])[2]
 ${zed_product_set_general_second_locale_expanded_section}    xpath=(//div[@id='tab-content-general'][contains(@class,'active')]//ancestor::div[contains(@class,'ibox nested')]//i[contains(@class,'minus')])[2]
