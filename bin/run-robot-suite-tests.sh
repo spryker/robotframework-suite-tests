@@ -28,6 +28,12 @@ VENV_DIR="$PROJECT_ROOT/.robot/.venv"
 TEST_TYPE="${1:-api}"
 TEST_PATH="${2:-}"
 
+# Normalize TEST_PATH: strip TESTS_DIR prefix if user passed a full path from project root
+if [ -n "$TEST_PATH" ]; then
+    TESTS_DIR_RELATIVE="${TESTS_DIR#$PROJECT_ROOT/}"
+    TEST_PATH="${TEST_PATH#$TESTS_DIR_RELATIVE/}"
+fi
+
 echo "🤖 Robot Framework Native Test Runner"
 echo "======================================"
 echo "Test Type: $TEST_TYPE"
