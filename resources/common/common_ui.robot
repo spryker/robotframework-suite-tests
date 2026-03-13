@@ -111,7 +111,7 @@ UI_suite_setup
     Common_suite_setup
     Overwrite pyz variables
     IF    ${verify_ssl}
-        New Browser    ${browser}    headless=${headless}    
+        New Browser    ${browser}    headless=${headless}
     ELSE
         New Browser    ${browser}    headless=${headless}    args=['--ignore-certificate-errors']
     END
@@ -309,9 +309,9 @@ Select From List By Value Contains
     [Arguments]    ${selector}    ${substring}
     ${options}=    Get Select Options    ${selector}
     ${matching_values}=    Evaluate    [option["value"] for option in ${options} if "${substring}" in option["value"]]
-    IF    ${matching_values}    
+    IF    ${matching_values}
         Select Options By    ${selector}    value    ${matching_values}[0]
-    ELSE    
+    ELSE
         Fail    No option with substring '${substring}' found in ${selector}
     END
 
@@ -319,9 +319,9 @@ Select From List By Label Contains
     [Arguments]    ${selector}    ${substring}
     ${options}=    Get Select Options    ${selector}
     ${matching_values}=    Evaluate    [option["label"] for option in ${options} if "${substring}" in option["label"]]
-    IF    ${matching_values}    
+    IF    ${matching_values}
         Select Options By    ${selector}    label    ${matching_values}[0]
-    ELSE    
+    ELSE
         Fail    No option with substring '${substring}' found in ${selector}
     END
 
@@ -365,7 +365,7 @@ Try reloading page until element is/not appear:
         ${elementAppears}=    Run Keyword And Return Status    Page Should Contain Element    ${element}
         Restore Automatic Screenshots on Failure
         IF    '${shouldBeDisplayed}'=='true' and '${elementAppears}'=='False'
-            Sleep    ${timeout}    
+            Sleep    ${timeout}
             Reload
             TRY
                 Wait For Load State
@@ -403,7 +403,7 @@ Try reloading page until element does/not contain text:
     ${shouldContain}=    Convert To Lower Case    ${shouldContain}
     FOR    ${index}    IN RANGE    0    ${tries}
         Disable Automatic Screenshots on Failure
-        ${textAppears}=    Run Keyword And Return Status    Element Text Should Be    ${element}    ${expectedText}    timeout=${timeout} 
+        ${textAppears}=    Run Keyword And Return Status    Element Text Should Be    ${element}    ${expectedText}    timeout=${timeout}
         Restore Automatic Screenshots on Failure
         IF    '${shouldContain}'=='true' and '${textAppears}'=='False'
             Run Keywords    Sleep    ${timeout}    AND    Reload
