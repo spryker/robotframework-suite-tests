@@ -8,7 +8,7 @@ Resource    ../pages/zed/zed_view_concrete_product_page.robot
 *** Keywords ***
 Zed: discontinue the following product:
     [Arguments]    ${productAbstract}    ${productConcrete}
-    Wait Until Element Is Visible    ${zed_log_out_button}
+    Wait Until Element Is Visible    ${backoffice-user-navigation-toggler}    Zed: User menu button is not visible - Login failed!    timeout=15s
     Zed: go to URL:    /product-management
     Zed: perform search by:    ${productAbstract}
     Zed: click Action Button in a table for row that contains:    ${productAbstract}    Edit

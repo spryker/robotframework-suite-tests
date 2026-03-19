@@ -21,7 +21,7 @@ Zed: verify first navigation root menus
         EXCEPT
             Log    Overlay is not displayed
         END
-        Wait Until Element Is Visible    locator=${zed_log_out_button}    timeout=${browser_timeout}    message=Some left navigation menu item throws an error.
+        Wait Until Element Is Visible    ${backoffice-user-navigation-toggler}    Zed: User menu button is not visible - Login failed!    timeout=15s
         ${counter}=    Evaluate    ${counter} + 1   
     END
 
@@ -60,10 +60,10 @@ Zed: verify second navigation root menus
                 EXCEPT
                     Log    Page is not loaded
                 END
-                Wait Until Element Is Visible    ${zed_log_out_button}    timeout=${browser_timeout}
+                Wait Until Element Is Visible    ${backoffice-user-navigation-toggler}    Zed: User menu button is not visible - Login failed!    timeout=15s
                 Log    ${counter_1}
                 ${counter_1}=    Evaluate    ${counter_1} + 1   
             END        
-        Wait Until Element Is Visible    ${zed_log_out_button}    timeout=${browser_timeout}
+        Wait Until Element Is Visible    ${backoffice-user-navigation-toggler}    Zed: User menu button is not visible - Login failed!    timeout=15s
         ${counter}=    Evaluate    ${counter} + 1  
     END
