@@ -541,14 +541,14 @@ Yves: go to external URL:
 
 Yves: go to second navigation item level:
     [Arguments]     ${navigation_item_level1}   ${navigation_item_level2}
-    ${nodeClass}=    Get Element Attribute    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li    class
+    ${nodeClass}=    Get Element Attribute    xpath=//*[contains(concat(' ',normalize-space(@class),' '),' header__navigation ') or contains(concat(' ',normalize-space(@class),' '),' header__nav-categories ')]//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li    class
     ${nodeClass}=    Replace String    ${nodeClass}    \n    ${EMPTY}
     ${nodeShownClass}=    Set Variable    is-shown
     ${nodeUpdatedClass}=    Set Variable    ${nodeClass} ${nodeShownClass}
-    ${1LevelXpath}=    Set Variable    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li
+    ${1LevelXpath}=    Set Variable    //*[contains(concat(' ',normalize-space(@class),' '),' header__navigation ') or contains(concat(' ',normalize-space(@class),' '),' header__nav-categories ')]//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li
     Add/Edit element attribute with JavaScript:    ${1LevelXpath}    class    ${nodeUpdatedClass}
-    Wait Until Element Is Visible    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
-    Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]//li[contains(@class,'menu__item--lvl-1')]/span/*[contains(@class,'lvl-1')][1][text()='${navigation_item_level2}']
+    Wait Until Element Is Visible    //*[contains(concat(' ',normalize-space(@class),' '),' header__navigation ') or contains(concat(' ',normalize-space(@class),' '),' header__nav-categories ')]//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
+    Click Element by xpath with JavaScript    //*[contains(concat(' ',normalize-space(@class),' '),' header__navigation ') or contains(concat(' ',normalize-space(@class),' '),' header__nav-categories ')]//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]//li[contains(@class,'menu__item--lvl-1')]/span/*[contains(@class,'lvl-1')][1][text()='${navigation_item_level2}']
     TRY
         Repeat Keyword    3    Wait For Load State
     EXCEPT
@@ -558,8 +558,8 @@ Yves: go to second navigation item level:
 Yves: go to first navigation item level:
     [Arguments]     ${navigation_item_level1}
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
-        Wait Until Element Is Visible    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
-        Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
+        Wait Until Element Is Visible    xpath=//*[contains(concat(' ',normalize-space(@class),' '),' header__navigation ') or contains(concat(' ',normalize-space(@class),' '),' header__nav-categories ')]//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
+        Click Element by xpath with JavaScript    //*[contains(concat(' ',normalize-space(@class),' '),' header__navigation ') or contains(concat(' ',normalize-space(@class),' '),' header__nav-categories ')]//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']
         TRY
             Repeat Keyword    3    Wait For Load State
         EXCEPT
@@ -585,14 +585,14 @@ Yves: go to first navigation item level:
 
 Yves: go to third navigation item level:
     [Arguments]     ${navigation_item_level1}   ${navigation_item_level3}
-    ${nodeClass}=    Get Element Attribute    xpath=//div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li    class
+    ${nodeClass}=    Get Element Attribute    xpath=//*[contains(concat(' ',normalize-space(@class),' '),' header__navigation ') or contains(concat(' ',normalize-space(@class),' '),' header__nav-categories ')]//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li    class
     ${nodeClass}=    Replace String    ${nodeClass}    \n    ${EMPTY}
     ${nodeShownClass}=    Set Variable    is-shown
     ${nodeUpdatedClass}=    Set Variable    ${nodeClass} ${nodeShownClass}
-    ${1LevelXpath}=    Set Variable    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li
+    ${1LevelXpath}=    Set Variable    //*[contains(concat(' ',normalize-space(@class),' '),' header__navigation ') or contains(concat(' ',normalize-space(@class),' '),' header__nav-categories ')]//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li
     Add/Edit element attribute with JavaScript:    ${1LevelXpath}    class    ${nodeUpdatedClass}
-    Wait Until Element Is Visible    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
-    Click Element by xpath with JavaScript    //div[@class='header__navigation']//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-2')]//li[contains(@class,'menu__item--lvl-2')]/span/*[contains(@class,'lvl-2')][1][text()='${navigation_item_level3}']
+    Wait Until Element Is Visible    //*[contains(concat(' ',normalize-space(@class),' '),' header__navigation ') or contains(concat(' ',normalize-space(@class),' '),' header__nav-categories ')]//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-1')]
+    Click Element by xpath with JavaScript    //*[contains(concat(' ',normalize-space(@class),' '),' header__navigation ') or contains(concat(' ',normalize-space(@class),' '),' header__nav-categories ')]//navigation-multilevel[@data-qa='component navigation-multilevel']/ul[@class='menu menu--lvl-0']//li[contains(@class,'menu__item--lvl-0')]/span/*[contains(@class,'lvl-0')][1][text()='${navigation_item_level1}']/ancestor::li//ul[contains(@class,'menu--lvl-2')]//li[contains(@class,'menu__item--lvl-2')]/span/*[contains(@class,'lvl-2')][1][text()='${navigation_item_level3}']
     TRY
         Repeat Keyword    3    Wait For Load State
     EXCEPT
