@@ -17,6 +17,8 @@ Yves: 'Shopping Carts' widget contains:
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
     IF    '${env}' in ['ui_suite']
         Page Should Contain Element    xpath=//header//cart-counter//a[contains(@href,'/cart')]/ancestor::li//ul[contains(@class,'menu')][contains(@class,'wide')]//*[contains(@data-qa,'mini-cart-detail')]//a[contains(.,'${shoppingCartName}')]/ancestor::div[1]//*[@class='cart-permission'][contains(.,'${accessLevel}')] | //header//cart-counter//a[contains(@href,'/cart')]/ancestor::li//ul[contains(@class,'menu')][contains(@class,'wide')]//*[contains(@data-qa,'mini-cart-detail')]//button[contains(.,'${shoppingCartName}')]/ancestor::div[1]//*[@class='cart-permission'][contains(.,'${accessLevel}')]
+    ELSE IF    '${env}' in ['ui_mp_b2b']
+        Page Should Contain Element    xpath=//header//div[contains(@class,'header-cart-pill__dropdown')]//*[@data-qa='component mini-cart-detail'][.//*[contains(@class,'mini-cart-detail__name')][normalize-space()='${shoppingCartName}']]//*[contains(@class,'cart-permission')][contains(normalize-space(),'${accessLevel}')]
     ELSE
         Page Should Contain Element    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//span[text()[contains(.,'${accessLevel}')]]/ancestor::div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
     END
@@ -68,6 +70,8 @@ Yves: go to the shopping cart through the header with name:
     Wait Until Element Is Visible    ${shopping_cart_sub_navigation_widget}
     IF    '${env}' in ['ui_suite']
         Click    xpath=//header//cart-counter//a[contains(@href,'/cart')]/ancestor::li//ul[contains(@class,'menu')][contains(@class,'wide')]//*[contains(@data-qa,'mini-cart-detail')]//a[contains(.,'${shoppingCartName}')] | //header//cart-counter//a[contains(@href,'/cart')]/ancestor::li//ul[contains(@class,'menu')][contains(@class,'wide')]//*[contains(@data-qa,'mini-cart-detail')]//button[contains(.,'${shoppingCartName}')]
+    ELSE IF    '${env}' in ['ui_mp_b2b']
+        Click    xpath=//header//div[contains(@class,'header-cart-pill__dropdown')]//*[@data-qa='component mini-cart-detail']//a[.//*[contains(@class,'mini-cart-detail__name')][normalize-space()='${shoppingCartName}']]
     ELSE
         Click    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//div[@class='mini-cart-detail']//*[contains(@class,'mini-cart-detail__title')]/*[text()='${shoppingCartName}']
     END

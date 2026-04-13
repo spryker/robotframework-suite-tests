@@ -42,9 +42,17 @@ Yves: perform search by:
 
 Yves: go to company menu item:
     [Arguments]    ${company_menu_item}
-    wait until element is visible  ${company_name_icon_header_menu_item}
-    mouse over  ${company_name_icon_header_menu_item}
-    Click    //div[@class='header__top']//a[contains(@class,'navigation-top__company')]/..//nav[contains(@class,'navigation-list')]/ul//a[text()='${company_menu_item}']
+    IF    '${env}' in ['ui_mp_b2b']
+        Wait Until Element Is Visible    xpath=//header//button[contains(@class,'header-dropdown__trigger--user-account')]
+        Mouse Over    xpath=//header//button[contains(@class,'header-dropdown__trigger--user-account')]
+        Wait Until Element Is Visible    xpath=//header//button[contains(@class,'header-dropdown__trigger--user-account')]/following-sibling::div[contains(@class,'header-dropdown__dropdown')]//button[@role='tab'][@data-tab-id='company-account']
+        Click    xpath=//header//button[contains(@class,'header-dropdown__trigger--user-account')]/following-sibling::div[contains(@class,'header-dropdown__dropdown')]//button[@role='tab'][@data-tab-id='company-account']
+        Click    xpath=//header//button[contains(@class,'header-dropdown__trigger--user-account')]/following-sibling::div[contains(@class,'header-dropdown__dropdown')]//div[@role='tabpanel'][@data-tab-id='company-account']//a[.//*[normalize-space()='${company_menu_item}']]
+    ELSE
+        wait until element is visible  ${company_name_icon_header_menu_item}
+        mouse over  ${company_name_icon_header_menu_item}
+        Click    //div[@class='header__top']//a[contains(@class,'navigation-top__company')]/..//nav[contains(@class,'navigation-list')]/ul//a[text()='${company_menu_item}']
+    END
 
 
 Yves: company menu '${condition}' be available for logged in user
@@ -91,7 +99,9 @@ Yves: go to user menu item in header:
     Wait Until Element Is Visible  ${user_navigation_icon_header_menu_item}[${env}]
     Mouse Over  ${user_navigation_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${user_navigation_fly_out_header_menu_item}[${env}]
-    IF    '${env}' in ['ui_b2b','ui_mp_b2b']
+    IF    '${env}' in ['ui_mp_b2b']
+        Click    xpath=//header//button[contains(@class,'header-dropdown__trigger--user-account')]/following-sibling::div[contains(@class,'header-dropdown__dropdown')]//a[.//*[normalize-space()='${user_menu_item}']]
+    ELSE IF    '${env}' in ['ui_b2b']
         Click    xpath=//li[contains(@class,'user-navigation__item--user')]//nav[contains(@class,'user-navigation__sub-nav')]//ul[contains(@class,'list--secondary')]//a[text()='${user_menu_item}']
     ELSE
         Click    xpath=//a[contains(@class,'user-block') and contains(text(),'${user_menu_item}')]
