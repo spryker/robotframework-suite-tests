@@ -28,4 +28,4 @@ ${agent_quote_requests_header_item}    xpath=//agent-control-bar//a[contains(@hr
 ${agent_quote_requests_widget}    xpath=//agent-control-bar//a[contains(@href,'quote-request') and not(contains(@href,'detail'))]/ancestor::li[contains(@class,'item')][contains(@class,'-has-children') and not(contains(@class,'navigation'))]//ul
 ${wishlist_icon_header_navigation_widget}    xpath=//nav[@data-qa='component navigation-top']//*[@*='#:wishlist']/ancestor::*[@data-qa='component icon'] | //nav[@data-qa='component navigation-top']//*[@*='wishlist']
 ${cart_widget_item_quantity_counter}    xpath=//*[@data-qa='component navigation-top']//span[contains(@class,'cart-counter__quantity js-cart-counter__quantity')]
-${header_logo_link}    xpath=//*[@data-qa='component logo']//a
+${header_logo_link}    xpath=//header//*[@data-qa='component logo']//a
