@@ -41,5 +41,5 @@ ${checkout_billing_address_zip_code_field}    id=addressesForm_billingAddress_zi
 ${checkout_billing_address_city_field}    id=addressesForm_billingAddress_city
 ${checkout_billing_address_country_select}    id=addressesForm_billingAddress_iso2_code
 ${checkout_billing_address_phone_field}    id=addressesForm_billingAddress_phone
-${manage_your_addresses_link}    xpath=//a[contains(@href,'customer/address') and contains(@class,'link--checkout')] | //a[contains(@href,'customer/address')]
+${manage_your_addresses_link}    xpath=//a[contains(@href,'customer/address') and contains(@class,'link--checkout')]
 &{billing_address_section}    ui_b2b=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-same-as-shipping')]    ui_b2c=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-address')]    ui_suite=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-form')]    ui_mp_b2b=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-same-as-shipping')]    ui_mp_b2c=xpath=//form[@name='addressesForm']//div[contains(@class,'billing-address')]
