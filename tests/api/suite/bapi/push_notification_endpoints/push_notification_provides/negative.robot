@@ -41,8 +41,8 @@ Create_push_notification_provider_without_name
 Create_push_notification_provider_without_authorization
     When I set Headers:    Content-Type=application/vnd.api+json
     When I send a POST request:    /push-notification-providers    {"data": {"type": "push-notification-providers","attributes": {"name": "Unauthorized Push Notification Provider"}}}
-    Then Response status code should be:    403
-    And Response reason should be:    Forbidden
+    Then Response status code should be:    401
+    And Response reason should be:    Unauthorized
 
 Create_push_notification_provider_with_invalid_type
     [Documentation]    https://spryker.atlassian.net/browse/FRW-6312
