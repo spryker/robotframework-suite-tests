@@ -36,8 +36,8 @@ Create_shipment_type_with_empty_token
 Create_shipment_type_with_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a POST request:    /shipment-types    {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type","key": "incorrect_token${random}","isActive": "true","stores": ["DE", "AT"]}}}
-    Then Response status code should be:    403
-    And Response reason should be:    Forbidden
+    Then Response status code should be:    401
+    And Response reason should be:    Unauthorized
 
 Create_shipment_type_without_key_in_request
     [Documentation]    FRW-1597: Attribute validation in Glue Requests
@@ -79,8 +79,8 @@ Update_shipment_type_with_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a PATCH request:    /shipment-types/${shipment_type_uuid}
     ...    {"data": {"type": "shipment-types","attributes": {"name": "updated_name${random}","isActive": "false","stores": ["AT"]}}}
-     Then Response status code should be:    403
-     And Response reason should be:    Forbidden
+     Then Response status code should be:    401
+     And Response reason should be:    Unauthorized
 
 Update_shipment_type_without_key
     [Documentation]    FRW-1597: Attribute validation in Glue Requests
@@ -123,8 +123,8 @@ Retrieve_single_shipment_type_without_auth
 Retrieve_single_shipment_type_with_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a GET request:    /shipment-types/${shipment_type_uuid}
-     Then Response status code should be:    403
-     And Response reason should be:    Forbidden
+     Then Response status code should be:    401
+     And Response reason should be:    Unauthorized
 
 Retrieve_single_shipment_type_with_incorrect_id
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -137,12 +137,12 @@ Retrieve_single_shipment_type_with_incorrect_id
 Retrieve_list_of_shipment_types_without_auth
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}
     When I send a GET request:    /shipment-types/
-    Then Response status code should be:    403
-    And Response reason should be:    Forbidden
+    Then Response status code should be:    401
+    And Response reason should be:    Unauthorized
     And Response should return error message:    Unauthorized request.
 
 Retrieve_list_of_shipment_types_witt_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a GET request:    /shipment-types/${shipment_type_uuid}
-     Then Response status code should be:    403
-     And Response reason should be:    Forbidden
+     Then Response status code should be:    401
+     And Response reason should be:    Unauthorized

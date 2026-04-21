@@ -3,7 +3,7 @@ Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Resource    ../../../../../../resources/steps/api_service_point_steps.robot
-Test Tags    bapi    spryker-core    spryker-core-back-office    service-points    shipment-service-points    product-offer-service-points    service-points-cart    product-offer-service-points-availability    marketplace-merchant-product-offer-service-points-availability    shipment-product-offer-service-points-availability    marketplace-merchant-portal-product-offer-service-points    inventory-management    marketplace-inventory-management 
+Test Tags    bapi    spryker-core    spryker-core-back-office    service-points    shipment-service-points    product-offer-service-points    service-points-cart    product-offer-service-points-availability    marketplace-merchant-product-offer-service-points-availability    shipment-product-offer-service-points-availability    marketplace-merchant-portal-product-offer-service-points    inventory-management    marketplace-inventory-management
 
 *** Test Cases ***
 Create_Service_No_Auth
@@ -28,7 +28,7 @@ Get_Service_By_ID__No_Auth
     And Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType2${random}     key=sp11${random}
     Then Create service in DB    servicePointUuid=262feb9d-33a7${random}    serviceTypeUuid=33a7-5c55-9b04${random}    uuid=262feb1fd22067e${random}    key=s1f${random}    isActive=true
     And I send a GET request:    /services/262feb1fd22067e${random}
-    Then Response status code should be:    404
+    Then Response status code should be:    401
     [Teardown]     Run Keywords    Delete service point in DB    262feb9d-33a7${random}
     ...    AND    Delete service type in DB    33a7-5c55-9b04${random}
 
@@ -45,7 +45,7 @@ Get_Services_No_Auth
     And Create service type in DB    uuid=33a7-5c55-9b04${random}    name=TestType2a${random}     key=sp11a${random}
     Then Create service in DB    servicePointUuid=262feb9d-33a7${random}    serviceTypeUuid=33a7-5c55-9b04${random}    uuid=262feb1fd22067e${random}    key=s1f${random}    isActive=true
     When I send a GET request:    /services
-    Then Response status code should be:    404
+    Then Response status code should be:    401
     [Teardown]     Run Keywords    Delete service point in DB    262feb9d-33a7${random}
     ...    AND    Delete service type in DB    33a7-5c55-9b04${random}
 
