@@ -3,7 +3,7 @@ Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Resource    ../../../../../../resources/steps/api_service_point_steps.robot
-Test Tags    bapi    spryker-core    spryker-core-back-office    service-points    shipment-service-points    product-offer-service-points    service-points-cart    product-offer-service-points-availability    marketplace-merchant-product-offer-service-points-availability    shipment-product-offer-service-points-availability    marketplace-merchant-portal-product-offer-service-points    inventory-management    marketplace-inventory-management 
+Test Tags    bapi    spryker-core    spryker-core-back-office    service-points    shipment-service-points    product-offer-service-points    service-points-cart    product-offer-service-points-availability    marketplace-merchant-product-offer-service-points-availability    shipment-product-offer-service-points-availability    marketplace-merchant-portal-product-offer-service-points    inventory-management    marketplace-inventory-management
 
 *** Test Cases ***
 Create_Service_Type_With_Maximum_Length_Key
@@ -61,7 +61,7 @@ Create_Service_Type_With_Empty_Name
 Create_Service_Type_without_Auth
     And I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer
     When I send a POST request:    /service-types    {"data": {"type": "service-types", "attributes": {"name": "Test Service ${random}", "key": "service1-test${random}"}}}
-    Then Response status code should be:    403
+    Then Response status code should be:    401
 
 Create_Service_Type_with_incorrect_Auth
     And I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer incorrect
@@ -100,13 +100,13 @@ Update_Service_Type_without_Auth
     When Create service type in DB    12345678${random}    test    test
     And I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer
     When I send a PATCH request:    /service-types/12345678${random}    {"data": {"type": "service-types", "attributes": {"name": "Updated Service Name","key": "12345678${random}"}}}
-    Then Response status code should be:    403
+    Then Response status code should be:    401
     [Teardown]    Delete service type in DB    12345678${random}
 
 Get_Service_Types_No_Auth
     I set Headers:    Content-Type=${default_header_content_type}
     When I send a GET request:    /service-types
-    Then Response status code should be:    403
+    Then Response status code should be:    401
     And Response should return error message:    Unauthorized request.
 
 Get_Service_Types_Invalid_Auth
@@ -120,7 +120,7 @@ Get_Service_Type_By_ID_No_Auth
     I set Headers:    Content-Type=${default_header_content_type}
     Create service type in DB    uuid=service-by-id${random}    name=service-by-id     key=service-by-id${random}
     When I send a GET request:    /service-types/service-by-id${random}
-    Then Response status code should be:    403
+    Then Response status code should be:    401
     And Response should return error message:    Unauthorized request.
     [Teardown]    Delete service type in DB    service-by-id${random}
 

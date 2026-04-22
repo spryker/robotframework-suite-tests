@@ -3,14 +3,14 @@ Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Resource    ../../../../../../resources/steps/api_service_point_steps.robot
-Test Tags    bapi    spryker-core    spryker-core-back-office    service-points    shipment-service-points    product-offer-service-points    service-points-cart    product-offer-service-points-availability    marketplace-merchant-product-offer-service-points-availability    shipment-product-offer-service-points-availability    marketplace-merchant-portal-product-offer-service-points    inventory-management    marketplace-inventory-management 
+Test Tags    bapi    spryker-core    spryker-core-back-office    service-points    shipment-service-points    product-offer-service-points    service-points-cart    product-offer-service-points-availability    marketplace-merchant-product-offer-service-points-availability    shipment-product-offer-service-points-availability    marketplace-merchant-portal-product-offer-service-points    inventory-management    marketplace-inventory-management
 
 *** Test Cases ***
 Create_Service_Point_Address_Without_Authentication
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=
     When I send a POST request:    /service-points/${demo_service_point.spryker_main_store.uuid}/service-point-addresses    {"data":{"type":"service-point-addresses","attributes":{"address1":"Park Avenue","address2":"Building №2","address3":"address3","city":"Dreamtown","zipCode":"30-221","countryIso2Code":"DE"}}}
-    Then Response status code should be:    403
+    Then Response status code should be:    401
     And Response should return error message:    Missing access token.
 
 Create_Service_Point_Address_With_Incorrect_Token
@@ -94,14 +94,14 @@ Update_Service_Point_Address_Without_Authentication
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=
     When I send a PATCH request:    /service-points/${demo_service_point.spryker_main_store.uuid}/service-point-addresses/${service_point_address.uuid}    {"data": {"type": "service-point-addresses", "attributes": {"address1": "New Address", "zipCode": "40-123", "city": "New City"}}}
-    Then Response status code should be:    403
+    Then Response status code should be:    401
     And Response should return error message:    Missing access token.
 
 Update_Service_Point_Address_With_Incorrect_Token
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=IncorrectToken
     When I send a PATCH request:    /service-points/${demo_service_point.spryker_main_store.uuid}/service-point-addresses/${service_point_address.uuid}      {"data": {"type": "service-point-addresses", "attributes": {"address1": "New Address", "zipCode": "40-123", "city": "New City"}}}
-    Then Response status code should be:    403
+    Then Response status code should be:    401
     And Response should return error code:    002
     And Response should return error message:    Missing access token.
 
@@ -154,5 +154,5 @@ Read_Service_Point_Address_No_Authentication
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
     ...    AND    I set Headers:    Content-Type=${default_header_content_type}   Authorization=Bearer
     When I send a GET request:    /service-points/${demo_service_point.spryker_main_store.uuid}/service-point-addresses
-    Then Response status code should be:    403
+    Then Response status code should be:    401
     And Response should return error message:    Missing access token.

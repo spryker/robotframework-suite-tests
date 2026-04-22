@@ -7,15 +7,15 @@ Test Tags    bapi    spryker-core    spryker-core-back-office    warehouse-user-
 *** Test Cases ***
 New_warehouse_token_without_autorization
     And I send a POST request:    /warehouse-tokens   {}
-    Then Response status code should be:    403
-    And Response reason should be:    Forbidden
+    Then Response status code should be:    401
+    And Response reason should be:    Unauthorized
 
 
 New_warehouse_token_with_invalid_token
     When I set Headers:    Authorization=fake_token    Content-Type=application/x-www-form-urlencoded
     And I send a POST request:    /warehouse-tokens   {}
-    Then Response status code should be:    403
-    And Response reason should be:    Forbidden
+    Then Response status code should be:    401
+    And Response reason should be:    Unauthorized
 
 New_warehouse_token_for_admin_user_who_is_not_a_WH_user
     When I set Headers:    Content-Type=application/x-www-form-urlencoded

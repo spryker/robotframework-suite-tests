@@ -3,7 +3,7 @@ Suite Setup       API_suite_setup
 Test Setup        API_test_setup
 Resource    ../../../../../../resources/common/common_api.robot
 Resource    ../../../../../../resources/steps/api_service_point_steps.robot
-Test Tags    bapi    spryker-core    spryker-core-back-office    service-points    shipment-service-points    product-offer-service-points    service-points-cart    product-offer-service-points-availability    marketplace-merchant-product-offer-service-points-availability    shipment-product-offer-service-points-availability    marketplace-merchant-portal-product-offer-service-points    inventory-management    marketplace-inventory-management 
+Test Tags    bapi    spryker-core    spryker-core-back-office    service-points    shipment-service-points    product-offer-service-points    service-points-cart    product-offer-service-points-availability    marketplace-merchant-product-offer-service-points-availability    shipment-product-offer-service-points-availability    marketplace-merchant-portal-product-offer-service-points    inventory-management    marketplace-inventory-management
 
 *** Test Cases ***
 Create_Service_Point_With_Existing_Key
@@ -38,7 +38,7 @@ Create_Service_Point_With_Empty_Key
 Create_Service_Point_Without_Authorization
     [Setup]    I set Headers:    Authorization=
     When I send a POST request:    /service-points   {"name": "New Service Point", "key": "new_service_point", "isActive": "true", "stores": ["DE", "AT"]}
-    Then Response status code should be:    403
+    Then Response status code should be:    401
 
 Create_Service_Point_With_Empty_Name
     [Documentation]    https://spryker.atlassian.net/browse/FRW-1597
@@ -112,7 +112,7 @@ Update_Service_Point_With_Wrong_type
 Update_Service_Point_Without_Authorization
     [Setup]    I set Headers:    Authorization=
     When I send a PATCH request:    /service-points/random-id    {"data": {"type": "service-points","attributes": {"name": "Unauthorized Update","key": "unauthorized-update-${random}","isActive": "true","stores": ["DE", "AT"]}}}
-    Then Response status code should be:    403
+    Then Response status code should be:    401
 
 Update_Service_Point_With_Nonexistent_ID
     [Setup]    Run Keywords    I get access token by user credentials:   ${zed_admin.email}
@@ -155,7 +155,7 @@ Update_Service_Point_With_not_existing_key
 Get_Service_Points_Without_Authentication
     [Setup]    I set Headers:    Authorization=
     When I send a GET request:    /service-points
-    Then Response status code should be:    403
+    Then Response status code should be:    401
 
 Get_Service_Points_With_Incorrect_Token
     [Setup]    I set Headers:    Authorization=Bearer IncorrectToken
