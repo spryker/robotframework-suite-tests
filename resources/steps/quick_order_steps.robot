@@ -20,14 +20,14 @@ Yves: add products to the shopping cart from quick order page
 
 Yves: add products to the shopping list from quick order page with name:
     [Arguments]    ${shoppingListName}
-    Wait Until Element Is Visible    ${quick_order_shopping_list_selector}
+    Wait Until Element Is Visible    ${quick_order_shopping_list_visible}[${env}]
     Yves: Select shopping list on 'Quick Order' page    ${shoppingListName}
     Click    ${quick_order_add_to_shopping_list_button}
     Yves: remove flash messages
 
 Yves: Select shopping list on 'Quick Order' page
     [Arguments]    ${shoppingListName}
-    Scroll Element Into View    ${quick_order_shopping_list_selector}
+    Scroll Element Into View    ${quick_order_shopping_list_visible}[${env}]
     Select From List By Label    ${quick_order_shopping_list_selector}    ${shoppingListName}
 
 Yves: find and add new item in the quick order form:

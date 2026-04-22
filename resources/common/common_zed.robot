@@ -195,7 +195,7 @@ Zed: go to second navigation item level:
         Restore Automatic Screenshots on Failure
         IF    '${node_expanded}'=='False'
             Reload
-            Click    xpath=//ul[@id='side-menu']/li/a/span[contans(@class,'nav-label')][contains(text(),'${navigation_item_level1}')]/../../a
+            Click    xpath=//ul[@id='side-menu']/li/a/span[contains(@class,'nav-label')][contains(text(),'${navigation_item_level1}')]/../../a
             TRY
                 Repeat Keyword    3    Wait For Load State
             EXCEPT

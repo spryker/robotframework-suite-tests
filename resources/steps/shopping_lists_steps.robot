@@ -13,9 +13,11 @@ Yves: 'Shopping List' widget contains:
     Mouse Over    ${shopping_list_icon_header_menu_item}[${env}]
     Wait Until Element Is Visible    ${shopping_list_sub_navigation_widget}[${env}]
     IF    '${env}' in ['ui_suite']
-    Page Should Contain Element    xpath=//header//li[contains(@class,'item')]//a[contains(@href,'shopping-list')]/ancestor::li//*[contains(@class,'list')]//li//a[contains(.,'${shoppingListName}')]/ancestor::li/div[contains(@class,'list-item')]//*[contains(@class,'access')][contains(.,'${accessLevel}')]
+        Page Should Contain Element    xpath=//header//li[contains(@class,'item')]//a[contains(@href,'shopping-list')]/ancestor::li//*[contains(@class,'list')]//li//a[contains(.,'${shoppingListName}')]/ancestor::li/div[contains(@class,'list-item')]//*[contains(@class,'access')][contains(.,'${accessLevel}')]
+    ELSE IF    '${env}' in ['ui_mp_b2b']
+        Page Should Contain Element    xpath=//header//div[contains(@class,'header-shopping-list-pill__dropdown')]//a[contains(@class,'shopping-list-panel__row')][.//*[contains(@class,'shopping-list-panel__name')][normalize-space()='${shoppingListName}']][.//*[contains(@class,'shopping-list-panel__meta-left')]//span[contains(normalize-space(),'${accessLevel}')]]
     ELSE
-    Page Should Contain Element    xpath=//header//li[contains(@class,'item')]/span[contains(@class,'item-inner')]//a[contains(@href,'shopping-list')]/ancestor::span/*[contains(@class,'list')]//li//a[contains(.,'${shoppingListName}')]/ancestor::li/div[contains(@class,'list-item')]//*[contains(@class,'access')][contains(.,'${accessLevel}')]
+        Page Should Contain Element    xpath=//header//li[contains(@class,'item')]/span[contains(@class,'item-inner')]//a[contains(@href,'shopping-list')]/ancestor::span/*[contains(@class,'list')]//li//a[contains(.,'${shoppingListName}')]/ancestor::li/div[contains(@class,'list-item')]//*[contains(@class,'access')][contains(.,'${accessLevel}')]
     END
 
 Yves: go to 'Shopping Lists' page
