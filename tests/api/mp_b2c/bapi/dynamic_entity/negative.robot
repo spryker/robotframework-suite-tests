@@ -15,7 +15,7 @@ Get_list_of_country_with_invalid_token
     And I set Headers:    Content-Type=${default_header_content_type}    Authorization=${token}
     And I send a GET request:    /dynamic-entity/robot-test-countries
     Then Response status code should be:    401
-    And Response reason should be:    Forbidden
+    And Response reason should be:    Unauthorized
     And Response should return error code:    002
     And Response should return error message:    Missing access token.
     [Teardown]    Run Keyword    Delete dynamic entity configuration in Database:    robot-test-countries
