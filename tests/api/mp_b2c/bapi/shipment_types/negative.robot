@@ -30,15 +30,15 @@ Create_shipment_type_with_empty_body
 Create_shipment_type_with_empty_token
     [Setup]    I set Headers:    Content-Type=${default_header_content_type}    Authorization=
     When I send a POST request:    /shipment-types    {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type","key": "empty_token${random}","isActive": "true","stores": ["DE", "AT"]}}}
-    Then Response status code should be:    403
-    And Response reason should be:    Forbidden
+    Then Response status code should be:    401
+    And Response reason should be:    Unauthorized
     And Response should return error message:    Missing access token.
 
 Create_shipment_type_with_incorrect_token
     [Setup]    I set Headers:    Authorization=wrong_token
     When I send a POST request:    /shipment-types    {"data": {"type": "shipment-types","attributes": {"name": "Some Shipment Type","key": "incorrect_token${random}","isActive": "true","stores": ["DE", "AT"]}}}
-    Then Response status code should be:    403
-    And Response reason should be:    Forbidden
+    Then Response status code should be:    401
+    And Response reason should be:    Unauthorized
 
 Create_shipment_type_without_key_in_request
     [Documentation]    https://spryker.atlassian.net/browse/CC-32473 Attribute validation in Glue Requests
