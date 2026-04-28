@@ -123,7 +123,7 @@ Get_user_assignments_list_with_invalid_token
     And Create_warehouse_user_assignment:    ${warehouse_uuid}    ${fk_warehouse_spryker}    ${admin_user_uuid}    false
     Then I send a GET request:    /warehouse-user-assignments/
     Then Response status code should be:    401
-    And Response reason should be:    Forbidden
+    And Response reason should be:    Unauthorized
     And Response should return error message:    Missing access token.
     [Teardown]    Run Keywords    Remove_warehouse_user_assignment:    ${warehouse_uuid}    ${admin_user_uuid}
     ...    AND    Make user a warehouse user/ not a warehouse user:    ${admin_user_uuid}    0
