@@ -47,7 +47,7 @@ Add content product abstract list to cms page in DB
     END
     Disconnect From Database
     Trigger publish trigger-events    cms_page
-    Sleep    3s
+    Sleep    4s
     Run console command    console queue:worker:start --stop-when-empty    DE
 
 Delete latest cms page version by uuid from DB
