@@ -450,7 +450,7 @@ Yves: select the following payment method on the checkout and go next:
         Type Text    ${checkout_payment_card_number_field}    4111111111111111
         Type Text    ${checkout_payment_name_on_card_field}    First Last
         Select From List By Value    ${checkout_payment_card_expires_month_select}    01
-        Select From List By Value    ${checkout_payment_card_expires_year_select}    2025
+        Select From List By Value    ${checkout_payment_card_expires_year_select}    2028
         Type Text    ${checkout_payment_card_security_code_field}    123
         Click    ${submit_checkout_form_button}[${env}]
     ELSE IF    '${env}' in ['ui_mp_b2c'] and '${paymentMethod}'=='Invoice'

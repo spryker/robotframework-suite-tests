@@ -47,6 +47,8 @@ Add content product abstract list to cms page in DB
     END
     Disconnect From Database
     Trigger publish trigger-events    cms_page
+    Sleep    5s
+    Run console command    console queue:worker:start --stop-when-empty    DE
 
 Delete latest cms page version by uuid from DB
     [Documentation]    This keyword deletes the latest cms page version data by uuid from in the DB table `spy_cms_version`.
