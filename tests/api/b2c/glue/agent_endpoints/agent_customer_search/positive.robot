@@ -42,7 +42,7 @@ Agent_can_get_search_for_customers_by_email
     And Response should contain the array of a certain size:    [data][0][attributes][customers]    1
     And Response should contain the array of a certain size:    [data][0][attributes][customers][0]    4
     And Response body parameter should contain:    [data][0][attributes][customers][0][customerReference]    DE--21
-    And Response body parameter should contain:    [data][0][attributes][customers][0][email]    sonia@spryker.com
+    And Response body parameter should contain:    [data][0][attributes][customers][0][email]    sonia@acme.com
     And Response body parameter should contain:    [data][0][attributes][customers][0][firstName]    Sonia
     And Response body parameter should contain:    [data][0][attributes][customers][0][lastName]    Wagner
     And Response body has correct self link
@@ -129,9 +129,9 @@ Agent_can_get_search_for_customers_by_substring
     And Response body parameter should not be EMPTY:    [data][0][attributes][customers][0][firstName]
     And Response body parameter should not be EMPTY:    [data][0][attributes][customers][0][lastName]
     And Response body parameter should be:    [data][0][attributes][customers][0][customerReference]    DE--2
-    And Response body parameter should be:    [data][0][attributes][customers][0][email]    maria.williams@spryker.com
+    And Response body parameter should be:    [data][0][attributes][customers][0][email]    maria.williams@acme.com
     And Response body parameter should be:    [data][0][attributes][customers][1][customerReference]    DE--4
-    And Response body parameter should be:    [data][0][attributes][customers][1][email]    bill.martin@spryker.com
+    And Response body parameter should be:    [data][0][attributes][customers][1][email]    bill.martin@acme.com
     And Response body has correct self link
 
 Agent_can_get_search_for_customers_by_incorrect_keyword 
