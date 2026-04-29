@@ -47,10 +47,10 @@ New_Customer_Registration
     [Documentation]    Check that a new user can be registered in the system
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                       | password                   ||
-    ...    || Mr.        | New        | User      | sonia+${random}@spryker.com  | ${default_secure_password} ||
+    ...    || Mr.        | New        | User      | sonia+${random}@acme.com  | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
-    [Teardown]    Zed: delete customer:    sonia+ui+new${random}@spryker.com 
-    
+    [Teardown]    Zed: delete customer:    sonia+ui+new${random}@acme.com
+
 Guest_User_Access_Restrictions
     [Documentation]    Checks that guest users see products info and cart but not profile
     Yves: header contains/doesn't contain:    true    ${currencySwitcher}[${env}]   ${wishlistIcon}    ${accountIcon}    ${shoppingCartIcon}
@@ -117,7 +117,7 @@ User_Account
     Yves: check that user has address exists/doesn't exist:    true    ${yves_second_user_first_name}${random}    ${yves_second_user_last_name}${random}    address 1${random}    address 2 ${random}    ${random}    Berlin${random}    Austria
     [Teardown]    Run Keywords    Yves: login on Yves with provided credentials:    ${yves_second_user_email}
     ...    AND     Yves: delete all user addresses
-    
+
 Add_to_Wishlist
     [Documentation]    Check creation of wishlist and adding to different wishlists
     Yves: login on Yves with provided credentials:    ${yves_user_email}
@@ -222,7 +222,7 @@ Email_Confirmation
     [Documentation]    Check that a new user cannot login if the email is not verified
     Register a new customer with data:
     ...    || salutation | first name | last name | e-mail                             | password                   ||
-    ...    || Mr.        | New        | User      | sonia+fails+${random}@spryker.com  | ${default_secure_password} ||
+    ...    || Mr.        | New        | User      | sonia+fails+${random}@acme.com  | ${default_secure_password} ||
     Yves: flash message should be shown:    success    Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.
-    Yves: login on Yves with provided credentials and expect error:     sonia+fails+${random}@spryker.com     ${default_secure_password}
-    [Teardown]    Zed: delete customer:    sonia+fails+${random}@spryker.com
+    Yves: login on Yves with provided credentials and expect error:     sonia+fails+${random}@acme.com     ${default_secure_password}
+    [Teardown]    Zed: delete customer:    sonia+fails+${random}@acme.com
