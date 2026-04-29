@@ -350,12 +350,12 @@ Business_on_Behalf
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: go to second navigation item level:    Customers    Company Users
     Zed: click Action Button in a table for row that contains:    Donald    Attach to BU
-    Zed: attach company user to the following BU with role:    Spryker Systems Zurich    Admin
+    Zed: attach company user to the following BU with role:    Acme Corporation Zurich    Admin
     Yves: login on Yves with provided credentials:    ${yves_company_user_bob_email}
     Yves: go to URL:    en/company/user/select
     Yves: 'Select Business Unit' page is displayed
-    Yves: 'Business Unit' dropdown contains:    Spryker Systems GmbH / Spryker Systems Berlin    Spryker Systems GmbH / Spryker Systems Zurich
-    [Teardown]    Zed: delete company user xxx withing xxx company business unit:    Donald    Spryker Systems Zurich
+    Yves: 'Business Unit' dropdown contains:    Acme Corporation / Acme Corporation Berlin    Acme Corporation / Acme Corporation Zurich
+    [Teardown]    Zed: delete company user xxx withing xxx company business unit:    Donald    Acme Corporation Zurich
 
 Wishlist_List_Supports_Offers
     [Tags]    wishlist    marketplace-wishlist    product    marketplace-product    marketplace-product-offer

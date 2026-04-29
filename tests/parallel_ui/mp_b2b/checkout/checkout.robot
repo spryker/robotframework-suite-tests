@@ -34,7 +34,7 @@ Business_Unit_Address_on_Checkout
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
-    Yves: shipping address on the order details page is:    Mr. Dynamic Customer Spryker Systems GmbH Gurmont Str. 23 8002 Barcelona, Spain 3490284322
+    Yves: shipping address on the order details page is:    Mr. Dynamic Customer Acme Corporation Gurmont Str. 23 8002 Barcelona, Spain 3490284322
 
 Approval_Process
     [Documentation]    Checks role permissions on checkout and Approval process

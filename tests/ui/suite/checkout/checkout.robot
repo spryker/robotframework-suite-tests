@@ -213,7 +213,7 @@ Business_Unit_Address_on_Checkout
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
-    Yves: shipping address on the order details page is:    Mr. Armando Richi Spryker Systems GmbH Gurmont Str. 23 8002 Barcelona, Spain 3490284322
+    Yves: shipping address on the order details page is:    Mr. Armando Richi Acme Corporation Gurmont Str. 23 8002 Barcelona, Spain 3490284322
 
 Request_for_Quote
     [Tags]    smoke    quotation-process    order-management    marketplace-order-management    agent-assist
