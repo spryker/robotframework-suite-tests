@@ -23,7 +23,7 @@
     },
     "users":{
         "yves_user":{
-            "email":"sonia@spryker.com",
+            "email":"sonia@acme.com",
             "first_name":"Sonia",
             "last_name":"Wagner",
             "password":"change123",
@@ -33,7 +33,7 @@
             "salutation":"Ms"
         },
         "yves_second_user":{
-            "email":"bill.martin@spryker.com",
+            "email":"bill.martin@acme.com",
             "first_name":"Martin",
             "last_name":"Bill",
             "password":"change123",
@@ -57,14 +57,14 @@
             "salutation":"Ms"
         },
         "yves_eighth_user":{
-            "email":"maria.williams@spryker.com",
+            "email":"maria.williams@acme.com",
             "password":"change123",
             "password_new":"Change!23456",
             "password_new_additional":"qweRTY_123456",
             "reference":"DE--2"
         },
         "yves_ninth_user":{
-            "email":"maggie.may@spryker.com",
+            "email":"maggie.may@acme.com",
             "first_name":"Maggie",
             "last_name":"May",
             "password":"Change!23456",
@@ -81,14 +81,14 @@
             "salutation":"Mr"
         },
         "yves_shared_shopping_list_user":{
-            "email":"Trever.m@spryker.com",
+            "email":"Trever.m@acme.com",
             "first_name":"Trever",
             "last_name":"Meier",
             "password":"change123",
             "salutation":"Mr"
         },
         "yves_shared_shopping_cart_user":{
-            "email":"Solomon@spryker.com",
+            "email":"Solomon@acme.com",
             "first_name":"Solomon",
             "last_name":"Wesner",
             "password":"change123",
@@ -758,7 +758,7 @@
     },
     "companies":{
         "company_name":"Spryker Systems GmbH",
-        "user_with_multiple_companies":"anne.boleyn@spryker.com",
+        "user_with_multiple_companies":"anne.boleyn@acme.com",
         "company_id":"62de4ab6-b768-5c21-8835-455d9f341625",
         "company_user_id":"2816dcbd-855e-567e-b26f-4d57f3310bb8",
         "business_unit":{

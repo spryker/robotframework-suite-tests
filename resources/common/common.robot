@@ -599,7 +599,7 @@ I add 'admin' role to company user and get company_user_uuid:
     [Documentation]    This is a helper keyword which sets the 'Admin' role to the company user if it is not already set and returns the uuid of this company user. Requires: company user email, company key and business unit key
     ...    *Example:*
     ...
-    ...    ``Add 'admin' role to company user and return company_user_uuid:    anne.boleyn@spryker.com    BoB-Hotel-Jim    business-unit-jim-1``
+    ...    ``Add 'admin' role to company user and return company_user_uuid:    anne.boleyn@acme.com    BoB-Hotel-Jim    business-unit-jim-1``
     [Arguments]    ${email}    ${company_key}    ${business_unit_key}
     Connect to Spryker DB
     Set Log Level    NONE
@@ -997,7 +997,7 @@ Delete dynamic admin user from DB
     Disconnect From Database
 
 Create dynamic customer in DB
-    [Documentation]    This keyword creates a new approved dynamic customer in the DB based on an existing customer (sonia@spryker.com) and assigns the customer to a company.
+    [Documentation]    This keyword creates a new approved dynamic customer in the DB based on an existing customer (sonia@acme.com) and assigns the customer to a company.
     ...               It works for both MariaDB and PostgreSQL.
     [Arguments]    ${first_name}=Dynamic    ${last_name}=Customer    ${email}=${EMPTY}    ${based_on}=${EMPTY}    ${create_default_address}=True
     ${dynamic_customer_exists}=    Run Keyword And Return Status    Variable Should Exist    ${dynamic_customer}
@@ -1018,7 +1018,7 @@ Create dynamic customer in DB
     END
 
     IF    '${based_on}' == '${EMPTY}'
-        VAR    ${based_on}    sonia@spryker.com
+        VAR    ${based_on}    sonia@acme.com
     END
 
     # Step 1: Fetch the existing customer data (${based_on})
