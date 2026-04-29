@@ -16,7 +16,7 @@ Guest_User_Access_Restrictions
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: header contains/doesn't contain:    false    ${priceModeSwitcher}    ${currencySwitcher}[${env}]     ${quickOrderIcon}    ${accountIcon}    ${shopping_list_icon_header_menu_item}[${env}]    ${shoppingCartIcon}
-    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku} 
+    Yves: go to PDP of the product with sku:    ${one_variant_product_abstract_sku}
     Yves: PDP contains/doesn't contain:     false    ${pdpPriceLocator}    ${addToCartButton}
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: header contains/doesn't contain:    true    ${priceModeSwitcher}    ${currencySwitcher}[${env}]    ${quickOrderIcon}    ${accountIcon}    ${shopping_list_icon_header_menu_item}[${env}]    ${shoppingCartIcon}
@@ -45,7 +45,7 @@ Share_Shopping_Lists
     Yves: 'Shopping Lists' page is displayed
     Yves: the following shopping list is shown:    shoppingListName=shareShoppingList+${random}    shoppingListOwner=Share${random} List${random}    shoppingListAccess=Full access
     Yves: view shopping list with name:    shareShoppingList+${random}
-    Yves: add all available products from list to cart  
+    Yves: add all available products from list to cart
     Yves: 'Shopping Cart' page is displayed
     Yves: shopping cart contains the following products:    403125
     [Teardown]    Run Keywords    Close Current Context
@@ -120,12 +120,12 @@ Business_on_Behalf
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Customers    Company Users
     Zed: click Action Button in a table for row that contains:    Oryx${random}    Attach to BU
-    Zed: attach company user to the following BU with role:    Spryker Systems Zurich    Admin
+    Zed: attach company user to the following BU with role:    Acme Corporation Zurich    Admin
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to URL:    en/company/user/select
     Yves: 'Select Business Unit' page is displayed
-    Yves: 'Business Unit' dropdown contains:    Spryker Systems GmbH / Spryker Systems HR department    Spryker Systems GmbH / Spryker Systems Zurich
-    [Teardown]    Run Keywords    Zed: delete company user xxx withing xxx company business unit:    Oryx${random}    Spryker Systems Zurich
+    Yves: 'Business Unit' dropdown contains:    Acme Corporation / Acme Corporation HR department    Acme Corporation / Acme Corporation Zurich
+    [Teardown]    Run Keywords    Zed: delete company user xxx withing xxx company business unit:    Oryx${random}    Acme Corporation Zurich
     ...    AND    Delete dynamic admin user from DB
 
 User_Account

@@ -25,7 +25,7 @@ Merchant_Portal_Customer_Specific_Prices
     MP: open concrete drawer by SKU:    ${one_variant_product_of_main_merchant_concrete_sku}
     MP: fill product price values:
     ...    || product type | row number | customer                  | store | currency | gross default ||
-    ...    || concrete     | 1          | 5 - Spryker Systems GmbH  | DE    | EUR      | 100           ||
+    ...    || concrete     | 1          | 5 - Acme Corporation  | DE    | EUR      | 100           ||
     MP: save concrete product
     Trigger p&s
     Yves: login on Yves with provided credentials:     ${dynamic_customer}
@@ -36,7 +36,7 @@ Merchant_Portal_Customer_Specific_Prices
     MP: perform search by:    ${one_variant_product_of_main_merchant_abstract_sku}
     MP: click on a table row that contains:    ${one_variant_product_of_main_merchant_abstract_sku}
     MP: open concrete drawer by SKU:    ${one_variant_product_of_main_merchant_concrete_sku}
-    MP: delete product price row that contains text:    5 - Spryker Systems GmbH
+    MP: delete product price row that contains text:    5 - Acme Corporation
     MP: save concrete product
     Trigger p&s
     Yves: login on Yves with provided credentials:     ${dynamic_customer}

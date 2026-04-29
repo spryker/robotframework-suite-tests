@@ -61,7 +61,7 @@ Agent_can_get_search_for_customers_by_first_name
     And Response should contain the array of a certain size:    [data][0][attributes][customers]    1
     And Response should contain the array of a certain size:    [data][0][attributes][customers][0]    4
     And Response body parameter should contain:    [data][0][attributes][customers][0][customerReference]    DE--4
-    And Response body parameter should contain:    [data][0][attributes][customers][0][email]    bill.martin@spryker.co
+    And Response body parameter should contain:    [data][0][attributes][customers][0][email]    bill.martin@acme.com
     And Response body parameter should contain:    [data][0][attributes][customers][0][firstName]    Bill
     And Response body parameter should contain:    [data][0][attributes][customers][0][lastName]    Martin
     And Response body has correct self link
@@ -80,7 +80,7 @@ Agent_can_get_search_for_customers_by_last_name
     And Response should contain the array of a certain size:    [data][0][attributes][customers]    1
     And Response should contain the array of a certain size:    [data][0][attributes][customers][0]    4
     And Response body parameter should contain:    [data][0][attributes][customers][0][customerReference]    DE--4
-    And Response body parameter should contain:    [data][0][attributes][customers][0][email]    bill.martin@spryker.co
+    And Response body parameter should contain:    [data][0][attributes][customers][0][email]    bill.martin@acme.com
     And Response body parameter should contain:    [data][0][attributes][customers][0][firstName]    Bill
     And Response body parameter should contain:    [data][0][attributes][customers][0][lastName]    Martin
     And Response body has correct self link
