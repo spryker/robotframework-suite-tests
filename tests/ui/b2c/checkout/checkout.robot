@@ -104,7 +104,7 @@ Guest_Checkout
     Yves: apply discount voucher to cart:    guestTest${random}
     Yves: shopping cart contains the following products:    ${bundle_product_product_name}
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest${random}@spryker.com
+    Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest${random}@acme.com
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
     ...    || salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
@@ -117,7 +117,7 @@ Guest_Checkout
     Yves: 'Thank you' page is displayed
     Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
+    Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@acme.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
@@ -141,7 +141,7 @@ Guest_Checkout_Addresses
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest+new${random}@spryker.com
+    Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest+new${random}@acme.com
     Yves: billing address same as shipping address:    true
     Yves: select delivery to multiple addresses
     Yves: fill in new delivery address for a product:
@@ -167,7 +167,7 @@ Guest_Checkout_Addresses
     Yves: 'Thank you' page is displayed
     Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: get the last placed order ID of the customer by email:    sonia+guest+new${random}@spryker.com
+    Zed: get the last placed order ID of the customer by email:    sonia+guest+new${random}@acme.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
@@ -231,7 +231,7 @@ Login_during_checkout
     Yves: go to the 'Home' page
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
-    Yves: go to shopping cart page  
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
     Yves: proceed as a guest user and login during checkout:   ${yves_second_user_email}
     Yves: fill in the following new shipping address:
@@ -253,13 +253,13 @@ Register_during_checkout
     Yves: go to PDP of the product with sku:    ${bundled_product_3_concrete_sku}
     Yves: add product to the shopping cart
     Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
-    Yves: go to shopping cart page  
+    Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    ${default_secure_password}    ${default_secure_password}
-    Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
+    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@acme.com    ${default_secure_password}    ${default_secure_password}
+    Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@acme.com'    confirmation_key
     API_test_setup
     I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
-    Yves: login after signup during checkout:    sonia+guest${random}@spryker.com    ${default_secure_password}
+    Yves: login after signup during checkout:    sonia+guest${random}@acme.com    ${default_secure_password}
     Yves: fill in the following new shipping address:
     ...    || salutation     | firstName                | lastName                | street    | houseNumber | postCode     | city       | country     | company    | phone     | additionalAddress         ||
     ...    || ${salutation}  | ${guest_user_first_name} | ${guest_user_last_name} | ${random} | ${random}   | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address}     ||
@@ -276,8 +276,8 @@ Register_during_checkout
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation    | first name               | last name               | email                            ||
-    ...    || ${salutation} | ${guest_user_first_name} | ${guest_user_last_name} | sonia+guest${random}@spryker.com ||
-    [Teardown]    Zed: delete customer:    sonia+guest${random}@spryker.com 
+    ...    || ${salutation} | ${guest_user_first_name} | ${guest_user_last_name} | sonia+guest${random}@acme.com ||
+    [Teardown]    Zed: delete customer:    sonia+guest${random}@acme.com
 
 Configurable_Product_Checkout
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}

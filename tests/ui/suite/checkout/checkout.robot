@@ -71,11 +71,11 @@ Register_during_checkout
     Page Should Not Contain Element    ${pdp_add_to_wishlist_button}
     Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@spryker.com    ${default_secure_password}    ${default_secure_password}
-    Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@spryker.com'    confirmation_key
+    Yves: signup guest user during checkout:    ${guest_user_first_name}    ${guest_user_last_name}    sonia+guest${random}@acme.com    ${default_secure_password}    ${default_secure_password}
+    Save the result of a SELECT DB query to a variable:    select registration_key from spy_customer where email = 'sonia+guest${random}@acme.com'    confirmation_key
     API_test_setup
     I send a POST request:     /customer-confirmation   {"data":{"type":"customer-confirmation","attributes":{"registrationKey":"${confirmation_key}"}}}
-    Yves: login after signup during checkout:    sonia+guest${random}@spryker.com    ${default_secure_password}
+    Yves: login after signup during checkout:    sonia+guest${random}@acme.com    ${default_secure_password}
     Yves: fill in the following new shipping address:
     ...    || salutation     | firstName                | lastName                | street    | houseNumber | postCode     | city       | country     | company    | phone     | additionalAddress         ||
     ...    || ${salutation}  | ${guest_user_first_name} | ${guest_user_last_name} | ${random} | ${random}   | ${random}    | ${city}    | ${country}  | ${company} | ${random} | ${additional_address}     ||
@@ -92,11 +92,11 @@ Register_during_checkout
     Yves: 'Profile' page is displayed
     Yves: assert customer profile data:
     ...    || salutation    | first name               | last name               | email                            ||
-    ...    || ${salutation} | ${guest_user_first_name} | ${guest_user_last_name} | sonia+guest${random}@spryker.com ||
-    [Teardown]    Zed: delete customer:    sonia+guest${random}@spryker.com
+    ...    || ${salutation} | ${guest_user_first_name} | ${guest_user_last_name} | sonia+guest${random}@acme.com ||
+    [Teardown]    Zed: delete customer:    sonia+guest${random}@acme.com
 
 Guest_Checkout
-    [Tags]    smoke    product-bundles    promotions-discounts    marketplace-promotions-discounts    order-management    marketplace-order-management    
+    [Tags]    smoke    product-bundles    promotions-discounts    marketplace-promotions-discounts    order-management    marketplace-order-management
     [Documentation]    Guest checkout with bundles, discounts and OMS
     [Setup]    Run keywords    Zed: login on Zed with provided credentials:    ${zed_admin_email}
     ...    AND    Zed: change product stock:    ${bundled_product_1_abstract_sku}    ${bundled_product_1_concrete_sku}    true    10
@@ -113,7 +113,7 @@ Guest_Checkout
     Yves: apply discount voucher to cart:    guestTest${random}
     Yves: shopping cart contains the following products:    ${bundle_product_concrete_sku}
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest${random}@spryker.com
+    Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest${random}@acme.com
     Yves: billing address same as shipping address:    true
     Yves: fill in the following new shipping address:
     ...    || salutation | firstName | lastName | street        | houseNumber | postCode | city   | country | company | phone     | additionalAddress ||
@@ -126,7 +126,7 @@ Guest_Checkout
     Yves: 'Thank you' page is displayed
     Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
+    Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@acme.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
@@ -139,7 +139,7 @@ Guest_Checkout
     ...    AND    Zed: deactivate following discounts from Overview page:    Guest Voucher Code 5% ${random}    Guest Cart Rule 10% ${random}
 
 Guest_Checkout_Addresses
-    [Tags]    smoke    order-management    marketplace-order-management    product        
+    [Tags]    smoke    order-management    marketplace-order-management    product
     [Documentation]    Guest checkout with different addresses and OMS
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
@@ -151,7 +151,7 @@ Guest_Checkout_Addresses
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest+new${random}@spryker.com
+    Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest+new${random}@acme.com
     Yves: billing address same as shipping address:    true
     Yves: select delivery to multiple addresses
     Yves: fill in new delivery address for a product:
@@ -177,7 +177,7 @@ Guest_Checkout_Addresses
     Yves: 'Thank you' page is displayed
     Trigger oms
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
-    Zed: get the last placed order ID of the customer by email:    sonia+guest+new${random}@spryker.com
+    Zed: get the last placed order ID of the customer by email:    sonia+guest+new${random}@acme.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: billing address for the order should be:    First Last, Billing Street 123, 10247 Berlin, Germany
@@ -213,7 +213,7 @@ Business_Unit_Address_on_Checkout
     Yves: get the last placed order ID by current customer
     Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
     Yves: 'Order Details' page is displayed
-    Yves: shipping address on the order details page is:    Mr. Armando Richi Spryker Systems GmbH Gurmont Str. 23 8002 Barcelona, Spain 3490284322
+    Yves: shipping address on the order details page is:    Mr. Armando Richi Acme Corporation Gurmont Str. 23 8002 Barcelona, Spain 3490284322
 
 Request_for_Quote
     [Tags]    smoke    quotation-process    order-management    marketplace-order-management    agent-assist

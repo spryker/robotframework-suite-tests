@@ -2050,12 +2050,12 @@ Cleanup all availability notifications:
 Get the first company user id and its' customer email
     [Documentation]    This keyword sends the GET request to the ``/company-users?include=customers`` endpoint and returns first available company user id and its' customer email in
     ...    ``{companyUserId}``  and  ``{companyUserEmail}`` variables.
-    ...    If the fist company user is anne.boleyn@spryker.com - the next one will be taken and Anna is a 'BoB' user
+    ...    If the fist company user is anne.boleyn@acme.com - the next one will be taken and Anna is a 'BoB' user
     ...
     I send a GET request:    /company-users?include=customers
     Save value to a variable:    [data][0][id]    companyUserId
     Save value to a variable:    [included][0][attributes][email]    companyUserEmail
-    IF    '${companyUserEmail}' == 'anne.boleyn@spryker.com'
+    IF    '${companyUserEmail}' == 'anne.boleyn@acme.com'
         Save value to a variable:    [included][1][attributes][email]    companyUserEmail
         Save value to a variable:    [data][1][id]    companyUserId
     END

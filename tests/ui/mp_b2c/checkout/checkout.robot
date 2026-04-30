@@ -99,7 +99,7 @@ Guest_Checkout_and_Addresses
     Yves: go to shopping cart page
     Yves: apply discount voucher to cart:    guestTest${random}
     Yves: click on the 'Checkout' button in the shopping cart
-    Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest${random}@spryker.com
+    Yves: proceed with checkout as guest:    Mr    Guest    user    sonia+guest${random}@acme.com
     Yves: billing address same as shipping address:    true
     Yves: select delivery to multiple addresses
     Yves: fill in new delivery address for a product:
@@ -124,7 +124,7 @@ Guest_Checkout_and_Addresses
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
     Zed: login on Zed with provided credentials:    ${zed_main_merchant_email}
-    Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@spryker.com
+    Zed: get the last placed order ID of the customer by email:    sonia+guest${random}@acme.com
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside xxx order:    ${zedLastPlacedOrder}    Pay
     Zed: go to my order page:    ${zedLastPlacedOrder}
@@ -141,7 +141,7 @@ Guest_Checkout_and_Addresses
 
 Multiple_Merchants_Order
     [Documentation]    Checks that order with products and offers of multiple merchants could be placed and it will be split per merchant
-    [Setup]    Run Keywords    
+    [Setup]    Run Keywords
     ...    MP: login on MP with provided credentials:    ${merchant_video_king_email}
     ...    AND    MP: change offer stock:
     ...    || offer   | stock quantity | is never out of stock ||
