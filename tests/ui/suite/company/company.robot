@@ -21,36 +21,36 @@ Create_new_company_with_linked_entities_and_customer_in_backoffice
     Zed: create new Company Role with provided permissions:    ${created_company}    ${created_company_id}    RobotRole    true    View company users
     Zed: Create new Company User with provided details:
     ...    || email                                     | salutation | first_name | last_name | gender | company           | business_unit            | role      ||
-    ...    || sonia+created+cuser+${random}@spryker.com | Ms         | Robot      | User      | Female | ${created_company}| ${created_business_unit} | RobotRole ||
+    ...    || sonia+created+cuser+${random}@acme.com | Ms         | Robot      | User      | Female | ${created_company}| ${created_business_unit} | RobotRole ||
     Zed: create new Zed user with the following data:    agent+company_user_bo${random}@spryker.com    ${default_secure_password}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent+company_user_bo${random}@spryker.com    ${default_secure_password}    agent_assist=${True}
-    Yves: as an agent login under the customer:    sonia+created+cuser+${random}@spryker.com
-    Yves: go to URL:    /company/user    
+    Yves: as an agent login under the customer:    sonia+created+cuser+${random}@acme.com
+    Yves: go to URL:    /company/user
     ${location}=    Get Location
     Should Contain    ${location}    /company/user    msg=Failed to navigate to the 'Company User' page
     Yves: go to URL:    /company/company-role
     ${location}=    Get Location
     Should Contain    ${location}    /403    msg=Navigated to the 'Company Role' page despite the lack of permissions
-    
+
 Create_new_company_user_with_linked_entities_in_storefront
     [Tags]    smoke
     [Documentation]    Create a new company user on Storefront
     Yves: login on Yves with provided credentials:    ${yves_spryker_admin_company_user_email}
     Yves: create new company role:    RobotYvesRole+${random}
     Yves: assign the following permissions to the company role:    RobotYvesRole+${random}    View company users
-    Yves: create new company business unit:    business_unit_name=RobotYvesBusinessUnit+${random}    business_unit_email=robot+business+unit+${random}@spryker.com
-    Yves: create new company user:    business_unit=RobotYvesBusinessUnit+${random}    email=sonia+sf+new+cuser+${random}@spryker.com    role=RobotYvesRole+${random}    first_name=Sonia    last_name=NewUser    
+    Yves: create new company business unit:    business_unit_name=RobotYvesBusinessUnit+${random}    business_unit_email=robot+business+unit+${random}@acme.com
+    Yves: create new company user:    business_unit=RobotYvesBusinessUnit+${random}    email=sonia+sf+new+cuser+${random}@acme.com    role=RobotYvesRole+${random}    first_name=Sonia    last_name=NewUser
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
     Zed: create new Zed user with the following data:    agent+company_user_yves${random}@spryker.com    ${default_secure_password}    Agent    Assist    Root group    This user is an agent in Storefront    en_US
     Yves: go to the 'Home' page
     Yves: logout on Yves as a customer
     Yves: go to URL:    agent/login
     Yves: login on Yves with provided credentials:    agent+company_user_yves${random}@spryker.com    ${default_secure_password}    agent_assist=${True}
-    Yves: as an agent login under the customer:    sonia+sf+new+cuser+${random}@spryker.com
-    Yves: go to URL:    /company/user    
+    Yves: as an agent login under the customer:    sonia+sf+new+cuser+${random}@acme.com
+    Yves: go to URL:    /company/user
     ${location}=    Get Location
     Should Contain    ${location}    /company/user    msg=Failed to navigate to the 'Company User' page
     Yves: go to URL:    /company/company-role

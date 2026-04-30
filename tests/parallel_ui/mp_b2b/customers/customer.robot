@@ -123,12 +123,12 @@ Business_on_Behalf
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to second navigation item level:    Customers    Company Users
     Zed: click Action Button in a table for row that contains:    Oryx${random}    Attach to BU
-    Zed: attach company user to the following BU with role:    Spryker Systems Zurich    Admin
+    Zed: attach company user to the following BU with role:    Acme Corporation Zurich    Admin
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to URL:    en/company/user/select
     Yves: 'Select Business Unit' page is displayed
-    Yves: 'Business Unit' dropdown contains:    Spryker Systems GmbH / Spryker Systems HR department    Spryker Systems GmbH / Spryker Systems Zurich
-    [Teardown]    Run Keywords    Zed: delete company user xxx withing xxx company business unit:    Oryx${random}    Spryker Systems Zurich
+    Yves: 'Business Unit' dropdown contains:    Acme Corporation / Acme Corporation HR department    Acme Corporation / Acme Corporation Zurich
+    [Teardown]    Run Keywords    Zed: delete company user xxx withing xxx company business unit:    Oryx${random}    Acme Corporation Zurich
     ...    AND    Delete dynamic admin user from DB
 
 User_Account
