@@ -85,14 +85,16 @@ Multistore_Product_Offer
     Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: merchant's offer/product price should be:    Spryker    €200.00
-    Yves: go to AT store 'Home' page if other store not specified:
-    Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
-    Yves: product price on the PDP should be:    €10.00   wait_for_p&s=true
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
-    Yves: merchant's offer/product price should be:    Video King    €55.00
+    IF    ${dms}
+        Yves: go to AT store 'Home' page if other store not specified:
+        Trigger multistore p&s
+        Yves: login on Yves with provided credentials:    ${dynamic_customer}
+        Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
+        Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
+        Yves: product price on the PDP should be:    €10.00   wait_for_p&s=true
+        Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
+        Yves: merchant's offer/product price should be:    Video King    €55.00
+    END
     MP: login on MP with provided credentials:    ${dynamic_spryker_merchant}
     MP: open navigation menu tab:    Offers
     MP: perform search by:    multistoreSKU${random}-1
@@ -102,12 +104,14 @@ Multistore_Product_Offer
     ...    || true      | AT             ||
     MP: save offer
     Repeat Keyword    3    Trigger multistore p&s
-    Yves: go to AT store 'Home' page if other store not specified:
-    Trigger multistore p&s
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
-    Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    false
-    Save current URL
+    IF    ${dms}
+        Yves: go to AT store 'Home' page if other store not specified:
+        Trigger multistore p&s
+        Yves: login on Yves with provided credentials:    ${dynamic_customer}
+        Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
+        Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    false
+        Save current URL
+    END
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: update abstract product data:
     ...    || productAbstract        | unselect store ||
@@ -117,5 +121,7 @@ Multistore_Product_Offer
     ...    || productAbstract        | unselect store ||
     ...    || multistoreSKU${random} | AT             ||
     Repeat Keyword    3    Trigger multistore p&s
-    Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
+    IF    ${dms}
+        Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:    ${url}
+    END
     [Teardown]    Delete dynamic admin user from DB
