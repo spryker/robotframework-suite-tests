@@ -34,8 +34,7 @@ Zed: create new Zed user with the following data:
 Yves: open agent control popover if present
     ${hasAgentControl}=    Run Keyword And Return Status    Page Should Contain Element    ${agent_control_widget}
     IF    ${hasAgentControl}
-        ${isOpen}=    Run Keyword And Return Status    Element Should Be Visible    ${agent_customer_search_widget}
-        IF    not ${isOpen}    Click    ${agent_chip_trigger}
+        Hover    ${agent_chip_trigger}
         Wait Until Element Is Visible    ${agent_customer_search_widget}
     END
 
@@ -65,15 +64,24 @@ Yves: as an agent login under the customer:
     END
     Yves: perform search by customer:    ${searchQuery}
     Wait Until Element Is Visible    //ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
-    Click    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
-    ${needsConfirm}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${agent_confirm_login_button}    timeout=2s
-    IF    ${needsConfirm}    Click    ${agent_confirm_login_button}
+    ${isNewUi}=    Run Keyword And Return Status    Page Should Contain Element    ${agent_control_widget}
+    IF    ${isNewUi}
+        Evaluate Javascript    ${None}    () => document.querySelector(`header agent-control ul[data-qa='component customer-list'] li[data-value='${searchQuery}']`)?.click()
+    ELSE
+        Click    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
+        ${needsConfirm}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${agent_confirm_login_button}    timeout=2s
+        IF    ${needsConfirm}    Click    ${agent_confirm_login_button}
+    END
+    TRY
+        Wait For Load State    networkidle    timeout=10s
+    EXCEPT
+        Log    Page did not reach networkidle within 10s
+    END
 
 Yves: end customer assistance
     ${hasAgentControl}=    Run Keyword And Return Status    Page Should Contain Element    ${agent_control_widget}
     IF    ${hasAgentControl}
-        ${isOpen}=    Run Keyword And Return Status    Element Should Be Visible    ${agent_end_session_trigger}
-        IF    not ${isOpen}    Click    ${agent_chip_trigger}
+        Hover    ${agent_chip_trigger}
         Wait Until Element Is Visible    ${agent_end_session_trigger}
         Click    ${agent_end_session_trigger}
     END
