@@ -22,10 +22,10 @@ ${shopping_cart_sub_navigation_all_carts_button}    //*[contains(@class,'icon--c
 ${shopping_cart_sub_navigation_create_cart_button}    xpath=//*[contains(@class,'icon--cart')]/ancestor::li//div[contains(@class,'js-user-navigation__sub-nav-cart')]//a[contains(.,'Create New Cart')]
 ${search_form_header_menu_item}    xpath=//div[@data-qa='component search-form'][@data-search-id='desktop']//input[@name='q' and not(ancestor::asset-finder)]
 ${search_form_open_menu_item}    xpath=//div[(contains(@class,'header'))][(contains(@class,'search-open'))]
-${agent_customer_search_widget}    xpath=//autocomplete-form[@data-qa='component autocomplete-form']//input[contains(@class,'autocomplete-form')][@type='text']
-${agent_confirm_login_button}    xpath=//agent-control-bar[@data-qa='component agent-control-bar']//button[contains(@class,'button--success')]
-${agent_quote_requests_header_item}    xpath=//agent-control-bar//a[contains(@href,'quote-request') and not(contains(@href,'detail'))]/ancestor::li[contains(@class,'item')][contains(@class,'-has-children') and not(contains(@class,'navigation'))]
-${agent_quote_requests_widget}    xpath=//agent-control-bar//a[contains(@href,'quote-request') and not(contains(@href,'detail'))]/ancestor::li[contains(@class,'item')][contains(@class,'-has-children') and not(contains(@class,'navigation'))]//ul
+${agent_customer_search_widget}    xpath=//*[@data-qa='component agent-control-bar' or @data-qa='component agent-control']//autocomplete-form[@data-qa='component autocomplete-form']//input[contains(@class,'autocomplete-form')][@type='text']
+${agent_confirm_login_button}    xpath=//agent-control-bar[@data-qa='component agent-control-bar']//button[contains(@class,'button--success')] | //*[contains(@class,'js-agent-control__switch-confirm-trigger')]
+${agent_quote_requests_header_item}    xpath=//agent-control-bar//a[contains(@href,'quote-request') and not(contains(@href,'detail'))]/ancestor::li[contains(@class,'item')][contains(@class,'-has-children') and not(contains(@class,'navigation'))] | //agent-control[@data-qa='component agent-control']//a[contains(@href,'agent/quote-request')]
+${agent_quote_requests_widget}    xpath=//agent-control-bar//a[contains(@href,'quote-request') and not(contains(@href,'detail'))]/ancestor::li[contains(@class,'item')][contains(@class,'-has-children') and not(contains(@class,'navigation'))]//ul | //agent-control[@data-qa='component agent-control']//a[contains(@href,'agent/quote-request')]
 ${wishlist_icon_header_navigation_widget}    xpath=//nav[@data-qa='component navigation-top']//*[@*='#:wishlist']/ancestor::*[@data-qa='component icon'] | //nav[@data-qa='component navigation-top']//*[@*='wishlist']
 ${cart_widget_item_quantity_counter}    xpath=//*[@data-qa='component navigation-top']//span[contains(@class,'cart-counter__quantity js-cart-counter__quantity')]
 ${header_logo_link}    xpath=//header//*[@data-qa='component logo']//a
