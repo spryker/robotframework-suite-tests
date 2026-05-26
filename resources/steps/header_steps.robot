@@ -1,6 +1,7 @@
 *** Settings ***
 Resource    ../common/common.robot
 Resource    ../pages/yves/yves_header_section.robot
+Resource    ../pages/yves/yves_agent_assist_page.robot
 Resource    ../pages/yves/yves_catalog_page.robot
 Resource    ../steps/request_for_quote_steps.robot
 Resource    ../steps/shopping_carts_steps.robot
@@ -112,13 +113,19 @@ Yves: move mouse over header menu item:
     ${header_elements_list_count}=   get length  ${header_elements_list}
     FOR    ${index}    IN RANGE    0    ${header_elements_list_count}
         ${header_element_to_check}=    Get From List    ${header_elements_list}    ${index}
+        ${isAgentItem}=    Run Keyword And Return Status    Should Contain    ${header_element_to_check}    agent-control
+        IF    ${isAgentItem}
+            ${hasNewAgentControl}=    Run Keyword And Return Status    Page Should Contain Element    ${agent_control_widget}
+            IF    ${hasNewAgentControl}    Hover    ${agent_chip_trigger}
+        END
         Mouse Over    ${header_element_to_check}
         Sleep    1s
     END
 
 Yves: '${headerItem}' widget is shown
     IF    '${headerItem}' == 'Quote Requests'
-        Run Keywords
-            Wait Until Element Is Visible    ${agent_quote_requests_widget}
-            Page Should Contain Element    ${agent_quote_requests_widget}
+        ${hasNewAgentControl}=    Run Keyword And Return Status    Page Should Contain Element    ${agent_control_widget}
+        IF    ${hasNewAgentControl}    Hover    ${agent_chip_trigger}
+        Wait Until Element Is Visible    ${agent_quote_requests_widget}
+        Page Should Contain Element    ${agent_quote_requests_widget}
     END
