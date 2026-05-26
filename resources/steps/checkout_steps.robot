@@ -92,7 +92,7 @@ Yves: select the following existing address on the checkout as 'shipping' addres
     IF    '${is_ssp}' == 'true'
         Wait Until Element Is Visible    ${checkout_address_delivery_selector}[ssp_b2b]
     ELSE
-        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}] 
+        Wait Until Element Is Visible    ${checkout_address_delivery_selector}[${env}]
     END
     WHILE  '${selected_address}' != '${addressToUse}'    limit=5
         IF    '${env}' in ['ui_b2c','ui_mp_b2c']
