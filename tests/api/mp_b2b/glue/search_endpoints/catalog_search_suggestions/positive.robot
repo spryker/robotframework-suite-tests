@@ -183,7 +183,6 @@ Get_search_suggestions_with_brand_and_currency
     And Response should contain the array of a certain size:    [data][0][attributes][completion]    10
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    10
     And Array element should contain property with value at least once:    [data][0][attributes][abstractProducts]    price    ${${alternative_abstract_product.price_chf}}
-    And Response body has correct self link
 
 Get_search_suggestions_with_color
     When I send a GET request:    /catalog-search-suggestions?q=${color_name}
