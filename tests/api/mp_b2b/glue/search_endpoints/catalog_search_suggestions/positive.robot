@@ -174,7 +174,7 @@ Get_search_suggestions_with_cms_page_collection
     And Response body has correct self link
 
 Get_search_suggestions_with_brand_and_currency
-    When I send a GET request:    /catalog-search-suggestions?q=${brand_name}&currency=${currency.chf.code}
+    When I send a GET request:    /catalog-search-suggestions?q=${brand_name}&currency=${currency.chf.code}&page[limit]=12
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][0][type]    catalog-search-suggestions
