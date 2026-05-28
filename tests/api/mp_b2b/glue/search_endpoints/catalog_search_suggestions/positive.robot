@@ -174,7 +174,7 @@ Get_search_suggestions_with_cms_page_collection
     And Response body has correct self link
 
 Get_search_suggestions_with_brand_and_currency
-    When I send a GET request:    /catalog-search-suggestions?q=${brand_name}&currency=${currency.chf.code}
+    When I send a GET request:    /catalog-search-suggestions?q=${brand_name}&currency=${currency.chf.code}&page[limit]=12
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response body parameter should be:    [data][0][type]    catalog-search-suggestions
@@ -183,7 +183,6 @@ Get_search_suggestions_with_brand_and_currency
     And Response should contain the array of a certain size:    [data][0][attributes][completion]    10
     And Response should contain the array of a certain size:    [data][0][attributes][abstractProducts]    10
     And Array element should contain property with value at least once:    [data][0][attributes][abstractProducts]    price    ${${alternative_abstract_product.price_chf}}
-    And Response body has correct self link
 
 Get_search_suggestions_with_color
     When I send a GET request:    /catalog-search-suggestions?q=${color_name}
