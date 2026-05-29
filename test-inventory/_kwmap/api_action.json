@@ -1,0 +1,374 @@
+{
+  "I set Headers:": {
+    "canonical_name": "set_request_headers",
+    "kind": "setup",
+    "description": "Set HTTP request headers for the next API call.",
+    "migration_note": "cy.request({ headers: {...} }) or set in a request wrapper."
+  },
+  "And I set Headers:": {
+    "canonical_name": "set_request_headers",
+    "kind": "setup",
+    "description": "Set HTTP request headers for the next API call.",
+    "migration_note": "cy.request({ headers: {...} }) or set in a request wrapper."
+  },
+  "When I set Headers:": {
+    "canonical_name": "set_request_headers",
+    "kind": "setup",
+    "description": "Set HTTP request headers for the next API call.",
+    "migration_note": "cy.request({ headers: {...} }) or set in a request wrapper."
+  },
+  "I Set Headers:": {
+    "canonical_name": "set_request_headers",
+    "kind": "setup",
+    "description": "Set HTTP request headers for the next API call.",
+    "migration_note": "cy.request({ headers: {...} }) or set in a request wrapper."
+  },
+  "I set headers:": {
+    "canonical_name": "set_request_headers",
+    "kind": "setup",
+    "description": "Set HTTP request headers for the next API call.",
+    "migration_note": "cy.request({ headers: {...} }) or set in a request wrapper."
+  },
+  "Then I set Headers:": {
+    "canonical_name": "set_request_headers",
+    "kind": "setup",
+    "description": "Set HTTP request headers for the next API call.",
+    "migration_note": "cy.request({ headers: {...} }) or set in a request wrapper."
+  },
+  "And I Set Headers:": {
+    "canonical_name": "set_request_headers",
+    "kind": "setup",
+    "description": "Set HTTP request headers for the next API call.",
+    "migration_note": "cy.request({ headers: {...} }) or set in a request wrapper."
+  },
+  "I send a POST request:": {
+    "canonical_name": "send_post_request",
+    "kind": "api",
+    "description": "Send an HTTP POST request to the API.",
+    "migration_note": "cy.request({ method: 'POST', url, body, headers })."
+  },
+  "When I send a POST request:": {
+    "canonical_name": "send_post_request",
+    "kind": "api",
+    "description": "Send an HTTP POST request to the API.",
+    "migration_note": "cy.request({ method: 'POST', url, body, headers })."
+  },
+  "And I send a POST request:": {
+    "canonical_name": "send_post_request",
+    "kind": "api",
+    "description": "Send an HTTP POST request to the API.",
+    "migration_note": "cy.request({ method: 'POST', url, body, headers })."
+  },
+  "I send a Post request:": {
+    "canonical_name": "send_post_request",
+    "kind": "api",
+    "description": "Send an HTTP POST request to the API.",
+    "migration_note": "cy.request({ method: 'POST', url, body, headers })."
+  },
+  "When I send a Post request:": {
+    "canonical_name": "send_post_request",
+    "kind": "api",
+    "description": "Send an HTTP POST request to the API.",
+    "migration_note": "cy.request({ method: 'POST', url, body, headers })."
+  },
+  "Then I send a POST request:": {
+    "canonical_name": "send_post_request",
+    "kind": "api",
+    "description": "Send an HTTP POST request to the API.",
+    "migration_note": "cy.request({ method: 'POST', url, body, headers })."
+  },
+  "And I send a POST request with data:": {
+    "canonical_name": "send_post_request",
+    "kind": "api",
+    "description": "Send an HTTP POST request to the API with a body payload.",
+    "migration_note": "cy.request({ method: 'POST', url, body }); 'with data' = explicit body arg."
+  },
+  "Then I send a POST request with data:": {
+    "canonical_name": "send_post_request",
+    "kind": "api",
+    "description": "Send an HTTP POST request to the API with a body payload.",
+    "migration_note": "cy.request({ method: 'POST', url, body }); 'with data' = explicit body arg."
+  },
+  "I send a POST request with data:": {
+    "canonical_name": "send_post_request",
+    "kind": "api",
+    "description": "Send an HTTP POST request to the API with a body payload.",
+    "migration_note": "cy.request({ method: 'POST', url, body }); 'with data' = explicit body arg."
+  },
+  "When I send a GET request:": {
+    "canonical_name": "send_get_request",
+    "kind": "api",
+    "description": "Send an HTTP GET request to the API.",
+    "migration_note": "cy.request({ method: 'GET', url, headers })."
+  },
+  "And I send a GET request:": {
+    "canonical_name": "send_get_request",
+    "kind": "api",
+    "description": "Send an HTTP GET request to the API.",
+    "migration_note": "cy.request({ method: 'GET', url, headers })."
+  },
+  "I send a GET request:": {
+    "canonical_name": "send_get_request",
+    "kind": "api",
+    "description": "Send an HTTP GET request to the API.",
+    "migration_note": "cy.request({ method: 'GET', url, headers })."
+  },
+  "Then I send a GET request:": {
+    "canonical_name": "send_get_request",
+    "kind": "api",
+    "description": "Send an HTTP GET request to the API.",
+    "migration_note": "cy.request({ method: 'GET', url, headers })."
+  },
+  "when I send a GET request:": {
+    "canonical_name": "send_get_request",
+    "kind": "api",
+    "description": "Send an HTTP GET request to the API.",
+    "migration_note": "cy.request({ method: 'GET', url, headers })."
+  },
+  "I send a DELETE request:": {
+    "canonical_name": "send_delete_request",
+    "kind": "api",
+    "description": "Send an HTTP DELETE request to the API.",
+    "migration_note": "cy.request({ method: 'DELETE', url, headers })."
+  },
+  "When I send a DELETE request:": {
+    "canonical_name": "send_delete_request",
+    "kind": "api",
+    "description": "Send an HTTP DELETE request to the API.",
+    "migration_note": "cy.request({ method: 'DELETE', url, headers })."
+  },
+  "And I send a DELETE request:": {
+    "canonical_name": "send_delete_request",
+    "kind": "api",
+    "description": "Send an HTTP DELETE request to the API.",
+    "migration_note": "cy.request({ method: 'DELETE', url, headers })."
+  },
+  "Then I send a DELETE request:": {
+    "canonical_name": "send_delete_request",
+    "kind": "api",
+    "description": "Send an HTTP DELETE request to the API.",
+    "migration_note": "cy.request({ method: 'DELETE', url, headers })."
+  },
+  "When I send a Delete request:": {
+    "canonical_name": "send_delete_request",
+    "kind": "api",
+    "description": "Send an HTTP DELETE request to the API.",
+    "migration_note": "cy.request({ method: 'DELETE', url, headers })."
+  },
+  "When I send a PATCH request:": {
+    "canonical_name": "send_patch_request",
+    "kind": "api",
+    "description": "Send an HTTP PATCH request to the API.",
+    "migration_note": "cy.request({ method: 'PATCH', url, body, headers })."
+  },
+  "I send a PATCH request:": {
+    "canonical_name": "send_patch_request",
+    "kind": "api",
+    "description": "Send an HTTP PATCH request to the API.",
+    "migration_note": "cy.request({ method: 'PATCH', url, body, headers })."
+  },
+  "And I send a PATCH request:": {
+    "canonical_name": "send_patch_request",
+    "kind": "api",
+    "description": "Send an HTTP PATCH request to the API.",
+    "migration_note": "cy.request({ method: 'PATCH', url, body, headers })."
+  },
+  "AND I send a PATCH request:": {
+    "canonical_name": "send_patch_request",
+    "kind": "api",
+    "description": "Send an HTTP PATCH request to the API.",
+    "migration_note": "cy.request({ method: 'PATCH', url, body, headers })."
+  },
+  "Then I send a PATCH request:": {
+    "canonical_name": "send_patch_request",
+    "kind": "api",
+    "description": "Send an HTTP PATCH request to the API.",
+    "migration_note": "cy.request({ method: 'PATCH', url, body, headers })."
+  },
+  "When I send a Patch request:": {
+    "canonical_name": "send_patch_request",
+    "kind": "api",
+    "description": "Send an HTTP PATCH request to the API.",
+    "migration_note": "cy.request({ method: 'PATCH', url, body, headers })."
+  },
+  "And I send a PUT request:": {
+    "canonical_name": "send_put_request",
+    "kind": "api",
+    "description": "Send an HTTP PUT request to the API.",
+    "migration_note": "cy.request({ method: 'PUT', url, body, headers })."
+  },
+  "Save value to a variable:": {
+    "canonical_name": "save_response_value",
+    "kind": "data",
+    "description": "Extract a value from the response and save it to a test variable.",
+    "migration_note": "cy.request(...).then((res) => { const v = res.body... }); use closure/alias."
+  },
+  "And Save value to a variable:": {
+    "canonical_name": "save_response_value",
+    "kind": "data",
+    "description": "Extract a value from the response and save it to a test variable.",
+    "migration_note": "cy.request(...).then((res) => { const v = res.body... }); use closure/alias."
+  },
+  "When Save value to a variable:": {
+    "canonical_name": "save_response_value",
+    "kind": "data",
+    "description": "Extract a value from the response and save it to a test variable.",
+    "migration_note": "cy.request(...).then((res) => { const v = res.body... }); use closure/alias."
+  },
+  "Then Save value to a variable:": {
+    "canonical_name": "save_response_value",
+    "kind": "data",
+    "description": "Extract a value from the response and save it to a test variable.",
+    "migration_note": "cy.request(...).then((res) => { const v = res.body... }); use closure/alias."
+  },
+  "AND Save value to a variable:": {
+    "canonical_name": "save_response_value",
+    "kind": "data",
+    "description": "Extract a value from the response and save it to a test variable.",
+    "migration_note": "cy.request(...).then((res) => { const v = res.body... }); use closure/alias."
+  },
+  "I get access token for the customer:": {
+    "canonical_name": "get_customer_access_token",
+    "kind": "setup",
+    "description": "Obtain an OAuth access token for a customer account.",
+    "migration_note": "cy.request POST to token endpoint with customer creds; store token for headers."
+  },
+  "When I get access token for the customer:": {
+    "canonical_name": "get_customer_access_token",
+    "kind": "setup",
+    "description": "Obtain an OAuth access token for a customer account.",
+    "migration_note": "cy.request POST to token endpoint with customer creds; store token for headers."
+  },
+  "I GET access token for the customer:": {
+    "canonical_name": "get_customer_access_token",
+    "kind": "setup",
+    "description": "Obtain an OAuth access token for a customer account.",
+    "migration_note": "cy.request POST to token endpoint with customer creds; store token for headers."
+  },
+  "Then I get access token for the customer:": {
+    "canonical_name": "get_customer_access_token",
+    "kind": "setup",
+    "description": "Obtain an OAuth access token for a customer account.",
+    "migration_note": "cy.request POST to token endpoint with customer creds; store token for headers."
+  },
+  "And I get access token for the customer:": {
+    "canonical_name": "get_customer_access_token",
+    "kind": "setup",
+    "description": "Obtain an OAuth access token for a customer account.",
+    "migration_note": "cy.request POST to token endpoint with customer creds; store token for headers."
+  },
+  "I get access token by user credentials:": {
+    "canonical_name": "get_user_access_token",
+    "kind": "setup",
+    "description": "Obtain an OAuth access token using supplied user credentials.",
+    "migration_note": "cy.request POST to token endpoint with given username/password."
+  },
+  "When I get access token by user credentials:": {
+    "canonical_name": "get_user_access_token",
+    "kind": "setup",
+    "description": "Obtain an OAuth access token using supplied user credentials.",
+    "migration_note": "cy.request POST to token endpoint with given username/password."
+  },
+  "And I get access token by user credentials:": {
+    "canonical_name": "get_user_access_token",
+    "kind": "setup",
+    "description": "Obtain an OAuth access token using supplied user credentials.",
+    "migration_note": "cy.request POST to token endpoint with given username/password."
+  },
+  "Then I get access token by user credentials:": {
+    "canonical_name": "get_user_access_token",
+    "kind": "setup",
+    "description": "Obtain an OAuth access token using supplied user credentials.",
+    "migration_note": "cy.request POST to token endpoint with given username/password."
+  },
+  "I get access token for the company user by uuid:": {
+    "canonical_name": "get_company_user_access_token",
+    "kind": "setup",
+    "description": "Obtain an OAuth access token for a company user identified by uuid.",
+    "migration_note": "cy.request POST to token endpoint scoped to company-user uuid."
+  },
+  "And I get access token for the company user by uuid:": {
+    "canonical_name": "get_company_user_access_token",
+    "kind": "setup",
+    "description": "Obtain an OAuth access token for a company user identified by uuid.",
+    "migration_note": "cy.request POST to token endpoint scoped to company-user uuid."
+  },
+  "I add 'admin' role to company user and get company_user_uuid:": {
+    "canonical_name": "add_admin_role_to_company_user",
+    "kind": "setup",
+    "description": "Assign the admin role to a company user and return the company_user_uuid.",
+    "migration_note": "cy.request to company-role endpoint; alias returned company_user_uuid."
+  },
+  "And I add 'admin' role to company user and get company_user_uuid:": {
+    "canonical_name": "add_admin_role_to_company_user",
+    "kind": "setup",
+    "description": "Assign the admin role to a company user and return the company_user_uuid.",
+    "migration_note": "cy.request to company-role endpoint; alias returned company_user_uuid."
+  },
+  "Find or create customer cart": {
+    "canonical_name": "find_or_create_customer_cart",
+    "kind": "setup",
+    "description": "Find the customer's existing cart or create a new one.",
+    "migration_note": "cy.request GET carts then POST if empty; reuse cart id."
+  },
+  "find or create customer cart": {
+    "canonical_name": "find_or_create_customer_cart",
+    "kind": "setup",
+    "description": "Find the customer's existing cart or create a new one.",
+    "migration_note": "cy.request GET carts then POST if empty; reuse cart id."
+  },
+  "When Find or create customer cart": {
+    "canonical_name": "find_or_create_customer_cart",
+    "kind": "setup",
+    "description": "Find the customer's existing cart or create a new one.",
+    "migration_note": "cy.request GET carts then POST if empty; reuse cart id."
+  },
+  "Cleanup all items in the cart:": {
+    "canonical_name": "cleanup_cart_items",
+    "kind": "setup",
+    "description": "Remove all items from the customer's cart.",
+    "migration_note": "cy.request GET cart items then DELETE each; iterate in .then()."
+  },
+  "Then Cleanup all items in the cart:": {
+    "canonical_name": "cleanup_cart_items",
+    "kind": "setup",
+    "description": "Remove all items from the customer's cart.",
+    "migration_note": "cy.request GET cart items then DELETE each; iterate in .then()."
+  },
+  "Cleanup all items in the guest cart:": {
+    "canonical_name": "cleanup_guest_cart_items",
+    "kind": "setup",
+    "description": "Remove all items from the guest cart.",
+    "migration_note": "cy.request GET guest-cart items then DELETE each; X-Anonymous-Customer-Unique-Id header."
+  },
+  "Cleanup All Items In The Guest Cart:": {
+    "canonical_name": "cleanup_guest_cart_items",
+    "kind": "setup",
+    "description": "Remove all items from the guest cart.",
+    "migration_note": "cy.request GET guest-cart items then DELETE each; X-Anonymous-Customer-Unique-Id header."
+  },
+  "Cleanup existing customer addresses:": {
+    "canonical_name": "cleanup_customer_addresses",
+    "kind": "setup",
+    "description": "Delete all existing addresses for the customer.",
+    "migration_note": "cy.request GET customer addresses then DELETE each."
+  },
+  "Cleanup all customer carts": {
+    "canonical_name": "cleanup_customer_carts",
+    "kind": "setup",
+    "description": "Delete all carts belonging to the customer.",
+    "migration_note": "cy.request GET carts then DELETE each cart id."
+  },
+  "Then Cleanup all customer carts": {
+    "canonical_name": "cleanup_customer_carts",
+    "kind": "setup",
+    "description": "Delete all carts belonging to the customer.",
+    "migration_note": "cy.request GET carts then DELETE each cart id."
+  },
+  "Cleanup all availability notifications:": {
+    "canonical_name": "cleanup_availability_notifications",
+    "kind": "setup",
+    "description": "Delete all availability notification subscriptions for the customer.",
+    "migration_note": "cy.request GET availability-notifications then DELETE each."
+  }
+}

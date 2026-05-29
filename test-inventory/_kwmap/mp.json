@@ -1,0 +1,206 @@
+{
+  "MP: login on MP with provided credentials:": {
+    "canonical_name": "login_as_merchant",
+    "kind": "setup",
+    "description": "Log in to Merchant Portal with provided credentials.",
+    "migration_note": "Seed keyword; reuse across MP login flows."
+  },
+  "MP: login on MP with provided credentials and expect error:": {
+    "canonical_name": "login_as_merchant_expecting_error",
+    "kind": "assert",
+    "description": "Attempt MP login expecting an error response.",
+    "migration_note": "Negative variant of login_as_merchant."
+  },
+  "MP: click on a table row that contains:": {
+    "canonical_name": "click_table_row_containing",
+    "kind": "ui",
+    "description": "Click the table row containing the given text.",
+    "migration_note": ""
+  },
+  "MP: open navigation menu tab:": {
+    "canonical_name": "open_mp_section",
+    "kind": "nav",
+    "description": "Open a navigation menu tab in Merchant Portal.",
+    "migration_note": "Seed keyword; covers MP section navigation."
+  },
+  "MP: open profile tab:": {
+    "canonical_name": "open_mp_section",
+    "kind": "nav",
+    "description": "Open the profile tab in Merchant Portal.",
+    "migration_note": "Maps to open_mp_section with profile target."
+  },
+  "MP: switch to the tab:": {
+    "canonical_name": "switch_tab",
+    "kind": "nav",
+    "description": "Switch to the named tab.",
+    "migration_note": ""
+  },
+  "MP: fill product price values:": {
+    "canonical_name": "fill_product_price_values",
+    "kind": "data",
+    "description": "Fill in product price values.",
+    "migration_note": ""
+  },
+  "MP: perform search by:": {
+    "canonical_name": "search_by",
+    "kind": "ui",
+    "description": "Perform a search by the given term.",
+    "migration_note": ""
+  },
+  "MP: open concrete drawer by SKU:": {
+    "canonical_name": "open_concrete_drawer_by_sku",
+    "kind": "nav",
+    "description": "Open the concrete product drawer by SKU.",
+    "migration_note": ""
+  },
+  "MP: click on create new entity button:": {
+    "canonical_name": "click_create_entity_button",
+    "kind": "ui",
+    "description": "Click the create new entity button.",
+    "migration_note": ""
+  },
+  "MP: add offer price:": {
+    "canonical_name": "add_offer_price",
+    "kind": "data",
+    "description": "Add an offer price.",
+    "migration_note": ""
+  },
+  "MP: fill concrete product fields:": {
+    "canonical_name": "fill_concrete_product_fields",
+    "kind": "data",
+    "description": "Fill concrete product fields.",
+    "migration_note": ""
+  },
+  "MP: fill abstract product required fields:": {
+    "canonical_name": "fill_abstract_product_required_fields",
+    "kind": "data",
+    "description": "Fill required fields for an abstract product.",
+    "migration_note": ""
+  },
+  "MP: save abstract product": {
+    "canonical_name": "save_abstract_product",
+    "kind": "ui",
+    "description": "Save the abstract product.",
+    "migration_note": ""
+  },
+  "MP: save concrete product": {
+    "canonical_name": "save_concrete_product",
+    "kind": "ui",
+    "description": "Save the concrete product.",
+    "migration_note": ""
+  },
+  "MP: save offer": {
+    "canonical_name": "save_offer",
+    "kind": "ui",
+    "description": "Save the offer.",
+    "migration_note": ""
+  },
+  "MP: create multi sku product with following data:": {
+    "canonical_name": "create_multi_sku_product",
+    "kind": "data",
+    "description": "Create a multi-SKU product from the given data.",
+    "migration_note": ""
+  },
+  "MP: add new concrete product:": {
+    "canonical_name": "add_concrete_product",
+    "kind": "data",
+    "description": "Add a new concrete product.",
+    "migration_note": ""
+  },
+  "MP: fill offer fields:": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "data",
+    "description": "Fill offer fields.",
+    "migration_note": ""
+  },
+  "MP: change offer stock:": {
+    "canonical_name": "change_offer_stock",
+    "kind": "data",
+    "description": "Change the offer stock value.",
+    "migration_note": ""
+  },
+  "MP: order states on drawer should contain:": {
+    "canonical_name": "assert_order_states_on_drawer",
+    "kind": "assert",
+    "description": "Assert the order drawer contains the given states.",
+    "migration_note": ""
+  },
+  "MP: order item state should be:": {
+    "canonical_name": "assert_order_item_state",
+    "kind": "assert",
+    "description": "Assert the order item state equals the expected value.",
+    "migration_note": ""
+  },
+  "MP: order grand total should be:": {
+    "canonical_name": "assert_order_grand_total",
+    "kind": "assert",
+    "description": "Assert the order grand total equals the expected value.",
+    "migration_note": ""
+  },
+  "MP: update order state using header button:": {
+    "canonical_name": "update_order_state_via_header",
+    "kind": "ui",
+    "description": "Update the order state using the header button.",
+    "migration_note": ""
+  },
+  "MP: change order item state on:": {
+    "canonical_name": "change_order_item_state",
+    "kind": "ui",
+    "description": "Change the order item state on the given target.",
+    "migration_note": ""
+  },
+  "MP: wait for order to appear:": {
+    "canonical_name": "wait_for_order",
+    "kind": "assert",
+    "description": "Wait for the order to appear.",
+    "migration_note": ""
+  },
+  "MP: click submit button": {
+    "canonical_name": "click_submit_button",
+    "kind": "ui",
+    "description": "Click the submit button.",
+    "migration_note": ""
+  },
+  "MP: click button on dashboard page and check url:": {
+    "canonical_name": "click_dashboard_button_and_assert_url",
+    "kind": "assert",
+    "description": "Click a dashboard button and verify the resulting URL.",
+    "migration_note": ""
+  },
+  "MP: update profile fields with following data:": {
+    "canonical_name": "update_profile_fields",
+    "kind": "data",
+    "description": "Update profile fields with the given data.",
+    "migration_note": ""
+  },
+  "MP: update merchant personal details with data:": {
+    "canonical_name": "update_merchant_personal_details",
+    "kind": "data",
+    "description": "Update merchant personal details with the given data.",
+    "migration_note": ""
+  },
+  "MP: change store status to:": {
+    "canonical_name": "change_store_status",
+    "kind": "ui",
+    "description": "Change the store status to the given value.",
+    "migration_note": ""
+  },
+  "MP: delete offer price row that contains quantity:": {
+    "canonical_name": "delete_offer_price_row_by_quantity",
+    "kind": "data",
+    "description": "Delete the offer price row matching the given quantity.",
+    "migration_note": ""
+  },
+  "MP: delete product price row that contains quantity:": {
+    "canonical_name": "delete_product_price_row_by_quantity",
+    "kind": "data",
+    "description": "Delete the product price row matching the given quantity.",
+    "migration_note": ""
+  },
+  "MP: delete product price row that contains text:": {
+    "canonical_name": "delete_product_price_row_by_text",
+    "kind": "data",
+    "description": "Delete the product price row matching the given text.",
+    "migration_note": ""
+  }
+}
