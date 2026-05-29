@@ -212,7 +212,12 @@ Discounts
     Zed: create a discount and activate it:    cart rule    Percentage    100    discountName=Promotional Product 100% ${random}    promotionalProductDiscount=True    promotionalProductAbstractSku=002    promotionalProductQuantity=2
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     # SKU substituted 190 → 199 (Sony HXR-MC2500, indexed in dump-restore).
-    Yves: go to PDP of the product with sku:    199
+    # Round 5: added wait_for_p&s=true to give Yves time to surface the product
+    # via Publish & Sync after the demodata is restored. Without this, the keyword
+    # navigates to /search?q=199 once and times out if the index hasn't caught up.
+    # The keyword's wait_for_p&s mode does up to 26 iterations with `Trigger multistore p&s`
+    # at indexes 5/10/15, which is exactly the mechanism designed for this race.
+    Yves: go to PDP of the product with sku:    199    wait_for_p&s=true
     Yves: add product to the shopping cart    wait_for_p&s=true
     Yves: go to shopping cart page
     Yves: apply discount voucher to cart:    test${random}
@@ -221,7 +226,12 @@ Discounts
     # disambiguated by discount-name (`Voucher Code 5% ${random}` etc.).
     Yves: discount is applied:    voucher    Voucher Code 5% ${random}    - €
     Yves: discount is applied:    cart rule    Cart Rule 10% ${random}    - €
-    Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}
+    # Round 5: added wait_for_p&s=true to bundle PDP navigation. ${bundle_product_abstract_sku}
+    # = 211 (HP Bundle) and bundles are part of the same demodata as SKU 199 but the
+    # dump-restore's Yves index race-condition often leaves bundles unindexed at test
+    # start (observed locator timeout in run 26628312026). The keyword's retry loop
+    # with Trigger-multistore-p&s at iterations 5/10/15 is the intended mitigation.
+    Yves: go to PDP of the product with sku:    ${bundle_product_abstract_sku}    wait_for_p&s=true
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
     # `- €87.96` (product 190 + bundle) replaced with `- €` partial match.
