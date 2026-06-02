@@ -180,14 +180,14 @@ Yves: shopping cart contains product with unit price:
     END
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         TRY
-            Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=300ms
+            Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::*[self::article or self::product-cart-item]//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=300ms
         EXCEPT
-            Page Should Contain Element    xpath=//div[contains(@class,'product-cart-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::article//*[contains(@class,'product-cart-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=300ms
+            Page Should Contain Element    xpath=//div[contains(@class,'product-cart-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::*[self::article or self::product-cart-item]//*[contains(@class,'product-cart-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=300ms
         END  
     ELSE IF    '${env}' in ['ui_suite']
         Page Should Contain Element    xpath=//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//*[@data-qa='cart-item-sku'][contains(text(),'${sku}')]/ancestor::product-item//*[contains(@data-qa,'cart-item-summary')]//span[contains(.,'${productPrice}')]    timeout=300ms
     ELSE
-        Page Should Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]    timeout=300ms
+        Page Should Contain Element    xpath=(//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]) | (//main[contains(@class,'cart')]//product-cart-item[contains(@data-qa,'component product-cart-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')])    timeout=300ms
     END
 
 Yves: shopping cart contains/doesn't contain the following elements:
@@ -247,7 +247,7 @@ Yves: delete product from the shopping cart with name:
     EXCEPT
         Log    Page is not loaded
     END
-    Click    //main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/ancestor::article//form[contains(@name,'removeFromCartForm')]//button | //div[contains(@class,'box cart-items-list')]//a[contains(text(),'${productName}')]//ancestor::*[@data-qa='component product-cart-item']//button[contains(text(),'remove')]
+    Click    //main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/ancestor::article//form[contains(@name,'removeFromCartForm')]//button | //main[contains(@class,'cart')]//product-cart-item[contains(@data-qa,'component product-cart-item')]//a[contains(text(),'${productName}')]/ancestor::product-cart-item//form[contains(@name,'removeFromCartForm')]//button | //div[contains(@class,'box cart-items-list')]//a[contains(text(),'${productName}')]//ancestor::*[@data-qa='component product-cart-item']//button[contains(text(),'remove')]
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
@@ -313,14 +313,14 @@ Yves: change quantity of the configurable bundle in the shopping cart on:
         Log    Page is not loaded
     END
     IF    '${env}' in ['ui_b2b','ui_mp_b2b','ui_suite']
-        Type Text    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article//input[contains(@class, 'formatted-number-input__input')]    ${quantity}
+        Type Text    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::*[self::article or self::product-cart-item]//input[contains(@class, 'formatted-number-input__input')]    ${quantity}
     ELSE
         Type Text    xpath=//article[contains(@data-qa,'configured-bundle-secondary')][1]//ancestor::*[contains(@data-qa, 'component formatted-number-input')]//input[contains(@class,'formatted-number-input')][contains(@data-min-quantity,'1')]    ${quantity}
     END
     IF    '${env}' in ['ui_suite']
-        Click    //main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article//input[contains(@class, 'formatted-number-input__input')]/ancestor::article//button[@data-qa='quantity-input-submit']
+        Click    //main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::*[self::article or self::product-cart-item]//input[contains(@class, 'formatted-number-input__input')]/ancestor::*[self::article or self::product-cart-item]//button[@data-qa='quantity-input-submit']
     END
-    Click With Options    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::article    delay=1s
+    Click With Options    xpath=//main//article[contains(@data-qa,'configured-bundle')][1]//a[text()='${confBundleTitle}']/ancestor::*[self::article or self::product-cart-item]    delay=1s
     TRY
         Repeat Keyword    3    Wait For Load State
         Wait For Load State    domcontentloaded
@@ -382,7 +382,7 @@ Yves: delete from b2c cart products with name:
         IF    '${env}' in ['ui_b2b','ui_mp_b2b']
             Page Should Not Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'${product}')]
         ELSE
-            Page Should Not Contain Element    xpath=//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${product}')]
+            Page Should Not Contain Element    xpath=(//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${product}')]) | (//main[contains(@class,'cart')]//product-cart-item[contains(@data-qa,'component product-cart-item')]//a[contains(text(),'${product}')])
         END
     END
 
@@ -486,4 +486,4 @@ Yves: add promotional product to the cart
 Yves: assert merchant of product in b2c cart:
     [Documentation]    Method for MP which asserts value in 'Sold by' label of item in cart or list. Requires concrete SKU
     [Arguments]    ${product_name}    ${merchant_name_expected}
-    Page Should Contain Element    xpath=//main[contains(@class,'cart')]//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${product_name}')]/ancestor::article//*[@data-qa='component sold-by-merchant']/a[text()='${merchant_name_expected}']
+    Page Should Contain Element    xpath=(//main[contains(@class,'cart')]//article[contains(@data-qa,'component product-card-item')]//*[contains(.,'${product_name}')]/ancestor::article//*[@data-qa='component sold-by-merchant']/a[text()='${merchant_name_expected}']) | (//main[contains(@class,'cart')]//product-cart-item[contains(@data-qa,'component product-cart-item')]//*[contains(.,'${product_name}')]/ancestor::product-cart-item//*[@data-qa='component sold-by-merchant']/a[text()='${merchant_name_expected}'])
