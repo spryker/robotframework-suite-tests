@@ -123,7 +123,7 @@ Yves: shopping cart contains the following products:
         IF    '${env}' in ['ui_suite']
             Page Should Contain Element    locator=xpath=(//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//*[@data-qa='cart-item-sku'][contains(text(),'${item_to_check}')])[1]    timeout=${browser_timeout}
         ELSE
-            Page Should Contain Element    locator=xpath=(//main[contains(@class,'cart')]//article[(contains(@data-qa,'product-cart-item') or contains(@data-qa,'product-card-item'))]//*[contains(.,'${item_to_check}')]/ancestor::article)[1]    timeout=${browser_timeout}
+            Page Should Contain Element    locator=xpath=((//main[contains(@class,'cart')]//product-cart-item[contains(@data-qa,'component product-cart-item')]//*[contains(.,'${item_to_check}')]/ancestor::product-cart-item) | (//main[contains(@class,'cart')]//article[(contains(@data-qa,'product-cart-item') or contains(@data-qa,'product-card-item'))]//*[contains(.,'${item_to_check}')]/ancestor::article))[1]    timeout=${browser_timeout}
         END
     END
 
@@ -142,7 +142,7 @@ Yves: preview shopping cart contains the following products:
         IF    '${env}' in ['ui_suite']
             Page Should Contain Element    xpath=(//main//product-item[contains(@data-qa,'component product-cart-item')]//*[@data-qa='cart-item-sku'][contains(text(),'${item_to_check}')])[1]
         ELSE
-            Page Should Contain Element    xpath=(//main[contains(@class,'cart')]//article[(contains(@data-qa,'product-cart-item') or contains(@data-qa,'product-card-item'))]//*[contains(.,'${item_to_check}')]/ancestor::article)[1]
+            Page Should Contain Element    xpath=((//main[contains(@class,'cart')]//product-cart-item[contains(@data-qa,'component product-cart-item')]//*[contains(.,'${item_to_check}')]/ancestor::product-cart-item) | (//main[contains(@class,'cart')]//article[(contains(@data-qa,'product-cart-item') or contains(@data-qa,'product-card-item'))]//*[contains(.,'${item_to_check}')]/ancestor::article))[1]
         END
     END
 
