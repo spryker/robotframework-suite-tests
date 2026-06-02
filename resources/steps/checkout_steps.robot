@@ -801,9 +801,9 @@ Yves: checkout summary page contains product with unit price:
     END
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         TRY
-            Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::*[self::article or self::product-cart-item]//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=100ms
+            Page Should Contain Element    xpath=//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::*[self::article or self::product-cart-item]//*[contains(@class,'product-card-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')] | //product-cart-item[contains(@data-qa,'component product-cart-item')][.//*[@data-qa='cart-item-sku'][contains(.,'${sku}')]]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=100ms
         EXCEPT
-            Page Should Contain Element    xpath=//div[contains(@class,'product-cart-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::*[self::article or self::product-cart-item]//*[contains(@class,'product-cart-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=100ms
+            Page Should Contain Element    xpath=//div[contains(@class,'product-cart-item__col--description')]//div[contains(.,'SKU: ${sku}')]/ancestor::*[self::article or self::product-cart-item]//*[contains(@class,'product-cart-item__col--description')]/div[1]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')] | //product-cart-item[contains(@data-qa,'component product-cart-item')][.//*[@data-qa='cart-item-sku'][contains(.,'${sku}')]]//*[contains(@class,'money-price__amount')][contains(.,'${productPrice}')]    timeout=100ms
         END
     ELSE IF    '${env}' in ['ui_suite']
         Page Should Contain Element    xpath=//*[contains(@data-qa,'summary-node')]//div[contains(.,'${productName}')]/ancestor::*[contains(@data-qa,'summary-node')]//strong[contains(.,'${productPrice}')]
