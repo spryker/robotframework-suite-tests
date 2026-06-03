@@ -76,7 +76,7 @@ Yves: shopping list contains the following products:
         IF    '${env}' in ['ui_suite']
             Page Should Contain Element    xpath=(//table[contains(@data-qa,'shopping-list')]/tbody/tr//*[@itemprop='sku'][contains(.,'${sku_to_check}')])[1]
         ELSE
-            Page Should Contain Element    xpath=(//*[@data-qa='component shopping-list-table']//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku_to_check}')]/ancestor::article)[1]
+            Page Should Contain Element    xpath=(//*[@data-qa='component shopping-list-table']//div[contains(@class,'product-card-item__col--description')]//div[contains(.,'SKU: ${sku_to_check}')]/ancestor::*[self::article or self::product-cart-item])[1]
         END
     END
 
