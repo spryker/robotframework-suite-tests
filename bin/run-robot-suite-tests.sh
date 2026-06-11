@@ -3,7 +3,7 @@
 # Usage from robotframework-suite-tests/ folder: ./bin/run-tests-native.sh [api|ui]
 # Usage form suite/ folder: ./vendor/bin/run-tests-native.sh or vendor/spryker/robotframework-suite-tests/bin/run-robot-suite-tests.sh [api|ui]
 
-set -e
+set -eo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -28,6 +28,16 @@ VENV_DIR="$PROJECT_ROOT/.robot/.venv"
 TEST_TYPE="${1:-api}"
 TEST_PATH="${2:-}"
 
+if [[ "$TEST_TYPE" == "--help" || "$TEST_TYPE" == "-h" ]]; then
+    echo "Usage: $0 [api|ui] [optional-test-path]"
+    echo ""
+    echo "Examples:"
+    echo "  $0 api                                    # Run all API tests"
+    echo "  $0 api tests/api/mp_b2b/glue             # Run specific tests"
+    echo "  $0 api tests/api/mp_b2b/glue/cart_endpoints  # Run even more specific tests"
+    exit 0
+fi
+
 # Normalize TEST_PATH: strip TESTS_DIR prefix if user passed a full path from project root
 if [ -n "$TEST_PATH" ]; then
     TESTS_DIR_RELATIVE="${TESTS_DIR#$PROJECT_ROOT/}"
@@ -42,10 +52,36 @@ echo "Tests Dir: $TESTS_DIR"
 echo "Results Dir: $RESULTS_DIR"
 echo ""
 
-# Check if virtual environment exists and is valid
-if [ ! -f "$VENV_DIR/bin/python" ]; then
-    echo "📦 Creating virtual environment..."
-    python3 -m venv "$VENV_DIR"
+# Find Python 3 (prefer python3, fall back to versioned binaries)
+PYTHON_BIN=""
+for candidate in python3 python3.14 python3.13 python3.12 python3.11; do
+    if command -v "$candidate" > /dev/null 2>&1; then
+        major=$("$candidate" -c "import sys; print(sys.version_info.major)" 2>/dev/null)
+        if [ "$major" -eq 3 ]; then
+            PYTHON_BIN="$candidate"
+            break
+        fi
+    fi
+done
+
+if [ -z "$PYTHON_BIN" ]; then
+    echo "❌ Python 3 not found. Install it with:"
+    echo "   sudo apt install python3 python3-venv   # Debian/Ubuntu"
+    echo "   brew install python3                    # macOS"
+    exit 1
+fi
+
+# Check if virtual environment exists and is valid (python present and pip importable)
+if [ ! -f "$VENV_DIR/bin/python" ] || ! "$VENV_DIR/bin/python" -c "import pip" 2>/dev/null; then
+    if ! "$PYTHON_BIN" -c "import venv" 2>/dev/null; then
+        echo "❌ python3-venv is not installed. Install it with:"
+        echo "   sudo apt install python3-venv   # Debian/Ubuntu"
+        echo "   brew install python3            # macOS"
+        exit 1
+    fi
+    echo "📦 Creating virtual environment with $PYTHON_BIN..."
+    rm -rf "$VENV_DIR"
+    "$PYTHON_BIN" -m venv "$VENV_DIR"
     echo "✅ Virtual environment created"
     echo ""
 fi
@@ -53,8 +89,8 @@ fi
 # Check if dependencies are installed (check for robot command)
 if [ ! -f "$VENV_DIR/bin/robot" ]; then
     echo "📦 Installing Robot Framework dependencies..."
-    "$VENV_DIR/bin/pip" install --upgrade pip
-    "$VENV_DIR/bin/pip" install -U -r "$TESTS_DIR/requirements.txt"
+    "$VENV_DIR/bin/python" -m pip install --upgrade pip
+    "$VENV_DIR/bin/python" -m pip install --prefer-binary -U -r "$TESTS_DIR/requirements.txt"
     echo "✅ Dependencies installed"
     echo ""
 fi
@@ -87,12 +123,12 @@ case "$TEST_TYPE" in
         if [ -z "$TEST_PATH" ]; then
             # No path specified - run all API tests
             TEST_TARGET="."
-            SUITE_OPTION="-s '*'.tests.api.suite"
+            SUITE_FILTER=(-s "*.tests.api.suite")
             echo "🧪 Running API tests (all)..."
         else
             # Path specified - run specific tests
             TEST_TARGET="$TEST_PATH"
-            SUITE_OPTION=""
+            SUITE_FILTER=()
             echo "🧪 Running API tests..."
             echo "Target: $TEST_PATH"
         fi
@@ -107,8 +143,8 @@ case "$TEST_TYPE" in
             -v ignore_console:false \
             -d "$RESULTS_DIR" \
             --exclude skip-due-to-issueORskip-due-to-refactoring \
-            $SUITE_OPTION \
-            $TEST_TARGET
+            "${SUITE_FILTER[@]}" \
+            "$TEST_TARGET"
         ;;
 
     ui)
@@ -118,7 +154,25 @@ case "$TEST_TYPE" in
 
         if [ ! -d "$BROWSER_PATH" ] || [ -z "$(find "$BROWSER_PATH" -type d -name "chromium-*" 2>/dev/null)" ]; then
             echo "📦 Installing Chromium browser (first time only)..."
-            rfbrowser init chromium
+            WRAPPER_DIR="$SITE_PACKAGES/Browser/wrapper"
+            RFBROWSER_LOG=$(rfbrowser init chromium 2>&1) || {
+                if echo "$RFBROWSER_LOG" | grep -q "does not support chromium"; then
+                    # rfbrowser's npm install already ran and succeeded; only the browser
+                    # download failed because playwright-core has no builds for this OS.
+                    # Patch the platform detection to map ubuntu26.x -> ubuntu24.04 builds,
+                    # then download the browser directly without re-running rfbrowser init
+                    # (which would reset node_modules).
+                    echo "⚠️  Playwright does not support this OS yet. Patching platform detection to use ubuntu24.04 builds..."
+                    CORE_BUNDLE="$WRAPPER_DIR/node_modules/playwright-core/lib/coreBundle.js"
+                    sed -i 's/if (major < 26)/if (major < 28)/g' "$CORE_BUNDLE"
+                    cd "$WRAPPER_DIR"
+                    node_modules/.bin/playwright install chromium
+                    cd - > /dev/null
+                else
+                    echo "$RFBROWSER_LOG"
+                    exit 1
+                fi
+            }
             echo "✅ Chromium installed"
         else
             echo "✅ Chromium already installed at $BROWSER_PATH, skipping download"
