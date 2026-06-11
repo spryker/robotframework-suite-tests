@@ -41,7 +41,7 @@ Yves: add product to the shopping cart
     Disable Automatic Screenshots on Failure
     ${variants_present_status}=    Run Keyword And Return Status    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=0:00:01
     Restore Automatic Screenshots on Failure
-    IF    '${variants_present_status}'=='False'    Yves: change variant of the product on PDP on random value
+    IF    '${variants_present_status}'=='False'    Run Keyword And Ignore Error    Yves: change variant of the product on PDP on random value
     ${wait_for_p&s}=    Convert To String    ${wait_for_p&s}
     ${wait_for_p&s}=    Convert To Lower Case    ${wait_for_p&s}
     IF    '${wait_for_p&s}' == 'true'
@@ -68,6 +68,17 @@ Yves: add product to the shopping cart
                 EXCEPT
                     Log    Page is not loaded
                 END
+                # Reload resets the variant selector to "Please select", so the
+                # add-to-cart button can never become enabled again and every
+                # remaining iteration fails. Re-select a variant after each
+                # reload (observed on dump-restore CI shards where the first
+                # 400ms check misses the variant-select navigation). Ignore
+                # transient errors (mid-navigation states) — the next loop
+                # iteration retries.
+                Disable Automatic Screenshots on Failure
+                ${variants_present_status}=    Run Keyword And Return Status    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=0:00:01
+                Restore Automatic Screenshots on Failure
+                IF    '${variants_present_status}'=='False'    Run Keyword And Ignore Error    Yves: change variant of the product on PDP on random value
                 Continue For Loop
             ELSE
                 TRY
@@ -382,7 +393,17 @@ Yves: change variant of the product on PDP on random value
         Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
         Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][1]
     EXCEPT
-        Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
+        # Native <select> fallback (suite Yves renders a plain select, no
+        # select2). The previous fallback selected ${variantToChoose}, which
+        # is not defined in this keyword and silently no-op'd under Ignore
+        # Error — the variant stayed unselected, the buy box (incl. the
+        # add-to-cart button) never rendered, and PDP add-to-cart timed out.
+        # Pick the FIRST non-empty option, mirroring the select2 branch above
+        # (li[1]): tests assert against the first concrete (e.g. Discounts
+        # expects 199_7016823 = "16 GB"), so a truly random pick breaks them.
+        ${options}=    Get Select Options    ${pdp_variant_selector}
+        ${values}=    Evaluate    [option["value"] for option in $options if option["value"]]
+        Select Options By    ${pdp_variant_selector}    value    ${values}[0]
     END
     Set Browser Timeout    ${browser_timeout}
     TRY
