@@ -25,16 +25,29 @@ fi
 
 VENV_DIR="$PROJECT_ROOT/.robot/.venv"
 
-TEST_TYPE="${1:-api}"
-TEST_PATH="${2:-}"
+HEADLESS="true"
+POSITIONAL=()
+for arg in "$@"; do
+    case "$arg" in
+        --headed) HEADLESS="false" ;;
+        *)        POSITIONAL+=("$arg") ;;
+    esac
+done
+
+TEST_TYPE="${POSITIONAL[0]:-api}"
+TEST_PATH="${POSITIONAL[1]:-}"
 
 if [[ "$TEST_TYPE" == "--help" || "$TEST_TYPE" == "-h" ]]; then
-    echo "Usage: $0 [api|ui] [optional-test-path]"
+    echo "Usage: $0 [api|ui] [optional-test-path] [--headed]"
+    echo ""
+    echo "Options:"
+    echo "  --headed   Run UI tests in headed (visible) browser mode (default: headless)"
     echo ""
     echo "Examples:"
     echo "  $0 api                                    # Run all API tests"
-    echo "  $0 api tests/api/mp_b2b/glue             # Run specific tests"
-    echo "  $0 api tests/api/mp_b2b/glue/cart_endpoints  # Run even more specific tests"
+    echo "  $0 api tests/api/mp_b2b/glue             # Run specific API tests"
+    echo "  $0 ui                                     # Run UI tests headless"
+    echo "  $0 ui --headed                            # Run UI tests with visible browser"
     exit 0
 fi
 
@@ -50,6 +63,9 @@ echo "Test Type: $TEST_TYPE"
 echo "Project Root: $PROJECT_ROOT"
 echo "Tests Dir: $TESTS_DIR"
 echo "Results Dir: $RESULTS_DIR"
+if [[ "$TEST_TYPE" == "ui" ]]; then
+    echo "Headless: $HEADLESS"
+fi
 echo ""
 
 # Find Python 3 (prefer python3, fall back to versioned binaries)
@@ -189,7 +205,7 @@ case "$TEST_TYPE" in
             --listener resources/libraries/failure_detail_listener.py \
             -v env:ui_suite \
             -v docker:false \
-            -v headless:true \
+            -v headless:$HEADLESS \
             -v ignore_console:false \
             -v dms:true \
             -v project_location:$PROJECT_ROOT \
@@ -205,7 +221,7 @@ case "$TEST_TYPE" in
             --listener resources/libraries/failure_detail_listener.py \
             -v env:ui_suite \
             -v docker:false \
-            -v headless:true \
+            -v headless:$HEADLESS \
             -v ignore_console:false \
             -v dms:true \
             -v project_location:$PROJECT_ROOT \
@@ -227,7 +243,7 @@ case "$TEST_TYPE" in
             -v env:ui_suite \
             -v docker:false \
             -v dms:true \
-            -v headless:true \
+            -v headless:$HEADLESS \
             -v ignore_console:false \
             -v project_location:$PROJECT_ROOT \
             -d "$RESULTS_DIR/rerun" \
