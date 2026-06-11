@@ -340,7 +340,9 @@ Yves: wait until store switcher contains:
     Wait Until Element Is Visible    ${store_switcher_header_menu_item}
     FOR    ${index}    IN RANGE    0    ${tries}
         Disable Automatic Screenshots on Failure
-        ${storeAppears}=    Run Keyword And Return Status    Wait Until Element Contains    locator=${store_switcher_header_menu_item}    text=${store}    timeout=${timeout}
+        # `Get Text` (robotframework-browser >= 20.0.0) returns the input value for <select> elements,
+        # i.e. only the selected option. Wait for the new store's <option> node instead.
+        ${storeAppears}=    Run Keyword And Return Status    Wait For Elements State    ${store_switcher_header_menu_item}/option[contains(., '${store}')]    attached    timeout=${timeout}
         Restore Automatic Screenshots on Failure
         IF    '${storeAppears}'=='False'
             Run Keywords    Sleep    ${timeout}    AND    Reload
