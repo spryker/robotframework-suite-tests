@@ -197,6 +197,21 @@ case "$TEST_TYPE" in
         # Create subdirectories
         mkdir -p "$RESULTS_DIR/dynamic_set" "$RESULTS_DIR/dynamic_set/pabot_results" "$RESULTS_DIR/static_set" "$RESULTS_DIR/rerun"
 
+        # In headed mode, pabot workers each spawn their own Node.js rfbrowser server
+        # which has no display access. The documented fix (Browser/browser.py) is to start
+        # one shared server in the main process (which has DISPLAY) and point all workers
+        # to it via ROBOT_FRAMEWORK_BROWSER_NODE_PORT.
+        if [ "$HEADLESS" = "false" ]; then
+            RF_NODE_PORT=$(python3 -c "import socket; s=socket.socket(); s.bind(('', 0)); p=s.getsockname()[1]; s.close(); print(p)")
+            echo "🌐 Starting shared rfbrowser node server on port $RF_NODE_PORT..."
+            node "$SITE_PACKAGES/Browser/wrapper/index.js" 127.0.0.1 "$RF_NODE_PORT" &
+            RF_NODE_PID=$!
+            export ROBOT_FRAMEWORK_BROWSER_NODE_PORT="$RF_NODE_PORT"
+            trap "kill $RF_NODE_PID 2>/dev/null || true" EXIT
+            sleep 1
+            echo "✅ rfbrowser node server started (PID $RF_NODE_PID)"
+        fi
+
         echo "🧪 Running UI tests..."
         cd $TESTS_DIR
 
