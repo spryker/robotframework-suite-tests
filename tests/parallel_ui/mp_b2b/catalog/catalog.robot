@@ -200,7 +200,7 @@ Product_PDP
     Yves: PDP contains/doesn't contain:    false    ${pdpPriceLocator}   ${addToCartButton}
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${multi_variant_product_abstract_sku}
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_limited_warranty_option}[${env}]    ${pdp_insurance_coverage_option}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${pdp_variant_not_selected_notification}    ${pdp_limited_warranty_option}[${env}]    ${pdp_insurance_coverage_option}
     Yves: change variant of the product on PDP on:    500 x 930 x 400
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]     ${pdp_insurance_coverage_option}
 

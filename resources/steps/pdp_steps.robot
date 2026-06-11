@@ -334,6 +334,7 @@ Yves: add product to the shopping list:
     ${variants_present_status}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=400ms
     ${shopping_list_dropdown_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_shopping_list_selector}    timeout=5s
     IF    'FAIL' in $variants_present_status    Yves: change variant of the product on PDP on random value
+    Yves: open save to shopping list popup if present
     IF    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in $shopping_list_dropdown_status)
         TRY
             Set Browser Timeout    1s
@@ -352,6 +353,7 @@ Yves: add product to the shopping list:
             LocalStorage Clear
             Reload
             Set Browser Timeout    ${browser_timeout}
+            Yves: open save to shopping list popup if present
             Click    xpath=//span[@class='select2-selection select2-selection--single']//span[contains(@id,'select2-idShoppingList')]
             Wait Until Element Is Visible    xpath=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
             Click    xpath=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
@@ -373,6 +375,16 @@ Yves: add product to the shopping list:
     END
     Set Browser Timeout    ${browser_timeout}
     Yves: remove flash messages
+
+Yves: open save to shopping list popup if present
+    [Documentation]    The save to shopping list form is rendered inside a popup, the popup
+    ...    trigger is clicked first to make the form interactable. On older PDP markup without
+    ...    the popup trigger the keyword is a no-op
+    ${popup_trigger_present}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//button[@data-qa='save-to-shopping-list-trigger']    timeout=400ms
+    IF    ${popup_trigger_present}
+        Click    xpath=//button[@data-qa='save-to-shopping-list-trigger']
+        Wait Until Element Is Visible    xpath=//*[contains(@class,'main-popup--open')]//button[@data-qa='add-to-shopping-list-button']
+    END
 
 Yves: change variant of the product on PDP on random value
     Wait Until Element Is Visible    ${pdp_variant_selector}
@@ -474,6 +486,11 @@ Yves: select xxx merchant's offer:
     EXCEPT
         Log    Page is not loaded
     END
+    ${seller_list_is_present}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//seller-list    timeout=100ms
+    IF    ${seller_list_is_present}
+        Yves: select merchant's offer in seller list:    ${merchantName}
+        RETURN
+    END
     ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]/../input[@checked]    timeout=50ms
     IF    not ${merchant_offer_is_already_selected}
         TRY
@@ -515,6 +532,33 @@ Yves: select xxx merchant's offer:
             Wait For Load State    domcontentloaded
         EXCEPT
             Log    Page is not loaded
+        END
+    END
+
+Yves: select merchant's offer in seller list:
+    [Documentation]    Offer selection in the seller list is applied client-side (no page reload),
+    ...    so the selection is verified via the radio state and the updated URL query, then the page
+    ...    is reloaded to get the server-rendered state of the selected offer
+    [Arguments]    ${merchantName}
+    ${offer_cls}=    Set Variable    ${offer_item_class}[${env}]
+    ${offer_radio_input}=    Set Variable    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::*[contains(@class,'${offer_cls}')]//input[@type='radio']
+    ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Wait For Elements State    ${offer_radio_input}    state=checked    timeout=200ms
+    IF    not ${merchant_offer_is_already_selected}
+        Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::*[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]
+        Wait For Elements State    ${offer_radio_input}    state=checked    timeout=3s
+        Get Url    contains    offer    message=Offer selector radio button does not work on PDP but should
+        ${offer_reference}=    Get Attribute    ${offer_radio_input}    value
+        IF    '${offer_reference}' != '${EMPTY}'
+            # selection of a real offer survives a reload via the URL query, the merchant's own
+            # product (empty reference) does not — its selection lives in the form radio state only
+            Reload
+            TRY
+                Repeat Keyword    3    Wait For Load State
+                Wait For Load State    domcontentloaded
+            EXCEPT
+                Log    Page is not loaded
+            END
+            Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
         END
     END
 
@@ -609,19 +653,20 @@ Yves: select xxx merchant's offer with price:
 
 Yves: merchant's offer/product price should be:
     [Arguments]    ${merchantName}    ${expectedProductPrice}
+    ${offer_cls}=    Set Variable    ${offer_item_class}[${env}]
     Wait Until Element Is Visible    ${pdpPriceLocator}
-    Try reloading page until element does/not contain text:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price']    ${expectedProductPrice}    true    21    5s
+    Try reloading page until element does/not contain text:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::*[contains(@class,'${offer_cls}')]//span[@itemprop='price']    ${expectedProductPrice}    true    21    5s
 
 Yves: merchant is (not) displaying in Sold By section of PDP:
     [Arguments]    ${merchantName}    ${condition}
     ${merchant_cls}=    Set Variable    ${merchant_product_class}[${env}]
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     TRY
-        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//div[contains(@class,'${merchant_cls}')]//*[contains(text(),'${merchantName}')]     ${condition}    4    10s
+        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(@class,'${merchant_cls}')]//*[contains(text(),'${merchantName}')]     ${condition}    4    10s
     EXCEPT
         Trigger multistore p&s
         ${currentURL}=    Get Url
-        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//div[contains(@class,'${merchant_cls}')]//*[contains(text(),'${merchantName}')]     ${condition}    6    10s
+        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(@class,'${merchant_cls}')]//*[contains(text(),'${merchantName}')]     ${condition}    6    10s
     END
 
 Yves: select random varian if variant selector is available
