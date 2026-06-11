@@ -169,7 +169,6 @@ case "$TEST_TYPE" in
         BROWSER_PATH="$SITE_PACKAGES/Browser/wrapper/node_modules/playwright-core/.local-browsers"
 
         if [ ! -d "$BROWSER_PATH" ] || [ -z "$(find "$BROWSER_PATH" -type d -name "chromium-*" 2>/dev/null)" ]; then
-            echo "📦 Installing Chromium browser (first time only)..."
             WRAPPER_DIR="$SITE_PACKAGES/Browser/wrapper"
             RFBROWSER_LOG=$(rfbrowser init chromium 2>&1) || {
                 if echo "$RFBROWSER_LOG" | grep -q "does not support chromium"; then
@@ -194,87 +193,92 @@ case "$TEST_TYPE" in
             echo "✅ Chromium already installed at $BROWSER_PATH, skipping download"
         fi
 
-        # Create subdirectories
-        mkdir -p "$RESULTS_DIR/dynamic_set" "$RESULTS_DIR/dynamic_set/pabot_results" "$RESULTS_DIR/static_set" "$RESULTS_DIR/rerun"
-
-        # In headed mode, pabot workers each spawn their own Node.js rfbrowser server
-        # which has no display access. The documented fix (Browser/browser.py) is to start
-        # one shared server in the main process (which has DISPLAY) and point all workers
-        # to it via ROBOT_FRAMEWORK_BROWSER_NODE_PORT.
-        if [ "$HEADLESS" = "false" ]; then
-            RF_NODE_PORT=$(python3 -c "import socket; s=socket.socket(); s.bind(('', 0)); p=s.getsockname()[1]; s.close(); print(p)")
-            echo "🌐 Starting shared rfbrowser node server on port $RF_NODE_PORT..."
-            node "$SITE_PACKAGES/Browser/wrapper/index.js" 127.0.0.1 "$RF_NODE_PORT" &
-            RF_NODE_PID=$!
-            export ROBOT_FRAMEWORK_BROWSER_NODE_PORT="$RF_NODE_PORT"
-            trap "kill $RF_NODE_PID 2>/dev/null || true" EXIT
-            sleep 1
-            echo "✅ rfbrowser node server started (PID $RF_NODE_PID)"
-        fi
-
         echo "🧪 Running UI tests..."
         cd $TESTS_DIR
 
-        echo "Running dynamic smoke tests with $PROCESSES parallel processes (detected $CPU_COUNT CPUs)..."
-        pabot --processes "$PROCESSES" --testlevelsplit \
-            --listener resources/libraries/failure_detail_listener.py \
-            -v env:ui_suite \
-            -v docker:false \
-            -v headless:$HEADLESS \
-            -v ignore_console:false \
-            -v dms:true \
-            -v project_location:$PROJECT_ROOT \
-            -d "$RESULTS_DIR/dynamic_set" \
-            --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set \
-            --include smoke \
-            -s '*'.tests.parallel_ui.suite \
-            . || true
-
-        echo ""
-        echo "Running static smoke tests sequentially..."
-        robot \
-            --listener resources/libraries/failure_detail_listener.py \
-            -v env:ui_suite \
-            -v docker:false \
-            -v headless:$HEADLESS \
-            -v ignore_console:false \
-            -v dms:true \
-            -v project_location:$PROJECT_ROOT \
-            -d "$RESULTS_DIR/static_set" \
-            --exclude skip-due-to-issueORskip-due-to-refactoring \
-            --include static-setANDsmoke \
-            -s '*'.tests.parallel_ui.suite \
-            . || true
-
-        # Merge results
-        echo "Merging test results..."
-        rebot -d "$RESULTS_DIR" --output output.xml --merge \
-            "$RESULTS_DIR/dynamic_set/output.xml" \
-            "$RESULTS_DIR/static_set/output.xml" || true
-
-        echo "Rerunning failed tests..."
-        robot \
-            --listener resources/libraries/failure_detail_listener.py \
-            -v env:ui_suite \
-            -v docker:false \
-            -v dms:true \
-            -v headless:$HEADLESS \
-            -v ignore_console:false \
-            -v project_location:$PROJECT_ROOT \
-            -d "$RESULTS_DIR/rerun" \
-            --runemptysuite \
-            --rerunfailed "$RESULTS_DIR/output.xml" \
-            --output rerun.xml \
-            -s '*'.tests.parallel_ui.suite \
-            $TESTS_DIR || true
-
-        if [ -f "$RESULTS_DIR/rerun/rerun.xml" ] && [ -s "$RESULTS_DIR/rerun/rerun.xml" ]; then
-            echo "Merging rerun results..."
-            rebot -d "$RESULTS_DIR" --merge \
-                "$RESULTS_DIR/output.xml" \
-                "$RESULTS_DIR/rerun/rerun.xml" || true
+        if [ "$HEADLESS" = "false" ]; then
+            # Headed mode: run sequentially with robot so the browser window is visible.
+            # pabot spawns isolated subprocesses whose Node.js rfbrowser servers have no
+            # DISPLAY access, so headed mode only works with a single robot process.
+            echo "Running all smoke tests sequentially (headed mode)..."
+            robot \
+                --listener resources/libraries/failure_detail_listener.py \
+                -v env:ui_suite \
+                -v docker:false \
+                -v headless:false \
+                -v ignore_console:false \
+                -v dms:true \
+                -v project_location:$PROJECT_ROOT \
+                -d "$RESULTS_DIR" \
+                --exclude skip-due-to-issueORskip-due-to-refactoring \
+                --include smoke \
+                -s '*'.tests.parallel_ui.suite \
+                .
         else
-            echo "✅ All tests passed on first run, no rerun needed"
+            # Headless mode: run dynamic tests in parallel with pabot, static tests
+            # sequentially, then merge and rerun failures.
+            mkdir -p "$RESULTS_DIR/dynamic_set" "$RESULTS_DIR/dynamic_set/pabot_results" "$RESULTS_DIR/static_set" "$RESULTS_DIR/rerun"
+
+            echo "Running dynamic smoke tests with $PROCESSES parallel processes (detected $CPU_COUNT CPUs)..."
+            pabot --processes "$PROCESSES" --testlevelsplit \
+                --listener resources/libraries/failure_detail_listener.py \
+                -v env:ui_suite \
+                -v docker:false \
+                -v headless:true \
+                -v ignore_console:false \
+                -v dms:true \
+                -v project_location:$PROJECT_ROOT \
+                -d "$RESULTS_DIR/dynamic_set" \
+                --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set \
+                --include smoke \
+                -s '*'.tests.parallel_ui.suite \
+                . || true
+
+            echo ""
+            echo "Running static smoke tests sequentially..."
+            robot \
+                --listener resources/libraries/failure_detail_listener.py \
+                -v env:ui_suite \
+                -v docker:false \
+                -v headless:true \
+                -v ignore_console:false \
+                -v dms:true \
+                -v project_location:$PROJECT_ROOT \
+                -d "$RESULTS_DIR/static_set" \
+                --exclude skip-due-to-issueORskip-due-to-refactoring \
+                --include static-setANDsmoke \
+                -s '*'.tests.parallel_ui.suite \
+                . || true
+
+            echo "Merging test results..."
+            rebot -d "$RESULTS_DIR" --output output.xml --merge \
+                "$RESULTS_DIR/dynamic_set/output.xml" \
+                "$RESULTS_DIR/static_set/output.xml" || true
+
+            echo "Rerunning failed tests..."
+            robot \
+                --listener resources/libraries/failure_detail_listener.py \
+                -v env:ui_suite \
+                -v docker:false \
+                -v dms:true \
+                -v headless:true \
+                -v ignore_console:false \
+                -v project_location:$PROJECT_ROOT \
+                -d "$RESULTS_DIR/rerun" \
+                --runemptysuite \
+                --rerunfailed "$RESULTS_DIR/output.xml" \
+                --output rerun.xml \
+                -s '*'.tests.parallel_ui.suite \
+                $TESTS_DIR || true
+
+            if [ -f "$RESULTS_DIR/rerun/rerun.xml" ] && [ -s "$RESULTS_DIR/rerun/rerun.xml" ]; then
+                echo "Merging rerun results..."
+                rebot -d "$RESULTS_DIR" --merge \
+                    "$RESULTS_DIR/output.xml" \
+                    "$RESULTS_DIR/rerun/rerun.xml" || true
+            else
+                echo "✅ All tests passed on first run, no rerun needed"
+            fi
         fi
         ;;
 
