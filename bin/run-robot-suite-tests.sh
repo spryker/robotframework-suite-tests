@@ -181,7 +181,7 @@ case "$TEST_TYPE" in
                     CORE_BUNDLE="$WRAPPER_DIR/node_modules/playwright-core/lib/coreBundle.js"
                     sed -i 's/if (major < 26)/if (major < 28)/g' "$CORE_BUNDLE"
                     cd "$WRAPPER_DIR"
-                    node_modules/.bin/playwright install chromium
+                    PLAYWRIGHT_BROWSERS_PATH=0 node_modules/.bin/playwright install chromium
                     cd - > /dev/null
                 else
                     echo "$RFBROWSER_LOG"
