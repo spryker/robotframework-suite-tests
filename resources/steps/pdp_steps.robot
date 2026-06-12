@@ -536,9 +536,11 @@ Yves: select xxx merchant's offer:
     END
 
 Yves: select merchant's offer in seller list:
-    [Documentation]    Offer selection in the seller list is applied client-side (no page reload),
-    ...    so the selection is verified via the radio state and the updated URL query, then the page
-    ...    is reloaded to get the server-rendered state of the selected offer
+    [Documentation]    Offer selection in the seller list is applied client-side (no page reload):
+    ...    seller-list.ts checks the radio, updates the price block and the cart/shopping-list offer
+    ...    inputs, and pushes the offer into the URL query. The selection is verified via the radio
+    ...    state and the live URL. No reload — a reload drops the client-set offer inputs (seller-list.ts
+    ...    does not re-apply them for a pre-checked radio), which would lose the offer on add-to-cart/list.
     [Arguments]    ${merchantName}
     ${offer_cls}=    Set Variable    ${offer_item_class}[${env}]
     ${offer_radio_input}=    Set Variable    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::*[contains(@class,'${offer_cls}')]//input[@type='radio']
@@ -546,19 +548,16 @@ Yves: select merchant's offer in seller list:
     IF    not ${merchant_offer_is_already_selected}
         Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::*[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]
         Wait For Elements State    ${offer_radio_input}    state=checked    timeout=3s
-        Get Url    contains    offer    message=Offer selector radio button does not work on PDP but should
         ${offer_reference}=    Get Attribute    ${offer_radio_input}    value
         IF    '${offer_reference}' != '${EMPTY}'
-            # selection of a real offer survives a reload via the URL query, the merchant's own
-            # product (empty reference) does not — its selection lives in the form radio state only
-            Reload
-            TRY
-                Repeat Keyword    3    Wait For Load State
-                Wait For Load State    domcontentloaded
-            EXCEPT
-                Log    Page is not loaded
-            END
-            Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
+            # a real offer pushes ?attribute[selected_merchant_reference]=... into the live URL
+            Wait Until Keyword Succeeds    5x    500ms    Get Url    contains    offer    message=Offer selector radio button does not work on PDP but should
+        END
+        TRY
+            Repeat Keyword    3    Wait For Load State
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    Page is not loaded
         END
     END
 
