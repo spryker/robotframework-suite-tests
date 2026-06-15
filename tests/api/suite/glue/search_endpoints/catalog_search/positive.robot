@@ -27,7 +27,7 @@ Search_with_empty_search_criteria_all_default_values_check
     [Documentation]    Verifies the default catalog-search response shape (sort, pagination,
     ...    abstract products, facets, links) when no query is supplied.
     ...    The numFound bound (`min_/max_number_of_products_in_search`) was widened from
-    ...    the tight legacy band of 215..225 to 50..500 in environments_api_suite.json so
+    ...    the tight legacy band of 215..225 to 100..500 in environments_api_suite.json so
     ...    this test tolerates both full-install demodata (~218 indexed) and dump-restore
     ...    demodata (~70 indexed). The assertion still proves the index is non-trivially
     ...    populated; it no longer pins the exact catalog size.
@@ -68,7 +68,7 @@ Search_with_empty_search_criteria_all_default_values_check
     And Response body parameter should contain:    [data][0][attributes]    currentSortParam
     And Response body parameter should contain:    [data][0][attributes]    currentSortOrder
     #Pagination
-    # numFound bound widened from 215..225 to 50..500 (see environments_api_suite.json)
+    # numFound bound widened from 215..225 to 100..500 (see environments_api_suite.json)
     # to tolerate dump-restore demodata variants alongside full-install demodata.
     And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${min_number_of_products_in_search}
     And Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    ${max_number_of_products_in_search}
@@ -535,14 +535,14 @@ Filter_by_brand_two_brands
 Filter_by_brand_empty_brand
     [Documentation]    Empty-brand filter behaves like no filter; the numFound bound uses
     ...    `min_/max_number_of_products_in_search` which was widened from 215..225 to
-    ...    50..500 in environments_api_suite.json to tolerate full-install vs dump-restore
+    ...    100..500 in environments_api_suite.json to tolerate full-install vs dump-restore
     ...    demodata variants.
     When I send a GET request:    /catalog-search?q=&brand=
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    # numFound bound widened via environments_api_suite.json (50..500).
+    # numFound bound widened via environments_api_suite.json (100..500).
     And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${min_number_of_products_in_search}
     And Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    ${max_number_of_products_in_search}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
@@ -619,7 +619,7 @@ Filter_by_label_non_existing_label
 Filter_by_label_empty_label
     [Documentation]    Empty-label filter behaves like no filter; the numFound bound uses
     ...    `min_/max_number_of_products_in_search` which was widened from 215..225 to
-    ...    50..500 in environments_api_suite.json to tolerate demodata variants.
+    ...    100..500 in environments_api_suite.json to tolerate demodata variants.
     ...
     ...    The maxPage exact-equality check against `${default_qty.ipp_pages}` (19) was
     ...    relaxed to `> 0` because maxPage = ceil(numFound / ipp) and tracks catalog
@@ -630,7 +630,7 @@ Filter_by_label_empty_label
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    # numFound bound widened via environments_api_suite.json (50..500).
+    # numFound bound widened via environments_api_suite.json (100..500).
     And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${min_number_of_products_in_search}
     And Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    ${max_number_of_products_in_search}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
@@ -696,7 +696,7 @@ Filter_by_color_non_existing_color
 Filter_by_color_empty_color
     [Documentation]    Empty-color filter behaves like no filter; the numFound bound uses
     ...    `min_/max_number_of_products_in_search` which was widened from 215..225 to
-    ...    50..500 in environments_api_suite.json to tolerate demodata variants.
+    ...    100..500 in environments_api_suite.json to tolerate demodata variants.
     ...
     ...    The maxPage exact-equality check against `${default_qty.ipp_pages}` (19) was
     ...    relaxed to `> 0` because maxPage = ceil(numFound / ipp) and tracks catalog
@@ -707,7 +707,7 @@ Filter_by_color_empty_color
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
     And Response body parameter should be:    [data][0][type]    catalog-search
-    # numFound bound widened via environments_api_suite.json (50..500).
+    # numFound bound widened via environments_api_suite.json (100..500).
     And Response body parameter should be greater than:    [data][0][attributes][pagination][numFound]    ${min_number_of_products_in_search}
     And Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    ${max_number_of_products_in_search}
     And Response body parameter should be:    [data][0][attributes][pagination][currentPage]    1
