@@ -853,21 +853,26 @@ Response body parameter should be greater than:
     Should Be Equal    ${result}    True    Actual '${data}' is not greater than expected '${expected_value}' in '${json_path}'.
 
 Response body parameter should be less than:
-    [Documentation]    This keyword checks that the body parameter sent in ``{json_path}`` argument is less than a specific integer value ``{expected_value}``.
-    ...    It can be used to check that the default price of the product is less than the original price, that the date of the order is before the certain date.
+    [Documentation]    This keyword checks that the body parameter sent in ``{json_path}`` argument is numerically less than a specific integer/float value ``{expected_value}``.
+    ...    It can be used to check that the default price of the product is less than the original price, that the number of returned products in search is below a max bound, that an expires-in is below a ceiling, etc.
+    ...
+    ...    *Note:* the comparison is **numeric** (`float(actual) < float(expected)`), mirroring the sibling ``Response body parameter should be greater than:`` keyword. The previous implementation compared the values as strings which produced lexicographic-only ordering and failed for cases such as ``70 < 500`` (string ``'7' > '5'``). Callers that need date-string ordering should use a date-specific assertion keyword instead.
     ...
     ...    *Example:*
     ...
     ...    ``Response body parameter should be less than:    [data][0][attributes][price]   100``
     ...
-    ...    ``Response body parameter should be less than:    data[0].attributes.dateSchedule[0].date    2019-01-01``
+    ...    ``Response body parameter should be less than:    [data][0][attributes][pagination][numFound]    500``
     [Arguments]    ${json_path}    ${expected_value}
     ${data}=    Get Value From Json    ${response_body}    ${json_path}
     ${data}=    Convert To String    ${data}
     ${data}=    Replace String    ${data}    '   ${EMPTY}
     ${data}=    Replace String    ${data}    [   ${EMPTY}
     ${data}=    Replace String    ${data}    ]   ${EMPTY}
-    ${result}=    Evaluate    '${data}' < '${expected_value}'
+    # Numeric comparison via float(); mirrors `Response body parameter should be greater than:` above.
+    # Previously this used string compare (`'${data}' < '${expected_value}'`), which is
+    # lexicographic and incorrectly reports `'70' < '500'` as False (`'7' > '5'` in ASCII).
+    ${result}=    Evaluate    float('${data}') < float('${expected_value}')
     ${result}=    Convert To String    ${result}
     Should Be Equal    ${result}    True    Actual '${data}' is not less than expected '${expected_value}' in '${json_path}'.
 
