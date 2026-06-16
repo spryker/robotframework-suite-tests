@@ -67,6 +67,7 @@ Yves: as an agent login under the customer:
     ${isNewUi}=    Run Keyword And Return Status    Page Should Contain Element    ${agent_control_widget}
     IF    ${isNewUi}
         Evaluate Javascript    ${None}    () => document.querySelector(`header agent-control ul[data-qa='component customer-list'] li[data-value='${searchQuery}']`)?.click()
+        Wait Until Element Is Visible    ${agent_control_active_chip}    timeout=${browser_timeout}
     ELSE
         Click    xpath=//ul[@data-qa='component customer-list']/li[@data-value='${searchQuery}']
         ${needsConfirm}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${agent_confirm_login_button}    timeout=2s
