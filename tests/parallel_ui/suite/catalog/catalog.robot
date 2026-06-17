@@ -284,8 +284,9 @@ Configurable_Product_PDP_Shopping_List
     ...    || option one | option two ||
     ...    || 517        | 249        ||
     Yves: save product configuration
-    ### bug: https://spryker.atlassian.net/browse/CC-33647
-    Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €249.00
+    ### bug: https://spryker.atlassian.net/browse/CC-33647 — configured option prices are not added to the
+    ### displayed cart unit price, so it stays the base product price (configurable_product_price_without_configurations).
+    Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    ${configurable_product_price_without_configurations}
     Yves: delete product from the shopping cart with name:    ${configurable_product_name}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: add product to the shopping list:    configProduct+${random}
