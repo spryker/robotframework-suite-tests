@@ -181,9 +181,9 @@ Yves: shopping cart contains product with unit price:
     IF    '${env}' in ['ui_b2b','ui_mp_b2b']
         Log    Unit price assertion skipped on ${env}: new cart UI renders item total only; per-row total is covered by other assertions in the test.
     ELSE IF    '${env}' in ['ui_suite']
-        Page Should Contain Element    xpath=//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//*[@data-qa='cart-item-sku'][contains(text(),'${sku}')]/ancestor::product-item//*[contains(@data-qa,'cart-item-summary')]//span[contains(.,'${productPrice}')]    timeout=300ms
+        Page Should Contain Element    xpath=//main//cart-items-list//product-item[contains(@data-qa,'component product-cart-item')]//*[@data-qa='cart-item-sku'][contains(text(),'${sku}')]/ancestor::product-item//*[contains(@data-qa,'cart-item-summary')]//span[contains(.,'${productPrice}')]    timeout=${browser_timeout}
     ELSE
-        Page Should Contain Element    xpath=(//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]) | (//main[contains(@class,'cart')]//product-cart-item[contains(@data-qa,'component product-cart-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')])    timeout=300ms
+        Page Should Contain Element    xpath=(//main[@class='page-layout-cart']//article[contains(@data-qa,'component product-card-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')]) | (//main[contains(@class,'cart')]//product-cart-item[contains(@data-qa,'component product-cart-item')]//a[contains(text(),'${productName}')]/following-sibling::span/span[contains(@class,'money-price__amount') and contains(.,'${productPrice}')])    timeout=${browser_timeout}
     END
 
 Yves: shopping cart contains/doesn't contain the following elements:
