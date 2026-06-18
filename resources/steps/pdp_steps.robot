@@ -39,9 +39,14 @@ Yves: PDP contains/doesn't contain:
 Yves: add product to the shopping cart
     [Arguments]    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=3s
     Disable Automatic Screenshots on Failure
-    ${variants_present_status}=    Run Keyword And Return Status    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=0:00:01
+    IF    '${env}' == 'ui_mp_b2b'
+        ${pick_random_variant}=    Evaluate JavaScript    ${None}    () => [...document.querySelectorAll('[data-qa="component variant"] select')].some(s => !s.value)
+    ELSE
+        ${variant_select_absent}=    Run Keyword And Return Status    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=0:00:01
+        ${pick_random_variant}=    Evaluate    not ${variant_select_absent}
+    END
     Restore Automatic Screenshots on Failure
-    IF    '${variants_present_status}'=='False'    Run Keyword And Ignore Error    Yves: change variant of the product on PDP on random value
+    IF    ${pick_random_variant}    Run Keyword And Ignore Error    Yves: change variant of the product on PDP on random value
     ${wait_for_p&s}=    Convert To String    ${wait_for_p&s}
     ${wait_for_p&s}=    Convert To Lower Case    ${wait_for_p&s}
     IF    '${wait_for_p&s}' == 'true'
