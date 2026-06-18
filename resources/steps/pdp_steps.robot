@@ -258,8 +258,12 @@ Yves: change variant of the product on PDP on:
     Set Browser Timeout    ${browser_timeout}
 
 Yves: reset selected variant of the product on PDP
-    Wait Until Page Contains Element    ${pdp_reset_selected_variant_locator}
-    Click    ${pdp_reset_selected_variant_locator}
+    IF    '${env}' == 'ui_mp_b2b'
+        Log    Redesigned mp_b2b PDP keeps the variant as an editable select (no Reset link); selecting another value replaces it directly, so reset is a no-op here.
+    ELSE
+        Wait Until Page Contains Element    ${pdp_reset_selected_variant_locator}
+        Click    ${pdp_reset_selected_variant_locator}
+    END
 
 Yves: change amount on PDP:
     [Arguments]    ${amountToSet}
