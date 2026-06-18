@@ -39,7 +39,7 @@ Yves: PDP contains/doesn't contain:
 Yves: add product to the shopping cart
     [Arguments]    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=3s
     Disable Automatic Screenshots on Failure
-    IF    '${env}' == 'ui_mp_b2b'
+    IF    '${env}' in ['ui_mp_b2b', 'ui_b2b']
         ${pick_random_variant}=    Evaluate JavaScript    ${None}    () => [...document.querySelectorAll('[data-qa="component variant"] select')].some(s => !s.value)
     ELSE
         ${variant_select_absent}=    Run Keyword And Return Status    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=0:00:01
@@ -263,8 +263,8 @@ Yves: change variant of the product on PDP on:
     Set Browser Timeout    ${browser_timeout}
 
 Yves: reset selected variant of the product on PDP
-    IF    '${env}' == 'ui_mp_b2b'
-        Log    Redesigned mp_b2b PDP keeps the variant as an editable select (no Reset link); selecting another value replaces it directly, so reset is a no-op here.
+    IF    '${env}' in ['ui_mp_b2b', 'ui_b2b']
+        Log    Redesigned b2b/mp_b2b PDP keeps the variant as an editable select (no Reset link); selecting another value replaces it directly, so reset is a no-op here.
     ELSE
         Wait Until Page Contains Element    ${pdp_reset_selected_variant_locator}
         Click    ${pdp_reset_selected_variant_locator}
