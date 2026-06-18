@@ -159,7 +159,7 @@ Multistore_Product_Offer
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
     Yves: check if cart is not empty and clear it
-    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
+    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true    iterations=26    delay=20s
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: product price on the PDP should be:    €50.00    wait_for_p&s=true
     MP: login on MP with provided credentials:    ${merchant_spryker_email}
@@ -182,13 +182,13 @@ Multistore_Product_Offer
     MP: save offer
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
+    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true    iterations=26    delay=20s
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
     Yves: merchant's offer/product price should be:    Spryker    €200.00
     Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
+    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true    iterations=26    delay=20s
     Yves: merchant is (not) displaying in Sold By section of PDP:    Video King    true
     Yves: product price on the PDP should be:    €55.00    wait_for_p&s=true
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    true
@@ -205,7 +205,7 @@ Multistore_Product_Offer
     Yves: go to AT store 'Home' page if other store not specified:
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${yves_user_email}
-    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true
+    Yves: go to PDP of the product with sku:     multistoreSKU${random}    wait_for_p&s=true    iterations=26    delay=20s
     Yves: merchant is (not) displaying in Sold By section of PDP:    Spryker    false
     Save current URL
     Zed: login on Zed with provided credentials:    ${zed_admin_email}
