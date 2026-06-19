@@ -11,7 +11,7 @@ ${pdp_measurement_sales_unit_selector}    css=*[name=id-product-measurement-sale
 ${pdp_measurement_unit_notification}    xpath=//packaging-unit-quantity-selector/div[contains(@class,'measurement-unit-choice')]
 &{pdp_increase_quantity_button}    ui_b2b=xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--increment')]    ui_mp_b2b=xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--increment')]    ui_b2c=xpath=//quantity-counter[@data-qa='component quantity-counter']//*[contains(@class,'quantity-counter__incr')]    ui_mp_b2c=xpath=//quantity-counter[@data-qa='component quantity-counter']//*[contains(@class,'quantity-counter__incr')]
 &{pdp_decrease_quantity_button}    ui_b2b=xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--decrement')]    ui_mp_b2b=xpath=//div[@class='product-configurator__add-to-cart']//button[contains(@class,'quantity-counter__button--decrement')]    ui_b2c=xpath=//quantity-counter[@data-qa='component quantity-counter']//*[contains(@class,'quantity-counter__decr')]    ui_mp_b2c=xpath=//quantity-counter[@data-qa='component quantity-counter']//*[contains(@class,'quantity-counter__decr')]
-${pdp_variant_selector}    xpath=//*[@data-qa='component variant']//select
+${pdp_variant_selector}    xpath=(//*[@data-qa='component variant']//select)[1]
 ${pdp_variant_custom_selector}    xpath=//*[@data-qa='component variant-configurator']//span[contains(@id,'select2-attribute')]
 ${pdp_variant_custom_selector_results}    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]
 ${pdp_amount_input_filed}    xpath=//formatted-number-input/input[contains(@class,'user-amount')]
@@ -34,7 +34,7 @@ ${pdp_product_not_available_text}    xpath=//*[contains(@class,'product-configur
 ${pdp_availability_notification_email_field}    xpath=//input[@id='availabilityNotificationSubscriptionForm_email']
 ${pdp_wishlist_dropdown}    xpath=//select[contains(@name,'wishlist-name')]
 ${pdp_reset_selected_variant_locator}    xpath=(//div[@class='variant']//button | //div[@class='variant']//a)[1]
-${pdp_variant_not_selected_notification}    xpath=//*[@data-qa='component variant-configurator']//*[contains(@class,'variant-configurator__notify')]
+${pdp_variant_not_selected_notification}    xpath=//*[@data-qa='component variant-configurator']//*[contains(@class,'variant-configurator__notify')][not(contains(@class,'notify-shopping-list'))]
 ${pdp_back_in_stock_subscribe_button}    xpath=//form[@id='availability_notification_subscription']//button[@data-qa='submit-button']
 ${pdp_back_in_stock_unsubscribe_button}    xpath=//form[@id='availability_unsubscribe']//button[@type='submit']
 ${pdp_bazaarvoice_write_review_button}    xpath=//button[contains(@class,'bv-write-review')]
