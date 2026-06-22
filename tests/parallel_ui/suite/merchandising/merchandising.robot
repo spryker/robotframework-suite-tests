@@ -3,13 +3,12 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office    spryker-core    product    product-sets    product-relations    configurable-bundle    product-labels
+Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office    spryker-core    product    product-sets    product-relations    product-labels
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/steps/catalog_steps.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
 Resource    ../../../../resources/steps/product_set_steps.robot
-Resource    ../../../../resources/steps/configurable_bundle_steps.robot
 Resource    ../../../../resources/steps/orders_management_steps.robot
 
 *** Test Cases ***
