@@ -1888,6 +1888,37 @@ Cleanup all items in the cart:
         ...    ``Cleanup items in the cart:    ${cart_id}``
         [Arguments]    ${cart_id}
         Setup_api_host_if_undefined
+        # Remove any configured bundles first. Deleting a plain item from a cart that still
+        # contains a configured bundle triggers the configured-bundle quantity recalculation
+        # (ConfiguredBundleQuantityPostSavePlugin) in Zed, which fails with HTTP 500 when the
+        # bundle item carries no quantityPerSlot. Removing bundles via their own endpoint avoids
+        # that code path. This loop is a no-op for carts that contain no configured bundles.
+        ${bundle_response}=    GET On Session    ${api_session}    ${current_url}/carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
+        IF    ${bundle_response.status_code} != 204
+            @{bundle_included}=    Get Value From Json    ${bundle_response.json()}    [included]
+            @{deleted_bundle_keys}=    Create List
+            ${bundle_list_length}=    Get length    ${bundle_included}
+            FOR    ${bundle_index}    IN RANGE    0    ${bundle_list_length}
+                    ${bundle_element}=    Get From List    @{bundle_included}    ${bundle_index}
+                    ${bundle_status}    ${bundle_group_key}=    Run Keyword And Ignore Error    Get Value From Json    ${bundle_element}    [attributes][configuredBundle][groupKey]
+                    IF    '${bundle_status}' != 'PASS'
+                        CONTINUE
+                    END
+                    ${bundle_group_key}=    Convert To String    ${bundle_group_key}
+                    ${bundle_group_key}=    Replace String    ${bundle_group_key}    '   ${EMPTY}
+                    ${bundle_group_key}=    Replace String    ${bundle_group_key}    [   ${EMPTY}
+                    ${bundle_group_key}=    Replace String    ${bundle_group_key}    ]   ${EMPTY}
+                    IF    '${bundle_group_key}' == '${EMPTY}'
+                        CONTINUE
+                    END
+                    ${already_deleted}=    Run Keyword And Return Status    List Should Contain Value    ${deleted_bundle_keys}    ${bundle_group_key}
+                    IF    ${already_deleted}
+                        CONTINUE
+                    END
+                    DELETE On Session    ${api_session}    ${current_url}/carts/${cart_id}/configured-bundles/${bundle_group_key}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}    expected_status=204    verify=${verify_ssl}
+                    Append To List    ${deleted_bundle_keys}    ${bundle_group_key}
+            END
+        END
         ${response}=    GET On Session    ${api_session}    ${current_url}/carts/${cart_id}    headers=${headers}    timeout=${api_timeout}    allow_redirects=${default_allow_redirects}    auth=${default_auth}  params=include=items,bundle-items     expected_status=200    verify=${verify_ssl}
         ${response.status_code}=    Set Variable    ${response.status_code}
         IF    ${response.status_code} != 204
