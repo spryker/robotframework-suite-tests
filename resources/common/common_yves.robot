@@ -448,6 +448,13 @@ Yves: go to newly created page by URL:
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Restore Automatic Screenshots on Failure
         IF    '${page_not_published}'=='True'
+            # CC-39400: the single create-time `--stop-when-empty` P&S drain can exit mid publish->sync
+            # cascade, and this loop otherwise only navigates with a cache-buster + sleeps -> the 404
+            # never clears and it runs to its full ~180s timeout. Re-trigger the worker while polling
+            # (same pattern as the PDP poll above) so the cascade actually finishes.
+            IF    ${index} == 5 or ${index} == 10 or ${index} == 15 or ${index} == 20
+                Trigger multistore p&s
+            END
             Sleep    ${delay}
         ELSE
             Exit For Loop
