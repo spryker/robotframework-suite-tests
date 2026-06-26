@@ -58,7 +58,7 @@ Configurable_Product_RfQ_OMS
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,352.44
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,346.54
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
@@ -110,5 +110,5 @@ Configurable_Product_Checkout
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,352.44
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,346.54
     [Teardown]    Delete dynamic admin user from DB
