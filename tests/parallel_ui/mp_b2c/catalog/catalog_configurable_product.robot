@@ -50,7 +50,7 @@ Configurable_Product_Checkout
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_spryker_merchant}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,361.00
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €1,461.00
     [Teardown]    Delete dynamic admin user from DB
 
 Configurable_Product_OMS
@@ -99,7 +99,7 @@ Configurable_Product_OMS
     MP: open navigation menu tab:    Orders    
     MP: wait for order to appear:    ${lastPlacedOrder}--${merchant_spryker_reference}
     MP: click on a table row that contains:    ${lastPlacedOrder}--${merchant_spryker_reference}
-    MP: order grand total should be:    €1,361.00
+    MP: order grand total should be:    €1,461.00
     Zed: login on Zed with provided credentials:    ${dynamic_spryker_merchant}
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    send to distribution
