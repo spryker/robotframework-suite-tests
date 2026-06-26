@@ -58,7 +58,7 @@ Configurable_Product_RfQ_OMS
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,346.54
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,352.44
     Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: trigger all matching states inside this order:    Skip timeout
@@ -93,7 +93,7 @@ Configurable_Product_Checkout
     Yves: product configuration status should be equal:      Configuration complete!
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
-    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=2,306.54
+    Yves: shopping cart contains product with unit price:    sku=${configurable_product_concrete_sku}    productName=${configurable_product_name}    productPrice=2,446.54
     Yves: change the product options in configurator to:
     ...    || option one | option two ||
     ...    || 280        | 240        ||
@@ -110,5 +110,5 @@ Configurable_Product_Checkout
     Yves: 'Thank you' page is displayed
     Yves: get the last placed order ID by current customer
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,346.54
+    Zed: grand total for the order equals:    ${lastPlacedOrder}    €2,352.44
     [Teardown]    Delete dynamic admin user from DB
