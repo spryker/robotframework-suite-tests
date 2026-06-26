@@ -281,6 +281,13 @@ Configurable_Product_PDP_Shopping_List
     Yves: change quantity on PDP:    8
     Yves: try add product to the cart from PDP and expect error:    Item ${configurable_product_concrete_sku} only has availability of 7.
     Yves: go to PDP of the product with sku:   ${configurable_product_abstract_sku}
+    # Reconfigure to the final 140/240 options before adding to cart: adding the 280/480 config at
+    # quantity 7 crashes the product-configurator backend gateway and leaves the cart empty.
+    Yves: change the product options in configurator to:
+    ...    || option one | option two ||
+    ...    || 140        | 240        ||
+    Yves: save product configuration
+    Yves: product configuration status should be equal:      Configuration complete!
     Yves: change quantity on PDP:    7
     Yves: add product to the shopping cart
     Yves: go to shopping cart page
