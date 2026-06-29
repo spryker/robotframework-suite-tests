@@ -6,8 +6,22 @@ Resource    ../common/common.robot
 *** Keywords ***
 Yves: 'Catalog' page should show products:
     [Arguments]    ${productsCount}
-    Wait Until Element Is Visible    ${catalog_products_counter_locator}[${env}]
-    Element Should Contain    ${catalog_products_counter_locator}[${env}]    ${productsCount}
+    IF    '${env}' in ['ui_mp_b2b']
+        # Redesign: the product counter renders only on search results (catalog-header__count, gated on `q`).
+        # Category pages have no counter, so assert exact count on search and product presence/empty-state on categories.
+        ${current_url}=    Get Url
+        IF    '/search' in '${current_url}'
+            Wait Until Element Is Visible    ${catalog_products_counter_locator}[${env}]
+            Element Should Contain    ${catalog_products_counter_locator}[${env}]    ${productsCount}
+        ELSE IF    '${productsCount}' == '0'
+            Wait Until Element Is Visible    ${catalog_empty_state_locator}
+        ELSE
+            Wait Until Element Is Visible    ${catalog_product_card_locator}
+        END
+    ELSE
+        Wait Until Element Is Visible    ${catalog_products_counter_locator}[${env}]
+        Element Should Contain    ${catalog_products_counter_locator}[${env}]    ${productsCount}
+    END
 
 Yves: product with name in the catalog should have price:
     [Arguments]    ${productName}    ${expectedProductPrice}
@@ -118,6 +132,23 @@ Yves: select filter value:
     IF    '${env}' in ['ui_suite']
         Check Checkbox    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'title')][contains(.,'${filter}')]/..//input[@value='${filterValue}']    force=true
         Click    ${catalog_filter_apply_button}
+    ELSE IF    '${env}' in ['ui_mp_b2b']
+        Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
+        Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
+        Disable Automatic Screenshots on Failure
+        ${filter_expanded}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]    timeout=2s
+        Restore Automatic Screenshots on Failure
+        IF    'FAIL' in $filter_expanded
+            Reload
+            Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
+            Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
+        END
+        Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]
+        TRY
+            Repeat Keyword    3    Wait For Load State
+        EXCEPT
+            Log    Page is not loaded
+        END
     ELSE
         Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
         Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
