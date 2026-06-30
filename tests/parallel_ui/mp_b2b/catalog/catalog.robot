@@ -156,7 +156,7 @@ Product_Restrictions
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: perform search by:    Soennecken
     Yves: 'Catalog' page should show products:    18
-    Yves: go to URL:    en/office-furniture/storage/lockers
+    Yves: go to URL:    en/office/office-furniture/storage/lockers
     Yves: 'Catalog' page should show products:    34
     Yves: logout on Yves as a customer
     Yves: login on Yves with provided credentials:    ${dynamic_second_customer}
@@ -164,7 +164,7 @@ Product_Restrictions
     Yves: 'Catalog' page should show products:    0
     Yves: logout on Yves as a customer
     Yves: login on Yves with provided credentials:    ${dynamic_third_customer}
-    Yves: go to URL:    en/office-furniture/storage/lockers
+    Yves: go to URL:    en/office/office-furniture/storage/lockers
     Yves: 'Catalog' page should show products:    0
     Yves: go to URL:    en/transport/lift-carts
     Yves: 'Catalog' page should show products:    16
