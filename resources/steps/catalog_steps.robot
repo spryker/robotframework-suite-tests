@@ -9,7 +9,25 @@ Yves: 'Catalog' page should show products:
     IF    '${env}' in ['ui_mp_b2b']
         # Redesign: the product counter renders only on search results (catalog-header__count, gated on `q`).
         # Category pages have no counter, so assert exact count on search and product presence/empty-state on categories.
+        # A navigation triggered by the previous step (e.g. a nav-menu click) can land slightly late, so wait for
+        # the page and URL to settle before deciding search-vs-category — otherwise Get Url returns the stale URL.
+        TRY
+            Wait For Load State    networkidle    timeout=15s
+        EXCEPT
+            Log    Page is not idle
+        END
         ${current_url}=    Get Url
+        FOR    ${i}    IN RANGE    10
+            Sleep    0.5s
+            ${next_url}=    Get Url
+            Exit For Loop If    '${current_url}' == '${next_url}'
+            ${current_url}=    Set Variable    ${next_url}
+            TRY
+                Wait For Load State    networkidle    timeout=15s
+            EXCEPT
+                Log    Page is not idle
+            END
+        END
         IF    '/search' in '${current_url}'
             Wait Until Element Is Visible    ${catalog_products_counter_locator}[${env}]
             Element Should Contain    ${catalog_products_counter_locator}[${env}]    ${productsCount}
