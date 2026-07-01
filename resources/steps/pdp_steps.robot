@@ -720,8 +720,32 @@ Yves: try add product to the cart from PDP and expect error:
     Yves: flash message should be shown:    error    ${expectedError}
 
 Yves: product name on PDP should be:
-    [Arguments]    ${expected_product_name}
-    Yves: try reloading page if element is/not appear:    xpath=//h1[contains(@class,'title')][contains(.,'${expected_product_name}')]    True    15    3s
+    [Arguments]    ${expected_product_name}    ${iterations}=26    ${delay}=5s
+    # Flaked on slow CI: the renamed product's publish->sync had not reached Yves
+    # storage within the old 15x3s (~45s) window. Match the sibling price
+    # assertion: wider ~130s window and re-trigger p&s so the sync stage runs.
+    ${name_locator}=    Set Variable    xpath=//h1[contains(@class,'title')][contains(.,'${expected_product_name}')]
+    FOR    ${index}    IN RANGE    1    ${iterations}
+        IF    ${index} == 2 or ${index} == 5
+            Trigger multistore p&s
+        END
+        Disable Automatic Screenshots on Failure
+        ${nameAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${name_locator}
+        Restore Automatic Screenshots on Failure
+        IF    ${nameAppears}    Exit For Loop
+        IF    ${index} == ${iterations}-1
+            Take Screenshot    EMBED    fullPage=True
+            Fail    Product name ${expected_product_name} not shown on PDP after ${iterations} iterations
+        END
+        Sleep    ${delay}
+        Reload
+        TRY
+            Wait For Load State
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    page is not fully loaded
+        END
+    END
 
 Yves: try to add product to wishlist as guest user
     TRY
