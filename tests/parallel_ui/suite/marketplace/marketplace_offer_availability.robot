@@ -101,18 +101,27 @@ Offer_Availability_Calculation
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Trigger oms
     Yves: get the last placed order ID by current customer
+    Trigger oms
+    # Allocate the ordered items (skip grace period -> warehouse allocated) before asserting
+    # availability: a reservation is only counted once its items are warehouse-allocated.
+    Zed: login on Zed with provided credentials:    ${dynamic_spryker_second_merchant}
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
+    Trigger oms
+    Trigger multistore p&s
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     offAvKU${random}    wait_for_p&s=true
     Yves: select xxx merchant's offer:    Spryker
     Yves: change quantity on PDP:    6
     Yves: try add product to the cart from PDP and expect error:    Item offAvKU${random}-1 only has availability of 2.
     Zed: login on Zed with provided credentials:    ${dynamic_spryker_second_merchant}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Pay
     Zed: go to my order page:    ${lastPlacedOrder}
     Zed: trigger matching state of xxx merchant's shipment:    1    Cancel
+    Trigger oms
+    Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:     offAvKU${random}    wait_for_p&s=true
     Yves: select xxx merchant's offer:    Spryker

@@ -72,13 +72,20 @@ Product_Availability_Calculation
     Yves: 'Thank you' page is displayed    
     Trigger oms
     Yves: get the last placed order ID by current customer
+    # Allocate the ordered items (skip grace period -> warehouse allocated) before asserting
+    # availability: a reservation is only counted once its items are warehouse-allocated.
+    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
+    Zed: go to order page:    ${lastPlacedOrder}
+    Zed: trigger all matching states inside this order:    skip grace period
+    Trigger oms
+    Trigger multistore p&s
+    Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}    wait_for_p&s=true
     Yves: try reloading page if element is/not appear:    ${pdp_product_not_available_text}    False
     Yves: change quantity on PDP:    6
     Yves: try add product to the cart from PDP and expect error:    Item availabilitySKU${random}-color-grey only has availability of 2.
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to order page:    ${lastPlacedOrder}
-    Zed: trigger all matching states inside this order:    skip grace period
     Zed: trigger all matching states inside this order:    Cancel
     Trigger multistore p&s
     Yves: login on Yves with provided credentials:    ${dynamic_customer}

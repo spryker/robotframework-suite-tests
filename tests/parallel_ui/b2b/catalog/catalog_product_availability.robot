@@ -70,9 +70,12 @@ Product_Availability_Calculation
     Yves: 'Thank you' page is displayed
     Trigger oms
     Yves: get the last placed order ID by current customer
+    # Allocate the ordered items (skip grace period -> warehouse allocated) before asserting availability.
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     Zed: go to order page:    ${lastPlacedOrder}
     Zed: trigger all matching states inside this order:    skip grace period
+    Trigger oms
+    Trigger multistore p&s
     Zed: wait for order item to be in state:    sku=availabilitySKU${random}-farbe-grey    state=payment pending    iterations=7
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    availabilitySKU${random}
