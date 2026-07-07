@@ -183,6 +183,10 @@ Yves: select filter value:
     END
 
 Yves: quick add to cart for first item in catalog
+    # The quick-add button has no native form behind it: it does nothing until its
+    # webcomponent attaches the click handler in init(), so a click that lands before
+    # the component is mounted is silently lost (no request, no error).
+    Yves: wait until quick add to cart is interactive
     IF    '${env}' in ['ui_b2b','ui_mp_b2b','ui_suite']
         Click    xpath=(//product-item[@data-qa='component product-item'][1]//*[@class='product-item__actions']//ajax-add-to-cart//button)[1]
     ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c']
@@ -197,6 +201,16 @@ Yves: quick add to cart for first item in catalog
     EXCEPT
         Log    Page is not loaded
     END
+
+Yves: wait until quick add to cart is interactive
+    [Documentation]    Waits until the first ajax-add-to-cart webcomponent reports itself
+    ...    mounted (isMounted is set by the ShopUi Component base class after the click
+    ...    handler is attached).
+    Wait Until Keyword Succeeds    15s    500ms    Yves: quick add to cart component should be mounted
+
+Yves: quick add to cart component should be mounted
+    ${isMounted}=    Evaluate Javascript    ${None}    document.querySelector('ajax-add-to-cart') !== null && document.querySelector('ajax-add-to-cart').isMounted === true
+    Should Be True    ${isMounted}
 
 Yves: get current cart item counter value
     [Documentation]    returns the cart item count number as an integer
