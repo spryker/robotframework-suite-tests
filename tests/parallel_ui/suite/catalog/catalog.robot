@@ -59,7 +59,7 @@ Catalog_Actions
     ...    || 003             | 003_26138343    | DE    | gross | default| €        | 65.00  ||
     Trigger p&s
     Yves: check if cart is not empty and clear it
-    Yves: perform search by:     150_29554292
+    Yves: search catalog until product is quick addable:    150_29554292
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: quick add to cart for first item in catalog
     Yves: perform search by:    115_26408656
