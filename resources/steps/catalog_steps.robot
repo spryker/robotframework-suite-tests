@@ -187,6 +187,7 @@ Yves: quick add to cart for first item in catalog
     # webcomponent attaches the click handler in init(), so a click that lands before
     # the component is mounted is silently lost (no request, no error).
     Yves: wait until quick add to cart is interactive
+    ${promise}=    Promise To    Wait For Response    matcher=**/cart/add-ajax/**    timeout=15s
     IF    '${env}' in ['ui_b2b','ui_mp_b2b','ui_suite']
         Click    xpath=(//product-item[@data-qa='component product-item'][1]//*[@class='product-item__actions']//ajax-add-to-cart//button)[1]
     ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c']
@@ -195,12 +196,32 @@ Yves: quick add to cart for first item in catalog
         Wait Until Element Is Visible    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
         Click    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
     END
-    Wait For Response
+    ${response}=    Wait For    ${promise}
+    ${status}=    Get From Dictionary    ${response}    status
+    Should Be Equal As Integers    ${status}    200    message=Quick add to cart was rejected by the server: ${response}
     TRY
         Repeat Keyword    3    Wait For Load State
     EXCEPT
         Log    Page is not loaded
     END
+
+Yves: search catalog until product is quick addable:
+    [Documentation]    Searches the catalog and retries until the first product tile offers
+    ...    quick add to cart for the expected concrete SKU. The product's search document can
+    ...    be lost to a failed publish batch; re-publishing through the real pipeline heals
+    ...    the catalog before the next attempt.
+    [Arguments]    ${concreteSku}    ${iterations}=6    ${delay}=2s
+    FOR    ${index}    IN RANGE    0    ${iterations}
+        Yves: perform search by:    ${concreteSku}
+        Disable Automatic Screenshots on Failure
+        ${found}=    Run Keyword And Return Status    Page Should Contain Element    xpath=(//product-item[@data-qa='component product-item'])[1]//ajax-add-to-cart//button[contains(@data-url,'${concreteSku}')]    timeout=0:00:03
+        Restore Automatic Screenshots on Failure
+        IF    ${found}    RETURN
+        IF    ${index} == 2    Run console command    console publish:trigger-events -r product_abstract    DE
+        Trigger p&s
+        Sleep    ${delay}
+    END
+    Fail    Product '${concreteSku}' did not become the first quick-addable tile in catalog search results
 
 Yves: wait until quick add to cart is interactive
     [Documentation]    Waits until the first ajax-add-to-cart webcomponent reports itself
