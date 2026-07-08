@@ -187,6 +187,7 @@ Yves: quick add to cart for first item in catalog
     # webcomponent attaches the click handler in init(), so a click that lands before
     # the component is mounted is silently lost (no request, no error).
     Yves: wait until quick add to cart is interactive
+    ${promise}=    Promise To    Wait For Response    matcher=**/cart/add-ajax/**    timeout=15s
     IF    '${env}' in ['ui_b2b','ui_mp_b2b','ui_suite']
         Click    xpath=(//product-item[@data-qa='component product-item'][1]//*[@class='product-item__actions']//ajax-add-to-cart//button)[1]
     ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c']
@@ -195,7 +196,9 @@ Yves: quick add to cart for first item in catalog
         Wait Until Element Is Visible    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
         Click    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
     END
-    Wait For Response
+    ${response}=    Wait For    ${promise}
+    ${status}=    Get From Dictionary    ${response}    status
+    Should Be Equal As Integers    ${status}    200    message=Quick add to cart was rejected by the server: ${response}
     TRY
         Repeat Keyword    3    Wait For Load State
     EXCEPT
