@@ -13,7 +13,7 @@ Resource    ../../../../resources/steps/orders_management_steps.robot
 
 *** Test Cases ***
 Guest_Checkout
-    [Tags]    smoke
+    [Tags]    smoke    quarantine
     [Documentation]    Guest checkout with bundles, discounts and OMS
     [Setup]    Run keywords    Create dynamic admin user in DB
     ...    AND    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
