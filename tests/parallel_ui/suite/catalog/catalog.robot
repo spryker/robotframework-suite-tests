@@ -50,7 +50,7 @@ Catalog
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Catalog_Actions
-    [Tags]    smoke    quick-add-to-cart     cart
+    [Tags]    smoke    quick-add-to-cart     cart    quarantine
     [Documentation]    Checks quick add to cart and product groups
     [Setup]    Create dynamic admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
