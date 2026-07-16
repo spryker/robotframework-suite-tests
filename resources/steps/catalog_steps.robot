@@ -151,17 +151,17 @@ Yves: select filter value:
         Check Checkbox    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'title')][contains(.,'${filter}')]/..//input[@value='${filterValue}']    force=true
         Click    ${catalog_filter_apply_button}
     ELSE IF    '${env}' in ['ui_mp_b2b']
-        Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
-        Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
+        Wait Until Element Is Visible    xpath=//filter-section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
+        Click    xpath=//filter-section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
         Disable Automatic Screenshots on Failure
-        ${filter_expanded}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]    timeout=2s
+        ${filter_expanded}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    xpath=//filter-section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]    timeout=2s
         Restore Automatic Screenshots on Failure
         IF    'FAIL' in $filter_expanded
             Reload
-            Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
-            Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
+            Wait Until Element Is Visible    xpath=//filter-section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
+            Click    xpath=//filter-section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
         END
-        Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]
+        Click    xpath=//filter-section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]
         TRY
             Repeat Keyword    3    Wait For Load State
         EXCEPT
