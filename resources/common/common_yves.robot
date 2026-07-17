@@ -533,6 +533,13 @@ Yves: go to URL and refresh until 404 occurs:
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Restore Automatic Screenshots on Failure
         IF    '${page_not_published}'=='False'
+            # Under DMS the delete is a publish->sync cascade; the single pre-loop `--stop-when-empty`
+            # drain can exit between stages before sync removes the storefront storage entry, so the
+            # page stays live and this loop otherwise just refreshes+sleeps to its ~180s timeout.
+            # Re-drain the worker while polling (same pattern as the create-side poll) so it finishes.
+            IF    ${index} == 5 or ${index} == 10 or ${index} == 15 or ${index} == 20
+                Trigger multistore p&s
+            END
             Run Keyword    Sleep    ${delay}
         ELSE
             Exit For Loop
