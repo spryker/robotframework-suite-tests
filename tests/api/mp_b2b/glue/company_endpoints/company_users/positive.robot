@@ -12,7 +12,7 @@ Retrieve_list_of_company_users
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response should contain the array of a certain size:    [data]    12
+    And Response should contain the array of a certain size:    [data]    13
     And Response should contain the array of a certain size:    [data][0]    4
     And Each array element of array in response should contain value:    [data]    type
     And Each array element of array in response should contain property with value:    [data]    type    company-users
@@ -113,11 +113,11 @@ Retrieve_company_users_by_mine
     Then Response status code should be:    200
     And Response reason should be:    OK
     And Response header parameter should be:    Content-Type    ${default_header_content_type}
-    And Response should contain the array of a certain size:    [data]  1
-    And Response body parameter should be:    [data][0][type]   company-users
-    And Response body parameter should not be EMPTY:    [data][0][id]
-    And Response body parameter should be:    [data][0][attributes][isActive]    True
-    And Response body parameter should be:    [data][0][attributes][isDefault]    False
+    And Response should contain the array of a certain size:    [data]  2
+    And Each array element of array in response should contain property with value:    [data]    type    company-users
+    And Each array element of array in response should contain property with value NOT in:    [data]    [id]    None
+    And Each array element of array in response should contain property with value in:    [data]    attributes.isActive    True
+    And Each array element of array in response should contain property with value in:    [data]    attributes.isDefault    True    False
     And Response body has correct self link
 
 Retrieve_list_of_company_users_with_include_customers_and_filtered_by_company_role
