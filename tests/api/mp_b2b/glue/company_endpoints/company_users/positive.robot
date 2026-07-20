@@ -116,7 +116,7 @@ Retrieve_company_users_by_mine
     And Response should contain the array of a certain size:    [data]  2
     And Each array element of array in response should contain property with value:    [data]    type    company-users
     And Each array element of array in response should contain property with value NOT in:    [data]    [id]    None
-    And Each array element of array in response should contain property with value in:    [data]    attributes.isActive    True
+    And Each array element of array in response should contain property with value in:    [data]    attributes.isActive    True    True
     And Each array element of array in response should contain property with value in:    [data]    attributes.isDefault    True    False
     And Response body has correct self link
 
