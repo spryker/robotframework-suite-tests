@@ -72,11 +72,12 @@ Request_business_unit_by_id_with_include_address_and_company
     And Response body parameter should contain:    [data][relationships]    company-business-unit-addresses
     And Response body parameter should contain:    [data][relationships][company-business-unit-addresses][data][0][type]    company-business-unit-addresses
     And Response body parameter should not be EMPTY:    [data][relationships][company-business-unit-addresses][data][0][id]
-    And Response should contain the array of a certain size:    [included]  2
+    And Response should contain the array of a certain size:    [included]  3
     And Response include should contain certain entity type:    companies
     And Response include should contain certain entity type:    company-business-unit-addresses
     And Response body parameter should not be EMPTY:    [included][0][id]
     And Response body parameter should not be EMPTY:    [included][1][id]
+    And Response body parameter should not be EMPTY:    [included][2][id]
     And Each array element of array in response should contain property:    [included]    attributes
     And Response body parameter should not be EMPTY:    [included][0][attributes][isActive]
     And Response body parameter should not be EMPTY:    [included][0][attributes][name]
@@ -89,6 +90,14 @@ Request_business_unit_by_id_with_include_address_and_company
     And Response body parameter should not be EMPTY:    [included][1][attributes][phone]
     And Response body parameter should not be EMPTY:    [included][1][attributes][iso2Code]
     And Response body parameter should contain:     [included][1][attributes]    comment
+    And Response body parameter should not be EMPTY:    [included][2][attributes][address1]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][address2]
+    And Response body parameter should contain:     [included][2][attributes]    address3
+    And Response body parameter should not be EMPTY:    [included][2][attributes][zipCode]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][city]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][phone]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][iso2Code]
+    And Response body parameter should contain:     [included][2][attributes]    comment
     And Response body has correct self link internal
 
 Request_business_unit_by_mine_include_address_and_company
@@ -112,11 +121,12 @@ Request_business_unit_by_mine_include_address_and_company
     And Response body parameter should contain:    [data]    relationships
     And Response body parameter should contain:    [data][0][relationships][companies][data][0][type]   companies
     And Response body parameter should not be EMPTY:    [data][0][relationships][companies][data][0][id]
-    And Response should contain the array of a certain size:    [included]  2
+    And Response should contain the array of a certain size:    [included]  3
     And Response include should contain certain entity type:    companies
     And Response include should contain certain entity type:    company-business-unit-addresses
     And Response body parameter should not be EMPTY:    [included][0][id]
     And Response body parameter should not be EMPTY:    [included][1][id]
+    And Response body parameter should not be EMPTY:    [included][2][id]
     And Each array element of array in response should contain property:    [included]    attributes
     And Response body parameter should not be EMPTY:    [included][0][attributes][isActive]
     And Response body parameter should not be EMPTY:    [included][0][attributes][name]
@@ -129,4 +139,12 @@ Request_business_unit_by_mine_include_address_and_company
     And Response body parameter should not be EMPTY:    [included][1][attributes][phone]
     And Response body parameter should not be EMPTY:    [included][1][attributes][iso2Code]
     And Response body parameter should contain:     [included][1][attributes]    comment
+    And Response body parameter should not be EMPTY:    [included][2][attributes][address1]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][address2]
+    And Response body parameter should contain:     [included][2][attributes]    address3
+    And Response body parameter should not be EMPTY:    [included][2][attributes][zipCode]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][city]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][phone]
+    And Response body parameter should not be EMPTY:    [included][2][attributes][iso2Code]
+    And Response body parameter should contain:     [included][2][attributes]    comment
     And Response body has correct self link
