@@ -443,6 +443,7 @@
        },
        "product_options":{
           "option_1":"OP_2_year_waranty",
+          "option_1_group_name":"Warranty",
           "option_1_name":"Two (2) year limited warranty",
           "option_2":"OP_insurance"
        },

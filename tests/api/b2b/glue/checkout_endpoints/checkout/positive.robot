@@ -348,7 +348,7 @@ Create_order_with_weight_product_&_product_options
     And Response body parameter should be:    [included][0][attributes][items][1][sku]    ${concrete.with_options.sku}
     And Response body parameter should be:
     ...    [included][0][attributes][items][1][productOptions][0][optionGroupName]
-    ...    Warranty
+    ...    ${product_options.option_1_group_name}
     And Response body parameter should be:
     ...    [included][0][attributes][items][1][productOptions][0][sku]
     ...    ${product_options.option_1}
