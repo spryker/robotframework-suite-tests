@@ -315,25 +315,25 @@
             "product_options":{
                 "OP_1":{
                     "id":"OP_1_year_waranty",
-                    "option_group_name":"Three (3) year limited warranty",
+                    "option_group_name":"Warranty",
                     "sku":"OP_1_year_waranty",
                     "option_name":"One (1) year limited warranty"
                 },
                 "OP_2":{
                     "id":"OP_2_year_waranty",
-                    "option_group_name":"Three (3) year limited warranty",
+                    "option_group_name":"Warranty",
                     "sku":"OP_2_year_waranty",
                     "option_name":"Two (2) year limited warranty"
                 },
                 "OP_3":{
                     "id":"OP_3_year_waranty",
-                    "option_group_name":"Three (3) year limited warranty",
+                    "option_group_name":"Warranty",
                     "sku":"OP_3_year_waranty",
                     "option_name":"Three (3) year limited warranty"
                 },
                 "OP_insurance":{
                     "id":"OP_insurance",
-                    "option_group_name":"Two (2) year insurance coverage",
+                    "option_group_name":"Insurance",
                     "sku":"OP_insurance",
                     "option_name":"Two (2) year insurance coverage"
                 }
@@ -481,25 +481,25 @@
             "product_options":{
                 "OP_1":{
                     "id":"OP_1_year_waranty",
-                    "option_group_name":"Three (3) year limited warranty",
+                    "option_group_name":"Warranty",
                     "sku":"OP_1_year_waranty",
                     "option_name":"One (1) year limited warranty"
                 },
                 "OP_2":{
                     "id":"OP_2_year_waranty",
-                    "option_group_name":"Three (3) year limited warranty",
+                    "option_group_name":"Warranty",
                     "sku":"OP_2_year_waranty",
                     "option_name":"Two (2) year limited warranty"
                 },
                 "OP_3":{
                     "id":"OP_3_year_waranty",
-                    "option_group_name":"Three (3) year limited warranty",
+                    "option_group_name":"Warranty",
                     "sku":"OP_3_year_waranty",
                     "option_name":"Three (3) year limited warranty"
                 },
                 "OP_insurance":{
                     "id":"OP_insurance",
-                    "option_group_name":"Two (2) year insurance coverage",
+                    "option_group_name":"Insurance",
                     "sku":"OP_insurance",
                     "option_name":"Two (2) year insurance coverage"
                 }
@@ -592,6 +592,7 @@
         "measurement_unit_m":"METR",
         "product_options":{
             "option_1":"OP_2_year_waranty",
+            "option_1_group_name":"Warranty",
             "option_1_name":"Two (2) year limited warranty",
             "option_2":"OP_insurance"
         },
