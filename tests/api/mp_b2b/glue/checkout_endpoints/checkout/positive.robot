@@ -213,7 +213,7 @@ Create_order_with_weight_product_&_product_options
     #product_2
     And Response body parameter should be:    [included][0][attributes][items][1][name]    ${abstract_product.product_with_options.concrete_name}
     And Response body parameter should be:    [included][0][attributes][items][1][sku]    ${abstract_product.product_with_options.concrete_sku}
-    And Response body parameter should be:    [included][0][attributes][items][1][productOptions][0][optionGroupName]    Warranty
+    And Response body parameter should be:    [included][0][attributes][items][1][productOptions][0][optionGroupName]    ${product_options.option_1_group_name}
     And Response body parameter should be:    [included][0][attributes][items][1][productOptions][0][sku]    ${product_options.option_1}
     And Response body parameter should be:    [included][0][attributes][items][1][productOptions][0][optionName]    ${product_options.option_1_name}
     And Response body parameter should be greater than:    [included][0][attributes][items][1][productOptions][0][price]    0
