@@ -33,6 +33,7 @@ except ImportError:
 
 SUITE_SKIP = re.compile(r"^\s*(describe|context)\.skip\s*\(", re.MULTILINE)
 PHP_NEXT_DECL = re.compile(r"\n    (?:public |protected |private )?function ")
+PHP_SKIP = re.compile(r"markTestSkipped\s*\(|->\s*skip\s*\(")
 ROBOT_NEXT_DECL = re.compile(r"\n(?=\S)")
 ROBOT_SKIP = re.compile(
     r"^\s*(\[Tags\][^\n]*\bskip\b|Skip(\s+If)?\b)", re.IGNORECASE | re.MULTILINE
@@ -53,6 +54,23 @@ def read(path: Path) -> str | None:
         return None
 
 
+def php_body(text: str, start: int) -> str:
+    """The declaration body, cut at the next method declaration at class-member indentation."""
+    tail = text[start:]
+    boundary = PHP_NEXT_DECL.search(tail)
+    return tail[: boundary.start()] if boundary else tail
+
+
+def php_skips(body: str) -> bool:
+    """Codeception offers two spellings: `$i->markTestSkipped()` and `$scenario->skip()`."""
+    return bool(PHP_SKIP.search(body))
+
+
+def php_before_skips(text: str) -> bool:
+    match = re.search(r"\n\s*(?:public |protected |private )?function\s+_before(?:Suite)?\s*\(", text)
+    return bool(match) and php_skips(php_body(text, match.end()))
+
+
 def find_test(text: str, name: str) -> bool | None:
     """Is `name` present in `text`, and is it skipped? None when the test is absent.
 
@@ -70,14 +88,17 @@ def find_test(text: str, name: str) -> bool | None:
         callee, suffix = match.group(1), match.group(2)
         return bool(suffix) or callee == "xit" or bool(SUITE_SKIP.search(text))
 
-    # Codeception: @skip in the docblock above, or markTestSkipped in the body.
+    # Codeception: skipped by its own body, by its docblock, or by the Cest's `_before` --
+    # a `markTestSkipped` in `_before` skips every test in the file, which is how whole
+    # Cests are parked in this codebase.
     match = re.search(rf"\n\s*(?:public |protected |private )?function\s+{escaped}\s*\(", text)
     if match:
-        tail = text[match.end():]
-        boundary = PHP_NEXT_DECL.search(tail)
-        body = tail[: boundary.start()] if boundary else tail
         docblock = text[max(0, match.start() - 400) : match.start()]
-        return "markTestSkipped" in body or "@skip" in docblock
+        return (
+            php_skips(php_body(text, match.end()))
+            or "@skip" in docblock
+            or php_before_skips(text)
+        )
 
     # Robot: a test-case heading starts at column zero; its body is indented.
     match = re.search(rf"^{escaped}[ \t]*$", text, re.MULTILINE)

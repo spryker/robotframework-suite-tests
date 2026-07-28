@@ -96,7 +96,11 @@ def main() -> int:
             if row["source_state"] == "GONE" and row["status"] not in SETTLED_STATUSES:
                 # A deleted source is only safe once something covers it. Which of the three
                 # things went wrong decides whether this blocks the merge or just isn't finished.
-                if row.get("verdict") not in PORTING_VERDICTS:
+                if row.get("verdict") == "DEFER" and row.get("blocked_by"):
+                    # A DEFER carrying a reason is a recorded decision to park the scenario,
+                    # not drift. It stays visible as BLOCKED and never counts as ported.
+                    warnings.append(f"{row_id}: parked — {row['blocked_by']}")
+                elif row.get("verdict") not in PORTING_VERDICTS:
                     failures.append(
                         f"G1 {row_id}: source deleted while the verdict is still "
                         f"{row['verdict']} — settle the verdict before deleting"

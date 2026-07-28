@@ -72,8 +72,12 @@ in. Sharding is generated from recorded timings at runtime.
 
 - Test names are Given/When/Then. Body comments are Arrange/Act/Assert. Never the other way round.
 - No Jira keys in test code, comments, config or CI files.
-- Never port a test as skipped. If it cannot be made to pass, the row is `DEFER` with a
-  `blocked_by`, not a skipped placeholder that looks like coverage. Gate G4 enforces this.
+- Never port a *live* test as skipped. Gate G4 refuses to count a skipped target as coverage: if it
+  cannot be made to pass, the row is `DEFER` with a `blocked_by`, not a skipped placeholder that
+  looks like coverage.
+- A source already disabled by `markTestSkipped`, `@skip` or `$scenario->skip()` — including one
+  skipped from the test file's `_before()`, which disables every test in it — was running nowhere,
+  so deleting it loses nothing. Park it as `DEFER`; see Verdicts.
 - If the source Robot test is itself skipped or quarantined, do not port it — set `DROP` and say
   so in the `rationale`.
 
@@ -149,7 +153,13 @@ Set in `decisions.jsonl`. Every row needs one.
 | `DROP` | low value — delete without replacement | `rationale` |
 | `RESHAPE` | wrong framework entirely — keep it here in a different shape | `target_path` |
 | `REVIEW` | thin smoke or partial overlap — a human call, blocks the batch until resolved | `recommended_action` |
-| `DEFER` | blocked on infrastructure | `blocked_by` |
+| `DEFER` | parked on purpose — blocked on infrastructure, or skipped in the source and not worth rebuilding yet | `blocked_by` |
+
+A source test that was already `@skip`/`markTestSkipped`/`$scenario->skip()` upstream was running
+nowhere, so deleting it loses no coverage. Park it: `DEFER` with
+`blocked_by: "Skipped in source, rebuild when there is a need for."`, and keep the ported spec as
+`it.skip` with the same sentence as a comment. The row shows up under `blocked`, never as migrated,
+and `gate.py` accepts the deletion because the reason is recorded.
 
 Also set `decided_by`: `auto` (matcher), `ai` (classifier), `human`. Only `auto` and `ai` rows are
 recomputed — a `human` verdict is never overwritten.

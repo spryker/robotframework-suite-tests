@@ -86,9 +86,11 @@ def render_domain(matrix_name: str, domain: str, rows: list[dict]) -> str:
         counts[row.get("verdict", "UNDECIDED")] = counts.get(row.get("verdict", "UNDECIDED"), 0) + 1
     portable = [row for row in rows if row.get("verdict") in ("MIGRATE", "RESHAPE")]
     green = sum(1 for row in portable if row["status"] in CHECKED_STATUSES)
-    skipped = sum(1 for row in portable if row.get("target_state") == "SKIPPED")
     # A skipped target is authored code that never runs, so it is counted apart from the rest.
-    authored = sum(1 for row in portable if row["status"] == "AUTHORED") - skipped
+    skipped = sum(1 for row in portable
+                  if row["status"] == "AUTHORED" and row.get("target_state") == "SKIPPED")
+    authored = sum(1 for row in portable
+                   if row["status"] == "AUTHORED" and row.get("target_state") != "SKIPPED")
     jira = next((row.get("jira") for row in rows if row.get("jira")), None)
     batches = sorted({row.get("batch") or domain for row in rows})
 
@@ -158,10 +160,10 @@ def render_domain(matrix_name: str, domain: str, rows: list[dict]) -> str:
         ],
     )
     table(
-        "DEFER — blocked",
+        "DEFER — parked, not counted as migrated",
         by_verdict("DEFER"),
-        ["Scenario", "Blocked by"],
-        lambda row: [escape(row["name"]), escape(row.get("blocked_by"))],
+        ["Scenario", "Placeholder", "Blocked by"],
+        lambda row: [escape(row["name"]), target_cell(row), escape(row.get("blocked_by"))],
     )
     table(
         "UNDECIDED — no verdict yet",
@@ -170,6 +172,16 @@ def render_domain(matrix_name: str, domain: str, rows: list[dict]) -> str:
         lambda row: [escape(row["name"]), contract_cell(row), escape(row.get("effort"))],
     )
     return "\n".join(lines).rstrip() + "\n"
+
+
+def authored_and_running(row: dict) -> bool:
+    return (row.get("verdict") in ("MIGRATE", "RESHAPE") and row["status"] == "AUTHORED"
+            and row.get("target_state") != "SKIPPED")
+
+
+def authored_but_skipped(row: dict) -> bool:
+    return (row.get("verdict") in ("MIGRATE", "RESHAPE") and row["status"] == "AUTHORED"
+            and row.get("target_state") == "SKIPPED")
 
 
 def render_progress(config: dict, matrices: dict[str, list[dict]]) -> str:
@@ -185,13 +197,8 @@ def render_progress(config: dict, matrices: dict[str, list[dict]]) -> str:
     for name, rows in matrices.items():
         domains = len({row["domain"] for row in rows})
         migrate = sum(1 for row in rows if row.get("verdict") in ("MIGRATE", "RESHAPE"))
-        authored = sum(
-            1
-            for row in rows
-            if row.get("verdict") in ("MIGRATE", "RESHAPE") and row["status"] == "AUTHORED"
-        )
-        skipped = sum(1 for row in rows if row.get("target_state") == "SKIPPED")
-        authored -= skipped  # a skipped target never runs, so it is reported on its own
+        authored = sum(1 for row in rows if authored_and_running(row))
+        skipped = sum(1 for row in rows if authored_but_skipped(row))
         ported = sum(
             1
             for row in rows
@@ -218,13 +225,8 @@ def render_progress(config: dict, matrices: dict[str, list[dict]]) -> str:
         for domain in sorted(by_domain):
             subset = by_domain[domain]
             migrate = sum(1 for row in subset if row.get("verdict") in ("MIGRATE", "RESHAPE"))
-            authored = sum(
-                1
-                for row in subset
-                if row.get("verdict") in ("MIGRATE", "RESHAPE") and row["status"] == "AUTHORED"
-            )
-            skipped = sum(1 for row in subset if row.get("target_state") == "SKIPPED")
-            authored -= skipped
+            authored = sum(1 for row in subset if authored_and_running(row))
+            skipped = sum(1 for row in subset if authored_but_skipped(row))
             ported = sum(
                 1
                 for row in subset
