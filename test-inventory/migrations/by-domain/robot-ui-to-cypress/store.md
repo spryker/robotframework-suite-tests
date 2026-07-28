@@ -1,6 +1,6 @@
 ### store · robot-ui-to-cypress · 4 scenarios
 
-MIGRATE 4   ▸ 0/4 ported
+MIGRATE 4   ▸ 0/4 verified
 
 Batches: `store`
 

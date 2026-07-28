@@ -1,6 +1,6 @@
 ### agent-assist · robot-api-to-codeception · 43 scenarios
 
-MIGRATE 21 · REVIEW 22   ▸ 0/21 ported
+MIGRATE 21 · REVIEW 22   ▸ 0/21 verified
 
 Batches: `agent-assist-1`, `agent-assist-2`
 

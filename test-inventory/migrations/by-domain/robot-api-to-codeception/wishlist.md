@@ -1,6 +1,6 @@
 ### wishlist · robot-api-to-codeception · 83 scenarios
 
-MIGRATE 83   ▸ 0/83 ported
+MIGRATE 83   ▸ 0/83 verified
 
 Batches: `wishlist-1`, `wishlist-2`, `wishlist-3`
 

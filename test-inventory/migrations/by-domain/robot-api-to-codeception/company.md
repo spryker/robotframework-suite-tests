@@ -1,6 +1,6 @@
 ### company · robot-api-to-codeception · 71 scenarios
 
-MIGRATE 64 · REVIEW 7   ▸ 0/64 ported
+MIGRATE 64 · REVIEW 7   ▸ 0/64 verified
 
 Batches: `company-1`, `company-2`
 

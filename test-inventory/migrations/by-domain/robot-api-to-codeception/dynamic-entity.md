@@ -1,6 +1,6 @@
 ### dynamic-entity · robot-api-to-codeception · 59 scenarios
 
-MIGRATE 56 · UNDECIDED 3   ▸ 0/56 ported
+MIGRATE 56 · UNDECIDED 3   ▸ 0/56 verified
 
 Batches: `dynamic-entity-1`, `dynamic-entity-2`
 

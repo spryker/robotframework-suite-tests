@@ -1,6 +1,6 @@
 ### platform · robot-ui-to-cypress · 6 scenarios
 
-MIGRATE 3 · RESHAPE 2 · REVIEW 1   ▸ 0/5 ported
+MIGRATE 3 · RESHAPE 2 · REVIEW 1   ▸ 0/5 verified
 
 Batches: `platform`
 

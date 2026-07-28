@@ -1,6 +1,6 @@
 ### product-bundle · robot-api-to-codeception · 78 scenarios
 
-MIGRATE 68 · REVIEW 10   ▸ 0/68 ported
+MIGRATE 68 · REVIEW 10   ▸ 0/68 verified
 
 Batches: `product-bundle-1`, `product-bundle-2`
 

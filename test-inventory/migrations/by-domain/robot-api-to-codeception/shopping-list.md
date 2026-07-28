@@ -1,6 +1,6 @@
 ### shopping-list · robot-api-to-codeception · 117 scenarios
 
-MIGRATE 111 · REVIEW 6   ▸ 0/111 ported
+MIGRATE 111 · REVIEW 6   ▸ 0/111 verified
 
 Batches: `shopping-list-1`, `shopping-list-2`, `shopping-list-3`
 

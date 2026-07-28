@@ -1,6 +1,6 @@
 ### cart · robot-api-to-codeception · 213 scenarios
 
-MIGRATE 155 · REVIEW 58   ▸ 0/155 ported
+MIGRATE 155 · REVIEW 58   ▸ 0/155 verified
 
 Batches: `cart-1`, `cart-2`, `cart-3`, `cart-4`, `cart-5`, `cart-6`
 

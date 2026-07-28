@@ -1,6 +1,6 @@
 ### checkout · robot-api-to-codeception · 79 scenarios
 
-MIGRATE 40 · REVIEW 39   ▸ 0/40 ported
+MIGRATE 40 · REVIEW 39   ▸ 0/40 verified
 
 Batches: `checkout-1`, `checkout-2`
 

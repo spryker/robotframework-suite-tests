@@ -1,6 +1,6 @@
 ### authentication · robot-api-to-codeception · 38 scenarios
 
-MIGRATE 6 · REVIEW 18 · UNDECIDED 14   ▸ 0/6 ported
+MIGRATE 6 · REVIEW 18 · UNDECIDED 14   ▸ 0/6 verified
 
 Batches: `authentication`
 

@@ -1,6 +1,6 @@
 ### company · robot-ui-to-cypress · 2 scenarios
 
-MIGRATE 2   ▸ 0/2 ported
+MIGRATE 2   ▸ 0/2 verified
 
 Batches: `company`
 

@@ -1,6 +1,6 @@
 ### merchant · robot-ui-to-cypress · 22 scenarios
 
-MIGRATE 14 · DROP 3 · REVIEW 5   ▸ 0/14 ported
+MIGRATE 14 · DROP 3 · REVIEW 5   ▸ 0/14 verified · 1 awaiting a CI run
 
 Batches: `merchant`
 

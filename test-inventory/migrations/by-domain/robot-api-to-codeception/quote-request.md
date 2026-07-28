@@ -1,6 +1,6 @@
 ### quote-request · robot-api-to-codeception · 31 scenarios
 
-MIGRATE 22 · REVIEW 9   ▸ 0/22 ported
+MIGRATE 22 · REVIEW 9   ▸ 0/22 verified
 
 Batches: `quote-request`
 

@@ -1,6 +1,6 @@
 ### service-point · robot-api-to-codeception · 116 scenarios
 
-MIGRATE 103 · REVIEW 12 · UNDECIDED 1   ▸ 0/103 ported
+MIGRATE 103 · REVIEW 12 · UNDECIDED 1   ▸ 0/103 verified
 
 Batches: `service-point-1`, `service-point-2`, `service-point-3`
 

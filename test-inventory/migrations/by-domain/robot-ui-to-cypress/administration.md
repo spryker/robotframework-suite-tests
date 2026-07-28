@@ -1,6 +1,6 @@
 ### administration · robot-ui-to-cypress · 6 scenarios
 
-MIGRATE 3 · REVIEW 3   ▸ 0/3 ported
+MIGRATE 3 · REVIEW 3   ▸ 0/3 verified
 
 Batches: `administration`
 

@@ -1,6 +1,6 @@
 ### warehouse · robot-api-to-codeception · 32 scenarios
 
-MIGRATE 32   ▸ 0/32 ported
+MIGRATE 32   ▸ 0/32 verified
 
 Batches: `warehouse`
 

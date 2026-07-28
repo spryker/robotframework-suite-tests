@@ -2,12 +2,16 @@
 """Migration drift gates. Run in CI; run locally before you push.
 
 G1 coverage      every inventory test is in exactly one matrix row (or is a clone of one),
-                 every matrix row's source still exists unless it is SOURCE_REMOVED/DROPPED,
+                 a deleted source has a recorded target and a settled verdict,
                  every framework-native domain resolves through domains.yaml,
                  the generated files are not stale.
 G3 parity        a row with verified_run recorded must have its target test present.
-G4 skip honesty  a skipped target test can never count as ported.
+G4 skip honesty  a skipped target test can never count as ported, and deleting a source
+                 whose target is skipped leaves the scenario untested everywhere.
 D   decisions    each verdict carries the field that makes it reviewable.
+
+A deleted source whose target is present but has no verified_run yet is a warning, not a
+violation: that is an unfinished batch, not drift. Only a lost or skipped target fails.
 
 G2 (no new source-framework tests) is a diff-scoped check and lives in the CI workflow,
 not here -- this script has no view of the pull request.
@@ -31,6 +35,7 @@ except ImportError:
 
 SETTLED_STATUSES = {"SOURCE_REMOVED", "DROPPED"}
 PORTED_STATUSES = {"TARGET_GREEN", "SOURCE_REMOVED"}
+PORTING_VERDICTS = {"MIGRATE", "RESHAPE"}
 REQUIRED_BY_VERDICT = {
     "OBSOLETE": "covered_by",
     "DEFER": "blocked_by",
@@ -58,6 +63,7 @@ def main() -> int:
     config = yaml.safe_load((base / "matrices.yaml").read_text())
     inventory = load_jsonl(base / config["inventory"])
     failures: list[str] = []
+    warnings: list[str] = []
 
     for script in ("build.py", "render.py"):
         result = subprocess.run(
@@ -88,10 +94,27 @@ def main() -> int:
             if row["domain"] == "UNMAPPED":
                 failures.append(f"G1 {row_id}: domain '{row['native_domain']}' not in domains.yaml")
             if row["source_state"] == "GONE" and row["status"] not in SETTLED_STATUSES:
-                failures.append(
-                    f"G1 {row_id}: source is gone but status is {row['status']} — "
-                    "record the target, or set the verdict to OBSOLETE/DROP"
-                )
+                # A deleted source is only safe once something covers it. Which of the three
+                # things went wrong decides whether this blocks the merge or just isn't finished.
+                if row.get("verdict") not in PORTING_VERDICTS:
+                    failures.append(
+                        f"G1 {row_id}: source deleted while the verdict is still "
+                        f"{row['verdict']} — settle the verdict before deleting"
+                    )
+                elif row["target_state"] in ("MISSING", "UNKNOWN"):
+                    failures.append(
+                        f"G1 {row_id}: source deleted but no target is recorded — that coverage "
+                        "is gone. Port it, or change the verdict to DROP/OBSOLETE with a reason"
+                    )
+                elif row["target_state"] == "SKIPPED":
+                    failures.append(
+                        f"G4 {row_id}: source deleted but the target test is skipped — "
+                        "nothing runs this scenario in any variant"
+                    )
+                else:
+                    warnings.append(
+                        f"{row_id}: ported, awaiting a verified CI run before it counts as done"
+                    )
             if row.get("verified_run") and row["target_state"] != "PRESENT":
                 failures.append(
                     f"G3 {row_id}: verified_run recorded but target_state is {row['target_state']}"
@@ -105,6 +128,10 @@ def main() -> int:
                     and not row.get("target_path"):
                 failures.append(f"D  {row_id}: {row['status']} without a target_path")
 
+    if warnings:
+        print(f"{len(warnings)} row(s) ported but not yet verified by a CI run:")
+        for warning in warnings:
+            print(f"  {warning}")
     if failures:
         print(f"{len(failures)} violation(s):\n  " + "\n  ".join(failures), file=sys.stderr)
         return 1

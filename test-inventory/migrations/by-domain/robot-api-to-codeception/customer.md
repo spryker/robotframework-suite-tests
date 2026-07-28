@@ -1,6 +1,6 @@
 ### customer · robot-api-to-codeception · 108 scenarios
 
-MIGRATE 82 · REVIEW 26   ▸ 0/82 ported
+MIGRATE 82 · REVIEW 26   ▸ 0/82 verified
 
 Batches: `customer-1`, `customer-2`, `customer-3`
 

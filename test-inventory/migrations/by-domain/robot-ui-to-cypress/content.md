@@ -1,6 +1,6 @@
 ### content · robot-ui-to-cypress · 1 scenarios
 
-MIGRATE 1   ▸ 0/1 ported
+MIGRATE 1   ▸ 0/1 verified
 
 Batches: `content`
 

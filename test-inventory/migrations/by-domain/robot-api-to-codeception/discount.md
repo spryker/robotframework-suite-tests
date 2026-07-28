@@ -1,6 +1,6 @@
 ### discount · robot-api-to-codeception · 53 scenarios
 
-MIGRATE 52 · REVIEW 1   ▸ 0/52 ported
+MIGRATE 52 · REVIEW 1   ▸ 0/52 verified
 
 Batches: `discount-1`, `discount-2`
 

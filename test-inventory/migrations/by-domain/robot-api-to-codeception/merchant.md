@@ -1,6 +1,6 @@
 ### merchant · robot-api-to-codeception · 11 scenarios
 
-MIGRATE 11   ▸ 0/11 ported
+MIGRATE 11   ▸ 0/11 verified
 
 Batches: `merchant`
 

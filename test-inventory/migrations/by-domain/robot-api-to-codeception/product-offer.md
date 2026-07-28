@@ -1,6 +1,6 @@
 ### product-offer · robot-api-to-codeception · 48 scenarios
 
-MIGRATE 48   ▸ 0/48 ported
+MIGRATE 48   ▸ 0/48 verified
 
 Batches: `product-offer-1`, `product-offer-2`
 

@@ -1,6 +1,6 @@
 ### platform · robot-api-to-codeception · 21 scenarios
 
-MIGRATE 11 · REVIEW 10   ▸ 0/11 ported
+MIGRATE 11 · REVIEW 10   ▸ 0/11 verified
 
 Batches: `platform`
 

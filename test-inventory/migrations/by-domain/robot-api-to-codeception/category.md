@@ -1,6 +1,6 @@
 ### category · robot-api-to-codeception · 8 scenarios
 
-MIGRATE 8   ▸ 0/8 ported
+MIGRATE 8   ▸ 0/8 verified
 
 Batches: `category`
 

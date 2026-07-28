@@ -1,6 +1,6 @@
 ### customer · robot-ui-to-cypress · 14 scenarios
 
-MIGRATE 10 · DROP 1 · REVIEW 3   ▸ 0/10 ported
+MIGRATE 10 · DROP 1 · REVIEW 3   ▸ 0/10 verified · 1 awaiting a CI run
 
 Batches: `customer`
 

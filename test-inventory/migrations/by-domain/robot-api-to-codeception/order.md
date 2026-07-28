@@ -1,6 +1,6 @@
 ### order · robot-api-to-codeception · 45 scenarios
 
-MIGRATE 21 · REVIEW 24   ▸ 0/21 ported
+MIGRATE 21 · REVIEW 24   ▸ 0/21 verified
 
 Batches: `order-1`, `order-2`
 

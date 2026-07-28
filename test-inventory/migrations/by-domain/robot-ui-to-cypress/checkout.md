@@ -1,6 +1,6 @@
 ### checkout · robot-ui-to-cypress · 16 scenarios
 
-MIGRATE 9 · OBSOLETE 1 · REVIEW 6   ▸ 0/9 ported
+MIGRATE 9 · OBSOLETE 1 · REVIEW 6   ▸ 0/9 verified
 
 Batches: `checkout`
 

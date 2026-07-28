@@ -1,6 +1,6 @@
 ### product · robot-ui-to-cypress · 21 scenarios
 
-MIGRATE 17 · REVIEW 4   ▸ 0/17 ported
+MIGRATE 17 · REVIEW 4   ▸ 0/17 verified
 
 Batches: `product`
 

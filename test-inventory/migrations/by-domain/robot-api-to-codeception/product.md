@@ -1,6 +1,6 @@
 ### product · robot-api-to-codeception · 235 scenarios
 
-MIGRATE 122 · REVIEW 113   ▸ 0/122 ported
+MIGRATE 122 · REVIEW 113   ▸ 0/122 verified
 
 Batches: `product-1`, `product-2`, `product-3`, `product-4`, `product-5`, `product-6`
 

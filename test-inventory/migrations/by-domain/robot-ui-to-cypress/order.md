@@ -1,6 +1,6 @@
 ### order · robot-ui-to-cypress · 6 scenarios
 
-MIGRATE 6   ▸ 0/6 ported
+MIGRATE 6   ▸ 0/6 verified
 
 Batches: `order`
 

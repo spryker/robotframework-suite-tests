@@ -1,6 +1,6 @@
 ### content · robot-api-to-codeception · 19 scenarios
 
-MIGRATE 19   ▸ 0/19 ported
+MIGRATE 19   ▸ 0/19 verified
 
 Batches: `content`
 

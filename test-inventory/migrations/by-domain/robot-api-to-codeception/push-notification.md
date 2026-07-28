@@ -1,6 +1,6 @@
 ### push-notification · robot-api-to-codeception · 24 scenarios
 
-MIGRATE 24   ▸ 0/24 ported
+MIGRATE 24   ▸ 0/24 verified
 
 Batches: `push-notification`
 

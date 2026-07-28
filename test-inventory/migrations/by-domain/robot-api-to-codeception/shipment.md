@@ -1,6 +1,6 @@
 ### shipment · robot-api-to-codeception · 32 scenarios
 
-MIGRATE 21 · REVIEW 11   ▸ 0/21 ported
+MIGRATE 21 · REVIEW 11   ▸ 0/21 verified
 
 Batches: `shipment`
 

@@ -1,6 +1,6 @@
 ### warehouse · robot-ui-to-cypress · 1 scenarios
 
-RESHAPE 1   ▸ 0/1 ported
+RESHAPE 1   ▸ 0/1 verified
 
 Batches: `warehouse`
 

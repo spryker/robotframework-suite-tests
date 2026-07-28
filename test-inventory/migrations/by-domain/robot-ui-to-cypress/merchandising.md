@@ -1,6 +1,6 @@
 ### merchandising · robot-ui-to-cypress · 6 scenarios
 
-MIGRATE 5 · REVIEW 1   ▸ 0/5 ported
+MIGRATE 5 · REVIEW 1   ▸ 0/5 verified
 
 Batches: `merchandising`
 

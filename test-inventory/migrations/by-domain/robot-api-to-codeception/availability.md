@@ -1,6 +1,6 @@
 ### availability · robot-api-to-codeception · 22 scenarios
 
-MIGRATE 21 · REVIEW 1   ▸ 0/21 ported
+MIGRATE 21 · REVIEW 1   ▸ 0/21 verified
 
 Batches: `availability`
 
