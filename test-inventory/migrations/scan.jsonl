@@ -1823,4 +1823,4 @@
 {"id": "robot:tests/ui/suite/sales/sales.robot::Refunds", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/sales/sales.robot::Return_Management", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/users/users.robot::Agent_Assist", "source_state": "ACTIVE", "target_state": "MISSING"}
-{"id": "robot:tests/ui/suite/users/users.robot::User_Control", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/users/users.robot::User_Control", "source_state": "ACTIVE", "target_state": "PRESENT"}
