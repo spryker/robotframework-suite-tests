@@ -1,0 +1,38 @@
+name: No new Robot tests
+
+on:
+    pull_request:
+        types: [opened, synchronize, reopened, labeled, unlabeled]
+
+jobs:
+    no-new-robot-tests:
+        name: "No new Robot tests"
+        runs-on: ubuntu-22.04
+
+        steps:
+            -   name: "Check out the pull request"
+                uses: actions/checkout@v4
+                with:
+                    # The gate compares each changed file against the merge base, which a
+                    # shallow clone cannot resolve.
+                    fetch-depth: 0
+
+            -   name: "Set up Python"
+                uses: actions/setup-python@v4
+                with:
+                    python-version: '3.11'
+
+            -   name: "Refuse added Robot test cases"
+                env:
+                    LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+                    BASE_SHA: ${{ github.event.pull_request.base.sha }}
+                    HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+                run: |
+                    if [[ ",${LABELS}," == *",allow-new-source-test,"* ]]; then
+                        echo "The allow-new-source-test label is set, so a new Robot test case is allowed here."
+                        exit 0
+                    fi
+
+                    python3 test-inventory/migrations/gate_no_new_source_tests.py \
+                        --base "${BASE_SHA}" \
+                        --head "${HEAD_SHA}"
