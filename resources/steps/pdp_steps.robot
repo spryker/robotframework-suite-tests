@@ -39,9 +39,14 @@ Yves: PDP contains/doesn't contain:
 Yves: add product to the shopping cart
     [Arguments]    ${wait_for_p&s}=${False}    ${iterations}=26    ${delay}=3s
     Disable Automatic Screenshots on Failure
-    ${variants_present_status}=    Run Keyword And Return Status    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=0:00:01
+    IF    '${env}' == 'ui_mp_b2b'
+        ${pick_random_variant}=    Evaluate JavaScript    ${None}    () => [...document.querySelectorAll('[data-qa="component variant"] select')].some(s => !s.value)
+    ELSE
+        ${variant_select_absent}=    Run Keyword And Return Status    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=0:00:01
+        ${pick_random_variant}=    Evaluate    not ${variant_select_absent}
+    END
     Restore Automatic Screenshots on Failure
-    IF    '${variants_present_status}'=='False'    Yves: change variant of the product on PDP on random value
+    IF    ${pick_random_variant}    Run Keyword And Ignore Error    Yves: change variant of the product on PDP on random value
     ${wait_for_p&s}=    Convert To String    ${wait_for_p&s}
     ${wait_for_p&s}=    Convert To Lower Case    ${wait_for_p&s}
     IF    '${wait_for_p&s}' == 'true'
@@ -68,6 +73,17 @@ Yves: add product to the shopping cart
                 EXCEPT
                     Log    Page is not loaded
                 END
+                # Reload resets the variant selector to "Please select", so the
+                # add-to-cart button can never become enabled again and every
+                # remaining iteration fails. Re-select a variant after each
+                # reload (observed on dump-restore CI shards where the first
+                # 400ms check misses the variant-select navigation). Ignore
+                # transient errors (mid-navigation states) — the next loop
+                # iteration retries.
+                Disable Automatic Screenshots on Failure
+                ${variants_present_status}=    Run Keyword And Return Status    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=0:00:01
+                Restore Automatic Screenshots on Failure
+                IF    '${variants_present_status}'=='False'    Run Keyword And Ignore Error    Yves: change variant of the product on PDP on random value
                 Continue For Loop
             ELSE
                 TRY
@@ -247,8 +263,12 @@ Yves: change variant of the product on PDP on:
     Set Browser Timeout    ${browser_timeout}
 
 Yves: reset selected variant of the product on PDP
-    Wait Until Page Contains Element    ${pdp_reset_selected_variant_locator}
-    Click    ${pdp_reset_selected_variant_locator}
+    IF    '${env}' == 'ui_mp_b2b'
+        Log    Redesigned mp_b2b PDP keeps the variant as an editable select (no Reset link); selecting another value replaces it directly, so reset is a no-op here.
+    ELSE
+        Wait Until Page Contains Element    ${pdp_reset_selected_variant_locator}
+        Click    ${pdp_reset_selected_variant_locator}
+    END
 
 Yves: change amount on PDP:
     [Arguments]    ${amountToSet}
@@ -334,6 +354,7 @@ Yves: add product to the shopping list:
     ${variants_present_status}=    Run Keyword And Ignore Error    Page Should Not Contain Element    ${pdp_variant_selector}    timeout=400ms
     ${shopping_list_dropdown_status}=    Run Keyword And Ignore Error    Page should contain element    ${pdp_shopping_list_selector}    timeout=5s
     IF    'FAIL' in $variants_present_status    Yves: change variant of the product on PDP on random value
+    Yves: open save to shopping list popup if present
     IF    ('${shoppingListName}' != '${EMPTY}' and 'PASS' in $shopping_list_dropdown_status)
         TRY
             Set Browser Timeout    1s
@@ -352,6 +373,7 @@ Yves: add product to the shopping list:
             LocalStorage Clear
             Reload
             Set Browser Timeout    ${browser_timeout}
+            Yves: open save to shopping list popup if present
             Click    xpath=//span[@class='select2-selection select2-selection--single']//span[contains(@id,'select2-idShoppingList')]
             Wait Until Element Is Visible    xpath=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
             Click    xpath=//li[contains(@id,'select2-idShoppingList')][contains(@id,'result')][contains(.,'${shoppingListName}')]
@@ -374,6 +396,16 @@ Yves: add product to the shopping list:
     Set Browser Timeout    ${browser_timeout}
     Yves: remove flash messages
 
+Yves: open save to shopping list popup if present
+    [Documentation]    The save to shopping list form is rendered inside a popup, the popup
+    ...    trigger is clicked first to make the form interactable. On older PDP markup without
+    ...    the popup trigger the keyword is a no-op
+    ${popup_trigger_present}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//button[@data-qa='save-to-shopping-list-trigger']    timeout=400ms
+    IF    ${popup_trigger_present}
+        Click    xpath=//button[@data-qa='save-to-shopping-list-trigger']
+        Wait Until Element Is Visible    xpath=//*[contains(@class,'main-popup--open')]//button[@data-qa='add-to-shopping-list-button']
+    END
+
 Yves: change variant of the product on PDP on random value
     Wait Until Element Is Visible    ${pdp_variant_selector}
     TRY
@@ -382,7 +414,17 @@ Yves: change variant of the product on PDP on random value
         Wait Until Element Is Visible    ${pdp_variant_custom_selector_results}
         Click    xpath=//ul[contains(@id,'select2-attribute')][contains(@id,'results')]/li[contains(@id,'select2-attribute')][1]
     EXCEPT
-        Run Keyword And Ignore Error    Select From List By Value    ${pdp_variant_selector}    ${variantToChoose}
+        # Native <select> fallback (suite Yves renders a plain select, no
+        # select2). The previous fallback selected ${variantToChoose}, which
+        # is not defined in this keyword and silently no-op'd under Ignore
+        # Error — the variant stayed unselected, the buy box (incl. the
+        # add-to-cart button) never rendered, and PDP add-to-cart timed out.
+        # Pick the FIRST non-empty option, mirroring the select2 branch above
+        # (li[1]): tests assert against the first concrete (e.g. Discounts
+        # expects 199_7016823 = "16 GB"), so a truly random pick breaks them.
+        ${options}=    Get Select Options    ${pdp_variant_selector}
+        ${values}=    Evaluate    [option["value"] for option in $options if option["value"]]
+        Select Options By    ${pdp_variant_selector}    value    ${values}[0]
     END
     Set Browser Timeout    ${browser_timeout}
     TRY
@@ -474,6 +516,11 @@ Yves: select xxx merchant's offer:
     EXCEPT
         Log    Page is not loaded
     END
+    ${seller_list_is_present}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//seller-list    timeout=100ms
+    IF    ${seller_list_is_present}
+        Yves: select merchant's offer in seller list:    ${merchantName}
+        RETURN
+    END
     ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]/../input[@checked]    timeout=50ms
     IF    not ${merchant_offer_is_already_selected}
         TRY
@@ -510,6 +557,32 @@ Yves: select xxx merchant's offer:
             END
         END
         Wait Until Element Contains    ${referrer_url}    offer    message=Offer selector radio button does not work on PDP but should
+        TRY
+            Repeat Keyword    3    Wait For Load State
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    Page is not loaded
+        END
+    END
+
+Yves: select merchant's offer in seller list:
+    [Documentation]    Offer selection in the seller list is applied client-side (no page reload):
+    ...    seller-list.ts checks the radio, updates the price block and the cart/shopping-list offer
+    ...    inputs, and pushes the offer into the URL query. The selection is verified via the radio
+    ...    state and the live URL. No reload — a reload drops the client-set offer inputs (seller-list.ts
+    ...    does not re-apply them for a pre-checked radio), which would lose the offer on add-to-cart/list.
+    [Arguments]    ${merchantName}
+    ${offer_cls}=    Set Variable    ${offer_item_class}[${env}]
+    ${offer_radio_input}=    Set Variable    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::*[contains(@class,'${offer_cls}')]//input[@type='radio']
+    ${merchant_offer_is_already_selected}=    Run Keyword And Return Status    Wait For Elements State    ${offer_radio_input}    state=checked    timeout=200ms
+    IF    not ${merchant_offer_is_already_selected}
+        Click    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::*[contains(@class,'${offer_cls}')]//span[contains(@class,'radio__box')]
+        Wait For Elements State    ${offer_radio_input}    state=checked    timeout=3s
+        ${offer_reference}=    Get Attribute    ${offer_radio_input}    value
+        IF    '${offer_reference}' != '${EMPTY}'
+            # a real offer pushes ?attribute[selected_merchant_reference]=... into the live URL
+            Wait Until Keyword Succeeds    5x    500ms    Get Url    contains    offer    message=Offer selector radio button does not work on PDP but should
+        END
         TRY
             Repeat Keyword    3    Wait For Load State
             Wait For Load State    domcontentloaded
@@ -609,19 +682,20 @@ Yves: select xxx merchant's offer with price:
 
 Yves: merchant's offer/product price should be:
     [Arguments]    ${merchantName}    ${expectedProductPrice}
+    ${offer_cls}=    Set Variable    ${offer_item_class}[${env}]
     Wait Until Element Is Visible    ${pdpPriceLocator}
-    Try reloading page until element does/not contain text:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::div[contains(@class,'item')]//span[@itemprop='price']    ${expectedProductPrice}    true    21    5s
+    Try reloading page until element does/not contain text:    xpath=//section[@data-qa='component product-configurator']//*[contains(text(),'${merchantName}')]/ancestor::*[contains(@class,'${offer_cls}')]//span[@itemprop='price']    ${expectedProductPrice}    true    21    5s
 
 Yves: merchant is (not) displaying in Sold By section of PDP:
     [Arguments]    ${merchantName}    ${condition}
     ${merchant_cls}=    Set Variable    ${merchant_product_class}[${env}]
     Wait Until Element Is Visible    ${pdp_product_sku}[${env}]
     TRY
-        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//div[contains(@class,'${merchant_cls}')]//*[contains(text(),'${merchantName}')]     ${condition}    4    10s
+        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(@class,'${merchant_cls}')]//*[contains(text(),'${merchantName}')]     ${condition}    4    10s
     EXCEPT
         Trigger multistore p&s
         ${currentURL}=    Get Url
-        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//div[contains(@class,'${merchant_cls}')]//*[contains(text(),'${merchantName}')]     ${condition}    6    10s
+        Try reloading page until element is/not appear:    xpath=//section[@data-qa='component product-configurator']//*[contains(@class,'${merchant_cls}')]//*[contains(text(),'${merchantName}')]     ${condition}    6    10s
     END
 
 Yves: select random varian if variant selector is available
@@ -646,8 +720,32 @@ Yves: try add product to the cart from PDP and expect error:
     Yves: flash message should be shown:    error    ${expectedError}
 
 Yves: product name on PDP should be:
-    [Arguments]    ${expected_product_name}
-    Yves: try reloading page if element is/not appear:    xpath=//h1[contains(@class,'title')][contains(.,'${expected_product_name}')]    True    15    3s
+    [Arguments]    ${expected_product_name}    ${iterations}=26    ${delay}=5s
+    # Flaked on slow CI: the renamed product's publish->sync had not reached Yves
+    # storage within the old 15x3s (~45s) window. Match the sibling price
+    # assertion: wider ~130s window and re-trigger p&s so the sync stage runs.
+    ${name_locator}=    Set Variable    xpath=//h1[contains(@class,'title')][contains(.,'${expected_product_name}')]
+    FOR    ${index}    IN RANGE    1    ${iterations}
+        IF    ${index} == 2 or ${index} == 5
+            Trigger multistore p&s
+        END
+        Disable Automatic Screenshots on Failure
+        ${nameAppears}=    Run Keyword And Return Status    Element Should Be Visible    ${name_locator}
+        Restore Automatic Screenshots on Failure
+        IF    ${nameAppears}    Exit For Loop
+        IF    ${index} == ${iterations}-1
+            Take Screenshot    EMBED    fullPage=True
+            Fail    Product name ${expected_product_name} not shown on PDP after ${iterations} iterations
+        END
+        Sleep    ${delay}
+        Reload
+        TRY
+            Wait For Load State
+            Wait For Load State    domcontentloaded
+        EXCEPT
+            Log    page is not fully loaded
+        END
+    END
 
 Yves: try to add product to wishlist as guest user
     TRY

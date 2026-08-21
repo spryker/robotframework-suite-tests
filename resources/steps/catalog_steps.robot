@@ -6,8 +6,40 @@ Resource    ../common/common.robot
 *** Keywords ***
 Yves: 'Catalog' page should show products:
     [Arguments]    ${productsCount}
-    Wait Until Element Is Visible    ${catalog_products_counter_locator}[${env}]
-    Element Should Contain    ${catalog_products_counter_locator}[${env}]    ${productsCount}
+    IF    '${env}' in ['ui_mp_b2b']
+        # Redesign: the product counter renders only on search results (catalog-header__count, gated on `q`).
+        # Category pages have no counter, so assert exact count on search and product presence/empty-state on categories.
+        # A navigation triggered by the previous step (e.g. a nav-menu click) can land slightly late, so wait for
+        # the page and URL to settle before deciding search-vs-category — otherwise Get Url returns the stale URL.
+        TRY
+            Wait For Load State    networkidle    timeout=15s
+        EXCEPT
+            Log    Page is not idle
+        END
+        ${current_url}=    Get Url
+        FOR    ${i}    IN RANGE    10
+            Sleep    0.5s
+            ${next_url}=    Get Url
+            Exit For Loop If    '${current_url}' == '${next_url}'
+            ${current_url}=    Set Variable    ${next_url}
+            TRY
+                Wait For Load State    networkidle    timeout=15s
+            EXCEPT
+                Log    Page is not idle
+            END
+        END
+        IF    '/search' in '${current_url}'
+            Wait Until Element Is Visible    ${catalog_products_counter_locator}[${env}]
+            Element Should Contain    ${catalog_products_counter_locator}[${env}]    ${productsCount}
+        ELSE IF    '${productsCount}' == '0'
+            Wait Until Element Is Visible    ${catalog_empty_state_locator}
+        ELSE
+            Wait Until Element Is Visible    ${catalog_product_card_locator}
+        END
+    ELSE
+        Wait Until Element Is Visible    ${catalog_products_counter_locator}[${env}]
+        Element Should Contain    ${catalog_products_counter_locator}[${env}]    ${productsCount}
+    END
 
 Yves: product with name in the catalog should have price:
     [Arguments]    ${productName}    ${expectedProductPrice}
@@ -118,6 +150,23 @@ Yves: select filter value:
     IF    '${env}' in ['ui_suite']
         Check Checkbox    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'title')][contains(.,'${filter}')]/..//input[@value='${filterValue}']    force=true
         Click    ${catalog_filter_apply_button}
+    ELSE IF    '${env}' in ['ui_mp_b2b']
+        Wait Until Element Is Visible    xpath=//filter-section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
+        Click    xpath=//filter-section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
+        Disable Automatic Screenshots on Failure
+        ${filter_expanded}=    Run Keyword And Ignore Error    Wait Until Element Is Visible    xpath=//filter-section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]    timeout=2s
+        Restore Automatic Screenshots on Failure
+        IF    'FAIL' in $filter_expanded
+            Reload
+            Wait Until Element Is Visible    xpath=//filter-section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
+            Click    xpath=//filter-section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]
+        END
+        Click    xpath=//filter-section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section__item-title')][contains(.,'${filter}')]/following-sibling::*//span[contains(@data-qa,'checkbox')][contains(.,'${filterValue}')]
+        TRY
+            Repeat Keyword    3    Wait For Load State
+        EXCEPT
+            Log    Page is not loaded
+        END
     ELSE
         Wait Until Element Is Visible    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
         Click    xpath=//section[contains(@data-qa,'component filter-section')]//*[contains(@class,'filter-section')][contains(text(),'${filter}')]
@@ -134,6 +183,11 @@ Yves: select filter value:
     END
 
 Yves: quick add to cart for first item in catalog
+    # The quick-add button has no native form behind it: it does nothing until its
+    # webcomponent attaches the click handler in init(), so a click that lands before
+    # the component is mounted is silently lost (no request, no error).
+    Yves: wait until quick add to cart is interactive
+    ${promise}=    Promise To    Wait For Response    matcher=**/cart/add-ajax/**    timeout=15s
     IF    '${env}' in ['ui_b2b','ui_mp_b2b','ui_suite']
         Click    xpath=(//product-item[@data-qa='component product-item'][1]//*[@class='product-item__actions']//ajax-add-to-cart//button)[1]
     ELSE IF    '${env}' in ['ui_b2c','ui_mp_b2c']
@@ -142,12 +196,42 @@ Yves: quick add to cart for first item in catalog
         Wait Until Element Is Visible    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
         Click    xpath=//product-item[@data-qa='component product-item'][1]//ajax-add-to-cart//button
     END
-    Wait For Response
+    ${response}=    Wait For    ${promise}
+    ${status}=    Get From Dictionary    ${response}    status
+    Should Be Equal As Integers    ${status}    200    message=Quick add to cart was rejected by the server: ${response}
     TRY
         Repeat Keyword    3    Wait For Load State
     EXCEPT
         Log    Page is not loaded
     END
+
+Yves: search catalog until product is quick addable:
+    [Documentation]    Searches the catalog and retries until the first product tile offers
+    ...    quick add to cart for the expected concrete SKU. The product's search document can
+    ...    be lost to a failed publish batch; re-publishing through the real pipeline heals
+    ...    the catalog before the next attempt.
+    [Arguments]    ${concreteSku}    ${iterations}=6    ${delay}=2s
+    FOR    ${index}    IN RANGE    0    ${iterations}
+        Yves: perform search by:    ${concreteSku}
+        Disable Automatic Screenshots on Failure
+        ${found}=    Run Keyword And Return Status    Page Should Contain Element    xpath=(//product-item[@data-qa='component product-item'])[1]//ajax-add-to-cart//button[contains(@data-url,'${concreteSku}')]    timeout=0:00:03
+        Restore Automatic Screenshots on Failure
+        IF    ${found}    RETURN
+        IF    ${index} == 2    Run console command    console publish:trigger-events -r product_abstract    DE
+        Trigger p&s
+        Sleep    ${delay}
+    END
+    Fail    Product '${concreteSku}' did not become the first quick-addable tile in catalog search results
+
+Yves: wait until quick add to cart is interactive
+    [Documentation]    Waits until the first ajax-add-to-cart webcomponent reports itself
+    ...    mounted (isMounted is set by the ShopUi Component base class after the click
+    ...    handler is attached).
+    Wait Until Keyword Succeeds    15s    500ms    Yves: quick add to cart component should be mounted
+
+Yves: quick add to cart component should be mounted
+    ${isMounted}=    Evaluate Javascript    ${None}    document.querySelector('ajax-add-to-cart') !== null && document.querySelector('ajax-add-to-cart').isMounted === true
+    Should Be True    ${isMounted}
 
 Yves: get current cart item counter value
     [Documentation]    returns the cart item count number as an integer

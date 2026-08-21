@@ -340,7 +340,9 @@ Yves: wait until store switcher contains:
     Wait Until Element Is Visible    ${store_switcher_header_menu_item}
     FOR    ${index}    IN RANGE    0    ${tries}
         Disable Automatic Screenshots on Failure
-        ${storeAppears}=    Run Keyword And Return Status    Wait Until Element Contains    locator=${store_switcher_header_menu_item}    text=${store}    timeout=${timeout}
+        # `Get Text` (robotframework-browser >= 20.0.0) returns the input value for <select> elements,
+        # i.e. only the selected option. Wait for the new store's <option> node instead.
+        ${storeAppears}=    Run Keyword And Return Status    Wait For Elements State    ${store_switcher_header_menu_item}/option[contains(., '${store}')]    attached    timeout=${timeout}
         Restore Automatic Screenshots on Failure
         IF    '${storeAppears}'=='False'
             Run Keywords    Sleep    ${timeout}    AND    Reload
@@ -446,6 +448,13 @@ Yves: go to newly created page by URL:
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Restore Automatic Screenshots on Failure
         IF    '${page_not_published}'=='True'
+            # CC-39400: the single create-time `--stop-when-empty` P&S drain can exit mid publish->sync
+            # cascade, and this loop otherwise only navigates with a cache-buster + sleeps -> the 404
+            # never clears and it runs to its full ~180s timeout. Re-trigger the worker while polling
+            # (same pattern as the PDP poll above) so the cascade actually finishes.
+            IF    ${index} == 5 or ${index} == 10 or ${index} == 15 or ${index} == 20
+                Trigger multistore p&s
+            END
             Sleep    ${delay}
         ELSE
             Exit For Loop
@@ -524,6 +533,13 @@ Yves: go to URL and refresh until 404 occurs:
         ${page_not_published}=    Run Keyword And Return Status    Page Should Contain Element    xpath=//main//*[contains(text(),'ERROR 404')]
         Restore Automatic Screenshots on Failure
         IF    '${page_not_published}'=='False'
+            # Under DMS the delete is a publish->sync cascade; the single pre-loop `--stop-when-empty`
+            # drain can exit between stages before sync removes the storefront storage entry, so the
+            # page stays live and this loop otherwise just refreshes+sleeps to its ~180s timeout.
+            # Re-drain the worker while polling (same pattern as the create-side poll) so it finishes.
+            IF    ${index} == 5 or ${index} == 10 or ${index} == 15 or ${index} == 20
+                Trigger multistore p&s
+            END
             Run Keyword    Sleep    ${delay}
         ELSE
             Exit For Loop

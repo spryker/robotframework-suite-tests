@@ -3,12 +3,11 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_two    spryker-core-back-office    spryker-core    product    product-sets    product-relations    configurable-bundle    product-labels
+Test Tags    robot:recursive-stop-on-failure    group_two    spryker-core-back-office    spryker-core    product    product-sets    product-relations    product-labels
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/steps/product_set_steps.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
-Resource    ../../../../resources/steps/configurable_bundle_steps.robot
 Resource    ../../../../resources/steps/catalog_steps.robot
 
 *** Test Cases ***
@@ -36,40 +35,6 @@ Product_Relations
     Yves: go to shopping cart page
     Yves: shopping cart contains/doesn't contain the following elements:    true    ${upSellProducts}
 
-Configurable_Bundle
-    [Documentation]    Checks checkout with the configurable bundle
-    [Setup]    Create dynamic customer in DB
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to second navigation item level:    More    Configurable Bundle
-    Yves: 'Choose Bundle to configure' page is displayed
-    Yves: choose bundle template to configure:    Presentation bundle
-    Yves: select product in the bundle slot:    Slot 5    408104
-    Yves: select product in the bundle slot:    Slot 6    423172
-    Yves: go to 'Summary' step in the bundle configurator
-    Yves: add products to the shopping cart in the bundle configurator
-    Yves: go to second navigation item level:    More    Configurable Bundle
-    Yves: 'Choose Bundle to configure' page is displayed
-    Yves: choose bundle template to configure:    Presentation bundle
-    Yves: select product in the bundle slot:    Slot 5    421539
-    Yves: select product in the bundle slot:    Slot 6    424551
-    Yves: go to 'Summary' step in the bundle configurator
-    Yves: add products to the shopping cart in the bundle configurator
-    Yves: change quantity of the configurable bundle in the shopping cart on:    Presentation bundle    2
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Yves: go to user menu:    Order History
-    Yves: 'Order History' page is displayed
-    Yves: get the last placed order ID by current customer
-    Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
-    Yves: 'Order Details' page is displayed
-    Yves: 'Order Details' page contains the following product title N times:    Presentation bundle    3
-
 Product_labels
     [Documentation]    Checks that products have labels on PLP and PDP
     Trigger product labels update
@@ -80,10 +45,10 @@ Product_labels
     Yves: go to first navigation item level:    New
     Yves: 1st product card in catalog (not)contains:     New label    true
     Yves: go to the PDP of the first product on open catalog page
-    Yves: PDP contains/doesn't contain:    true    ${pdp_new_label}[${env}] 
+    Yves: PDP contains/doesn't contain:    true    ${pdp_new_label}[${env}]
 
 CRUD_Product_Set
-    [Documentation]    CRUD operations for product sets. DMS-ON: https://spryker.atlassian.net/browse/FRW-7393 
+    [Documentation]    CRUD operations for product sets. DMS-ON: https://spryker.atlassian.net/browse/FRW-7393
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Create dynamic admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}

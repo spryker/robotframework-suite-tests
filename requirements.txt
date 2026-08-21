@@ -1,7 +1,10 @@
 # Robot Framework and core dependencies
 robotframework
 robotframework-pabot
-robotframework-browser
+# Pinned: 20.0.0 changed Get Text semantics for <select>/<input> (returns inputValue)
+# and Wait For Request behaviour; unpinned-latest broke master CI (CC-39227).
+# Bump deliberately and re-validate the UI suites.
+robotframework-browser==20.0.0
 robotframework-databaselibrary
 robotframework-requests
 robotframework-jsonlibrary

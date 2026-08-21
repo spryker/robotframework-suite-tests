@@ -255,6 +255,18 @@ Add_a_configurable_product_to_the_cart
 
 ###### PATCH #######
 Change_item_qty_in_cart
+   [Documentation]    Verifies that PATCHing a cart item with a higher quantity updates the
+   ...    cart's sumPriceToPayAggregation. The test adds 1 unit at price P, then PATCHes
+   ...    quantity to 2, so the post-PATCH total should be > P.
+   ...
+   ...    The assertion direction was flipped from `less than ${item_total_price}` to
+   ...    `greater than ${item_total_price}`. The original `less than` was masked by a
+   ...    string-comparison bug in the `Response body parameter should be less than:`
+   ...    keyword (fixed in commit e50f12b1 of this branch): string compare let
+   ...    `'10080' < '5600'` evaluate truthy (lexicographic '1' < '5') even though
+   ...    numerically 10080 > 5600. With the keyword fixed to use float() compare,
+   ...    the latent bug surfaced — increasing quantity must increase the total, so
+   ...    the assertion is now `> ${item_total_price}`.
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Authorization=${token}
    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -270,11 +282,24 @@ Change_item_qty_in_cart
    And Response body parameter should be:    [data][type]    carts
    And Response body parameter should be:    [included][0][id]    ${item_uid}
    And Response body parameter should be:    [included][0][attributes][quantity]    2
-   And Response body parameter should be less than:    [included][0][attributes][calculations][sumPriceToPayAggregation]    ${item_total_price}
+   # Direction flipped from `less than` to `greater than`: PATCH increases qty 1→2, so
+   # the cart total must grow. The legacy `less than` assertion was masked by a
+   # string-compare bug in the keyword (fixed in commit e50f12b1 of this branch).
+   And Response body parameter should be greater than:    [included][0][attributes][calculations][sumPriceToPayAggregation]    ${item_total_price}
    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}/items/${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}
    ...    AND    Response status code should be:    204
 
 Change_item_amount_in_cart
+   [Documentation]    Verifies that PATCHing a cart item with a higher quantity updates the
+   ...    cart's sumPriceToPayAggregation and that the item-level `amount` field is None
+   ...    (this product has no measurement unit). Quantity changes from 1 to 2, so the
+   ...    post-PATCH total should be > the pre-PATCH price.
+   ...
+   ...    The assertion direction was flipped from `less than ${item_total_price}` to
+   ...    `greater than ${item_total_price}` for the same reason as Change_item_qty_in_cart
+   ...    above — the original `less than` was masked by a string-compare bug in the
+   ...    keyword (fixed in commit e50f12b1 of this branch); with float() compare,
+   ...    increasing quantity must increase the total.
    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
    ...    AND    I set Headers:    Authorization=${token}
    ...    AND    I send a POST request:    /carts    {"data": {"type": "carts","attributes": {"priceMode": "${mode.gross}","currency": "${currency.eur.code}","store": "${store.de}","name": "${test_cart_name}-${random}"}}}
@@ -291,7 +316,9 @@ Change_item_amount_in_cart
    And Response body parameter should be:    [included][0][id]    ${item_uid}
    And Response body parameter should be:    [included][0][attributes][quantity]    2
    And Response body parameter should be:    [included][0][attributes][amount]    None
-   And Response body parameter should be less than:    [included][0][attributes][calculations][sumPriceToPayAggregation]    ${item_total_price}
+   # Direction flipped from `less than` to `greater than`: PATCH increases qty 1→2, so
+   # the cart total must grow. See [Documentation].
+   And Response body parameter should be greater than:    [included][0][attributes][calculations][sumPriceToPayAggregation]    ${item_total_price}
    [Teardown]    Run Keywords    I send a DELETE request:    /carts/${cart_id}/items/${product_availability.concrete_available_with_stock_and_never_out_of_stock_sku}
    ...    AND    Response status code should be:    204
 

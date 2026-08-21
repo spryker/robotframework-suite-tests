@@ -19,5 +19,7 @@ Yves: assert merchant profile fields:
         ...    AND    Element Text Should Be    ${merchant_profile_name_header_locator}[${env}]    ${value}
         IF    '${key}'=='phone' and '${value}' != '${EMPTY}'    Element Text Should Be    ${merchant_profile_phone_locator}    ${value}
         IF    '${key}'=='delivery time' and '${value}' != '${EMPTY}'    Element Text Should Be    ${merchant_profile_delivery_time_locator}    ${value}
-        IF    '${key}'=='data privacy' and '${value}' != '${EMPTY}'     Element Text Should Be    ${merchant_profile_data_privacy_locator}    ${value}
+        IF    '${key}'=='data privacy' and '${value}' != '${EMPTY}'    Run Keywords
+        ...    Click    ${merchant_profile_data_privacy_toggle_locator}
+        ...    AND    Element Text Should Be    ${merchant_profile_data_privacy_locator}    ${value}
     END  

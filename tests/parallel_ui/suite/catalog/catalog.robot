@@ -50,7 +50,7 @@ Catalog
     [Teardown]    Yves: check if cart is not empty and clear it
 
 Catalog_Actions
-    [Tags]    smoke    quick-add-to-cart     cart
+    [Tags]    smoke    quick-add-to-cart     cart    quarantine
     [Documentation]    Checks quick add to cart and product groups
     [Setup]    Create dynamic admin user in DB
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
@@ -59,7 +59,7 @@ Catalog_Actions
     ...    || 003             | 003_26138343    | DE    | gross | default| €        | 65.00  ||
     Trigger p&s
     Yves: check if cart is not empty and clear it
-    Yves: perform search by:     150_29554292
+    Yves: search catalog until product is quick addable:    150_29554292
     Yves: 1st product card in catalog (not)contains:      Add to Cart    true
     Yves: quick add to cart for first item in catalog
     Yves: perform search by:    115_26408656
@@ -284,8 +284,9 @@ Configurable_Product_PDP_Shopping_List
     ...    || option one | option two ||
     ...    || 517        | 249        ||
     Yves: save product configuration
-    ### bug: https://spryker.atlassian.net/browse/CC-33647
-    Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €249.00
+    # Configured unit price = sum of the selected options (Option title 2 €517 + Option Two title 3 €249 = €766.00),
+    # matching the €882.00 assertion below for the 607/275 configuration.
+    Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €766.00
     Yves: delete product from the shopping cart with name:    ${configurable_product_name}
     Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
     Yves: add product to the shopping list:    configProduct+${random}

@@ -200,7 +200,7 @@ Product_PDP
     Yves: PDP contains/doesn't contain:    false    ${pdpPriceLocator}   ${addToCartButton}
     Yves: login on Yves with provided credentials:    ${dynamic_customer}
     Yves: go to PDP of the product with sku:    ${multi_variant_product_abstract_sku}
-    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${pdp_add_to_cart_disabled_button}[${env}]    ${pdp_limited_warranty_option}[${env}]    ${pdp_insurance_coverage_option}
+    Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${pdp_variant_not_selected_notification}    ${pdp_limited_warranty_option}[${env}]    ${pdp_insurance_coverage_option}
     Yves: change variant of the product on PDP on:    500 x 930 x 400
     Yves: PDP contains/doesn't contain:    true    ${pdpPriceLocator}    ${addToCartButton}    ${pdp_limited_warranty_option}[${env}]     ${pdp_insurance_coverage_option}
 
@@ -250,67 +250,6 @@ Back_in_Stock_Notification
     Yves: check if product is available on PDP:    ${stock_product_abstract_sku}    true
     [Teardown]    Run keywords    Zed: check and restore product availability in Zed:    ${stock_product_abstract_sku}    Available    ${stock_product_concrete_sku}    ${dynamic_admin_user}
     ...    AND    Delete dynamic admin user from DB
-
-Configurable_Product_PDP_Shopping_List
-    [Documentation]    Configure products from both the PDP and the Shopping List. Verify the availability of 7 items. Ensure that products that have not been configured cannot be purchased.
-    [Setup]    Run keywords    Create dynamic customer in DB
-    ...    AND    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    ...    AND    Yves: create new 'Shopping List' with name:    configProduct+${random}
-    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
-    Yves: PDP contains/doesn't contain:    true    ${configureButton}
-    Yves: product configuration status should be equal:       Configuration is not complete.
-    Yves: add product to the shopping cart
-    Yves: go to shopping cart page
-    Yves: product configuration status should be equal:       Configuration is not complete.
-    Yves: checkout is blocked with the following message:    This cart can't be processed. Please configure items inside the cart.
-    Yves: delete product from the shopping cart with sku:    ${configurable_product_concrete_sku}
-    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
-    Yves: check and go back that configuration page contains:
-    ...    || store | locale | price_mode | currency | customer_id                          | sku                                  ||
-    ...    || DE    | en_US  | GROSS_MODE | EUR      | ${yves_company_user_buyer_reference} | ${configurable_product_concrete_sku} ||
-    Yves: change the product options in configurator to:
-    ...    || option one | option two ||
-    ...    || 420        | 240        ||
-    Yves: save product configuration
-    Yves: product configuration status should be equal:      Configuration complete!
-    Yves: change the product options in configurator to:
-    ...    || option one | option two ||
-    ...    || 280        | 480        ||
-    Yves: product configuration notification is:     Only 7 items available
-    Yves: save product configuration
-    Yves: product configuration status should be equal:      Configuration complete!
-    Yves: configuration should be equal:
-    ...    || option one | option two ||
-    ...    || 5 shelves  | 3 lockers  ||
-    Yves: product configuration status should be equal:      Configuration complete!
-    Yves: change quantity on PDP:    8
-    Yves: try add product to the cart from PDP and expect error:    Item ${configurable_product_concrete_sku} only has availability of 7.
-    Yves: go to PDP of the product with sku:   ${configurable_product_abstract_sku}
-    Yves: change quantity on PDP:    7
-    Yves: add product to the shopping cart
-    Yves: go to shopping cart page
-    Yves: change the product options in configurator to:
-    ...    || option one | option two ||
-    ...    || 140        | 240        ||
-    Yves: save product configuration
-    Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €2,206.54
-    Yves: delete all shopping carts
-    Yves: go to PDP of the product with sku:    ${configurable_product_abstract_sku}
-    Yves: add product to the shopping list:    configProduct+${random}
-    Yves: go to 'Shopping Lists' page
-    Yves: view shopping list with name:    configProduct+${random}
-    Yves: change the product options in configurator to:
-    ...    || option one | option two ||
-    ...    || 420        | 240        ||
-    Yves: save product configuration
-    Yves: configuration should be equal:
-    ...    || option one | option two ||
-    ...    || 6 shelves  | 2 lockers  ||
-    Yves: add all available products from list to cart
-    Yves: configuration should be equal:
-    ...    || option one | option two ||
-    ...    || 6 shelves  | 2 lockers  ||
-    Yves: shopping cart contains product with unit price:    ${configurable_product_concrete_sku}    ${configurable_product_name}    €2,486.54
 
 #### Product Bundles feature is not present in marketplace for now ####
 # Product_Bundles

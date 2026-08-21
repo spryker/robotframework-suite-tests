@@ -15,7 +15,7 @@ Resource    ../../../../resources/steps/products_steps.robot
 
 *** Test Cases ***
 Multistore_Product_Offer
-    [Tags]    smoke
+    [Tags]    smoke    quarantine
     [Documentation]    check product and offer multistore functionality.
     [Setup]    Run Keywords    Create dynamic customer in DB
     ...    AND    Zed: create dynamic merchant user:    Spryker

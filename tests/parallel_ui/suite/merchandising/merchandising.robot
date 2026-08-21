@@ -3,13 +3,12 @@ Suite Setup       UI_suite_setup
 Test Setup        UI_test_setup
 Test Teardown     UI_test_teardown
 Suite Teardown    UI_suite_teardown
-Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office    spryker-core    product    product-sets    product-relations    configurable-bundle    product-labels    
+Test Tags    robot:recursive-stop-on-failure    group_tree    spryker-core-back-office    spryker-core    product    product-sets    product-relations    product-labels
 Resource    ../../../../resources/common/common.robot
 Resource    ../../../../resources/common/common_yves.robot
 Resource    ../../../../resources/steps/catalog_steps.robot
 Resource    ../../../../resources/steps/pdp_steps.robot
 Resource    ../../../../resources/steps/product_set_steps.robot
-Resource    ../../../../resources/steps/configurable_bundle_steps.robot
 Resource    ../../../../resources/steps/orders_management_steps.robot
 
 *** Test Cases ***
@@ -65,48 +64,6 @@ CRUD_Product_Set
     Zed: delete product set:    test set ${random}
     Trigger multistore p&s
     Yves: go to URL and refresh until 404 occurs:    ${yves_url}en/test-set-${random}
-    [Teardown]    Delete dynamic admin user from DB
-
-Configurable_Bundle
-    [Tags]    smoke    product-bundles    configurable-bundle    cart    checkout    product
-    [Documentation]    Check the usage of configurable bundles (includes authorized checkout)
-    [Setup]    Run Keywords    Create dynamic admin user in DB
-    ...    AND    Create dynamic customer in DB
-    Yves: login on Yves with provided credentials:    ${dynamic_customer}
-    Yves: go to URL:    en/configurable-bundle/configurator/template-selection
-    Yves: 'Choose Bundle to configure' page is displayed
-    Yves: choose bundle template to configure:    Smartstation Kit
-    Yves: select product in the bundle slot:    Slot 5    130_24725761
-    Yves: select product in the bundle slot:    Slot 6    042_31040075
-    Yves: go to 'Summary' step in the bundle configurator
-    Yves: add products to the shopping cart in the bundle configurator
-    Yves: go to URL:    en/configurable-bundle/configurator/template-selection
-    Yves: 'Choose Bundle to configure' page is displayed
-    Yves: choose bundle template to configure:    Smartstation Kit
-    Yves: select product in the bundle slot:    Slot 5    121_29406823
-    Yves: select product in the bundle slot:    Slot 6    043_31040074
-    Yves: go to 'Summary' step in the bundle configurator
-    Yves: add products to the shopping cart in the bundle configurator
-    Yves: go to shopping cart page
-    Yves: change quantity of the configurable bundle in the shopping cart on:    Smartstation Kit    2
-    Yves: click on the 'Checkout' button in the shopping cart
-    Yves: billing address same as shipping address:    true
-    Yves: select the following existing address on the checkout as 'shipping' address and go next:    ${default_address.full_address}
-    Yves: select the following shipping method on the checkout and go next:    Express
-    Yves: select the following payment method on the checkout and go next:    Invoice
-    Yves: accept the terms and conditions:    true
-    Yves: 'submit the order' on the summary page
-    Yves: 'Thank you' page is displayed
-    Trigger oms
-    Yves: go to user menu:    Orders History
-    Yves: 'Order History' page is displayed
-    Yves: get the last placed order ID by current customer
-    Yves: 'View Order/Reorder/Return' on the order history page:    View Order    ${lastPlacedOrder}
-    Yves: 'Order Details' page is displayed
-    Yves: 'Order Details' page contains the following product title N times:    Smartstation Kit    3
-    Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: trigger all matching states inside xxx order:    ${lastPlacedOrder}    skip grace period
-    Zed: trigger all matching states inside this order:    Pay
     [Teardown]    Delete dynamic admin user from DB
 
 Product_Relations

@@ -198,15 +198,15 @@
         }
     },
     "search":{
-        "total_number_of_products_in_search":"414",
+        "total_number_of_products_in_search":"421",
         "ipp":{
             "default":"12",
             "middle":"24",
             "biggest":"36"
         },
         "default_qty":{
-            "ipp_pages":"35",
-            "categories":"33",
+            "ipp_pages":"36",
+            "categories":"35",
             "colors":"10",
             "labels":"5",
             "materials":"10",
@@ -237,7 +237,7 @@
             "id":"13",
             "qty":"28"
         },
-        "category_tree_branches_qty":"6",
+        "category_tree_branches_qty":"7",
         "abstract_sku_highest_rating":"M1016129"
     },
     "products":{
@@ -315,25 +315,25 @@
             "product_options":{
                 "OP_1":{
                     "id":"OP_1_year_waranty",
-                    "option_group_name":"Three (3) year limited warranty",
+                    "option_group_name":"Warranty",
                     "sku":"OP_1_year_waranty",
                     "option_name":"One (1) year limited warranty"
                 },
                 "OP_2":{
                     "id":"OP_2_year_waranty",
-                    "option_group_name":"Three (3) year limited warranty",
+                    "option_group_name":"Warranty",
                     "sku":"OP_2_year_waranty",
                     "option_name":"Two (2) year limited warranty"
                 },
                 "OP_3":{
                     "id":"OP_3_year_waranty",
-                    "option_group_name":"Three (3) year limited warranty",
+                    "option_group_name":"Warranty",
                     "sku":"OP_3_year_waranty",
                     "option_name":"Three (3) year limited warranty"
                 },
                 "OP_insurance":{
                     "id":"OP_insurance",
-                    "option_group_name":"Two (2) year insurance coverage",
+                    "option_group_name":"Insurance",
                     "sku":"OP_insurance",
                     "option_name":"Two (2) year insurance coverage"
                 }
@@ -481,25 +481,25 @@
             "product_options":{
                 "OP_1":{
                     "id":"OP_1_year_waranty",
-                    "option_group_name":"Three (3) year limited warranty",
+                    "option_group_name":"Warranty",
                     "sku":"OP_1_year_waranty",
                     "option_name":"One (1) year limited warranty"
                 },
                 "OP_2":{
                     "id":"OP_2_year_waranty",
-                    "option_group_name":"Three (3) year limited warranty",
+                    "option_group_name":"Warranty",
                     "sku":"OP_2_year_waranty",
                     "option_name":"Two (2) year limited warranty"
                 },
                 "OP_3":{
                     "id":"OP_3_year_waranty",
-                    "option_group_name":"Three (3) year limited warranty",
+                    "option_group_name":"Warranty",
                     "sku":"OP_3_year_waranty",
                     "option_name":"Three (3) year limited warranty"
                 },
                 "OP_insurance":{
                     "id":"OP_insurance",
-                    "option_group_name":"Two (2) year insurance coverage",
+                    "option_group_name":"Insurance",
                     "sku":"OP_insurance",
                     "option_name":"Two (2) year insurance coverage"
                 }
@@ -592,6 +592,7 @@
         "measurement_unit_m":"METR",
         "product_options":{
             "option_1":"OP_2_year_waranty",
+            "option_1_group_name":"Warranty",
             "option_1_name":"Two (2) year limited warranty",
             "option_2":"OP_insurance"
         },
@@ -705,7 +706,7 @@
         "urlencoded_header_content_type":"application/x-www-form-urlencoded",
         "test_cart_name":"Test-cart",
         "restricted_content_qty":"5",
-        "qty_of_categories_in_category_trees":"6",
+        "qty_of_categories_in_category_trees":"7",
         "qty_of_subcategories_in_category_trees":"2",
         "color_name":"black",
         "payment":{
