@@ -1,6 +1,6 @@
 ### customer · robot-ui-to-cypress · 14 scenarios
 
-MIGRATE 12 · DROP 1 · REVIEW 1   ▸ 0/12 verified
+MIGRATE 12 · OBSOLETE 1 · DROP 1   ▸ 0/12 verified
 
 Batches: `customer`
 
@@ -24,8 +24,4 @@ Batches: `customer`
 | ✓ | Scenario | Reason | Covered by |
 |---|---|---|---|
 | [ ] | Authorized_User_Access | Navigation smoke: header icons and page-is-displayed assertions with one add-to-cart; no state change, and login is already covered by yves/customer-account-management/customer-auth.cy.ts. | — |
-
-#### REVIEW — needs a call before this batch can close
-| Scenario | Recommended | Why |
-|---|---|---|
-| Reorder | Check whether the b2c-demo-shop copy asserts anything real — a plain shop has no merchants. Merchant-preserving reorder is asserted by yves/reorder/reorder-product-offers.cy.ts, but that spec early-returns on repository b2c and b2b. Either drop this row, or ungate the Cypress spec instead of porting. | Left open on purpose: the deletion turns on whether the b2c-demo-shop copy covers anything the gated Cypress spec does not. |
+| [ ] | Reorder | Both halves of this journey are already covered, in the repositories the Robot copies run in. The mp_b2c copy asserts merchant preservation, and reorder-product-offers.cy.ts skips only b2c and b2b, so it still runs in b2c-mp. The b2c-demo-shop copy does not assert a merchant at all despite its documentation line — it replaces that assertion with a plain product-presence check — and reorder-concrete-products.cy.ts covers exactly that, ungated, with an isB2c() helper that explicitly handles b2c and b2c-mp. No port needed. | spryker/cypress-tests:cypress/e2e/yves/reorder/reorder-concrete-products.cy.ts + cypress/e2e/yves/reorder/reorder-product-offers.cy.ts |

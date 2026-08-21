@@ -11,7 +11,7 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | Matrix | Domains | Scenarios | left to port | in scope | ported | authored | target skipped | dropped | review | blocked | done % |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
 | robot-api-to-codeception | 27 | 1721 | 1285 | 1285 | 0 | 0 | 0 | 0 | 418 | 0 | 0% |
-| robot-ui-to-cypress | 12 | 105 | 90 | 90 | 0 | 0 | 0 | 0 | 1 | 0 | 0% |
+| robot-ui-to-cypress | 12 | 105 | 90 | 90 | 0 | 0 | 0 | 0 | 0 | 0 | 0% |
 
 ## robot-api-to-codeception by domain
 
@@ -53,7 +53,7 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | [checkout](by-domain/robot-ui-to-cypress/checkout.md) | 16 | 13 | 13 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [company](by-domain/robot-ui-to-cypress/company.md) | 2 | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [content](by-domain/robot-ui-to-cypress/content.md) | 1 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
-| [customer](by-domain/robot-ui-to-cypress/customer.md) | 14 | 12 | 12 | 0 | 0 | 0 | 0 | 1 | 0 | 1 |
+| [customer](by-domain/robot-ui-to-cypress/customer.md) | 14 | 12 | 12 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [merchandising](by-domain/robot-ui-to-cypress/merchandising.md) | 6 | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [merchant](by-domain/robot-ui-to-cypress/merchant.md) | 22 | 18 | 18 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [order](by-domain/robot-ui-to-cypress/order.md) | 6 | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
@@ -484,4 +484,3 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | shopping-list | Update_existing_shopping_list_of_another_customer | drop |
 | shopping-list | Get_several_shopping_lists_info_with_includes | drop |
 | shopping-list | Get_shopping_lists_info_for_user_with_zero_quantity_of_number_of_shopping_lists | drop |
-| customer | Reorder | Check whether the b2c-demo-shop copy asserts anything real — a plain shop has no merchants. Merchant-preserving reorder is asserted by yves/reorder/reorder-product-offers.cy.ts, but that spec early-returns on repository b2c and b2b. Either drop this row, or ungate the Cypress spec instead of porting. |
