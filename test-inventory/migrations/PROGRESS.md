@@ -11,7 +11,7 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | Matrix | Domains | Scenarios | left to port | in scope | ported | authored | target skipped | dropped | review | blocked | done % |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
 | robot-api-to-codeception | 27 | 1721 | 1285 | 1285 | 0 | 0 | 0 | 0 | 418 | 0 | 0% |
-| robot-ui-to-cypress | 12 | 105 | 77 | 77 | 0 | 4 | 0 | 0 | 23 | 0 | 0% |
+| robot-ui-to-cypress | 12 | 105 | 90 | 90 | 0 | 0 | 0 | 0 | 1 | 0 | 0% |
 
 ## robot-api-to-codeception by domain
 
@@ -49,16 +49,16 @@ Status is observed from **this branch's** working tree, so a branch that has not
 
 | Domain | Scenarios | left to port | in scope | ported | authored | target skipped | dropped | review | blocked | batches |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|---|
-| [administration](by-domain/robot-ui-to-cypress/administration.md) | 6 | 3 | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 1 |
-| [checkout](by-domain/robot-ui-to-cypress/checkout.md) | 16 | 9 | 9 | 0 | 0 | 0 | 0 | 6 | 0 | 1 |
+| [administration](by-domain/robot-ui-to-cypress/administration.md) | 6 | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| [checkout](by-domain/robot-ui-to-cypress/checkout.md) | 16 | 13 | 13 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [company](by-domain/robot-ui-to-cypress/company.md) | 2 | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [content](by-domain/robot-ui-to-cypress/content.md) | 1 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
-| [customer](by-domain/robot-ui-to-cypress/customer.md) | 14 | 10 | 10 | 0 | 3 | 0 | 0 | 3 | 0 | 1 |
-| [merchandising](by-domain/robot-ui-to-cypress/merchandising.md) | 6 | 5 | 5 | 0 | 0 | 0 | 0 | 1 | 0 | 1 |
-| [merchant](by-domain/robot-ui-to-cypress/merchant.md) | 22 | 14 | 14 | 0 | 1 | 0 | 0 | 5 | 0 | 1 |
+| [customer](by-domain/robot-ui-to-cypress/customer.md) | 14 | 12 | 12 | 0 | 0 | 0 | 0 | 1 | 0 | 1 |
+| [merchandising](by-domain/robot-ui-to-cypress/merchandising.md) | 6 | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| [merchant](by-domain/robot-ui-to-cypress/merchant.md) | 22 | 18 | 18 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [order](by-domain/robot-ui-to-cypress/order.md) | 6 | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
-| [platform](by-domain/robot-ui-to-cypress/platform.md) | 6 | 5 | 5 | 0 | 0 | 0 | 0 | 1 | 0 | 1 |
-| [product](by-domain/robot-ui-to-cypress/product.md) | 21 | 17 | 17 | 0 | 0 | 0 | 0 | 4 | 0 | 1 |
+| [platform](by-domain/robot-ui-to-cypress/platform.md) | 6 | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| [product](by-domain/robot-ui-to-cypress/product.md) | 21 | 18 | 18 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [store](by-domain/robot-ui-to-cypress/store.md) | 4 | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [warehouse](by-domain/robot-ui-to-cypress/warehouse.md) | 1 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 
@@ -484,26 +484,4 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | shopping-list | Update_existing_shopping_list_of_another_customer | drop |
 | shopping-list | Get_several_shopping_lists_info_with_includes | drop |
 | shopping-list | Get_shopping_lists_info_for_user_with_zero_quantity_of_number_of_shopping_lists | drop |
-| administration | Minimum_Order_Value | merge into cypress/e2e/yves/checkout/minimum-order-value.cy.ts |
-| administration | Zed_navigation_ordering_and_naming | port as a single cypress/e2e/backoffice/navigation/navigation-smoke.cy.ts that opens each node |
-| administration | User_Control | port the action-deny and deactivation deltas into cypress/e2e/backoffice/acl/acl-navigation-access.cy.ts |
-| checkout | Guest_Checkout_and_Addresses | merge into cypress/e2e/yves/checkout/basic-checkout.cy.ts |
-| checkout | Comments_in_Cart | merge into cypress/e2e/yves/comments/cart-comments.cy.ts |
-| checkout | Configurable_Product_Checkout | merge into cypress/e2e/yves/product-configurator/configurable-product-checkout.cy.ts |
-| checkout | Guest_Checkout | port only the guest voucher/cart-rule/bundle delta into cypress/e2e/yves/discount/discounts-and-promotions.cy.ts |
-| checkout | Guest_Checkout_Addresses | merge into cypress/e2e/yves/checkout/basic-checkout.cy.ts |
-| checkout | Split_Delivery | merge into cypress/e2e/yves/checkout/basic-checkout.cy.ts |
-| customer | Guest_User_Access_Restrictions | port as a small cypress/e2e/yves/customer-account-management/guest-access-restrictions.cy.ts |
-| customer | New_Customer_Registration | merge into cypress/e2e/yves/customer-account-management/customer-auth.cy.ts |
-| customer | Reorder | drop; merchant-preserving reorder is already asserted in cypress/e2e/yves/reorder/reorder-product-offers.cy.ts - only keep if that spec's b2c/b2b skip matters |
-| merchandising | Discounts | merge into cypress/e2e/yves/discount/discounts-and-promotions.cy.ts |
-| merchant | Shopping_List_Contains_Offers | merge into cypress/e2e/yves/shopping-list/shopping-list-product-offers.cy.ts |
-| merchant | Create_and_Approve_New_Merchant_Product | merge the approve/deny path into cypress/e2e/mp/marketplace-product-concretes/product-concrete-management.cy.ts |
-| merchant | Fulfill_Order_from_Merchant_Portal | port the per-item state and multi-merchant delta into cypress/e2e/mp/marketplace-order-management/order-creation.cy.ts |
-| merchant | Manage_Merchant_Users | port the BO CRUD half as cypress/e2e/backoffice/merchant-management/merchant-user-management.cy.ts |
-| merchant | Merchant_Portal_My_Account | port as cypress/e2e/mp/merchant-portal/merchant-user-account.cy.ts |
-| platform | Click_and_collect | merge into cypress/e2e/yves/checkout/click-and-collect.cy.ts |
-| product | Configurable_Product_OMS | merge into cypress/e2e/backoffice/order-management/configurable-product-oms.cy.ts |
-| product | Quick_Order | merge into cypress/e2e/yves/quick-order/quick-order-to-checkout.cy.ts |
-| product | Offer_Availability_Calculation | merge into cypress/e2e/yves/product-offer/offer-availability.cy.ts |
-| product | Product_PDP | port as a slim cypress/e2e/yves/product/product-detail-visibility.cy.ts |
+| customer | Reorder | Check whether the b2c-demo-shop copy asserts anything real — a plain shop has no merchants. Merchant-preserving reorder is asserted by yves/reorder/reorder-product-offers.cy.ts, but that spec early-returns on repository b2c and b2b. Either drop this row, or ungate the Cypress spec instead of porting. |

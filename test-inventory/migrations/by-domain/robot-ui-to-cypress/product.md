@@ -1,6 +1,6 @@
 ### product · robot-ui-to-cypress · 21 scenarios
 
-MIGRATE 17 · REVIEW 4   ▸ 0/17 verified
+MIGRATE 18 · OBSOLETE 3   ▸ 0/18 verified
 
 Batches: `product`
 
@@ -22,13 +22,13 @@ Batches: `product`
 | [ ] | Product_Availability_Calculation | ×5 | Check product availability + multistore. _(yves)_ | `cypress/e2e/yves/product/availability-calculation.cy.ts` | L | — |
 | [ ] | Product_Bundles | ×4 | Checks checkout with Bundle product. _(yves)_ | `cypress/e2e/yves/product/product-bundle-checkout.cy.ts` | L | — |
 | [ ] | Product_Original_Price | ×3 | checks that Original price is displayed on the PDP and in Catalog. _(yves)_ | `cypress/e2e/yves/product/original-price.cy.ts` | L | — |
+| [ ] | Product_PDP | ×5 | Checks that PDP contains required elements. _(yves)_ | `cypress/e2e/yves/product/product-detail-visibility.cy.ts` | M | — |
 | [ ] | Product_Restrictions | ×3 | Checks White and Black lists. _(yves)_ | `cypress/e2e/yves/catalog/product-restrictions.cy.ts` | L | — |
 | [ ] | Volume_Prices | ×5 | Checks that volume prices are applied in cart. _(yves)_ | `cypress/e2e/yves/product/volume-prices.cy.ts` | L | — |
 
-#### REVIEW — needs a call before this batch can close
-| Scenario | Recommended | Why |
-|---|---|---|
-| Configurable_Product_OMS | merge into cypress/e2e/backoffice/order-management/configurable-product-oms.cy.ts | Marketplace variant of tests/ui/b2c/sales/sales.robot::Configurable_Product_OMS with dynamic fixtures; the delta is the Merchant Portal order grand total and the merchant shipment states, while the b2c copy carries the return and reorder tail. |
-| Quick_Order | merge into cypress/e2e/yves/quick-order/quick-order-to-checkout.cy.ts | B2B variant of tests/ui/suite/customers/customer.robot::Quick_Order - same textarea bulk add, cart and shopping list, checkout and reorder, only with B2B SKUs and without the merchant assertions. |
-| Offer_Availability_Calculation | merge into cypress/e2e/yves/product-offer/offer-availability.cy.ts | Marketplace-B2C variant of tests/ui/suite/marketplace/marketplace.robot::Offer_Availability_Calculation - same offer stock/checkout/cancel availability cycle. |
-| Product_PDP | port as a slim cypress/e2e/yves/product/product-detail-visibility.cy.ts | Body is a sequence of 'PDP contains/doesn't contain' element-presence checks for guest vs logged-in plus a variant switch; the guest/customer element delta is real but no Cypress spec covers PDP element visibility (product-attribute-visibility.cy.ts covers attribute badges only). |
+#### OBSOLETE / DROP — delete the source, do not port
+| ✓ | Scenario | Reason | Covered by |
+|---|---|---|---|
+| [ ] | Configurable_Product_OMS | Duplicate journey — retired by the port of order/Configurable_Product_OMS; delete it in that sibling's batch, it needs no port of its own. | robot:tests/ui/b2c/sales/sales.robot::Configurable_Product_OMS |
+| [ ] | Quick_Order | Duplicate journey — retired by the port of customer/Quick_Order; delete it in that sibling's batch, it needs no port of its own. | robot:tests/ui/suite/customers/customer.robot::Quick_Order |
+| [ ] | Offer_Availability_Calculation | Duplicate journey — retired by the port of merchant/Offer_Availability_Calculation; delete it in that sibling's batch, it needs no port of its own. | robot:tests/ui/suite/marketplace/marketplace.robot::Offer_Availability_Calculation |

@@ -1,6 +1,6 @@
 ### merchandising · robot-ui-to-cypress · 6 scenarios
 
-MIGRATE 5 · REVIEW 1   ▸ 0/5 verified
+MIGRATE 5 · OBSOLETE 1   ▸ 0/5 verified
 
 Batches: `merchandising`
 
@@ -13,7 +13,7 @@ Batches: `merchandising`
 | [ ] | Product_Sets | ×3 | Check the usage of product sets. _(yves)_ | `cypress/e2e/yves/merchandising/product-sets.cy.ts` | M | — |
 | [ ] | Product_labels | ×5 | Checks that products have labels on PLP and PDP. _(yves)_ | `cypress/e2e/yves/merchandising/product-labels.cy.ts` | M | — |
 
-#### REVIEW — needs a call before this batch can close
-| Scenario | Recommended | Why |
-|---|---|---|
-| Discounts | merge into cypress/e2e/yves/discount/discounts-and-promotions.cy.ts | Same journey as parallel_ui/suite/misc/static_demodata_set.robot::Discounts (voucher, cart rule, promotional product, exact discount amounts, checkout grand total); that variant uses dynamic fixtures and DB-level discount deactivation and is the better port source. |
+#### OBSOLETE / DROP — delete the source, do not port
+| ✓ | Scenario | Reason | Covered by |
+|---|---|---|---|
+| [ ] | Discounts | Duplicate journey — retired by the port of platform/Discounts; delete it in that sibling's batch, it needs no port of its own. | robot:tests/parallel_ui/suite/misc/static_demodata_set.robot::Discounts |
