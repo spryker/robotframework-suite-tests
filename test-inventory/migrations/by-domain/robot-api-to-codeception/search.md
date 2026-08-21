@@ -15,11 +15,11 @@ Batches: `search-1`, `search-2`
 | [ ] | Search_with_invalid_price_mode | mp_b2c | `GET /catalog-search?q=&category=!@!@!` → 400 | — | S | — |
 | [ ] | Search_with_invalid_rating_max | mp_b2c | `GET /catalog-search?q=&category=!@!@!` → 400 | — | S | — |
 | [ ] | Search_with_invalid_rating_min | mp_b2c | `GET /catalog-search?q=&category=!@!@!` → 400 | — | S | — |
-| [ ] | Filter_by_label_one_label | ×5 | `GET /cata` → 200 | — | S | — |
+| [ ] | Filter_by_label_one_label | ×5 | `GET /catalog-search?q=&label[]=test123` → 200 | — | S | — |
 | [ ] | Get_search_suggestions_with_11_symbols | ×2 | `GET /catalog-search-suggestions?q=$` → 200 | — | S | — |
 | [ ] | Get_search_suggestions_with_abstract_product_sku | ×4 | `GET /catalog-search-suggestions?q=$` → 200 | — | S | — |
 | [ ] | Get_search_suggestions_with_abstract_product_sku_and_included_abstract_products | ×4 | `GET /catalog-search-suggestions?q=$` → 200 | — | S | — |
-| [ ] | Get_search_suggestions_with_all_attributes_data | ×4 | `GET /catalog-search-suggestions?q=acer` → 200 | — | S | — |
+| [ ] | Get_search_suggestions_with_all_attributes_data | ×4 | `GET /catalog-search-suggestions?q=sony` → 200 | — | S | — |
 | [ ] | Get_search_suggestions_with_brand_and_color | ×2 | `GET /catalog-search-suggestions?q=$` → 200 | — | S | — |
 | [ ] | Get_search_suggestions_with_brand_and_currency | ×4 | `GET /catalog-search-suggestions?q=$` → 200 | — | S | — |
 | [ ] | Get_search_suggestions_with_category_collection | ×4 | `GET /catalog-search-suggestions?q=$` → 200 | — | S | — |
@@ -27,7 +27,7 @@ Batches: `search-1`, `search-2`
 | [ ] | Get_search_suggestions_with_cms_pages | ×4 | `GET /catalog-search-suggestions?q=$` → 200 | — | S | — |
 | [ ] | Get_search_suggestions_with_color | ×4 | `GET /catalog-search-suggestions?q=$` → 200 | — | S | — |
 | [ ] | Get_search_suggestions_with_concrete_product_sku | ×4 | `GET /catalog-search-suggestions?q=$` → 200 | — | S | — |
-| [ ] | Get_search_suggestions_with_discontinued_product_sku | ×4 | `GET /catalog-search-suggestions?q=$` → 200 | — | S | — |
+| [ ] | Get_search_suggestions_with_discontinued_product_sku | ×4 | `GET /catalog-search-suggestions?q=sony` → 200 | — | S | — |
 | [ ] | Get_search_suggestions_with_empty_q_parameter | ×4 | `GET /catalog-search-suggestions?q=$` → 200 | — | S | — |
 | [ ] | Get_search_suggestions_with_few_symbols | ×4 | `GET /catalog-search-suggestions?q=$` → 200 | — | S | — |
 | [ ] | Get_search_suggestions_with_non_existing_product_sku | ×4 | `GET /catalog-search-suggestions?q=$` → 200 | — | S | — |

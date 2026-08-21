@@ -1,6 +1,6 @@
 {
  "And Response body parameter should be:": {
-  "count": 11236,
+  "count": 11024,
   "sources": [
    "tests/api/b2b/bapi/dynamic_entity/complex/negative.robot",
    "tests/api/b2b/bapi/dynamic_entity/complex/positive.robot",
@@ -10,7 +10,7 @@
   ]
  },
  "Then Response status code should be:": {
-  "count": 4686,
+  "count": 4679,
   "sources": [
    "tests/api/b2b/bapi/dynamic_entity/complex/negative.robot",
    "tests/api/b2b/bapi/dynamic_entity/complex/positive.robot",
@@ -20,7 +20,7 @@
   ]
  },
  "And Response reason should be:": {
-  "count": 4198,
+  "count": 4164,
   "sources": [
    "tests/api/b2b/bapi/dynamic_entity/complex/negative.robot",
    "tests/api/b2b/bapi/dynamic_entity/complex/positive.robot",
@@ -30,7 +30,7 @@
   ]
  },
  "I set Headers:": {
-  "count": 3082,
+  "count": 3047,
   "sources": [
    "tests/api/b2b/bapi/dynamic_entity/complex/positive.robot",
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_alternative_products/positive.robot",
@@ -39,18 +39,8 @@
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_products/positive.robot"
   ]
  },
- "I send a POST request:": {
-  "count": 2396,
-  "sources": [
-   "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/negative.robot",
-   "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/positive.robot",
-   "tests/api/b2b/glue/agent_endpoints/agent_customer_impersonation_access_tokens/negative.robot",
-   "tests/api/b2b/glue/agent_endpoints/agent_customer_impersonation_access_tokens/positive.robot",
-   "tests/api/b2b/glue/agent_endpoints/agent_customer_search/positive.robot"
-  ]
- },
  "And Response body parameter should not be EMPTY:": {
-  "count": 2373,
+  "count": 2380,
   "sources": [
    "tests/api/b2b/bapi/dynamic_entity/positive.robot",
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_product_image_sets/positive.robot",
@@ -59,8 +49,18 @@
    "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/positive.robot"
   ]
  },
+ "I send a POST request:": {
+  "count": 2323,
+  "sources": [
+   "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/negative.robot",
+   "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/positive.robot",
+   "tests/api/b2b/glue/agent_endpoints/agent_customer_impersonation_access_tokens/negative.robot",
+   "tests/api/b2b/glue/agent_endpoints/agent_customer_impersonation_access_tokens/positive.robot",
+   "tests/api/b2b/glue/agent_endpoints/agent_customer_search/positive.robot"
+  ]
+ },
  "And Response should return error message:": {
-  "count": 2289,
+  "count": 2273,
   "sources": [
    "tests/api/b2b/bapi/dynamic_entity/negative.robot",
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_alternative_products/negative.robot",
@@ -70,7 +70,7 @@
   ]
  },
  "Response status code should be:": {
-  "count": 2237,
+  "count": 2171,
   "sources": [
    "tests/api/b2b/bapi/dynamic_entity/complex/positive.robot",
    "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/negative.robot",
@@ -80,7 +80,7 @@
   ]
  },
  "I get access token for the customer:": {
-  "count": 2148,
+  "count": 2113,
   "sources": [
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_alternative_products/positive.robot",
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_product_prices/negative.robot",
@@ -90,7 +90,7 @@
   ]
  },
  "And Response should return error code:": {
-  "count": 2063,
+  "count": 2041,
   "sources": [
    "tests/api/b2b/bapi/dynamic_entity/negative.robot",
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_alternative_products/negative.robot",
@@ -100,7 +100,7 @@
   ]
  },
  "When I send a GET request:": {
-  "count": 2028,
+  "count": 2024,
   "sources": [
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_alternative_products/negative.robot",
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_alternative_products/positive.robot",
@@ -110,7 +110,7 @@
   ]
  },
  "Save value to a variable:": {
-  "count": 1831,
+  "count": 1797,
   "sources": [
    "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/negative.robot",
    "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/positive.robot",
@@ -120,7 +120,7 @@
   ]
  },
  "And Response should contain the array of a certain size:": {
-  "count": 1818,
+  "count": 1778,
   "sources": [
    "tests/api/b2b/bapi/dynamic_entity/complex/negative.robot",
    "tests/api/b2b/bapi/dynamic_entity/negative.robot",
@@ -130,7 +130,7 @@
   ]
  },
  "And Response header parameter should be:": {
-  "count": 1528,
+  "count": 1522,
   "sources": [
    "tests/api/b2b/bapi/dynamic_entity/complex/negative.robot",
    "tests/api/b2b/bapi/dynamic_entity/complex/positive.robot",
@@ -140,7 +140,7 @@
   ]
  },
  "When I send a POST request:": {
-  "count": 1387,
+  "count": 1385,
   "sources": [
    "tests/api/b2b/glue/access_token_endpoints/access_tokens/negative.robot",
    "tests/api/b2b/glue/access_token_endpoints/access_tokens/positive.robot",
@@ -160,7 +160,7 @@
   ]
  },
  "And Response body parameter should be greater than:": {
-  "count": 1264,
+  "count": 1260,
   "sources": [
    "tests/api/b2b/bapi/dynamic_entity/positive.robot",
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_product_availabilities/positive.robot",
@@ -170,7 +170,7 @@
   ]
  },
  "And Array in response should contain property with value:": {
-  "count": 1196,
+  "count": 1186,
   "sources": [
    "tests/api/b2b/bapi/dynamic_entity/positive.robot",
    "tests/api/b2b/glue/availability_endpoints/availability_notifications/negative.robot",
@@ -180,7 +180,7 @@
   ]
  },
  "I send a DELETE request:": {
-  "count": 1094,
+  "count": 1059,
   "sources": [
    "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/negative.robot",
    "tests/api/b2b/glue/availability_endpoints/availability_notifications/negative.robot",
@@ -190,7 +190,7 @@
   ]
  },
  "And Each array element of array in response should contain property:": {
-  "count": 1049,
+  "count": 1048,
   "sources": [
    "tests/api/b2b/bapi/dynamic_entity/positive.robot",
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_product_prices/positive.robot",
@@ -200,7 +200,7 @@
   ]
  },
  "Zed: login on Zed with provided credentials:": {
-  "count": 969,
+  "count": 965,
   "sources": [
    "tests/parallel_ui/b2b/administration/administration.robot",
    "tests/parallel_ui/b2b/catalog/catalog.robot",
@@ -210,7 +210,7 @@
   ]
  },
  "And Response body parameter should contain:": {
-  "count": 953,
+  "count": 948,
   "sources": [
    "tests/api/b2b/bapi/dynamic_entity/negative.robot",
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_products/positive.robot",
@@ -220,7 +220,7 @@
   ]
  },
  "Yves: login on Yves with provided credentials:": {
-  "count": 853,
+  "count": 842,
   "sources": [
    "tests/parallel_ui/b2b/administration/administration.robot",
    "tests/parallel_ui/b2b/catalog/catalog.robot",
@@ -230,23 +230,13 @@
   ]
  },
  "Yves: go to PDP of the product with sku:": {
-  "count": 848,
+  "count": 838,
   "sources": [
    "tests/parallel_ui/b2b/catalog/catalog.robot",
    "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
    "tests/parallel_ui/b2b/catalog/catalog_manage_product.robot",
    "tests/parallel_ui/b2b/catalog/catalog_prices.robot",
    "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot"
-  ]
- },
- "And Response status code should be:": {
-  "count": 736,
-  "sources": [
-   "tests/api/b2b/dynamic_store/search_endpoints/catalog_search/positive.robot",
-   "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/negative.robot",
-   "tests/api/b2b/glue/access_token_endpoints/token/negative.robot",
-   "tests/api/b2b/glue/agent_endpoints/agent_customer_impersonation_access_tokens/positive.robot",
-   "tests/api/b2b/glue/cart_endpoints/items/negative.robot"
   ]
  },
  "Delete dynamic entity configuration in Database:": {
@@ -269,6 +259,16 @@
    "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/negative.robot"
   ]
  },
+ "And Response status code should be:": {
+  "count": 682,
+  "sources": [
+   "tests/api/b2b/dynamic_store/search_endpoints/catalog_search/positive.robot",
+   "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/negative.robot",
+   "tests/api/b2b/glue/access_token_endpoints/token/negative.robot",
+   "tests/api/b2b/glue/agent_endpoints/agent_customer_impersonation_access_tokens/positive.robot",
+   "tests/api/b2b/glue/cart_endpoints/items/negative.robot"
+  ]
+ },
  "And Response body has correct self link": {
   "count": 588,
   "sources": [
@@ -277,16 +277,6 @@
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_product_image_sets/positive.robot",
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_product_prices/positive.robot",
    "tests/api/b2b/glue/agent_endpoints/agent_customer_search/positive.robot"
-  ]
- },
- "And Save value to a variable:": {
-  "count": 555,
-  "sources": [
-   "tests/api/b2b/bapi/dynamic_entity/complex/positive.robot",
-   "tests/api/b2b/glue/abstract_product_endpoints/abstract_product_prices/positive.robot",
-   "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/positive.robot",
-   "tests/api/b2b/glue/agent_endpoints/agent_customer_impersonation_access_tokens/positive.robot",
-   "tests/api/b2b/glue/availability_endpoints/availability_notifications/positive.robot"
   ]
  },
  "I get access token by user credentials:": {
@@ -299,8 +289,18 @@
    "tests/api/b2c/bapi/dynamic_entity/complex/negative.robot"
   ]
  },
+ "And Save value to a variable:": {
+  "count": 537,
+  "sources": [
+   "tests/api/b2b/bapi/dynamic_entity/complex/positive.robot",
+   "tests/api/b2b/glue/abstract_product_endpoints/abstract_product_prices/positive.robot",
+   "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/positive.robot",
+   "tests/api/b2b/glue/agent_endpoints/agent_customer_impersonation_access_tokens/positive.robot",
+   "tests/api/b2b/glue/availability_endpoints/availability_notifications/positive.robot"
+  ]
+ },
  "Yves: add product to the shopping cart": {
-  "count": 520,
+  "count": 516,
   "sources": [
    "tests/parallel_ui/b2b/catalog/catalog.robot",
    "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
@@ -309,18 +309,8 @@
    "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot"
   ]
  },
- "Response reason should be:": {
-  "count": 512,
-  "sources": [
-   "tests/api/b2b/glue/access_token_endpoints/token/positive.robot",
-   "tests/api/b2b/glue/cart_endpoints/items/negative.robot",
-   "tests/api/b2b/glue/cart_endpoints/items/positive.robot",
-   "tests/api/b2b/glue/cart_endpoints/shared_carts/negative.robot",
-   "tests/api/b2b/glue/cart_endpoints/shared_carts/positive.robot"
-  ]
- },
  "And Each array element of array in response should contain property with value:": {
-  "count": 509,
+  "count": 510,
   "sources": [
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_product_prices/positive.robot",
    "tests/api/b2b/glue/availability_endpoints/availability_notifications/negative.robot",
@@ -330,7 +320,7 @@
   ]
  },
  "And Response include should contain certain entity type:": {
-  "count": 492,
+  "count": 489,
   "sources": [
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_alternative_products/positive.robot",
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_products/positive.robot",
@@ -339,8 +329,18 @@
    "tests/api/b2b/glue/concrete_products_endpoints/concrete_alternative_products/positive.robot"
   ]
  },
+ "Response reason should be:": {
+  "count": 480,
+  "sources": [
+   "tests/api/b2b/glue/access_token_endpoints/token/positive.robot",
+   "tests/api/b2b/glue/cart_endpoints/items/negative.robot",
+   "tests/api/b2b/glue/cart_endpoints/items/positive.robot",
+   "tests/api/b2b/glue/cart_endpoints/shared_carts/negative.robot",
+   "tests/api/b2b/glue/cart_endpoints/shared_carts/positive.robot"
+  ]
+ },
  "And Response include element has self link:": {
-  "count": 478,
+  "count": 473,
   "sources": [
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_alternative_products/positive.robot",
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_products/positive.robot",
@@ -360,7 +360,7 @@
   ]
  },
  "And Response body parameter should be in:": {
-  "count": 443,
+  "count": 439,
   "sources": [
    "tests/api/b2b/glue/bundle_endpoints/bundled_products/positive.robot",
    "tests/api/b2b/glue/cart_endpoints/cart_permssion_groups/positive.robot",
@@ -370,7 +370,7 @@
   ]
  },
  "And Each array element of array in response should contain value:": {
-  "count": 426,
+  "count": 425,
   "sources": [
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_product_prices/positive.robot",
    "tests/api/b2b/glue/cart_endpoints/carts/positive.robot",
@@ -379,18 +379,8 @@
    "tests/api/b2b/glue/search_endpoints/catalog_search_suggestions/positive.robot"
   ]
  },
- "And Response body has correct self link internal": {
-  "count": 388,
-  "sources": [
-   "tests/api/b2b/glue/abstract_product_endpoints/abstract_products/positive.robot",
-   "tests/api/b2b/glue/access_token_endpoints/access_tokens/positive.robot",
-   "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/positive.robot",
-   "tests/api/b2b/glue/agent_endpoints/agent_access_tokens/positive.robot",
-   "tests/api/b2b/glue/agent_endpoints/agent_customer_impersonation_access_tokens/positive.robot"
-  ]
- },
  "And Response should contain the array larger than a certain size:": {
-  "count": 367,
+  "count": 395,
   "sources": [
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_alternative_products/positive.robot",
    "tests/api/b2b/glue/abstract_product_endpoints/abstract_products/positive.robot",
@@ -399,8 +389,18 @@
    "tests/api/b2b/glue/cart_endpoints/items/positive.robot"
   ]
  },
+ "And Response body has correct self link internal": {
+  "count": 387,
+  "sources": [
+   "tests/api/b2b/glue/abstract_product_endpoints/abstract_products/positive.robot",
+   "tests/api/b2b/glue/access_token_endpoints/access_tokens/positive.robot",
+   "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/positive.robot",
+   "tests/api/b2b/glue/agent_endpoints/agent_access_tokens/positive.robot",
+   "tests/api/b2b/glue/agent_endpoints/agent_customer_impersonation_access_tokens/positive.robot"
+  ]
+ },
  "When I send a PATCH request:": {
-  "count": 353,
+  "count": 352,
   "sources": [
    "tests/api/b2b/glue/cart_endpoints/carts/negative.robot",
    "tests/api/b2b/glue/cart_endpoints/carts/positive.robot",
@@ -420,7 +420,7 @@
   ]
  },
  "And I send a GET request:": {
-  "count": 340,
+  "count": 330,
   "sources": [
    "tests/api/b2b/bapi/dynamic_entity/complex/negative.robot",
    "tests/api/b2b/bapi/dynamic_entity/complex/positive.robot",
@@ -470,7 +470,7 @@
   ]
  },
  "Yves: go to shopping cart page": {
-  "count": 298,
+  "count": 290,
   "sources": [
    "tests/parallel_ui/b2b/catalog/catalog.robot",
    "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
@@ -499,16 +499,6 @@
    "tests/api/b2c/bapi/dynamic_entity/complex/negative.robot"
   ]
  },
- "Yves: click on the 'Checkout' button in the shopping cart": {
-  "count": 266,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot"
-  ]
- },
  "Cleanup all items in the cart:": {
   "count": 264,
   "sources": [
@@ -529,8 +519,18 @@
    "tests/api/b2b/glue/cart_endpoints/shared_carts/positive.robot"
   ]
  },
+ "Yves: click on the 'Checkout' button in the shopping cart": {
+  "count": 261,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot"
+  ]
+ },
  "Yves: select the following payment method on the checkout and go next:": {
-  "count": 260,
+  "count": 255,
   "sources": [
    "tests/parallel_ui/b2b/catalog/catalog.robot",
    "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
@@ -540,23 +540,13 @@
   ]
  },
  "Create dynamic customer in DB": {
-  "count": 258,
+  "count": 250,
   "sources": [
    "tests/parallel_ui/b2b/administration/administration.robot",
    "tests/parallel_ui/b2b/catalog/catalog.robot",
    "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
    "tests/parallel_ui/b2b/catalog/catalog_manage_product.robot",
    "tests/parallel_ui/b2b/catalog/catalog_prices.robot"
-  ]
- },
- "Yves: submit form on the checkout": {
-  "count": 244,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/b2b/misc/static_demodata_set.robot",
-   "tests/parallel_ui/b2b/sales/manage_shipments.robot",
-   "tests/parallel_ui/b2b/sales/sales.robot"
   ]
  },
  "Trigger p&s": {
@@ -569,8 +559,18 @@
    "tests/api/mp_b2b/bapi/dynamic_entity/complex/positive.robot"
   ]
  },
+ "Yves: submit form on the checkout": {
+  "count": 243,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/b2b/misc/static_demodata_set.robot",
+   "tests/parallel_ui/b2b/sales/manage_shipments.robot",
+   "tests/parallel_ui/b2b/sales/sales.robot"
+  ]
+ },
  "When I send a DELETE request:": {
-  "count": 241,
+  "count": 240,
   "sources": [
    "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/negative.robot",
    "tests/api/b2b/glue/availability_endpoints/availability_notifications/negative.robot",
@@ -580,47 +580,7 @@
   ]
  },
  "Yves: billing address same as shipping address:": {
-  "count": 241,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot"
-  ]
- },
- "Yves: 'submit the order' on the summary page": {
   "count": 236,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot"
-  ]
- },
- "Yves: accept the terms and conditions:": {
-  "count": 235,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot"
-  ]
- },
- "Create dynamic admin user in DB": {
-  "count": 234,
-  "sources": [
-   "tests/parallel_ui/b2b/administration/administration.robot",
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_manage_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_prices.robot"
-  ]
- },
- "Yves: 'Thank you' page is displayed": {
-  "count": 234,
   "sources": [
    "tests/parallel_ui/b2b/catalog/catalog.robot",
    "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
@@ -639,8 +599,48 @@
    "tests/parallel_ui/mp_b2b/marketplace/marketplace_offer_volume_prices.robot"
   ]
  },
+ "Yves: 'submit the order' on the summary page": {
+  "count": 231,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot"
+  ]
+ },
+ "Create dynamic admin user in DB": {
+  "count": 230,
+  "sources": [
+   "tests/parallel_ui/b2b/administration/administration.robot",
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_manage_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_prices.robot"
+  ]
+ },
+ "Yves: accept the terms and conditions:": {
+  "count": 230,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot"
+  ]
+ },
+ "Yves: 'Thank you' page is displayed": {
+  "count": 229,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot"
+  ]
+ },
  "Yves: product price on the PDP should be:": {
-  "count": 227,
+  "count": 223,
   "sources": [
    "tests/parallel_ui/b2b/catalog/catalog_manage_product.robot",
    "tests/parallel_ui/b2b/catalog/catalog_prices.robot",
@@ -659,16 +659,6 @@
    "tests/parallel_ui/mp_b2b/marketplace/marketplace.robot"
   ]
  },
- "Delete dynamic admin user from DB": {
-  "count": 214,
-  "sources": [
-   "tests/parallel_ui/b2b/administration/administration.robot",
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_manage_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_prices.robot"
-  ]
- },
  "Create a guest cart:": {
   "count": 211,
   "sources": [
@@ -679,24 +669,14 @@
    "tests/api/b2c/glue/configured_bundles_endpoints/guest_configured_bundles/negative.robot"
   ]
  },
- "Yves: get the last placed order ID by current customer": {
-  "count": 210,
+ "Delete dynamic admin user from DB": {
+  "count": 211,
   "sources": [
+   "tests/parallel_ui/b2b/administration/administration.robot",
    "tests/parallel_ui/b2b/catalog/catalog.robot",
    "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot"
-  ]
- },
- "Zed: trigger all matching states inside this order:": {
-  "count": 207,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
-   "tests/parallel_ui/b2b/sales/refunds.robot",
-   "tests/parallel_ui/b2b/sales/sales.robot",
-   "tests/parallel_ui/b2c/catalog/catalog_product_availability.robot"
+   "tests/parallel_ui/b2b/catalog/catalog_manage_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_prices.robot"
   ]
  },
  "And Each Array Element Of Array In Response Should Contain Property:": {
@@ -709,8 +689,18 @@
    "tests/api/b2c/glue/configurable_bundle_endpoints/configurable_bundle/positive.robot"
   ]
  },
+ "Yves: get the last placed order ID by current customer": {
+  "count": 205,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot"
+  ]
+ },
  "I send a PATCH request:": {
-  "count": 202,
+  "count": 198,
   "sources": [
    "tests/api/b2b/glue/customer_endpoints/customer_restore_password/negative.robot",
    "tests/api/b2b/glue/customer_endpoints/customers/negative.robot",
@@ -719,14 +709,24 @@
    "tests/api/b2b/glue/shopping_list_endpoints/shopping_list_items/positive.robot"
   ]
  },
+ "Zed: trigger all matching states inside this order:": {
+  "count": 198,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
+   "tests/parallel_ui/b2b/sales/refunds.robot",
+   "tests/parallel_ui/b2b/sales/sales.robot",
+   "tests/parallel_ui/b2c/catalog/catalog_product_availability.robot"
+  ]
+ },
  "Yves: go to user menu:": {
-  "count": 200,
+  "count": 195,
   "sources": [
    "tests/parallel_ui/b2b/catalog/catalog.robot",
    "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
    "tests/parallel_ui/b2b/checkout/checkout.robot",
    "tests/parallel_ui/b2b/customers/customer.robot",
-   "tests/parallel_ui/b2b/merchandising/merchandising.robot"
+   "tests/parallel_ui/b2b/sales/sales.robot"
   ]
  },
  "Make user a warehouse user/ not a warehouse user:": {
@@ -779,16 +779,6 @@
    "tests/parallel_ui/b2c/multistore/multistore_catalog.robot"
   ]
  },
- "Yves: select the following shipping method on the checkout and go next:": {
-  "count": 164,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot",
-   "tests/parallel_ui/b2b/merchandising/merchandising.robot"
-  ]
- },
  "MP: fill product price values:": {
   "count": 164,
   "sources": [
@@ -809,6 +799,16 @@
    "tests/api/mp_b2b/bapi/dynamic_entity/complex/negative.robot"
   ]
  },
+ "Yves: select the following shipping method on the checkout and go next:": {
+  "count": 159,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot",
+   "tests/parallel_ui/b2b/misc/static_demodata_set.robot"
+  ]
+ },
  "Repeat Keyword": {
   "count": 159,
   "sources": [
@@ -817,16 +817,6 @@
    "tests/parallel_ui/b2c/catalog/catalog_product_availability.robot",
    "tests/parallel_ui/b2c/multistore/multistore_catalog.robot",
    "tests/parallel_ui/mp_b2b/catalog/catalog_offer_availability.robot"
-  ]
- },
- "Yves: PDP contains/doesn't contain:": {
-  "count": 158,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot",
-   "tests/parallel_ui/b2b/merchandising/merchandising.robot",
-   "tests/parallel_ui/b2c/catalog/catalog.robot"
   ]
  },
  "Then Save value to a variable:": {
@@ -839,24 +829,14 @@
    "tests/api/b2c/bapi/warehouse_user_assignments/negative.robot"
   ]
  },
- "Yves: go to URL:": {
-  "count": 155,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_prices.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/b2b/company/company.robot"
-  ]
- },
- "Yves: select the following existing address on the checkout as 'shipping' address and go next:": {
+ "Yves: PDP contains/doesn't contain:": {
   "count": 154,
   "sources": [
    "tests/parallel_ui/b2b/catalog/catalog.robot",
    "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot"
+   "tests/parallel_ui/b2b/customers/customer.robot",
+   "tests/parallel_ui/b2b/merchandising/merchandising.robot",
+   "tests/parallel_ui/b2c/catalog/catalog.robot"
   ]
  },
  "MP: perform search by:": {
@@ -867,6 +847,26 @@
    "tests/parallel_ui/mp_b2b/marketplace/marketplace.robot",
    "tests/parallel_ui/mp_b2b/marketplace/marketplace_manage_product.robot",
    "tests/parallel_ui/mp_b2b/marketplace/marketplace_offer_volume_prices.robot"
+  ]
+ },
+ "Yves: select the following existing address on the checkout as 'shipping' address and go next:": {
+  "count": 150,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot"
+  ]
+ },
+ "Yves: go to URL:": {
+  "count": 150,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_prices.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/b2b/company/company.robot"
   ]
  },
  "When I set Headers:": {
@@ -890,7 +890,7 @@
   ]
  },
  "Yves: go to the 'Home' page": {
-  "count": 136,
+  "count": 134,
   "sources": [
    "tests/parallel_ui/b2b/catalog/catalog.robot",
    "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
@@ -949,24 +949,14 @@
    "tests/parallel_ui/mp_b2b/customers/customer.robot"
   ]
  },
- "Yves: shopping cart contains product with unit price:": {
-  "count": 126,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_manage_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_prices.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot"
-  ]
- },
  "Yves: go to the shopping cart through the header with name:": {
-  "count": 126,
+  "count": 125,
   "sources": [
    "tests/parallel_ui/b2b/checkout/checkout.robot",
    "tests/parallel_ui/b2b/customers/customer.robot",
    "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2b/checkout/checkout.robot"
+   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
+   "tests/parallel_ui/mp_b2b/customers/customer.robot"
   ]
  },
  "And Each array element of array in response should contain nested property with value:": {
@@ -987,6 +977,16 @@
    "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
    "tests/parallel_ui/mp_b2b/customers/customer.robot",
    "tests/parallel_ui/mp_b2b/marketplace/marketplace.robot"
+  ]
+ },
+ "Yves: shopping cart contains product with unit price:": {
+  "count": 120,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_manage_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_prices.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot"
   ]
  },
  "Cleanup all items in the guest cart:": {
@@ -1029,24 +1029,24 @@
    "tests/parallel_ui/mp_b2b/marketplace/marketplace_offer_volume_prices.robot"
   ]
  },
- "Yves: change variant of the product on PDP on:": {
-  "count": 108,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_manage_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_prices.robot",
-   "tests/parallel_ui/b2c/catalog/catalog.robot",
-   "tests/parallel_ui/b2c/catalog/catalog_manage_product.robot"
-  ]
- },
  "Yves: logout on Yves as a customer": {
-  "count": 108,
+  "count": 106,
   "sources": [
    "tests/parallel_ui/b2b/catalog/catalog.robot",
    "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
    "tests/parallel_ui/b2b/catalog/catalog_prices.robot",
    "tests/parallel_ui/b2b/checkout/checkout.robot",
    "tests/parallel_ui/b2b/company/company.robot"
+  ]
+ },
+ "Yves: change variant of the product on PDP on:": {
+  "count": 104,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_manage_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_prices.robot",
+   "tests/parallel_ui/b2c/catalog/catalog.robot",
+   "tests/parallel_ui/b2c/catalog/catalog_manage_product.robot"
   ]
  },
  "Yves: delete all user addresses": {
@@ -1069,16 +1069,6 @@
    "tests/parallel_ui/mp_b2b/marketplace/marketplace_prices.robot"
   ]
  },
- "Yves: change quantity using '+' or '-' button № times:": {
-  "count": 100,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_manage_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
-   "tests/parallel_ui/b2c/catalog/catalog.robot",
-   "tests/parallel_ui/b2c/catalog/catalog_manage_product.robot"
-  ]
- },
  "Yves: 1st product card in catalog (not)contains:": {
   "count": 100,
   "sources": [
@@ -1099,8 +1089,18 @@
    "tests/parallel_ui/b2c/misc/static_demodata_set.robot"
   ]
  },
+ "Yves: change quantity using '+' or '-' button № times:": {
+  "count": 96,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_manage_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
+   "tests/parallel_ui/b2c/catalog/catalog_manage_product.robot",
+   "tests/parallel_ui/b2c/catalog/catalog_product_availability.robot"
+  ]
+ },
  "Zed: grand total for the order equals:": {
-  "count": 98,
+  "count": 96,
   "sources": [
    "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
    "tests/parallel_ui/b2b/misc/static_demodata_set.robot",
@@ -1110,13 +1110,23 @@
   ]
  },
  "Zed: create dynamic merchant user:": {
-  "count": 98,
+  "count": 96,
   "sources": [
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
    "tests/parallel_ui/mp_b2b/catalog/catalog_offer_availability.robot",
    "tests/parallel_ui/mp_b2b/catalog/catalog_product_availability.robot",
    "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
-   "tests/parallel_ui/mp_b2b/customers/customer.robot"
+   "tests/parallel_ui/mp_b2b/customers/customer.robot",
+   "tests/parallel_ui/mp_b2b/marketplace/marketplace.robot"
+  ]
+ },
+ "And Each array element of array in response should contain property with value in:": {
+  "count": 95,
+  "sources": [
+   "tests/api/b2b/glue/cart_endpoints/cart_permssion_groups/positive.robot",
+   "tests/api/b2b/glue/general_product_endpoints/product_management_attributes/positive.robot",
+   "tests/api/b2b/glue/returns_endpoints/returns/positive.robot",
+   "tests/api/b2b/glue/utility_endpoints/stores/positive.robot",
+   "tests/api/b2b/glue/weight_unit_endpoints/sales_units/positive.robot"
   ]
  },
  "And Each array element of array in response should contain nested property with datatype:": {
@@ -1127,16 +1137,6 @@
    "tests/api/b2c/glue/general_product_endpoints/product_reviews/positive.robot",
    "tests/api/mp_b2b/glue/merchant_endpoints/merchant_opening_hours/positive.robot",
    "tests/api/mp_b2b/glue/orders_endpoints/positive.robot"
-  ]
- },
- "And Each array element of array in response should contain property with value in:": {
-  "count": 93,
-  "sources": [
-   "tests/api/b2b/glue/cart_endpoints/cart_permssion_groups/positive.robot",
-   "tests/api/b2b/glue/general_product_endpoints/product_management_attributes/positive.robot",
-   "tests/api/b2b/glue/returns_endpoints/returns/positive.robot",
-   "tests/api/b2b/glue/utility_endpoints/stores/positive.robot",
-   "tests/api/b2b/glue/weight_unit_endpoints/sales_units/positive.robot"
   ]
  },
  "Response body parameter should be:": {
@@ -1160,7 +1160,7 @@
   ]
  },
  "Zed: go to order page:": {
-  "count": 91,
+  "count": 90,
   "sources": [
    "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
    "tests/parallel_ui/b2b/checkout/checkout.robot",
@@ -1187,16 +1187,6 @@
    "tests/api/b2b/bapi/dynamic_entity/negative.robot",
    "tests/api/b2b/bapi/dynamic_entity/positive.robot",
    "tests/api/b2b/glue/customer_endpoints/addresses/negative.robot"
-  ]
- },
- "Yves: 'View Order/Reorder/Return' on the order history page:": {
-  "count": 86,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot",
-   "tests/parallel_ui/b2b/merchandising/merchandising.robot"
   ]
  },
  "I Set Headers:": {
@@ -1229,14 +1219,14 @@
    "tests/api/mp_b2b/glue/category_endpoints/category_nodes/positive.robot"
   ]
  },
- "Yves: product configuration status should be equal:": {
+ "Yves: 'View Order/Reorder/Return' on the order history page:": {
   "count": 82,
   "sources": [
    "tests/parallel_ui/b2b/catalog/catalog.robot",
    "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2c/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot"
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot",
+   "tests/parallel_ui/b2b/sales/sales.robot"
   ]
  },
  "Zed: update abstract product data:": {
@@ -1260,23 +1250,13 @@
   ]
  },
  "Yves: perform search by:": {
-  "count": 81,
+  "count": 80,
   "sources": [
    "tests/parallel_ui/b2b/catalog/catalog.robot",
    "tests/parallel_ui/b2b/catalog/catalog_prices.robot",
    "tests/parallel_ui/b2b/users/users.robot",
    "tests/parallel_ui/b2c/catalog/catalog.robot",
    "tests/parallel_ui/mp_b2b/catalog/catalog.robot"
-  ]
- },
- "Yves: change the product options in configurator to:": {
-  "count": 80,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2c/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot"
   ]
  },
  "Trigger API specification update": {
@@ -1309,16 +1289,6 @@
    "tests/parallel_ui/b2b/multistore/multistore_catalog.robot"
   ]
  },
- "Yves: save product configuration": {
-  "count": 78,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2c/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot"
-  ]
- },
  "Yves: fill in new delivery address for a product:": {
   "count": 78,
   "sources": [
@@ -1349,16 +1319,6 @@
    "tests/parallel_ui/b2c/multistore/multistore_catalog.robot"
   ]
  },
- "Zed: trigger matching state of xxx merchant's shipment:": {
-  "count": 74,
-  "sources": [
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_offer_availability.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_product_availability.robot",
-   "tests/parallel_ui/mp_b2b/sales/refunds.robot",
-   "tests/parallel_ui/mp_b2b/sales/sales.robot"
-  ]
- },
  "Yves: go to user menu item in the left bar:": {
   "count": 72,
   "sources": [
@@ -1369,14 +1329,14 @@
    "tests/parallel_ui/mp_b2b/customers/customer.robot"
   ]
  },
- "Yves: fill in the following new shipping address:": {
+ "Zed: trigger matching state of xxx merchant's shipment:": {
   "count": 72,
   "sources": [
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/b2c/administration/administration.robot",
-   "tests/parallel_ui/b2c/catalog/catalog.robot",
-   "tests/parallel_ui/b2c/catalog/catalog_product_availability.robot",
-   "tests/parallel_ui/b2c/checkout/checkout.robot"
+   "tests/parallel_ui/mp_b2b/catalog/catalog_offer_availability.robot",
+   "tests/parallel_ui/mp_b2b/catalog/catalog_product_availability.robot",
+   "tests/parallel_ui/mp_b2b/sales/refunds.robot",
+   "tests/parallel_ui/mp_b2b/sales/sales.robot",
+   "tests/parallel_ui/mp_b2c/catalog/catalog_configurable_product.robot"
   ]
  },
  "And I send a DELETE request:": {
@@ -1389,6 +1349,16 @@
    "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/positive.robot"
   ]
  },
+ "Yves: fill in the following new shipping address:": {
+  "count": 71,
+  "sources": [
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/b2c/administration/administration.robot",
+   "tests/parallel_ui/b2c/catalog/catalog.robot",
+   "tests/parallel_ui/b2c/catalog/catalog_product_availability.robot",
+   "tests/parallel_ui/b2c/checkout/checkout.robot"
+  ]
+ },
  "And Perform arithmetical calculation with two arguments:": {
   "count": 70,
   "sources": [
@@ -1397,26 +1367,6 @@
    "tests/api/b2b/glue/discount_endpoints/vouchers/positive.robot",
    "tests/api/b2b/glue/order_endpoints/orders/positive.robot",
    "tests/api/b2c/glue/checkout_endpoints/checkout/positive.robot"
-  ]
- },
- "Yves: try add product to the cart from PDP and expect error:": {
-  "count": 70,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_manage_product.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
-   "tests/parallel_ui/b2c/catalog/catalog.robot",
-   "tests/parallel_ui/b2c/catalog/catalog_manage_product.robot"
-  ]
- },
- "Trigger oms": {
-  "count": 70,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
-   "tests/parallel_ui/b2b/sales/refunds.robot",
-   "tests/parallel_ui/b2b/sales/sales.robot",
-   "tests/parallel_ui/b2c/catalog/catalog_product_availability.robot",
-   "tests/parallel_ui/b2c/checkout/checkout_guest.robot"
   ]
  },
  "Response body parameter should be greater than :": {
@@ -1430,13 +1380,23 @@
   ]
  },
  "And Each array element of array in response should contain property with value NOT in:": {
-  "count": 68,
+  "count": 69,
   "sources": [
    "tests/api/b2b/glue/general_product_endpoints/related_products/positive.robot",
    "tests/api/b2b/glue/general_product_endpoints/upselling_products/positive.robot",
    "tests/api/b2b/glue/returns_endpoints/return_reasons/positive.robot",
    "tests/api/b2c/glue/general_product_endpoints/related_products/positive.robot",
    "tests/api/b2c/glue/general_product_endpoints/upselling_products/positive.robot"
+  ]
+ },
+ "Yves: product configuration status should be equal:": {
+  "count": 69,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/mp_b2c/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/suite/catalog/catalog.robot",
+   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot"
   ]
  },
  "Zed: change concrete product price on:": {
@@ -1449,6 +1409,16 @@
    "tests/parallel_ui/b2b/multistore/multistore_dms.robot"
   ]
  },
+ "Trigger oms": {
+  "count": 68,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
+   "tests/parallel_ui/b2b/sales/refunds.robot",
+   "tests/parallel_ui/b2b/sales/sales.robot",
+   "tests/parallel_ui/b2c/catalog/catalog_product_availability.robot",
+   "tests/parallel_ui/b2c/checkout/checkout_guest.robot"
+  ]
+ },
  "AND I send a PATCH request:": {
   "count": 67,
   "sources": [
@@ -1457,6 +1427,26 @@
    "tests/api/b2c/glue/customer_endpoints/customer_password/negative.robot",
    "tests/api/b2c/glue/customer_endpoints/customer_password/positive.robot",
    "tests/api/mp_b2b/glue/customer_endpoints/customer_password/negative.robot"
+  ]
+ },
+ "Yves: try add product to the cart from PDP and expect error:": {
+  "count": 67,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_manage_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_product_availability.robot",
+   "tests/parallel_ui/b2c/catalog/catalog_manage_product.robot",
+   "tests/parallel_ui/b2c/catalog/catalog_product_availability.robot"
+  ]
+ },
+ "Yves: change the product options in configurator to:": {
+  "count": 66,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/mp_b2c/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/suite/catalog/catalog.robot",
+   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot"
   ]
  },
  "MP: create multi sku product with following data:": {
@@ -1489,34 +1479,14 @@
    "tests/parallel_ui/suite/catalog/catalog.robot"
   ]
  },
- "Yves: change quantity on PDP:": {
+ "Yves: save product configuration": {
   "count": 64,
   "sources": [
    "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_prices.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/customers/customer.robot",
-   "tests/parallel_ui/mp_b2b/marketplace/marketplace_offer_volume_prices.robot"
-  ]
- },
- "Yves: 'Shopping Cart' page is displayed": {
-  "count": 63,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
    "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot"
-  ]
- },
- "Yves: 'Order History' page is displayed": {
-  "count": 63,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot",
-   "tests/parallel_ui/b2b/merchandising/merchandising.robot",
-   "tests/parallel_ui/b2b/sales/sales.robot"
+   "tests/parallel_ui/mp_b2c/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/suite/catalog/catalog.robot",
+   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot"
   ]
  },
  "Zed: table should contain:": {
@@ -1527,6 +1497,26 @@
    "tests/parallel_ui/b2c/administration/administration.robot",
    "tests/parallel_ui/mp_b2b/administration/administration.robot",
    "tests/parallel_ui/mp_b2b/marketplace/marketplace.robot"
+  ]
+ },
+ "Yves: 'Shopping Cart' page is displayed": {
+  "count": 62,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot",
+   "tests/parallel_ui/mp_b2b/catalog/catalog.robot"
+  ]
+ },
+ "Yves: change quantity on PDP:": {
+  "count": 62,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_prices.robot",
+   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
+   "tests/parallel_ui/mp_b2b/customers/customer.robot",
+   "tests/parallel_ui/mp_b2b/marketplace/marketplace_offer_volume_prices.robot"
   ]
  },
  "MP: save offer": {
@@ -1559,6 +1549,16 @@
    "tests/api/b2b/glue/order_endpoints/orders/positive.robot"
   ]
  },
+ "Yves: 'Order History' page is displayed": {
+  "count": 60,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot",
+   "tests/parallel_ui/b2b/sales/sales.robot",
+   "tests/parallel_ui/b2c/customers/customer.robot"
+  ]
+ },
  "And Response body has correct self link for created entity:": {
   "count": 58,
   "sources": [
@@ -1569,16 +1569,6 @@
    "tests/api/b2b/glue/returns_endpoints/returns/positive.robot"
   ]
  },
- "Zed: trigger all matching states inside xxx order:": {
-  "count": 58,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/sales/refunds.robot",
-   "tests/parallel_ui/b2b/sales/sales.robot",
-   "tests/parallel_ui/b2c/checkout/checkout_guest.robot",
-   "tests/parallel_ui/b2c/merchandising/merchandising.robot"
-  ]
- },
  "API_test_setup": {
   "count": 57,
   "sources": [
@@ -1587,6 +1577,16 @@
    "tests/api/b2b/glue/content_endpoints/cms_pages/positive.robot",
    "tests/api/b2c/bapi/dynamic_entity/complex/positive.robot",
    "tests/api/b2c/bapi/dynamic_entity/positive.robot"
+  ]
+ },
+ "Zed: trigger all matching states inside xxx order:": {
+  "count": 56,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/sales/refunds.robot",
+   "tests/parallel_ui/b2b/sales/sales.robot",
+   "tests/parallel_ui/b2c/checkout/checkout_guest.robot",
+   "tests/parallel_ui/b2c/sales/refunds.robot"
   ]
  },
  "Zed: change concrete product data:": {
@@ -1669,16 +1669,6 @@
    "tests/api/suite/glue/navigation_endpoints/navigations/positive.robot"
   ]
  },
- "Yves: delete all shopping carts": {
-  "count": 50,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/ui/b2b/administration/administration.robot",
-   "tests/ui/b2b/catalog/catalog.robot",
-   "tests/ui/b2b/checkout/checkout.robot"
-  ]
- },
  "Zed: wait for order item to be in state:": {
   "count": 50,
   "sources": [
@@ -1719,6 +1709,16 @@
    "tests/parallel_ui/mp_b2b/checkout/checkout.robot"
   ]
  },
+ "Yves: delete all shopping carts": {
+  "count": 49,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/ui/b2b/administration/administration.robot",
+   "tests/ui/b2b/catalog/catalog.robot",
+   "tests/ui/b2b/checkout/checkout.robot",
+   "tests/ui/b2b/customers/customer.robot"
+  ]
+ },
  "Yves: 'Overview' page is displayed": {
   "count": 48,
   "sources": [
@@ -1757,16 +1757,6 @@
    "tests/parallel_ui/mp_b2b/catalog/catalog_offer_availability.robot",
    "tests/parallel_ui/mp_b2b/catalog/catalog_product_availability.robot",
    "tests/parallel_ui/mp_b2b/marketplace/marketplace_manage_product.robot"
-  ]
- },
- "And Response body parameter should be less than:": {
-  "count": 46,
-  "sources": [
-   "tests/api/b2b/bapi/dynamic_entity/positive.robot",
-   "tests/api/b2b/glue/access_token_endpoints/access_tokens/positive.robot",
-   "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/positive.robot",
-   "tests/api/b2b/glue/access_token_endpoints/token/positive.robot",
-   "tests/api/b2b/glue/company_endpoints/company_user_access_tokens/positive.robot"
   ]
  },
  "Delete service type in DB": {
@@ -1829,6 +1819,16 @@
    "tests/parallel_ui/mp_b2c/sales/manage_shipments.robot"
   ]
  },
+ "And Response body parameter should be less than:": {
+  "count": 42,
+  "sources": [
+   "tests/api/b2b/bapi/dynamic_entity/positive.robot",
+   "tests/api/b2b/glue/access_token_endpoints/access_tokens/positive.robot",
+   "tests/api/b2b/glue/access_token_endpoints/refresh_tokens/positive.robot",
+   "tests/api/b2b/glue/access_token_endpoints/token/positive.robot",
+   "tests/api/b2b/glue/company_endpoints/company_user_access_tokens/positive.robot"
+  ]
+ },
  "Get voucher code by discountId from Database:": {
   "count": 42,
   "sources": [
@@ -1847,16 +1847,6 @@
    "tests/parallel_ui/b2c/users/users.robot",
    "tests/parallel_ui/mp_b2b/sales/sales.robot",
    "tests/parallel_ui/mp_b2c/sales/sales.robot"
-  ]
- },
- "Zed: go to my order page:": {
-  "count": 41,
-  "sources": [
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_offer_availability.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_product_availability.robot",
-   "tests/parallel_ui/mp_b2b/sales/refunds.robot",
-   "tests/parallel_ui/mp_b2b/sales/sales.robot"
   ]
  },
  "And I send a PUT request:": {
@@ -1907,6 +1897,16 @@
    "tests/parallel_ui/mp_b2b/sales/manage_shipments.robot",
    "tests/parallel_ui/mp_b2c/sales/manage_shipments.robot",
    "tests/parallel_ui/suite/sales/manage_shipments.robot"
+  ]
+ },
+ "Zed: go to my order page:": {
+  "count": 40,
+  "sources": [
+   "tests/parallel_ui/mp_b2b/catalog/catalog_offer_availability.robot",
+   "tests/parallel_ui/mp_b2b/catalog/catalog_product_availability.robot",
+   "tests/parallel_ui/mp_b2b/sales/refunds.robot",
+   "tests/parallel_ui/mp_b2b/sales/sales.robot",
+   "tests/parallel_ui/mp_b2c/catalog/catalog_configurable_product.robot"
   ]
  },
  "Remove Tags": {
@@ -2039,16 +2039,6 @@
    "tests/parallel_ui/mp_b2c/marketplace/marketplace_manage_product.robot"
   ]
  },
- "Deactivate all discounts in the database": {
-  "count": 35,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/misc/static_demodata_set.robot",
-   "tests/parallel_ui/b2b/sales/manage_shipments.robot",
-   "tests/parallel_ui/b2b/sales/refunds.robot",
-   "tests/parallel_ui/b2c/catalog/catalog_volume_prices.robot"
-  ]
- },
  "Yves: go to the PDP of the first product on open catalog page": {
   "count": 35,
   "sources": [
@@ -2077,6 +2067,16 @@
    "tests/api/b2b/glue/search_endpoints/catalog_search/positive.robot",
    "tests/api/b2b/glue/shopping_list_endpoints/shopping_lists/positive.robot",
    "tests/api/b2c/glue/configured_bundles_endpoints/guest_configured_bundles/positive.robot"
+  ]
+ },
+ "Deactivate all discounts in the database": {
+  "count": 33,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/misc/static_demodata_set.robot",
+   "tests/parallel_ui/b2b/sales/manage_shipments.robot",
+   "tests/parallel_ui/b2b/sales/refunds.robot",
+   "tests/parallel_ui/b2c/catalog/catalog_volume_prices.robot"
   ]
  },
  "And Response body should contain:": {
@@ -2149,16 +2149,6 @@
    "tests/parallel_ui/suite/customers/customer.robot"
   ]
  },
- "Yves: add product to wishlist:": {
-  "count": 32,
-  "sources": [
-   "tests/parallel_ui/b2c/catalog/catalog.robot",
-   "tests/parallel_ui/b2c/customers/customer.robot",
-   "tests/parallel_ui/mp_b2c/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2c/customers/customer.robot",
-   "tests/parallel_ui/suite/catalog/catalog.robot"
-  ]
- },
  "Cleanup All Items In The Guest Cart:": {
   "count": 31,
   "sources": [
@@ -2228,16 +2218,6 @@
    "tests/api/suite/bapi/shipment_types/positive.robot"
   ]
  },
- "Yves: 'Order Details' page is displayed": {
-  "count": 30,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot",
-   "tests/parallel_ui/b2b/merchandising/merchandising.robot"
-  ]
- },
  "Yves: go to first navigation item level:": {
   "count": 30,
   "sources": [
@@ -2246,26 +2226,6 @@
    "tests/parallel_ui/b2c/catalog/catalog.robot",
    "tests/parallel_ui/b2c/merchandising/merchandising.robot",
    "tests/parallel_ui/mp_b2b/catalog/catalog.robot"
-  ]
- },
- "Yves: quote request with reference xxx should have status:": {
-  "count": 30,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
-   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot"
-  ]
- },
- "Yves: view quote request with reference:": {
-  "count": 30,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
-   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot"
   ]
  },
  "Zed: billing address for the order should be:": {
@@ -2308,6 +2268,16 @@
    "tests/parallel_ui/suite/customers/customer.robot"
   ]
  },
+ "Yves: add product to wishlist:": {
+  "count": 30,
+  "sources": [
+   "tests/parallel_ui/b2c/catalog/catalog.robot",
+   "tests/parallel_ui/b2c/customers/customer.robot",
+   "tests/parallel_ui/mp_b2c/catalog/catalog.robot",
+   "tests/parallel_ui/mp_b2c/customers/customer.robot",
+   "tests/parallel_ui/suite/catalog/catalog.robot"
+  ]
+ },
  "I send a Post request:": {
   "count": 29,
   "sources": [
@@ -2348,24 +2318,24 @@
    "tests/parallel_ui/mp_b2c/catalog/catalog.robot"
   ]
  },
- "Yves: go to wishlist with name:": {
+ "Yves: quote request with reference xxx should have status:": {
   "count": 28,
   "sources": [
-   "tests/parallel_ui/b2c/catalog/catalog.robot",
-   "tests/parallel_ui/b2c/customers/customer.robot",
-   "tests/parallel_ui/mp_b2c/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2c/customers/customer.robot",
-   "tests/parallel_ui/suite/catalog/catalog.robot"
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
+   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/suite/checkout/checkout.robot"
   ]
  },
- "Zed: trigger matching state of xxx order item inside xxx shipment:": {
+ "Yves: view quote request with reference:": {
   "count": 28,
   "sources": [
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2c/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
    "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot",
-   "tests/ui/b2c/sales/sales.robot",
-   "tests/ui/mp_b2b/catalog/catalog.robot"
+   "tests/parallel_ui/suite/checkout/checkout.robot"
   ]
  },
  "Zed: activate following discounts from Overview page:": {
@@ -2416,6 +2386,16 @@
    "tests/parallel_ui/mp_b2c/catalog/catalog_configurable_product.robot",
    "tests/parallel_ui/mp_b2c/marketplace/marketplace_oms.robot",
    "tests/parallel_ui/mp_b2c/sales/sales.robot"
+  ]
+ },
+ "Yves: 'Order Details' page is displayed": {
+  "count": 26,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot",
+   "tests/parallel_ui/mp_b2b/catalog/catalog.robot"
   ]
  },
  "Zed: start new abstract product creation:": {
@@ -2478,6 +2458,16 @@
    "tests/parallel_ui/mp_b2c/marketplace/marketplace_product_and_offer.robot"
   ]
  },
+ "Yves: go to wishlist with name:": {
+  "count": 26,
+  "sources": [
+   "tests/parallel_ui/b2c/catalog/catalog.robot",
+   "tests/parallel_ui/b2c/customers/customer.robot",
+   "tests/parallel_ui/mp_b2c/catalog/catalog.robot",
+   "tests/parallel_ui/mp_b2c/customers/customer.robot",
+   "tests/parallel_ui/suite/catalog/catalog.robot"
+  ]
+ },
  "Delete url by url name in Database:": {
   "count": 25,
   "sources": [
@@ -2536,14 +2526,14 @@
    "tests/ui/b2b/sales/sales.robot"
   ]
  },
- "And Response body case-insensitive parameter should be:": {
-  "count": 24,
+ "Zed: trigger matching state of xxx order item inside xxx shipment:": {
+  "count": 25,
   "sources": [
-   "tests/api/b2b/glue/checkout_endpoints/checkout/positive.robot",
-   "tests/api/b2b/glue/order_endpoints/orders/positive.robot",
-   "tests/api/b2c/glue/checkout_endpoints/checkout/positive.robot",
-   "tests/api/b2c/glue/order_endpoints/orders/positive.robot",
-   "tests/api/mp_b2b/glue/checkout_endpoints/checkout/positive.robot"
+   "tests/parallel_ui/mp_b2c/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot",
+   "tests/ui/b2c/sales/sales.robot",
+   "tests/ui/mp_b2b/catalog/catalog.robot",
+   "tests/ui/mp_b2b/checkout/checkout.robot"
   ]
  },
  "Delete service point in DB": {
@@ -2554,36 +2544,6 @@
    "tests/api/mp_b2c/bapi/service_points/services/negative.robot",
    "tests/api/mp_b2c/bapi/service_points/services/positive.robot",
    "tests/api/suite/bapi/service_points/services/negative.robot"
-  ]
- },
- "Yves: configuration should be equal:": {
-  "count": 24,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/suite/catalog/catalog.robot",
-   "tests/ui/b2b/catalog/catalog.robot",
-   "tests/ui/b2c/sales/sales.robot"
-  ]
- },
- "Yves: add product to the shopping list:": {
-  "count": 24,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/customers/customer.robot",
-   "tests/parallel_ui/mp_b2b/marketplace/marketplace.robot"
-  ]
- },
- "Yves: click 'Revise' button on the 'Quote Request Details' page": {
-  "count": 24,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
-   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot"
   ]
  },
  "Try reloading page until element is/not appear:": {
@@ -2627,16 +2587,6 @@
   ]
  },
  "Yves: 'Product Set' page contains the following products:": {
-  "count": 24,
-  "sources": [
-   "tests/parallel_ui/b2b/merchandising/merchandising.robot",
-   "tests/parallel_ui/b2c/merchandising/merchandising.robot",
-   "tests/parallel_ui/suite/merchandising/merchandising.robot",
-   "tests/ui/b2b/merchandising/merchandising.robot",
-   "tests/ui/b2c/merchandising/merchandising.robot"
-  ]
- },
- "Yves: select product in the bundle slot:": {
   "count": 24,
   "sources": [
    "tests/parallel_ui/b2b/merchandising/merchandising.robot",
@@ -2703,14 +2653,34 @@
    "tests/ui/mp_b2b/catalog/catalog.robot"
   ]
  },
- "Cleanup all customer carts": {
+ "And Response body case-insensitive parameter should be:": {
   "count": 23,
   "sources": [
-   "tests/api/b2b/glue/cart_endpoints/shared_carts/positive.robot",
    "tests/api/b2b/glue/checkout_endpoints/checkout/positive.robot",
-   "tests/api/b2b/glue/returns_endpoints/returns/positive.robot",
-   "tests/api/b2c/glue/return_endpoints/returns/positive.robot",
+   "tests/api/b2b/glue/order_endpoints/orders/positive.robot",
+   "tests/api/b2c/glue/checkout_endpoints/checkout/positive.robot",
+   "tests/api/b2c/glue/order_endpoints/orders/positive.robot",
    "tests/api/mp_b2b/glue/checkout_endpoints/checkout/positive.robot"
+  ]
+ },
+ "Yves: add product to the shopping list:": {
+  "count": 23,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot",
+   "tests/parallel_ui/mp_b2b/customers/customer.robot",
+   "tests/parallel_ui/mp_b2b/marketplace/marketplace.robot",
+   "tests/parallel_ui/suite/catalog/catalog.robot"
+  ]
+ },
+ "Yves: click 'Revise' button on the 'Quote Request Details' page": {
+  "count": 23,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
+   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/suite/checkout/checkout.robot"
   ]
  },
  "Yves: 'Create Return' page is displayed": {
@@ -2763,24 +2733,14 @@
    "tests/api/b2c/glue/search_endpoints/catalog_search/positive.robot"
   ]
  },
- "Yves: create new 'Shopping List' with name:": {
+ "Cleanup all customer carts": {
   "count": 22,
   "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/customers/customer.robot",
-   "tests/parallel_ui/mp_b2b/marketplace/marketplace.robot"
-  ]
- },
- "Yves: delete product from the shopping cart with sku:": {
-  "count": 22,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/b2b/misc/static_demodata_set.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/checkout/checkout.robot"
+   "tests/api/b2b/glue/cart_endpoints/shared_carts/positive.robot",
+   "tests/api/b2b/glue/checkout_endpoints/checkout/positive.robot",
+   "tests/api/b2b/glue/returns_endpoints/returns/positive.robot",
+   "tests/api/b2c/glue/return_endpoints/returns/positive.robot",
+   "tests/api/mp_b2b/glue/return_endpoints/returns/positive.robot"
   ]
  },
  "Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:": {
@@ -2791,16 +2751,6 @@
    "tests/parallel_ui/mp_b2b/multistore/multistore_catalog.robot",
    "tests/parallel_ui/mp_b2c/multistore/multistore_catalog.robot",
    "tests/parallel_ui/suite/multistore/multistore_cms.robot"
-  ]
- },
- "And Response body parameter should be either:": {
-  "count": 21,
-  "sources": [
-   "tests/api/b2b/dynamic_store/search_endpoints/catalog_search/positive.robot",
-   "tests/api/b2b/glue/search_endpoints/catalog_search/positive.robot",
-   "tests/api/b2c/glue/search_endpoints/catalog_search/positive.robot",
-   "tests/api/mp_b2b/dynamic_store/search_endpoints/catalog_search/positive.robot",
-   "tests/api/mp_b2c/glue/search_endpoints/catalog_search/positive.robot"
   ]
  },
  "And Create_warehouse_user_assignment:": {
@@ -2826,6 +2776,36 @@
    "tests/api/mp_b2c/glue/wishlist_endpoints/wishlists/positive.robot",
    "tests/api/suite/glue/checkout_endpoints/checkout/positive.robot",
    "tests/api/suite/glue/wishlist_endpoints/wishlists/positive.robot"
+  ]
+ },
+ "Yves: create new 'Shopping List' with name:": {
+  "count": 21,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot",
+   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
+   "tests/parallel_ui/mp_b2b/customers/customer.robot",
+   "tests/parallel_ui/mp_b2b/marketplace/marketplace.robot"
+  ]
+ },
+ "Yves: delete product from the shopping cart with sku:": {
+  "count": 21,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/b2b/misc/static_demodata_set.robot",
+   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
+   "tests/parallel_ui/mp_b2b/misc/static_demodata_set.robot"
+  ]
+ },
+ "Yves: configuration should be equal:": {
+  "count": 21,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/suite/catalog/catalog.robot",
+   "tests/ui/b2b/catalog/catalog.robot",
+   "tests/ui/b2c/sales/sales.robot",
+   "tests/ui/mp_b2b/catalog/catalog.robot"
   ]
  },
  "Zed: delete customer:": {
@@ -3086,6 +3066,16 @@
    "tests/parallel_ui/mp_b2c/sales/sales.robot"
   ]
  },
+ "And Response body parameter should be either:": {
+  "count": 19,
+  "sources": [
+   "tests/api/b2b/dynamic_store/search_endpoints/catalog_search/positive.robot",
+   "tests/api/b2b/glue/search_endpoints/catalog_search/positive.robot",
+   "tests/api/b2c/glue/search_endpoints/catalog_search/positive.robot",
+   "tests/api/mp_b2b/dynamic_store/search_endpoints/catalog_search/positive.robot",
+   "tests/api/mp_b2c/glue/search_endpoints/catalog_search/positive.robot"
+  ]
+ },
  "Yves: product with name in the catalog should have price:": {
   "count": 19,
   "sources": [
@@ -3106,14 +3096,11 @@
    "tests/api/b2c/glue/customer_endpoints/addresses/positive.robot"
   ]
  },
- "And Array element should contain property with value at least once:": {
+ "Response body parameter should be greater than:": {
   "count": 18,
   "sources": [
-   "tests/api/b2b/glue/search_endpoints/catalog_search/positive.robot",
-   "tests/api/b2b/glue/search_endpoints/catalog_search_suggestions/positive.robot",
-   "tests/api/b2c/glue/search_endpoints/catalog_search/positive.robot",
-   "tests/api/mp_b2b/glue/search_endpoints/catalog_search_suggestions/positive.robot",
-   "tests/api/suite/glue/search_endpoints/catalog_search/positive.robot"
+   "tests/api/b2c/glue/cart_endpoints/guest_carts/positive.robot",
+   "tests/api/suite/dynamic_store/search_endpoints/catalog_search/positive.robot"
   ]
  },
  "AND Response reason should be:": {
@@ -3133,36 +3120,6 @@
    "tests/api/mp_b2c/bapi/service_points/services/negative.robot",
    "tests/api/suite/bapi/service_points/service_types/negative.robot",
    "tests/api/suite/bapi/service_points/services/negative.robot"
-  ]
- },
- "Yves: go to 'Shopping Lists' page": {
-  "count": 18,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/customers/customer.robot",
-   "tests/parallel_ui/suite/catalog/catalog.robot"
-  ]
- },
- "Yves: click 'Send to Agent' button on the 'Quote Request Details' page": {
-  "count": 18,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
-   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot"
-  ]
- },
- "Yves: click 'Send to Customer' button on the 'Quote Request Details' page": {
-  "count": 18,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
-   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot"
   ]
  },
  "Yves: product name on PDP should be:": {
@@ -3213,26 +3170,6 @@
    "tests/parallel_ui/suite/sales/sales.robot",
    "tests/ui/b2b/sales/sales.robot",
    "tests/ui/b2c/sales/sales.robot"
-  ]
- },
- "Yves: product configuration price should be:": {
-  "count": 18,
-  "sources": [
-   "tests/parallel_ui/b2c/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2c/catalog/catalog.robot",
-   "tests/parallel_ui/suite/catalog/catalog.robot",
-   "tests/ui/b2c/catalog/catalog.robot",
-   "tests/ui/mp_b2c/catalog/catalog.robot"
-  ]
- },
- "Yves: wishlist contains product with sku:": {
-  "count": 18,
-  "sources": [
-   "tests/parallel_ui/b2c/catalog/catalog.robot",
-   "tests/parallel_ui/b2c/customers/customer.robot",
-   "tests/parallel_ui/mp_b2c/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2c/customers/customer.robot",
-   "tests/parallel_ui/suite/catalog/catalog.robot"
   ]
  },
  "Register a new customer with data:": {
@@ -3315,10 +3252,34 @@
    "tests/ui/mp_b2c/marketplace/marketplace.robot"
   ]
  },
- "Response body parameter should be greater than:": {
-  "count": 16,
+ "Yves: go to 'Shopping Lists' page": {
+  "count": 17,
   "sources": [
-   "tests/api/b2c/glue/cart_endpoints/guest_carts/positive.robot"
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot",
+   "tests/parallel_ui/mp_b2b/customers/customer.robot",
+   "tests/parallel_ui/suite/catalog/catalog.robot",
+   "tests/parallel_ui/suite/customers/customer.robot"
+  ]
+ },
+ "Yves: click 'Send to Agent' button on the 'Quote Request Details' page": {
+  "count": 17,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
+   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/suite/checkout/checkout.robot"
+  ]
+ },
+ "Yves: click 'Send to Customer' button on the 'Quote Request Details' page": {
+  "count": 17,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
+   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/suite/checkout/checkout.robot"
   ]
  },
  "Zed: check and restore product availability in Zed:": {
@@ -3329,16 +3290,6 @@
    "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
    "tests/parallel_ui/mp_b2c/catalog/catalog.robot",
    "tests/parallel_ui/suite/catalog/catalog.robot"
-  ]
- },
- "Yves: add all available products from list to cart": {
-  "count": 16,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/customers/customer.robot",
-   "tests/parallel_ui/mp_b2b/marketplace/marketplace.robot"
   ]
  },
  "Yves: 'Shopping Carts' widget contains:": {
@@ -3369,6 +3320,16 @@
    "tests/parallel_ui/b2c/misc/static_demodata_set.robot",
    "tests/parallel_ui/mp_b2b/misc/static_demodata_set.robot",
    "tests/parallel_ui/mp_b2c/checkout/checkout.robot"
+  ]
+ },
+ "Yves: wishlist contains product with sku:": {
+  "count": 16,
+  "sources": [
+   "tests/parallel_ui/b2c/customers/customer.robot",
+   "tests/parallel_ui/mp_b2c/customers/customer.robot",
+   "tests/parallel_ui/suite/catalog/catalog.robot",
+   "tests/parallel_ui/suite/customers/customer.robot",
+   "tests/ui/b2c/catalog/catalog.robot"
   ]
  },
  "Zed: filter by merchant:": {
@@ -3408,6 +3369,16 @@
    "tests/api/suite/glue/wishlist_endpoints/wishlists/positive.robot"
   ]
  },
+ "Yves: add all available products from list to cart": {
+  "count": 15,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot",
+   "tests/parallel_ui/mp_b2b/customers/customer.robot",
+   "tests/parallel_ui/mp_b2b/marketplace/marketplace.robot",
+   "tests/parallel_ui/suite/catalog/catalog.robot"
+  ]
+ },
  "Zed: update customer profile data:": {
   "count": 15,
   "sources": [
@@ -3426,6 +3397,13 @@
    "tests/parallel_ui/mp_b2c/catalog/catalog_configurable_product.robot",
    "tests/parallel_ui/mp_b2c/marketplace/marketplace_oms.robot",
    "tests/parallel_ui/mp_b2c/sales/sales.robot"
+  ]
+ },
+ "And Array element should contain property with value at least once:": {
+  "count": 14,
+  "sources": [
+   "tests/api/b2b/glue/search_endpoints/catalog_search/positive.robot",
+   "tests/api/b2c/glue/search_endpoints/catalog_search/positive.robot"
   ]
  },
  "Get ETag header value from cart": {
@@ -3463,16 +3441,6 @@
    "tests/parallel_ui/suite/catalog/catalog.robot"
   ]
  },
- "Yves: view shopping list with name:": {
-  "count": 14,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/customers/customer.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/customers/customer.robot",
-   "tests/parallel_ui/mp_b2b/marketplace/marketplace.robot"
-  ]
- },
  "Yves: perform search by customer:": {
   "count": 14,
   "sources": [
@@ -3501,6 +3469,16 @@
    "tests/parallel_ui/suite/checkout/checkout_guest.robot",
    "tests/parallel_ui/suite/misc/static_demodata_set.robot",
    "tests/ui/b2c/catalog/catalog.robot"
+  ]
+ },
+ "Yves: view shopping list with name:": {
+  "count": 13,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/customers/customer.robot",
+   "tests/parallel_ui/mp_b2b/customers/customer.robot",
+   "tests/parallel_ui/mp_b2b/marketplace/marketplace.robot",
+   "tests/parallel_ui/suite/catalog/catalog.robot"
   ]
  },
  "Then I send a DELETE request:": {
@@ -3589,16 +3567,6 @@
    "tests/ui/mp_b2b/catalog/catalog.robot"
   ]
  },
- "Yves: reorder all items from 'Order Details' page": {
-  "count": 12,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot"
-  ]
- },
  "Yves: change amount on PDP:": {
   "count": 12,
   "sources": [
@@ -3617,86 +3585,6 @@
    "tests/parallel_ui/suite/catalog/catalog.robot",
    "tests/ui/b2b/catalog/catalog.robot",
    "tests/ui/b2c/catalog/catalog.robot"
-  ]
- },
- "Yves: check and go back that configuration page contains:": {
-  "count": 12,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2c/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2c/catalog/catalog.robot",
-   "tests/parallel_ui/suite/catalog/catalog.robot"
-  ]
- },
- "Yves: product configuration notification is:": {
-  "count": 12,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/b2c/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2c/catalog/catalog.robot",
-   "tests/parallel_ui/suite/catalog/catalog.robot"
-  ]
- },
- "Yves: submit new request for quote": {
-  "count": 12,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
-   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot"
-  ]
- },
- "Yves: go to 'Agent Quote Requests' page through the header": {
-  "count": 12,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
-   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot"
-  ]
- },
- "Yves: 'Quote Request Details' page is displayed": {
-  "count": 12,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
-   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot"
-  ]
- },
- "Yves: click 'Edit Items' button on the 'Quote Request Details' page": {
-  "count": 12,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
-   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot"
-  ]
- },
- "Yves: click 'Save and Back to Edit' button on the 'Quote Request Details' page": {
-  "count": 12,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
-   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot"
-  ]
- },
- "Yves: click 'Convert to Cart' button on the 'Quote Request Details' page": {
-  "count": 12,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/b2b/checkout/checkout.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog_configurable_product.robot",
-   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
-   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot"
   ]
  },
  "Yves: 'Summary' page contains/doesn't contain:": {
@@ -3759,46 +3647,6 @@
   ]
  },
  "Yves: add all products to the shopping cart from Product Set": {
-  "count": 12,
-  "sources": [
-   "tests/parallel_ui/b2b/merchandising/merchandising.robot",
-   "tests/parallel_ui/b2c/merchandising/merchandising.robot",
-   "tests/parallel_ui/suite/merchandising/merchandising.robot",
-   "tests/ui/b2b/merchandising/merchandising.robot",
-   "tests/ui/b2c/merchandising/merchandising.robot"
-  ]
- },
- "Yves: 'Choose Bundle to configure' page is displayed": {
-  "count": 12,
-  "sources": [
-   "tests/parallel_ui/b2b/merchandising/merchandising.robot",
-   "tests/parallel_ui/b2c/merchandising/merchandising.robot",
-   "tests/parallel_ui/suite/merchandising/merchandising.robot",
-   "tests/ui/b2b/merchandising/merchandising.robot",
-   "tests/ui/b2c/merchandising/merchandising.robot"
-  ]
- },
- "Yves: choose bundle template to configure:": {
-  "count": 12,
-  "sources": [
-   "tests/parallel_ui/b2b/merchandising/merchandising.robot",
-   "tests/parallel_ui/b2c/merchandising/merchandising.robot",
-   "tests/parallel_ui/suite/merchandising/merchandising.robot",
-   "tests/ui/b2b/merchandising/merchandising.robot",
-   "tests/ui/b2c/merchandising/merchandising.robot"
-  ]
- },
- "Yves: go to 'Summary' step in the bundle configurator": {
-  "count": 12,
-  "sources": [
-   "tests/parallel_ui/b2b/merchandising/merchandising.robot",
-   "tests/parallel_ui/b2c/merchandising/merchandising.robot",
-   "tests/parallel_ui/suite/merchandising/merchandising.robot",
-   "tests/ui/b2b/merchandising/merchandising.robot",
-   "tests/ui/b2c/merchandising/merchandising.robot"
-  ]
- },
- "Yves: add products to the shopping cart in the bundle configurator": {
   "count": 12,
   "sources": [
    "tests/parallel_ui/b2b/merchandising/merchandising.robot",
@@ -3898,14 +3746,21 @@
    "tests/ui/mp_b2c/marketplace/marketplace.robot"
   ]
  },
- "And Nested array element should contain sub-array with property and value at least once:": {
-  "count": 11,
+ "Yves: product configuration price should be:": {
+  "count": 12,
   "sources": [
-   "tests/api/b2b/glue/shopping_list_endpoints/shopping_list_items/positive.robot",
-   "tests/api/b2c/glue/wishlist_endpoints/wishlist_items/positive.robot",
-   "tests/api/mp_b2b/glue/shopping_list_endpoints/shopping_list_items/positive.robot",
-   "tests/api/mp_b2c/glue/wishlist_endpoints/wishlist_items/positive.robot",
-   "tests/api/suite/glue/wishlist_endpoints/wishlist_items/positive.robot"
+   "tests/parallel_ui/suite/catalog/catalog.robot",
+   "tests/ui/b2c/catalog/catalog.robot",
+   "tests/ui/mp_b2c/catalog/catalog.robot",
+   "tests/ui/suite/catalog/catalog.robot"
+  ]
+ },
+ "Yves: select product in the bundle slot:": {
+  "count": 12,
+  "sources": [
+   "tests/ui/b2b/merchandising/merchandising.robot",
+   "tests/ui/b2c/merchandising/merchandising.robot",
+   "tests/ui/suite/merchandising/merchandising.robot"
   ]
  },
  "And Each array element of array in response should be greater than:": {
@@ -3914,6 +3769,76 @@
    "tests/api/mp_b2c/glue/cart_endpoints/guest_carts/positive.robot",
    "tests/api/suite/glue/cart_endpoints/guest_carts/positive.robot",
    "tests/api/suite/glue/quote_requests_endpoint/quote_requests/positive.robot"
+  ]
+ },
+ "Yves: reorder all items from 'Order Details' page": {
+  "count": 11,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
+   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/suite/customers/customer.robot"
+  ]
+ },
+ "Yves: submit new request for quote": {
+  "count": 11,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
+   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/suite/checkout/checkout.robot"
+  ]
+ },
+ "Yves: go to 'Agent Quote Requests' page through the header": {
+  "count": 11,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
+   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/suite/checkout/checkout.robot"
+  ]
+ },
+ "Yves: 'Quote Request Details' page is displayed": {
+  "count": 11,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
+   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/suite/checkout/checkout.robot"
+  ]
+ },
+ "Yves: click 'Edit Items' button on the 'Quote Request Details' page": {
+  "count": 11,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
+   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/suite/checkout/checkout.robot"
+  ]
+ },
+ "Yves: click 'Save and Back to Edit' button on the 'Quote Request Details' page": {
+  "count": 11,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
+   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/suite/checkout/checkout.robot"
+  ]
+ },
+ "Yves: click 'Convert to Cart' button on the 'Quote Request Details' page": {
+  "count": 11,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/b2b/checkout/checkout.robot",
+   "tests/parallel_ui/mp_b2b/checkout/checkout.robot",
+   "tests/parallel_ui/suite/catalog/catalog_configurable_product.robot",
+   "tests/parallel_ui/suite/checkout/checkout.robot"
   ]
  },
  "Yves: 'Order History' page contains the following order with a status:": {
@@ -3956,14 +3881,14 @@
    "tests/api/suite/glue/navigation_endpoints/navigations/positive.robot"
   ]
  },
- "And Response body parameter should start with:": {
+ "And Nested array element should contain sub-array with property and value at least once:": {
   "count": 10,
   "sources": [
-   "tests/api/b2b/glue/search_endpoints/catalog_search/positive.robot",
-   "tests/api/b2c/glue/search_endpoints/catalog_search/positive.robot",
-   "tests/api/mp_b2b/glue/search_endpoints/catalog_search/positive.robot",
-   "tests/api/mp_b2c/glue/search_endpoints/catalog_search/positive.robot",
-   "tests/api/suite/glue/search_endpoints/catalog_search/positive.robot"
+   "tests/api/b2b/glue/shopping_list_endpoints/shopping_list_items/positive.robot",
+   "tests/api/b2c/glue/wishlist_endpoints/wishlist_items/positive.robot",
+   "tests/api/mp_b2c/glue/wishlist_endpoints/wishlist_items/positive.robot",
+   "tests/api/suite/glue/shopping_list_endpoints/shopping_list_items/positive.robot",
+   "tests/api/suite/glue/wishlist_endpoints/wishlist_items/positive.robot"
   ]
  },
  "When Make user a warehouse user/ not a warehouse user:": {
@@ -4328,16 +4253,6 @@
    "tests/ui/suite/administration/administration.robot"
   ]
  },
- "Yves: add all available products from wishlist to cart": {
-  "count": 10,
-  "sources": [
-   "tests/parallel_ui/b2c/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2c/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2c/customers/customer.robot",
-   "tests/parallel_ui/suite/catalog/catalog.robot",
-   "tests/parallel_ui/suite/customers/customer.robot"
-  ]
- },
  "Yves: proceed with checkout as guest:": {
   "count": 10,
   "sources": [
@@ -4412,6 +4327,16 @@
    "tests/api/b2b/glue/search_endpoints/catalog_search/positive.robot"
   ]
  },
+ "And Response body parameter should start with:": {
+  "count": 9,
+  "sources": [
+   "tests/api/b2b/glue/search_endpoints/catalog_search/positive.robot",
+   "tests/api/b2c/glue/search_endpoints/catalog_search/positive.robot",
+   "tests/api/mp_b2b/glue/search_endpoints/catalog_search/positive.robot",
+   "tests/api/mp_b2c/glue/search_endpoints/catalog_search/positive.robot",
+   "tests/api/suite/glue/search_endpoints/catalog_search/positive.robot"
+  ]
+ },
  "Delete push notification subscription in DB:": {
   "count": 9,
   "sources": [
@@ -4429,6 +4354,26 @@
    "tests/api/suite/glue/cart_endpoints/cart_codes/positive.robot",
    "tests/api/suite/glue/checkout_endpoints/checkout/positive.robot",
    "tests/api/suite/glue/order_endpoints/orders/positive.robot"
+  ]
+ },
+ "Yves: check and go back that configuration page contains:": {
+  "count": 9,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/suite/catalog/catalog.robot",
+   "tests/ui/b2b/catalog/catalog.robot",
+   "tests/ui/b2c/catalog/catalog.robot",
+   "tests/ui/mp_b2b/catalog/catalog.robot"
+  ]
+ },
+ "Yves: product configuration notification is:": {
+  "count": 9,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/suite/catalog/catalog.robot",
+   "tests/ui/b2b/catalog/catalog.robot",
+   "tests/ui/b2c/catalog/catalog.robot",
+   "tests/ui/mp_b2b/catalog/catalog.robot"
   ]
  },
  "Zed: create a return for the following order and product in it:": {
@@ -4567,6 +4512,16 @@
    "tests/ui/suite/customers/customer.robot"
   ]
  },
+ "Yves: add all available products from wishlist to cart": {
+  "count": 8,
+  "sources": [
+   "tests/parallel_ui/mp_b2c/customers/customer.robot",
+   "tests/parallel_ui/suite/catalog/catalog.robot",
+   "tests/parallel_ui/suite/customers/customer.robot",
+   "tests/ui/b2c/catalog/catalog.robot",
+   "tests/ui/mp_b2c/catalog/catalog.robot"
+  ]
+ },
  "Yves: select xxx merchant's offer with price:": {
   "count": 8,
   "sources": [
@@ -4627,16 +4582,6 @@
    "tests/parallel_ui/mp_b2c/misc/static_demodata_set.robot",
    "tests/parallel_ui/suite/misc/static_demodata_set.robot",
    "tests/ui/b2c/fulfillment_app/fultillment_app.robot"
-  ]
- },
- "Yves: create new 'Wishlist' with name:": {
-  "count": 7,
-  "sources": [
-   "tests/parallel_ui/b2c/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2c/catalog/catalog.robot",
-   "tests/parallel_ui/suite/catalog/catalog.robot",
-   "tests/ui/b2c/catalog/catalog.robot",
-   "tests/ui/b2c/checkout/checkout.robot"
   ]
  },
  "MP: order grand total should be:": {
@@ -4761,16 +4706,6 @@
    "tests/parallel_ui/suite/catalog/catalog.robot",
    "tests/ui/b2b/catalog/catalog.robot",
    "tests/ui/b2c/catalog/catalog.robot"
-  ]
- },
- "Yves: checkout is blocked with the following message:": {
-  "count": 6,
-  "sources": [
-   "tests/parallel_ui/b2b/catalog/catalog.robot",
-   "tests/parallel_ui/mp_b2b/catalog/catalog.robot",
-   "tests/parallel_ui/suite/catalog/catalog.robot",
-   "tests/ui/b2b/catalog/catalog.robot",
-   "tests/ui/mp_b2b/catalog/catalog.robot"
   ]
  },
  "Zed: add new concrete product to abstract:": {
@@ -5133,26 +5068,6 @@
    "tests/ui/b2c/merchandising/merchandising.robot"
   ]
  },
- "Yves: change quantity of the configurable bundle in the shopping cart on:": {
-  "count": 6,
-  "sources": [
-   "tests/parallel_ui/b2b/merchandising/merchandising.robot",
-   "tests/parallel_ui/b2c/merchandising/merchandising.robot",
-   "tests/parallel_ui/suite/merchandising/merchandising.robot",
-   "tests/ui/b2b/merchandising/merchandising.robot",
-   "tests/ui/b2c/merchandising/merchandising.robot"
-  ]
- },
- "Yves: 'Order Details' page contains the following product title N times:": {
-  "count": 6,
-  "sources": [
-   "tests/parallel_ui/b2b/merchandising/merchandising.robot",
-   "tests/parallel_ui/b2c/merchandising/merchandising.robot",
-   "tests/parallel_ui/suite/merchandising/merchandising.robot",
-   "tests/ui/b2b/merchandising/merchandising.robot",
-   "tests/ui/b2c/merchandising/merchandising.robot"
-  ]
- },
  "Zed: create new product set:": {
   "count": 6,
   "sources": [
@@ -5445,6 +5360,38 @@
    "tests/ui/suite/catalog/catalog.robot"
   ]
  },
+ "Yves: 'Choose Bundle to configure' page is displayed": {
+  "count": 6,
+  "sources": [
+   "tests/ui/b2b/merchandising/merchandising.robot",
+   "tests/ui/b2c/merchandising/merchandising.robot",
+   "tests/ui/suite/merchandising/merchandising.robot"
+  ]
+ },
+ "Yves: choose bundle template to configure:": {
+  "count": 6,
+  "sources": [
+   "tests/ui/b2b/merchandising/merchandising.robot",
+   "tests/ui/b2c/merchandising/merchandising.robot",
+   "tests/ui/suite/merchandising/merchandising.robot"
+  ]
+ },
+ "Yves: go to 'Summary' step in the bundle configurator": {
+  "count": 6,
+  "sources": [
+   "tests/ui/b2b/merchandising/merchandising.robot",
+   "tests/ui/b2c/merchandising/merchandising.robot",
+   "tests/ui/suite/merchandising/merchandising.robot"
+  ]
+ },
+ "Yves: add products to the shopping cart in the bundle configurator": {
+  "count": 6,
+  "sources": [
+   "tests/ui/b2b/merchandising/merchandising.robot",
+   "tests/ui/b2c/merchandising/merchandising.robot",
+   "tests/ui/suite/merchandising/merchandising.robot"
+  ]
+ },
  "Create api key in db": {
   "count": 5,
   "sources": [
@@ -5575,6 +5522,16 @@
    "tests/api/suite/glue/product_offer_endpoints/product_offer_prices/positive.robot"
   ]
  },
+ "Yves: checkout is blocked with the following message:": {
+  "count": 5,
+  "sources": [
+   "tests/parallel_ui/b2b/catalog/catalog.robot",
+   "tests/parallel_ui/suite/catalog/catalog.robot",
+   "tests/ui/b2b/catalog/catalog.robot",
+   "tests/ui/mp_b2b/catalog/catalog.robot",
+   "tests/ui/suite/catalog/catalog.robot"
+  ]
+ },
  "When Find or create customer cart": {
   "count": 5,
   "sources": [
@@ -5593,6 +5550,16 @@
    "tests/parallel_ui/suite/misc/static_demodata_set.robot",
    "tests/ui/b2c/fulfillment_app/fultillment_app.robot",
    "tests/ui/mp_b2c/fulfillment_app/fultillment_app.robot"
+  ]
+ },
+ "Yves: create new 'Wishlist' with name:": {
+  "count": 5,
+  "sources": [
+   "tests/parallel_ui/suite/catalog/catalog.robot",
+   "tests/ui/b2c/catalog/catalog.robot",
+   "tests/ui/b2c/checkout/checkout.robot",
+   "tests/ui/mp_b2c/catalog/catalog.robot",
+   "tests/ui/suite/catalog/catalog.robot"
   ]
  },
  "Response body parameter should contain:": {
@@ -5666,13 +5633,6 @@
    "tests/parallel_ui/mp_b2b/customers/customer.robot",
    "tests/ui/b2b/customers/customer.robot",
    "tests/ui/mp_b2b/customers/customer.robot"
-  ]
- },
- "Yves: go to second navigation item level:": {
-  "count": 4,
-  "sources": [
-   "tests/parallel_ui/b2b/merchandising/merchandising.robot",
-   "tests/ui/b2b/merchandising/merchandising.robot"
   ]
  },
  "Zed: Deactivate Following Discounts From Overview Page:": {
@@ -5869,6 +5829,14 @@
    "tests/api/suite/glue/return_endpoints/returns/positive.robot"
   ]
  },
+ "And Response should contain the array larger or equal than a certain size:": {
+  "count": 3,
+  "sources": [
+   "tests/api/b2c/glue/search_endpoints/catalog_search/positive.robot",
+   "tests/api/mp_b2c/glue/search_endpoints/catalog_search/positive.robot",
+   "tests/api/suite/glue/search_endpoints/catalog_search/positive.robot"
+  ]
+ },
  "AND Response should return error code:": {
   "count": 3,
   "sources": [
@@ -5932,19 +5900,28 @@
    "tests/api/suite/bapi/service_points/services/negative.robot"
   ]
  },
- "And Array element should contain nested array with property and value at least once:": {
-  "count": 3,
-  "sources": [
-   "tests/api/mp_b2c/glue/search_endpoints/catalog_search/positive.robot",
-   "tests/api/suite/glue/search_endpoints/catalog_search/positive.robot"
-  ]
- },
  "Remove all warehouse user assignments by user uuid:": {
   "count": 3,
   "sources": [
    "tests/parallel_ui/b2c/misc/static_demodata_set.robot",
    "tests/parallel_ui/mp_b2c/misc/static_demodata_set.robot",
    "tests/parallel_ui/suite/misc/static_demodata_set.robot"
+  ]
+ },
+ "Yves: change quantity of the configurable bundle in the shopping cart on:": {
+  "count": 3,
+  "sources": [
+   "tests/ui/b2b/merchandising/merchandising.robot",
+   "tests/ui/b2c/merchandising/merchandising.robot",
+   "tests/ui/suite/merchandising/merchandising.robot"
+  ]
+ },
+ "Yves: 'Order Details' page contains the following product title N times:": {
+  "count": 3,
+  "sources": [
+   "tests/ui/b2b/merchandising/merchandising.robot",
+   "tests/ui/b2c/merchandising/merchandising.robot",
+   "tests/ui/suite/merchandising/merchandising.robot"
   ]
  },
  "I add 'admin' role to company user and get company_user_uuid:": {
@@ -5975,6 +5952,13 @@
    "tests/api/mp_b2b/glue/navigations_endpoints/navigations/positive.robot"
   ]
  },
+ "And Should Not Be Equal As Integers": {
+  "count": 2,
+  "sources": [
+   "tests/api/b2b/glue/search_endpoints/catalog_search_suggestions/positive.robot",
+   "tests/api/mp_b2b/glue/search_endpoints/catalog_search_suggestions/positive.robot"
+  ]
+ },
  "And Remove_warehouse_user_assignment:": {
   "count": 2,
   "sources": [
@@ -6001,13 +5985,6 @@
   "sources": [
    "tests/api/b2c/glue/customer_endpoints/customer_password/negative.robot",
    "tests/api/mp_b2c/glue/customer_endpoints/customer_password/negative.robot"
-  ]
- },
- "And Response should contain the array larger or equal than a certain size:": {
-  "count": 2,
-  "sources": [
-   "tests/api/b2c/glue/search_endpoints/catalog_search/positive.robot",
-   "tests/api/mp_b2c/glue/search_endpoints/catalog_search/positive.robot"
   ]
  },
  "Create_Service_Point_address_with_zip_more_than_15": {
@@ -6177,6 +6154,12 @@
    "tests/ui/suite/merchandising/merchandising.robot"
   ]
  },
+ "Yves: go to second navigation item level:": {
+  "count": 2,
+  "sources": [
+   "tests/ui/b2b/merchandising/merchandising.robot"
+  ]
+ },
  "Zed: go to tab:": {
   "count": 2,
   "sources": [
@@ -6231,6 +6214,12 @@
    "tests/api/mp_b2c/bapi/warehouse_user_assignments/negative.robot"
   ]
  },
+ "And Array element should contain nested array with property and value at least once:": {
+  "count": 1,
+  "sources": [
+   "tests/api/mp_b2c/glue/search_endpoints/catalog_search/positive.robot"
+  ]
+ },
  "And Verify that url is present in the Database:": {
   "count": 1,
   "sources": [
@@ -6277,6 +6266,12 @@
   "count": 1,
   "sources": [
    "tests/parallel_ui/b2c/users/users.robot"
+  ]
+ },
+ "Yves: search catalog until product is quick addable:": {
+  "count": 1,
+  "sources": [
+   "tests/parallel_ui/suite/catalog/catalog.robot"
   ]
  },
  "Yves: Accept the Terms and Conditions:": {

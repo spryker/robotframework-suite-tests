@@ -9,7 +9,7 @@ Batches: `cart-1`, `cart-2`, `cart-3`, `cart-4`, `cart-5`, `cart-6`
 |---|---|---|---|---|---|---|
 | [ ] | Add_item_without_storage_category_and_2_discounts | ×3 | `PATCH ...` → 201 | — | M | — |
 | [ ] | Add_random_weight_product_to_cart_with_included_sales_units_and_measurenet_units | ×2 | `POST ...` → 201 | — | M | — |
-| [ ] | Change_configuration_and_quantity_in_the_cart | ×2 | `DELETE /carts/$` → 201 | — | M | — |
+| [ ] | Change_configuration_and_quantity_in_the_cart | b2b | `DELETE /carts/$` → 201 | — | M | — |
 | [ ] | Create_cart_when_cart_already_exists | ×2 | `PATCH /carts/$` → 401 | — | M | — |
 | [ ] | Add_item_to_guest_cart_with_invalid_properties | b2c | `PATCH /guest-carts//guest-cart-items/fake` → 422 | — | S | — |
 | [ ] | Delete_cart_item_with_not_matching_anonymous_customer_id | b2c | `POST /guest-cart-items?include=items` → 404 | — | S | — |
@@ -38,12 +38,12 @@ Batches: `cart-1`, `cart-2`, `cart-3`, `cart-4`, `cart-5`, `cart-6`
 | [ ] | Add_gift_card_code_to_the_guest_cart | suite | `DELETE /guest-carts/$` → 201 | — | S | — |
 | [ ] | Delete_gift_card_code_from_the_guest_cart | suite | `POST /carts/$` → 201 | — | S | — |
 | [ ] | Delete_gift_card_from_cart | suite | `POST /guest-carts/$` → 201 | — | M | — |
-| [ ] | Add_a_configurable_product_to_the_cart_with_0_quantity | ×5 | `GET /carts/$` → 201 | — | M | — |
-| [ ] | Add_a_configurable_product_to_the_cart_with_empty_price | ×5 | `POST /carts/$` → 201 | — | M | — |
-| [ ] | Add_a_configurable_product_to_the_cart_with_empty_quantity | ×5 | `GET /carts/$` → 201 | — | M | — |
-| [ ] | Add_a_configurable_product_to_the_cart_with_negative_price | ×5 | `POST /carts/$` → 201 | — | M | — |
-| [ ] | Add_a_configurable_product_to_the_cart_with_negative_quantity | ×5 | `POST /carts/$` → 201 | — | M | — |
-| [ ] | Add_a_configurable_product_with_missing_isComplete_value_of_to_the_cart | ×5 | `PATCH /carts/fake/items/fake` → 201 | — | M | — |
+| [ ] | Add_a_configurable_product_to_the_cart_with_0_quantity | ×4 | `GET /carts/$` → 201 | — | M | — |
+| [ ] | Add_a_configurable_product_to_the_cart_with_empty_price | ×4 | `POST /carts/$` → 201 | — | M | — |
+| [ ] | Add_a_configurable_product_to_the_cart_with_empty_quantity | ×4 | `GET /carts/$` → 201 | — | M | — |
+| [ ] | Add_a_configurable_product_to_the_cart_with_negative_price | ×4 | `POST /carts/$` → 201 | — | M | — |
+| [ ] | Add_a_configurable_product_to_the_cart_with_negative_quantity | ×4 | `POST /carts/$` → 201 | — | M | — |
+| [ ] | Add_a_configurable_product_with_missing_isComplete_value_of_to_the_cart | ×4 | `PATCH /carts/fake/items/fake` → 201 | — | M | — |
 | [ ] | Add_item_to_cart_non_existing_sku | ×5 | `POST /carts/$` → 422 | — | M | — |
 | [ ] | Add_item_to_cart_with_invalid_properties | ×5 | `POST /carts/$` → 422 | — | M | — |
 | [ ] | Add_item_to_cart_with_invalid_token | ×5 | `POST /carts/$` → 401 | — | M | — |
@@ -68,8 +68,8 @@ Batches: `cart-1`, `cart-2`, `cart-3`, `cart-4`, `cart-5`, `cart-6`
 | [ ] | Add_product_with_options_to_cart | ×5 | `POST /carts/$` → 201 | — | M | — |
 | [ ] | Add_two_items_to_cart_with_included_items_concrete_products_and_abstract_products | ×5 | `POST /carts/$` → 201 | — | M | — |
 | [ ] | Change_item_amount_in_cart | ×4 | `POST /carts/$` → 200 | — | M | — |
-| [ ] | Change_item_qty_in_cart | ×5 | `DELETE /carts/$` → 200 | — | M | — |
-| [ ] | Delete_configurable_product_item_form_the_cart | ×5 | `GET /carts/$` → 201 | — | M | — |
+| [ ] | Change_item_qty_in_cart | ×5 | `POST /ca` → 200 | — | M | — |
+| [ ] | Delete_configurable_product_item_form_the_cart | ×4 | `GET /carts/$` → 201 | — | M | — |
 | [ ] | Delete_item_form_cart | ×5 | `GET /carts/$` → 204 | — | M | — |
 | [ ] | Get_a_cart_with_included_items_and_concrete_products | ×5 | `GET /carts/$` → 201 | — | M | — |
 | [ ] | Update_configurable_product_quantity_in_the_cart | ×3 | `DELETE /carts/$` → 201 | — | M | — |
