@@ -12,14 +12,14 @@ Batches: `checkout`
 | [ ] | Business_Unit_Address_on_Checkout | ×3 | Checks that business unit address can be used during checkout. _(yves)_ | `cypress/e2e/yves/company-account/business-unit-address-checkout.cy.ts` | L | — |
 | [ ] | Checkout_Address_Management | ×5 | Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book. _(yves)_ | `cypress/e2e/yves/checkout/checkout-address-management.cy.ts` | L | — |
 | [ ] | Click_and_collect | ×2 | checks that product offer is successfully replaced with a target product offer. _(yves)_ | `cypress/e2e/yves/checkout/click-and-collect.cy.ts` | L | — |
-| [ ] | Comments_in_Cart | ×3 | Add comments to cart and verify comments in Yves and Zed. _(yves)_ | `cypress/e2e/yves/comments/cart-comments.cy.ts::Given a cart carrying a comment When the order is placed Then the comment appears on the storefront order details page and on the back office order page` | L | — |
+| [ ] | Comments_in_Cart | ×3 | Add comments to cart and verify comments in Yves and Zed. _(yves)_ | `cypress/e2e/yves/comments/cart-comments.cy.ts::should keep a cart comment on the order details page after checkout` | L | — |
 | [ ] | Guest_Checkout | ×2 | Guest checkout with bundles, discounts and OMS. _(yves)_ | `cypress/e2e/yves/discount/discounts-and-promotions.cy.ts` | L | — |
-| [ ] | Guest_Checkout_Addresses | ×2 | Guest checkout with different addresses and OMS. _(yves)_ | `cypress/e2e/yves/checkout/basic-checkout.cy.ts::Given a guest cart of three items When each item is given its own delivery address and shipment method Then the order records all three addresses` | L | — |
+| [ ] | Guest_Checkout_Addresses | ×2 | Guest checkout with different addresses and OMS. _(yves)_ | `cypress/e2e/yves/checkout/basic-checkout.cy.ts::guest should checkout with a distinct delivery address per item` | L | — |
 | [ ] | Login_during_checkout | ×2 | Login during checkout _(yves)_ | `cypress/e2e/yves/checkout/checkout-authentication.cy.ts` | L | — |
 | [ ] | Multiple_Merchants_Order | ×3 | Checks that order with products and offers of multiple merchants could be placed and it will be split per merchant. _(yves)_ | `cypress/e2e/yves/checkout/multi-merchant-order.cy.ts` | L | — |
 | [ ] | Register_during_checkout | ×2 | Guest user email should be whitelisted from the AWS side before running the test. _(yves)_ | `cypress/e2e/yves/checkout/checkout-authentication.cy.ts` | L | — |
 | [ ] | Request_for_Quote | ×3 | Checks user can request and receive quote. _(yves)_ | `cypress/e2e/yves/quote-request/quote-request-lifecycle.cy.ts` | L | — |
-| [ ] | Split_Delivery | ×5 | Checks split delivery in checkout. _(yves)_ | `cypress/e2e/yves/checkout/basic-checkout.cy.ts::Given a cart split across three shipment carriers When the order is placed Then it has three shipments each with its own carrier` | L | — |
+| [ ] | Split_Delivery | ×5 | Checks split delivery in checkout. _(yves)_ | `cypress/e2e/yves/checkout/basic-checkout.cy.ts::should split an order into three shipments each with its own carrier` | L | — |
 
 #### OBSOLETE / DROP — delete the source, do not port
 | ✓ | Scenario | Reason | Covered by |
