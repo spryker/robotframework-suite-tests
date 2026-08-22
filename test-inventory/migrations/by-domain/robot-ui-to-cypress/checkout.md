@@ -1,6 +1,6 @@
 ### checkout · robot-ui-to-cypress · CC-39280 · 16 scenarios
 
-MIGRATE 13 · OBSOLETE 3   ▸ 0/13 verified · 1 awaiting a CI run
+MIGRATE 13 · OBSOLETE 3   ▸ 1/13 verified
 
 Batches: `checkout`
 
@@ -21,7 +21,7 @@ Target PR: https://github.com/spryker/cypress-tests/pull/392
 | [ ] | Multiple_Merchants_Order | ×3 | Checks that order with products and offers of multiple merchants could be placed and it will be split per merchant. _(yves)_ | `cypress/e2e/yves/checkout/multi-merchant-order.cy.ts` | L | — |
 | [ ] | Register_during_checkout | ×2 | Guest user email should be whitelisted from the AWS side before running the test. _(yves)_ | `cypress/e2e/yves/checkout/checkout-authentication.cy.ts` | L | — |
 | [ ] | Request_for_Quote | ×3 | Checks user can request and receive quote. _(yves)_ | `cypress/e2e/yves/quote-request/quote-request-lifecycle.cy.ts` | L | — |
-| [ ] | Split_Delivery | ×5 | Checks split delivery in checkout. _(yves)_ | `cypress/e2e/yves/checkout/split-delivery.cy.ts::should create one shipment per delivery address when the cart is split` | L | — |
+| [x] | Split_Delivery | ×5 | Checks split delivery in checkout. _(yves)_ | `cypress/e2e/yves/checkout/split-delivery.cy.ts::should create one shipment per delivery address when the cart is split` | L | [run](https://github.com/spryker/suite/actions/runs/32571880620) |
 
 #### OBSOLETE / DROP — delete the source, do not port
 | ✓ | Scenario | Reason | Covered by |
