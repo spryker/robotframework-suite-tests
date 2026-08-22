@@ -1775,9 +1775,9 @@
 {"id": "robot:tests/ui/suite/customers/customer.robot::Add_to_Wishlist", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/customers/customer.robot::Authorized_User_Access", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/ui/suite/customers/customer.robot::Business_on_Behalf", "source_state": "ACTIVE", "target_state": "MISSING"}
-{"id": "robot:tests/ui/suite/customers/customer.robot::Email_Confirmation", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/customers/customer.robot::Email_Confirmation", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/ui/suite/customers/customer.robot::Guest_User_Access_Restrictions", "source_state": "ACTIVE", "target_state": "MISSING"}
-{"id": "robot:tests/ui/suite/customers/customer.robot::New_Customer_Registration", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/customers/customer.robot::New_Customer_Registration", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/ui/suite/customers/customer.robot::Quick_Order", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/customers/customer.robot::Reorder", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/ui/suite/customers/customer.robot::Share_Shopping_Carts", "source_state": "ACTIVE", "target_state": "MISSING"}
