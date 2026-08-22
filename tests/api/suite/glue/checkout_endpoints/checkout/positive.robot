@@ -6,11 +6,11 @@ Test Tags    glue    spryker-core    cart    checkout    shipment    marketplace
 
 *** Test Cases ***
 ## Important CHECKOUT and CHECKOUT-DATA endpoints require Item ID and NOT intem sku. To get item id add include to the cart endpoint.
-## Example:  
+## Example:
 ##I send a POST request:    /carts/${cartId}/items?include=items   {"data": {"type": "items","attributes": {"sku": "${concrete_product.random_weight.sku}","quantity": 1,"salesUnit": {"id": "${sales_unit_id}","amount": 5}}}}
 ## Save value to a variable:    [included][0][id]    test
 ## I send a POST request:    /checkout    {"data": {"type": "checkout","attributes": {"customer": {"email": "${yves_user.email}","salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}"},"idCart": "${cart_id}","billingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": false,"isDefaultShipping": false},"shippingAddress": {"salutation": "${yves_user.salutation}","firstName": "${yves_user.first_name}","lastName": "${yves_user.last_name}","address1": "${default.address1}","address2": "${default.address2}","address3": "${default.address3}","zipCode": "${default.zipCode}","city": "${default.city}","iso2Code": "${default.iso2Code}","company": "${default.company}","phone": "${default.phone}","isDefaultBilling": false,"isDefaultShipping": false},"payments": [{"paymentProviderName": "${payment.provider_name_1}","paymentMethodName": "${payment.method_name}"}],"shipment": {"idShipmentMethod": 1},"items": ["${test}"]}}}
- 
+
 #POST requests
 Create_order
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
@@ -149,7 +149,7 @@ Create_order_include_orders
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumNetPrice]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][canceledAmount]    None
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitDiscountAmountAggregation]    None
-    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    None
+    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitTaxAmount]    78
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumTaxAmount]    78
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitPriceToPayAggregation]    490
@@ -402,7 +402,7 @@ Create_order_with_2_product_discounts
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    displayName: ${discount_3.name}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    description: ${discount_3.description}
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode: None
-    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity: 1 
+    And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity: 1
 
 Create_order_with_configurable_bundle_item
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
@@ -524,7 +524,7 @@ Create_order_with_configurable_bundle_item
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumNetPrice]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][canceledAmount]    None
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitDiscountAmountAggregation]    None
-    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    None
+    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitTaxAmount]    78
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumTaxAmount]    78
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitPriceToPayAggregation]    490
@@ -703,7 +703,7 @@ Create_checkout_with_gift_card
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    description
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    voucherCode
     And Response body parameter should contain:    [included][0][attributes][calculatedDiscounts]    quantity
-    
+
 Create_checkout_with_gift_card_when_gift_amount_partially_used
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_second_user.email}
     ...  AND    I set Headers:    Authorization=${token}
@@ -831,7 +831,7 @@ Create_checkout_with_gift_card_when_gift_amount_partially_used
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumNetPrice]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][canceledAmount]    None
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitDiscountAmountAggregation]    None
-    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    None
+    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitTaxAmount]    78
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumTaxAmount]    78
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitPriceToPayAggregation]    490
@@ -843,7 +843,7 @@ Create_checkout_with_gift_card_when_gift_amount_partially_used
     And Response body parameter should be:    [included][0][attributes][payments][0][amount]    ${gift_card.amount}
     And Response body parameter should be:    [included][0][attributes][payments][0][paymentProvider]    ${gift_card.paymentProvider}
     And Response body case-insensitive parameter should be:    [included][0][attributes][payments][0][paymentMethod]    ${gift_card.paymentMethod}
-    
+
     And Response body parameter should be greater than:    [included][0][attributes][payments][1][amount]    0
     And Response body parameter should be:    [included][0][attributes][payments][1][paymentProvider]    ${payment.provider_name_1}
     And Response body case-insensitive parameter should be:    [included][0][attributes][payments][1][paymentMethod]    ${payment.method_name}
@@ -987,7 +987,7 @@ Create_order_with_configurable_product
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumNetPrice]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][canceledAmount]    None
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitDiscountAmountAggregation]    None
-    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    None
+    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][taxAmountAfterCancellation]    None
     And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][idShipment]
     And Response body parameter should not be EMPTY:   [included][0][attributes][expenses][0][idSalesExpense]
