@@ -1,6 +1,6 @@
 ### customer · robot-ui-to-cypress · CC-39280 · 14 scenarios
 
-MIGRATE 10 · OBSOLETE 3 · DROP 1   ▸ 0/10 verified · 2 awaiting a CI run
+MIGRATE 10 · OBSOLETE 3 · DROP 1   ▸ 1/10 verified · 1 awaiting a CI run
 
 Batches: `customer`
 
@@ -16,7 +16,7 @@ Target PR: https://github.com/spryker/cypress-tests/pull/392
 | [ ] | Share_Shopping_Carts | ×3 | Checks that cart can be shared and used for checkout. _(yves)_ | `cypress/e2e/yves/cart/shared-cart-checkout.cy.ts` | L | — |
 | [ ] | Share_Shopping_Lists | ×3 | Checks that shopping list can be shared. _(yves)_ | `cypress/e2e/yves/shopping-list/shopping-list-sharing.cy.ts` | L | — |
 | [ ] | Shopping_List_Contains_Offers | suite | Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart. _(yves)_ | `cypress/e2e/yves/shopping-list/shopping-list-product-offers.cy.ts` | L | — |
-| [ ] | Update_Customer_Data | ×5 | Checks customer data can be updated from Yves and Zed. _(yves)_ | `cypress/e2e/yves/customer-account-management/customer-profile-management.cy.ts::customer should see a profile change an administrator made in the back office` | M | — |
+| [x] | Update_Customer_Data | ×5 | Checks customer data can be updated from Yves and Zed. _(yves)_ | `cypress/e2e/yves/customer-account-management/customer-profile-management.cy.ts::customer should see a profile change an administrator made in the back office` | M | [run](https://github.com/spryker/suite/actions/runs/32555392963) |
 | [ ] | User_Account | ×5 | Checks user account pages work + address management. _(yves)_ | `cypress/e2e/yves/customer-account-management/customer-address-management.cy.ts::customer should see an address an administrator added in the back office` | M | — |
 | [ ] | Wishlist_List_Supports_Offers | ×2 | Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart. _(yves)_ | `cypress/e2e/yves/wishlist/wishlist-product-offers.cy.ts` | L | — |
 
