@@ -11,7 +11,7 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | Matrix | Domains | Scenarios | left to port | in scope | ported | authored | target skipped | dropped | review | blocked | done % |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
 | robot-api-to-codeception | 27 | 1721 | 1285 | 1285 | 0 | 0 | 0 | 0 | 418 | 0 | 0% |
-| robot-ui-to-cypress | 12 | 105 | 83 | 88 | 5 | 1 | 0 | 0 | 0 | 0 | 0% |
+| robot-ui-to-cypress | 12 | 105 | 82 | 87 | 5 | 1 | 0 | 0 | 0 | 1 | 0% |
 
 ## robot-api-to-codeception by domain
 
@@ -49,7 +49,7 @@ Status is observed from **this branch's** working tree, so a branch that has not
 
 | Domain | Scenarios | left to port | in scope | ported | authored | target skipped | dropped | review | blocked | batches |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|---|
-| [administration](by-domain/robot-ui-to-cypress/administration.md) | 6 | 3 | 5 | 2 | 1 | 0 | 0 | 0 | 0 | 1 |
+| [administration](by-domain/robot-ui-to-cypress/administration.md) | 6 | 2 | 4 | 2 | 1 | 0 | 0 | 0 | 1 | 1 |
 | [checkout](by-domain/robot-ui-to-cypress/checkout.md) | 16 | 13 | 13 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [company](by-domain/robot-ui-to-cypress/company.md) | 2 | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [content](by-domain/robot-ui-to-cypress/content.md) | 1 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
@@ -484,3 +484,9 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | shopping-list | Update_existing_shopping_list_of_another_customer | drop |
 | shopping-list | Get_several_shopping_lists_info_with_includes | drop |
 | shopping-list | Get_shopping_lists_info_for_user_with_zero_quantity_of_number_of_shopping_lists | drop |
+
+## Blocked
+
+| Domain | Scenario | Blocked by |
+|---|---|---|
+| administration | Payment_method_update | Deactivates the Invoice payment method globally to prove it disappears from checkout. dummyPaymentInvoice is depended on by the checkout, order-amendment and recurring-order specs, Cypress shards run concurrently against one application, and shard packing is nondeterministic, so whichever of those is packed alongside would fail. A fixture-created payment method is not a way round it: with no storefront plugin behind it, it does not render in checkout. Needs a serial lane or per-test payment-method state. |
