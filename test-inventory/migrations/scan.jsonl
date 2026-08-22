@@ -1738,7 +1738,7 @@
 {"id": "robot:tests/ui/suite/administration/administration.robot::Glossary", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/administration/administration.robot::Minimum_Order_Value", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/ui/suite/administration/administration.robot::Payment_method_update", "source_state": "ACTIVE", "target_state": "MISSING"}
-{"id": "robot:tests/ui/suite/administration/administration.robot::Zed_navigation_ordering_and_naming", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/administration/administration.robot::Zed_navigation_ordering_and_naming", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/catalog/catalog.robot::Back_in_Stock_Notification", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/catalog/catalog.robot::Catalog", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/catalog/catalog.robot::Catalog_Actions", "source_state": "ACTIVE", "target_state": "MISSING"}
