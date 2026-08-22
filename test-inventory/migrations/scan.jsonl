@@ -1735,7 +1735,7 @@
 {"id": "robot:tests/ui/mp_b2c/checkout/checkout.robot::Guest_Checkout_and_Addresses", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/ui/mp_b2c/marketplace/marketplace.robot::Create_New_Offer", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/mp_b2c/marketplace/marketplace.robot::Create_and_Approve_New_Merchant_Product", "source_state": "ACTIVE", "target_state": "MISSING"}
-{"id": "robot:tests/ui/suite/administration/administration.robot::Glossary", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/administration/administration.robot::Glossary", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/administration/administration.robot::Minimum_Order_Value", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/ui/suite/administration/administration.robot::Payment_method_update", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/administration/administration.robot::Zed_navigation_ordering_and_naming", "source_state": "ACTIVE", "target_state": "PRESENT"}
