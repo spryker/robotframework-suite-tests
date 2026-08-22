@@ -1769,7 +1769,7 @@
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Register_during_checkout", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Request_for_Quote", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Split_Delivery", "source_state": "ACTIVE", "target_state": "MISSING"}
-{"id": "robot:tests/ui/suite/company/company.robot::Create_new_company_user_with_linked_entities_in_storefront", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/company/company.robot::Create_new_company_user_with_linked_entities_in_storefront", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/company/company.robot::Create_new_company_with_linked_entities_and_customer_in_backoffice", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/content/content.robot::Content_Management", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/customers/customer.robot::Add_to_Wishlist", "source_state": "ACTIVE", "target_state": "MISSING"}
