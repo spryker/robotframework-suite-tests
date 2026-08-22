@@ -11,7 +11,7 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | Matrix | Domains | Scenarios | left to port | in scope | ported | authored | target skipped | dropped | review | blocked | done % |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
 | robot-api-to-codeception | 27 | 1721 | 1285 | 1285 | 0 | 0 | 0 | 0 | 418 | 0 | 0% |
-| robot-ui-to-cypress | 12 | 105 | 88 | 90 | 2 | 1 | 0 | 0 | 0 | 0 | 0% |
+| robot-ui-to-cypress | 12 | 105 | 86 | 88 | 2 | 1 | 0 | 0 | 0 | 2 | 0% |
 
 ## robot-api-to-codeception by domain
 
@@ -57,7 +57,7 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | [merchandising](by-domain/robot-ui-to-cypress/merchandising.md) | 6 | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [merchant](by-domain/robot-ui-to-cypress/merchant.md) | 22 | 18 | 18 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [order](by-domain/robot-ui-to-cypress/order.md) | 6 | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
-| [platform](by-domain/robot-ui-to-cypress/platform.md) | 6 | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| [platform](by-domain/robot-ui-to-cypress/platform.md) | 6 | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 2 | 1 |
 | [product](by-domain/robot-ui-to-cypress/product.md) | 21 | 18 | 18 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [store](by-domain/robot-ui-to-cypress/store.md) | 4 | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [warehouse](by-domain/robot-ui-to-cypress/warehouse.md) | 1 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
@@ -484,3 +484,10 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | shopping-list | Update_existing_shopping_list_of_another_customer | drop |
 | shopping-list | Get_several_shopping_lists_info_with_includes | drop |
 | shopping-list | Get_shopping_lists_info_for_user_with_zero_quantity_of_number_of_shopping_lists | drop |
+
+## Blocked
+
+| Domain | Scenario | Blocked by |
+|---|---|---|
+| platform | Data_exchange_API_Configuration_in_Zed | Needs the Zed console command glue api:generate:documentation to run in the middle of the test, three times. cypress-tests registers only an isFileExists task, and in CI the Cypress runner has no route into the application container, so there is nothing to run it with. The API half also belongs in a Glue suite rather than a browser test. |
+| platform | Data_exchange_API_download_specification | Needs the Zed console command glue api:generate:documentation to run in the middle of the test, three times. cypress-tests registers only an isFileExists task, and in CI the Cypress runner has no route into the application container, so there is nothing to run it with. |
