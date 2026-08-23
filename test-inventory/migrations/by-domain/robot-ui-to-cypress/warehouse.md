@@ -4,6 +4,8 @@ RESHAPE 1   ▸ 0/1 verified · 1 awaiting a CI run
 
 Batches: `warehouse`
 
+Target PR: https://github.com/spryker/cypress-tests/pull/393
+
 #### MIGRATE / RESHAPE — port these
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
 |---|---|---|---|---|---|---|
