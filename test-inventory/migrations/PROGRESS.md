@@ -11,7 +11,7 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | Matrix | Domains | Scenarios | left to port | in scope | ported | authored | target skipped | dropped | review | blocked | done % |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
 | robot-api-to-codeception | 27 | 1721 | 1285 | 1285 | 0 | 0 | 0 | 0 | 418 | 0 | 0% |
-| robot-ui-to-cypress | 12 | 105 | 80 | 87 | 7 | 2 | 0 | 0 | 0 | 1 | 0% |
+| robot-ui-to-cypress | 12 | 105 | 80 | 87 | 7 | 3 | 0 | 0 | 0 | 1 | 0% |
 
 ## robot-api-to-codeception by domain
 
@@ -60,7 +60,7 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | [platform](by-domain/robot-ui-to-cypress/platform.md) | 6 | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [product](by-domain/robot-ui-to-cypress/product.md) | 21 | 18 | 18 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [store](by-domain/robot-ui-to-cypress/store.md) | 4 | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
-| [warehouse](by-domain/robot-ui-to-cypress/warehouse.md) | 1 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| [warehouse](by-domain/robot-ui-to-cypress/warehouse.md) | 1 | 1 | 1 | 0 | 1 | 0 | 0 | 0 | 0 | 1 |
 
 ## Review — unresolved judgement calls
 

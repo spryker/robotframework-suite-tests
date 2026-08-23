@@ -1728,7 +1728,7 @@
 {"id": "robot:tests/parallel_ui/suite/misc/static_demodata_set.robot::Minimum_Order_Value", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/b2b/catalog/catalog.robot::Quick_Order", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/ui/b2b/checkout/checkout.robot::Approval_Process", "source_state": "ACTIVE", "target_state": "MISSING"}
-{"id": "robot:tests/ui/b2c/fulfillment_app/fultillment_app.robot::Fulfillment_app_e2e", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/b2c/fulfillment_app/fultillment_app.robot::Fulfillment_app_e2e", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/b2c/sales/sales.robot::Configurable_Product_OMS", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/mp_b2b/marketplace/marketplace.robot::Shopping_List_Contains_Offers", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/ui/mp_b2c/catalog/catalog.robot::Offer_Availability_Calculation", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
