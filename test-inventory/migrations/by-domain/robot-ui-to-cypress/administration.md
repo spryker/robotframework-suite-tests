@@ -4,7 +4,7 @@ MIGRATE 4 · OBSOLETE 1 · DEFER 1   ▸ 4/4 verified
 
 Batches: `administration`
 
-Target PR: https://github.com/spryker/cypress-tests/pull/395
+Target PR: https://github.com/spryker/cypress-tests/pull/392
 
 #### MIGRATE / RESHAPE — port these
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
@@ -22,4 +22,4 @@ Target PR: https://github.com/spryker/cypress-tests/pull/395
 #### DEFER — parked, not counted as migrated
 | Scenario | Placeholder | Blocked by |
 |---|---|---|
-| Payment_method_update | `cypress/e2e/backoffice/administration/payment-method-availability.cy.ts` | Deactivates the Invoice payment method globally to prove it disappears from checkout. dummyPaymentInvoice is depended on by the checkout, order-amendment and recurring-order specs, Cypress shards run concurrently against one application, and shard packing is nondeterministic, so whichever of those is packed alongside would fail. A fixture-created payment method is not a way round it: with no storefront plugin behind it, it does not render in checkout. Needs a serial lane or per-test payment-method state. |
+| Payment_method_update | — | Deactivates the Invoice payment method globally to prove it disappears from checkout. dummyPaymentInvoice is depended on by the checkout, order-amendment and recurring-order specs, Cypress shards run concurrently against one application, and shard packing is nondeterministic, so whichever of those is packed alongside would fail. A fixture-created payment method is not a way round it: with no storefront plugin behind it, it does not render in checkout. Needs a serial lane or per-test payment-method state. |
