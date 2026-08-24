@@ -1,6 +1,6 @@
 ### checkout · robot-ui-to-cypress · CC-39280 · 16 scenarios
 
-MIGRATE 13 · OBSOLETE 3   ▸ 1/13 verified
+MIGRATE 13 · OBSOLETE 3   ▸ 1/13 verified · 1 awaiting a CI run
 
 Batches: `checkout`
 
