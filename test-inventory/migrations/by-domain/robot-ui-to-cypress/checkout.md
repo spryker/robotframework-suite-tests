@@ -1,6 +1,6 @@
 ### checkout · robot-ui-to-cypress · CC-39280 · 16 scenarios
 
-MIGRATE 13 · OBSOLETE 3   ▸ 11/13 verified · 1 awaiting a CI run
+MIGRATE 13 · OBSOLETE 3   ▸ 12/13 verified
 
 Batches: `checkout`
 
@@ -18,7 +18,7 @@ Target PR: https://github.com/spryker/cypress-tests/pull/392
 | [x] | Guest_Checkout | ×2 | Guest checkout with bundles, discounts and OMS. _(yves)_ | `cypress/e2e/yves/discount/discounts-and-promotions.cy.ts::given a guest cart holding a product bundle when a voucher and a cart rule both collect then both discounts apply and the guest order is placed` | L | `local 2026-08-24 · 2 passing · 41s` |
 | [x] | Guest_Checkout_Addresses | ×2 | Guest checkout with different addresses and OMS. _(yves)_ | `cypress/e2e/yves/checkout/split-delivery.cy.ts::guest should checkout with a distinct delivery address per item` | L | `local 2026-08-24 · 2 passing · 1m06s` |
 | [x] | Login_during_checkout | ×2 | Login during checkout _(yves)_ | `cypress/e2e/yves/checkout/checkout-authentication.cy.ts::given a guest cart when the customer logs in at the checkout customer step then the order is placed on that account` | L | `local 2026-08-24 · 2 passing · 28s` |
-| [ ] | Multiple_Merchants_Order | ×3 | Checks that order with products and offers of multiple merchants could be placed and it will be split per merchant. _(yves)_ | `cypress/e2e/yves/checkout/multi-merchant-order.cy.ts::given a cart holding the main merchant product and an offer from each of two merchants when the order is placed then it is split into one shipment per merchant` | L | — |
+| [x] | Multiple_Merchants_Order | ×3 | Checks that order with products and offers of multiple merchants could be placed and it will be split per merchant. _(yves)_ | `cypress/e2e/yves/checkout/multi-merchant-order.cy.ts::given a cart holding the main merchant product and an offer from each of two merchants when the order is placed then it is split into one shipment per merchant` | L | `local 2026-08-24 · 1 passing · 27s` |
 | [x] | Register_during_checkout | ×2 | Guest user email should be whitelisted from the AWS side before running the test. _(yves)_ | `cypress/e2e/yves/checkout/checkout-authentication.cy.ts::given a guest cart when the customer registers at the checkout customer step then the account is created and the order is placed on it` | L | `local 2026-08-24 · 2 passing · 28s` |
 | [x] | Request_for_Quote | ×3 | Checks user can request and receive quote. _(yves)_ | `cypress/e2e/yves/quote-request/quote-request-lifecycle.cy.ts::given a quote request sent to an agent when the agent revises the item price then the customer converts it to a cart and orders at the revised price` | L | `local 2026-08-24 · 1 passing · 25s` |
 | [x] | Split_Delivery | ×5 | Checks split delivery in checkout. _(yves)_ | `cypress/e2e/yves/checkout/split-delivery.cy.ts::should create one shipment per delivery address when the cart is split` | L | [run](https://github.com/spryker/suite/actions/runs/32571880620) |
