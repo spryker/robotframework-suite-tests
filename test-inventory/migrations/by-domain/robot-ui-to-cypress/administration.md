@@ -4,7 +4,7 @@ MIGRATE 4 · OBSOLETE 1 · DEFER 1   ▸ 4/4 verified
 
 Batches: `administration`
 
-Target PR: https://github.com/spryker/cypress-tests/pull/392
+Target PR: https://github.com/spryker/cypress-tests/pull/395
 
 #### MIGRATE / RESHAPE — port these
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
