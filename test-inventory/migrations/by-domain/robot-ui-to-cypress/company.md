@@ -4,7 +4,7 @@ MIGRATE 2   ▸ 2/2 verified
 
 Batches: `company`
 
-Target PR: https://github.com/spryker/cypress-tests/pull/392
+Target PR: https://github.com/spryker/cypress-tests/pull/394
 
 #### MIGRATE / RESHAPE — port these
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
