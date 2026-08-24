@@ -1722,7 +1722,7 @@
 {"id": "robot:tests/parallel_ui/mp_b2c/catalog/catalog_configurable_product.robot::Configurable_Product_OMS", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/parallel_ui/mp_b2c/misc/static_demodata_set.robot::Click_and_collect", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/parallel_ui/suite/catalog/catalog_configurable_product.robot::Configurable_Product_Checkout", "source_state": "ACTIVE", "target_state": "MISSING"}
-{"id": "robot:tests/parallel_ui/suite/checkout/checkout.robot::Unique_URL", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/parallel_ui/suite/checkout/checkout.robot::Unique_URL", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/parallel_ui/suite/misc/static_demodata_set.robot::Discounts", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/parallel_ui/suite/misc/static_demodata_set.robot::Fulfillment_app_e2e", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/parallel_ui/suite/misc/static_demodata_set.robot::Minimum_Order_Value", "source_state": "ACTIVE", "target_state": "PRESENT"}
@@ -1765,7 +1765,7 @@
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Guest_Checkout", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Guest_Checkout_Addresses", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Login_during_checkout", "source_state": "ACTIVE", "target_state": "PRESENT"}
-{"id": "robot:tests/ui/suite/checkout/checkout.robot::Multiple_Merchants_Order", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/checkout/checkout.robot::Multiple_Merchants_Order", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Register_during_checkout", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Request_for_Quote", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Split_Delivery", "source_state": "ACTIVE", "target_state": "PRESENT"}
