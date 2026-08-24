@@ -987,7 +987,7 @@ Create_order_with_configurable_product
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumNetPrice]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][canceledAmount]    None
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitDiscountAmountAggregation]    None
-    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    0
+    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    490
     And Response body parameter should be:    [included][0][attributes][expenses][0][taxAmountAfterCancellation]    None
     And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][idShipment]
     And Response body parameter should not be EMPTY:   [included][0][attributes][expenses][0][idSalesExpense]
