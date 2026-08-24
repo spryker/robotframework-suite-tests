@@ -1,6 +1,6 @@
 ### checkout · robot-ui-to-cypress · CC-39280 · 16 scenarios
 
-MIGRATE 13 · OBSOLETE 3   ▸ 12/13 verified · 1 awaiting a CI run
+MIGRATE 13 · OBSOLETE 3   ▸ 13/13 verified
 
 Batches: `checkout`
 
@@ -13,7 +13,7 @@ Target PR: https://github.com/spryker/cypress-tests/pull/392
 | [x] | Approval_Process | ×2 | Checks role permissions on checkout and Approval process. _(yves)_ | `cypress/e2e/yves/checkout/cart-approval-process.cy.ts::given a cart above the buyer spend limit when the approver approves the request then the buyer can place the order` | L | `local 2026-08-24 · 1 passing · 23s` |
 | [x] | Business_Unit_Address_on_Checkout | ×3 | Checks that business unit address can be used during checkout. _(yves)_ | `cypress/e2e/yves/company-account/business-unit-address-checkout.cy.ts::given a company user with no personal address when the business unit address is chosen at checkout then the order ships to it` | L | `local 2026-08-24 · 1 passing · 16s` |
 | [x] | Checkout_Address_Management | ×5 | Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book. _(yves)_ | `cypress/e2e/yves/checkout/checkout-address-management.cy.ts::given a separate billing address when the customer returns to the address step and changes both addresses then the order takes the changed ones and only the address marked for saving is added to the address book` | L | `local 2026-08-24 · 1 passing · 28s` |
-| [ ] | Click_and_collect | ×2 | checks that product offer is successfully replaced with a target product offer. _(yves)_ | `cypress/e2e/yves/checkout/click-and-collect.cy.ts::given an offer collected at a service point when the order is placed then it ships to the service point as a single pickup shipment` | L | — |
+| [x] | Click_and_collect | ×2 | checks that product offer is successfully replaced with a target product offer. _(yves)_ | `cypress/e2e/yves/checkout/click-and-collect.cy.ts::given an offer collected at a service point when the order is placed then it ships to the service point as a single pickup shipment` | L | `local 2026-08-24 · 1 passing · 25s` |
 | [x] | Comments_in_Cart | ×3 | Add comments to cart and verify comments in Yves and Zed. _(yves)_ | `cypress/e2e/yves/comments/cart-comments.cy.ts::should keep a cart comment on the order details page after checkout` | L | `local 2026-08-24 · 7 passing · 48s` |
 | [x] | Guest_Checkout | ×2 | Guest checkout with bundles, discounts and OMS. _(yves)_ | `cypress/e2e/yves/discount/discounts-and-promotions.cy.ts::given a guest cart holding a product bundle when a voucher and a cart rule both collect then both discounts apply and the guest order is placed` | L | `local 2026-08-24 · 2 passing · 41s` |
 | [x] | Guest_Checkout_Addresses | ×2 | Guest checkout with different addresses and OMS. _(yves)_ | `cypress/e2e/yves/checkout/split-delivery.cy.ts::guest should checkout with a distinct delivery address per item` | L | `local 2026-08-24 · 2 passing · 1m06s` |
