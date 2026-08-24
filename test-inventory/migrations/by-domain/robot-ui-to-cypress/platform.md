@@ -1,6 +1,6 @@
 ### platform · robot-ui-to-cypress · CC-39280 · 6 scenarios
 
-MIGRATE 3 · RESHAPE 1 · OBSOLETE 2   ▸ 2/4 verified
+MIGRATE 3 · RESHAPE 1 · OBSOLETE 2   ▸ 3/4 verified
 
 Batches: `platform`
 
@@ -8,7 +8,7 @@ Batches: `platform`
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
 |---|---|---|---|---|---|---|
 | [ ] | Discounts | ×5 | Discounts, Promo Products, and Coupon Codes (includes guest checkout). _(yves)_ | `cypress/e2e/yves/discount/discounts-and-promotions.cy.ts` | L | — |
-| [ ] | Minimum_Order_Value | ×5 | checks that global minimum and maximum order thresholds can be applied. _(yves)_ | `cypress/e2e/yves/checkout/minimum-order-value.cy.ts` | L | — |
+| [x] | Minimum_Order_Value | ×5 | checks that global minimum and maximum order thresholds can be applied. _(yves)_ | `cypress/e2e/yves/checkout/minimum-order-value.cy.ts::given global order thresholds when the cart is above the maximum and then below it then checkout is blocked and the soft threshold fee is charged` | L | `local 2026-08-24 · 1 passing · 32s` |
 | [x] | Data_exchange_API_Configuration_in_Zed | ×5 | DMS-ON: https://spryker.atlassian.net/browse/FRW-7396. _(backoffice)_ | `cypress/e2e/backoffice/data-exchange/dynamic-entity-configuration.cy.ts::given a data exchange api configuration for a table when its resource fields are configured and saved then the reloaded form renders back what was saved` | L | `local 2026-08-24 · 1 passing · 22s` |
 | [x] | Data_exchange_API_download_specification | ×5 | DMS-ON: https://spryker.atlassian.net/browse/FRW-7396. _(backoffice)_ | `cypress/e2e/backoffice/data-exchange/api-specification-download.cy.ts::given a table is not exposed when its data exchange api configuration is enabled and the specification is regenerated then the downloaded specification gains its resource` | M | `local 2026-08-24 · 1 passing · 38s` |
 
