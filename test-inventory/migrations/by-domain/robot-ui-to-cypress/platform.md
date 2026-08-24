@@ -4,6 +4,8 @@ MIGRATE 3 · RESHAPE 1 · OBSOLETE 2   ▸ 4/4 verified
 
 Batches: `platform`
 
+Target PR: https://github.com/spryker/cypress-tests/pull/396
+
 #### MIGRATE / RESHAPE — port these
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
 |---|---|---|---|---|---|---|
