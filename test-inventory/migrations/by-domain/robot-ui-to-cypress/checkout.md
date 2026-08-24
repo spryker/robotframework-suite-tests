@@ -1,6 +1,6 @@
 ### checkout · robot-ui-to-cypress · CC-39280 · 16 scenarios
 
-MIGRATE 13 · OBSOLETE 3   ▸ 9/13 verified · 1 awaiting a CI run
+MIGRATE 13 · OBSOLETE 3   ▸ 10/13 verified · 1 awaiting a CI run
 
 Batches: `checkout`
 
@@ -10,7 +10,7 @@ Target PR: https://github.com/spryker/cypress-tests/pull/392
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
 |---|---|---|---|---|---|---|
 | [x] | Unique_URL | ×3 | Bug: https://spryker.atlassian.net/browse/CC-12380. _(yves)_ | `cypress/e2e/yves/cart/shared-cart-external-link.cy.ts::given a cart shared by external link when an anonymous visitor opens it then the cart is shown as a read-only preview` | M | `local 2026-08-24 · 1 passing · 9s` |
-| [ ] | Approval_Process | ×2 | Checks role permissions on checkout and Approval process. _(yves)_ | `cypress/e2e/yves/checkout/cart-approval-process.cy.ts` | L | — |
+| [x] | Approval_Process | ×2 | Checks role permissions on checkout and Approval process. _(yves)_ | `cypress/e2e/yves/checkout/cart-approval-process.cy.ts::given a cart above the buyer spend limit when the approver approves the request then the buyer can place the order` | L | `local 2026-08-24 · 1 passing · 23s` |
 | [x] | Business_Unit_Address_on_Checkout | ×3 | Checks that business unit address can be used during checkout. _(yves)_ | `cypress/e2e/yves/company-account/business-unit-address-checkout.cy.ts::given a company user with no personal address when the business unit address is chosen at checkout then the order ships to it` | L | `local 2026-08-24 · 1 passing · 16s` |
 | [x] | Checkout_Address_Management | ×5 | Bug: CC-30439. Checks that user can change address during the checkout and save new into the address book. _(yves)_ | `cypress/e2e/yves/checkout/checkout-address-management.cy.ts::given a separate billing address when the customer returns to the address step and changes both addresses then the order takes the changed ones and only the address marked for saving is added to the address book` | L | `local 2026-08-24 · 1 passing · 28s` |
 | [ ] | Click_and_collect | ×2 | checks that product offer is successfully replaced with a target product offer. _(yves)_ | `cypress/e2e/yves/checkout/click-and-collect.cy.ts` | L | — |
