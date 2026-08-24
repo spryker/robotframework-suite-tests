@@ -1760,13 +1760,13 @@
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Checkout_Address_Management", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Click_and_collect", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Comment_Management_in_the_Cart", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
-{"id": "robot:tests/ui/suite/checkout/checkout.robot::Comments_in_Cart", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/checkout/checkout.robot::Comments_in_Cart", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Configurable_Product_Checkout", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Guest_Checkout", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Guest_Checkout_Addresses", "source_state": "ACTIVE", "target_state": "PRESENT"}
-{"id": "robot:tests/ui/suite/checkout/checkout.robot::Login_during_checkout", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/checkout/checkout.robot::Login_during_checkout", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Multiple_Merchants_Order", "source_state": "ACTIVE", "target_state": "MISSING"}
-{"id": "robot:tests/ui/suite/checkout/checkout.robot::Register_during_checkout", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/checkout/checkout.robot::Register_during_checkout", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Request_for_Quote", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/checkout/checkout.robot::Split_Delivery", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/company/company.robot::Create_new_company_user_with_linked_entities_in_storefront", "source_state": "ACTIVE", "target_state": "PRESENT"}
