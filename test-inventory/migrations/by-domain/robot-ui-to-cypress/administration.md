@@ -10,7 +10,7 @@ Target PR: https://github.com/spryker/cypress-tests/pull/392
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
 |---|---|---|---|---|---|---|
 | [x] | Glossary | ×5 | Create + edit glossary translation in BO. _(yves)_ | `cypress/e2e/backoffice/administration/glossary-management.cy.ts::should create a translation and list it` | L | `local 2026-08-24 · 2 passing · 13s` |
-| [x] | Zed_navigation_ordering_and_naming | ×5 | Verifies each left navigation node can be opened. DMS ON: https://spryker.atlassian.net/browse/FRW-7394. _(backoffice)_ | `cypress/e2e/backoffice/navigation/navigation-smoke.cy.ts::should open every left navigation node without an error` | M | [run](https://github.com/spryker/suite/actions/runs/32552259942) |
+| [x] | Zed_navigation_ordering_and_naming | ×5 | Verifies each left navigation node can be opened. DMS ON: https://spryker.atlassian.net/browse/FRW-7394. _(backoffice)_ | `cypress/e2e/backoffice/navigation/navigation-smoke.cy.ts::should open every left navigation node without an error` | M | `local 2026-08-24 · 2 passing · 29s` |
 | [x] | Agent_Assist | ×5 | Checks customer data and checkout as an agent. _(yves)_ | `cypress/e2e/yves/agent-assist/customer-impersonation.cy.ts::agent should be able to place an order for the impersonated customer` | L | [run](https://github.com/spryker/suite/actions/runs/32571880620) |
 | [x] | User_Control | ×5 | Create a user with limited access. _(backoffice)_ | `cypress/e2e/backoffice/acl/acl-navigation-access.cy.ts::should deny an action for a role with an explicit deny rule` | M | [run](https://github.com/spryker/suite/actions/runs/32512608457) |
 
