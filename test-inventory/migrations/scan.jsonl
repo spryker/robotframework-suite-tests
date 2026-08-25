@@ -1807,7 +1807,7 @@
 {"id": "robot:tests/ui/suite/marketplace/marketplace.robot::Merchant_Profile_Update", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/marketplace/marketplace.robot::Offer_Availability_Calculation", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/marketplace/marketplace.robot::Search_for_Merchant_Offers_and_Products", "source_state": "ACTIVE", "target_state": "MISSING"}
-{"id": "robot:tests/ui/suite/merchandising/merchandising.robot::CRUD_Product_Set", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/merchandising/merchandising.robot::CRUD_Product_Set", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/merchandising/merchandising.robot::Configurable_Bundle", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/merchandising/merchandising.robot::Discounts", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/ui/suite/merchandising/merchandising.robot::Product_Relations", "source_state": "ACTIVE", "target_state": "PRESENT"}

@@ -1,13 +1,13 @@
 ### merchandising · robot-ui-to-cypress · CC-39280 · 6 scenarios
 
-MIGRATE 5 · OBSOLETE 1   ▸ 2/5 verified
+MIGRATE 5 · OBSOLETE 1   ▸ 3/5 verified
 
 Batches: `merchandising`
 
 #### MIGRATE / RESHAPE — port these
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
 |---|---|---|---|---|---|---|
-| [ ] | CRUD_Product_Set | ×3 | CRUD operations for product sets. DMS-ON: https://spryker.atlassian.net/browse/FRW-7393. _(yves)_ | `cypress/e2e/backoffice/merchandising/product-set-management.cy.ts` | L | — |
+| [x] | CRUD_Product_Set | ×3 | CRUD operations for product sets. DMS-ON: https://spryker.atlassian.net/browse/FRW-7393. _(yves)_ | `cypress/e2e/backoffice/merchandising/product-set-management.cy.ts::given three products when a product set is created for them in the back office then the storefront serves the set and its whole content reaches the cart, and deleting the set retires the page` | L | `local 2026-08-25 · 1 passing · 34s` |
 | [ ] | Configurable_Bundle | ×3 | Check the usage of configurable bundles (includes authorized checkout). _(yves)_ | `cypress/e2e/yves/product-bundle/configurable-bundle-checkout.cy.ts` | L | — |
 | [x] | Product_Relations | ×5 | Checks related product on PDP and upsell products in cart. _(yves)_ | `cypress/e2e/yves/merchandising/product-relations.cy.ts::given one product carries a related-products relation and another carries none when both detail pages are opened then only the first shows the related products carousel` | M | `local 2026-08-25 · 1 passing · 18s` |
 | [ ] | Product_Sets | ×3 | Check the usage of product sets. _(yves)_ | `cypress/e2e/yves/merchandising/product-sets.cy.ts` | M | — |
