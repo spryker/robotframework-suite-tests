@@ -1,13 +1,13 @@
 ### order · robot-ui-to-cypress · CC-39280 · 6 scenarios
 
-MIGRATE 6   ▸ 5/6 verified
+MIGRATE 6   ▸ 6/6 verified
 
 Batches: `order`
 
 #### MIGRATE / RESHAPE — port these
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
 |---|---|---|---|---|---|---|
-| [ ] | Configurable_Product_OMS | ×2 | Conf Product OMS check and reorder. _(yves)_ | `cypress/e2e/backoffice/order-management/configurable-product-oms.cy.ts` | L | — |
+| [x] | Configurable_Product_OMS | ×2 | Conf Product OMS check and reorder. _(yves)_ | `cypress/e2e/backoffice/order-management/configurable-product-oms.cy.ts::given a configured product ordered and shipped when the order is reordered then the configuration is on the order but not in the new cart` | L | `local 2026-08-25 · 1 passing · 36s` |
 | [x] | Comment_Management_in_Order | ×3 | Add comments in Yves and check in Zed. _(yves)_ | `cypress/e2e/yves/comments/order-comments.cy.ts::given a placed order when the customer comments on it in the storefront then the comment is shown there and in the back office` | L | `local 2026-08-25 · 1 passing · 24s` |
 | [x] | Manage_Shipments | ×5 | Checks create/edit shipment functions from backoffice. _(yves)_ | `cypress/e2e/backoffice/order-management/shipment-management.cy.ts::given an order delivered as one shipment when a second shipment is created and then edited then the item moves and the edited address is kept` | L | `local 2026-08-25 · 1 passing · 31s` |
 | [x] | Order_Cancellation | ×5 | Check that customer is able to cancel order. _(yves)_ | `cypress/e2e/yves/order-management/order-cancellation.cy.ts::given every item of an order is cancellable when the customer cancels it then the order is cancelled` | L | `local 2026-08-25 · 2 passing · 37s` |
