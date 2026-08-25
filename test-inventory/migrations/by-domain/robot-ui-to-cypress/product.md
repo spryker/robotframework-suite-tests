@@ -1,6 +1,6 @@
 ### product · robot-ui-to-cypress · CC-39280 · 21 scenarios
 
-MIGRATE 18 · OBSOLETE 3   ▸ 17/18 verified
+MIGRATE 18 · OBSOLETE 3   ▸ 18/18 verified
 
 Batches: `product`
 
@@ -19,7 +19,7 @@ Batches: `product`
 | [x] | Manage_Product | ×3 | checks that BO user can manage abstract and concrete products + create new. _(yves)_ | `cypress/e2e/backoffice/product-management/product-lifecycle-management.cy.ts::given an abstract product created and approved in the back office when the catalog is searched then the storefront lists it` | L | `local 2026-08-25 · 2 passing · 1m29s` |
 | [x] | Measurement_Units | ×3 | Checks checkout with Measurement Unit product. _(yves)_ | `cypress/e2e/yves/product-measurement-unit/measurement-unit-checkout.cy.ts::given a measurement unit product when the quantity falls between two base units then the storefront says so rather than accepting it` | L | `local 2026-08-25 · 2 passing · 25s` |
 | [x] | Packaging_Units | ×3 | Checks checkout with Packaging Unit product. _(yves)_ | `cypress/e2e/yves/product-measurement-unit/packaging-unit-checkout.cy.ts::given a packaging unit product when an amount outside its rules is entered then the storefront says so rather than accepting it` | L | `local 2026-08-25 · 2 passing · 24s` |
-| [ ] | Product_Availability_Calculation | ×5 | Check product availability + multistore. _(yves)_ | `cypress/e2e/yves/product/availability-calculation.cy.ts` | L | — |
+| [x] | Product_Availability_Calculation | ×5 | Check product availability + multistore. _(yves)_ | `cypress/e2e/yves/product/availability-calculation.cy.ts::given a product with a limited stock when part of it is ordered and that order is then cancelled then availability falls and is restored with it` | L | `local 2026-08-25 · 1 passing · 41s` |
 | [x] | Product_Bundles | ×4 | Checks checkout with Bundle product. _(yves)_ | `cypress/e2e/yves/product/product-bundle-checkout.cy.ts::given a bundle product when its product detail page is opened then the products it bundles are listed on it` | L | `local 2026-08-25 · 2 passing · 20s` |
 | [x] | Product_Original_Price | ×3 | checks that Original price is displayed on the PDP and in Catalog. _(yves)_ | `cypress/e2e/yves/product/original-price.cy.ts::given an abstract product priced above its default price when the catalog is searched then the card shows the default and the original price side by side` | L | `local 2026-08-25 · 2 passing · 18s` |
 | [x] | Product_PDP | ×5 | Checks that PDP contains required elements. _(yves)_ | `cypress/e2e/yves/product/product-detail-visibility.cy.ts::given a guest when a product variant is selected then the price, add to cart and the product options are shown and no wishlist form is` | M | `local 2026-08-25 · 3 passing · 5s` |
