@@ -1,0 +1,650 @@
+{
+  "And Response body parameter should be:": {
+    "canonical_name": "assert_response_body_equals",
+    "kind": "assert",
+    "description": "Assert a response body parameter equals an expected value.",
+    "migration_note": "cy.request(...).its('body').its('path').should('eq', value)"
+  },
+  "Then Response status code should be:": {
+    "canonical_name": "assert_response_status",
+    "kind": "assert",
+    "description": "Assert the HTTP response status code.",
+    "migration_note": "cy.request(...).its('status').should('eq', N)"
+  },
+  "And Response reason should be:": {
+    "canonical_name": "assert_response_reason",
+    "kind": "assert",
+    "description": "Assert the HTTP response reason phrase.",
+    "migration_note": "cy.request(...).its('statusText').should('eq', reason)"
+  },
+  "And Response body parameter should not be EMPTY:": {
+    "canonical_name": "assert_response_body_not_empty",
+    "kind": "assert",
+    "description": "Assert a response body parameter is not empty.",
+    "migration_note": "cy.request(...).its('body').its('path').should('not.be.empty')"
+  },
+  "And Response should return error message:": {
+    "canonical_name": "assert_error_message",
+    "kind": "assert",
+    "description": "Assert the response returns an expected error message.",
+    "migration_note": "cy.request(...).its('body.errors[0].detail').should('eq', msg)"
+  },
+  "Response status code should be:": {
+    "canonical_name": "assert_response_status",
+    "kind": "assert",
+    "description": "Assert the HTTP response status code.",
+    "migration_note": "cy.request(...).its('status').should('eq', N)"
+  },
+  "And Response should return error code:": {
+    "canonical_name": "assert_error_code",
+    "kind": "assert",
+    "description": "Assert the response returns an expected error code.",
+    "migration_note": "cy.request(...).its('body.errors[0].code').should('eq', code)"
+  },
+  "And Response should contain the array of a certain size:": {
+    "canonical_name": "assert_response_array_size",
+    "kind": "assert",
+    "description": "Assert a response array has an exact size.",
+    "migration_note": "cy.request(...).its('body.data').should('have.length', N)"
+  },
+  "And Response header parameter should be:": {
+    "canonical_name": "assert_response_header",
+    "kind": "assert",
+    "description": "Assert a response header equals an expected value.",
+    "migration_note": "cy.request(...).its('headers').its('name').should('eq', value)"
+  },
+  "And Each array element of array in response should contain nested property:": {
+    "canonical_name": "assert_each_element_contains_nested_property",
+    "kind": "assert",
+    "description": "Assert every array element contains a given nested property.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el).to.have.nested.property(path))"
+  },
+  "And Response body parameter should be greater than:": {
+    "canonical_name": "assert_response_body_greater_than",
+    "kind": "assert",
+    "description": "Assert a response body parameter is greater than a value.",
+    "migration_note": "cy.request(...).its('body').its('path').should('be.gt', N)"
+  },
+  "And Array in response should contain property with value:": {
+    "canonical_name": "assert_response_array_contains_property_value",
+    "kind": "assert",
+    "description": "Assert a response array contains an element with a property equal to a value.",
+    "migration_note": "cy.request(...).its('body.data').should(arr => expect(arr).to.deep.include({ prop: value }))"
+  },
+  "And Each array element of array in response should contain property:": {
+    "canonical_name": "assert_each_element_contains_property",
+    "kind": "assert",
+    "description": "Assert every array element contains a given property.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el).to.have.property(prop))"
+  },
+  "And Response body parameter should contain:": {
+    "canonical_name": "assert_response_contains",
+    "kind": "assert",
+    "description": "Assert a response body parameter contains a substring or value.",
+    "migration_note": "cy.request(...).its('body').its('path').should('include', value)"
+  },
+  "And Response status code should be:": {
+    "canonical_name": "assert_response_status",
+    "kind": "assert",
+    "description": "Assert the HTTP response status code.",
+    "migration_note": "cy.request(...).its('status').should('eq', N)"
+  },
+  "And Response body has correct self link": {
+    "canonical_name": "assert_response_body_self_link",
+    "kind": "assert",
+    "description": "Assert the response body has a correct self link.",
+    "migration_note": "cy.request(...).its('body.links.self').should('eq', expectedUrl)"
+  },
+  "Response reason should be:": {
+    "canonical_name": "assert_response_reason",
+    "kind": "assert",
+    "description": "Assert the HTTP response reason phrase.",
+    "migration_note": "cy.request(...).its('statusText').should('eq', reason)"
+  },
+  "And Each array element of array in response should contain property with value:": {
+    "canonical_name": "assert_each_element_contains_property_value",
+    "kind": "assert",
+    "description": "Assert every array element contains a property equal to a value.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el).to.have.property(prop, value))"
+  },
+  "And Response include should contain certain entity type:": {
+    "canonical_name": "assert_response_include_contains_entity_type",
+    "kind": "assert",
+    "description": "Assert the response 'included' section contains a given entity type.",
+    "migration_note": "cy.request(...).its('body.included').should(arr => expect(arr.map(i=>i.type)).to.include(type))"
+  },
+  "And Response include element has self link:": {
+    "canonical_name": "assert_response_include_element_self_link",
+    "kind": "assert",
+    "description": "Assert a response 'included' element has a self link.",
+    "migration_note": "cy.request(...).its('body.included').should(arr => arr.forEach(i => expect(i.links.self).to.exist))"
+  },
+  "And Response body parameter should be in:": {
+    "canonical_name": "assert_response_body_in",
+    "kind": "assert",
+    "description": "Assert a response body parameter is one of an allowed set of values.",
+    "migration_note": "cy.request(...).its('body').its('path').should('be.oneOf', [values])"
+  },
+  "And Each array element of array in response should contain value:": {
+    "canonical_name": "assert_each_element_contains_value",
+    "kind": "assert",
+    "description": "Assert every array element contains a given value.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el).to.include(value))"
+  },
+  "And Response body has correct self link internal": {
+    "canonical_name": "assert_response_body_self_link_internal",
+    "kind": "assert",
+    "description": "Assert the response body has a correct internal self link.",
+    "migration_note": "cy.request(...).its('body.links.self').should('eq', internalUrl)"
+  },
+  "And Response should contain the array larger than a certain size:": {
+    "canonical_name": "assert_response_array_size_greater_than",
+    "kind": "assert",
+    "description": "Assert a response array is larger than a given size.",
+    "migration_note": "cy.request(...).its('body.data').its('length').should('be.gt', N)"
+  },
+  "And Each Array Element Of Array In Response Should Contain Property:": {
+    "canonical_name": "assert_each_element_contains_property",
+    "kind": "assert",
+    "description": "Assert every array element contains a given property.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el).to.have.property(prop))"
+  },
+  "And Each array element of array in response should contain nested property with value:": {
+    "canonical_name": "assert_each_element_contains_nested_property_value",
+    "kind": "assert",
+    "description": "Assert every array element contains a nested property equal to a value.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el).to.have.nested.property(path, value))"
+  },
+  "And Each array element of array in response should contain nested property with datatype:": {
+    "canonical_name": "assert_each_element_nested_property_datatype",
+    "kind": "assert",
+    "description": "Assert every array element has a nested property of a given datatype.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el.path).to.be.a(type))"
+  },
+  "And Each array element of array in response should contain property with value in:": {
+    "canonical_name": "assert_each_element_property_value_in",
+    "kind": "assert",
+    "description": "Assert every array element has a property within an allowed set.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect([values]).to.include(el.prop))"
+  },
+  "Response body parameter should be:": {
+    "canonical_name": "assert_response_body_equals",
+    "kind": "assert",
+    "description": "Assert a response body parameter equals an expected value.",
+    "migration_note": "cy.request(...).its('body').its('path').should('eq', value)"
+  },
+  "And Response Body parameter should have datatype:": {
+    "canonical_name": "assert_response_body_datatype",
+    "kind": "assert",
+    "description": "Assert a response body parameter has a given datatype.",
+    "migration_note": "cy.request(...).its('body').its('path').should('be.a', type)"
+  },
+  "And Response body parameter should have datatype:": {
+    "canonical_name": "assert_response_body_datatype",
+    "kind": "assert",
+    "description": "Assert a response body parameter has a given datatype.",
+    "migration_note": "cy.request(...).its('body').its('path').should('be.a', type)"
+  },
+  "Response body parameter should be greater than :": {
+    "canonical_name": "assert_response_body_greater_than",
+    "kind": "assert",
+    "description": "Assert a response body parameter is greater than a value.",
+    "migration_note": "cy.request(...).its('body').its('path').should('be.gt', N)"
+  },
+  "And Each array element of array in response should contain property with value NOT in:": {
+    "canonical_name": "assert_each_element_property_value_not_in",
+    "kind": "assert",
+    "description": "Assert every array element has a property not within a given set.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect([values]).to.not.include(el.prop))"
+  },
+  "And Response body parameter with rounding should be:": {
+    "canonical_name": "assert_response_body_rounded",
+    "kind": "assert",
+    "description": "Assert a response body parameter equals a value after rounding.",
+    "migration_note": "cy.request(...).its('body').its('path').should(v => expect(Math.round(v)).to.eq(N))"
+  },
+  "And Response body has correct self link for created entity:": {
+    "canonical_name": "assert_response_body_self_link_created_entity",
+    "kind": "assert",
+    "description": "Assert the response self link is correct for a newly created entity.",
+    "migration_note": "cy.request(...).its('body.data.links.self').should('eq', expectedUrl)"
+  },
+  "And Each array element of nested array should contain property with value in:": {
+    "canonical_name": "assert_each_nested_array_element_property_value_in",
+    "kind": "assert",
+    "description": "Assert every element of a nested array has a property within an allowed set.",
+    "migration_note": "cy.request(...).its('body.data').each(el => el.nested.forEach(n => expect([values]).to.include(n.prop)))"
+  },
+  "And Each Array Element Of Array In Response Should Contain Nested Property:": {
+    "canonical_name": "assert_each_element_contains_nested_property",
+    "kind": "assert",
+    "description": "Assert every array element contains a given nested property.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el).to.have.nested.property(path))"
+  },
+  "And Response body parameter should be less than:": {
+    "canonical_name": "assert_response_body_less_than",
+    "kind": "assert",
+    "description": "Assert a response body parameter is less than a value.",
+    "migration_note": "cy.request(...).its('body').its('path').should('be.lt', N)"
+  },
+  "And Array element should contain property with value greater than at least once:": {
+    "canonical_name": "assert_array_element_property_value_greater_than_at_least_once",
+    "kind": "assert",
+    "description": "Assert at least one array element has a property greater than a value.",
+    "migration_note": "cy.request(...).its('body.data').should(arr => expect(arr.some(e => e.prop > N)).to.be.true)"
+  },
+  "And Response should contain the array smaller than a certain size:": {
+    "canonical_name": "assert_response_array_size_less_than",
+    "kind": "assert",
+    "description": "Assert a response array is smaller than a given size.",
+    "migration_note": "cy.request(...).its('body.data').its('length').should('be.lt', N)"
+  },
+  "And Response body should contain:": {
+    "canonical_name": "assert_response_contains",
+    "kind": "assert",
+    "description": "Assert the response body contains an expected value.",
+    "migration_note": "cy.request(...).its('body').should('include', value)"
+  },
+  "And Each array in response should contain property with NOT EMPTY value:": {
+    "canonical_name": "assert_each_element_property_not_empty",
+    "kind": "assert",
+    "description": "Assert every array element has a non-empty value for a property.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el.prop).to.not.be.empty)"
+  },
+  "And Response should contain certain number of values:": {
+    "canonical_name": "assert_response_array_value_count",
+    "kind": "assert",
+    "description": "Assert the response contains a certain number of values.",
+    "migration_note": "cy.request(...).its('body.data').should('have.length', N)"
+  },
+  "Each array element of array in response should contain property:": {
+    "canonical_name": "assert_each_element_contains_property",
+    "kind": "assert",
+    "description": "Assert every array element contains a given property.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el).to.have.property(prop))"
+  },
+  "And Response body case-insensitive parameter should be:": {
+    "canonical_name": "assert_response_body_case_insensitive_equals",
+    "kind": "assert",
+    "description": "Assert a response body parameter equals a value, case-insensitively.",
+    "migration_note": "cy.request(...).its('body').its('path').should(v => expect(v.toLowerCase()).to.eq(value.toLowerCase()))"
+  },
+  "Should Contain": {
+    "canonical_name": "assert_response_contains",
+    "kind": "assert",
+    "description": "Builtin string/collection containment assertion used on response data.",
+    "migration_note": "expect(value).to.include(expected)"
+  },
+  "And Response body parameter should NOT be:": {
+    "canonical_name": "assert_response_body_not_equals",
+    "kind": "assert",
+    "description": "Assert a response body parameter does not equal a value.",
+    "migration_note": "cy.request(...).its('body').its('path').should('not.eq', value)"
+  },
+  "And Response body parameter should be either:": {
+    "canonical_name": "assert_response_body_in",
+    "kind": "assert",
+    "description": "Assert a response body parameter is one of an allowed set of values.",
+    "migration_note": "cy.request(...).its('body').its('path').should('be.oneOf', [values])"
+  },
+  "AND Response body parameter should not be EMPTY:": {
+    "canonical_name": "assert_response_body_not_empty",
+    "kind": "assert",
+    "description": "Assert a response body parameter is not empty.",
+    "migration_note": "cy.request(...).its('body').its('path').should('not.be.empty')"
+  },
+  "Response header parameter should be:": {
+    "canonical_name": "assert_response_header",
+    "kind": "assert",
+    "description": "Assert a response header equals an expected value.",
+    "migration_note": "cy.request(...).its('headers').its('name').should('eq', value)"
+  },
+  "Response should contain the array of a certain size:": {
+    "canonical_name": "assert_response_array_size",
+    "kind": "assert",
+    "description": "Assert a response array has an exact size.",
+    "migration_note": "cy.request(...).its('body.data').should('have.length', N)"
+  },
+  "And Array element should contain property with value at least once:": {
+    "canonical_name": "assert_array_element_property_value_at_least_once",
+    "kind": "assert",
+    "description": "Assert at least one array element has a property equal to a value.",
+    "migration_note": "cy.request(...).its('body.data').should(arr => expect(arr.some(e => e.prop === value)).to.be.true)"
+  },
+  "AND Response reason should be:": {
+    "canonical_name": "assert_response_reason",
+    "kind": "assert",
+    "description": "Assert the HTTP response reason phrase.",
+    "migration_note": "cy.request(...).its('statusText').should('eq', reason)"
+  },
+  "Response body parameter should be greater than:": {
+    "canonical_name": "assert_response_body_greater_than",
+    "kind": "assert",
+    "description": "Assert a response body parameter is greater than a value.",
+    "migration_note": "cy.request(...).its('body').its('path').should('be.gt', N)"
+  },
+  "AND Response body parameter should be:": {
+    "canonical_name": "assert_response_body_equals",
+    "kind": "assert",
+    "description": "Assert a response body parameter equals an expected value.",
+    "migration_note": "cy.request(...).its('body').its('path').should('eq', value)"
+  },
+  "productConfigurationInstance.prices.0.netAmount => This value should be greater than or equal to 0.": {
+    "canonical_name": "assert_response_body_greater_than",
+    "kind": "data",
+    "description": "Literal expected error-message string (validation: netAmount >= 0), not a keyword.",
+    "migration_note": ""
+  },
+  "productConfigurationInstance.prices.0.grossAmount => This value should be greater than or equal to 0.": {
+    "canonical_name": "assert_response_body_greater_than",
+    "kind": "data",
+    "description": "Literal expected error-message string (validation: grossAmount >= 0), not a keyword.",
+    "migration_note": ""
+  },
+  "then Response status code should be:": {
+    "canonical_name": "assert_response_status",
+    "kind": "assert",
+    "description": "Assert the HTTP response status code.",
+    "migration_note": "cy.request(...).its('status').should('eq', N)"
+  },
+  "And Nested array element should contain sub-array with property and value at least once:": {
+    "canonical_name": "assert_nested_array_element_sub_array_property_value_at_least_once",
+    "kind": "assert",
+    "description": "Assert at least one nested array element has a sub-array entry matching a property and value.",
+    "migration_note": "cy.request(...).its('body.data').should(arr => expect(arr.some(e => e.sub.some(s => s.prop === value))).to.be.true)"
+  },
+  "And Each array element of array in response should be greater than:": {
+    "canonical_name": "assert_each_element_greater_than",
+    "kind": "assert",
+    "description": "Assert every array element value is greater than a given value.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el).to.be.gt(N))"
+  },
+  "Then Each array element of array in response should contain property with value:": {
+    "canonical_name": "assert_each_element_contains_property_value",
+    "kind": "assert",
+    "description": "Assert every array element contains a property equal to a value.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el).to.have.property(prop, value))"
+  },
+  "And Response Should Contain The Array Larger Than a Certain Size:": {
+    "canonical_name": "assert_response_array_size_greater_than",
+    "kind": "assert",
+    "description": "Assert a response array is larger than a given size.",
+    "migration_note": "cy.request(...).its('body.data').its('length').should('be.gt', N)"
+  },
+  "And Response body parameter should start with:": {
+    "canonical_name": "assert_response_body_starts_with",
+    "kind": "assert",
+    "description": "Assert a response body parameter starts with a given prefix.",
+    "migration_note": "cy.request(...).its('body').its('path').should('match', /^prefix/)"
+  },
+  "And Array element should contain property or array value at least once:": {
+    "canonical_name": "assert_array_element_property_or_array_value_at_least_once",
+    "kind": "assert",
+    "description": "Assert at least one array element has a property or array value matching.",
+    "migration_note": "cy.request(...).its('body.data').should(arr => expect(arr.some(e => match(e))).to.be.true)"
+  },
+  "And Response should contain the array of size in:": {
+    "canonical_name": "assert_response_array_size_in",
+    "kind": "assert",
+    "description": "Assert a response array size is within an allowed set.",
+    "migration_note": "cy.request(...).its('body.data').its('length').should('be.oneOf', [sizes])"
+  },
+  "And Response body array element should contain property with value at least once:": {
+    "canonical_name": "assert_array_element_property_value_at_least_once",
+    "kind": "assert",
+    "description": "Assert at least one response body array element has a property equal to a value.",
+    "migration_note": "cy.request(...).its('body.data').should(arr => expect(arr.some(e => e.prop === value)).to.be.true)"
+  },
+  "And Response should contain a nested array of a certain size at least once:": {
+    "canonical_name": "assert_response_nested_array_size_at_least_once",
+    "kind": "assert",
+    "description": "Assert at least one element has a nested array of a given size.",
+    "migration_note": "cy.request(...).its('body.data').should(arr => expect(arr.some(e => e.nested.length === N)).to.be.true)"
+  },
+  "And Product availability status should be changed on:": {
+    "canonical_name": "assert_product_availability_status_changed",
+    "kind": "assert",
+    "description": "Assert the product availability status changed to an expected value.",
+    "migration_note": "cy.request(...).its('body.data.attributes.availability').should('eq', expected)"
+  },
+  "Then Response header parameter should be:": {
+    "canonical_name": "assert_response_header",
+    "kind": "assert",
+    "description": "Assert a response header equals an expected value.",
+    "migration_note": "cy.request(...).its('headers').its('name').should('eq', value)"
+  },
+  "And Each array element of nested array should contain property with value NOT in:": {
+    "canonical_name": "assert_each_nested_array_element_property_value_not_in",
+    "kind": "assert",
+    "description": "Assert every element of a nested array has a property not within a given set.",
+    "migration_note": "cy.request(...).its('body.data').each(el => el.nested.forEach(n => expect([values]).to.not.include(n.prop)))"
+  },
+  "And Each Array Element Of Array In Response Should Contain Property With Value:": {
+    "canonical_name": "assert_each_element_contains_property_value",
+    "kind": "assert",
+    "description": "Assert every array element contains a property equal to a value.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el).to.have.property(prop, value))"
+  },
+  "And Array element should contain property with value less than at least once:": {
+    "canonical_name": "assert_array_element_property_value_less_than_at_least_once",
+    "kind": "assert",
+    "description": "Assert at least one array element has a property less than a value.",
+    "migration_note": "cy.request(...).its('body.data').should(arr => expect(arr.some(e => e.prop < N)).to.be.true)"
+  },
+  "And Each array element of array in response should contain a nested array of a certain size:": {
+    "canonical_name": "assert_each_element_nested_array_size",
+    "kind": "assert",
+    "description": "Assert every array element contains a nested array of a given size.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el.nested).to.have.length(N))"
+  },
+  "Then Response reason should be:": {
+    "canonical_name": "assert_response_reason",
+    "kind": "assert",
+    "description": "Assert the HTTP response reason phrase.",
+    "migration_note": "cy.request(...).its('statusText').should('eq', reason)"
+  },
+  "Response body parameter should contain:": {
+    "canonical_name": "assert_response_contains",
+    "kind": "assert",
+    "description": "Assert a response body parameter contains a substring or value.",
+    "migration_note": "cy.request(...).its('body').its('path').should('include', value)"
+  },
+  "And Each array element of array in response should NOT be empty:": {
+    "canonical_name": "assert_each_element_not_empty",
+    "kind": "assert",
+    "description": "Assert every array element is not empty.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el).to.not.be.empty)"
+  },
+  "And Response body parameter Should Be:": {
+    "canonical_name": "assert_response_body_equals",
+    "kind": "assert",
+    "description": "Assert a response body parameter equals an expected value.",
+    "migration_note": "cy.request(...).its('body').its('path').should('eq', value)"
+  },
+  "And Response body parameter should Be:": {
+    "canonical_name": "assert_response_body_equals",
+    "kind": "assert",
+    "description": "Assert a response body parameter equals an expected value.",
+    "migration_note": "cy.request(...).its('body').its('path').should('eq', value)"
+  },
+  "quantity => This value should be of type integer.": {
+    "canonical_name": "assert_response_body_datatype",
+    "kind": "data",
+    "description": "Literal expected error-message string (validation: quantity is integer), not a keyword.",
+    "migration_note": ""
+  },
+  "And Each array element of array in response should contain nested property with datatype in:": {
+    "canonical_name": "assert_each_element_nested_property_datatype_in",
+    "kind": "assert",
+    "description": "Assert every array element has a nested property whose datatype is within an allowed set.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect([types]).to.include(typeof el.path))"
+  },
+  "And Response body parameter should not be empty:": {
+    "canonical_name": "assert_response_body_not_empty",
+    "kind": "assert",
+    "description": "Assert a response body parameter is not empty.",
+    "migration_note": "cy.request(...).its('body').its('path').should('not.be.empty')"
+  },
+  "productConfigurationInstance.prices.0.netAmount => This value should be of type numeric.": {
+    "canonical_name": "assert_response_body_datatype",
+    "kind": "data",
+    "description": "Literal expected error-message string (validation: netAmount is numeric), not a keyword.",
+    "migration_note": ""
+  },
+  "productConfigurationInstance.prices.0.grossAmount => This value should be of type numeric.": {
+    "canonical_name": "assert_response_body_datatype",
+    "kind": "data",
+    "description": "Literal expected error-message string (validation: grossAmount is numeric), not a keyword.",
+    "migration_note": ""
+  },
+  "AND Response should return error code:": {
+    "canonical_name": "assert_error_code",
+    "kind": "assert",
+    "description": "Assert the response returns an expected error code.",
+    "migration_note": "cy.request(...).its('body.errors[0].code').should('eq', code)"
+  },
+  "AND Response body parameter should be greater than:": {
+    "canonical_name": "assert_response_body_greater_than",
+    "kind": "assert",
+    "description": "Assert a response body parameter is greater than a value.",
+    "migration_note": "cy.request(...).its('body').its('path').should('be.gt', N)"
+  },
+  "And Array element should contain nested array at least once:": {
+    "canonical_name": "assert_array_element_nested_array_at_least_once",
+    "kind": "assert",
+    "description": "Assert at least one array element contains a nested array.",
+    "migration_note": "cy.request(...).its('body.data').should(arr => expect(arr.some(e => Array.isArray(e.nested))).to.be.true)"
+  },
+  "When Response status code should be:": {
+    "canonical_name": "assert_response_status",
+    "kind": "assert",
+    "description": "Assert the HTTP response status code.",
+    "migration_note": "cy.request(...).its('status').should('eq', N)"
+  },
+  "And Array element should contain nested array with property and value at least once:": {
+    "canonical_name": "assert_nested_array_element_sub_array_property_value_at_least_once",
+    "kind": "assert",
+    "description": "Assert at least one array element has a nested array entry matching a property and value.",
+    "migration_note": "cy.request(...).its('body.data').should(arr => expect(arr.some(e => e.nested.some(n => n.prop === value))).to.be.true)"
+  },
+  "quantity => This value should be of type numeric.": {
+    "canonical_name": "assert_response_body_datatype",
+    "kind": "data",
+    "description": "Literal expected error-message string (validation: quantity is numeric), not a keyword.",
+    "migration_note": ""
+  },
+  "quantity => This value should be greater than 0.": {
+    "canonical_name": "assert_response_body_greater_than",
+    "kind": "data",
+    "description": "Literal expected error-message string (validation: quantity > 0), not a keyword.",
+    "migration_note": ""
+  },
+  "Value in field password should be identical to value in the confirmPassword field.": {
+    "canonical_name": "assert_error_message",
+    "kind": "data",
+    "description": "Literal expected error-message string (password confirmation mismatch), not a keyword.",
+    "migration_note": ""
+  },
+  "Each array element of array in response should contain nested property:": {
+    "canonical_name": "assert_each_element_contains_nested_property",
+    "kind": "assert",
+    "description": "Assert every array element contains a given nested property.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el).to.have.nested.property(path))"
+  },
+  "Response should return error code:": {
+    "canonical_name": "assert_error_code",
+    "kind": "assert",
+    "description": "Assert the response returns an expected error code.",
+    "migration_note": "cy.request(...).its('body.errors[0].code').should('eq', code)"
+  },
+  "And Response should contain the array larger or equal than a certain size:": {
+    "canonical_name": "assert_response_array_size_greater_or_equal",
+    "kind": "assert",
+    "description": "Assert a response array is larger than or equal to a given size.",
+    "migration_note": "cy.request(...).its('body.data').its('length').should('be.gte', N)"
+  },
+  "And Each array element of the array in response should contain a nested array larger than a certain size:": {
+    "canonical_name": "assert_each_element_nested_array_size_greater_than",
+    "kind": "assert",
+    "description": "Assert every array element contains a nested array larger than a given size.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el.nested.length).to.be.gt(N))"
+  },
+  "And Each array in response should contain property with value NOT in:": {
+    "canonical_name": "assert_each_element_property_value_not_in",
+    "kind": "assert",
+    "description": "Assert every array element has a property not within a given set.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect([values]).to.not.include(el.prop))"
+  },
+  "Then Array in response should contain property with value:": {
+    "canonical_name": "assert_response_array_contains_property_value",
+    "kind": "assert",
+    "description": "Assert a response array contains an element with a property equal to a value.",
+    "migration_note": "cy.request(...).its('body.data').should(arr => expect(arr).to.deep.include({ prop: value }))"
+  },
+  "And Response body should not contain:": {
+    "canonical_name": "assert_response_not_contains",
+    "kind": "assert",
+    "description": "Assert the response body does not contain a given value.",
+    "migration_note": "cy.request(...).its('body').should('not.include', value)"
+  },
+  "AND Response should contain the array of a certain size:": {
+    "canonical_name": "assert_response_array_size",
+    "kind": "assert",
+    "description": "Assert a response array has an exact size.",
+    "migration_note": "cy.request(...).its('body.data').should('have.length', N)"
+  },
+  "AND Response body has correct self link": {
+    "canonical_name": "assert_response_body_self_link",
+    "kind": "assert",
+    "description": "Assert the response body has a correct self link.",
+    "migration_note": "cy.request(...).its('body.links.self').should('eq', expectedUrl)"
+  },
+  "And Nested array element should contain sub-array at least once:": {
+    "canonical_name": "assert_array_element_nested_array_at_least_once",
+    "kind": "assert",
+    "description": "Assert at least one nested array element contains a sub-array.",
+    "migration_note": "cy.request(...).its('body.data').should(arr => expect(arr.some(e => Array.isArray(e.sub))).to.be.true)"
+  },
+  "acceptedTerms => This value should be true.": {
+    "canonical_name": "assert_response_body_equals",
+    "kind": "data",
+    "description": "Literal expected error-message string (validation: acceptedTerms is true), not a keyword.",
+    "migration_note": ""
+  },
+  "rating => This value should be of type numeric.": {
+    "canonical_name": "assert_response_body_datatype",
+    "kind": "data",
+    "description": "Literal expected error-message string (validation: rating is numeric), not a keyword.",
+    "migration_note": ""
+  },
+  "rating => This value should be greater than or equal to 1.": {
+    "canonical_name": "assert_response_body_greater_than",
+    "kind": "data",
+    "description": "Literal expected error-message string (validation: rating >= 1), not a keyword.",
+    "migration_note": ""
+  },
+  "And Each array element should contain property with value:": {
+    "canonical_name": "assert_each_element_contains_property_value",
+    "kind": "assert",
+    "description": "Assert every array element contains a property equal to a value.",
+    "migration_note": "cy.request(...).its('body.data').each(el => expect(el).to.have.property(prop, value))"
+  },
+  "And Response body parameter shouldnot be EMPTY:": {
+    "canonical_name": "assert_response_body_not_empty",
+    "kind": "assert",
+    "description": "Assert a response body parameter is not empty (typo variant of should not).",
+    "migration_note": "cy.request(...).its('body').its('path').should('not.be.empty')"
+  },
+  "quantity => This value should be less than 2147483647.": {
+    "canonical_name": "assert_response_body_less_than",
+    "kind": "data",
+    "description": "Literal expected error-message string (validation: quantity < int max), not a keyword.",
+    "migration_note": ""
+  },
+  "Then Response body parameter should be:": {
+    "canonical_name": "assert_response_body_equals",
+    "kind": "assert",
+    "description": "Assert a response body parameter equals an expected value.",
+    "migration_note": "cy.request(...).its('body').its('path').should('eq', value)"
+  }
+}

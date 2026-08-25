@@ -1,0 +1,1526 @@
+{
+  "Yves: login on Yves with provided credentials:": {
+    "canonical_name": "login_as_customer",
+    "kind": "setup",
+    "description": "Log in to the storefront with given credentials.",
+    "migration_note": ""
+  },
+  "Yves: go to PDP of the product with sku:": {
+    "canonical_name": "open_product_page",
+    "kind": "nav",
+    "description": "Open the product detail page for a given SKU.",
+    "migration_note": ""
+  },
+  "Yves: add product to the shopping cart": {
+    "canonical_name": "add_product_to_cart",
+    "kind": "ui",
+    "description": "Add the current product to the cart.",
+    "migration_note": ""
+  },
+  "Yves: go to shopping cart page": {
+    "canonical_name": "open_cart",
+    "kind": "nav",
+    "description": "Navigate to the shopping cart page.",
+    "migration_note": ""
+  },
+  "Yves: click on the 'Checkout' button in the shopping cart": {
+    "canonical_name": "proceed_to_checkout",
+    "kind": "nav",
+    "description": "Click the Checkout button in the cart.",
+    "migration_note": ""
+  },
+  "Yves: select the following payment method on the checkout and go next:": {
+    "canonical_name": "select_payment_method",
+    "kind": "ui",
+    "description": "Select a payment method and advance.",
+    "migration_note": ""
+  },
+  "Yves: submit form on the checkout": {
+    "canonical_name": "submit_checkout_step",
+    "kind": "ui",
+    "description": "Submit the current checkout form/step.",
+    "migration_note": ""
+  },
+  "Yves: billing address same as shipping address:": {
+    "canonical_name": "set_billing_same_as_shipping",
+    "kind": "ui",
+    "description": "Toggle billing address to match shipping.",
+    "migration_note": ""
+  },
+  "Yves: 'submit the order' on the summary page": {
+    "canonical_name": "place_order",
+    "kind": "ui",
+    "description": "Submit the order on the summary page.",
+    "migration_note": ""
+  },
+  "Yves: accept the terms and conditions:": {
+    "canonical_name": "accept_terms",
+    "kind": "ui",
+    "description": "Check the terms and conditions checkbox.",
+    "migration_note": ""
+  },
+  "Yves: 'Thank you' page is displayed": {
+    "canonical_name": "assert_order_success",
+    "kind": "assert",
+    "description": "Assert the order success / thank-you page shows.",
+    "migration_note": ""
+  },
+  "Yves: product price on the PDP should be:": {
+    "canonical_name": "assert_product_price",
+    "kind": "assert",
+    "description": "Assert the product price shown on the PDP.",
+    "migration_note": ""
+  },
+  "Yves: get the last placed order ID by current customer": {
+    "canonical_name": "get_last_order_id",
+    "kind": "data",
+    "description": "Read the most recent order ID for the customer.",
+    "migration_note": "Use API/intercept instead of UI scrape."
+  },
+  "Yves: go to user menu:": {
+    "canonical_name": "open_user_menu",
+    "kind": "nav",
+    "description": "Open a customer account/user menu entry.",
+    "migration_note": ""
+  },
+  "Yves: select the following shipping method for the shipment:": {
+    "canonical_name": "select_shipment_method_per_shipment",
+    "kind": "ui",
+    "description": "Select shipping method for a specific shipment.",
+    "migration_note": ""
+  },
+  "Yves: check if cart is not empty and clear it": {
+    "canonical_name": "clear_cart",
+    "kind": "setup",
+    "description": "Empty the cart if it has items.",
+    "migration_note": ""
+  },
+  "Yves: select the following shipping method on the checkout and go next:": {
+    "canonical_name": "select_shipment_method",
+    "kind": "ui",
+    "description": "Select a shipping method and advance.",
+    "migration_note": ""
+  },
+  "Yves: PDP contains/doesn't contain:": {
+    "canonical_name": "assert_pdp_contains",
+    "kind": "assert",
+    "description": "Assert presence/absence of content on the PDP.",
+    "migration_note": ""
+  },
+  "Yves: go to URL:": {
+    "canonical_name": "open_url",
+    "kind": "nav",
+    "description": "Navigate to an explicit URL.",
+    "migration_note": "cy.visit()."
+  },
+  "Yves: select the following existing address on the checkout as 'shipping' address and go next:": {
+    "canonical_name": "select_existing_shipping_address",
+    "kind": "ui",
+    "description": "Pick a saved shipping address and advance.",
+    "migration_note": ""
+  },
+  "Yves: go to the 'Home' page": {
+    "canonical_name": "go_home",
+    "kind": "nav",
+    "description": "Navigate to the storefront home page.",
+    "migration_note": ""
+  },
+  "Yves: merchant is (not) displaying in Sold By section of PDP:": {
+    "canonical_name": "assert_pdp_merchant",
+    "kind": "assert",
+    "description": "Assert merchant shown/hidden in PDP Sold By.",
+    "migration_note": ""
+  },
+  "Yves: try reloading page if element is/not appear:": {
+    "canonical_name": "reload_until_element",
+    "kind": "ui",
+    "description": "Reload the page until an element appears/disappears.",
+    "migration_note": "Use cy retry/should assertions instead of manual reload loop."
+  },
+  "Yves: assert merchant of product in cart or list:": {
+    "canonical_name": "assert_cart_merchant",
+    "kind": "assert",
+    "description": "Assert a product's merchant in cart or list.",
+    "migration_note": ""
+  },
+  "Yves: shopping cart contains product with unit price:": {
+    "canonical_name": "assert_cart_unit_price",
+    "kind": "assert",
+    "description": "Assert a cart product's unit price.",
+    "migration_note": ""
+  },
+  "Yves: go to the shopping cart through the header with name:": {
+    "canonical_name": "open_named_cart",
+    "kind": "nav",
+    "description": "Open a named cart via the header switcher.",
+    "migration_note": ""
+  },
+  "Yves: select xxx merchant's offer:": {
+    "canonical_name": "select_merchant_offer",
+    "kind": "ui",
+    "description": "Select a specific merchant's offer on the PDP.",
+    "migration_note": ""
+  },
+  "Yves: create new 'Shopping Cart' with name:": {
+    "canonical_name": "create_named_cart",
+    "kind": "ui",
+    "description": "Create a new named shopping cart.",
+    "migration_note": ""
+  },
+  "Yves: page contains CMS element:": {
+    "canonical_name": "assert_cms_element",
+    "kind": "assert",
+    "description": "Assert a CMS element is present on the page.",
+    "migration_note": ""
+  },
+  "Yves: change variant of the product on PDP on:": {
+    "canonical_name": "select_product_variant",
+    "kind": "ui",
+    "description": "Change the selected product variant on the PDP.",
+    "migration_note": ""
+  },
+  "Yves: logout on Yves as a customer": {
+    "canonical_name": "logout_customer",
+    "kind": "setup",
+    "description": "Log the customer out of the storefront.",
+    "migration_note": ""
+  },
+  "Yves: delete all user addresses": {
+    "canonical_name": "delete_all_addresses",
+    "kind": "setup",
+    "description": "Remove all addresses from the customer's address book.",
+    "migration_note": "Prefer API/DB reset for setup."
+  },
+  "Yves: merchant's offer/product price should be:": {
+    "canonical_name": "assert_offer_price",
+    "kind": "assert",
+    "description": "Assert a merchant offer/product price.",
+    "migration_note": ""
+  },
+  "Yves: change quantity using '+' or '-' button № times:": {
+    "canonical_name": "change_cart_quantity",
+    "kind": "ui",
+    "description": "Adjust cart item quantity with +/- buttons.",
+    "migration_note": ""
+  },
+  "Yves: 1st product card in catalog (not)contains:": {
+    "canonical_name": "assert_catalog_card_contains",
+    "kind": "assert",
+    "description": "Assert content of the first catalog product card.",
+    "migration_note": ""
+  },
+  "Yves: shopping cart contains the following products:": {
+    "canonical_name": "assert_cart_products",
+    "kind": "assert",
+    "description": "Assert the set of products in the cart.",
+    "migration_note": ""
+  },
+  "Yves: 'View Order/Reorder/Return' on the order history page:": {
+    "canonical_name": "open_order_action",
+    "kind": "nav",
+    "description": "Trigger View/Reorder/Return from order history.",
+    "migration_note": ""
+  },
+  "Yves: product configuration status should be equal:": {
+    "canonical_name": "assert_configuration_status",
+    "kind": "assert",
+    "description": "Assert a configurable product's status.",
+    "migration_note": ""
+  },
+  "Yves: perform search by:": {
+    "canonical_name": "search_catalog",
+    "kind": "ui",
+    "description": "Run a catalog search for a term.",
+    "migration_note": ""
+  },
+  "Yves: change the product options in configurator to:": {
+    "canonical_name": "set_product_configuration",
+    "kind": "ui",
+    "description": "Set options in the product configurator.",
+    "migration_note": ""
+  },
+  "Yves: save product configuration": {
+    "canonical_name": "save_product_configuration",
+    "kind": "ui",
+    "description": "Save the product configurator state.",
+    "migration_note": ""
+  },
+  "Yves: fill in new delivery address for a product:": {
+    "canonical_name": "set_split_delivery_address",
+    "kind": "ui",
+    "description": "Enter a per-product delivery address.",
+    "migration_note": ""
+  },
+  "Yves: go to AT store 'Home' page if other store not specified:": {
+    "canonical_name": "go_home",
+    "kind": "nav",
+    "description": "Go to the (AT default) store home page.",
+    "migration_note": "Store/locale is config, not a UI step in Cypress."
+  },
+  "Yves: go to user menu item in the left bar:": {
+    "canonical_name": "open_user_menu",
+    "kind": "nav",
+    "description": "Open a customer menu item in the sidebar.",
+    "migration_note": ""
+  },
+  "Yves: fill in the following new shipping address:": {
+    "canonical_name": "set_shipping_address",
+    "kind": "ui",
+    "description": "Enter a new shipping address.",
+    "migration_note": ""
+  },
+  "Yves: try add product to the cart from PDP and expect error:": {
+    "canonical_name": "assert_add_to_cart_error",
+    "kind": "assert",
+    "description": "Attempt add-to-cart from PDP and assert an error.",
+    "migration_note": ""
+  },
+  "Yves: 'Catalog' page should show products:": {
+    "canonical_name": "assert_catalog_products",
+    "kind": "assert",
+    "description": "Assert products shown on the catalog page.",
+    "migration_note": ""
+  },
+  "Yves: change quantity on PDP:": {
+    "canonical_name": "set_pdp_quantity",
+    "kind": "ui",
+    "description": "Set the quantity field on the PDP.",
+    "migration_note": ""
+  },
+  "Yves: 'Shopping Cart' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Shopping Cart page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: 'Order History' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Order History page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: go to newly created page by URL:": {
+    "canonical_name": "open_url",
+    "kind": "nav",
+    "description": "Open a newly created CMS page by URL.",
+    "migration_note": ""
+  },
+  "Yves: delete all shopping carts": {
+    "canonical_name": "delete_all_carts",
+    "kind": "setup",
+    "description": "Delete all of the customer's shopping carts.",
+    "migration_note": "Prefer API/DB reset for setup."
+  },
+  "Yves: fill in the following new billing address:": {
+    "canonical_name": "set_billing_address",
+    "kind": "ui",
+    "description": "Enter a new billing address.",
+    "migration_note": ""
+  },
+  "Yves: check that user has address exists/doesn't exist:": {
+    "canonical_name": "assert_address_exists",
+    "kind": "assert",
+    "description": "Assert an address exists/absent in address book.",
+    "migration_note": ""
+  },
+  "Yves: 'Overview' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the account Overview page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: go to 'Wishlist' page": {
+    "canonical_name": "open_wishlist_page",
+    "kind": "nav",
+    "description": "Navigate to the Wishlist page.",
+    "migration_note": ""
+  },
+  "Yves: go to 'Order History' page": {
+    "canonical_name": "open_order_history_page",
+    "kind": "nav",
+    "description": "Navigate to the Order History page.",
+    "migration_note": ""
+  },
+  "Yves: discount is applied:": {
+    "canonical_name": "assert_discount_applied",
+    "kind": "assert",
+    "description": "Assert a discount is applied.",
+    "migration_note": ""
+  },
+  "Yves: header contains/doesn't contain:": {
+    "canonical_name": "assert_header_contains",
+    "kind": "assert",
+    "description": "Assert presence/absence of header content.",
+    "migration_note": ""
+  },
+  "Yves: as an agent login under the customer:": {
+    "canonical_name": "login_as_agent_for_customer",
+    "kind": "setup",
+    "description": "Agent assist: log in on behalf of a customer.",
+    "migration_note": ""
+  },
+  "Yves: 'Profile' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Profile page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: assert customer profile data:": {
+    "canonical_name": "assert_customer_profile",
+    "kind": "assert",
+    "description": "Assert customer profile field values.",
+    "migration_note": ""
+  },
+  "Yves: assert merchant of product in b2c cart:": {
+    "canonical_name": "assert_cart_merchant",
+    "kind": "assert",
+    "description": "Assert a product's merchant in the B2C cart.",
+    "migration_note": ""
+  },
+  "Yves: go to the PDP of the first product on open catalog page": {
+    "canonical_name": "open_first_catalog_product",
+    "kind": "nav",
+    "description": "Open the PDP of the first catalog product.",
+    "migration_note": ""
+  },
+  "Yves: 'Shopping Carts' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Shopping Carts list page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: the following shopping cart is shown:": {
+    "canonical_name": "assert_cart_shown",
+    "kind": "assert",
+    "description": "Assert a named cart is shown in the list.",
+    "migration_note": ""
+  },
+  "Yves: add product to wishlist:": {
+    "canonical_name": "add_product_to_wishlist",
+    "kind": "ui",
+    "description": "Add a product to a wishlist.",
+    "migration_note": ""
+  },
+  "Yves: 'Order Details' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Order Details page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: go to first navigation item level:": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open a first-level main navigation item.",
+    "migration_note": ""
+  },
+  "Yves: quote request with reference xxx should have status:": {
+    "canonical_name": "assert_quote_request_status",
+    "kind": "assert",
+    "description": "Assert status of a quote request by reference.",
+    "migration_note": ""
+  },
+  "Yves: view quote request with reference:": {
+    "canonical_name": "open_quote_request",
+    "kind": "nav",
+    "description": "Open a quote request by reference.",
+    "migration_note": ""
+  },
+  "Yves: 'Addresses' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Addresses page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: create a new customer address in profile:": {
+    "canonical_name": "create_customer_address",
+    "kind": "ui",
+    "description": "Add a new address in the customer profile.",
+    "migration_note": ""
+  },
+  "Yves: select filter value:": {
+    "canonical_name": "select_catalog_filter",
+    "kind": "ui",
+    "description": "Select a catalog filter value.",
+    "migration_note": ""
+  },
+  "Yves: go to wishlist with name:": {
+    "canonical_name": "open_named_wishlist",
+    "kind": "nav",
+    "description": "Open a wishlist by name.",
+    "migration_note": ""
+  },
+  "Yves: change sorting order on catalog page:": {
+    "canonical_name": "set_catalog_sorting",
+    "kind": "ui",
+    "description": "Change the catalog sort order.",
+    "migration_note": ""
+  },
+  "Yves: reset selected variant of the product on PDP": {
+    "canonical_name": "reset_product_variant",
+    "kind": "ui",
+    "description": "Clear the selected product variant on the PDP.",
+    "migration_note": ""
+  },
+  "Yves: select delivery to multiple addresses": {
+    "canonical_name": "enable_multiple_address_delivery",
+    "kind": "ui",
+    "description": "Enable multi-address delivery in checkout.",
+    "migration_note": ""
+  },
+  "Yves: configuration should be equal:": {
+    "canonical_name": "assert_configuration",
+    "kind": "assert",
+    "description": "Assert the product configuration values.",
+    "migration_note": ""
+  },
+  "Yves: add product to the shopping list:": {
+    "canonical_name": "add_product_to_shopping_list",
+    "kind": "ui",
+    "description": "Add a product to a shopping list.",
+    "migration_note": ""
+  },
+  "Yves: click 'Revise' button on the 'Quote Request Details' page": {
+    "canonical_name": "click_quote_request_action",
+    "kind": "ui",
+    "description": "Click Revise on Quote Request Details.",
+    "migration_note": ""
+  },
+  "Yves: check comments are visible or not in cart:": {
+    "canonical_name": "assert_cart_comments_visible",
+    "kind": "assert",
+    "description": "Assert cart comments are visible or not.",
+    "migration_note": ""
+  },
+  "Yves: go to 'Shopping Carts' page through the header": {
+    "canonical_name": "open_shopping_carts_page",
+    "kind": "nav",
+    "description": "Open the Shopping Carts page via the header.",
+    "migration_note": ""
+  },
+  "Yves: 'Product Set' page contains the following products:": {
+    "canonical_name": "assert_product_set_products",
+    "kind": "assert",
+    "description": "Assert products listed on a Product Set page.",
+    "migration_note": ""
+  },
+  "Yves: select product in the bundle slot:": {
+    "canonical_name": "select_bundle_slot_product",
+    "kind": "ui",
+    "description": "Select a product for a bundle slot.",
+    "migration_note": ""
+  },
+  "Yves: at least one product is/not displayed on the search results page:": {
+    "canonical_name": "assert_search_results",
+    "kind": "assert",
+    "description": "Assert at least one search result shown/absent.",
+    "migration_note": ""
+  },
+  "Yves: delete 'Shopping Cart' with name:": {
+    "canonical_name": "delete_named_cart",
+    "kind": "ui",
+    "description": "Delete a named shopping cart.",
+    "migration_note": ""
+  },
+  "Yves: 'Create Return' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Create Return page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: create return for the following products:": {
+    "canonical_name": "create_return",
+    "kind": "ui",
+    "description": "Create a return for given products.",
+    "migration_note": ""
+  },
+  "Yves: 'Return Details' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Return Details page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: check that 'Print Slip' contains the following products:": {
+    "canonical_name": "assert_print_slip_products",
+    "kind": "assert",
+    "description": "Assert products on the return print slip.",
+    "migration_note": ""
+  },
+  "Yves: create new 'Shopping List' with name:": {
+    "canonical_name": "create_named_shopping_list",
+    "kind": "ui",
+    "description": "Create a new named shopping list.",
+    "migration_note": ""
+  },
+  "Yves: delete product from the shopping cart with sku:": {
+    "canonical_name": "remove_cart_product",
+    "kind": "ui",
+    "description": "Remove a cart product by SKU.",
+    "migration_note": ""
+  },
+  "Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:": {
+    "canonical_name": "open_url_until_404",
+    "kind": "nav",
+    "description": "Open a store URL and refresh until a 404 appears.",
+    "migration_note": "Replace reload loop with cy retry/intercept."
+  },
+  "Yves: validate the page title:": {
+    "canonical_name": "assert_page_title",
+    "kind": "assert",
+    "description": "Assert the page title text.",
+    "migration_note": ""
+  },
+  "Yves: check if product is available on PDP:": {
+    "canonical_name": "assert_product_available",
+    "kind": "assert",
+    "description": "Assert product availability on the PDP.",
+    "migration_note": ""
+  },
+  "Yves: 'Summary' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the checkout Summary page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: shopping cart contains/doesn't contain the following elements:": {
+    "canonical_name": "assert_cart_elements",
+    "kind": "assert",
+    "description": "Assert presence/absence of cart elements.",
+    "migration_note": ""
+  },
+  "Yves: shopping cart with name xxx has the following status:": {
+    "canonical_name": "assert_named_cart_status",
+    "kind": "assert",
+    "description": "Assert the status of a named cart.",
+    "migration_note": ""
+  },
+  "Yves: save new billing address to address book:": {
+    "canonical_name": "save_billing_to_address_book",
+    "kind": "ui",
+    "description": "Save a new billing address to the address book.",
+    "migration_note": ""
+  },
+  "Yves: soft threshold surcharge is added in the cart:": {
+    "canonical_name": "assert_soft_threshold_cart",
+    "kind": "assert",
+    "description": "Assert soft-threshold surcharge shown in cart.",
+    "migration_note": ""
+  },
+  "Yves: soft threshold surcharge is added on summary page:": {
+    "canonical_name": "assert_soft_threshold_summary",
+    "kind": "assert",
+    "description": "Assert soft-threshold surcharge on summary page.",
+    "migration_note": ""
+  },
+  "Yves: product with name in the catalog should have price:": {
+    "canonical_name": "assert_catalog_product_price",
+    "kind": "assert",
+    "description": "Assert a catalog product's price by name.",
+    "migration_note": ""
+  },
+  "Yves: go to 'Shopping Lists' page": {
+    "canonical_name": "open_shopping_lists_page",
+    "kind": "nav",
+    "description": "Navigate to the Shopping Lists page.",
+    "migration_note": ""
+  },
+  "Yves: click 'Send to Agent' button on the 'Quote Request Details' page": {
+    "canonical_name": "click_quote_request_action",
+    "kind": "ui",
+    "description": "Click Send to Agent on Quote Request Details.",
+    "migration_note": ""
+  },
+  "Yves: click 'Send to Customer' button on the 'Quote Request Details' page": {
+    "canonical_name": "click_quote_request_action",
+    "kind": "ui",
+    "description": "Click Send to Customer on Quote Request Details.",
+    "migration_note": ""
+  },
+  "Yves: product name on PDP should be:": {
+    "canonical_name": "assert_product_name",
+    "kind": "assert",
+    "description": "Assert the product name on the PDP.",
+    "migration_note": ""
+  },
+  "Yves: product original price on the PDP should be:": {
+    "canonical_name": "assert_product_original_price",
+    "kind": "assert",
+    "description": "Assert the original (struck) price on the PDP.",
+    "migration_note": ""
+  },
+  "Yves: 'Order Details' page contains the cancel order button:": {
+    "canonical_name": "assert_cancel_order_button",
+    "kind": "assert",
+    "description": "Assert the cancel-order button on Order Details.",
+    "migration_note": ""
+  },
+  "Yves: product configuration price should be:": {
+    "canonical_name": "assert_configuration_price",
+    "kind": "assert",
+    "description": "Assert the configured product price.",
+    "migration_note": ""
+  },
+  "Yves: wishlist contains product with sku:": {
+    "canonical_name": "assert_wishlist_product",
+    "kind": "assert",
+    "description": "Assert a wishlist contains a product by SKU.",
+    "migration_note": ""
+  },
+  "Yves: flash message should be shown:": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert a flash/notification message text.",
+    "migration_note": ""
+  },
+  "Yves: select random varian if variant selector is available": {
+    "canonical_name": "select_random_variant",
+    "kind": "ui",
+    "description": "Select a random product variant if available.",
+    "migration_note": ""
+  },
+  "Yves: assert merchant profile fields:": {
+    "canonical_name": "assert_merchant_profile",
+    "kind": "assert",
+    "description": "Assert merchant profile field values.",
+    "migration_note": ""
+  },
+  "Yves: add all available products from list to cart": {
+    "canonical_name": "add_all_list_products_to_cart",
+    "kind": "ui",
+    "description": "Add all available shopping-list items to cart.",
+    "migration_note": ""
+  },
+  "Yves: 'Shopping Carts' widget contains:": {
+    "canonical_name": "assert_carts_widget",
+    "kind": "assert",
+    "description": "Assert contents of the Shopping Carts widget.",
+    "migration_note": ""
+  },
+  "Yves: go to URL and refresh until 404 occurs:": {
+    "canonical_name": "open_url_until_404",
+    "kind": "nav",
+    "description": "Open a URL and refresh until a 404 appears.",
+    "migration_note": "Replace reload loop with cy retry/intercept."
+  },
+  "Yves: apply discount voucher to cart:": {
+    "canonical_name": "apply_voucher",
+    "kind": "ui",
+    "description": "Apply a discount voucher code to the cart.",
+    "migration_note": ""
+  },
+  "Yves: check store availability for item number xxx:": {
+    "canonical_name": "assert_store_availability",
+    "kind": "assert",
+    "description": "Assert store availability for a line item.",
+    "migration_note": ""
+  },
+  "Yves: delete all wishlists": {
+    "canonical_name": "delete_all_wishlists",
+    "kind": "setup",
+    "description": "Delete all of the customer's wishlists.",
+    "migration_note": "Prefer API/DB reset for setup."
+  },
+  "Yves: catalog page contains filter:": {
+    "canonical_name": "assert_catalog_filter",
+    "kind": "assert",
+    "description": "Assert a filter is present on the catalog page.",
+    "migration_note": ""
+  },
+  "Yves: view shopping list with name:": {
+    "canonical_name": "open_named_shopping_list",
+    "kind": "nav",
+    "description": "Open a shopping list by name.",
+    "migration_note": ""
+  },
+  "Yves: perform search by customer:": {
+    "canonical_name": "search_catalog",
+    "kind": "ui",
+    "description": "Run a catalog search as the customer.",
+    "migration_note": ""
+  },
+  "Yves: agent widget contains:": {
+    "canonical_name": "assert_agent_widget",
+    "kind": "assert",
+    "description": "Assert contents of the agent widget.",
+    "migration_note": ""
+  },
+  "Yves: go to 'Quick Order' page through the header": {
+    "canonical_name": "open_quick_order_page",
+    "kind": "nav",
+    "description": "Open the Quick Order page via the header.",
+    "migration_note": ""
+  },
+  "Yves: add the following articles into the form through quick order text area:": {
+    "canonical_name": "fill_quick_order_textarea",
+    "kind": "ui",
+    "description": "Bulk-add SKUs via the Quick Order text area.",
+    "migration_note": ""
+  },
+  "Yves: reorder all items from 'Order Details' page": {
+    "canonical_name": "reorder_order",
+    "kind": "ui",
+    "description": "Reorder all items from an order's details.",
+    "migration_note": ""
+  },
+  "Yves: change amount on PDP:": {
+    "canonical_name": "set_pdp_quantity",
+    "kind": "ui",
+    "description": "Change the amount/quantity on the PDP.",
+    "migration_note": ""
+  },
+  "Yves: quick add to cart for first item in catalog": {
+    "canonical_name": "quick_add_first_catalog_product",
+    "kind": "ui",
+    "description": "Quick-add the first catalog item to cart.",
+    "migration_note": ""
+  },
+  "Yves: check and go back that configuration page contains:": {
+    "canonical_name": "assert_configuration_contains",
+    "kind": "assert",
+    "description": "Assert configurator page contents, then go back.",
+    "migration_note": ""
+  },
+  "Yves: product configuration notification is:": {
+    "canonical_name": "assert_configuration_notification",
+    "kind": "assert",
+    "description": "Assert the product configuration notification.",
+    "migration_note": ""
+  },
+  "Yves: submit new request for quote": {
+    "canonical_name": "submit_quote_request",
+    "kind": "ui",
+    "description": "Submit a new request for quote.",
+    "migration_note": ""
+  },
+  "Yves: go to 'Agent Quote Requests' page through the header": {
+    "canonical_name": "open_agent_quote_requests_page",
+    "kind": "nav",
+    "description": "Open the Agent Quote Requests page via header.",
+    "migration_note": ""
+  },
+  "Yves: 'Quote Request Details' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Quote Request Details page is shown.",
+    "migration_note": ""
+  },
+  "Yves: click 'Edit Items' button on the 'Quote Request Details' page": {
+    "canonical_name": "click_quote_request_action",
+    "kind": "ui",
+    "description": "Click Edit Items on Quote Request Details.",
+    "migration_note": ""
+  },
+  "Yves: click 'Save and Back to Edit' button on the 'Quote Request Details' page": {
+    "canonical_name": "click_quote_request_action",
+    "kind": "ui",
+    "description": "Click Save and Back to Edit on Quote Request Details.",
+    "migration_note": ""
+  },
+  "Yves: click 'Convert to Cart' button on the 'Quote Request Details' page": {
+    "canonical_name": "click_quote_request_action",
+    "kind": "ui",
+    "description": "Click Convert to Cart on Quote Request Details.",
+    "migration_note": ""
+  },
+  "Yves: 'Summary' page contains/doesn't contain:": {
+    "canonical_name": "assert_summary_contains",
+    "kind": "assert",
+    "description": "Assert presence/absence on the Summary page.",
+    "migration_note": ""
+  },
+  "Yves: change price for the product in the quote request with sku xxx on:": {
+    "canonical_name": "set_quote_request_price",
+    "kind": "ui",
+    "description": "Edit a product price in a quote request.",
+    "migration_note": ""
+  },
+  "Yves: add comment on cart:": {
+    "canonical_name": "add_cart_comment",
+    "kind": "ui",
+    "description": "Add a comment to the cart.",
+    "migration_note": ""
+  },
+  "Yves: 'Shopping Lists' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Shopping Lists page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: the following shopping list is shown:": {
+    "canonical_name": "assert_shopping_list_shown",
+    "kind": "assert",
+    "description": "Assert a shopping list is shown in the list.",
+    "migration_note": ""
+  },
+  "Yves: add all products to the shopping cart from Product Set": {
+    "canonical_name": "add_product_set_to_cart",
+    "kind": "ui",
+    "description": "Add all Product Set products to the cart.",
+    "migration_note": ""
+  },
+  "Yves: 'Choose Bundle to configure' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Choose Bundle to configure page shows.",
+    "migration_note": ""
+  },
+  "Yves: choose bundle template to configure:": {
+    "canonical_name": "choose_bundle_template",
+    "kind": "ui",
+    "description": "Choose a bundle template to configure.",
+    "migration_note": ""
+  },
+  "Yves: go to 'Summary' step in the bundle configurator": {
+    "canonical_name": "open_bundle_summary_step",
+    "kind": "nav",
+    "description": "Open the Summary step in the bundle configurator.",
+    "migration_note": ""
+  },
+  "Yves: add products to the shopping cart in the bundle configurator": {
+    "canonical_name": "add_bundle_to_cart",
+    "kind": "ui",
+    "description": "Add configured bundle products to the cart.",
+    "migration_note": ""
+  },
+  "Yves: 'Login' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Login page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: 'Wishlist' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Wishlist page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: create wishlist with name:": {
+    "canonical_name": "create_named_wishlist",
+    "kind": "ui",
+    "description": "Create a new wishlist with a name.",
+    "migration_note": ""
+  },
+  "Yves: 'Order History' page contains the following order with a status:": {
+    "canonical_name": "assert_order_history_status",
+    "kind": "assert",
+    "description": "Assert an order with a status in Order History.",
+    "migration_note": ""
+  },
+  "Yves: delete 'Shopping List' with name:": {
+    "canonical_name": "delete_named_shopping_list",
+    "kind": "ui",
+    "description": "Delete a shopping list by name.",
+    "migration_note": ""
+  },
+  "Yves: go to catalog page:": {
+    "canonical_name": "open_catalog_page",
+    "kind": "nav",
+    "description": "Navigate to a catalog/category page.",
+    "migration_note": ""
+  },
+  "Yves: submit back in stock notification request for email:": {
+    "canonical_name": "submit_back_in_stock_notification",
+    "kind": "ui",
+    "description": "Submit a back-in-stock notification request.",
+    "migration_note": ""
+  },
+  "Yves: unsubscribe from availability notifications": {
+    "canonical_name": "unsubscribe_availability_notification",
+    "kind": "ui",
+    "description": "Unsubscribe from availability notifications.",
+    "migration_note": ""
+  },
+  "Yves: return to the previous checkout step:": {
+    "canonical_name": "return_to_checkout_step",
+    "kind": "nav",
+    "description": "Go back to the previous checkout step.",
+    "migration_note": ""
+  },
+  "Yves: save new delivery address to address book:": {
+    "canonical_name": "save_shipping_to_address_book",
+    "kind": "ui",
+    "description": "Save a new delivery address to the address book.",
+    "migration_note": ""
+  },
+  "Yves: 'Newsletter' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Newsletter page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: 'Returns' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Returns page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: delete user address:": {
+    "canonical_name": "delete_customer_address",
+    "kind": "ui",
+    "description": "Delete a specific customer address.",
+    "migration_note": ""
+  },
+  "Yves: update customer profile data:": {
+    "canonical_name": "update_customer_profile",
+    "kind": "ui",
+    "description": "Update customer profile fields.",
+    "migration_note": ""
+  },
+  "Yves: hard threshold is applied with the following message:": {
+    "canonical_name": "assert_hard_threshold",
+    "kind": "assert",
+    "description": "Assert a hard threshold block message.",
+    "migration_note": ""
+  },
+  "Yves: promotional product offer is/not shown in cart:": {
+    "canonical_name": "assert_promo_product_in_cart",
+    "kind": "assert",
+    "description": "Assert a promotional product offer in cart.",
+    "migration_note": ""
+  },
+  "Yves: go to newly created page by URL on AT store if other store not specified:": {
+    "canonical_name": "open_url",
+    "kind": "nav",
+    "description": "Open a newly created CMS page by URL.",
+    "migration_note": ""
+  },
+  "Yves: wait until store switcher contains:": {
+    "canonical_name": "assert_store_switcher",
+    "kind": "assert",
+    "description": "Wait/assert the store switcher contents.",
+    "migration_note": "Use cy.should retry instead of explicit wait."
+  },
+  "Yves: select currency Euro if other currency not specified": {
+    "canonical_name": "select_currency",
+    "kind": "ui",
+    "description": "Select a currency (defaults to EUR).",
+    "migration_note": ""
+  },
+  "Yves: cancel the order:": {
+    "canonical_name": "cancel_order",
+    "kind": "ui",
+    "description": "Cancel an order.",
+    "migration_note": ""
+  },
+  "Yves: add all available products from wishlist to cart": {
+    "canonical_name": "add_all_wishlist_products_to_cart",
+    "kind": "ui",
+    "description": "Add all available wishlist items to the cart.",
+    "migration_note": ""
+  },
+  "Yves: proceed with checkout as guest:": {
+    "canonical_name": "checkout_as_guest",
+    "kind": "ui",
+    "description": "Proceed through checkout as a guest.",
+    "migration_note": ""
+  },
+  "Yves: go to the PDP of the first available product on current catalog page": {
+    "canonical_name": "open_first_catalog_product",
+    "kind": "nav",
+    "description": "Open the PDP of the first available catalog product.",
+    "migration_note": ""
+  },
+  "Yves: select approver on the 'Summary' page:": {
+    "canonical_name": "select_approver",
+    "kind": "ui",
+    "description": "Select an approver on the Summary page.",
+    "migration_note": ""
+  },
+  "Yves: 'send the request' on the summary page": {
+    "canonical_name": "submit_quote_request",
+    "kind": "ui",
+    "description": "Send the approval/quote request on summary.",
+    "migration_note": ""
+  },
+  "Yves: click checkout button:": {
+    "canonical_name": "proceed_to_checkout",
+    "kind": "nav",
+    "description": "Click the checkout button.",
+    "migration_note": ""
+  },
+  "Yves: share shopping cart with user:": {
+    "canonical_name": "share_cart",
+    "kind": "ui",
+    "description": "Share a shopping cart with another user.",
+    "migration_note": ""
+  },
+  "Yves: change quantity of promotional product and add to cart:": {
+    "canonical_name": "change_promo_quantity_add_to_cart",
+    "kind": "ui",
+    "description": "Set promo product quantity and add to cart.",
+    "migration_note": ""
+  },
+  "Yves: check that the payment method is/not present in the checkout process:": {
+    "canonical_name": "assert_payment_method_present",
+    "kind": "assert",
+    "description": "Assert a payment method is present/absent.",
+    "migration_note": ""
+  },
+  "Yves: find and add new item in the quick order form:": {
+    "canonical_name": "add_quick_order_item",
+    "kind": "ui",
+    "description": "Find and add an item in the Quick Order form.",
+    "migration_note": ""
+  },
+  "Yves: assert merchant of product in wishlist:": {
+    "canonical_name": "assert_wishlist_merchant",
+    "kind": "assert",
+    "description": "Assert a product's merchant in the wishlist.",
+    "migration_note": ""
+  },
+  "Yves: select xxx merchant's offer with price:": {
+    "canonical_name": "select_merchant_offer",
+    "kind": "ui",
+    "description": "Select a merchant offer matching a price.",
+    "migration_note": ""
+  },
+  "Yves: select xxx shipment type for item number xxx:": {
+    "canonical_name": "select_shipment_type_per_item",
+    "kind": "ui",
+    "description": "Select shipment type for a specific line item.",
+    "migration_note": ""
+  },
+  "Yves: select pickup service point store for item number xxx:": {
+    "canonical_name": "select_pickup_service_point",
+    "kind": "ui",
+    "description": "Select a pickup service point for a line item.",
+    "migration_note": ""
+  },
+  "Yves: create new 'Wishlist' with name:": {
+    "canonical_name": "create_named_wishlist",
+    "kind": "ui",
+    "description": "Create a new wishlist with a name.",
+    "migration_note": ""
+  },
+  "Yves: 'Quick Order' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Quick Order page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: add products to the shopping cart from quick order page": {
+    "canonical_name": "add_quick_order_to_cart",
+    "kind": "ui",
+    "description": "Add Quick Order products to the cart.",
+    "migration_note": ""
+  },
+  "Yves: add products to the shopping list from quick order page with name:": {
+    "canonical_name": "add_quick_order_to_shopping_list",
+    "kind": "ui",
+    "description": "Add Quick Order products to a named shopping list.",
+    "migration_note": ""
+  },
+  "Yves: 'Shopping List' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Shopping List page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: shopping list contains the following products:": {
+    "canonical_name": "assert_shopping_list_products",
+    "kind": "assert",
+    "description": "Assert products in a shopping list.",
+    "migration_note": ""
+  },
+  "Yves: select the following 'Sales Unit' on PDP:": {
+    "canonical_name": "select_sales_unit",
+    "kind": "ui",
+    "description": "Select a sales unit on the PDP.",
+    "migration_note": ""
+  },
+  "Yves: mouse over color on product card:": {
+    "canonical_name": "hover_product_card_color",
+    "kind": "ui",
+    "description": "Hover a color swatch on a product card.",
+    "migration_note": ""
+  },
+  "Yves: checkout is blocked with the following message:": {
+    "canonical_name": "assert_checkout_blocked",
+    "kind": "assert",
+    "description": "Assert checkout is blocked with a message.",
+    "migration_note": ""
+  },
+  "Yves: shipping address on the order details page is:": {
+    "canonical_name": "assert_order_shipping_address",
+    "kind": "assert",
+    "description": "Assert the shipping address on Order Details.",
+    "migration_note": ""
+  },
+  "Yves: 'Quote Requests' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Quote Requests page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: add the following note to the quote request:": {
+    "canonical_name": "add_quote_request_note",
+    "kind": "ui",
+    "description": "Add a note to a quote request.",
+    "migration_note": ""
+  },
+  "Yves: click 'Save' button on the 'Quote Request Details' page": {
+    "canonical_name": "click_quote_request_action",
+    "kind": "ui",
+    "description": "Click Save on Quote Request Details.",
+    "migration_note": ""
+  },
+  "Yves: move mouse over header menu item:": {
+    "canonical_name": "hover_header_menu_item",
+    "kind": "ui",
+    "description": "Hover over a header menu item.",
+    "migration_note": ""
+  },
+  "Yves: 'Quote Requests' widget is shown": {
+    "canonical_name": "assert_quote_requests_widget",
+    "kind": "assert",
+    "description": "Assert the Quote Requests widget is shown.",
+    "migration_note": ""
+  },
+  "Yves: go to the quote request through the header with reference:": {
+    "canonical_name": "open_quote_request",
+    "kind": "nav",
+    "description": "Open a quote request by reference via header.",
+    "migration_note": ""
+  },
+  "Yves: 'Quote Request Details' page contains the following note:": {
+    "canonical_name": "assert_quote_request_note",
+    "kind": "assert",
+    "description": "Assert a note on Quote Request Details.",
+    "migration_note": ""
+  },
+  "Yves: set 'Valid Till' date for the quote request, today +:": {
+    "canonical_name": "set_quote_request_valid_till",
+    "kind": "ui",
+    "description": "Set the Valid Till date on a quote request.",
+    "migration_note": ""
+  },
+  "Yves: shopping cart doesn't contain the following products:": {
+    "canonical_name": "assert_cart_products_absent",
+    "kind": "assert",
+    "description": "Assert products are absent from the cart.",
+    "migration_note": ""
+  },
+  "Yves: get link for external cart sharing": {
+    "canonical_name": "get_cart_share_link",
+    "kind": "data",
+    "description": "Retrieve the external cart sharing link.",
+    "migration_note": ""
+  },
+  "Yves: go to external URL:": {
+    "canonical_name": "open_external_url",
+    "kind": "nav",
+    "description": "Navigate to an external URL.",
+    "migration_note": ""
+  },
+  "Yves: Shopping Cart title should be equal:": {
+    "canonical_name": "assert_cart_title",
+    "kind": "assert",
+    "description": "Assert the shopping cart title.",
+    "migration_note": ""
+  },
+  "Yves: go to order details page to check comment:": {
+    "canonical_name": "open_order_details_page",
+    "kind": "nav",
+    "description": "Open an order's details page to view comments.",
+    "migration_note": ""
+  },
+  "Yves: edit comment on cart:": {
+    "canonical_name": "edit_cart_comment",
+    "kind": "ui",
+    "description": "Edit an existing cart comment.",
+    "migration_note": ""
+  },
+  "Yves: delete comment on cart": {
+    "canonical_name": "delete_cart_comment",
+    "kind": "ui",
+    "description": "Delete a cart comment.",
+    "migration_note": ""
+  },
+  "Yves: create new company role:": {
+    "canonical_name": "create_company_role",
+    "kind": "ui",
+    "description": "Create a new company role.",
+    "migration_note": ""
+  },
+  "Yves: assign the following permissions to the company role:": {
+    "canonical_name": "assign_company_role_permissions",
+    "kind": "ui",
+    "description": "Assign permissions to a company role.",
+    "migration_note": ""
+  },
+  "Yves: create new company business unit:": {
+    "canonical_name": "create_company_business_unit",
+    "kind": "ui",
+    "description": "Create a new company business unit.",
+    "migration_note": ""
+  },
+  "Yves: create new company user:": {
+    "canonical_name": "create_company_user",
+    "kind": "ui",
+    "description": "Create a new company user.",
+    "migration_note": ""
+  },
+  "Yves: share shopping list with user:": {
+    "canonical_name": "share_shopping_list",
+    "kind": "ui",
+    "description": "Share a shopping list with another user.",
+    "migration_note": ""
+  },
+  "Yves: 'Shopping List' widget contains:": {
+    "canonical_name": "assert_shopping_list_widget",
+    "kind": "assert",
+    "description": "Assert contents of the Shopping List widget.",
+    "migration_note": ""
+  },
+  "Yves: 'Select Business Unit' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Select Business Unit page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: 'Business Unit' dropdown contains:": {
+    "canonical_name": "assert_business_unit_dropdown",
+    "kind": "assert",
+    "description": "Assert options in the Business Unit dropdown.",
+    "migration_note": ""
+  },
+  "Yves: 'Product Sets' page contains the following sets:": {
+    "canonical_name": "assert_product_sets",
+    "kind": "assert",
+    "description": "Assert sets listed on the Product Sets page.",
+    "migration_note": ""
+  },
+  "Yves: view the following Product Set:": {
+    "canonical_name": "open_product_set",
+    "kind": "nav",
+    "description": "Open a specific Product Set.",
+    "migration_note": ""
+  },
+  "Yves: change variant of the product on CMS page on:": {
+    "canonical_name": "select_product_variant",
+    "kind": "ui",
+    "description": "Change a product variant on a CMS page.",
+    "migration_note": ""
+  },
+  "Yves: change quantity of the configurable bundle in the shopping cart on:": {
+    "canonical_name": "change_cart_quantity",
+    "kind": "ui",
+    "description": "Change quantity of a configurable bundle in cart.",
+    "migration_note": ""
+  },
+  "Yves: 'Order Details' page contains the following product title N times:": {
+    "canonical_name": "assert_order_product_count",
+    "kind": "assert",
+    "description": "Assert a product title appears N times on Order Details.",
+    "migration_note": ""
+  },
+  "Yves: go to AT store URL if other store not specified:": {
+    "canonical_name": "open_url",
+    "kind": "nav",
+    "description": "Open a store URL (AT default).",
+    "migration_note": "Store/locale is config, not a UI step in Cypress."
+  },
+  "Yves: add comment on order in order detail page:": {
+    "canonical_name": "add_order_comment",
+    "kind": "ui",
+    "description": "Add a comment to an order on Order Details.",
+    "migration_note": ""
+  },
+  "Yves: check comments is visible or not in order:": {
+    "canonical_name": "assert_order_comments_visible",
+    "kind": "assert",
+    "description": "Assert order comments are visible or not.",
+    "migration_note": ""
+  },
+  "Yves: product with sku is marked as discontinued in wishlist:": {
+    "canonical_name": "assert_wishlist_product_discontinued",
+    "kind": "assert",
+    "description": "Assert a wishlist product marked discontinued.",
+    "migration_note": ""
+  },
+  "Yves: product with sku is marked as alternative in wishlist:": {
+    "canonical_name": "assert_wishlist_product_alternative",
+    "kind": "assert",
+    "description": "Assert a wishlist product marked as alternative.",
+    "migration_note": ""
+  },
+  "Yves: delete from b2c cart products with name:": {
+    "canonical_name": "remove_cart_product",
+    "kind": "ui",
+    "description": "Remove cart products by name.",
+    "migration_note": ""
+  },
+  "Yves: login on Yves with provided credentials and expect error:": {
+    "canonical_name": "assert_login_error",
+    "kind": "assert",
+    "description": "Attempt login and assert an error message.",
+    "migration_note": ""
+  },
+  "Yves: delete product from the shopping cart with name:": {
+    "canonical_name": "remove_cart_product",
+    "kind": "ui",
+    "description": "Remove a cart product by name.",
+    "migration_note": ""
+  },
+  "Yves: end customer assistance": {
+    "canonical_name": "end_agent_assistance",
+    "kind": "setup",
+    "description": "End the agent customer-assistance session.",
+    "migration_note": ""
+  },
+  "Yves: 'approve the cart' on the summary page": {
+    "canonical_name": "approve_cart",
+    "kind": "ui",
+    "description": "Approve the cart on the summary page.",
+    "migration_note": ""
+  },
+  "Yves: company menu 'should' be available for logged in user": {
+    "canonical_name": "assert_company_menu_available",
+    "kind": "assert",
+    "description": "Assert the company menu is available when logged in.",
+    "migration_note": ""
+  },
+  "Yves: go to company menu item:": {
+    "canonical_name": "open_company_menu_item",
+    "kind": "nav",
+    "description": "Open a company menu item.",
+    "migration_note": ""
+  },
+  "Yves: 'Company Users' page is displayed": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert the Company Users page is displayed.",
+    "migration_note": ""
+  },
+  "Yves: go to second navigation item level:": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open a second-level navigation item.",
+    "migration_note": ""
+  },
+  "Yves: proceed as a guest user and login during checkout:": {
+    "canonical_name": "login_during_checkout",
+    "kind": "ui",
+    "description": "Proceed as guest then log in during checkout.",
+    "migration_note": ""
+  },
+  "Yves: signup guest user during checkout:": {
+    "canonical_name": "signup_during_checkout",
+    "kind": "ui",
+    "description": "Register a guest user during checkout.",
+    "migration_note": ""
+  },
+  "Yves: login after signup during checkout:": {
+    "canonical_name": "login_after_signup_during_checkout",
+    "kind": "ui",
+    "description": "Log in after signing up during checkout.",
+    "migration_note": ""
+  },
+  "Yves: try to add product to wishlist as guest user": {
+    "canonical_name": "add_product_to_wishlist",
+    "kind": "ui",
+    "description": "Attempt to add to wishlist as a guest.",
+    "migration_note": ""
+  },
+  "Yves: select multiple addresses from toggler": {
+    "canonical_name": "enable_multiple_address_delivery",
+    "kind": "ui",
+    "description": "Enable multi-address delivery via the toggler.",
+    "migration_note": ""
+  },
+  "Yves: 'billing same as shipping' checkbox should be displayed:": {
+    "canonical_name": "assert_billing_same_as_shipping_checkbox",
+    "kind": "assert",
+    "description": "Assert the billing-same-as-shipping checkbox shows.",
+    "migration_note": ""
+  },
+  "Yves: set quantity on PDP:": {
+    "canonical_name": "set_pdp_quantity",
+    "kind": "ui",
+    "description": "Set the product quantity on the PDP.",
+    "migration_note": ""
+  },
+  "Yves: checkout summary step contains product with unit price:": {
+    "canonical_name": "assert_summary_unit_price",
+    "kind": "assert",
+    "description": "Assert a product unit price on the summary step.",
+    "migration_note": ""
+  },
+  "Yves: select xxx shipment type on checkout:": {
+    "canonical_name": "select_shipment_type",
+    "kind": "ui",
+    "description": "Select a shipment type during checkout.",
+    "migration_note": ""
+  },
+  "Yves: filter order history by business unit:": {
+    "canonical_name": "filter_order_history",
+    "kind": "ui",
+    "description": "Filter order history by business unit.",
+    "migration_note": ""
+  },
+  "Yves: logout as an agent": {
+    "canonical_name": "logout_agent",
+    "kind": "setup",
+    "description": "Log the agent out.",
+    "migration_note": ""
+  },
+  "Yves: go to the PDP of the first available product": {
+    "canonical_name": "open_first_catalog_product",
+    "kind": "nav",
+    "description": "Open the PDP of the first available product.",
+    "migration_note": ""
+  },
+  "Yves: get sku of the concrete product on PDP": {
+    "canonical_name": "get_concrete_sku",
+    "kind": "data",
+    "description": "Read the concrete product SKU from the PDP.",
+    "migration_note": ""
+  },
+  "Yves: get sku of the abstract product on PDP": {
+    "canonical_name": "get_abstract_sku",
+    "kind": "data",
+    "description": "Read the abstract product SKU from the PDP.",
+    "migration_note": ""
+  },
+  "Yves: checkout summary page contains product with unit price:": {
+    "canonical_name": "assert_summary_unit_price",
+    "kind": "assert",
+    "description": "Assert a product unit price on the summary page.",
+    "migration_note": ""
+  },
+  "Yves: back to PDP and not save configuration": {
+    "canonical_name": "discard_product_configuration",
+    "kind": "ui",
+    "description": "Return to PDP without saving the configuration.",
+    "migration_note": ""
+  },
+  "Yves: preview shopping cart contains the following products:": {
+    "canonical_name": "assert_cart_preview_products",
+    "kind": "assert",
+    "description": "Assert products in the cart preview/mini-cart.",
+    "migration_note": ""
+  },
+  "Yves: add promotional product to the cart": {
+    "canonical_name": "add_promo_product_to_cart",
+    "kind": "ui",
+    "description": "Add a promotional product to the cart.",
+    "migration_note": ""
+  },
+  "Yves: select the following existing address on the checkout as 'shipping':": {
+    "canonical_name": "select_existing_shipping_address",
+    "kind": "ui",
+    "description": "Pick a saved shipping address at checkout.",
+    "migration_note": ""
+  },
+  "Yves: 'Order History' page contains the following order:": {
+    "canonical_name": "assert_order_history_order",
+    "kind": "assert",
+    "description": "Assert an order appears in Order History.",
+    "migration_note": ""
+  },
+  "Yves: Accept the Terms and Conditions:": {
+    "canonical_name": "accept_terms",
+    "kind": "ui",
+    "description": "Check the terms and conditions checkbox.",
+    "migration_note": ""
+  }
+}
