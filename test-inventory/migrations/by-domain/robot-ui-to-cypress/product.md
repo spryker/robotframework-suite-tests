@@ -1,6 +1,6 @@
 ### product · robot-ui-to-cypress · CC-39280 · 21 scenarios
 
-MIGRATE 18 · OBSOLETE 3   ▸ 7/18 verified
+MIGRATE 18 · OBSOLETE 3   ▸ 8/18 verified
 
 Batches: `product`
 
@@ -18,7 +18,7 @@ Batches: `product`
 | [x] | Discontinued_Alternative_Products | ×5 | Checks discontinued and alternative products. _(yves)_ | `cypress/e2e/yves/product/discontinued-alternative-products.cy.ts::given a discontinued product carrying an alternative when its product detail page is opened then the alternative is offered there` | L | `local 2026-08-25 · 2 passing · 27s` |
 | [ ] | Manage_Product | ×3 | checks that BO user can manage abstract and concrete products + create new. _(yves)_ | `cypress/e2e/backoffice/product-management/product-lifecycle-management.cy.ts` | L | — |
 | [x] | Measurement_Units | ×3 | Checks checkout with Measurement Unit product. _(yves)_ | `cypress/e2e/yves/product-measurement-unit/measurement-unit-checkout.cy.ts::given a measurement unit product when the quantity falls between two base units then the storefront says so rather than accepting it` | L | `local 2026-08-25 · 2 passing · 25s` |
-| [ ] | Packaging_Units | ×3 | Checks checkout with Packaging Unit product. _(yves)_ | `cypress/e2e/yves/product-measurement-unit/packaging-unit-checkout.cy.ts` | L | — |
+| [x] | Packaging_Units | ×3 | Checks checkout with Packaging Unit product. _(yves)_ | `cypress/e2e/yves/product-measurement-unit/packaging-unit-checkout.cy.ts::given a packaging unit product when an amount outside its rules is entered then the storefront says so rather than accepting it` | L | `local 2026-08-25 · 2 passing · 24s` |
 | [ ] | Product_Availability_Calculation | ×5 | Check product availability + multistore. _(yves)_ | `cypress/e2e/yves/product/availability-calculation.cy.ts` | L | — |
 | [ ] | Product_Bundles | ×4 | Checks checkout with Bundle product. _(yves)_ | `cypress/e2e/yves/product/product-bundle-checkout.cy.ts` | L | — |
 | [x] | Product_Original_Price | ×3 | checks that Original price is displayed on the PDP and in Catalog. _(yves)_ | `cypress/e2e/yves/product/original-price.cy.ts::given an abstract product priced above its default price when the catalog is searched then the card shows the default and the original price side by side` | L | `local 2026-08-25 · 2 passing · 18s` |
