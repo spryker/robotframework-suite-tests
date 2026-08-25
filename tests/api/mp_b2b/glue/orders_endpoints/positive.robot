@@ -126,7 +126,7 @@ Get_order_by_order_id
     And Response body parameter should be:    [data][attributes][expenses][0][sumNetPrice]    0
     And Response body parameter should be:    [data][attributes][expenses][0][canceledAmount]    None
     And Response body parameter should be:    [data][attributes][expenses][0][unitDiscountAmountAggregation]    None
-    And Response body parameter should be:    [data][attributes][expenses][0][sumDiscountAmountAggregation]    None
+    And Response body parameter should be:    [data][attributes][expenses][0][sumDiscountAmountAggregation]    0
     And Response body parameter should be:    [data][attributes][expenses][0][unitTaxAmount]    0
     And Response body parameter should be:    [data][attributes][expenses][0][sumTaxAmount]    0
     And Response body parameter should be:    [data][attributes][expenses][0][unitPriceToPayAggregation]    0
