@@ -1,6 +1,6 @@
 ### customer · robot-ui-to-cypress · CC-39280 · 14 scenarios
 
-MIGRATE 10 · OBSOLETE 3 · DROP 1   ▸ 9/10 verified
+MIGRATE 10 · OBSOLETE 3 · DROP 1   ▸ 10/10 verified
 
 Batches: `customer`
 
@@ -10,7 +10,7 @@ Target PR: https://github.com/spryker/cypress-tests/pull/392
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
 |---|---|---|---|---|---|---|
 | [x] | Add_to_Wishlist | ×3 | Check creation of wishlist and adding to different wishlists. _(yves)_ | `cypress/e2e/yves/wishlist/wishlist-management.cy.ts::customer should be able to keep two products in two separate wishlists` | M | `local 2026-08-25 · 2 passing · 17s` |
-| [ ] | Business_on_Behalf | ×3 | Check that BoB user has possibility to change the business unit. _(yves)_ | `cypress/e2e/yves/company-account/business-on-behalf.cy.ts` | L | — |
+| [x] | Business_on_Behalf | ×3 | Check that BoB user has possibility to change the business unit. _(yves)_ | `cypress/e2e/yves/company-account/business-on-behalf.cy.ts::given a customer attached to two business units when they use the selector then they can act for either one` | L | `local 2026-08-25 · 1 passing · 7s` |
 | [x] | Guest_User_Access_Restrictions | ×5 | Checks that guest users see products info and cart but not profile. _(yves)_ | `cypress/e2e/yves/customer-account-management/guest-access-restrictions.cy.ts::guest should be able to buy a product from the detail page into the cart` | S | `local 2026-08-25 · 3 passing · 10s` |
 | [x] | Quick_Order | suite | Checks Quick Order, checkout and Reorder. _(yves)_ | `cypress/e2e/yves/quick-order/quick-order-to-checkout.cy.ts::company user should be able to quick order two merchant products, buy them and reorder them` | L | `local 2026-08-25 · 1 passing · 21s` |
 | [x] | Share_Shopping_Carts | ×3 | Checks that cart can be shared and used for checkout. _(yves)_ | `cypress/e2e/yves/cart/shared-cart-checkout.cy.ts::company user should be able to order from a cart a colleague shared at full access` | L | `local 2026-08-25 · 1 passing · 22s` |
