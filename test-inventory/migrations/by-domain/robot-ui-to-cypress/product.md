@@ -1,6 +1,6 @@
 ### product · robot-ui-to-cypress · CC-39280 · 21 scenarios
 
-MIGRATE 18 · OBSOLETE 3   ▸ 6/18 verified
+MIGRATE 18 · OBSOLETE 3   ▸ 7/18 verified
 
 Batches: `product`
 
@@ -17,7 +17,7 @@ Batches: `product`
 | [x] | Customer_Specific_Prices | ×3 | Checks that product price can be different for different customers. _(yves)_ | `cypress/e2e/yves/product/customer-specific-prices.cy.ts::given a customer whose company has no merchant specific price when the product is browsed then the default price is shown in the catalog and on the product detail page` | M | `local 2026-08-25 · 2 passing · 9s` |
 | [x] | Discontinued_Alternative_Products | ×5 | Checks discontinued and alternative products. _(yves)_ | `cypress/e2e/yves/product/discontinued-alternative-products.cy.ts::given a discontinued product carrying an alternative when its product detail page is opened then the alternative is offered there` | L | `local 2026-08-25 · 2 passing · 27s` |
 | [ ] | Manage_Product | ×3 | checks that BO user can manage abstract and concrete products + create new. _(yves)_ | `cypress/e2e/backoffice/product-management/product-lifecycle-management.cy.ts` | L | — |
-| [ ] | Measurement_Units | ×3 | Checks checkout with Measurement Unit product. _(yves)_ | `cypress/e2e/yves/product-measurement-unit/measurement-unit-checkout.cy.ts` | L | — |
+| [x] | Measurement_Units | ×3 | Checks checkout with Measurement Unit product. _(yves)_ | `cypress/e2e/yves/product-measurement-unit/measurement-unit-checkout.cy.ts::given a measurement unit product when the quantity falls between two base units then the storefront says so rather than accepting it` | L | `local 2026-08-25 · 2 passing · 25s` |
 | [ ] | Packaging_Units | ×3 | Checks checkout with Packaging Unit product. _(yves)_ | `cypress/e2e/yves/product-measurement-unit/packaging-unit-checkout.cy.ts` | L | — |
 | [ ] | Product_Availability_Calculation | ×5 | Check product availability + multistore. _(yves)_ | `cypress/e2e/yves/product/availability-calculation.cy.ts` | L | — |
 | [ ] | Product_Bundles | ×4 | Checks checkout with Bundle product. _(yves)_ | `cypress/e2e/yves/product/product-bundle-checkout.cy.ts` | L | — |
