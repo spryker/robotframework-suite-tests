@@ -4,6 +4,8 @@ MIGRATE 5 · OBSOLETE 1   ▸ 5/5 verified
 
 Batches: `merchandising`
 
+Target PR: https://github.com/spryker/cypress-tests/pull/400
+
 #### MIGRATE / RESHAPE — port these
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
 |---|---|---|---|---|---|---|
