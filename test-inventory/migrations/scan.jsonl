@@ -1745,7 +1745,7 @@
 {"id": "robot:tests/ui/suite/catalog/catalog.robot::Configurable_Product_PDP_Shopping_List", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/catalog/catalog.robot::Configurable_Product_PDP_Wishlist_Availability", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/catalog/catalog.robot::Configurable_Product_RfQ_OMS", "source_state": "ACTIVE", "target_state": "MISSING"}
-{"id": "robot:tests/ui/suite/catalog/catalog.robot::Customer_Specific_Prices", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/catalog/catalog.robot::Customer_Specific_Prices", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/catalog/catalog.robot::Discontinued_Alternative_Products", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/catalog/catalog.robot::Manage_Product", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/catalog/catalog.robot::Measurement_Units", "source_state": "ACTIVE", "target_state": "MISSING"}
