@@ -160,7 +160,7 @@ Create_order_include_orders
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumNetPrice]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][canceledAmount]    None
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitDiscountAmountAggregation]    None
-    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    None
+    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    0
     And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][unitTaxAmount]
     And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][sumTaxAmount]
     And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][unitPriceToPayAggregation]
@@ -392,7 +392,7 @@ Create_order_with_free_shipping_discount
 
 Create_order_with_configurable_product
      [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
-    ...  AND    I set Headers:    Authorization=${token}    
+    ...  AND    I set Headers:    Authorization=${token}
     ...  AND    Find or create customer cart
     ...  AND    Cleanup all items in the cart:    ${cart_id}
     ...  AND    I send a POST request:    /carts/${cart_id}/items?include=items    {"data":{"type":"items","attributes":{"sku":"${configurable_product.sku_1}","quantity":1,"productConfigurationInstance":{"displayData":"{\\\"Preferred time of the day\\\":\\\"Afternoon\\\",\\\"Date\\\":\\\"09.09.2050\\\"}","configuration":"{\\\"time_of_day\\\":\\\"4\\\"}","configuratorKey":"DATE_TIME_CONFIGURATOR","isComplete":true,"quantity":1,"availableQuantity":4,"prices":[{"priceTypeName":"DEFAULT","netAmount":23434,"grossAmount":42502,"currency":{"code":"EUR","name":"Euro","symbol":"€"},"volumePrices":[{"netAmount":150,"grossAmount":165,"quantity":5},{"netAmount":145,"grossAmount":158,"quantity":10},{"netAmount":140,"grossAmount":152,"quantity":20}]}]}}}}
@@ -511,7 +511,7 @@ Create_order_with_configurable_product
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumNetPrice]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][canceledAmount]    None
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitDiscountAmountAggregation]    None
-    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    None
+    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    490
     And Response body parameter should be:    [included][0][attributes][expenses][0][taxAmountAfterCancellation]    None
     And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][idShipment]
     And Response body parameter should not be EMPTY:   [included][0][attributes][expenses][0][idSalesExpense]
