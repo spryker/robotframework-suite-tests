@@ -1811,7 +1811,7 @@
 {"id": "robot:tests/ui/suite/merchandising/merchandising.robot::Configurable_Bundle", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/merchandising/merchandising.robot::Discounts", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/ui/suite/merchandising/merchandising.robot::Product_Relations", "source_state": "ACTIVE", "target_state": "PRESENT"}
-{"id": "robot:tests/ui/suite/merchandising/merchandising.robot::Product_Sets", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/merchandising/merchandising.robot::Product_Sets", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/merchandising/merchandising.robot::Product_labels", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/multistore/mustistore.robot::Dynamic_multistore", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/multistore/mustistore.robot::Multistore_CMS", "source_state": "ACTIVE", "target_state": "MISSING"}
