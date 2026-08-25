@@ -11,7 +11,7 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | Matrix | Domains | Scenarios | left to port | in scope | ported | authored | target skipped | dropped | review | blocked | done % |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
 | robot-api-to-codeception | 27 | 1721 | 1285 | 1285 | 0 | 0 | 0 | 0 | 418 | 0 | 0% |
-| robot-ui-to-cypress | 12 | 105 | 24 | 86 | 62 | 0 | 0 | 0 | 0 | 1 | 0% |
+| robot-ui-to-cypress | 12 | 105 | 23 | 86 | 63 | 0 | 0 | 0 | 0 | 1 | 0% |
 
 ## robot-api-to-codeception by domain
 
@@ -58,7 +58,7 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | [merchant](by-domain/robot-ui-to-cypress/merchant.md) | 22 | 18 | 18 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [order](by-domain/robot-ui-to-cypress/order.md) | 6 | 0 | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [platform](by-domain/robot-ui-to-cypress/platform.md) | 6 | 0 | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 1 |
-| [product](by-domain/robot-ui-to-cypress/product.md) | 21 | 2 | 18 | 16 | 0 | 0 | 0 | 0 | 0 | 1 |
+| [product](by-domain/robot-ui-to-cypress/product.md) | 21 | 1 | 18 | 17 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [store](by-domain/robot-ui-to-cypress/store.md) | 4 | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [warehouse](by-domain/robot-ui-to-cypress/warehouse.md) | 1 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
 
