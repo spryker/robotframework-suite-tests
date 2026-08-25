@@ -1,6 +1,6 @@
 ### product · robot-ui-to-cypress · CC-39280 · 21 scenarios
 
-MIGRATE 18 · OBSOLETE 3   ▸ 14/18 verified
+MIGRATE 18 · OBSOLETE 3   ▸ 15/18 verified
 
 Batches: `product`
 
@@ -13,7 +13,7 @@ Batches: `product`
 | [x] | Catalog_Actions | ×3 | Checks quick add to cart and product groups. _(yves)_ | `cypress/e2e/yves/catalog/quick-add-to-cart.cy.ts::given a buyable product in the catalog when it is quick added from its card then it lands in the cart` | L | `local 2026-08-25 · 3 passing · 11s` |
 | [x] | Configurable_Product_PDP_Shopping_List | ×3 | Configure products from both the PDP and the Shopping List. Verify the availability of five items. Ensure that products that have not been configured cannot be purchased. _(yves)_ | `cypress/e2e/yves/product-configurator/configurable-product-shopping-list.cy.ts::given a configurable product added to the cart without being configured then the cart states that it cannot be processed` | M | `local 2026-08-25 · 3 passing · 26s` |
 | [x] | Configurable_Product_PDP_Wishlist_Availability | ×2 | Configure product from PDP and Wishlist + availability case. _(yves)_ | `cypress/e2e/yves/product-configurator/configurable-product-wishlist.cy.ts::given a configurable product configured on its detail page when it is wishlisted and configured again from the wishlist then the wishlist carries the newer configuration` | M | `local 2026-08-25 · 2 passing · 24s` |
-| [ ] | Configurable_Product_RfQ_OMS | ×3 | Conf Product in RfQ, OMS, Merchant OMS and reorder. _(yves)_ | `cypress/e2e/yves/quote-request/configurable-product-rfq.cy.ts` | L | — |
+| [x] | Configurable_Product_RfQ_OMS | ×3 | Conf Product in RfQ, OMS, Merchant OMS and reorder. _(yves)_ | `cypress/e2e/yves/quote-request/configurable-product-rfq.cy.ts::given a configured product submitted as a quote request when an agent returns it and the customer converts it then the cart still carries the configuration` | L | `local 2026-08-25 · 1 passing · 1m27s` |
 | [x] | Customer_Specific_Prices | ×3 | Checks that product price can be different for different customers. _(yves)_ | `cypress/e2e/yves/product/customer-specific-prices.cy.ts::given a customer whose company has no merchant specific price when the product is browsed then the default price is shown in the catalog and on the product detail page` | M | `local 2026-08-25 · 2 passing · 9s` |
 | [x] | Discontinued_Alternative_Products | ×5 | Checks discontinued and alternative products. _(yves)_ | `cypress/e2e/yves/product/discontinued-alternative-products.cy.ts::given a discontinued product carrying an alternative when its product detail page is opened then the alternative is offered there` | L | `local 2026-08-25 · 2 passing · 27s` |
 | [ ] | Manage_Product | ×3 | checks that BO user can manage abstract and concrete products + create new. _(yves)_ | `cypress/e2e/backoffice/product-management/product-lifecycle-management.cy.ts` | L | — |
