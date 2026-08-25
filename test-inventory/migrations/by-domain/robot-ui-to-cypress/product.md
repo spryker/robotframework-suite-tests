@@ -1,6 +1,6 @@
 ### product · robot-ui-to-cypress · CC-39280 · 21 scenarios
 
-MIGRATE 18 · OBSOLETE 3   ▸ 3/18 verified
+MIGRATE 18 · OBSOLETE 3   ▸ 4/18 verified
 
 Batches: `product`
 
@@ -15,7 +15,7 @@ Batches: `product`
 | [ ] | Configurable_Product_PDP_Wishlist_Availability | ×2 | Configure product from PDP and Wishlist + availability case. _(yves)_ | `cypress/e2e/yves/product-configurator/configurable-product-wishlist.cy.ts` | M | — |
 | [ ] | Configurable_Product_RfQ_OMS | ×3 | Conf Product in RfQ, OMS, Merchant OMS and reorder. _(yves)_ | `cypress/e2e/yves/quote-request/configurable-product-rfq.cy.ts` | L | — |
 | [x] | Customer_Specific_Prices | ×3 | Checks that product price can be different for different customers. _(yves)_ | `cypress/e2e/yves/product/customer-specific-prices.cy.ts::given a customer whose company has no merchant specific price when the product is browsed then the default price is shown in the catalog and on the product detail page` | M | `local 2026-08-25 · 2 passing · 9s` |
-| [ ] | Discontinued_Alternative_Products | ×5 | Checks discontinued and alternative products. _(yves)_ | `cypress/e2e/yves/product/discontinued-alternative-products.cy.ts` | L | — |
+| [x] | Discontinued_Alternative_Products | ×5 | Checks discontinued and alternative products. _(yves)_ | `cypress/e2e/yves/product/discontinued-alternative-products.cy.ts::given a discontinued product carrying an alternative when its product detail page is opened then the alternative is offered there` | L | `local 2026-08-25 · 2 passing · 27s` |
 | [ ] | Manage_Product | ×3 | checks that BO user can manage abstract and concrete products + create new. _(yves)_ | `cypress/e2e/backoffice/product-management/product-lifecycle-management.cy.ts` | L | — |
 | [ ] | Measurement_Units | ×3 | Checks checkout with Measurement Unit product. _(yves)_ | `cypress/e2e/yves/product-measurement-unit/measurement-unit-checkout.cy.ts` | L | — |
 | [ ] | Packaging_Units | ×3 | Checks checkout with Packaging Unit product. _(yves)_ | `cypress/e2e/yves/product-measurement-unit/packaging-unit-checkout.cy.ts` | L | — |
