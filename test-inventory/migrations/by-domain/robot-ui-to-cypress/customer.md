@@ -4,7 +4,7 @@ MIGRATE 10 · OBSOLETE 3 · DROP 1   ▸ 10/10 verified
 
 Batches: `customer`
 
-Target PR: https://github.com/spryker/cypress-tests/pull/392
+Target PR: https://github.com/spryker/cypress-tests/pull/399
 
 #### MIGRATE / RESHAPE — port these
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
