@@ -4,6 +4,8 @@ MIGRATE 6   ▸ 6/6 verified
 
 Batches: `order`
 
+Target PR: https://github.com/spryker/cypress-tests/pull/402
+
 #### MIGRATE / RESHAPE — port these
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
 |---|---|---|---|---|---|---|
