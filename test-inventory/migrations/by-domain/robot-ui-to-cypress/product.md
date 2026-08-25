@@ -1,6 +1,6 @@
 ### product · robot-ui-to-cypress · CC-39280 · 21 scenarios
 
-MIGRATE 18 · OBSOLETE 3   ▸ 12/18 verified
+MIGRATE 18 · OBSOLETE 3   ▸ 13/18 verified
 
 Batches: `product`
 
@@ -12,7 +12,7 @@ Batches: `product`
 | [x] | Catalog | ×5 | Checks that catalog options and search work. _(yves)_ | `cypress/e2e/yves/catalog/catalog-browsing.cy.ts::given a search result when a colour facet is applied then the catalog narrows to fewer products without emptying` | L | `local 2026-08-25 · 4 passing · 9s` |
 | [x] | Catalog_Actions | ×3 | Checks quick add to cart and product groups. _(yves)_ | `cypress/e2e/yves/catalog/quick-add-to-cart.cy.ts::given a buyable product in the catalog when it is quick added from its card then it lands in the cart` | L | `local 2026-08-25 · 3 passing · 11s` |
 | [ ] | Configurable_Product_PDP_Shopping_List | ×3 | Configure products from both the PDP and the Shopping List. Verify the availability of five items. Ensure that products that have not been configured cannot be purchased. _(yves)_ | `cypress/e2e/yves/product-configurator/configurable-product-shopping-list.cy.ts` | M | — |
-| [ ] | Configurable_Product_PDP_Wishlist_Availability | ×2 | Configure product from PDP and Wishlist + availability case. _(yves)_ | `cypress/e2e/yves/product-configurator/configurable-product-wishlist.cy.ts` | M | — |
+| [x] | Configurable_Product_PDP_Wishlist_Availability | ×2 | Configure product from PDP and Wishlist + availability case. _(yves)_ | `cypress/e2e/yves/product-configurator/configurable-product-wishlist.cy.ts::given a configurable product configured on its detail page when it is wishlisted and configured again from the wishlist then the wishlist carries the newer configuration` | M | `local 2026-08-25 · 2 passing · 24s` |
 | [ ] | Configurable_Product_RfQ_OMS | ×3 | Conf Product in RfQ, OMS, Merchant OMS and reorder. _(yves)_ | `cypress/e2e/yves/quote-request/configurable-product-rfq.cy.ts` | L | — |
 | [x] | Customer_Specific_Prices | ×3 | Checks that product price can be different for different customers. _(yves)_ | `cypress/e2e/yves/product/customer-specific-prices.cy.ts::given a customer whose company has no merchant specific price when the product is browsed then the default price is shown in the catalog and on the product detail page` | M | `local 2026-08-25 · 2 passing · 9s` |
 | [x] | Discontinued_Alternative_Products | ×5 | Checks discontinued and alternative products. _(yves)_ | `cypress/e2e/yves/product/discontinued-alternative-products.cy.ts::given a discontinued product carrying an alternative when its product detail page is opened then the alternative is offered there` | L | `local 2026-08-25 · 2 passing · 27s` |
