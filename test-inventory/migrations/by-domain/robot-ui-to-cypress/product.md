@@ -1,6 +1,6 @@
 ### product · robot-ui-to-cypress · CC-39280 · 21 scenarios
 
-MIGRATE 18 · OBSOLETE 3   ▸ 2/18 verified
+MIGRATE 18 · OBSOLETE 3   ▸ 3/18 verified
 
 Batches: `product`
 
@@ -21,7 +21,7 @@ Batches: `product`
 | [ ] | Packaging_Units | ×3 | Checks checkout with Packaging Unit product. _(yves)_ | `cypress/e2e/yves/product-measurement-unit/packaging-unit-checkout.cy.ts` | L | — |
 | [ ] | Product_Availability_Calculation | ×5 | Check product availability + multistore. _(yves)_ | `cypress/e2e/yves/product/availability-calculation.cy.ts` | L | — |
 | [ ] | Product_Bundles | ×4 | Checks checkout with Bundle product. _(yves)_ | `cypress/e2e/yves/product/product-bundle-checkout.cy.ts` | L | — |
-| [ ] | Product_Original_Price | ×3 | checks that Original price is displayed on the PDP and in Catalog. _(yves)_ | `cypress/e2e/yves/product/original-price.cy.ts` | L | — |
+| [x] | Product_Original_Price | ×3 | checks that Original price is displayed on the PDP and in Catalog. _(yves)_ | `cypress/e2e/yves/product/original-price.cy.ts::given an abstract product priced above its default price when the catalog is searched then the card shows the default and the original price side by side` | L | `local 2026-08-25 · 2 passing · 18s` |
 | [x] | Product_PDP | ×5 | Checks that PDP contains required elements. _(yves)_ | `cypress/e2e/yves/product/product-detail-visibility.cy.ts::given a guest when a product variant is selected then the price, add to cart and the product options are shown and no wishlist form is` | M | `local 2026-08-25 · 3 passing · 5s` |
 | [ ] | Product_Restrictions | ×3 | Checks White and Black lists. _(yves)_ | `cypress/e2e/yves/catalog/product-restrictions.cy.ts` | L | — |
 | [ ] | Volume_Prices | ×5 | Checks that volume prices are applied in cart. _(yves)_ | `cypress/e2e/yves/product/volume-prices.cy.ts` | L | — |
