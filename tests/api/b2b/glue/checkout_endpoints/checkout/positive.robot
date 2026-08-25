@@ -233,7 +233,7 @@ Create_order_include_orders
     ...    None
     And Response body parameter should be:
     ...    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]
-    ...    None
+    ...    490
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitTaxAmount]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumTaxAmount]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitPriceToPayAggregation]    0
