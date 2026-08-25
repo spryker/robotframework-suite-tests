@@ -1,13 +1,13 @@
 ### product · robot-ui-to-cypress · CC-39280 · 21 scenarios
 
-MIGRATE 18 · OBSOLETE 3   ▸ 11/18 verified
+MIGRATE 18 · OBSOLETE 3   ▸ 12/18 verified
 
 Batches: `product`
 
 #### MIGRATE / RESHAPE — port these
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
 |---|---|---|---|---|---|---|
-| [ ] | Configurable_Product_Checkout | ×3 | Configurable product checkout _(yves)_ | `cypress/e2e/yves/product-configurator/configurable-product-checkout.cy.ts` | L | — |
+| [x] | Configurable_Product_Checkout | ×3 | Configurable product checkout _(yves)_ | `cypress/e2e/yves/product-configurator/configurable-product-checkout.cy.ts::given a configurable product when it is configured on its detail page then the configuration completes and the chosen option reaches the cart` | L | `local 2026-08-25 · 2 passing · 24s` |
 | [x] | Back_in_Stock_Notification | ×5 | Back in stock notification is sent and availability check. _(yves)_ | `cypress/e2e/yves/product/back-in-stock-notification.cy.ts::given a product with no stock left when its detail page is opened then it reads as out of stock and offers a back in stock notification` | M | `local 2026-08-25 · 3 passing · 15s` |
 | [x] | Catalog | ×5 | Checks that catalog options and search work. _(yves)_ | `cypress/e2e/yves/catalog/catalog-browsing.cy.ts::given a search result when a colour facet is applied then the catalog narrows to fewer products without emptying` | L | `local 2026-08-25 · 4 passing · 9s` |
 | [x] | Catalog_Actions | ×3 | Checks quick add to cart and product groups. _(yves)_ | `cypress/e2e/yves/catalog/quick-add-to-cart.cy.ts::given a buyable product in the catalog when it is quick added from its card then it lands in the cart` | L | `local 2026-08-25 · 3 passing · 11s` |
