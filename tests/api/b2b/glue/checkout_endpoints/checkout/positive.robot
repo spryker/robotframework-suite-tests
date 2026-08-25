@@ -233,7 +233,7 @@ Create_order_include_orders
     ...    None
     And Response body parameter should be:
     ...    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]
-    ...    None
+    ...    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitTaxAmount]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumTaxAmount]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitPriceToPayAggregation]    0
@@ -676,7 +676,7 @@ Create_order_with_2_product_discounts
     And Response body parameter should be:
     ...    [included][0][attributes][items][1][calculatedDiscounts][0][quantity]
     ...    1
-    #item 3 - "10% off minimum order" discount  
+    #item 3 - "10% off minimum order" discount
     And Response should contain the array of a certain size:
     ...    [included][0][attributes][items][2][calculatedDiscounts]
     ...    1
@@ -849,7 +849,7 @@ Create_order_with_configurable_product
     And Response body parameter should be:    [included][0][attributes][expenses][0][sumNetPrice]    0
     And Response body parameter should be:    [included][0][attributes][expenses][0][canceledAmount]    None
     And Response body parameter should be:    [included][0][attributes][expenses][0][unitDiscountAmountAggregation]    None
-    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    None
+    And Response body parameter should be:    [included][0][attributes][expenses][0][sumDiscountAmountAggregation]    490
     And Response body parameter should be:    [included][0][attributes][expenses][0][taxAmountAfterCancellation]    None
     And Response body parameter should not be EMPTY:    [included][0][attributes][expenses][0][idShipment]
     And Response body parameter should not be EMPTY:   [included][0][attributes][expenses][0][idSalesExpense]
