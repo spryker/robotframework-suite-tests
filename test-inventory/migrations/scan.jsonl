@@ -1751,7 +1751,7 @@
 {"id": "robot:tests/ui/suite/catalog/catalog.robot::Measurement_Units", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/catalog/catalog.robot::Packaging_Units", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/catalog/catalog.robot::Product_Availability_Calculation", "source_state": "ACTIVE", "target_state": "MISSING"}
-{"id": "robot:tests/ui/suite/catalog/catalog.robot::Product_Bundles", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/catalog/catalog.robot::Product_Bundles", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/catalog/catalog.robot::Product_Original_Price", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/catalog/catalog.robot::Product_PDP", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/catalog/catalog.robot::Product_Restrictions", "source_state": "ACTIVE", "target_state": "MISSING"}
