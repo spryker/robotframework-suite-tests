@@ -1,6 +1,6 @@
 ### customer · robot-ui-to-cypress · CC-39280 · 14 scenarios
 
-MIGRATE 10 · OBSOLETE 3 · DROP 1   ▸ 7/10 verified
+MIGRATE 10 · OBSOLETE 3 · DROP 1   ▸ 8/10 verified
 
 Batches: `customer`
 
@@ -13,7 +13,7 @@ Target PR: https://github.com/spryker/cypress-tests/pull/392
 | [ ] | Business_on_Behalf | ×3 | Check that BoB user has possibility to change the business unit. _(yves)_ | `cypress/e2e/yves/company-account/business-on-behalf.cy.ts` | L | — |
 | [x] | Guest_User_Access_Restrictions | ×5 | Checks that guest users see products info and cart but not profile. _(yves)_ | `cypress/e2e/yves/customer-account-management/guest-access-restrictions.cy.ts::guest should be able to buy a product from the detail page into the cart` | S | `local 2026-08-25 · 3 passing · 10s` |
 | [ ] | Quick_Order | suite | Checks Quick Order, checkout and Reorder. _(yves)_ | `cypress/e2e/yves/quick-order/quick-order-to-checkout.cy.ts` | L | — |
-| [ ] | Share_Shopping_Carts | ×3 | Checks that cart can be shared and used for checkout. _(yves)_ | `cypress/e2e/yves/cart/shared-cart-checkout.cy.ts` | L | — |
+| [x] | Share_Shopping_Carts | ×3 | Checks that cart can be shared and used for checkout. _(yves)_ | `cypress/e2e/yves/cart/shared-cart-checkout.cy.ts::company user should be able to order from a cart a colleague shared at full access` | L | `local 2026-08-25 · 1 passing · 22s` |
 | [x] | Share_Shopping_Lists | ×3 | Checks that shopping list can be shared. _(yves)_ | `cypress/e2e/yves/shopping-list/shopping-list-sharing.cy.ts::company user should be able to share a shopping list with a colleague at full access` | L | `local 2026-08-25 · 1 passing · 20s` |
 | [x] | Shopping_List_Contains_Offers | suite | Checks that customer is able to add merchant products and offers to list and merchant relation won't be lost in list and afterwards in cart. _(yves)_ | `cypress/e2e/yves/shopping-list/shopping-list-product-offers.cy.ts::customer should be able to keep two merchant offers of one product on a shopping list and in the cart` | L | `local 2026-08-25 · 1 passing · 19s` |
 | [x] | Update_Customer_Data | ×5 | Checks customer data can be updated from Yves and Zed. _(yves)_ | `cypress/e2e/yves/customer-account-management/customer-profile-management.cy.ts::customer should see a profile change an administrator made in the back office` | M | [run](https://github.com/spryker/suite/actions/runs/32555392963) |
