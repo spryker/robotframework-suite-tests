@@ -1,19 +1,21 @@
-### platform · robot-ui-to-cypress · 6 scenarios
+### platform · robot-ui-to-cypress · CC-39280 · 6 scenarios
 
-MIGRATE 3 · RESHAPE 2 · OBSOLETE 1   ▸ 0/5 verified
+MIGRATE 3 · RESHAPE 1 · OBSOLETE 2   ▸ 4/4 verified
 
 Batches: `platform`
+
+Target PR: https://github.com/spryker/cypress-tests/pull/396
 
 #### MIGRATE / RESHAPE — port these
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
 |---|---|---|---|---|---|---|
-| [ ] | Discounts | ×5 | Discounts, Promo Products, and Coupon Codes (includes guest checkout). _(yves)_ | `cypress/e2e/yves/discount/discounts-and-promotions.cy.ts` | L | — |
-| [ ] | Fulfillment_app_e2e | ×3 | Fulfillment app e2e _(yves)_ | `cypress/e2e/backoffice/warehouse/warehouse-user-assignment.cy.ts` | L | — |
-| [ ] | Minimum_Order_Value | ×5 | checks that global minimum and maximum order thresholds can be applied. _(yves)_ | `cypress/e2e/yves/checkout/minimum-order-value.cy.ts` | L | — |
-| [ ] | Data_exchange_API_Configuration_in_Zed | ×5 | DMS-ON: https://spryker.atlassian.net/browse/FRW-7396. _(backoffice)_ | `cypress/e2e/backoffice/data-exchange/dynamic-entity-configuration.cy.ts` | L | — |
-| [ ] | Data_exchange_API_download_specification | ×5 | DMS-ON: https://spryker.atlassian.net/browse/FRW-7396. _(backoffice)_ | `cypress/e2e/backoffice/data-exchange/api-specification-download.cy.ts` | M | — |
+| [x] | Discounts | ×5 | Discounts, Promo Products, and Coupon Codes (includes guest checkout). _(yves)_ | `cypress/e2e/yves/discount/discounts-and-promotions.cy.ts::given a cart rule, a voucher and a promotional product discount when the voucher is redeemed and the promotional product is added then all three are applied and the order is placed` | L | `local 2026-08-24 · 1 passing · 31s` |
+| [x] | Minimum_Order_Value | ×5 | checks that global minimum and maximum order thresholds can be applied. _(yves)_ | `cypress/e2e/yves/checkout/minimum-order-value.cy.ts::given global order thresholds when the cart is above the maximum and then below it then checkout is blocked and the soft threshold fee is charged` | L | `local 2026-08-24 · 1 passing · 32s` |
+| [x] | Data_exchange_API_Configuration_in_Zed | ×5 | DMS-ON: https://spryker.atlassian.net/browse/FRW-7396. _(backoffice)_ | `cypress/e2e/backoffice/data-exchange/dynamic-entity-configuration.cy.ts::given a data exchange api configuration for a table when its resource fields are configured and saved then the reloaded form renders back what was saved` | L | `local 2026-08-24 · 1 passing · 22s` |
+| [x] | Data_exchange_API_download_specification | ×5 | DMS-ON: https://spryker.atlassian.net/browse/FRW-7396. _(backoffice)_ | `cypress/e2e/backoffice/data-exchange/api-specification-download.cy.ts::given a table is not exposed when its data exchange api configuration is enabled and the specification is regenerated then the downloaded specification gains its resource` | M | `local 2026-08-24 · 1 passing · 44s` |
 
 #### OBSOLETE / DROP — delete the source, do not port
 | ✓ | Scenario | Reason | Covered by |
 |---|---|---|---|
 | [ ] | Click_and_collect | Duplicate journey — retired by the port of checkout/Click_and_collect; delete it in that sibling's batch, it needs no port of its own. | robot:tests/ui/suite/checkout/checkout.robot::Click_and_collect |
+| [ ] | Fulfillment_app_e2e | Duplicate journey — retired by the port of fulfillment_app/Fulfillment_app_e2e; delete it in that sibling's batch, it needs no port of its own. Same warehouse-user checkbox, same BAPI warehouse assignment, same Glue order, same back-office OMS walk to ready for picking, same variants; only the SKUs differ. The sibling's port walks Pay and Skip timeout through the UI rather than updating the database, so it covers this variant's browser half in full. | robot:tests/ui/b2c/fulfillment_app/fultillment_app.robot::Fulfillment_app_e2e |
