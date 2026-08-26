@@ -1,6 +1,6 @@
 ### store · robot-ui-to-cypress · CC-39280 · 4 scenarios
 
-MIGRATE 4   ▸ 1/4 verified
+MIGRATE 4   ▸ 2/4 verified
 
 Batches: `store`
 
@@ -9,5 +9,5 @@ Batches: `store`
 |---|---|---|---|---|---|---|
 | [ ] | Dynamic_multistore | ×5 | This test should exclusively run for dynamic multi-store scenarios. The test verifies that the user can successfully create a new store, assign a product and CMS page, and register a customer within the new store. _(yves)_ | `cypress/e2e/backoffice/core/dynamic-store-creation.cy.ts` | L | — |
 | [x] | Multistore_CMS | ×5 | check CMS multistore functionality. _(yves)_ | `cypress/e2e/yves/core/multistore-cms-page.cy.ts::given a cms page is unassigned from a store when a shopper opens its url on that store then the page is not found` | L | `local 2026-08-26 · 2 passing · 43s` |
-| [ ] | Multistore_Product | ×3 | check product multistore functionality. _(yves)_ | `cypress/e2e/yves/core/multistore-product.cy.ts` | L | — |
+| [x] | Multistore_Product | ×3 | check product multistore functionality. _(yves)_ | `cypress/e2e/yves/core/multistore-product.cy.ts::given a product is unassigned from a store when a shopper opens its detail page on that store then the page is not found` | L | `local 2026-08-26 · 2 passing · 41s` |
 | [ ] | Multistore_Product_Offer | ×3 | check product and offer multistore functionality. _(yves)_ | `cypress/e2e/yves/core/multistore-product-offer.cy.ts` | L | — |

@@ -1815,7 +1815,7 @@
 {"id": "robot:tests/ui/suite/merchandising/merchandising.robot::Product_labels", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/multistore/mustistore.robot::Dynamic_multistore", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/multistore/mustistore.robot::Multistore_CMS", "source_state": "ACTIVE", "target_state": "PRESENT"}
-{"id": "robot:tests/ui/suite/multistore/mustistore.robot::Multistore_Product", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/multistore/mustistore.robot::Multistore_Product", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/multistore/mustistore.robot::Multistore_Product_Offer", "source_state": "ACTIVE", "target_state": "MISSING"}
 {"id": "robot:tests/ui/suite/sales/sales.robot::Comment_Management_in_Order", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/sales/sales.robot::Manage_Shipments", "source_state": "ACTIVE", "target_state": "PRESENT"}
