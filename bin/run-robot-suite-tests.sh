@@ -3,7 +3,7 @@
 # Usage from robotframework-suite-tests/ folder: ./bin/run-tests-native.sh [api|ui]
 # Usage form suite/ folder: ./vendor/bin/run-tests-native.sh or vendor/spryker/robotframework-suite-tests/bin/run-robot-suite-tests.sh [api|ui]
 
-set -e
+set -eo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -25,8 +25,31 @@ fi
 
 VENV_DIR="$PROJECT_ROOT/.robot/.venv"
 
-TEST_TYPE="${1:-api}"
-TEST_PATH="${2:-}"
+HEADLESS="true"
+POSITIONAL=()
+for arg in "$@"; do
+    case "$arg" in
+        --headed) HEADLESS="false" ;;
+        *)        POSITIONAL+=("$arg") ;;
+    esac
+done
+
+TEST_TYPE="${POSITIONAL[0]:-api}"
+TEST_PATH="${POSITIONAL[1]:-}"
+
+if [[ "$TEST_TYPE" == "--help" || "$TEST_TYPE" == "-h" ]]; then
+    echo "Usage: $0 [api|ui] [optional-test-path] [--headed]"
+    echo ""
+    echo "Options:"
+    echo "  --headed   Run UI tests in headed (visible) browser mode (default: headless)"
+    echo ""
+    echo "Examples:"
+    echo "  $0 api                                    # Run all API tests"
+    echo "  $0 api tests/api/mp_b2b/glue             # Run specific API tests"
+    echo "  $0 ui                                     # Run UI tests headless"
+    echo "  $0 ui --headed                            # Run UI tests with visible browser"
+    exit 0
+fi
 
 # Normalize TEST_PATH: strip TESTS_DIR prefix if user passed a full path from project root
 if [ -n "$TEST_PATH" ]; then
@@ -40,12 +63,41 @@ echo "Test Type: $TEST_TYPE"
 echo "Project Root: $PROJECT_ROOT"
 echo "Tests Dir: $TESTS_DIR"
 echo "Results Dir: $RESULTS_DIR"
+if [[ "$TEST_TYPE" == "ui" ]]; then
+    echo "Headless: $HEADLESS"
+fi
 echo ""
 
-# Check if virtual environment exists and is valid
-if [ ! -f "$VENV_DIR/bin/python" ]; then
-    echo "📦 Creating virtual environment..."
-    python3 -m venv "$VENV_DIR"
+# Find Python 3 (prefer python3, fall back to versioned binaries)
+PYTHON_BIN=""
+for candidate in python3 python3.14 python3.13 python3.12 python3.11; do
+    if command -v "$candidate" > /dev/null 2>&1; then
+        major=$("$candidate" -c "import sys; print(sys.version_info.major)" 2>/dev/null)
+        if [ "$major" -eq 3 ]; then
+            PYTHON_BIN="$candidate"
+            break
+        fi
+    fi
+done
+
+if [ -z "$PYTHON_BIN" ]; then
+    echo "❌ Python 3 not found. Install it with:"
+    echo "   sudo apt install python3 python3-venv   # Debian/Ubuntu"
+    echo "   brew install python3                    # macOS"
+    exit 1
+fi
+
+# Check if virtual environment exists and is valid (python present and pip importable)
+if [ ! -f "$VENV_DIR/bin/python" ] || ! "$VENV_DIR/bin/python" -c "import pip" 2>/dev/null; then
+    if ! "$PYTHON_BIN" -c "import venv" 2>/dev/null; then
+        echo "❌ python3-venv is not installed. Install it with:"
+        echo "   sudo apt install python3-venv   # Debian/Ubuntu"
+        echo "   brew install python3            # macOS"
+        exit 1
+    fi
+    echo "📦 Creating virtual environment with $PYTHON_BIN..."
+    rm -rf "$VENV_DIR"
+    "$PYTHON_BIN" -m venv "$VENV_DIR"
     echo "✅ Virtual environment created"
     echo ""
 fi
@@ -53,8 +105,8 @@ fi
 # Check if dependencies are installed (check for robot command)
 if [ ! -f "$VENV_DIR/bin/robot" ]; then
     echo "📦 Installing Robot Framework dependencies..."
-    "$VENV_DIR/bin/pip" install --upgrade pip
-    "$VENV_DIR/bin/pip" install -U -r "$TESTS_DIR/requirements.txt"
+    "$VENV_DIR/bin/python" -m pip install --upgrade pip
+    "$VENV_DIR/bin/python" -m pip install --prefer-binary -U -r "$TESTS_DIR/requirements.txt"
     echo "✅ Dependencies installed"
     echo ""
 fi
@@ -87,12 +139,12 @@ case "$TEST_TYPE" in
         if [ -z "$TEST_PATH" ]; then
             # No path specified - run all API tests
             TEST_TARGET="."
-            SUITE_OPTION="-s '*'.tests.api.suite"
+            SUITE_FILTER=(-s "*.tests.api.suite")
             echo "🧪 Running API tests (all)..."
         else
             # Path specified - run specific tests
             TEST_TARGET="$TEST_PATH"
-            SUITE_OPTION=""
+            SUITE_FILTER=()
             echo "🧪 Running API tests..."
             echo "Target: $TEST_PATH"
         fi
@@ -107,8 +159,8 @@ case "$TEST_TYPE" in
             -v ignore_console:false \
             -d "$RESULTS_DIR" \
             --exclude skip-due-to-issueORskip-due-to-refactoring \
-            $SUITE_OPTION \
-            $TEST_TARGET
+            "${SUITE_FILTER[@]}" \
+            "$TEST_TARGET"
         ;;
 
     ui)
@@ -117,79 +169,116 @@ case "$TEST_TYPE" in
         BROWSER_PATH="$SITE_PACKAGES/Browser/wrapper/node_modules/playwright-core/.local-browsers"
 
         if [ ! -d "$BROWSER_PATH" ] || [ -z "$(find "$BROWSER_PATH" -type d -name "chromium-*" 2>/dev/null)" ]; then
-            echo "📦 Installing Chromium browser (first time only)..."
-            rfbrowser init chromium
+            WRAPPER_DIR="$SITE_PACKAGES/Browser/wrapper"
+            RFBROWSER_LOG=$(rfbrowser init chromium 2>&1) || {
+                if echo "$RFBROWSER_LOG" | grep -q "does not support chromium"; then
+                    # rfbrowser's npm install already ran and succeeded; only the browser
+                    # download failed because playwright-core has no builds for this OS.
+                    # Patch the platform detection to map ubuntu26.x -> ubuntu24.04 builds,
+                    # then download the browser directly without re-running rfbrowser init
+                    # (which would reset node_modules).
+                    echo "⚠️  Playwright does not support this OS yet. Patching platform detection to use ubuntu24.04 builds..."
+                    CORE_BUNDLE="$WRAPPER_DIR/node_modules/playwright-core/lib/coreBundle.js"
+                    sed -i 's/if (major < 26)/if (major < 28)/g' "$CORE_BUNDLE"
+                    cd "$WRAPPER_DIR"
+                    PLAYWRIGHT_BROWSERS_PATH=0 node_modules/.bin/playwright install chromium
+                    cd - > /dev/null
+                else
+                    echo "$RFBROWSER_LOG"
+                    exit 1
+                fi
+            }
             echo "✅ Chromium installed"
         else
             echo "✅ Chromium already installed at $BROWSER_PATH, skipping download"
         fi
 
-        # Create subdirectories
-        mkdir -p "$RESULTS_DIR/dynamic_set" "$RESULTS_DIR/dynamic_set/pabot_results" "$RESULTS_DIR/static_set" "$RESULTS_DIR/rerun"
-
         echo "🧪 Running UI tests..."
         cd $TESTS_DIR
 
-        echo "Running dynamic smoke tests with $PROCESSES parallel processes (detected $CPU_COUNT CPUs)..."
-        pabot --processes "$PROCESSES" --testlevelsplit \
-            --listener resources/libraries/failure_detail_listener.py \
-            -v env:ui_suite \
-            -v docker:false \
-            -v headless:true \
-            -v ignore_console:false \
-            -v dms:true \
-            -v project_location:$PROJECT_ROOT \
-            -d "$RESULTS_DIR/dynamic_set" \
-            --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set \
-            --include smoke \
-            -s '*'.tests.parallel_ui.suite \
-            . || true
-
-        echo ""
-        echo "Running static smoke tests sequentially..."
-        robot \
-            --listener resources/libraries/failure_detail_listener.py \
-            -v env:ui_suite \
-            -v docker:false \
-            -v headless:true \
-            -v ignore_console:false \
-            -v dms:true \
-            -v project_location:$PROJECT_ROOT \
-            -d "$RESULTS_DIR/static_set" \
-            --exclude skip-due-to-issueORskip-due-to-refactoring \
-            --include static-setANDsmoke \
-            -s '*'.tests.parallel_ui.suite \
-            . || true
-
-        # Merge results
-        echo "Merging test results..."
-        rebot -d "$RESULTS_DIR" --output output.xml --merge \
-            "$RESULTS_DIR/dynamic_set/output.xml" \
-            "$RESULTS_DIR/static_set/output.xml" || true
-
-        echo "Rerunning failed tests..."
-        robot \
-            --listener resources/libraries/failure_detail_listener.py \
-            -v env:ui_suite \
-            -v docker:false \
-            -v dms:true \
-            -v headless:true \
-            -v ignore_console:false \
-            -v project_location:$PROJECT_ROOT \
-            -d "$RESULTS_DIR/rerun" \
-            --runemptysuite \
-            --rerunfailed "$RESULTS_DIR/output.xml" \
-            --output rerun.xml \
-            -s '*'.tests.parallel_ui.suite \
-            $TESTS_DIR || true
-
-        if [ -f "$RESULTS_DIR/rerun/rerun.xml" ] && [ -s "$RESULTS_DIR/rerun/rerun.xml" ]; then
-            echo "Merging rerun results..."
-            rebot -d "$RESULTS_DIR" --merge \
-                "$RESULTS_DIR/output.xml" \
-                "$RESULTS_DIR/rerun/rerun.xml" || true
+        if [ "$HEADLESS" = "false" ]; then
+            # Headed mode: run sequentially with robot so the browser window is visible.
+            # pabot spawns isolated subprocesses whose Node.js rfbrowser servers have no
+            # DISPLAY access, so headed mode only works with a single robot process.
+            echo "Running all smoke tests sequentially (headed mode)..."
+            robot \
+                --listener resources/libraries/failure_detail_listener.py \
+                -v env:ui_suite \
+                -v docker:false \
+                -v headless:false \
+                -v ignore_console:false \
+                -v dms:true \
+                -v project_location:$PROJECT_ROOT \
+                -d "$RESULTS_DIR" \
+                --exclude skip-due-to-issueORskip-due-to-refactoring \
+                --include smoke \
+                -s '*'.tests.parallel_ui.suite \
+                .
         else
-            echo "✅ All tests passed on first run, no rerun needed"
+            # Headless mode: run dynamic tests in parallel with pabot, static tests
+            # sequentially, then merge and rerun failures.
+            mkdir -p "$RESULTS_DIR/dynamic_set" "$RESULTS_DIR/dynamic_set/pabot_results" "$RESULTS_DIR/static_set" "$RESULTS_DIR/rerun"
+
+            echo "Running dynamic smoke tests with $PROCESSES parallel processes (detected $CPU_COUNT CPUs)..."
+            pabot --processes "$PROCESSES" --testlevelsplit \
+                --listener resources/libraries/failure_detail_listener.py \
+                -v env:ui_suite \
+                -v docker:false \
+                -v headless:true \
+                -v ignore_console:false \
+                -v dms:true \
+                -v project_location:$PROJECT_ROOT \
+                -d "$RESULTS_DIR/dynamic_set" \
+                --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set \
+                --include smoke \
+                -s '*'.tests.parallel_ui.suite \
+                . || true
+
+            echo ""
+            echo "Running static smoke tests sequentially..."
+            robot \
+                --listener resources/libraries/failure_detail_listener.py \
+                -v env:ui_suite \
+                -v docker:false \
+                -v headless:true \
+                -v ignore_console:false \
+                -v dms:true \
+                -v project_location:$PROJECT_ROOT \
+                -d "$RESULTS_DIR/static_set" \
+                --exclude skip-due-to-issueORskip-due-to-refactoring \
+                --include static-setANDsmoke \
+                -s '*'.tests.parallel_ui.suite \
+                . || true
+
+            echo "Merging test results..."
+            rebot -d "$RESULTS_DIR" --output output.xml --merge \
+                "$RESULTS_DIR/dynamic_set/output.xml" \
+                "$RESULTS_DIR/static_set/output.xml" || true
+
+            echo "Rerunning failed tests..."
+            robot \
+                --listener resources/libraries/failure_detail_listener.py \
+                -v env:ui_suite \
+                -v docker:false \
+                -v dms:true \
+                -v headless:true \
+                -v ignore_console:false \
+                -v project_location:$PROJECT_ROOT \
+                -d "$RESULTS_DIR/rerun" \
+                --runemptysuite \
+                --rerunfailed "$RESULTS_DIR/output.xml" \
+                --output rerun.xml \
+                -s '*'.tests.parallel_ui.suite \
+                $TESTS_DIR || true
+
+            if [ -f "$RESULTS_DIR/rerun/rerun.xml" ] && [ -s "$RESULTS_DIR/rerun/rerun.xml" ]; then
+                echo "Merging rerun results..."
+                rebot -d "$RESULTS_DIR" --merge \
+                    "$RESULTS_DIR/output.xml" \
+                    "$RESULTS_DIR/rerun/rerun.xml" || true
+            else
+                echo "✅ All tests passed on first run, no rerun needed"
+            fi
         fi
         ;;
 
