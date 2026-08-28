@@ -12,7 +12,7 @@ Default_Merchants
     Create dynamic admin user in DB
     [Documentation]    Checks that default merchants are present in Zed
     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
-    Zed: go to second navigation item level:    B2B Contracts    Merchants
+    Zed: go to second navigation item level:    Marketplace    Merchants
     Zed: table should contain:    Restrictions Merchant
     Zed: table should contain:    Prices Merchant
     Zed: table should contain:    Products Restrictions Merchant
