@@ -428,6 +428,25 @@ Select From List By Value When Element Is Visible
         Wait Until Element Is Visible    ${selector}
         Select From List By Value    ${selector}     ${value}
 
+Type Text Into Date Picker Field
+    [Documentation]    Fills a Back Office date picker field by typing into it.
+    ...
+    ...    The picker keeps its calendar open over the rest of the form and only parses what was
+    ...    typed once the field loses focus, so focus is moved away before anything else on the
+    ...    form is touched. A date the picker does not accept - one outside a configured
+    ...    `min_date`/`max_date` bound - is silently dropped on that parse, so the value is read
+    ...    back to fail here instead of at some later assertion on the saved record.
+    ...
+    ...    *Example:*
+    ...
+    ...    `Type Text Into Date Picker Field    id=shipment_group_form_shipment_requestedDeliveryDate    ${future_date}`
+    [Arguments]    ${selector}    ${text}
+    Wait Until Element Is Visible    ${selector}
+    Type Text    ${selector}    ${text}
+    Keyboard Key    press    Tab
+    Get Text    ${selector}    ==    ${text}
+    ...    message=Date picker '${selector}' kept {value} instead of the typed date {expected}, so the picker rejected it - most likely it falls outside the range the field allows.
+
 Ping and go to URL:
     [Arguments]    ${url}    ${timeout}=${EMPTY}
     ${accessible}=    Run Keyword And Ignore Error    Send GET request and return status code:    ${url}    ${timeout}
