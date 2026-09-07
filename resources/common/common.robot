@@ -71,6 +71,11 @@ Common_suite_setup
     ${today}=    Get Current Date    result_format=%Y-%m-%d
     Set Global Variable    ${today}
 
+    # Back Office date pickers refuse dates that already passed, so a date typed into one has to
+    # stay in the future as the suite ages instead of being hardcoded in the test data.
+    ${future_date}=    Add Time To Date    ${today}    30 days    result_format=%Y-%m-%d
+    Set Global Variable    ${future_date}
+
     ${already_executed}=    Run Keyword And Return Status    Variable Should Exist    ${setup_done}
     IF    ${already_executed} and ${skip_if_already_executed}
         # Setup is already done, skip
