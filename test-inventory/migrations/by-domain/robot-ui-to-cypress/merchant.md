@@ -1,6 +1,6 @@
 ### merchant · robot-ui-to-cypress · CC-39280 · 22 scenarios
 
-MIGRATE 18 · OBSOLETE 1 · DROP 3   ▸ 4/18 verified · 2 awaiting a CI run
+MIGRATE 18 · OBSOLETE 1 · DROP 3   ▸ 4/18 verified
 
 Batches: `merchant`
 
