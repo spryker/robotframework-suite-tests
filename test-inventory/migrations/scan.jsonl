@@ -1733,8 +1733,8 @@
 {"id": "robot:tests/ui/mp_b2b/marketplace/marketplace.robot::Shopping_List_Contains_Offers", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/ui/mp_b2c/catalog/catalog.robot::Offer_Availability_Calculation", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/ui/mp_b2c/checkout/checkout.robot::Guest_Checkout_and_Addresses", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
-{"id": "robot:tests/ui/mp_b2c/marketplace/marketplace.robot::Create_New_Offer", "source_state": "ACTIVE", "target_state": "MISSING"}
-{"id": "robot:tests/ui/mp_b2c/marketplace/marketplace.robot::Create_and_Approve_New_Merchant_Product", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/mp_b2c/marketplace/marketplace.robot::Create_New_Offer", "source_state": "ACTIVE", "target_state": "PRESENT"}
+{"id": "robot:tests/ui/mp_b2c/marketplace/marketplace.robot::Create_and_Approve_New_Merchant_Product", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/administration/administration.robot::Glossary", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/administration/administration.robot::Minimum_Order_Value", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "robot:tests/ui/suite/administration/administration.robot::Payment_method_update", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
@@ -1790,8 +1790,8 @@
 {"id": "robot:tests/ui/suite/data_exchange/data_exchange.robot::Data_exchange_API_download_specification", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/marketplace/marketplace.robot::Approve_Offer", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/marketplace/marketplace.robot::Default_Merchants", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
-{"id": "robot:tests/ui/suite/marketplace/marketplace.robot::Fulfill_Order_from_Merchant_Portal", "source_state": "ACTIVE", "target_state": "MISSING"}
-{"id": "robot:tests/ui/suite/marketplace/marketplace.robot::Manage_Merchant_Product", "source_state": "ACTIVE", "target_state": "MISSING"}
+{"id": "robot:tests/ui/suite/marketplace/marketplace.robot::Fulfill_Order_from_Merchant_Portal", "source_state": "ACTIVE", "target_state": "PRESENT"}
+{"id": "robot:tests/ui/suite/marketplace/marketplace.robot::Manage_Merchant_Product", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/marketplace/marketplace.robot::Manage_Merchant_Users", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/marketplace/marketplace.robot::Manage_Merchants_from_Backoffice", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "robot:tests/ui/suite/marketplace/marketplace.robot::Merchant_Portal_Customer_Specific_Prices", "source_state": "ACTIVE", "target_state": "PRESENT"}
