@@ -269,8 +269,8 @@ MP: save concrete product
 
 MP: delete product price row that contains text:
     [Arguments]    ${rowContent}
-    Scroll Element Into View    xpath=//spy-chips[contains(text(),'${rowContent}')]/ancestor::tr//td[@class='ng-star-inserted']/div
-    Hover    xpath=//spy-chips[contains(text(),'${rowContent}')]/ancestor::tr//td[@class='ng-star-inserted']/div
+    Scroll Element Into View    xpath=//spy-chips[contains(text(),'${rowContent}')]/ancestor::tr//td[.//div[contains(@class,'ant-table-row-actions-feature')]]/div
+    Hover    xpath=//spy-chips[contains(text(),'${rowContent}')]/ancestor::tr//td[.//div[contains(@class,'ant-table-row-actions-feature')]]/div
     Click    ${product_delete_price_row_button}
     Wait Until Element Is Visible    ${product_price_deleted_popup}
     MP: remove notification wrapper
@@ -298,8 +298,8 @@ MP: open concrete drawer by SKU:
 MP: delete product price row that contains quantity:
     [Arguments]    ${quantity}
     IF    '${env}' in ['ui_mp_b2b','ui_suite']
-        Scroll Element Into View    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
-        Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
+        Scroll Element Into View    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[.//div[contains(@class,'ant-table-row-actions-feature')]]/div
+        Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[8][contains(.,'${quantity}')]/ancestor::tr//td[.//div[contains(@class,'ant-table-row-actions-feature')]]/div
         Click    ${product_delete_price_row_button}
         Wait Until Element Is Visible    ${product_price_deleted_popup}
         TRY
@@ -312,8 +312,8 @@ MP: delete product price row that contains quantity:
         MP: remove notification wrapper
     END
     IF    '${env}' in ['ui_mp_b2c']
-        Scroll Element Into View    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[7][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
-        Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[7][contains(.,'${quantity}')]/ancestor::tr//td[@class='ng-star-inserted']/div
+        Scroll Element Into View    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[7][contains(.,'${quantity}')]/ancestor::tr//td[.//div[contains(@class,'ant-table-row-actions-feature')]]/div
+        Hover    xpath=//web-spy-card[@spy-title='Price']//tbody/tr/td[7][contains(.,'${quantity}')]/ancestor::tr//td[.//div[contains(@class,'ant-table-row-actions-feature')]]/div
         Click    ${product_delete_price_row_button}
         Wait Until Element Is Visible    ${product_price_deleted_popup}
         TRY
