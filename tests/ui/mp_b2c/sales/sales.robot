@@ -222,14 +222,14 @@ Manage_Shipments
     ...    || 2          | DHL             | Standard        | €0.00          | ASAP                    ||
     Zed: edit xxx shipment inside the order:
     ...    || shipmentN | delivery address | salutation | first name | last name | email              | country | address 1     | address 2 | city   | zip code | shipment method | requested delivery date | sku          ||
-    ...    || 2         | New address      | Mr         | Edit       | Shipment  | ${yves_user_email} | Germany | Hartmanngasse | 9         | Vienna | 0987     | DHL - Express   | 2025-01-25              | 005_30663301 ||
+    ...    || 2         | New address      | Mr         | Edit       | Shipment  | ${yves_user_email} | Germany | Hartmanngasse | 9         | Vienna | 0987     | DHL - Express   | ${future_date}          | 005_30663301 ||
     Zed: order has the following number of shipments:    ${lastPlacedOrder}    3
     Zed: shipment data inside xxx shipment should be:
     ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
     ...    || 2          | DHL             | Standard        |  €0.00         | ASAP                    ||
     Zed: shipment data inside xxx shipment should be:
     ...    || shipment n | delivery method | shipping method | shipping costs | requested delivery date ||
-    ...    || 3          | DHL             | Express         |  €0.00         | 2025-01-25              ||
+    ...    || 3          | DHL             | Express         |  €0.00         | ${future_date}          ||
     Zed: xxx shipment should/not contain the following products:    1    true    007_30691822
     Zed: xxx shipment should/not contain the following products:    1    false    012_25904598
     Zed: xxx shipment should/not contain the following products:    2    true    012_25904598
