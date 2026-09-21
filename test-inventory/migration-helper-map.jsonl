@@ -1,0 +1,706 @@
+{"canonical_name": "accept_terms", "robot_keyword": "Yves: accept the terms and conditions:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "activate_admin_mfa", "robot_keyword": null, "cypress_fn": "UserMfaActivationScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "activate_admin_user", "robot_keyword": null, "cypress_fn": "UserActivationScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "activate_agent_mfa", "robot_keyword": null, "cypress_fn": "AgentMfaActivationScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "activate_customer_mfa", "robot_keyword": null, "cypress_fn": "CustomerMfaActivationScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "activate_discount", "robot_keyword": "Zed: activate following discounts from Overview page:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "activate_merchant", "robot_keyword": null, "cypress_fn": "MerchantActivationScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "activate_merchant_mfa", "robot_keyword": null, "cypress_fn": "mfaSetUpScenario.executeActivation", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "activate_product", "robot_keyword": null, "cypress_fn": "ActivateProductScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "add_admin_role_to_company_user", "robot_keyword": "I add 'admin' role to company user and get company_user_uuid:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_all_list_products_to_cart", "robot_keyword": "Yves: add all available products from list to cart", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_all_wishlist_products_to_cart", "robot_keyword": "Yves: add all available products from wishlist to cart", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_alternative_products", "robot_keyword": "Zed: add following alternative products to the concrete:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_bundle_to_cart", "robot_keyword": "Yves: add products to the shopping cart in the bundle configurator", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_cart_comment", "robot_keyword": "Yves: add comment on cart:", "cypress_fn": "CommentCartPage.add", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "add_concrete_product", "robot_keyword": "MP: add new concrete product:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_configurable_product_zero_quantity", "robot_keyword": "Add_a_configurable_product_to_the_cart_with_0_quantity", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_content_product_list_to_cms_page", "robot_keyword": "Add content product abstract list to cms page in DB", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_custom_order_reference", "robot_keyword": null, "cypress_fn": "CartPage.addCustomOrderReferenceInput", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "add_offer_price", "robot_keyword": "MP: add offer price:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_order_comment", "robot_keyword": "Yves: add comment on order in order detail page:", "cypress_fn": "MerchantRelationRequestEditPage.addInternalComment", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "add_product_attachment", "robot_keyword": null, "cypress_fn": "ProductManagementEditPage.addAttachment", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "add_product_set_to_cart", "robot_keyword": "Yves: add all products to the shopping cart from Product Set", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_product_to_cart", "robot_keyword": "Yves: add product to the shopping cart", "cypress_fn": "ProductPage.addToCart", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "add_product_to_shopping_list", "robot_keyword": "Yves: add product to the shopping list:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_product_to_wishlist", "robot_keyword": "Yves: add product to wishlist:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_promo_product_to_cart", "robot_keyword": "Yves: add promotional product to the cart", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_quick_order_item", "robot_keyword": "Yves: find and add new item in the quick order form:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_quick_order_to_cart", "robot_keyword": "Yves: add products to the shopping cart from quick order page", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_quick_order_to_shopping_list", "robot_keyword": "Yves: add products to the shopping list from quick order page with name:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "add_quote_request_note", "robot_keyword": "Yves: add the following note to the quote request:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "any_element_matches", "robot_keyword": null, "cypress_fn": "data.some", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "apply_filter_and_search", "robot_keyword": null, "cypress_fn": "ProductAttributeVisibilityListPage.applyFilterAndSearch", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "apply_filters", "robot_keyword": null, "cypress_fn": "SspFileManagementListPage.filterByType", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "apply_voucher", "robot_keyword": "Yves: apply discount voucher to cart:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "approve_cart", "robot_keyword": "Yves: 'approve the cart' on the summary page", "cypress_fn": "MerchantRelationRequestsPage.approve", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "approve_merchant_registration", "robot_keyword": null, "cypress_fn": "MerchantRegistrationApprovalScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "approve_product_offer", "robot_keyword": null, "cypress_fn": "ApproveProductOfferScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "approve_ssp_inquiry", "robot_keyword": null, "cypress_fn": "SspInquiryDetailPage.approveSspInquiry", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_abstract_product_view_contains", "robot_keyword": "Zed: view abstract product page contains:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_acl_navigation_access", "robot_keyword": null, "cypress_fn": "AclNavigationAccessScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_add_to_cart_error", "robot_keyword": "Yves: try add product to the cart from PDP and expect error:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_address_exists", "robot_keyword": "Yves: check that user has address exists/doesn't exist:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_agent_widget", "robot_keyword": "Yves: agent widget contains:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_api_spec_download_enabled", "robot_keyword": "Zed: download data exchange api specification should be active:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_array_element_nested_array_at_least_once", "robot_keyword": "And Array element should contain nested array at least once:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_array_element_property_or_array_value_at_least_once", "robot_keyword": "And Array element should contain property or array value at least once:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_array_element_property_value_at_least_once", "robot_keyword": "And Array element should contain property with value at least once:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_array_element_property_value_greater_than_at_least_once", "robot_keyword": "And Array element should contain property with value greater than at least once:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_array_element_property_value_less_than_at_least_once", "robot_keyword": "And Array element should contain property with value less than at least once:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_asset_assignments", "robot_keyword": null, "cypress_fn": "SspAssetDetailPage.assertSspAssetAssignments", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_asset_details", "robot_keyword": null, "cypress_fn": "SspAssetDetailPage.verifyAssetDetails", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_asset_inquiries", "robot_keyword": null, "cypress_fn": "SspAssetDetailPage.assertSspInquiries", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_billing_same_as_shipping_checkbox", "robot_keyword": "Yves: 'billing same as shipping' checkbox should be displayed:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_business_unit_dropdown", "robot_keyword": "Yves: 'Business Unit' dropdown contains:", "cypress_fn": "CompanyUserSelectPage.selectBusinessUnit", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_cancel_order_button", "robot_keyword": "Yves: 'Order Details' page contains the cancel order button:", "cypress_fn": "CartPage.assertCancelOrderAmendmentButton", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_cart_comments_visible", "robot_keyword": "Yves: check comments are visible or not in cart:", "cypress_fn": "CommentCartPage.getCommentThreadListSection", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_cart_elements", "robot_keyword": "Yves: shopping cart contains/doesn't contain the following elements:", "cypress_fn": "CartPage.getCartSummary", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_cart_merchant", "robot_keyword": "Yves: assert merchant of product in cart or list:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_cart_preview_products", "robot_keyword": "Yves: preview shopping cart contains the following products:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_cart_products", "robot_keyword": "Yves: shopping cart contains the following products:", "cypress_fn": "CartPage.getCartItemSummary", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_cart_products_absent", "robot_keyword": "Yves: shopping cart doesn't contain the following products:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_cart_shown", "robot_keyword": "Yves: the following shopping cart is shown:", "cypress_fn": "CartPage.assertPageLocation", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_cart_title", "robot_keyword": "Yves: Shopping Cart title should be equal:", "cypress_fn": "CartPage.assertCartName", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_cart_unit_price", "robot_keyword": "Yves: shopping cart contains product with unit price:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_carts_widget", "robot_keyword": "Yves: 'Shopping Carts' widget contains:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_catalog_card_contains", "robot_keyword": "Yves: 1st product card in catalog (not)contains:", "cypress_fn": "ProductAttributeVisibilityPage.assertPlpAttributeBadgeVisible", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_catalog_filter", "robot_keyword": "Yves: catalog page contains filter:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_catalog_product_price", "robot_keyword": "Yves: product with name in the catalog should have price:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_catalog_products", "robot_keyword": "Yves: 'Catalog' page should show products:", "cypress_fn": "CatalogPage.getProductItemBlocks", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_checkout_blocked", "robot_keyword": "Yves: checkout is blocked with the following message:", "cypress_fn": "CheckoutSummaryBudgetPage.assertEnforcementError", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_cms_element", "robot_keyword": "Yves: page contains CMS element:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_company_menu_available", "robot_keyword": "Yves: company menu 'should' be available for logged in user", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_concrete_alternative_products", "robot_keyword": "Zed: concrete product has the following alternative products:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_configuration", "robot_keyword": "Yves: configuration should be equal:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_configuration_contains", "robot_keyword": "Yves: check and go back that configuration page contains:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_configuration_notification", "robot_keyword": "Yves: product configuration notification is:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_configuration_price", "robot_keyword": "Yves: product configuration price should be:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_configuration_status", "robot_keyword": "Yves: product configuration status should be equal:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_contains", "robot_keyword": null, "cypress_fn": "cy.contains", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_customer_profile", "robot_keyword": "Yves: assert customer profile data:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_customer_profile_data", "robot_keyword": "Zed: assert customer profile data:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_dashboard_block_absent", "robot_keyword": null, "cypress_fn": "SspDashboardPage.assertSspDashboardAssetsWidgetNotPresent", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_dashboard_block_present", "robot_keyword": null, "cypress_fn": "SspDashboardPage.assertSspDashboardFilesBlockPresent", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_dashboard_user_info", "robot_keyword": null, "cypress_fn": "SspDashboardPage.assertSspDashboardUserInfoHasWelcomeText", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_discount_applied", "robot_keyword": "Yves: discount is applied:", "cypress_fn": "CartPage.getCartDiscountSummary", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_download_forbidden", "robot_keyword": null, "cypress_fn": "SspFileManagementDownloadPage.downloadFileForbidden", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_downloaded_api_spec_contains", "robot_keyword": "Zed: check that downloaded api specification contains:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_downloaded_api_spec_not_contains", "robot_keyword": "Zed: check that downloaded api specification does not contain:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_element_contains_nested_property", "robot_keyword": "And Each array element of array in response should contain nested property:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_element_contains_nested_property_value", "robot_keyword": "And Each array element of array in response should contain nested property with value:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_element_contains_property", "robot_keyword": "And Each array element of array in response should contain property:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_element_contains_property_value", "robot_keyword": "And Each array element of array in response should contain property with value:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_element_contains_value", "robot_keyword": "And Each array element of array in response should contain value:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_element_greater_than", "robot_keyword": "And Each array element of array in response should be greater than:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_element_nested_array_size", "robot_keyword": "And Each array element of array in response should contain a nested array of a certain size:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_element_nested_array_size_greater_than", "robot_keyword": "And Each array element of the array in response should contain a nested array larger than a certain size:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_element_nested_property_datatype", "robot_keyword": "And Each array element of array in response should contain nested property with datatype:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_element_nested_property_datatype_in", "robot_keyword": "And Each array element of array in response should contain nested property with datatype in:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_element_not_empty", "robot_keyword": "And Each array element of array in response should NOT be empty:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_element_property_not_empty", "robot_keyword": "And Each array in response should contain property with NOT EMPTY value:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_element_property_value_in", "robot_keyword": "And Each array element of array in response should contain property with value in:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_element_property_value_not_in", "robot_keyword": "And Each array element of array in response should contain property with value NOT in:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_nested_array_element_property_value_in", "robot_keyword": "And Each array element of nested array should contain property with value in:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_each_nested_array_element_property_value_not_in", "robot_keyword": "And Each array element of nested array should contain property with value NOT in:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_element_absent", "robot_keyword": "Page Should Not Contain Element", "cypress_fn": "ProductAttributeVisibilityPage.assertPlpAttributeBadgeNotVisible", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_equals", "robot_keyword": null, "cypress_fn": "to.equal", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_error_code", "robot_keyword": "And Response should return error code:", "cypress_fn": "DashboardPage.assert500StatusCode", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_error_message", "robot_keyword": "And Response should return error message:", "cypress_fn": "MerchantRegistrationPage.assertValidationErrors", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_file_detached", "robot_keyword": null, "cypress_fn": "SspFileManagementDetachPage.assertDetachFile", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_file_details", "robot_keyword": null, "cypress_fn": "SspFileManagementViewPage.verifyFileDetailsAreVisible", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_file_downloaded", "robot_keyword": null, "cypress_fn": "SspFileManagementListPage.verifyFileDownloaded", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_file_exists", "robot_keyword": null, "cypress_fn": "SspFileManagementListPage.assertFileExists", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_file_not_exists", "robot_keyword": null, "cypress_fn": "SspFileManagementListPage.assertFileNotExists", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_file_upload_constraints", "robot_keyword": null, "cypress_fn": "SspFileManagementAddPage.verifyFileUploadConstraints", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_filter_value_empty", "robot_keyword": null, "cypress_fn": "NavigationMenuPage.assertFilterValueEmpty", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_first_nav_root_menus", "robot_keyword": "Zed: verify first navigation root menus", "cypress_fn": "NavigationMenuPage.hasMenuItem", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_flash_message", "robot_keyword": "Yves: flash message should be shown:", "cypress_fn": "ProductManagementEditPage.verifySaveSuccess", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_hard_threshold", "robot_keyword": "Yves: hard threshold is applied with the following message:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_header_contains", "robot_keyword": "Yves: header contains/doesn't contain:", "cypress_fn": "ProductAttributeVisibilityListPage.assertDisplayAtColumnExists", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_includes", "robot_keyword": null, "cypress_fn": "to.include", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_inquiry_details", "robot_keyword": null, "cypress_fn": "SspInquiryDetailPage.assertSspInquiryDetails", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_inquiry_status", "robot_keyword": null, "cypress_fn": "SspInquiryDetailPage.assertSspInquiryStatusChangedToApproved", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_intercepted_request", "robot_keyword": null, "cypress_fn": "foundRequest.should", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_login_error", "robot_keyword": "Yves: login on Yves with provided credentials and expect error:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_login_fails", "robot_keyword": "Zed: login with deactivated user/invalid data:", "cypress_fn": "MpLoginPage.getFailedAuthenticationText", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_logo_uploaded", "robot_keyword": null, "cypress_fn": "ConfigurationPage.verifyStorefrontLogoUploaded", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_menu_items_filtered", "robot_keyword": null, "cypress_fn": "NavigationMenuPage.assertMenuItemsFiltered", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_menu_order_unchanged", "robot_keyword": null, "cypress_fn": "NavigationMenuPage.assertMenuOrderUnchanged", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_merchant_profile", "robot_keyword": "Yves: assert merchant profile fields:", "cypress_fn": "ProductManagementEditPage.verifyMerchantSelected", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_named_cart_status", "robot_keyword": "Yves: shopping cart with name xxx has the following status:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_nav_root_menu_icons", "robot_keyword": "Zed: verify root menu icons", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_nested_array_element_sub_array_property_value_at_least_once", "robot_keyword": "And Nested array element should contain sub-array with property and value at least once:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_no_table_records", "robot_keyword": null, "cypress_fn": "ProductManagementListPage.assertNoTableRecords", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_offer_price", "robot_keyword": "Yves: merchant's offer/product price should be:", "cypress_fn": "ProductPage.getProductOfferPrice", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_offer_product_view_contains", "robot_keyword": "Zed: view offer product page contains:", "cypress_fn": "ProductOfferViewPage.assertProductOfferData", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_offer_view_page_displayed", "robot_keyword": "Zed: view offer page is displayed", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_order_billing_address", "robot_keyword": "Zed: billing address for the order should be:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_order_comment_present", "robot_keyword": "Zed: check comment appears at order detailed page in zed:", "cypress_fn": "MerchantRegistrationViewPage.assertNoteAdded", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_order_comments_visible", "robot_keyword": "Yves: check comments is visible or not in order:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_order_grand_total", "robot_keyword": "Zed: grand total for the order equals:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_order_history_order", "robot_keyword": "Yves: 'Order History' page contains the following order:", "cypress_fn": "CustomerOverviewPage.getOrderDetailTable", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_order_history_status", "robot_keyword": "Yves: 'Order History' page contains the following order with a status:", "cypress_fn": "OrderDetailsPage.containsOrderState", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_order_item_state", "robot_keyword": "MP: order item state should be:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_order_product_count", "robot_keyword": "Yves: 'Order Details' page contains the following product title N times:", "cypress_fn": "CustomerOverviewPage.assertProductQuantity", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_order_shipment_count", "robot_keyword": "Zed: order has the following number of shipments:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_order_shipping_address", "robot_keyword": "Yves: shipping address on the order details page is:", "cypress_fn": "CustomerOverviewPage.assertFirstShippingAddress", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_order_states_on_drawer", "robot_keyword": "MP: order states on drawer should contain:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_order_success", "robot_keyword": "Yves: 'Thank you' page is displayed", "cypress_fn": "CustomerOverviewPage.getPlacedOrderSuccessMessage", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_page_displayed", "robot_keyword": "Yves: 'Shopping Cart' page is displayed", "cypress_fn": "CustomerOverviewPage.assertPageLocation", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_page_title", "robot_keyword": "Yves: validate the page title:", "cypress_fn": "MerchantRegistrationPage.assertPageTitle", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_parent_item_expanded", "robot_keyword": null, "cypress_fn": "NavigationMenuPage.assertParentItemExpanded", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_parent_items_closed", "robot_keyword": null, "cypress_fn": "NavigationMenuPage.assertAllParentItemsClosed", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_payment_method_present", "robot_keyword": "Yves: check that the payment method is/not present in the checkout process:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_pdp_contains", "robot_keyword": "Yves: PDP contains/doesn't contain:", "cypress_fn": "ProductAttributeVisibilityPage.assertPdpAttributeVisible", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_pdp_merchant", "robot_keyword": "Yves: merchant is (not) displaying in Sold By section of PDP:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_permission_restricted_message", "robot_keyword": "Zed: validate the message when permission is restricted:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_print_slip_products", "robot_keyword": "Yves: check that 'Print Slip' contains the following products:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_product_attachment", "robot_keyword": null, "cypress_fn": "ProductManagementEditPage.verifyAttachmentExists", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_product_attachment_count", "robot_keyword": null, "cypress_fn": "ProductManagementEditPage.verifyAttachmentCount", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_product_availability_status_changed", "robot_keyword": "And Product availability status should be changed on:", "cypress_fn": "ProductPage.getAvailabilityStatusBlock", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_product_available", "robot_keyword": "Yves: check if product is available on PDP:", "cypress_fn": "CartPage.assertCartItemAvailabilityDisplayed", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_product_class_selected", "robot_keyword": null, "cypress_fn": "ProductPage.verifyProductClassSelected", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_product_configuration", "robot_keyword": "Zed: product configuration should be equal:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_product_discontinued", "robot_keyword": "Zed: product is successfully discontinued", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_product_in_stock", "robot_keyword": "Zed: check if product is/not in stock:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_product_name", "robot_keyword": "Yves: product name on PDP should be:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_product_original_price", "robot_keyword": "Yves: product original price on the PDP should be:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_product_price", "robot_keyword": "Yves: product price on the PDP should be:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_product_set_products", "robot_keyword": "Yves: 'Product Set' page contains the following products:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_product_sets", "robot_keyword": "Yves: 'Product Sets' page contains the following sets:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_product_view_page_displayed", "robot_keyword": "Zed: view product page is displayed", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_promo_product_in_cart", "robot_keyword": "Yves: promotional product offer is/not shown in cart:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_quote_request_note", "robot_keyword": "Yves: 'Quote Request Details' page contains the following note:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_quote_request_status", "robot_keyword": "Yves: quote request with reference xxx should have status:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_quote_requests_widget", "robot_keyword": "Yves: 'Quote Requests' widget is shown", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_array_contains_property_value", "robot_keyword": "And Array in response should contain property with value:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_array_size", "robot_keyword": "And Response should contain the array of a certain size:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_array_size_greater_or_equal", "robot_keyword": "And Response should contain the array larger or equal than a certain size:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_array_size_greater_than", "robot_keyword": "And Response should contain the array larger than a certain size:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_array_size_in", "robot_keyword": "And Response should contain the array of size in:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_array_size_less_than", "robot_keyword": "And Response should contain the array smaller than a certain size:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_array_value_count", "robot_keyword": "And Response should contain certain number of values:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_body_case_insensitive_equals", "robot_keyword": "And Response body case-insensitive parameter should be:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_body_datatype", "robot_keyword": "And Response Body parameter should have datatype:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_body_equals", "robot_keyword": "And Response body parameter should be:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_body_greater_than", "robot_keyword": "And Response body parameter should be greater than:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_body_in", "robot_keyword": "And Response body parameter should be in:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_body_less_than", "robot_keyword": "And Response body parameter should be less than:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_body_not_empty", "robot_keyword": "And Response body parameter should not be EMPTY:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_body_not_equals", "robot_keyword": "And Response body parameter should NOT be:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_body_rounded", "robot_keyword": "And Response body parameter with rounding should be:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_body_self_link", "robot_keyword": "And Response body has correct self link", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_body_self_link_created_entity", "robot_keyword": "And Response body has correct self link for created entity:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_body_self_link_internal", "robot_keyword": "And Response body has correct self link internal", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_body_starts_with", "robot_keyword": "And Response body parameter should start with:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_contains", "robot_keyword": "And Response body parameter should contain:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_header", "robot_keyword": "And Response header parameter should be:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_include_contains_entity_type", "robot_keyword": "And Response include should contain certain entity type:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_include_element_self_link", "robot_keyword": "And Response include element has self link:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_nested_array_size_at_least_once", "robot_keyword": "And Response should contain a nested array of a certain size at least once:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_not_contains", "robot_keyword": "And Response body should not contain:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_reason", "robot_keyword": "And Response reason should be:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_response_status", "robot_keyword": "Then Response status code should be:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_return_items", "robot_keyword": "Zed: return details page contains the following items:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_search_results", "robot_keyword": "Yves: at least one product is/not displayed on the search results page:", "cypress_fn": "SspServiceListPage.assertSearchResult", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_second_nav_root_menus", "robot_keyword": "Zed: verify second navigation root menus", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_service_cancelled", "robot_keyword": null, "cypress_fn": "SspServiceListPage.assertFirstServiceIsCancelled", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_shipment_data", "robot_keyword": "Zed: shipment data inside xxx shipment should be:", "cypress_fn": "CartPage.assertShipmentTypeGrouping", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_shipment_products", "robot_keyword": "Zed: xxx shipment should/not contain the following products:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_shipment_shipping_address", "robot_keyword": "Zed: shipping address inside xxx shipment should be:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_shipment_type_selected", "robot_keyword": null, "cypress_fn": "ProductPage.verifyShipmentTypeSelected", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_shopping_list_products", "robot_keyword": "Yves: shopping list contains the following products:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_shopping_list_shown", "robot_keyword": "Yves: the following shopping list is shown:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_shopping_list_widget", "robot_keyword": "Yves: 'Shopping List' widget contains:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_soft_threshold_cart", "robot_keyword": "Yves: soft threshold surcharge is added in the cart:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_soft_threshold_summary", "robot_keyword": "Yves: soft threshold surcharge is added on summary page:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_ssp_model", "robot_keyword": null, "cypress_fn": "SspModelViewPage.verifySspModel", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_ssp_services", "robot_keyword": null, "cypress_fn": "SspAssetDetailPage.assertSspServices", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_status_active", "robot_keyword": null, "cypress_fn": "YvesCostCenterUpdatePage.assertIsActive", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_status_color", "robot_keyword": null, "cypress_fn": "MerchantRegistrationListPage.assertStatusColor", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_status_inactive", "robot_keyword": null, "cypress_fn": "YvesCostCenterUpdatePage.assertIsInactive", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_store_availability", "robot_keyword": "Yves: check store availability for item number xxx:", "cypress_fn": "CartPage.assertServicePointsDisplayed", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_store_switcher", "robot_keyword": "Yves: wait until store switcher contains:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_string_matches", "robot_keyword": "Should Match", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_summary_contains", "robot_keyword": "Yves: 'Summary' page contains/doesn't contain:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_summary_unit_price", "robot_keyword": "Yves: checkout summary step contains product with unit price:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_table_contains_value", "robot_keyword": "Zed: table should contain non-searchable value:", "cypress_fn": "DataImportMerchantFilePage.assertFileStatus", "kind": "assert", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assert_table_contains_value_n_times", "robot_keyword": "Zed: table should contain xxx N times:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_text_includes", "robot_keyword": null, "cypress_fn": "text.includes", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_true", "robot_keyword": null, "cypress_fn": "assert.isTrue", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_url_in_database", "robot_keyword": "And Verify that url is present in the Database:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_url_includes", "robot_keyword": null, "cypress_fn": "url.includes", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_widget_data", "robot_keyword": null, "cypress_fn": "SspDashboardPage.assertWidgetData", "kind": "assert", "in_robot": false, "in_cypress": true}
+{"canonical_name": "assert_wishlist_merchant", "robot_keyword": "Yves: assert merchant of product in wishlist:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_wishlist_product", "robot_keyword": "Yves: wishlist contains product with sku:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_wishlist_product_alternative", "robot_keyword": "Yves: product with sku is marked as alternative in wishlist:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assert_wishlist_product_discontinued", "robot_keyword": "Yves: product with sku is marked as discontinued in wishlist:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assign_company_role_permissions", "robot_keyword": "Yves: assign the following permissions to the company role:", "cypress_fn": "ManageCompanyRoleUserPage.assignUser", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "assign_product_list_to_merchant_relation", "robot_keyword": "Zed: assign product list to merchant relation:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assign_store_to_cms_block", "robot_keyword": "Zed: assigned store to cms block:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "assign_user_to_warehouse", "robot_keyword": "Assign user to Warehouse in DB:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "attach_company_user_to_business_unit", "robot_keyword": "Zed: attach company user to the following BU with role:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "calculate_value", "robot_keyword": "And Perform arithmetical calculation with two arguments:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "cancel_order", "robot_keyword": "Yves: cancel the order:", "cypress_fn": "CartPage.cancelOrderAmendment", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "cancel_service", "robot_keyword": null, "cypress_fn": "SspServiceListPage.cancelFirstService", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "cancel_ssp_inquiry", "robot_keyword": null, "cypress_fn": "SspInquiryDetailPage.cancelSspInquiry", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "change_cart_quantity", "robot_keyword": "Yves: change quantity using '+' or '-' button № times:", "cypress_fn": "CartPage.changeQuantity", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "change_customer_password", "robot_keyword": null, "cypress_fn": "CustomerProfileScenario.executePasswordChange", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "change_merchant_password", "robot_keyword": null, "cypress_fn": "MerchantUserAccountScenario.executeChangePassword", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "change_offer_stock", "robot_keyword": "MP: change offer stock:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "change_order_item_state", "robot_keyword": "MP: change order item state on:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "change_password", "robot_keyword": null, "cypress_fn": "ResetPasswordPage.changePassword", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "change_promo_quantity_add_to_cart", "robot_keyword": "Yves: change quantity of promotional product and add to cart:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "change_store_status", "robot_keyword": "MP: change store status to:", "cypress_fn": "YvesCostCenterUpdatePage.deactivate", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "check_configurable_product_pdp_wishlist_availability", "robot_keyword": "Configurable_Product_PDP_Wishlist_Availability", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "check_create_ssp_model_checkbox", "robot_keyword": null, "cypress_fn": "SspAssetAddPage.checkCreateSspModelCheckbox", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "check_merchant_agent_checkbox", "robot_keyword": null, "cypress_fn": "UserUpdatePage.checkMerchantAgentCheckbox", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "checkout_as_guest", "robot_keyword": "Yves: proceed with checkout as guest:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "choose_bundle_template", "robot_keyword": "Yves: choose bundle template to configure:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "cleanup_availability_notifications", "robot_keyword": "Cleanup all availability notifications:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "cleanup_cart_items", "robot_keyword": "Cleanup all items in the cart:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "cleanup_customer_addresses", "robot_keyword": "Cleanup existing customer addresses:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "cleanup_customer_carts", "robot_keyword": "Cleanup all customer carts", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "cleanup_guest_cart_items", "robot_keyword": "Cleanup all items in the guest cart:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "clear_cart", "robot_keyword": "Yves: check if cart is not empty and clear it", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "clear_comparison_list", "robot_keyword": null, "cypress_fn": "ProductComparisonPage.clearComparisonList", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "clear_navigation_filter", "robot_keyword": null, "cypress_fn": "NavigationMenuPage.clearFilter", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "click_add_attribute_button", "robot_keyword": null, "cypress_fn": "ProductsPage.clickAddAttributeButton", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "click_create_claim_button", "robot_keyword": null, "cypress_fn": "SspAssetDetailPage.clickCreateClaimButton", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "click_create_entity_button", "robot_keyword": "MP: click on create new entity button:", "cypress_fn": "SspInquiryListPage.clickCreateSspInquiryButton", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "click_dashboard_button_and_assert_url", "robot_keyword": "MP: click button on dashboard page and check url:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "click_header_button", "robot_keyword": "Zed: click button in Header:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "click_quote_request_action", "robot_keyword": "Yves: click 'Revise' button on the 'Quote Request Details' page", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "click_row_action_button", "robot_keyword": "Zed: click Action Button in a table for row that contains:", "cypress_fn": "SspFileManagementListPage.clickAttachButton", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "click_submit_button", "robot_keyword": "MP: click submit button", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "click_table_row_containing", "robot_keyword": "MP: click on a table row that contains:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "click_use_default_setting", "robot_keyword": null, "cypress_fn": "ConfigurationPage.clickUseDefaultLink", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "close_browser_context", "robot_keyword": "Close Current Context", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "confirm_delete", "robot_keyword": null, "cypress_fn": "SspFileManagementDeletePage.confirmDelete", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "create_admin_user", "robot_keyword": "Zed: create new Zed user with the following data:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_admin_user_with_mfa", "robot_keyword": null, "cypress_fn": "UserMfaCreateScenario.execute", "kind": "setup", "in_robot": false, "in_cypress": true}
+{"canonical_name": "create_api_key", "robot_keyword": "Create api key in db", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_browser_context", "robot_keyword": "Create New Context", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_cms_page", "robot_keyword": "Zed: create a cms page and publish it:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_company", "robot_keyword": "Zed: create new Company with provided name:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_company_business_unit", "robot_keyword": "Yves: create new company business unit:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_company_role", "robot_keyword": "Yves: create new company role:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_company_user", "robot_keyword": "Yves: create new company user:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_customer_address", "robot_keyword": "Yves: create a new customer address in profile:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_discount", "robot_keyword": "Zed: create a discount and activate it:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_dynamic_admin_user", "robot_keyword": "Create dynamic admin user in DB", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_dynamic_customer", "robot_keyword": "Create dynamic customer in DB", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_dynamic_entity_config", "robot_keyword": "Create dynamic entity configuration in Database:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_dynamic_entity_config_relation", "robot_keyword": "Create dynamic entity configuration relation in Database:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_dynamic_merchant_user", "robot_keyword": "Zed: create dynamic merchant user:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_empty_customer_cart", "robot_keyword": "Create empty customer cart:", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_gift_code", "robot_keyword": "Create giftcode in Database:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_group", "robot_keyword": "Zed: create new group with role assigned:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_guest_cart", "robot_keyword": "Create a guest cart:", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_merchant", "robot_keyword": "Zed: create new Merchant with the following data:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_merchant_order_and_set_status", "robot_keyword": "Create merchant order for the item in DB and change status:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_merchant_relation_request", "robot_keyword": null, "cypress_fn": "MerchantRelationRequestCreatePage.create", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "create_merchant_user", "robot_keyword": "Zed: create new Merchant User with the following data:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_multi_sku_product", "robot_keyword": "MP: create multi sku product with following data:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_named_cart", "robot_keyword": "Yves: create new 'Shopping Cart' with name:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_named_shopping_list", "robot_keyword": "Yves: create new 'Shopping List' with name:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_named_wishlist", "robot_keyword": "Yves: create wishlist with name:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_order_return", "robot_keyword": "Zed: create a return for the following order and product in it:", "cypress_fn": "SalesReturnCreatePage.create", "kind": "setup", "in_robot": true, "in_cypress": true}
+{"canonical_name": "create_order_shipment", "robot_keyword": "Zed: create new shipment inside the order:", "cypress_fn": "SalesDetailPage.create", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "create_product", "robot_keyword": null, "cypress_fn": "CreateProductScenario.execute", "kind": "setup", "in_robot": false, "in_cypress": true}
+{"canonical_name": "create_product_abstract_collection_two_children", "robot_keyword": "Create_product_abstract_collection_with_two_childs:", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_product_list", "robot_keyword": "Zed: create product list with the following assigned category:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_product_set", "robot_keyword": "Zed: create new product set:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_region", "robot_keyword": "And Create region in DB:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_return", "robot_keyword": "Yves: create return for the following products:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_role", "robot_keyword": "Zed: create new role with name:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_service", "robot_keyword": "Then Create service in DB", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_service_point", "robot_keyword": "When Create service point in DB", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_service_point_address_long_zip", "robot_keyword": "Create_Service_Point_address_with_zip_more_than_15", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_service_type", "robot_keyword": "Create service type in DB", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_service_via_bapi_if_absent", "robot_keyword": "Create dynamic service with all data via BAPI if doesn't exist", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_ssp_asset", "robot_keyword": null, "cypress_fn": "SspAssetCreatePage.createAsset", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "create_ssp_inquiry", "robot_keyword": null, "cypress_fn": "SspInquiryCreatePage.createSspInquiry", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "create_store", "robot_keyword": "Zed: create new Store:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_warehouse", "robot_keyword": "Create warehouse in DB:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_warehouse_user_assignment", "robot_keyword": "And Create_warehouse_user_assignment:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "create_warehouse_user_assignment_multiple_active", "robot_keyword": "Create_warehouse_user_assignment_with_multiple_active_assignments", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "current_timestamp", "robot_keyword": null, "cypress_fn": "Date.now", "kind": "utility", "in_robot": false, "in_cypress": true}
+{"canonical_name": "data_field_description", "robot_keyword": "description: ${discounts.discount_2.description}", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "data_field_displayname", "robot_keyword": "displayName: ${discounts.discount_2.name}", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "data_field_sumamount", "robot_keyword": "sumAmount: ${discounts.discount_1.total_sum_for_products_1_and_2}", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "deactivate_admin_mfa", "robot_keyword": null, "cypress_fn": "UserMfaActivationScenario.deactivate", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "deactivate_admin_user", "robot_keyword": "Zed: deactivate the created user:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "deactivate_all_discounts", "robot_keyword": "Deactivate all discounts in the database", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "deactivate_customer_mfa", "robot_keyword": null, "cypress_fn": "CustomerMfaActivationScenario.deactivate", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "deactivate_discount", "robot_keyword": "Zed: deactivate all discounts from Overview page", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "deactivate_merchant_mfa", "robot_keyword": null, "cypress_fn": "mfaSetUpScenario.executeDeactivation", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "deactivate_service_point_via_bapi", "robot_keyword": "Deactivate service point via BAPI", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "deassign_user_from_warehouse", "robot_keyword": "De-assign user from Warehouse in DB:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_admin_user", "robot_keyword": "Zed: delete Zed user with the following email:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_all_addresses", "robot_keyword": "Yves: delete all user addresses", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_all_carts", "robot_keyword": "Yves: delete all shopping carts", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_all_cookies", "robot_keyword": "Delete All Cookies", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_all_wishlists", "robot_keyword": "Yves: delete all wishlists", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_api_key", "robot_keyword": "Delete api key from db", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_cart_comment", "robot_keyword": "Yves: delete comment on cart", "cypress_fn": "CommentCartPage.remove", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "delete_company_user", "robot_keyword": "Zed: delete company user xxx withing xxx company business unit:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_complex_product_by_abstract_id", "robot_keyword": "Delete complex product by id_product_abstract in Database:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_country_by_iso2", "robot_keyword": "Delete country by iso2_code in Database:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_customer", "robot_keyword": "Zed: delete customer:", "cypress_fn": "CustomerDeletePage.clickDeleteAccount", "kind": "data", "in_robot": true, "in_cypress": true}
+{"canonical_name": "delete_customer_address", "robot_keyword": "Yves: delete user address:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_downloaded_api_specification", "robot_keyword": "Zed: delete downloaded api specification", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_dynamic_admin_user", "robot_keyword": "Delete dynamic admin user from DB", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_dynamic_entity_config", "robot_keyword": "Delete dynamic entity configuration in Database:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_dynamic_entity_config_relation", "robot_keyword": "Delete dynamic entity configuration relation in Database:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_latest_cms_page_version", "robot_keyword": "Delete latest cms page version by uuid from DB", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_mime_type_by_id", "robot_keyword": "Delete mime_type by id_mime_type in Database:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_named_cart", "robot_keyword": "Yves: delete 'Shopping Cart' with name:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_named_shopping_list", "robot_keyword": "Yves: delete 'Shopping List' with name:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_non_default_service_points", "robot_keyword": "Delete all non-default service points from DB with p&s", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_offer_price_row_by_quantity", "robot_keyword": "MP: delete offer price row that contains quantity:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_picking_list_by_uuid", "robot_keyword": "Remove picking list by uuid in DB:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_picking_list_item_by_uuid", "robot_keyword": "Remove picking list item by uuid in DB:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_product_abstract_by_id", "robot_keyword": "Delete product_abstract by id_product_abstract in Database:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_product_attachment", "robot_keyword": null, "cypress_fn": "ProductManagementEditPage.deleteAttachmentsForLocale", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "delete_product_by_id", "robot_keyword": "Delete product by id_product in Database:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_product_list", "robot_keyword": "Zed: remove product list with title:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_product_price_by_id", "robot_keyword": "Delete product_price by id_price_product in Database:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_product_price_row_by_quantity", "robot_keyword": "MP: delete product price row that contains quantity:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_product_price_row_by_text", "robot_keyword": "MP: delete product price row that contains text:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_product_set", "robot_keyword": "Zed: delete product set:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_push_notification_subscription", "robot_keyword": "Delete push notification subscription in DB:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_service_point", "robot_keyword": "Delete service point in DB", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_service_type", "robot_keyword": "Delete service type in DB", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_shipment_type", "robot_keyword": "Delete shipment type in DB:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_url_by_name", "robot_keyword": "Delete url by url name in Database:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_warehouse", "robot_keyword": "Delete warehouse in DB:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "delete_warehouse_user_assignment_invalid_token", "robot_keyword": "Delete_warehouse_user_assignment_with_invalid_token", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "detach_file", "robot_keyword": null, "cypress_fn": "SspFileManagementDetachPage.detachFile", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "discard_product_configuration", "robot_keyword": "Yves: back to PDP and not save configuration", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "discontinue_product", "robot_keyword": "Zed: discontinue the following product:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "download_api_specification", "robot_keyword": "Zed: download data exchange api specification", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "download_file", "robot_keyword": null, "cypress_fn": "SspFileManagementListPage.downloadFile", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "edit_cart_comment", "robot_keyword": "Yves: edit comment on cart:", "cypress_fn": "CommentCartPage.update", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "edit_data_exchange_api_config", "robot_keyword": "Zed: edit data exchange api configuration:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "edit_order_shipment", "robot_keyword": "Zed: edit xxx shipment inside the order:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "enable_multiple_address_delivery", "robot_keyword": "Yves: select delivery to multiple addresses", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "end_agent_assistance", "robot_keyword": "Yves: end customer assistance", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "ensure_concrete_product_price", "robot_keyword": "Zed: check if at least one price exists for concrete and add if doesn't:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "expand_locale_section", "robot_keyword": null, "cypress_fn": "ProductManagementEditPage.expandLocaleSection", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "expression_return_result_0_pass", "robot_keyword": "\"${return_result[0]}\" != \"PASS\"", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "expression_value", "robot_keyword": "+", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "fill_abstract_product_required_fields", "robot_keyword": "MP: fill abstract product required fields:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "fill_asset_form", "robot_keyword": null, "cypress_fn": "SspAssetAddPage.fillAssetForm", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "fill_concrete_product_fields", "robot_keyword": "MP: fill concrete product fields:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "fill_glossary_form", "robot_keyword": "Zed: fill glossary form:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "fill_offer_fields", "robot_keyword": "MP: fill offer fields:", "cypress_fn": "ProductMeasurementUnitCreatePage.fillCreateForm", "kind": "data", "in_robot": true, "in_cypress": true}
+{"canonical_name": "fill_product_price_values", "robot_keyword": "MP: fill product price values:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "fill_quick_order_textarea", "robot_keyword": "Yves: add the following articles into the form through quick order text area:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "fill_ssp_model_form", "robot_keyword": null, "cypress_fn": "SspModelAddPage.fillSspModelForm", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "filter_by_merchant", "robot_keyword": "Zed: filter by merchant:", "cypress_fn": "MerchantRelationRequestIndexPage.filterRequests", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "filter_navigation_menu", "robot_keyword": null, "cypress_fn": "NavigationMenuPage.filterMenu", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "filter_order_history", "robot_keyword": "Yves: filter order history by business unit:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "find_first_available_product_via_dx_api", "robot_keyword": "Find first available product via data exchange api", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "find_or_create_customer_cart", "robot_keyword": "Find or create customer cart", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "find_product_offer", "robot_keyword": null, "cypress_fn": "productOffer.find", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "for_each_business_unit", "robot_keyword": null, "cypress_fn": "businessUnits.forEach", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "for_each_comment", "robot_keyword": null, "cypress_fn": "commentsToAdd.forEach", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "for_each_merchant", "robot_keyword": null, "cypress_fn": "merchants.forEach", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "for_each_status", "robot_keyword": null, "cypress_fn": "statuses.forEach", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_abstract_sku", "robot_keyword": "Yves: get sku of the abstract product on PDP", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "get_access_filter_by_company", "robot_keyword": null, "cypress_fn": "SspAssetListPage.getAccessTableFilterByCompanyValue", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_add_to_cart_button", "robot_keyword": null, "cypress_fn": "ProductPage.getAddToCartButton", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_agent_merchant_checkbox", "robot_keyword": null, "cypress_fn": "UserUpdatePage.getAgentMerchantCheckbox", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_asset_customer_menu_item", "robot_keyword": null, "cypress_fn": "SspAssetListPage.getSspAssetCustomerMenuItem", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_asset_filters_submit_button", "robot_keyword": null, "cypress_fn": "SspAssetListPage.getSspAssetFiltersSubmitButton", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_asset_form", "robot_keyword": null, "cypress_fn": "SspAssetEditPage.getAssetForm", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_asset_reference", "robot_keyword": null, "cypress_fn": "SspAssetDetailPage.getReference", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_asset_services_button", "robot_keyword": null, "cypress_fn": "SspAssetDetailPage.getSspAssetServicesButton", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_asset_spare_parts_button", "robot_keyword": null, "cypress_fn": "SspAssetDetailPage.getSspAssetSparePartsButton", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_attachment_items", "robot_keyword": null, "cypress_fn": "ProductPage.getAttachmentItems", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_available_locales", "robot_keyword": null, "cypress_fn": "HomePage.getAvailableLocales", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_cancel_button", "robot_keyword": null, "cypress_fn": "MerchantRelationRequestDetailsPage.getCancelButton", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_cart_etag_header", "robot_keyword": "Get ETag header value from cart", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "get_cart_item_change_quantity_field", "robot_keyword": null, "cypress_fn": "CartPage.getCartItemChangeQuantityField", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_cart_share_link", "robot_keyword": "Yves: get link for external cart sharing", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "get_changes_count", "robot_keyword": null, "cypress_fn": "ConfigurationPage.getChangesCount", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_checkbox_state", "robot_keyword": null, "cypress_fn": "checkbox.is", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_company_role_form", "robot_keyword": null, "cypress_fn": "CompanyRoleCreatePage.getCompanyRoleCreateForm", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_company_user_access_token", "robot_keyword": "I get access token for the company user by uuid:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "get_company_user_id_by_customer_reference", "robot_keyword": "Get company user id by customer reference:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "get_comparison_empty_message", "robot_keyword": null, "cypress_fn": "ProductComparisonPage.getProductComparisonListIsEmptyMessage", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_comparison_nav_link_selector", "robot_keyword": null, "cypress_fn": "ProductComparisonPage.getComparisonPageNavigationLinkSelector", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_comparison_table_row_selector", "robot_keyword": null, "cypress_fn": "ProductComparisonPage.getComparisonTableRowSelector", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_concrete_sku", "robot_keyword": "Yves: get sku of the concrete product on PDP", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "get_container_element", "robot_keyword": null, "cypress_fn": "container.get", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_create_button", "robot_keyword": null, "cypress_fn": "SspAssetListPage.getCreateAssetButton", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_current_date", "robot_keyword": null, "cypress_fn": "ProductOfferCreatePage.getCurrentDate", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_custom_css_field", "robot_keyword": null, "cypress_fn": "ConfigurationPage.getCustomCss", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_customer_access_token", "robot_keyword": "I get access token for the customer:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "get_dashboard_sidebar_selector", "robot_keyword": null, "cypress_fn": "AgentDashboardPage.getDashboardSidebarSelector", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_drawer", "robot_keyword": null, "cypress_fn": "MerchantRelationRequestsPage.getDrawer", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_edit_button", "robot_keyword": null, "cypress_fn": "SspAssetDetailPage.getEditButton", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_element_value", "robot_keyword": null, "cypress_fn": "el.val", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_end_user_assistance_selector", "robot_keyword": null, "cypress_fn": "AgentDashboardPage.getEndUserAssistanceSelector", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_first_company_user", "robot_keyword": "Get the first company user id and its' customer email", "cypress_fn": "MerchantRelationRequestIndexPage.getFirstRequest", "kind": "data", "in_robot": true, "in_cypress": true}
+{"canonical_name": "get_first_row_reference", "robot_keyword": null, "cypress_fn": "SspInquiryListPage.getFirstRowReference", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_first_table_row", "robot_keyword": null, "cypress_fn": "ProductsPage.getFirstTableRow", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_future_date", "robot_keyword": null, "cypress_fn": "ProductOfferCreatePage.getFutureDate", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_input_radio_selector", "robot_keyword": null, "cypress_fn": "ProductPage.getInputRadioSelector", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_inquiry_status_selector", "robot_keyword": null, "cypress_fn": "SspInquiryDetailPage.getCanceledSspInquiryStatusSelector", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_last_order_id", "robot_keyword": "Yves: get the last placed order ID by current customer", "cypress_fn": "OrderDetailsPage.getOrderReferenceBlock", "kind": "data", "in_robot": true, "in_cypress": true}
+{"canonical_name": "get_localized_ibox_toggle", "robot_keyword": null, "cypress_fn": "ProductManagementEditPage.getLocalizedIboxToggle", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_location_part", "robot_keyword": null, "cypress_fn": "cy.location", "kind": "nav", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_logo_upload_button", "robot_keyword": null, "cypress_fn": "ConfigurationPage.getBackofficeLogoUploadButton", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_logout_agent_selector", "robot_keyword": null, "cypress_fn": "AgentDashboardPage.getLogoutAgentSelector", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_measurement_unit_without_code", "robot_keyword": "Get_a_measurement_unit_without_unit_code", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "get_menu_items_order", "robot_keyword": null, "cypress_fn": "NavigationMenuPage.getMenuItemsOrder", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_merchant_not_assigned_option", "robot_keyword": null, "cypress_fn": "ProductManagementEditPage.getMerchantNotAssignedOptionText", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_message_from_company", "robot_keyword": null, "cypress_fn": "MerchantRelationRequestsPage.getMessageFromCompanyValue", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_mrr_link_attribute", "robot_keyword": null, "cypress_fn": "ProductPage.getMerchantRelationRequestLinkAttribute", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_pagination_bar", "robot_keyword": null, "cypress_fn": "ProductMeasurementUnitListPage.getPaginationBar", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_product_concretes_count_selector", "robot_keyword": null, "cypress_fn": "VariantsPage.getProductConcretesCountSelector", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_product_items_selector", "robot_keyword": null, "cypress_fn": "ProductComparisonPage.getProductItemsSelector", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_product_offer_children", "robot_keyword": null, "cypress_fn": "productOffers.children", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_product_offer_radio", "robot_keyword": null, "cypress_fn": "ProductPage.getProductOfferRadio", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_reset_button", "robot_keyword": null, "cypress_fn": "ProductManagementListPage.getResetButton", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_response_body_text", "robot_keyword": null, "cypress_fn": "body.text", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_save_bar", "robot_keyword": null, "cypress_fn": "ConfigurationPage.getSaveBar", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_save_button_selector", "robot_keyword": null, "cypress_fn": "ProductsPage.getSaveButtonSelector", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_scope_selector", "robot_keyword": null, "cypress_fn": "ConfigurationPage.getScopeSelector", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_sold_by_offers", "robot_keyword": null, "cypress_fn": "ProductPage.getSoldByProductOffers", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_ssp_asset_name_block", "robot_keyword": null, "cypress_fn": "CatalogPage.getSspAssetNameBlock", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_ssp_asset_selector_block", "robot_keyword": null, "cypress_fn": "CatalogPage.getSspAssetSelectorBlock", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_table_code_column", "robot_keyword": null, "cypress_fn": "ProductMeasurementUnitListPage.getTableCodeColumn", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_table_delete_button", "robot_keyword": null, "cypress_fn": "ProductMeasurementUnitListPage.getTableDeleteButton", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_table_edit_button", "robot_keyword": null, "cypress_fn": "ProductMeasurementUnitListPage.getTableEditButton", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_table_rows", "robot_keyword": null, "cypress_fn": "ProductManagementListPage.getTableRows", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_tax_id_set_option_selector", "robot_keyword": null, "cypress_fn": "ProductsPage.getTaxIdSetOptionSelector", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_tax_id_set_selector", "robot_keyword": null, "cypress_fn": "ProductsPage.getTaxIdSetSelector", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_theme_color", "robot_keyword": null, "cypress_fn": "ConfigurationPage.getThemeMainColor", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_unassign_button", "robot_keyword": null, "cypress_fn": "SspAssetDetailPage.getUnassignButton", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_user_access_token", "robot_keyword": "I get access token by user credentials:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "get_user_table_header", "robot_keyword": null, "cypress_fn": "UserIndexPage.getUserTableHeader", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_view_all_inquiries_link", "robot_keyword": null, "cypress_fn": "SspAssetDetailPage.getViewAllInquiriesLink", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "get_voucher_code_by_discount_id", "robot_keyword": "Get voucher code by discountId from Database:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "get_warehouse_user_assignment_id", "robot_keyword": "Then Get_warehouse_user_assignment_id:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "get_window_object", "robot_keyword": null, "cypress_fn": "cy.window", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "go_home", "robot_keyword": "Yves: go to the 'Home' page", "cypress_fn": "HomePage.visit", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "hover_header_menu_item", "robot_keyword": "Yves: move mouse over header menu item:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "hover_product_card_color", "robot_keyword": "Yves: mouse over color on product card:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "impersonate_merchant_user_as_agent", "robot_keyword": null, "cypress_fn": "ImpersonateAsMerchantUserScenario.execute", "kind": "setup", "in_robot": false, "in_cypress": true}
+{"canonical_name": "intercept_request", "robot_keyword": null, "cypress_fn": "DashboardPage.interceptRequest", "kind": "api", "in_robot": false, "in_cypress": true}
+{"canonical_name": "load_test_files", "robot_keyword": null, "cypress_fn": "SspFileManagementAddPage.loadTestFiles", "kind": "setup", "in_robot": false, "in_cypress": true}
+{"canonical_name": "log_message", "robot_keyword": "Log", "cypress_fn": "cy.log", "kind": "setup", "in_robot": true, "in_cypress": true}
+{"canonical_name": "login_after_signup_during_checkout", "robot_keyword": "Yves: login after signup during checkout:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "login_as_admin", "robot_keyword": "Zed: login on Zed with provided credentials:", "cypress_fn": "UserLoginScenario.execute", "kind": "setup", "in_robot": true, "in_cypress": true}
+{"canonical_name": "login_as_admin_with_invalid_mfa", "robot_keyword": null, "cypress_fn": "UserMfaLoginScenario.executeWithInvalidCode", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "login_as_admin_with_mfa", "robot_keyword": null, "cypress_fn": "UserMfaLoginScenario.execute", "kind": "setup", "in_robot": false, "in_cypress": true}
+{"canonical_name": "login_as_agent_for_customer", "robot_keyword": "Yves: as an agent login under the customer:", "cypress_fn": "AgentDashboardPage.assist", "kind": "setup", "in_robot": true, "in_cypress": true}
+{"canonical_name": "login_as_agent_with_invalid_mfa", "robot_keyword": null, "cypress_fn": "AgentMfaLoginScenario.executeWithInvalidCode", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "login_as_agent_with_mfa", "robot_keyword": null, "cypress_fn": "AgentMfaLoginScenario.execute", "kind": "setup", "in_robot": false, "in_cypress": true}
+{"canonical_name": "login_as_customer", "robot_keyword": "Yves: login on Yves with provided credentials:", "cypress_fn": "CustomerLoginScenario.execute", "kind": "setup", "in_robot": true, "in_cypress": true}
+{"canonical_name": "login_as_customer_with_invalid_mfa", "robot_keyword": null, "cypress_fn": "CustomerMfaLoginScenario.executeWithInvalidCode", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "login_as_customer_with_mfa", "robot_keyword": null, "cypress_fn": "CustomerMfaLoginScenario.execute", "kind": "setup", "in_robot": false, "in_cypress": true}
+{"canonical_name": "login_as_merchant", "robot_keyword": "MP: login on MP with provided credentials:", "cypress_fn": "MerchantUserLoginScenario.execute", "kind": "setup", "in_robot": true, "in_cypress": true}
+{"canonical_name": "login_as_merchant_agent_with_invalid_mfa", "robot_keyword": null, "cypress_fn": "MerchantAgentMfaLoginScenario.executeWithInvalidCode", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "login_as_merchant_agent_with_mfa", "robot_keyword": null, "cypress_fn": "MerchantAgentMfaLoginScenario.execute", "kind": "setup", "in_robot": false, "in_cypress": true}
+{"canonical_name": "login_as_merchant_expecting_error", "robot_keyword": "MP: login on MP with provided credentials and expect error:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "login_as_merchant_with_invalid_mfa", "robot_keyword": null, "cypress_fn": "MerchantUserMfaLoginScenario.executeWithInvalidCode", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "login_as_merchant_with_mfa", "robot_keyword": null, "cypress_fn": "MerchantUserMfaLoginScenario.execute", "kind": "setup", "in_robot": false, "in_cypress": true}
+{"canonical_name": "login_during_checkout", "robot_keyword": "Yves: proceed as a guest user and login during checkout:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "logout_admin", "robot_keyword": null, "cypress_fn": "UserLogoutScenario.execute", "kind": "nav", "in_robot": false, "in_cypress": true}
+{"canonical_name": "logout_agent", "robot_keyword": "Yves: logout as an agent", "cypress_fn": "AgentDashboardPage.logoutAgent", "kind": "setup", "in_robot": true, "in_cypress": true}
+{"canonical_name": "logout_customer", "robot_keyword": "Yves: logout on Yves as a customer", "cypress_fn": "CustomerLogoutScenario.execute", "kind": "setup", "in_robot": true, "in_cypress": true}
+{"canonical_name": "map_files", "robot_keyword": null, "cypress_fn": "files.map", "kind": "data", "in_robot": false, "in_cypress": true}
+{"canonical_name": "navigate_to_latest_return", "robot_keyword": "Zed: view the latest return from My Returns:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "navigate_to_my_order_detail", "robot_keyword": "Zed: go to my order page:", "cypress_fn": "CustomerOverviewPage.viewLastPlacedOrder", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "navigate_to_order_detail", "robot_keyword": "Zed: go to order page:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "navigate_to_submenu_item", "robot_keyword": "Zed: go to second navigation item level:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "navigate_to_tab", "robot_keyword": "Zed: go to tab:", "cypress_fn": "ProductManagementEditPage.openMediaTab", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "navigate_to_tab_by_href", "robot_keyword": "Zed: go to tab by link href that contains:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "navigate_to_url", "robot_keyword": "Go To", "cypress_fn": "cy.visitBackoffice", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "open_agent_quote_requests_page", "robot_keyword": "Yves: go to 'Agent Quote Requests' page through the header", "cypress_fn": "AgentDashboardPage.visit", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "open_bundle_summary_step", "robot_keyword": "Yves: go to 'Summary' step in the bundle configurator", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "open_cart", "robot_keyword": "Yves: go to shopping cart page", "cypress_fn": "CartPage.visit", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "open_catalog_page", "robot_keyword": "Yves: go to catalog page:", "cypress_fn": "CatalogPage.visit", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "open_company_menu_item", "robot_keyword": "Yves: go to company menu item:", "cypress_fn": "CompanyRoleListPage.visit", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "open_concrete_drawer_by_sku", "robot_keyword": "MP: open concrete drawer by SKU:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "open_external_url", "robot_keyword": "Yves: go to external URL:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "open_filters", "robot_keyword": null, "cypress_fn": "SspFileManagementListPage.openFilters", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "open_first_catalog_product", "robot_keyword": "Yves: go to the PDP of the first product on open catalog page", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "open_inquiry_history", "robot_keyword": null, "cypress_fn": "SspInquiryDetailPage.openSspInquiryHistory", "kind": "nav", "in_robot": false, "in_cypress": true}
+{"canonical_name": "open_latest_asset_details", "robot_keyword": null, "cypress_fn": "SspAssetListPage.openLatestAssetDetailsPage", "kind": "nav", "in_robot": false, "in_cypress": true}
+{"canonical_name": "open_latest_inquiry_details", "robot_keyword": null, "cypress_fn": "SspInquiryListPage.openLatestSspInquiryDetailsPage", "kind": "nav", "in_robot": false, "in_cypress": true}
+{"canonical_name": "open_mp_section", "robot_keyword": "MP: open navigation menu tab:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "open_named_cart", "robot_keyword": "Yves: go to the shopping cart through the header with name:", "cypress_fn": "MultiCartPage.selectCart", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "open_named_shopping_list", "robot_keyword": "Yves: view shopping list with name:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "open_named_wishlist", "robot_keyword": "Yves: go to wishlist with name:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "open_navigation_item", "robot_keyword": "Yves: go to first navigation item level:", "cypress_fn": "SspFileManagementListPage.visit", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "open_order_action", "robot_keyword": "Yves: 'View Order/Reorder/Return' on the order history page:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "open_order_details_page", "robot_keyword": "Yves: go to order details page to check comment:", "cypress_fn": "SalesIndexPage.view", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "open_order_history_page", "robot_keyword": "Yves: go to 'Order History' page", "cypress_fn": "SalesIndexPage.visit", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "open_product_page", "robot_keyword": "Yves: go to PDP of the product with sku:", "cypress_fn": "ProductAttributeVisibilityPage.navigateToProductDetailPage", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "open_product_set", "robot_keyword": "Yves: view the following Product Set:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "open_quick_order_page", "robot_keyword": "Yves: go to 'Quick Order' page through the header", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "open_quote_request", "robot_keyword": "Yves: view quote request with reference:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "open_shopping_carts_page", "robot_keyword": "Yves: go to 'Shopping Carts' page through the header", "cypress_fn": "MultiCartPage.visit", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "open_shopping_lists_page", "robot_keyword": "Yves: go to 'Shopping Lists' page", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "open_url", "robot_keyword": "Yves: go to URL:", "cypress_fn": "cy.visit", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "open_url_until_404", "robot_keyword": "Yves: navigate to specified AT store URL if no other store is specified and refresh until 404 occurs:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "open_user_menu", "robot_keyword": "Yves: go to user menu:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "open_wishlist_page", "robot_keyword": "Yves: go to 'Wishlist' page", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "place_order", "robot_keyword": "Yves: 'submit the order' on the summary page", "cypress_fn": "CheckoutScenario.execute", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "place_order_marketplace", "robot_keyword": null, "cypress_fn": "CheckoutMpScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "press_enter", "robot_keyword": null, "cypress_fn": "NavigationMenuPage.pressEnter", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "proceed_to_checkout", "robot_keyword": "Yves: click on the 'Checkout' button in the shopping cart", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "quick_add_first_catalog_product", "robot_keyword": "Yves: quick add to cart for first item in catalog", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "refresh_product_labels", "robot_keyword": "Trigger product labels update", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "regenerate_api_specification", "robot_keyword": "Trigger API specification update", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "register_customer", "robot_keyword": "Register a new customer with data:", "cypress_fn": "MerchantRegistrationPage.register", "kind": "api", "in_robot": true, "in_cypress": true}
+{"canonical_name": "reject_merchant_registration", "robot_keyword": null, "cypress_fn": "MerchantRegistrationRejectionScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "reject_merchant_relation_request", "robot_keyword": null, "cypress_fn": "MerchantRelationRequestEditPage.reject", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "reject_ssp_inquiry", "robot_keyword": null, "cypress_fn": "SspInquiryDetailPage.rejectSspInquiry", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "reload_page", "robot_keyword": "Reload", "cypress_fn": "cy.reload", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "reload_until_element", "robot_keyword": "Yves: try reloading page if element is/not appear:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "reload_until_element_state", "robot_keyword": "Try reloading page until element is/not appear:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "remove_cart_product", "robot_keyword": "Yves: delete product from the shopping cart with sku:", "cypress_fn": "CartPage.removeProduct", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "remove_customer_mfa", "robot_keyword": null, "cypress_fn": "CustomerMfaRemoveScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "remove_from_comparison_list", "robot_keyword": null, "cypress_fn": "ProductComparisonPage.removeProductFromComparisonList", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "remove_merchant_assignment", "robot_keyword": null, "cypress_fn": "ProductManagementEditPage.removeMerchantAssignment", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "remove_test_tags", "robot_keyword": "Remove Tags", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "remove_warehouse_user_assignment", "robot_keyword": "Remove_warehouse_user_assignment:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "remove_warehouse_user_assignments_by_user", "robot_keyword": "Remove all warehouse user assignments by user uuid:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "reorder_order", "robot_keyword": "Yves: reorder all items from 'Order Details' page", "cypress_fn": "OrderDetailsPage.reorderAll", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "repeat_keyword", "robot_keyword": "Repeat Keyword", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "reschedule_service", "robot_keyword": null, "cypress_fn": "SspServiceListPage.rescheduleFirstServiceToTomorrow", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "reset_configuration_changes", "robot_keyword": null, "cypress_fn": "ConfigurationPage.resetChanges", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "reset_product_variant", "robot_keyword": "Yves: reset selected variant of the product on PDP", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "restore_product_availability", "robot_keyword": "Zed: check and restore product availability in Zed:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "restore_product_stock_via_dx_api", "robot_keyword": "Restore product initial stock via data exchange api:", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "return_to_checkout_step", "robot_keyword": "Yves: return to the previous checkout step:", "cypress_fn": "OrderDetailsPage.editOrder", "kind": "nav", "in_robot": true, "in_cypress": true}
+{"canonical_name": "run_cli_command", "robot_keyword": null, "cypress_fn": "cy.runCliCommands", "kind": "setup", "in_robot": false, "in_cypress": true}
+{"canonical_name": "run_keyword_and_ignore_error", "robot_keyword": "Run Keyword And Ignore Error", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "run_publish_and_sync", "robot_keyword": "Trigger p&s", "cypress_fn": "cy.runQueueWorker", "kind": "setup", "in_robot": true, "in_cypress": true}
+{"canonical_name": "run_publish_and_sync_multistore", "robot_keyword": "Trigger multistore p&s", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "save_abstract_product", "robot_keyword": "MP: save abstract product", "cypress_fn": "ProductManagementEditPage.save", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "save_billing_to_address_book", "robot_keyword": "Yves: save new billing address to address book:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "save_concrete_product", "robot_keyword": "MP: save concrete product", "cypress_fn": "ProductPage.saveProduct", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "save_current_url", "robot_keyword": "Save current URL", "cypress_fn": "cy.url", "kind": "data", "in_robot": true, "in_cypress": true}
+{"canonical_name": "save_data_exchange_api_config", "robot_keyword": "Zed: save data exchange api configuration", "cypress_fn": "ConfigurationPage.saveConfiguration", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "save_db_query_result", "robot_keyword": "Save the result of a SELECT DB query to a variable:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "save_header_value", "robot_keyword": "Save Header value to a variable:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "save_offer", "robot_keyword": "MP: save offer", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "save_product_configuration", "robot_keyword": "Yves: save product configuration", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "save_response_value", "robot_keyword": "Save value to a variable:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "save_shipping_to_address_book", "robot_keyword": "Yves: save new delivery address to address book:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "search_by", "robot_keyword": "MP: perform search by:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "search_catalog", "robot_keyword": "Yves: perform search by:", "cypress_fn": "CatalogPage.search", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "search_merchant_users", "robot_keyword": "Zed: perform merchant user search by:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "search_product", "robot_keyword": null, "cypress_fn": "CatalogPage.searchProductFromSuggestions", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "search_table", "robot_keyword": "Zed: perform search by:", "cypress_fn": "MerchantRelationRequestsPage.find", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "select_abstract_product_variants", "robot_keyword": "Zed: select abstract product variants:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "select_approver", "robot_keyword": "Yves: select approver on the 'Summary' page:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "select_attachment_scope", "robot_keyword": null, "cypress_fn": "SspFileManagementAttachPage.selectAttachmentScope", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "select_available_items", "robot_keyword": null, "cypress_fn": "SspFileManagementAttachPage.selectAvailableItems", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "select_bundle_slot_product", "robot_keyword": "Yves: select product in the bundle slot:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "select_business_unit", "robot_keyword": null, "cypress_fn": "CostCenterCreatePage.selectBusinessUnit", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "select_catalog_filter", "robot_keyword": "Yves: select filter value:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "select_company", "robot_keyword": null, "cypress_fn": "CostCenterCreatePage.selectCompany", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "select_currency", "robot_keyword": "Yves: select currency Euro if other currency not specified", "cypress_fn": "BackofficeBudgetCreatePage.selectCurrency", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "select_element", "robot_keyword": null, "cypress_fn": "cy.get", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "select_enforcement_rule", "robot_keyword": null, "cypress_fn": "BackofficeBudgetCreatePage.selectEnforcementRule", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "select_existing_shipping_address", "robot_keyword": "Yves: select the following existing address on the checkout as 'shipping' address and go next:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "select_locale", "robot_keyword": null, "cypress_fn": "ProductPage.selectLocale", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "select_merchant_offer", "robot_keyword": "Yves: select xxx merchant's offer:", "cypress_fn": "ProductManagementEditPage.selectMerchant", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "select_payment_method", "robot_keyword": "Yves: select the following payment method on the checkout and go next:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "select_pickup_service_point", "robot_keyword": "Yves: select pickup service point store for item number xxx:", "cypress_fn": "ProductPage.selectServicePoint", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "select_product_class", "robot_keyword": null, "cypress_fn": "ProductPage.selectProductClass", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "select_product_variant", "robot_keyword": "Yves: change variant of the product on PDP on:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "select_random_variant", "robot_keyword": "Yves: select random varian if variant selector is available", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "select_sales_unit", "robot_keyword": "Yves: select the following 'Sales Unit' on PDP:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "select_shipment_method", "robot_keyword": "Yves: select the following shipping method on the checkout and go next:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "select_shipment_method_per_shipment", "robot_keyword": "Yves: select the following shipping method for the shipment:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "select_shipment_type", "robot_keyword": "Yves: select xxx shipment type on checkout:", "cypress_fn": "ProductPage.selectShipmentType", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "select_shipment_type_per_item", "robot_keyword": "Yves: select xxx shipment type for item number xxx:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "select_ssp_asset", "robot_keyword": null, "cypress_fn": "CatalogPage.selectSspAsset", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "select_store", "robot_keyword": null, "cypress_fn": "SelectStoreScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "send_delete_request", "robot_keyword": "I send a DELETE request:", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "send_get_request", "robot_keyword": "When I send a GET request:", "cypress_fn": "cy.request", "kind": "api", "in_robot": true, "in_cypress": true}
+{"canonical_name": "send_merchant_relation_request", "robot_keyword": null, "cypress_fn": "MerchantPage.sendMerchantRelationRequest", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "send_patch_request", "robot_keyword": "When I send a PATCH request:", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "send_post_request", "robot_keyword": "I send a POST request:", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "send_put_request", "robot_keyword": "And I send a PUT request:", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_abstract_product_price", "robot_keyword": "Zed: update abstract product price on:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_billing_address", "robot_keyword": "Yves: fill in the following new billing address:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_billing_same_as_shipping", "robot_keyword": "Yves: billing address same as shipping address:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_catalog_sorting", "robot_keyword": "Yves: change sorting order on catalog page:", "cypress_fn": "MerchantRegistrationListPage.sortByColumn", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "set_concrete_product_price", "robot_keyword": "Zed: change concrete product price on:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_global_threshold_settings", "robot_keyword": "Zed: change global threshold settings:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_pdp_quantity", "robot_keyword": "Yves: change quantity on PDP:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_product_configuration", "robot_keyword": "Yves: change the product options in configurator to:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_product_stock", "robot_keyword": "Zed: change product stock:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_quote_request_price", "robot_keyword": "Yves: change price for the product in the quote request with sku xxx on:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_quote_request_valid_till", "robot_keyword": "Yves: set 'Valid Till' date for the quote request, today +:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_request_headers", "robot_keyword": "I set Headers:", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_role_permissions", "robot_keyword": "Zed: apply access permissions for user role:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_shipping_address", "robot_keyword": "Yves: fill in the following new shipping address:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_split_delivery_address", "robot_keyword": "Yves: fill in new delivery address for a product:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_test_tags", "robot_keyword": "Set Tags", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "set_theme_color", "robot_keyword": null, "cypress_fn": "ConfigurationPage.setThemeMainColor", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "set_warehouse_user_flag", "robot_keyword": "Make user a warehouse user/ not a warehouse user:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "setup_api_test", "robot_keyword": "API_test_setup", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "setup_ui_test", "robot_keyword": "UI_test_setup", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "share_cart", "robot_keyword": "Yves: share shopping cart with user:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "share_shopping_list", "robot_keyword": "Yves: share shopping list with user:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "signup_during_checkout", "robot_keyword": "Yves: signup guest user during checkout:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "skip_test_if_dms_mismatch", "robot_keyword": "Should Test Run", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "sql_query_select_registration_key_from_spy", "robot_keyword": "select registration_key from spy_customer where customer_reference = '${user_reference_id}'", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "start_abstract_product_creation", "robot_keyword": "Zed: start new abstract product creation:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "start_data_exchange_api_config_creation", "robot_keyword": "Zed: start creation of new data exchange api configuration for db table:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "submit_back_in_stock_notification", "robot_keyword": "Yves: submit back in stock notification request for email:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "submit_checkout_step", "robot_keyword": "Yves: submit form on the checkout", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "submit_form", "robot_keyword": "Zed: submit the form", "cypress_fn": "SspFileManagementAttachPage.submitForm", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "submit_quote_request", "robot_keyword": "Yves: submit new request for quote", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "switch_locale", "robot_keyword": null, "cypress_fn": "LocaleSwitchingScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "switch_tab", "robot_keyword": "MP: switch to the tab:", "cypress_fn": null, "kind": "nav", "in_robot": true, "in_cypress": false}
+{"canonical_name": "switch_to_glue_session", "robot_keyword": "Switch to Glue", "cypress_fn": null, "kind": "setup", "in_robot": true, "in_cypress": false}
+{"canonical_name": "to_lower_case", "robot_keyword": null, "cypress_fn": "searchTermValid.toLowerCase", "kind": "utility", "in_robot": false, "in_cypress": true}
+{"canonical_name": "to_string", "robot_keyword": null, "cypress_fn": "uuid.toString", "kind": "utility", "in_robot": false, "in_cypress": true}
+{"canonical_name": "toggle_comparison_list", "robot_keyword": null, "cypress_fn": "ProductPage.toggleProductComparisonList", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "toggle_payment_method", "robot_keyword": "Zed: activate/deactivate payment method:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "trigger_oms", "robot_keyword": "Zed: trigger all matching states inside this order:", "cypress_fn": "SalesDetailPage.triggerOms", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "unassign_company_role_user", "robot_keyword": null, "cypress_fn": "ManageCompanyRoleUserPage.unassignUser", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "unassign_product_lists_from_merchant_relation", "robot_keyword": "Zed: unassign all product lists from merchant relation:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "uncheck_business_units", "robot_keyword": null, "cypress_fn": "MerchantRelationRequestsPage.uncheckBusinessUnits", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "uncheck_merchant_agent_checkbox", "robot_keyword": null, "cypress_fn": "UserUpdatePage.uncheckMerchantAgentCheckbox", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "undo_discontinue_product", "robot_keyword": "Zed: undo discontinue the following product:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "undo_glossary_translation_changes", "robot_keyword": "Zed: undo the changes in glossary translation:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "unsubscribe_availability_notification", "robot_keyword": "Yves: unsubscribe from availability notifications", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "update_abstract_product", "robot_keyword": "Zed: update abstract product data:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "update_admin_user", "robot_keyword": "Zed: update Zed user:", "cypress_fn": "UserIndexPage.update", "kind": "data", "in_robot": true, "in_cypress": true}
+{"canonical_name": "update_attribute_visibility", "robot_keyword": null, "cypress_fn": "ProductAttributeVisibilityEditPage.updateAttributeVisibility", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "update_cms_page", "robot_keyword": "Zed: update cms page and publish it:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "update_concrete_product", "robot_keyword": "Zed: change concrete product data:", "cypress_fn": "ProductPage.editProductFromList", "kind": "data", "in_robot": true, "in_cypress": true}
+{"canonical_name": "update_customer_profile", "robot_keyword": "Zed: update customer profile data:", "cypress_fn": "ProfilePage.visit", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "update_merchant", "robot_keyword": "Zed: update Merchant on edit page with the following data:", "cypress_fn": "MerchantRelationRequestListPage.update", "kind": "data", "in_robot": true, "in_cypress": true}
+{"canonical_name": "update_merchant_personal_details", "robot_keyword": "MP: update merchant personal details with data:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "update_merchant_user", "robot_keyword": "Zed: update Merchant User on edit page with the following data:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "update_order_state_via_header", "robot_keyword": "MP: update order state using header button:", "cypress_fn": null, "kind": "ui", "in_robot": true, "in_cypress": false}
+{"canonical_name": "update_order_status", "robot_keyword": "Update order status in Database:", "cypress_fn": "SalesOrdersPage.update", "kind": "data", "in_robot": true, "in_cypress": true}
+{"canonical_name": "update_product_abstract_collection_with_child", "robot_keyword": "Update_product_abstract_collection_with_child:", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "update_profile_fields", "robot_keyword": "MP: update profile fields with following data:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "update_push_notification_provider_existing_name", "robot_keyword": "Update_push_notification_provider_with_existing_name", "cypress_fn": null, "kind": "api", "in_robot": true, "in_cypress": false}
+{"canonical_name": "update_ssp_asset", "robot_keyword": null, "cypress_fn": "SspAssetUpdatePage.updateAssetForm", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "update_warehouse", "robot_keyword": "Zed: update warehouse:", "cypress_fn": null, "kind": "data", "in_robot": true, "in_cypress": false}
+{"canonical_name": "upload_file", "robot_keyword": null, "cypress_fn": "SspFileManagementAttachPage.uploadCsvFile", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "upload_logo", "robot_keyword": null, "cypress_fn": "ConfigurationPage.uploadStorefrontLogo", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "upload_merchant_product_import_file", "robot_keyword": null, "cypress_fn": "UploadProductDataImportMerchantFileScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "upload_merchant_product_offer_import_file", "robot_keyword": null, "cypress_fn": "UploadProductOfferDataImportMerchantFileScenario.execute", "kind": "ui", "in_robot": false, "in_cypress": true}
+{"canonical_name": "wait_for_element_visible", "robot_keyword": "Wait Until Page Contains Element", "cypress_fn": "cy.wait", "kind": "ui", "in_robot": true, "in_cypress": true}
+{"canonical_name": "wait_for_info_box_to_disappear", "robot_keyword": "Zed: wait until info box is not displayed", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "wait_for_order", "robot_keyword": "MP: wait for order to appear:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "wait_for_order_item_state", "robot_keyword": "Zed: wait for order item to be in state:", "cypress_fn": null, "kind": "assert", "in_robot": true, "in_cypress": false}
+{"canonical_name": "wrap_value", "robot_keyword": null, "cypress_fn": "cy.wrap", "kind": "data", "in_robot": false, "in_cypress": true}
