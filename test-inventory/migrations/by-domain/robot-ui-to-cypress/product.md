@@ -1,30 +1,32 @@
-### product · robot-ui-to-cypress · 21 scenarios
+### product · robot-ui-to-cypress · CC-39280 · 21 scenarios
 
-MIGRATE 18 · OBSOLETE 3   ▸ 0/18 verified
+MIGRATE 18 · OBSOLETE 3   ▸ 18/18 verified
 
 Batches: `product`
+
+Target PR: https://github.com/spryker/cypress-tests/pull/403
 
 #### MIGRATE / RESHAPE — port these
 | ✓ | Scenario | Var | Contract | Target | Eff | Run |
 |---|---|---|---|---|---|---|
-| [ ] | Configurable_Product_Checkout | ×3 | Configurable product checkout _(yves)_ | `cypress/e2e/yves/product-configurator/configurable-product-checkout.cy.ts` | L | — |
-| [ ] | Back_in_Stock_Notification | ×5 | Back in stock notification is sent and availability check. _(yves)_ | `cypress/e2e/yves/product/back-in-stock-notification.cy.ts` | M | — |
-| [ ] | Catalog | ×5 | Checks that catalog options and search work. _(yves)_ | `cypress/e2e/yves/catalog/catalog-browsing.cy.ts` | L | — |
-| [ ] | Catalog_Actions | ×3 | Checks quick add to cart and product groups. _(yves)_ | `cypress/e2e/yves/catalog/quick-add-to-cart.cy.ts` | L | — |
-| [ ] | Configurable_Product_PDP_Shopping_List | ×3 | Configure products from both the PDP and the Shopping List. Verify the availability of five items. Ensure that products that have not been configured cannot be purchased. _(yves)_ | `cypress/e2e/yves/product-configurator/configurable-product-shopping-list.cy.ts` | M | — |
-| [ ] | Configurable_Product_PDP_Wishlist_Availability | ×2 | Configure product from PDP and Wishlist + availability case. _(yves)_ | `cypress/e2e/yves/product-configurator/configurable-product-wishlist.cy.ts` | M | — |
-| [ ] | Configurable_Product_RfQ_OMS | ×3 | Conf Product in RfQ, OMS, Merchant OMS and reorder. _(yves)_ | `cypress/e2e/yves/quote-request/configurable-product-rfq.cy.ts` | L | — |
-| [ ] | Customer_Specific_Prices | ×3 | Checks that product price can be different for different customers. _(yves)_ | `cypress/e2e/yves/product/customer-specific-prices.cy.ts` | M | — |
-| [ ] | Discontinued_Alternative_Products | ×5 | Checks discontinued and alternative products. _(yves)_ | `cypress/e2e/yves/product/discontinued-alternative-products.cy.ts` | L | — |
-| [ ] | Manage_Product | ×3 | checks that BO user can manage abstract and concrete products + create new. _(yves)_ | `cypress/e2e/backoffice/product-management/product-lifecycle-management.cy.ts` | L | — |
-| [ ] | Measurement_Units | ×3 | Checks checkout with Measurement Unit product. _(yves)_ | `cypress/e2e/yves/product-measurement-unit/measurement-unit-checkout.cy.ts` | L | — |
-| [ ] | Packaging_Units | ×3 | Checks checkout with Packaging Unit product. _(yves)_ | `cypress/e2e/yves/product-measurement-unit/packaging-unit-checkout.cy.ts` | L | — |
-| [ ] | Product_Availability_Calculation | ×5 | Check product availability + multistore. _(yves)_ | `cypress/e2e/yves/product/availability-calculation.cy.ts` | L | — |
-| [ ] | Product_Bundles | ×4 | Checks checkout with Bundle product. _(yves)_ | `cypress/e2e/yves/product/product-bundle-checkout.cy.ts` | L | — |
-| [ ] | Product_Original_Price | ×3 | checks that Original price is displayed on the PDP and in Catalog. _(yves)_ | `cypress/e2e/yves/product/original-price.cy.ts` | L | — |
-| [ ] | Product_PDP | ×5 | Checks that PDP contains required elements. _(yves)_ | `cypress/e2e/yves/product/product-detail-visibility.cy.ts` | M | — |
-| [ ] | Product_Restrictions | ×3 | Checks White and Black lists. _(yves)_ | `cypress/e2e/yves/catalog/product-restrictions.cy.ts` | L | — |
-| [ ] | Volume_Prices | ×5 | Checks that volume prices are applied in cart. _(yves)_ | `cypress/e2e/yves/product/volume-prices.cy.ts` | L | — |
+| [x] | Configurable_Product_Checkout | ×3 | Configurable product checkout _(yves)_ | `cypress/e2e/yves/product-configurator/configurable-product-checkout.cy.ts::given a configurable product when it is configured on its detail page then the configuration completes and the chosen option reaches the cart` | L | `local 2026-08-25 · 2 passing · 24s` |
+| [x] | Back_in_Stock_Notification | ×5 | Back in stock notification is sent and availability check. _(yves)_ | `cypress/e2e/yves/product/back-in-stock-notification.cy.ts::given a product with no stock left when its detail page is opened then it reads as out of stock and offers a back in stock notification` | M | `local 2026-08-25 · 3 passing · 15s` |
+| [x] | Catalog | ×5 | Checks that catalog options and search work. _(yves)_ | `cypress/e2e/yves/catalog/catalog-browsing.cy.ts::given a search result when a colour facet is applied then the catalog narrows to fewer products without emptying` | L | `local 2026-08-25 · 4 passing · 9s` |
+| [x] | Catalog_Actions | ×3 | Checks quick add to cart and product groups. _(yves)_ | `cypress/e2e/yves/catalog/quick-add-to-cart.cy.ts::given a buyable product in the catalog when it is quick added from its card then it lands in the cart` | L | `local 2026-08-25 · 3 passing · 11s` |
+| [x] | Configurable_Product_PDP_Shopping_List | ×3 | Configure products from both the PDP and the Shopping List. Verify the availability of five items. Ensure that products that have not been configured cannot be purchased. _(yves)_ | `cypress/e2e/yves/product-configurator/configurable-product-shopping-list.cy.ts::given a configurable product when it is added to the cart without being configured then the cart states that it cannot be processed` | M | `local 2026-08-25 · 3 passing · 26s` |
+| [x] | Configurable_Product_PDP_Wishlist_Availability | ×2 | Configure product from PDP and Wishlist + availability case. _(yves)_ | `cypress/e2e/yves/product-configurator/configurable-product-wishlist.cy.ts::given a configurable product configured on its detail page when it is wishlisted and configured again from the wishlist then the wishlist carries the newer configuration` | M | `local 2026-08-25 · 2 passing · 24s` |
+| [x] | Configurable_Product_RfQ_OMS | ×3 | Conf Product in RfQ, OMS, Merchant OMS and reorder. _(yves)_ | `cypress/e2e/yves/quote-request/configurable-product-rfq.cy.ts::given a configured product submitted as a quote request when an agent returns it and the customer converts it then the cart still carries the configuration` | L | `local 2026-08-25 · 1 passing · 1m27s` |
+| [x] | Customer_Specific_Prices | ×3 | Checks that product price can be different for different customers. _(yves)_ | `cypress/e2e/yves/product/customer-specific-prices.cy.ts::given a customer whose company has no merchant specific price when the product is browsed then the default price is shown in the catalog and on the product detail page` | M | `local 2026-08-25 · 2 passing · 9s` |
+| [x] | Discontinued_Alternative_Products | ×5 | Checks discontinued and alternative products. _(yves)_ | `cypress/e2e/yves/product/discontinued-alternative-products.cy.ts::given a discontinued product carrying an alternative when its product detail page is opened then the alternative is offered there` | L | `local 2026-08-25 · 2 passing · 27s` |
+| [x] | Manage_Product | ×3 | checks that BO user can manage abstract and concrete products + create new. _(yves)_ | `cypress/e2e/backoffice/product-management/product-lifecycle-management.cy.ts::given an abstract product created and approved in the back office when the catalog is searched then the storefront lists it` | L | `local 2026-08-25 · 2 passing · 1m48s` |
+| [x] | Measurement_Units | ×3 | Checks checkout with Measurement Unit product. _(yves)_ | `cypress/e2e/yves/product-measurement-unit/measurement-unit-checkout.cy.ts::given a measurement unit product when the quantity falls between two base units then the storefront says so rather than accepting it` | L | `local 2026-08-25 · 2 passing · 25s` |
+| [x] | Packaging_Units | ×3 | Checks checkout with Packaging Unit product. _(yves)_ | `cypress/e2e/yves/product-measurement-unit/packaging-unit-checkout.cy.ts::given a packaging unit product when an amount outside its rules is entered then the storefront says so rather than accepting it` | L | `local 2026-08-25 · 2 passing · 24s` |
+| [x] | Product_Availability_Calculation | ×5 | Check product availability + multistore. _(yves)_ | `cypress/e2e/yves/product/availability-calculation.cy.ts::given a product with a limited stock when part of it is ordered and that order is then cancelled then availability falls and is restored with it` | L | `local 2026-08-25 · 1 passing · 41s` |
+| [x] | Product_Bundles | ×4 | Checks checkout with Bundle product. _(yves)_ | `cypress/e2e/yves/product/product-bundle-checkout.cy.ts::given a bundle product when its product detail page is opened then the products it bundles are listed on it` | L | `local 2026-08-25 · 2 passing · 20s` |
+| [x] | Product_Original_Price | ×3 | checks that Original price is displayed on the PDP and in Catalog. _(yves)_ | `cypress/e2e/yves/product/original-price.cy.ts::given an abstract product priced above its default price when the catalog is searched then the card shows the default and the original price side by side` | L | `local 2026-08-25 · 2 passing · 18s` |
+| [x] | Product_PDP | ×5 | Checks that PDP contains required elements. _(yves)_ | `cypress/e2e/yves/product/product-detail-visibility.cy.ts::given a guest when a product variant is selected then the price, add to cart and the product options are shown and no wishlist form is` | M | `local 2026-08-25 · 3 passing · 5s` |
+| [x] | Product_Restrictions | ×3 | Checks White and Black lists. _(yves)_ | `cypress/e2e/yves/catalog/product-restrictions.cy.ts::given a whitelist scoped to a customer merchant relationship when that customer searches then only the whitelisted product is offered` | L | `local 2026-08-25 · 2 passing · 14s` |
+| [x] | Volume_Prices | ×5 | Checks that volume prices are applied in cart. _(yves)_ | `cypress/e2e/yves/product/volume-prices.cy.ts::given a product priced in volume tiers when the quantity on the detail page reaches a tier then the tier price replaces the unit price` | L | `local 2026-08-25 · 2 passing · 15s` |
 
 #### OBSOLETE / DROP — delete the source, do not port
 | ✓ | Scenario | Reason | Covered by |
