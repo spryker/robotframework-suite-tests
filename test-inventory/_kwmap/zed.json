@@ -1,0 +1,692 @@
+{
+  "Zed: login on Zed with provided credentials:": {
+    "canonical_name": "login_as_admin",
+    "kind": "setup",
+    "description": "Log in to the Zed back office with given credentials.",
+    "migration_note": "Use a cy.session-backed login command hitting the admin login form."
+  },
+  "Zed: go to second navigation item level:": {
+    "canonical_name": "navigate_to_submenu_item",
+    "kind": "nav",
+    "description": "Open a second-level item in the Zed navigation.",
+    "migration_note": "Click the parent nav item then the child link by label."
+  },
+  "Zed: click Action Button in a table for row that contains:": {
+    "canonical_name": "click_row_action_button",
+    "kind": "ui",
+    "description": "Click an action button in the table row matching given text.",
+    "migration_note": "Locate the row via cy.contains then click its action cell button."
+  },
+  "Zed: trigger all matching states inside this order:": {
+    "canonical_name": "trigger_oms",
+    "kind": "ui",
+    "description": "Trigger all matching OMS state transitions for the current order.",
+    "migration_note": "Iterate the order's available state buttons and click each."
+  },
+  "Zed: edit data exchange api configuration:": {
+    "canonical_name": "edit_data_exchange_api_config",
+    "kind": "ui",
+    "description": "Edit an existing Data Exchange API configuration.",
+    "migration_note": "Open the config edit page and update fields."
+  },
+  "Zed: change product stock:": {
+    "canonical_name": "set_product_stock",
+    "kind": "data",
+    "description": "Change the stock value of a product.",
+    "migration_note": "Edit stock field on the product availability page and save."
+  },
+  "Zed: grand total for the order equals:": {
+    "canonical_name": "assert_order_grand_total",
+    "kind": "assert",
+    "description": "Assert the order grand total matches an expected value.",
+    "migration_note": "Read grand total from order detail and assert equality."
+  },
+  "Zed: create dynamic merchant user:": {
+    "canonical_name": "create_dynamic_merchant_user",
+    "kind": "setup",
+    "description": "Create a merchant user with generated dynamic data.",
+    "migration_note": "Seed via API/task or fill the merchant-user create form."
+  },
+  "Zed: go to order page:": {
+    "canonical_name": "navigate_to_order_detail",
+    "kind": "nav",
+    "description": "Navigate to a specific order's detail page.",
+    "migration_note": "Visit the sales order detail URL by id."
+  },
+  "Zed: update abstract product data:": {
+    "canonical_name": "update_abstract_product",
+    "kind": "data",
+    "description": "Update fields on an abstract product.",
+    "migration_note": "Edit abstract product form and save."
+  },
+  "Zed: update abstract product price on:": {
+    "canonical_name": "set_abstract_product_price",
+    "kind": "data",
+    "description": "Set the price of an abstract product for a given store/currency.",
+    "migration_note": "Edit the price tab on the abstract product and save."
+  },
+  "Zed: table should contain non-searchable value:": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert a table contains a value without using its search box.",
+    "migration_note": "Assert cy.contains on the rendered table body."
+  },
+  "Zed: trigger matching state of xxx merchant's shipment:": {
+    "canonical_name": "trigger_oms",
+    "kind": "ui",
+    "description": "Trigger matching OMS state for a named merchant's shipment.",
+    "migration_note": "Scope to the merchant shipment block then click the state button."
+  },
+  "Zed: change concrete product price on:": {
+    "canonical_name": "set_concrete_product_price",
+    "kind": "data",
+    "description": "Set the price of a concrete product for a given store/currency.",
+    "migration_note": "Edit the price tab on the concrete product and save."
+  },
+  "Zed: table should contain:": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert a table contains the given value.",
+    "migration_note": "Assert cy.contains on the rendered table body."
+  },
+  "Zed: trigger all matching states inside xxx order:": {
+    "canonical_name": "trigger_oms",
+    "kind": "ui",
+    "description": "Trigger all matching OMS states inside a named order.",
+    "migration_note": "Scope to the named order then click each available state button."
+  },
+  "Zed: change concrete product data:": {
+    "canonical_name": "update_concrete_product",
+    "kind": "data",
+    "description": "Update fields on a concrete product.",
+    "migration_note": "Edit concrete product form and save."
+  },
+  "Zed: trigger matching state of order item inside xxx shipment:": {
+    "canonical_name": "trigger_oms",
+    "kind": "ui",
+    "description": "Trigger matching OMS state of an order item within a named shipment.",
+    "migration_note": "Scope to the shipment's item then click the state button."
+  },
+  "Zed: change concrete product stock:": {
+    "canonical_name": "set_product_stock",
+    "kind": "data",
+    "description": "Change the stock value of a concrete product.",
+    "migration_note": "Edit stock field on the concrete product availability page and save."
+  },
+  "Zed: shipping address inside xxx shipment should be:": {
+    "canonical_name": "assert_shipment_shipping_address",
+    "kind": "assert",
+    "description": "Assert the shipping address of a named shipment.",
+    "migration_note": "Read the shipment address block and assert each field."
+  },
+  "Zed: wait for order item to be in state:": {
+    "canonical_name": "wait_for_order_item_state",
+    "kind": "assert",
+    "description": "Wait until an order item reaches a given OMS state.",
+    "migration_note": "Poll/retry the item state label until it equals expected."
+  },
+  "Zed: order has the following number of shipments:": {
+    "canonical_name": "assert_order_shipment_count",
+    "kind": "assert",
+    "description": "Assert the number of shipments on an order.",
+    "migration_note": "Count shipment blocks on the order detail and assert."
+  },
+  "Zed: save abstract product:": {
+    "canonical_name": "save_abstract_product",
+    "kind": "ui",
+    "description": "Save the abstract product form.",
+    "migration_note": "Click the save button on the abstract product form."
+  },
+  "Zed: shipment data inside xxx shipment should be:": {
+    "canonical_name": "assert_shipment_data",
+    "kind": "assert",
+    "description": "Assert details of a named shipment.",
+    "migration_note": "Read the shipment block fields and assert each."
+  },
+  "Zed: go to my order page:": {
+    "canonical_name": "navigate_to_my_order_detail",
+    "kind": "nav",
+    "description": "Navigate to the current user's order detail page.",
+    "migration_note": "Visit the order detail for the order placed by the test user."
+  },
+  "Zed: save data exchange api configuration": {
+    "canonical_name": "save_data_exchange_api_config",
+    "kind": "ui",
+    "description": "Save the Data Exchange API configuration form.",
+    "migration_note": "Click save on the config form."
+  },
+  "Zed: wait until info box is not displayed": {
+    "canonical_name": "wait_for_info_box_to_disappear",
+    "kind": "assert",
+    "description": "Wait until the info/notification box is no longer visible.",
+    "migration_note": "Assert the info box selector is not.exist / not.visible."
+  },
+  "Zed: xxx shipment should/not contain the following products:": {
+    "canonical_name": "assert_shipment_products",
+    "kind": "assert",
+    "description": "Assert a named shipment does or does not contain given products.",
+    "migration_note": "Assert presence/absence of product rows in the shipment block."
+  },
+  "Zed: create a discount and activate it:": {
+    "canonical_name": "create_discount",
+    "kind": "setup",
+    "description": "Create a discount and activate it.",
+    "migration_note": "Fill the discount create form, save, then toggle active."
+  },
+  "Zed: create new Zed user with the following data:": {
+    "canonical_name": "create_admin_user",
+    "kind": "setup",
+    "description": "Create a new Zed back-office user with given data.",
+    "migration_note": "Fill the user create form and save."
+  },
+  "Zed: update warehouse:": {
+    "canonical_name": "update_warehouse",
+    "kind": "data",
+    "description": "Update a warehouse's data.",
+    "migration_note": "Edit warehouse form and save."
+  },
+  "Zed: click Action Button in Merchant Users table for row that contains:": {
+    "canonical_name": "click_row_action_button",
+    "kind": "ui",
+    "description": "Click an action button in the Merchant Users table row matching text.",
+    "migration_note": "Locate the merchant-users row via cy.contains then click its action button."
+  },
+  "Zed: billing address for the order should be:": {
+    "canonical_name": "assert_order_billing_address",
+    "kind": "assert",
+    "description": "Assert the billing address of an order.",
+    "migration_note": "Read the order billing address block and assert each field."
+  },
+  "Zed: create a cms page and publish it:": {
+    "canonical_name": "create_cms_page",
+    "kind": "setup",
+    "description": "Create a CMS page and publish it.",
+    "migration_note": "Fill CMS page create form, save, then publish."
+  },
+  "Zed: submit the form": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit the currently open form.",
+    "migration_note": "Click the form's submit button."
+  },
+  "Zed: trigger matching state of xxx order item inside xxx shipment:": {
+    "canonical_name": "trigger_oms",
+    "kind": "ui",
+    "description": "Trigger matching OMS state of a named order item within a named shipment.",
+    "migration_note": "Scope to shipment and item then click the state button."
+  },
+  "Zed: activate following discounts from Overview page:": {
+    "canonical_name": "activate_discount",
+    "kind": "ui",
+    "description": "Activate given discounts from the discount overview page.",
+    "migration_note": "On overview, toggle active for each named discount row."
+  },
+  "Zed: start new abstract product creation:": {
+    "canonical_name": "start_abstract_product_creation",
+    "kind": "nav",
+    "description": "Begin creating a new abstract product.",
+    "migration_note": "Visit the abstract product create page."
+  },
+  "Zed: select abstract product variants:": {
+    "canonical_name": "select_abstract_product_variants",
+    "kind": "ui",
+    "description": "Select super-attribute variants for an abstract product.",
+    "migration_note": "Check the variant attribute checkboxes on the create form."
+  },
+  "Zed: check if product is/not in stock:": {
+    "canonical_name": "assert_product_in_stock",
+    "kind": "assert",
+    "description": "Assert whether a product is or is not in stock.",
+    "migration_note": "Read stock/availability label and assert state."
+  },
+  "Zed: delete Zed user with the following email:": {
+    "canonical_name": "delete_admin_user",
+    "kind": "data",
+    "description": "Delete a Zed back-office user by email.",
+    "migration_note": "Find the user row by email and trigger delete action."
+  },
+  "Zed: update Zed user:": {
+    "canonical_name": "update_admin_user",
+    "kind": "data",
+    "description": "Update a Zed back-office user's data.",
+    "migration_note": "Edit the user form and save."
+  },
+  "Zed: perform merchant user search by:": {
+    "canonical_name": "search_merchant_users",
+    "kind": "ui",
+    "description": "Search the merchant users list by given criteria.",
+    "migration_note": "Type into the merchant-users table search box."
+  },
+  "Zed: deactivate all discounts from Overview page": {
+    "canonical_name": "deactivate_discount",
+    "kind": "ui",
+    "description": "Deactivate all discounts from the discount overview page.",
+    "migration_note": "On overview, toggle inactive for every discount row."
+  },
+  "Zed: delete customer:": {
+    "canonical_name": "delete_customer",
+    "kind": "data",
+    "description": "Delete a customer.",
+    "migration_note": "Find the customer row and trigger delete action."
+  },
+  "Zed: click button in Header:": {
+    "canonical_name": "click_header_button",
+    "kind": "ui",
+    "description": "Click a button in the page header.",
+    "migration_note": "Click the header button by its label."
+  },
+  "Zed: fill glossary form:": {
+    "canonical_name": "fill_glossary_form",
+    "kind": "ui",
+    "description": "Fill the glossary translation form.",
+    "migration_note": "Type translation values into the glossary form fields."
+  },
+  "Zed: undo the changes in glossary translation:": {
+    "canonical_name": "undo_glossary_translation_changes",
+    "kind": "ui",
+    "description": "Revert unsaved changes in a glossary translation.",
+    "migration_note": "Click the revert/undo control on the glossary form."
+  },
+  "Zed: download data exchange api specification should be active:": {
+    "canonical_name": "assert_api_spec_download_enabled",
+    "kind": "assert",
+    "description": "Assert the Data Exchange API spec download is available/active.",
+    "migration_note": "Assert the download button is enabled/visible."
+  },
+  "Zed: download data exchange api specification": {
+    "canonical_name": "download_api_specification",
+    "kind": "ui",
+    "description": "Download the Data Exchange API specification.",
+    "migration_note": "Click the download control and capture the file."
+  },
+  "Zed: check that downloaded api specification contains:": {
+    "canonical_name": "assert_downloaded_api_spec_contains",
+    "kind": "assert",
+    "description": "Assert the downloaded API spec file contains given content.",
+    "migration_note": "Read the downloaded file from cy downloads and assert content."
+  },
+  "Zed: delete downloaded api specification": {
+    "canonical_name": "delete_downloaded_api_specification",
+    "kind": "setup",
+    "description": "Remove the downloaded API specification file.",
+    "migration_note": "Use cy.task to delete the file from the downloads folder."
+  },
+  "Zed: start creation of new data exchange api configuration for db table:": {
+    "canonical_name": "start_data_exchange_api_config_creation",
+    "kind": "nav",
+    "description": "Begin creating a Data Exchange API configuration for a DB table.",
+    "migration_note": "Open the config create page and select the DB table."
+  },
+  "Zed: change global threshold settings:": {
+    "canonical_name": "set_global_threshold_settings",
+    "kind": "data",
+    "description": "Change the global free-shipping/threshold settings.",
+    "migration_note": "Edit the threshold settings form and save."
+  },
+  "Zed: assigned store to cms block:": {
+    "canonical_name": "assign_store_to_cms_block",
+    "kind": "data",
+    "description": "Assign a store to a CMS block.",
+    "migration_note": "Select stores on the CMS block edit form and save."
+  },
+  "Zed: apply access permissions for user role:": {
+    "canonical_name": "set_role_permissions",
+    "kind": "data",
+    "description": "Apply access permissions to a user role.",
+    "migration_note": "Toggle permission checkboxes on the role edit form and save."
+  },
+  "Zed: view product page is displayed": {
+    "canonical_name": "assert_product_view_page_displayed",
+    "kind": "assert",
+    "description": "Assert the product view page is shown.",
+    "migration_note": "Assert the product view page container is visible."
+  },
+  "Zed: view abstract product page contains:": {
+    "canonical_name": "assert_abstract_product_view_contains",
+    "kind": "assert",
+    "description": "Assert the abstract product view page contains given content.",
+    "migration_note": "Assert cy.contains on the abstract product view page."
+  },
+  "Zed: create new Merchant User with the following data:": {
+    "canonical_name": "create_merchant_user",
+    "kind": "setup",
+    "description": "Create a new merchant user with given data.",
+    "migration_note": "Fill the merchant-user create form and save."
+  },
+  "Zed: check and restore product availability in Zed:": {
+    "canonical_name": "restore_product_availability",
+    "kind": "setup",
+    "description": "Check and restore a product's availability/stock.",
+    "migration_note": "Read availability then reset stock to expected baseline."
+  },
+  "Zed: filter by merchant:": {
+    "canonical_name": "filter_by_merchant",
+    "kind": "ui",
+    "description": "Filter a list by merchant.",
+    "migration_note": "Select the merchant in the filter control."
+  },
+  "Zed: update customer profile data:": {
+    "canonical_name": "update_customer_profile",
+    "kind": "data",
+    "description": "Update a customer's profile data.",
+    "migration_note": "Edit the customer profile form and save."
+  },
+  "Zed: deactivate following discounts from Overview page:": {
+    "canonical_name": "deactivate_discount",
+    "kind": "ui",
+    "description": "Deactivate given discounts from the discount overview page.",
+    "migration_note": "On overview, toggle inactive for each named discount row."
+  },
+  "Zed: check comment appears at order detailed page in zed:": {
+    "canonical_name": "assert_order_comment_present",
+    "kind": "assert",
+    "description": "Assert a comment appears on the order detail page.",
+    "migration_note": "Assert cy.contains for the comment text in the order comments block."
+  },
+  "Zed: create new Merchant with the following data:": {
+    "canonical_name": "create_merchant",
+    "kind": "setup",
+    "description": "Create a new merchant with given data.",
+    "migration_note": "Fill the merchant create form and save."
+  },
+  "Zed: perform search by:": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Search a table/list by given criteria.",
+    "migration_note": "Type into the table search box."
+  },
+  "Zed: update Merchant on edit page with the following data:": {
+    "canonical_name": "update_merchant",
+    "kind": "data",
+    "description": "Update a merchant on its edit page.",
+    "migration_note": "Edit the merchant form and save."
+  },
+  "Zed: select merchant in filter:": {
+    "canonical_name": "filter_by_merchant",
+    "kind": "ui",
+    "description": "Select a merchant in the filter control.",
+    "migration_note": "Select the merchant in the filter dropdown."
+  },
+  "Zed: verify first navigation root menus": {
+    "canonical_name": "assert_first_nav_root_menus",
+    "kind": "assert",
+    "description": "Assert the first navigation's root menu items.",
+    "migration_note": "Assert the expected root menu labels in the primary nav."
+  },
+  "Zed: verify root menu icons": {
+    "canonical_name": "assert_nav_root_menu_icons",
+    "kind": "assert",
+    "description": "Assert the navigation root menu icons.",
+    "migration_note": "Assert the icon classes/elements on root menu items."
+  },
+  "Zed: verify second navigation root menus": {
+    "canonical_name": "assert_second_nav_root_menus",
+    "kind": "assert",
+    "description": "Assert the second navigation's root menu items.",
+    "migration_note": "Assert the expected root menu labels in the secondary nav."
+  },
+  "Zed: add following alternative products to the concrete:": {
+    "canonical_name": "add_alternative_products",
+    "kind": "data",
+    "description": "Add alternative products to a concrete product.",
+    "migration_note": "Search and attach alternatives on the concrete product tab, then save."
+  },
+  "Zed: discontinue the following product:": {
+    "canonical_name": "discontinue_product",
+    "kind": "ui",
+    "description": "Discontinue a product.",
+    "migration_note": "Trigger the discontinue action on the product."
+  },
+  "Zed: product is successfully discontinued": {
+    "canonical_name": "assert_product_discontinued",
+    "kind": "assert",
+    "description": "Assert a product is successfully discontinued.",
+    "migration_note": "Assert the discontinued status/label on the product."
+  },
+  "Zed: create a new customer address in profile:": {
+    "canonical_name": "create_customer_address",
+    "kind": "setup",
+    "description": "Create a new address in a customer's profile.",
+    "migration_note": "Fill the address create form in the customer profile and save."
+  },
+  "Zed: assert customer profile data:": {
+    "canonical_name": "assert_customer_profile_data",
+    "kind": "assert",
+    "description": "Assert a customer's profile data.",
+    "migration_note": "Read profile fields on the customer view and assert each."
+  },
+  "Zed: check that downloaded api specification does not contain:": {
+    "canonical_name": "assert_downloaded_api_spec_not_contains",
+    "kind": "assert",
+    "description": "Assert the downloaded API spec does not contain given content.",
+    "migration_note": "Read the downloaded file and assert content absent."
+  },
+  "Zed: update cms page and publish it:": {
+    "canonical_name": "update_cms_page",
+    "kind": "data",
+    "description": "Update a CMS page and publish it.",
+    "migration_note": "Edit CMS page form, save, then publish."
+  },
+  "Zed: create new Store:": {
+    "canonical_name": "create_store",
+    "kind": "setup",
+    "description": "Create a new store.",
+    "migration_note": "Fill the store create form and save."
+  },
+  "Zed: create new shipment inside the order:": {
+    "canonical_name": "create_order_shipment",
+    "kind": "ui",
+    "description": "Create a new shipment within an order.",
+    "migration_note": "Use the split/new-shipment flow on order detail and save."
+  },
+  "Zed: edit xxx shipment inside the order:": {
+    "canonical_name": "edit_order_shipment",
+    "kind": "ui",
+    "description": "Edit a named shipment within an order.",
+    "migration_note": "Open the shipment edit flow on order detail and save."
+  },
+  "Zed: create new role with name:": {
+    "canonical_name": "create_role",
+    "kind": "setup",
+    "description": "Create a new user role with a given name.",
+    "migration_note": "Fill the role create form and save."
+  },
+  "Zed: create new group with role assigned:": {
+    "canonical_name": "create_group",
+    "kind": "setup",
+    "description": "Create a new group with a role assigned.",
+    "migration_note": "Fill the group create form, assign the role, and save."
+  },
+  "Zed: validate the message when permission is restricted:": {
+    "canonical_name": "assert_permission_restricted_message",
+    "kind": "assert",
+    "description": "Assert the restricted-permission message is shown.",
+    "migration_note": "Assert the access-denied message text on the page."
+  },
+  "Zed: deactivate the created user:": {
+    "canonical_name": "deactivate_admin_user",
+    "kind": "ui",
+    "description": "Deactivate the previously created user.",
+    "migration_note": "Trigger the deactivate action on the user row."
+  },
+  "Zed: login with deactivated user/invalid data:": {
+    "canonical_name": "assert_login_fails",
+    "kind": "assert",
+    "description": "Attempt login with a deactivated/invalid user and assert failure.",
+    "migration_note": "Submit login form with bad creds and assert error/no session."
+  },
+  "Zed: activate/deactivate payment method:": {
+    "canonical_name": "toggle_payment_method",
+    "kind": "ui",
+    "description": "Activate or deactivate a payment method.",
+    "migration_note": "Toggle the payment method state control and save."
+  },
+  "Zed: get the last placed order ID of the customer by email:": {
+    "canonical_name": "get_last_order_id",
+    "kind": "data",
+    "description": "Get the most recent order id for a customer by email.",
+    "migration_note": "Query the orders list filtered by email and read the latest id."
+  },
+  "Zed: view offer page is displayed": {
+    "canonical_name": "assert_offer_view_page_displayed",
+    "kind": "assert",
+    "description": "Assert the offer view page is shown.",
+    "migration_note": "Assert the offer view page container is visible."
+  },
+  "Zed: view offer product page contains:": {
+    "canonical_name": "assert_offer_product_view_contains",
+    "kind": "assert",
+    "description": "Assert the offer product view page contains given content.",
+    "migration_note": "Assert cy.contains on the offer product view page."
+  },
+  "Zed: go to tab by link href that contains:": {
+    "canonical_name": "navigate_to_tab_by_href",
+    "kind": "nav",
+    "description": "Open a tab by matching its link href substring.",
+    "migration_note": "Click the tab whose anchor href contains the given fragment."
+  },
+  "Zed: create a return for the following order and product in it:": {
+    "canonical_name": "create_order_return",
+    "kind": "setup",
+    "description": "Create a return for a given order and product.",
+    "migration_note": "Open the create-return flow on the order and select the product."
+  },
+  "Zed: undo discontinue the following product:": {
+    "canonical_name": "undo_discontinue_product",
+    "kind": "ui",
+    "description": "Reverse the discontinuation of a product.",
+    "migration_note": "Trigger the undo-discontinue action on the product."
+  },
+  "Zed: add new concrete product to abstract:": {
+    "canonical_name": "add_concrete_product",
+    "kind": "data",
+    "description": "Add a new concrete product to an abstract product.",
+    "migration_note": "Use the add-variant flow on the abstract product and save."
+  },
+  "Zed: create new Company with provided name:": {
+    "canonical_name": "create_company",
+    "kind": "setup",
+    "description": "Create a new company with a given name.",
+    "migration_note": "Fill the company create form and save."
+  },
+  "Zed: create new Company Business Unit for the following company:": {
+    "canonical_name": "create_company_business_unit",
+    "kind": "setup",
+    "description": "Create a business unit for a given company.",
+    "migration_note": "Fill the business-unit create form and save."
+  },
+  "Zed: create new Company Role with provided permissions:": {
+    "canonical_name": "create_company_role",
+    "kind": "setup",
+    "description": "Create a company role with given permissions.",
+    "migration_note": "Fill the company-role create form, set permissions, and save."
+  },
+  "Zed: Create new Company User with provided details:": {
+    "canonical_name": "create_company_user",
+    "kind": "setup",
+    "description": "Create a company user with given details.",
+    "migration_note": "Fill the company-user create form and save."
+  },
+  "Zed: attach company user to the following BU with role:": {
+    "canonical_name": "attach_company_user_to_business_unit",
+    "kind": "data",
+    "description": "Attach a company user to a business unit with a role.",
+    "migration_note": "Assign BU and role on the company-user edit form and save."
+  },
+  "Zed: delete company user xxx withing xxx company business unit:": {
+    "canonical_name": "delete_company_user",
+    "kind": "data",
+    "description": "Delete a company user within a business unit.",
+    "migration_note": "Find the company-user row in the BU and trigger delete."
+  },
+  "Zed: create new product set:": {
+    "canonical_name": "create_product_set",
+    "kind": "setup",
+    "description": "Create a new product set.",
+    "migration_note": "Fill the product-set create form and save."
+  },
+  "Zed: delete product set:": {
+    "canonical_name": "delete_product_set",
+    "kind": "data",
+    "description": "Delete a product set.",
+    "migration_note": "Find the product-set row and trigger delete."
+  },
+  "Zed: check if at least one price exists for concrete and add if doesn't:": {
+    "canonical_name": "ensure_concrete_product_price",
+    "kind": "setup",
+    "description": "Ensure a concrete product has at least one price, adding if missing.",
+    "migration_note": "Read the price tab; if empty add a price and save."
+  },
+  "Zed: update Merchant User on edit page with the following data:": {
+    "canonical_name": "update_merchant_user",
+    "kind": "data",
+    "description": "Update a merchant user on its edit page.",
+    "migration_note": "Edit the merchant-user form and save."
+  },
+  "Zed: table should contain xxx N times:": {
+    "canonical_name": "assert_table_contains_value_n_times",
+    "kind": "assert",
+    "description": "Assert a table contains a value an expected number of times.",
+    "migration_note": "Assert the count of matching cells/rows equals N."
+  },
+  "Zed: view the latest return from My Returns:": {
+    "canonical_name": "navigate_to_latest_return",
+    "kind": "nav",
+    "description": "Open the latest return from the My Returns list.",
+    "migration_note": "Click the first/latest return row in My Returns."
+  },
+  "Zed: return details page contains the following items:": {
+    "canonical_name": "assert_return_items",
+    "kind": "assert",
+    "description": "Assert the return details page contains given items.",
+    "migration_note": "Assert each expected item row on the return detail page."
+  },
+  "Zed: unassign all product lists from merchant relation:": {
+    "canonical_name": "unassign_product_lists_from_merchant_relation",
+    "kind": "data",
+    "description": "Unassign all product lists from a merchant relation.",
+    "migration_note": "Clear the assigned product lists on the merchant relation and save."
+  },
+  "Zed: Deactivate Following Discounts From Overview Page:": {
+    "canonical_name": "deactivate_discount",
+    "kind": "ui",
+    "description": "Deactivate given discounts from the discount overview page.",
+    "migration_note": "On overview, toggle inactive for each named discount row."
+  },
+  "Zed: create product list with the following assigned category:": {
+    "canonical_name": "create_product_list",
+    "kind": "setup",
+    "description": "Create a product list with an assigned category.",
+    "migration_note": "Fill the product-list create form, assign the category, and save."
+  },
+  "Zed: assign product list to merchant relation:": {
+    "canonical_name": "assign_product_list_to_merchant_relation",
+    "kind": "data",
+    "description": "Assign a product list to a merchant relation.",
+    "migration_note": "Select the product list on the merchant relation form and save."
+  },
+  "Zed: remove product list with title:": {
+    "canonical_name": "delete_product_list",
+    "kind": "data",
+    "description": "Remove a product list by title.",
+    "migration_note": "Find the product-list row by title and trigger delete."
+  },
+  "Zed: product configuration should be equal:": {
+    "canonical_name": "assert_product_configuration",
+    "kind": "assert",
+    "description": "Assert a product's configuration matches expected.",
+    "migration_note": "Read the product configuration values and assert equality."
+  },
+  "Zed: concrete product has the following alternative products:": {
+    "canonical_name": "assert_concrete_alternative_products",
+    "kind": "assert",
+    "description": "Assert a concrete product's alternative products.",
+    "migration_note": "Assert each expected alternative product row on the concrete product."
+  },
+  "Zed: go to tab:": {
+    "canonical_name": "navigate_to_tab",
+    "kind": "nav",
+    "description": "Open a tab by its label.",
+    "migration_note": "Click the tab by its visible label."
+  }
+}

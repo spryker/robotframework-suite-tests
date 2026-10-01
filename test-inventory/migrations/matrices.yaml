@@ -1,0 +1,18 @@
+# Which migrations this repo owns. A matrix lives in the repo that loses the tests.
+inventory: ../tests.jsonl
+batch_cap: 40
+
+matrices:
+    - name: robot-api-to-codeception
+      source_framework: robot
+      target_framework: codeception
+      target_repo: spryker/suite
+      select:
+          type: api
+
+    - name: robot-ui-to-cypress
+      source_framework: robot
+      target_framework: cypress
+      target_repo: spryker/cypress-tests
+      select:
+          type: ui
