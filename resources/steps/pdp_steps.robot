@@ -255,8 +255,18 @@ Yves: change variant of the product on PDP on:
                 Log    Page is not loaded
             END
             IF    'FAIL' in $final_try
-                Take Screenshot    EMBED    fullPage=True
-                FAIL    '${variantToChoose}' variant was not selected on PDP. Check if variant exists
+                # A variant selection reloads the PDP, which then renders the chosen value
+                # with a Reset control instead of the <select> (a single-attribute product
+                # has no select left). A reload slower than the 400ms check above lands
+                # here, where the select is gone and the retry fails although the variant
+                # is selected - so trust the Reset control once the reload has landed.
+                Disable Automatic Screenshots on Failure
+                ${variant_selected}=    Run Keyword And Return Status    Wait Until Page Contains Element    ${pdp_reset_selected_variant_locator}
+                Restore Automatic Screenshots on Failure
+                IF    '${variant_selected}'=='False'
+                    Take Screenshot    EMBED    fullPage=True
+                    FAIL    '${variantToChoose}' variant was not selected on PDP. Check if variant exists
+                END
             END
         END
     END
