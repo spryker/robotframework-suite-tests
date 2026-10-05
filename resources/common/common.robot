@@ -399,6 +399,28 @@ Trigger oms
     END
     IF    ${docker} or ${ignore_console} != True    Sleep    ${timeout}
 
+Trigger oms until order items are in state:
+    [Documentation]    Runs the OMS until every item of the order is in the given state, e.g. a reserved one before
+    ...    asserting availability. Checkout leaves the items in the initial state and only ``oms:check-condition``
+    ...    moves them on, so a single ``Trigger oms`` does not guarantee the transition - its CLI call also passes
+    ...    when the console command fails.
+    ...
+    ...    *Example:*
+    ...
+    ...    ``Trigger oms until order items are in state:    ${lastPlacedOrder}    grace period started``
+    [Arguments]    ${order_reference}    ${state}    ${iterations}=20    ${delay}=3s
+    FOR    ${index}    IN RANGE    ${iterations}
+        Trigger oms
+        Connect to Spryker DB
+        ${item_states}=    Query    SELECT DISTINCT s.name FROM spy_sales_order_item i JOIN spy_sales_order o ON o.id_sales_order = i.fk_sales_order JOIN spy_oms_order_item_state s ON s.id_oms_order_item_state = i.fk_oms_order_item_state WHERE o.order_reference = '${order_reference}'
+        Disconnect From Database
+        ${item_states}=    Evaluate    [row[0] for row in $item_states]
+        IF    not $item_states    Fail    Order '${order_reference}' has no items in the DB
+        IF    $item_states == [$state]    RETURN
+        Sleep    ${delay}
+    END
+    Fail    Items of order '${order_reference}' are in ${item_states} after ${iterations} OMS runs, expected '${state}'. Check if OMS is functional
+
 Trigger publish trigger-events
     [Documentation]    This keyword triggers publish:trigger-events console command using provided resource, path and store.
         ...    *Example:*
