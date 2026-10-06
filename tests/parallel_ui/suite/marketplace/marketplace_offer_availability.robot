@@ -101,8 +101,8 @@ Offer_Availability_Calculation
     Yves: accept the terms and conditions:    true
     Yves: 'submit the order' on the summary page
     Yves: 'Thank you' page is displayed
-    Trigger oms
     Yves: get the last placed order ID by current customer
+    Trigger oms until order items are in state:    ${lastPlacedOrder}    grace period started
     Yves: go to PDP of the product with sku:     offAvKU${random}    wait_for_p&s=true
     Yves: select xxx merchant's offer:    Spryker
     Yves: change quantity on PDP:    6
