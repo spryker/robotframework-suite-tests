@@ -1,0 +1,2804 @@
+{
+  "Delete dynamic entity configuration in Database:": {
+    "canonical_name": "delete_dynamic_entity_config",
+    "kind": "data",
+    "description": "Remove a dynamic entity configuration row from the DB.",
+    "migration_note": "DB fixture teardown; map to a data-cleanup helper."
+  },
+  "Create dynamic entity configuration in Database:": {
+    "canonical_name": "create_dynamic_entity_config",
+    "kind": "data",
+    "description": "Insert a dynamic entity configuration row into the DB.",
+    "migration_note": "DB fixture setup."
+  },
+  "Trigger multistore p&s": {
+    "canonical_name": "run_publish_and_sync_multistore",
+    "kind": "setup",
+    "description": "Run publish-and-sync across all stores to propagate data to storage/search.",
+    "migration_note": "Maps to run_queue_worker plus P&S; multistore variant."
+  },
+  "Delete country by iso2_code in Database:": {
+    "canonical_name": "delete_country_by_iso2",
+    "kind": "data",
+    "description": "Delete a country row by ISO-2 code from the DB.",
+    "migration_note": "DB fixture teardown."
+  },
+  "detail": {
+    "canonical_name": "json_field_detail",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "Create dynamic customer in DB": {
+    "canonical_name": "create_dynamic_customer",
+    "kind": "data",
+    "description": "Create a randomized customer directly in the DB.",
+    "migration_note": "DB fixture; cf. seed create_dynamic_admin_user."
+  },
+  "Trigger p&s": {
+    "canonical_name": "run_publish_and_sync",
+    "kind": "setup",
+    "description": "Run publish-and-sync for one store to propagate data to storage/search.",
+    "migration_note": "Maps to run_queue_worker plus P&S."
+  },
+  "Create dynamic admin user in DB": {
+    "canonical_name": "create_dynamic_admin_user",
+    "kind": "data",
+    "description": "Create a randomized Zed admin/back-office user in the DB.",
+    "migration_note": "Seed vocabulary: create_dynamic_admin_user."
+  },
+  "Delete dynamic admin user from DB": {
+    "canonical_name": "delete_dynamic_admin_user",
+    "kind": "data",
+    "description": "Delete a previously created dynamic admin user from the DB.",
+    "migration_note": "DB fixture teardown."
+  },
+  "Create a guest cart:": {
+    "canonical_name": "create_guest_cart",
+    "kind": "api",
+    "description": "Create a guest (anonymous) cart via Glue.",
+    "migration_note": "Cart setup fixture."
+  },
+  "Make user a warehouse user/ not a warehouse user:": {
+    "canonical_name": "set_warehouse_user_flag",
+    "kind": "data",
+    "description": "Toggle whether a user is a warehouse user in the DB.",
+    "migration_note": "DB fixture."
+  },
+  "Delete dynamic entity configuration relation in Database:": {
+    "canonical_name": "delete_dynamic_entity_config_relation",
+    "kind": "data",
+    "description": "Remove a dynamic entity configuration relation row from the DB.",
+    "migration_note": "DB fixture teardown."
+  },
+  "Create dynamic entity configuration relation in Database:": {
+    "canonical_name": "create_dynamic_entity_config_relation",
+    "kind": "data",
+    "description": "Insert a dynamic entity configuration relation row into the DB.",
+    "migration_note": "DB fixture setup."
+  },
+  "Repeat Keyword": {
+    "canonical_name": "repeat_keyword",
+    "kind": "setup",
+    "description": "Robot built-in: repeat a keyword N times.",
+    "migration_note": "RF BuiltIn; usually inlined or replaced by a loop."
+  },
+  "Trigger API specification update": {
+    "canonical_name": "regenerate_api_specification",
+    "kind": "setup",
+    "description": "Regenerate the Glue API OpenAPI specification.",
+    "migration_note": "Glue API spec build step."
+  },
+  "And Perform arithmetical calculation with two arguments:": {
+    "canonical_name": "calculate_value",
+    "kind": "data",
+    "description": "Compute an arithmetic result from two operands.",
+    "migration_note": "Seed vocabulary: calculate_value. Gherkin-prefixed variant; same canonical."
+  },
+  "Trigger oms": {
+    "canonical_name": "trigger_oms",
+    "kind": "setup",
+    "description": "Run the OMS command to advance order state machine.",
+    "migration_note": "Seed vocabulary: trigger_oms."
+  },
+  "API_test_setup": {
+    "canonical_name": "setup_api_test",
+    "kind": "setup",
+    "description": "Suite/test setup for API tests.",
+    "migration_note": "Generic API test fixture."
+  },
+  "Delete product by id_product in Database:": {
+    "canonical_name": "delete_product_by_id",
+    "kind": "data",
+    "description": "Delete a concrete product row by id_product.",
+    "migration_note": "DB fixture teardown."
+  },
+  "Delete product_abstract by id_product_abstract in Database:": {
+    "canonical_name": "delete_product_abstract_by_id",
+    "kind": "data",
+    "description": "Delete an abstract product row by id_product_abstract.",
+    "migration_note": "DB fixture teardown."
+  },
+  "Delete service type in DB": {
+    "canonical_name": "delete_service_type",
+    "kind": "data",
+    "description": "Delete a service type row from the DB.",
+    "migration_note": "DB fixture teardown."
+  },
+  "Get voucher code by discountId from Database:": {
+    "canonical_name": "get_voucher_code_by_discount_id",
+    "kind": "data",
+    "description": "Read a voucher code for a discount id from the DB.",
+    "migration_note": "DB read helper."
+  },
+  "Update order status in Database:": {
+    "canonical_name": "update_order_status",
+    "kind": "data",
+    "description": "Set an order's OMS status directly in the DB.",
+    "migration_note": "DB fixture; cf. trigger_oms."
+  },
+  "Remove Tags": {
+    "canonical_name": "remove_test_tags",
+    "kind": "setup",
+    "description": "Robot built-in: remove tags from the current test.",
+    "migration_note": "RF BuiltIn tag mgmt."
+  },
+  "Set Tags": {
+    "canonical_name": "set_test_tags",
+    "kind": "setup",
+    "description": "Robot built-in: set tags on the current test.",
+    "migration_note": "RF BuiltIn tag mgmt."
+  },
+  "Save Header value to a variable:": {
+    "canonical_name": "save_header_value",
+    "kind": "data",
+    "description": "Store a response header value into a variable.",
+    "migration_note": "cf. seed save_response_value."
+  },
+  "Deactivate all discounts in the database": {
+    "canonical_name": "deactivate_all_discounts",
+    "kind": "data",
+    "description": "Deactivate every discount row in the DB.",
+    "migration_note": "Bulk DB cleanup; cf. seed activate_discount."
+  },
+  "type": {
+    "canonical_name": "json_field_type",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "Save the result of a SELECT DB query to a variable:": {
+    "canonical_name": "save_db_query_result",
+    "kind": "data",
+    "description": "Run a SELECT query and store the result in a variable.",
+    "migration_note": "Generic DB read; cf. seed save_response_value."
+  },
+  "Create dynamic service with all data via BAPI if doesn't exist": {
+    "canonical_name": "create_service_via_bapi_if_absent",
+    "kind": "api",
+    "description": "Create a fully populated service via Backend API if it does not already exist.",
+    "migration_note": "Idempotent BAPI fixture."
+  },
+  "Switch to Glue": {
+    "canonical_name": "switch_to_glue_session",
+    "kind": "setup",
+    "description": "Switch the active API session/context to the Glue application.",
+    "migration_note": "Multi-app API session switch."
+  },
+  "Should Test Run": {
+    "canonical_name": "skip_test_if_dms_mismatch",
+    "kind": "setup",
+    "description": "Skip the test when DMS on/off tags do not match the run mode.",
+    "migration_note": "Tag-driven conditional skip guard."
+  },
+  "Get the first company user id and its' customer email": {
+    "canonical_name": "get_first_company_user",
+    "kind": "data",
+    "description": "Read the first company user id and its customer email from the DB.",
+    "migration_note": "DB read helper."
+  },
+  "Delete shipment type in DB:": {
+    "canonical_name": "delete_shipment_type",
+    "kind": "data",
+    "description": "Delete a shipment type row from the DB.",
+    "migration_note": "DB fixture teardown."
+  },
+  "Deactivate service point via BAPI": {
+    "canonical_name": "deactivate_service_point_via_bapi",
+    "kind": "api",
+    "description": "Deactivate a service point through the Backend API.",
+    "migration_note": "BAPI write helper."
+  },
+  "Save current URL": {
+    "canonical_name": "save_current_url",
+    "kind": "data",
+    "description": "Capture the browser's current URL into a variable.",
+    "migration_note": "UI state helper."
+  },
+  "Delete url by url name in Database:": {
+    "canonical_name": "delete_url_by_name",
+    "kind": "data",
+    "description": "Delete a URL row by its url name from the DB.",
+    "migration_note": "DB fixture teardown."
+  },
+  "Trigger product labels update": {
+    "canonical_name": "refresh_product_labels",
+    "kind": "setup",
+    "description": "Recalculate/refresh product label assignments.",
+    "migration_note": "Product label relation rebuild."
+  },
+  "/checkout": {
+    "canonical_name": "endpoint_checkout",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/checkout-data": {
+    "canonical_name": "endpoint_checkout_data",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "Remove_warehouse_user_assignment:": {
+    "canonical_name": "remove_warehouse_user_assignment",
+    "kind": "data",
+    "description": "Remove a warehouse-user assignment.",
+    "migration_note": "Warehouse user fixture teardown."
+  },
+  "Delete service point in DB": {
+    "canonical_name": "delete_service_point",
+    "kind": "data",
+    "description": "Delete a service point row from the DB.",
+    "migration_note": "DB fixture teardown."
+  },
+  "Try reloading page until element is/not appear:": {
+    "canonical_name": "reload_until_element_state",
+    "kind": "ui",
+    "description": "Reload the page repeatedly until an element (dis)appears.",
+    "migration_note": "Flaky-UI retry helper."
+  },
+  "And Create_warehouse_user_assignment:": {
+    "canonical_name": "create_warehouse_user_assignment",
+    "kind": "data",
+    "description": "Create a warehouse-user assignment.",
+    "migration_note": "Warehouse user fixture setup. Gherkin-prefixed variant; same canonical."
+  },
+  "Then Get_warehouse_user_assignment_id:": {
+    "canonical_name": "get_warehouse_user_assignment_id",
+    "kind": "data",
+    "description": "Read a warehouse-user assignment id.",
+    "migration_note": "DB read helper. Gherkin-prefixed variant; same canonical."
+  },
+  "Delete All Cookies": {
+    "canonical_name": "delete_all_cookies",
+    "kind": "ui",
+    "description": "Clear all browser cookies.",
+    "migration_note": "Browser/Selenium lib keyword."
+  },
+  "Reload": {
+    "canonical_name": "reload_page",
+    "kind": "nav",
+    "description": "Reload the current page.",
+    "migration_note": "Browser/Selenium lib keyword."
+  },
+  "None": {
+    "canonical_name": "json_field_none",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "name": {
+    "canonical_name": "json_field_name",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "Create service type in DB": {
+    "canonical_name": "create_service_type",
+    "kind": "data",
+    "description": "Insert a service type row into the DB.",
+    "migration_note": "DB fixture setup."
+  },
+  "Register a new customer with data:": {
+    "canonical_name": "register_customer",
+    "kind": "api",
+    "description": "Register a new storefront customer with supplied data.",
+    "migration_note": "Glue/Yves registration."
+  },
+  "grand_total_sum": {
+    "canonical_name": "json_field_grand_total_sum",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "/shopping-lists/${shoppingListId}/shopping-list-items": {
+    "canonical_name": "endpoint_shopping_lists_shoppinglistid_shopping_list_items",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "+": {
+    "canonical_name": "expression_value",
+    "kind": "data",
+    "description": "Captured expression/operator fragment, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: condition/operator argument."
+  },
+  "productConfigurationInstance.prices.0.netAmount => This value should not be blank.": {
+    "canonical_name": "error_message_productconfigurationinstance_prices_0_netamount",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "productConfigurationInstance.prices.0.grossAmount => This value should not be blank.": {
+    "canonical_name": "error_message_productconfigurationinstance_prices_0_grossamount",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "Get ETag header value from cart": {
+    "canonical_name": "get_cart_etag_header",
+    "kind": "api",
+    "description": "Read the ETag header value returned by a cart endpoint.",
+    "migration_note": "Optimistic-locking header helper."
+  },
+  "Create merchant order for the item in DB and change status:": {
+    "canonical_name": "create_merchant_order_and_set_status",
+    "kind": "data",
+    "description": "Create a merchant order for an item in the DB and set its status.",
+    "migration_note": "DB fixture (marketplace)."
+  },
+  "/checkout?include=orders": {
+    "canonical_name": "endpoint_checkout_include_orders",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customers/": {
+    "canonical_name": "endpoint_customers",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "str": {
+    "canonical_name": "json_field_str",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "Create warehouse in DB:": {
+    "canonical_name": "create_warehouse",
+    "kind": "data",
+    "description": "Insert a warehouse (stock) row into the DB.",
+    "migration_note": "DB fixture setup."
+  },
+  "Assign user to Warehouse in DB:": {
+    "canonical_name": "assign_user_to_warehouse",
+    "kind": "data",
+    "description": "Assign a user to a warehouse in the DB.",
+    "migration_note": "DB fixture."
+  },
+  "De-assign user from Warehouse in DB:": {
+    "canonical_name": "deassign_user_from_warehouse",
+    "kind": "data",
+    "description": "Remove a user-to-warehouse assignment in the DB.",
+    "migration_note": "DB fixture."
+  },
+  "Delete warehouse in DB:": {
+    "canonical_name": "delete_warehouse",
+    "kind": "data",
+    "description": "Delete a warehouse row from the DB.",
+    "migration_note": "DB fixture teardown."
+  },
+  "Remove picking list item by uuid in DB:": {
+    "canonical_name": "delete_picking_list_item_by_uuid",
+    "kind": "data",
+    "description": "Delete a picking list item by uuid from the DB.",
+    "migration_note": "DB fixture teardown."
+  },
+  "/customers/${yves_user.reference}/addresses": {
+    "canonical_name": "endpoint_customers_yves_user_reference_addresses",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/token": {
+    "canonical_name": "endpoint_token",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts": {
+    "canonical_name": "endpoint_carts",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shopping-lists/shoppingListId/shopping-list-items/shoppingListItemId": {
+    "canonical_name": "endpoint_shopping_lists_shoppinglistid_shopping_list_items_shoppinglistitemid",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "When Make user a warehouse user/ not a warehouse user:": {
+    "canonical_name": "set_warehouse_user_flag",
+    "kind": "data",
+    "description": "Toggle whether a user is a warehouse user in the DB.",
+    "migration_note": "DB fixture. Gherkin-prefixed variant; same canonical."
+  },
+  "Delete mime_type by id_mime_type in Database:": {
+    "canonical_name": "delete_mime_type_by_id",
+    "kind": "data",
+    "description": "Delete a mime_type row by id from the DB.",
+    "migration_note": "DB fixture teardown."
+  },
+  "/access-tokens": {
+    "canonical_name": "endpoint_access_tokens",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/availability-notifications": {
+    "canonical_name": "endpoint_availability_notifications",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/${cart_id}": {
+    "canonical_name": "endpoint_carts_cart_id",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "-": {
+    "canonical_name": "expression_value",
+    "kind": "data",
+    "description": "Captured expression/operator fragment, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: condition/operator argument."
+  },
+  "Delete push notification subscription in DB:": {
+    "canonical_name": "delete_push_notification_subscription",
+    "kind": "data",
+    "description": "Delete a push-notification subscription row from the DB.",
+    "migration_note": "DB fixture teardown."
+  },
+  "Create giftcode in Database:": {
+    "canonical_name": "create_gift_code",
+    "kind": "data",
+    "description": "Insert a gift card code row into the DB.",
+    "migration_note": "DB fixture setup."
+  },
+  "/agent-customer-impersonation-access-tokens": {
+    "canonical_name": "endpoint_agent_customer_impersonation_access_tokens",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/${cart_uid}/items": {
+    "canonical_name": "endpoint_carts_cart_uid_items",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "id": {
+    "canonical_name": "json_field_id",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "/carts/${cartId}/shared-carts": {
+    "canonical_name": "endpoint_carts_cartid_shared_carts",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/company-user-access-tokens": {
+    "canonical_name": "endpoint_company_user_access_tokens",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customer-password/${yves_user.reference}": {
+    "canonical_name": "endpoint_customer_password_yves_user_reference",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customer-restore-password/${yves_user.reference}": {
+    "canonical_name": "endpoint_customer_restore_password_yves_user_reference",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "translation": {
+    "canonical_name": "json_field_translation",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "code": {
+    "canonical_name": "json_field_code",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "Create_warehouse_user_assignment:": {
+    "canonical_name": "create_warehouse_user_assignment",
+    "kind": "data",
+    "description": "Create a warehouse-user assignment.",
+    "migration_note": "Warehouse user fixture setup."
+  },
+  "/refresh-tokens": {
+    "canonical_name": "endpoint_refresh_tokens",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/agent-access-tokens": {
+    "canonical_name": "endpoint_agent_access_tokens",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "discount_total_sum": {
+    "canonical_name": "json_field_discount_total_sum",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "abstract-products": {
+    "canonical_name": "json_field_abstract_products",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "localeName": {
+    "canonical_name": "json_field_localename",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "Run Keyword And Ignore Error": {
+    "canonical_name": "run_keyword_and_ignore_error",
+    "kind": "setup",
+    "description": "Robot built-in: run a keyword, swallow any error.",
+    "migration_note": "RF BuiltIn; replace with try/except equivalent."
+  },
+  "Delete complex product by id_product_abstract in Database:": {
+    "canonical_name": "delete_complex_product_by_abstract_id",
+    "kind": "data",
+    "description": "Delete a complex product and its relations by abstract id.",
+    "migration_note": "DB fixture teardown."
+  },
+  "/carts/${cart_id}/vouchers": {
+    "canonical_name": "endpoint_carts_cart_id_vouchers",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.with_review.sku}/product-reviews": {
+    "canonical_name": "endpoint_abstract_products_abstract_with_review_sku_product_reviews",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "null": {
+    "canonical_name": "json_field_null",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "productConfigurationInstance.prices.0.netAmount => This field is missing.": {
+    "canonical_name": "error_message_productconfigurationinstance_prices_0_netamount",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "productConfigurationInstance.prices.0.grossAmount => This field is missing.": {
+    "canonical_name": "error_message_productconfigurationinstance_prices_0_grossamount",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "/shopping-lists/shoppingListId": {
+    "canonical_name": "endpoint_shopping_lists_shoppinglistid",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "When Create service point in DB": {
+    "canonical_name": "create_service_point",
+    "kind": "data",
+    "description": "Insert a service point row into the DB.",
+    "migration_note": "DB fixture setup. Gherkin-prefixed variant; same canonical."
+  },
+  "And Create service type in DB": {
+    "canonical_name": "create_service_type",
+    "kind": "data",
+    "description": "Insert a service type row into the DB.",
+    "migration_note": "DB fixture setup. Gherkin-prefixed variant; same canonical."
+  },
+  "Then Create service in DB": {
+    "canonical_name": "create_service",
+    "kind": "data",
+    "description": "Insert a service row into the DB.",
+    "migration_note": "DB fixture setup. Gherkin-prefixed variant; same canonical."
+  },
+  "Create New Context": {
+    "canonical_name": "create_browser_context",
+    "kind": "setup",
+    "description": "Create a new browser context (Browser lib).",
+    "migration_note": "Browser lib session setup."
+  },
+  "Close Current Context": {
+    "canonical_name": "close_browser_context",
+    "kind": "setup",
+    "description": "Close the current browser context (Browser lib).",
+    "migration_note": "Browser lib session teardown."
+  },
+  "UI_test_setup": {
+    "canonical_name": "setup_ui_test",
+    "kind": "setup",
+    "description": "Suite/test setup for UI tests.",
+    "migration_note": "Generic UI test fixture."
+  },
+  "And Update order status in Database:": {
+    "canonical_name": "update_order_status",
+    "kind": "data",
+    "description": "Set an order's OMS status directly in the DB.",
+    "migration_note": "DB fixture; cf. trigger_oms. Gherkin-prefixed variant; same canonical."
+  },
+  "Remove picking list by uuid in DB:": {
+    "canonical_name": "delete_picking_list_by_uuid",
+    "kind": "data",
+    "description": "Delete a picking list by uuid from the DB.",
+    "migration_note": "DB fixture teardown."
+  },
+  "Go To": {
+    "canonical_name": "navigate_to_url",
+    "kind": "nav",
+    "description": "Navigate the browser to a URL.",
+    "migration_note": "Browser/Selenium lib keyword."
+  },
+  "Wait Until Page Contains Element": {
+    "canonical_name": "wait_for_element_visible",
+    "kind": "ui",
+    "description": "Wait until an element is present on the page.",
+    "migration_note": "Browser/Selenium lib keyword."
+  },
+  "Should Match": {
+    "canonical_name": "assert_string_matches",
+    "kind": "assert",
+    "description": "Robot built-in: assert a string matches a pattern.",
+    "migration_note": "RF BuiltIn assertion."
+  },
+  "Create api key in db": {
+    "canonical_name": "create_api_key",
+    "kind": "data",
+    "description": "Insert an API key row into the DB.",
+    "migration_note": "DB fixture setup."
+  },
+  "Delete api key from db": {
+    "canonical_name": "delete_api_key",
+    "kind": "data",
+    "description": "Delete an API key row from the DB.",
+    "migration_note": "DB fixture teardown."
+  },
+  "Find first available product via data exchange api": {
+    "canonical_name": "find_first_available_product_via_dx_api",
+    "kind": "api",
+    "description": "Find the first available product through the Data Exchange API.",
+    "migration_note": "DX API read helper."
+  },
+  "Restore product initial stock via data exchange api:": {
+    "canonical_name": "restore_product_stock_via_dx_api",
+    "kind": "api",
+    "description": "Restore a product's initial stock level via the Data Exchange API.",
+    "migration_note": "DX API write helper."
+  },
+  "expenseTotal": {
+    "canonical_name": "json_field_expensetotal",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "discountTotal": {
+    "canonical_name": "json_field_discounttotal",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "taxTotal": {
+    "canonical_name": "json_field_taxtotal",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "subtotal": {
+    "canonical_name": "json_field_subtotal",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "grandTotal": {
+    "canonical_name": "json_field_grandtotal",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "url": {
+    "canonical_name": "json_field_url",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "Add content product abstract list to cms page in DB": {
+    "canonical_name": "add_content_product_list_to_cms_page",
+    "kind": "data",
+    "description": "Attach a content product-abstract list to a CMS page in the DB.",
+    "migration_note": "DB fixture."
+  },
+  "Delete latest cms page version by uuid from DB": {
+    "canonical_name": "delete_latest_cms_page_version",
+    "kind": "data",
+    "description": "Delete the latest CMS page version by uuid from the DB.",
+    "migration_note": "DB fixture teardown."
+  },
+  "confirmPassword => This value is too short. It should have 12 characters or more.": {
+    "canonical_name": "error_message_confirmpassword",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "password => This value is too short. It should have 12 characters or more.": {
+    "canonical_name": "error_message_password",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "/customers/${yves_user.reference}": {
+    "canonical_name": "endpoint_customers_yves_user_reference",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shopping-lists": {
+    "canonical_name": "endpoint_shopping_lists",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "netAmount": {
+    "canonical_name": "json_field_netamount",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "The provided authorization grant (e.g., authorization code, resource owner credentials) or refresh token is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.": {
+    "canonical_name": "message_text_the_provided_authorization_grant",
+    "kind": "assert",
+    "description": "Captured human-readable response/message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: expected response body text."
+  },
+  "True": {
+    "canonical_name": "json_field_true",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "/carts/${cart_id}/configured-bundles": {
+    "canonical_name": "endpoint_carts_cart_id_configured_bundles",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "externalUrlLarge": {
+    "canonical_name": "json_field_externalurllarge",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "externalUrlSmall": {
+    "canonical_name": "json_field_externalurlsmall",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "salutation => This value should not be blank.": {
+    "canonical_name": "error_message_salutation",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "firstName => This value should not be blank.": {
+    "canonical_name": "error_message_firstname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "lastName => This value should not be blank.": {
+    "canonical_name": "error_message_lastname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "/customers/${yves_user.reference}/addresses/${address_uid}": {
+    "canonical_name": "endpoint_customers_yves_user_reference_addresses_address_uid",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customer-confirmation": {
+    "canonical_name": "endpoint_customer_confirmation",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customer-forgotten-password": {
+    "canonical_name": "endpoint_customer_forgotten_password",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "gender => The value you selected is not a valid choice.": {
+    "canonical_name": "error_message_gender",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "salutation => The value you selected is not a valid choice.": {
+    "canonical_name": "error_message_salutation",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "localizedValues": {
+    "canonical_name": "json_field_localizedvalues",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "remunerationTotal": {
+    "canonical_name": "json_field_remunerationtotal",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "/shopping-lists/${shoppingListId}": {
+    "canonical_name": "endpoint_shopping_lists_shoppinglistid",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "defaultCurrency": {
+    "canonical_name": "json_field_defaultcurrency",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "postalCodeMandatory": {
+    "canonical_name": "json_field_postalcodemandatory",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "postalCodeRegex": {
+    "canonical_name": "json_field_postalcoderegex",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "Page Should Not Contain Element": {
+    "canonical_name": "assert_element_absent",
+    "kind": "assert",
+    "description": "Assert an element is not present on the page.",
+    "migration_note": "Browser/Selenium lib assertion."
+  },
+  "The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed.": {
+    "canonical_name": "message_text_the_request_is_missing",
+    "kind": "assert",
+    "description": "Captured human-readable response/message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: expected response body text."
+  },
+  "email => This value should not be blank.": {
+    "canonical_name": "error_message_email",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "bundled-products": {
+    "canonical_name": "json_field_bundled_products",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "cart-permission-groups": {
+    "canonical_name": "json_field_cart_permission_groups",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "False": {
+    "canonical_name": "json_field_false",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "name => This value should not be blank.": {
+    "canonical_name": "error_message_name",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "items": {
+    "canonical_name": "json_field_items",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "/carts/${cart_uid}/items/${item_uid}": {
+    "canonical_name": "endpoint_carts_cart_uid_items_item_uid",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "price": {
+    "canonical_name": "json_field_price",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "/shared-carts/${sharedCardId}": {
+    "canonical_name": "endpoint_shared_carts_sharedcardid",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "children": {
+    "canonical_name": "json_field_children",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "displayName: ${discounts.discount_2.name}": {
+    "canonical_name": "data_field_displayname",
+    "kind": "data",
+    "description": "Captured data-table field assignment, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: inline data argument."
+  },
+  "description: ${discounts.discount_2.description}": {
+    "canonical_name": "data_field_description",
+    "kind": "data",
+    "description": "Captured data-table field assignment, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: inline data argument."
+  },
+  "/carts/fake/configured-bundles": {
+    "canonical_name": "endpoint_carts_fake_configured_bundles",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "configurable-bundle-templates": {
+    "canonical_name": "json_field_configurable_bundle_templates",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "configurable-bundle-template-slots": {
+    "canonical_name": "json_field_configurable_bundle_template_slots",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "configurable-bundle-template-image-sets": {
+    "canonical_name": "json_field_configurable_bundle_template_image_sets",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "And Save the result of a SELECT DB query to a variable:": {
+    "canonical_name": "save_db_query_result",
+    "kind": "data",
+    "description": "Run a SELECT query and store the result in a variable.",
+    "migration_note": "Generic DB read; cf. seed save_response_value. Gherkin-prefixed variant; same canonical."
+  },
+  "description": {
+    "canonical_name": "json_field_description",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "metaKeywords": {
+    "canonical_name": "json_field_metakeywords",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "metaDescription": {
+    "canonical_name": "json_field_metadescription",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "attributes": {
+    "canonical_name": "json_field_attributes",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "currencyIsoCode": {
+    "canonical_name": "json_field_currencyisocode",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "canceledTotal": {
+    "canonical_name": "json_field_canceledtotal",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "abstractSku": {
+    "canonical_name": "json_field_abstractsku",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "shopping-list-items": {
+    "canonical_name": "json_field_shopping_list_items",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "Update_push_notification_provider_with_existing_name": {
+    "canonical_name": "update_push_notification_provider_existing_name",
+    "kind": "api",
+    "description": "Update a push-notification provider with an already-used name (negative case).",
+    "migration_note": "Negative API scenario."
+  },
+  "And Make user a warehouse user/ not a warehouse user:": {
+    "canonical_name": "set_warehouse_user_flag",
+    "kind": "data",
+    "description": "Toggle whether a user is a warehouse user in the DB.",
+    "migration_note": "DB fixture. Gherkin-prefixed variant; same canonical."
+  },
+  "And Create service point in DB": {
+    "canonical_name": "create_service_point",
+    "kind": "data",
+    "description": "Insert a service point row into the DB.",
+    "migration_note": "DB fixture setup. Gherkin-prefixed variant; same canonical."
+  },
+  "Then Create service type in DB": {
+    "canonical_name": "create_service_type",
+    "kind": "data",
+    "description": "Insert a service type row into the DB.",
+    "migration_note": "DB fixture setup. Gherkin-prefixed variant; same canonical."
+  },
+  "Create service point in DB": {
+    "canonical_name": "create_service_point",
+    "kind": "data",
+    "description": "Insert a service point row into the DB.",
+    "migration_note": "DB fixture setup."
+  },
+  "Remove all warehouse user assignments by user uuid:": {
+    "canonical_name": "remove_warehouse_user_assignments_by_user",
+    "kind": "data",
+    "description": "Remove all warehouse-user assignments for a given user uuid.",
+    "migration_note": "Bulk teardown."
+  },
+  "IF": {
+    "canonical_name": "control_if",
+    "kind": "setup",
+    "description": "Robot control structure: IF branch.",
+    "migration_note": "Control flow token captured as keyword; not migratable."
+  },
+  "END": {
+    "canonical_name": "control_end",
+    "kind": "setup",
+    "description": "Robot control structure: END terminator.",
+    "migration_note": "Control flow token; not a keyword."
+  },
+  "grossAmount": {
+    "canonical_name": "json_field_grossamount",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "quantity": {
+    "canonical_name": "json_field_quantity",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "volumePrices": {
+    "canonical_name": "json_field_volumeprices",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "sku => This value should not be blank.": {
+    "canonical_name": "error_message_sku",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "/carts/not-existing-cart": {
+    "canonical_name": "endpoint_carts_not_existing_cart",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "priceToPay": {
+    "canonical_name": "json_field_pricetopay",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "/carts/fake/items": {
+    "canonical_name": "endpoint_carts_fake_items",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "quantity => This value should not be blank.": {
+    "canonical_name": "error_message_quantity",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "/carts/${cart_uid}/items/${item_uid}?include=items": {
+    "canonical_name": "endpoint_carts_cart_uid_items_item_uid_include_items",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/shoppingCartId/shared-carts": {
+    "canonical_name": "endpoint_carts_shoppingcartid_shared_carts",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shared-carts/sharedCardId": {
+    "canonical_name": "endpoint_shared_carts_sharedcardid",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "nodeId": {
+    "canonical_name": "json_field_nodeid",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "idCart => This value should not be blank.": {
+    "canonical_name": "error_message_idcart",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "customer.salutation => This value should not be blank.": {
+    "canonical_name": "error_message_customer_salutation",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "customer.email => Email is invalid.": {
+    "canonical_name": "error_message_customer_email",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "customer.salutation => This field is missing.": {
+    "canonical_name": "error_message_customer_salutation",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "customer.email => This field is missing.": {
+    "canonical_name": "error_message_customer_email",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.salutation => This value should not be blank.": {
+    "canonical_name": "error_message_billingaddress_salutation",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.firstName => This value should not be blank.": {
+    "canonical_name": "error_message_billingaddress_firstname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.lastName => This value should not be blank.": {
+    "canonical_name": "error_message_billingaddress_lastname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.address1 => This value should not be blank.": {
+    "canonical_name": "error_message_billingaddress_address1",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.address2 => This value should not be blank.": {
+    "canonical_name": "error_message_billingaddress_address2",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.zipCode => This value should not be blank.": {
+    "canonical_name": "error_message_billingaddress_zipcode",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.city => This value should not be blank.": {
+    "canonical_name": "error_message_billingaddress_city",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.city => This value is too short. It should have 3 characters or more.": {
+    "canonical_name": "error_message_billingaddress_city",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.iso2Code => This value should not be blank.": {
+    "canonical_name": "error_message_billingaddress_iso2code",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.salutation => This field is missing.": {
+    "canonical_name": "error_message_billingaddress_salutation",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.firstName => This field is missing.": {
+    "canonical_name": "error_message_billingaddress_firstname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.lastName => This field is missing.": {
+    "canonical_name": "error_message_billingaddress_lastname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.address1 => This field is missing.": {
+    "canonical_name": "error_message_billingaddress_address1",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.address2 => This field is missing.": {
+    "canonical_name": "error_message_billingaddress_address2",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.zipCode => This field is missing.": {
+    "canonical_name": "error_message_billingaddress_zipcode",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.city => This field is missing.": {
+    "canonical_name": "error_message_billingaddress_city",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "billingAddress.iso2Code => This field is missing.": {
+    "canonical_name": "error_message_billingaddress_iso2code",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.salutation => This value should not be blank.": {
+    "canonical_name": "error_message_shippingaddress_salutation",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.firstName => This value should not be blank.": {
+    "canonical_name": "error_message_shippingaddress_firstname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.lastName => This value should not be blank.": {
+    "canonical_name": "error_message_shippingaddress_lastname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.address1 => This value should not be blank.": {
+    "canonical_name": "error_message_shippingaddress_address1",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.address2 => This value should not be blank.": {
+    "canonical_name": "error_message_shippingaddress_address2",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.zipCode => This value should not be blank.": {
+    "canonical_name": "error_message_shippingaddress_zipcode",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.city => This value should not be blank.": {
+    "canonical_name": "error_message_shippingaddress_city",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.city => This value is too short. It should have 3 characters or more.": {
+    "canonical_name": "error_message_shippingaddress_city",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.iso2Code => This value should not be blank.": {
+    "canonical_name": "error_message_shippingaddress_iso2code",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.salutation => This field is missing.": {
+    "canonical_name": "error_message_shippingaddress_salutation",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.firstName => This field is missing.": {
+    "canonical_name": "error_message_shippingaddress_firstname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.lastName => This field is missing.": {
+    "canonical_name": "error_message_shippingaddress_lastname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.address1 => This field is missing.": {
+    "canonical_name": "error_message_shippingaddress_address1",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.address2 => This field is missing.": {
+    "canonical_name": "error_message_shippingaddress_address2",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.zipCode => This field is missing.": {
+    "canonical_name": "error_message_shippingaddress_zipcode",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.city => This field is missing.": {
+    "canonical_name": "error_message_shippingaddress_city",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shippingAddress.iso2Code => This field is missing.": {
+    "canonical_name": "error_message_shippingaddress_iso2code",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "payments.0.paymentMethodName => This value should not be blank.": {
+    "canonical_name": "error_message_payments_0_paymentmethodname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "payments.0.paymentProviderName => This value should not be blank.": {
+    "canonical_name": "error_message_payments_0_paymentprovidername",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "payments.0.paymentMethodName => This field is missing.": {
+    "canonical_name": "error_message_payments_0_paymentmethodname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "payments.0.paymentProviderName => This field is missing.": {
+    "canonical_name": "error_message_payments_0_paymentprovidername",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "sumAmount: ${discounts.discount_1.total_sum_for_products_1_and_2}": {
+    "canonical_name": "data_field_sumamount",
+    "kind": "data",
+    "description": "Captured data-table field assignment, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: inline data argument."
+  },
+  "sumAmount: ${discounts.discount_2.total_sum_for_discounts_for_products_1_2_and_3}": {
+    "canonical_name": "data_field_sumamount",
+    "kind": "data",
+    "description": "Captured data-table field assignment, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: inline data argument."
+  },
+  "relationships": {
+    "canonical_name": "json_field_relationships",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "salutation => This field is missing.": {
+    "canonical_name": "error_message_salutation",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "firstName => This field is missing.": {
+    "canonical_name": "error_message_firstname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "lastName => This field is missing.": {
+    "canonical_name": "error_message_lastname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "address1 => This value should not be blank.": {
+    "canonical_name": "error_message_address1",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "address2 => This value should not be blank.": {
+    "canonical_name": "error_message_address2",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "zipCode => This value should not be blank.": {
+    "canonical_name": "error_message_zipcode",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "city => This value should not be blank.": {
+    "canonical_name": "error_message_city",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "confirmPassword => This value is too long. It should have 128 characters or less.": {
+    "canonical_name": "error_message_confirmpassword",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "password => This field is missing.": {
+    "canonical_name": "error_message_password",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "confirmPassword => This field is missing.": {
+    "canonical_name": "error_message_confirmpassword",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "password => This value is too long. It should have 128 characters or less.": {
+    "canonical_name": "error_message_password",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "gender => This value should not be blank.": {
+    "canonical_name": "error_message_gender",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "/carts/invalidCartId/vouchers": {
+    "canonical_name": "endpoint_carts_invalidcartid_vouchers",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "VAR": {
+    "canonical_name": "control_var",
+    "kind": "setup",
+    "description": "Robot VAR syntax for variable assignment.",
+    "migration_note": "Syntax token captured as keyword; not migratable."
+  },
+  "And Get voucher code by discountId from Database:": {
+    "canonical_name": "get_voucher_code_by_discount_id",
+    "kind": "data",
+    "description": "Read a voucher code for a discount id from the DB.",
+    "migration_note": "DB read helper. Gherkin-prefixed variant; same canonical."
+  },
+  "averageRating": {
+    "canonical_name": "json_field_averagerating",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "reviewCount": {
+    "canonical_name": "json_field_reviewcount",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "brand": {
+    "canonical_name": "json_field_brand",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "superAttributesDefinition": {
+    "canonical_name": "json_field_superattributesdefinition",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "superAttributes": {
+    "canonical_name": "json_field_superattributes",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "attributeMap": {
+    "canonical_name": "json_field_attributemap",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "super_attributes": {
+    "canonical_name": "json_field_super_attributes",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "product_concrete_ids": {
+    "canonical_name": "json_field_product_concrete_ids",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "attribute_variants": {
+    "canonical_name": "json_field_attribute_variants",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "attribute_variant_map": {
+    "canonical_name": "json_field_attribute_variant_map",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "attributeNames": {
+    "canonical_name": "json_field_attributenames",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "abstractName": {
+    "canonical_name": "json_field_abstractname",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "images": {
+    "canonical_name": "json_field_images",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "/shopping-lists/${shopping_list_1st.id}/shopping-list-items": {
+    "canonical_name": "endpoint_shopping_lists_shopping_list_1st_id_shopping_list",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shopping-lists/${sharedShoppingListId}/shopping-list-items": {
+    "canonical_name": "endpoint_shopping_lists_sharedshoppinglistid_shopping_list_items",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shopping-lists/${sharedShoppingListId}/shopping-list-items/${shoppingListItemId}": {
+    "canonical_name": "endpoint_shopping_lists_sharedshoppinglistid_shopping_list_items_shoppinglistitemid",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shopping-lists/${shoppingListId}/shopping-list-items?include=concrete-products": {
+    "canonical_name": "endpoint_shopping_lists_shoppinglistid_shopping_list_items_include_concrete",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shopping-lists/${shoppingListId}/shopping-list-items/${shoppingListItemId}?include=concrete-products": {
+    "canonical_name": "endpoint_shopping_lists_shoppinglistid_shopping_list_items_shoppinglistitemid_include",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shopping-lists/${shoppingListId}/shopping-list-items/${shoppingListItemId}": {
+    "canonical_name": "endpoint_shopping_lists_shoppinglistid_shopping_list_items_shoppinglistitemid",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "Shopping list with given name already exists.": {
+    "canonical_name": "message_text_shopping_list_with_given",
+    "kind": "assert",
+    "description": "Captured human-readable response/message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: expected response body text."
+  },
+  "name => This value is too long. It should have 255 characters or less.": {
+    "canonical_name": "error_message_name",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shopping-lists": {
+    "canonical_name": "json_field_shopping_lists",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "iso2Code": {
+    "canonical_name": "json_field_iso2code",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "iso3Code": {
+    "canonical_name": "json_field_iso3code",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "regions": {
+    "canonical_name": "json_field_regions",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "And Remove_warehouse_user_assignment:": {
+    "canonical_name": "remove_warehouse_user_assignment",
+    "kind": "data",
+    "description": "Remove a warehouse-user assignment.",
+    "migration_note": "Warehouse user fixture teardown. Gherkin-prefixed variant; same canonical."
+  },
+  "Delete_warehouse_user_assignment_with_invalid_token": {
+    "canonical_name": "delete_warehouse_user_assignment_invalid_token",
+    "kind": "api",
+    "description": "Attempt to delete a warehouse-user assignment with an invalid token (negative case).",
+    "migration_note": "Negative API scenario."
+  },
+  "Create_warehouse_user_assignment_with_multiple_active_assignments": {
+    "canonical_name": "create_warehouse_user_assignment_multiple_active",
+    "kind": "api",
+    "description": "Create a warehouse-user assignment with multiple active assignments (edge case).",
+    "migration_note": "Edge-case API scenario."
+  },
+  "Create_Service_Point_address_with_zip_more_than_15": {
+    "canonical_name": "create_service_point_address_long_zip",
+    "kind": "api",
+    "description": "Create a service point address with a zip code longer than 15 chars (negative case).",
+    "migration_note": "Negative API scenario."
+  },
+  "And Create region in DB:": {
+    "canonical_name": "create_region",
+    "kind": "data",
+    "description": "Insert a region row into the DB.",
+    "migration_note": "DB fixture setup. Gherkin-prefixed variant; same canonical."
+  },
+  "When Create service type in DB": {
+    "canonical_name": "create_service_type",
+    "kind": "data",
+    "description": "Insert a service type row into the DB.",
+    "migration_note": "DB fixture setup. Gherkin-prefixed variant; same canonical."
+  },
+  "Delete all non-default service points from DB with p&s": {
+    "canonical_name": "delete_non_default_service_points",
+    "kind": "data",
+    "description": "Delete all non-default service points and run publish-and-sync.",
+    "migration_note": "DB cleanup + P&S."
+  },
+  "Create empty customer cart:": {
+    "canonical_name": "create_empty_customer_cart",
+    "kind": "api",
+    "description": "Create an empty cart for an authenticated customer via Glue.",
+    "migration_note": "Cart setup fixture."
+  },
+  "Get company user id by customer reference:": {
+    "canonical_name": "get_company_user_id_by_customer_reference",
+    "kind": "data",
+    "description": "Look up a company user id from a customer reference in the DB.",
+    "migration_note": "DB read helper."
+  },
+  "Log": {
+    "canonical_name": "log_message",
+    "kind": "setup",
+    "description": "Robot built-in: log a message.",
+    "migration_note": "RF BuiltIn; diagnostic only."
+  },
+  "/concrete-products/${abstract.alternative_products.product_1.sku}/abstract-alternative-products": {
+    "canonical_name": "endpoint_concrete_products_abstract_alternative_products_product_1_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/concrete-products/${concrete.alternative_products.product_1.sku}/abstract-alternative-products": {
+    "canonical_name": "endpoint_concrete_products_concrete_alternative_products_product_1_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/concrete-products/${concrete.alternative_products.product_1.sku}/abstract-alternative-products?include=abstract-product-image-sets,abstract-product-availabilities,abstract-product-prices,category-nodes": {
+    "canonical_name": "endpoint_concrete_products_concrete_alternative_products_product_1_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/concrete-products/${bundle_product.product_2.concrete_sku}/abstract-alternative-products": {
+    "canonical_name": "endpoint_concrete_products_bundle_product_product_2_concrete_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${concrete.alternative_products.product_1.sku}/abstract-product-availabilities": {
+    "canonical_name": "endpoint_abstract_products_concrete_alternative_products_product_1_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.available_products.with_stock_and_never_out_of_stock_sku_2}/abstract-product-availabilities": {
+    "canonical_name": "endpoint_abstract_products_abstract_available_products_with_stock_and",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.available_products.with_stock.sku}/abstract-product-availabilities": {
+    "canonical_name": "endpoint_abstract_products_abstract_available_products_with_stock_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.available_products.with_no_stock_and_never_out_of_stock_sku}/abstract-product-availabilities": {
+    "canonical_name": "endpoint_abstract_products_abstract_available_products_with_no_stock",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.unavailable_product_sku}/abstract-product-availabilities": {
+    "canonical_name": "endpoint_abstract_products_abstract_unavailable_product_sku_abstract_product",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.available_products.with_3_concretes.sku}/abstract-product-availabilities": {
+    "canonical_name": "endpoint_abstract_products_abstract_available_products_with_3_concretes",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${concrete.alternative_products.product_1.sku}/abstract-product-image-sets": {
+    "canonical_name": "endpoint_abstract_products_concrete_alternative_products_product_1_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.available_products.with_stock_and_never_out_of_stock_sku}/abstract-product-image-sets": {
+    "canonical_name": "endpoint_abstract_products_abstract_available_products_with_stock_and",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.available_products.with_3_concretes.sku}/abstract-product-image-sets": {
+    "canonical_name": "endpoint_abstract_products_abstract_available_products_with_3_concretes",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${concrete.alternative_products.product_1.sku}/abstract-product-prices": {
+    "canonical_name": "endpoint_abstract_products_concrete_alternative_products_product_1_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.available_products.with_3_concretes.sku}/abstract-product-prices?currency=EUR&priceMode=GROSS_MODE": {
+    "canonical_name": "endpoint_abstract_products_abstract_available_products_with_3_concretes",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.available_products.with_3_concretes.sku}/abstract-product-prices?currency=CHF&priceMode=GROSS_MODE": {
+    "canonical_name": "endpoint_abstract_products_abstract_available_products_with_3_concretes",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.available_products.with_stock.sku}?include=abstract-product-availabilities,abstract-product-image-sets,product-tax-sets,category-nodes,abstract-product-prices": {
+    "canonical_name": "endpoint_abstract_products_abstract_available_products_with_stock_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.available_products.with_3_concretes.sku}?include=concrete-products,concrete-product-prices,concrete-product-image-sets,concrete-product-availabilities": {
+    "canonical_name": "endpoint_abstract_products_abstract_available_products_with_3_concretes",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "firstName": {
+    "canonical_name": "json_field_firstname",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "lastName": {
+    "canonical_name": "json_field_lastname",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "email => This value is not a valid email address.": {
+    "canonical_name": "error_message_email",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "/concrete-products/${bundle_product.product_1.concrete_sku}/bundled-products?include=concrete-products": {
+    "canonical_name": "endpoint_concrete_products_bundle_product_product_1_concrete_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "concrete-products": {
+    "canonical_name": "json_field_concrete_products",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "/abstract-products/${bundle_product.product_1.abstract_sku}?include=bundled-products,concrete-products": {
+    "canonical_name": "endpoint_abstract_products_bundle_product_product_1_abstract_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/concrete-products/${concrete.available_product.with_stock_and_never_out_of_stock.sku}/bundled-products": {
+    "canonical_name": "endpoint_concrete_products_concrete_available_product_with_stock_and",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "shared-carts": {
+    "canonical_name": "json_field_shared_carts",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "priceMode => This value should not be blank.": {
+    "canonical_name": "error_message_pricemode",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "currency => This value should not be blank.": {
+    "canonical_name": "error_message_currency",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "store => This value should not be blank.": {
+    "canonical_name": "error_message_store",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "priceMode => This field is missing.": {
+    "canonical_name": "error_message_pricemode",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "currency => This field is missing.": {
+    "canonical_name": "error_message_currency",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "/carts/8567km": {
+    "canonical_name": "endpoint_carts_8567km",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/": {
+    "canonical_name": "endpoint_carts",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "unitProductOptionPriceAggregation": {
+    "canonical_name": "json_field_unitproductoptionpriceaggregation",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "unitDiscountAmountFullAggregation": {
+    "canonical_name": "json_field_unitdiscountamountfullaggregation",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "/carts//items": {
+    "canonical_name": "endpoint_carts_items",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/as/items": {
+    "canonical_name": "endpoint_carts_as_items",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "quantity => This field is missing.": {
+    "canonical_name": "error_message_quantity",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "/carts/${cart_uid}/items/fake": {
+    "canonical_name": "endpoint_carts_cart_uid_items_fake",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts//items/${item_uid}": {
+    "canonical_name": "endpoint_carts_items_item_uid",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/${cart_uid}/items?include=items,concrete-products,abstract-products": {
+    "canonical_name": "endpoint_carts_cart_uid_items_include_items_concrete_products",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "concrete.available_product.with_stock_and_never_out_of_stock.id": {
+    "canonical_name": "json_field_concrete_available_product_with_stock_and_never_out",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "concrete.available_product.with_stock_and_never_out_of_stock.groupKey": {
+    "canonical_name": "json_field_concrete_available_product_with_stock_and_never_out",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "/carts/${cart_uid}/items?include=cart-rules,promotional-items": {
+    "canonical_name": "endpoint_carts_cart_uid_items_include_cart_rules_promotional",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/${cart_uid}/items?include=bundle-items,bundled-items": {
+    "canonical_name": "endpoint_carts_cart_uid_items_include_bundle_items_bundled",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/${cart_uid}/items?include=items,sales-units,product-measurement-units": {
+    "canonical_name": "endpoint_carts_cart_uid_items_include_items_sales_units",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/${cart_uid}/items?include=items": {
+    "canonical_name": "endpoint_carts_cart_uid_items_include_items",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "optionGroupName": {
+    "canonical_name": "json_field_optiongroupname",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "sku": {
+    "canonical_name": "json_field_sku",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "optionName": {
+    "canonical_name": "json_field_optionname",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "idCartPermissionGroup => This value should not be blank.": {
+    "canonical_name": "error_message_idcartpermissiongroup",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "idCompanyUser => This value should not be blank.": {
+    "canonical_name": "error_message_idcompanyuser",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "idCompanyUser => This field is missing.": {
+    "canonical_name": "error_message_idcompanyuser",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "idCartPermissionGroup => This field is missing.": {
+    "canonical_name": "error_message_idcartpermissiongroup",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "/carts//shared-carts": {
+    "canonical_name": "endpoint_carts_shared_carts",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shared-carts": {
+    "canonical_name": "endpoint_shared_carts",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/${cartId}/items": {
+    "canonical_name": "endpoint_carts_cartid_items",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/${cartId}/items/${concrete.available_product.with_stock.product_1.sku}": {
+    "canonical_name": "endpoint_carts_cartid_items_concrete_available_product_with_stock",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shared-carts/${sharedCartId}": {
+    "canonical_name": "endpoint_shared_carts_sharedcartid",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/${cartId}/items?include=items": {
+    "canonical_name": "endpoint_carts_cartid_items_include_items",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/${cartId}/items/${itemId}?include=items": {
+    "canonical_name": "endpoint_carts_cartid_items_itemid_include_items",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "order": {
+    "canonical_name": "json_field_order",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "\"You should add items for €40.00 to pass a recommended threshold. You cant proceed with checkout\"": {
+    "canonical_name": "message_text_you_should_add_items",
+    "kind": "assert",
+    "description": "Captured quoted expected-text string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: expected text literal."
+  },
+  "Single and multiple shipments attributes are not allowed in the same request.": {
+    "canonical_name": "message_text_single_and_multiple_shipments",
+    "kind": "assert",
+    "description": "Captured human-readable response/message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: expected response body text."
+  },
+  "shipments.0.requestedDeliveryDate => This value is not a valid date.": {
+    "canonical_name": "error_message_shipments_0_requesteddeliverydate",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "shipments.1.requestedDeliveryDate => This value is not a valid date.": {
+    "canonical_name": "error_message_shipments_1_requesteddeliverydate",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "Provided address is not valid. You can either provide address ID or address fields.": {
+    "canonical_name": "message_text_provided_address_is_not",
+    "kind": "assert",
+    "description": "Captured human-readable response/message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: expected response body text."
+  },
+  "Warranty": {
+    "canonical_name": "json_field_warranty",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "displayName: ${discounts.discount_1.name}": {
+    "canonical_name": "data_field_displayname",
+    "kind": "data",
+    "description": "Captured data-table field assignment, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: inline data argument."
+  },
+  "description: ${discounts.discount_1.description}": {
+    "canonical_name": "data_field_description",
+    "kind": "data",
+    "description": "Captured data-table field assignment, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: inline data argument."
+  },
+  "/company-business-units/${business_unit_id}?include=company-business-unit-addresses,companies": {
+    "canonical_name": "endpoint_company_business_units_business_unit_id_include_company",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "company-business-units": {
+    "canonical_name": "json_field_company_business_units",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "/concrete-products/${bundle_product.product_2.abstract_sku}/concrete-alternative-products": {
+    "canonical_name": "endpoint_concrete_products_bundle_product_product_2_abstract_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/concrete-products/${bundle_product.product_2.concrete_sku}/concrete-alternative-products": {
+    "canonical_name": "endpoint_concrete_products_bundle_product_product_2_concrete_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/concrete-products/${concrete.alternative_products.product_1.sku}/concrete-alternative-products": {
+    "canonical_name": "endpoint_concrete_products_concrete_alternative_products_product_1_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/concrete-products/${concrete.alternative_products.product_1.sku}/concrete-alternative-products?include=concrete-product-image-sets,concrete-product-availabilities,concrete-product-prices": {
+    "canonical_name": "endpoint_concrete_products_concrete_alternative_products_product_1_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/concrete-products/${abstract.alternative_products.product_1.sku}/concrete-product-availabilities": {
+    "canonical_name": "endpoint_concrete_products_abstract_alternative_products_product_1_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/concrete-products/${concrete.available_product.with_stock.product_2.sku}/concrete-product-availabilities": {
+    "canonical_name": "endpoint_concrete_products_concrete_available_product_with_stock_product",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/concrete-products/${concrete.available_product.with_stock_and_never_out_of_stock.sku}/concrete-product-availabilities": {
+    "canonical_name": "endpoint_concrete_products_concrete_available_product_with_stock_and",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/concrete-products/${concrete.available_product.without_stock.sku}/concrete-product-availabilities": {
+    "canonical_name": "endpoint_concrete_products_concrete_available_product_without_stock_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/concrete-products/${bundle_product.product_2.abstract_sku}/concrete-product-image-sets": {
+    "canonical_name": "endpoint_concrete_products_bundle_product_product_2_abstract_sku",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/concrete-products/${concrete.with_original_prices.sku}?include=concrete-product-availabilities,concrete-product-prices": {
+    "canonical_name": "endpoint_concrete_products_concrete_with_original_prices_sku_include",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts//configured-bundles": {
+    "canonical_name": "endpoint_carts_configured_bundles",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/${cart_id}/configured-bundles/fake": {
+    "canonical_name": "endpoint_carts_cart_id_configured_bundles_fake",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/${cart_id}/configured-bundles/": {
+    "canonical_name": "endpoint_carts_cart_id_configured_bundles",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/fake/configured-bundles/fake": {
+    "canonical_name": "endpoint_carts_fake_configured_bundles_fake",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts//configured-bundles/fake": {
+    "canonical_name": "endpoint_carts_configured_bundles_fake",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/configurable-bundle-templates/${configurable_bundle.template_id}?include=configurable-bundle-template-slots,configurable-bundle-template-image-sets": {
+    "canonical_name": "endpoint_configurable_bundle_templates_configurable_bundle_template_id_include",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/configurable-bundle-templates/${configurable_bundle.template_id}?include=configurable-bundle-template-slots,concrete-products,concrete-product-prices,concrete-product-image-sets": {
+    "canonical_name": "endpoint_configurable_bundle_templates_configurable_bundle_template_id_include",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/${cart_id}/configured-bundles?include=items": {
+    "canonical_name": "endpoint_carts_cart_id_configured_bundles_include_items",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/${cart_id}/configured-bundles/${bundle_group_key}?include=items": {
+    "canonical_name": "endpoint_carts_cart_id_configured_bundles_bundle_group_key",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "address1 => This field is missing.": {
+    "canonical_name": "error_message_address1",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "address2 => This field is missing.": {
+    "canonical_name": "error_message_address2",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "zipCode => This field is missing.": {
+    "canonical_name": "error_message_zipcode",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "iso2Code => This field is missing.": {
+    "canonical_name": "error_message_iso2code",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "isDefaultShipping => This field is missing.": {
+    "canonical_name": "error_message_isdefaultshipping",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "isDefaultBilling => This field is missing.": {
+    "canonical_name": "error_message_isdefaultbilling",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "/customers/${yves_second_user.reference}/addresses": {
+    "canonical_name": "endpoint_customers_yves_second_user_reference_addresses",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customers/DE--10000/addresses": {
+    "canonical_name": "endpoint_customers_de_10000_addresses",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customers//addresses": {
+    "canonical_name": "endpoint_customers_addresses",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customers/${yves_user.reference}/addresses/fake": {
+    "canonical_name": "endpoint_customers_yves_user_reference_addresses_fake",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customers/${yves_second_user.reference}/addresses/${address_uid}": {
+    "canonical_name": "endpoint_customers_yves_second_user_reference_addresses_address_uid",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customers//addresses/${address_uid}": {
+    "canonical_name": "endpoint_customers_addresses_address_uid",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customers/DE--1/addresses/${address_uid}": {
+    "canonical_name": "endpoint_customers_de_1_addresses_address_uid",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "iso2Code => This value should not be blank.": {
+    "canonical_name": "error_message_iso2code",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "newPassword => This value is too short. It should have 12 characters or more.": {
+    "canonical_name": "error_message_newpassword",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "newPassword => This value is too long. It should have 128 characters or less.": {
+    "canonical_name": "error_message_newpassword",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "/customer-password/": {
+    "canonical_name": "endpoint_customer_password",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customer-password/test123": {
+    "canonical_name": "endpoint_customer_password_test123",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customer-password/${yves_eighth_user.reference}": {
+    "canonical_name": "endpoint_customer_password_yves_eighth_user_reference",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customer-restore-password/": {
+    "canonical_name": "endpoint_customer_restore_password",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "password => This value should not be blank.": {
+    "canonical_name": "error_message_password",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "confirmPassword => This value should not be blank.": {
+    "canonical_name": "error_message_confirmpassword",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "/customer-restorepassword/${yves_user.reference}": {
+    "canonical_name": "endpoint_customer_restorepassword_yves_user_reference",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customer-restore-password/${user_reference_id}": {
+    "canonical_name": "endpoint_customer_restore_password_user_reference_id",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "If this email address is already in use, you will receive a password reset link. Otherwise you must first validate your e-mail address to finish registration. Please check your e-mail.": {
+    "canonical_name": "message_text_if_this_email_address",
+    "kind": "assert",
+    "description": "Captured human-readable response/message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: expected response body text."
+  },
+  "acceptedTerms => This field is missing.": {
+    "canonical_name": "error_message_acceptedterms",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "/customers/${customer_reference.de_1}": {
+    "canonical_name": "endpoint_customers_customer_reference_de_1",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/customers/DE--35": {
+    "canonical_name": "endpoint_customers_de_35",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "select registration_key from spy_customer where customer_reference = '${user_reference_id}'": {
+    "canonical_name": "sql_query_select_registration_key_from_spy",
+    "kind": "data",
+    "description": "Captured raw SQL SELECT fragment, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: SQL argument to a DB-query keyword."
+  },
+  "confirmation_key": {
+    "canonical_name": "json_field_confirmation_key",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "/carts/fake/vouchers": {
+    "canonical_name": "endpoint_carts_fake_vouchers",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "value": {
+    "canonical_name": "json_field_value",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "summary => This value should not be blank.": {
+    "canonical_name": "error_message_summary",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "nickname => This value should not be blank.": {
+    "canonical_name": "error_message_nickname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "summary => This field is missing.": {
+    "canonical_name": "error_message_summary",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "nickname => This field is missing.": {
+    "canonical_name": "error_message_nickname",
+    "kind": "assert",
+    "description": "Captured API validation error-message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: assertion expected-value string; belongs to test data."
+  },
+  "/abstract-products/${abstract.with_review.sku}/product-reviews?page[offset]=2&page[limit]=1": {
+    "canonical_name": "endpoint_abstract_products_abstract_with_review_sku_product_reviews",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.available_products.with_stock_and_never_out_of_stock_sku}/product-reviews": {
+    "canonical_name": "endpoint_abstract_products_abstract_available_products_with_stock_and",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.with_options.sku}/product-reviews": {
+    "canonical_name": "endpoint_abstract_products_abstract_with_options_sku_product_reviews",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${concrete.available_product.with_stock.product_1.sku}/product-tax-sets": {
+    "canonical_name": "endpoint_abstract_products_concrete_available_product_with_stock_product",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${concrete.available_product.with_stock.product_1.sku}/related-products": {
+    "canonical_name": "endpoint_abstract_products_concrete_available_product_with_stock_product",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.product_with_relations.has_related_products.product_1.sku}/related-products": {
+    "canonical_name": "endpoint_abstract_products_abstract_product_with_relations_has_related",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/abstract-products/${abstract.product_with_relations.has_related_products.product_1.sku}/related-products?include=abstract-product-prices,abstract-product-image-sets,concrete-products,abstract-product-availabilities,product-labels,product-tax-sets,product-options,product-reviews,category-nodes": {
+    "canonical_name": "endpoint_abstract_products_abstract_product_with_relations_has_related",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/carts/${cart_id}/up-selling-products?include=abstract-product-prices,abstract-product-image-sets,concrete-products,abstract-product-availabilities,product-labels,product-tax-sets,product-options,product-reviews,category-nodes": {
+    "canonical_name": "endpoint_carts_cart_id_up_selling_products_include_abstract",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "nodeType": {
+    "canonical_name": "json_field_nodetype",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "cssClass": {
+    "canonical_name": "json_field_cssclass",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "title": {
+    "canonical_name": "json_field_title",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "validFrom": {
+    "canonical_name": "json_field_validfrom",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "validTo": {
+    "canonical_name": "json_field_validto",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "category-nodes": {
+    "canonical_name": "json_field_category_nodes",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "metaTitle": {
+    "canonical_name": "json_field_metatitle",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "bundleItemIdentifier": {
+    "canonical_name": "json_field_bundleitemidentifier",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "relatedBundleItemIdentifier": {
+    "canonical_name": "json_field_relatedbundleitemidentifier",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "order-shipments": {
+    "canonical_name": "json_field_order_shipments",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "sumAmount: ${discounts.discount_3.total_sum}": {
+    "canonical_name": "data_field_sumamount",
+    "kind": "data",
+    "description": "Captured data-table field assignment, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: inline data argument."
+  },
+  "displayName: ${discounts.discount_3.name}": {
+    "canonical_name": "data_field_displayname",
+    "kind": "data",
+    "description": "Captured data-table field assignment, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: inline data argument."
+  },
+  "description: ${discounts.discount_3.description}": {
+    "canonical_name": "data_field_description",
+    "kind": "data",
+    "description": "Captured data-table field assignment, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: inline data argument."
+  },
+  "/returns": {
+    "canonical_name": "endpoint_returns",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "return-items": {
+    "canonical_name": "json_field_return_items",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "returnReference": {
+    "canonical_name": "json_field_returnreference",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "customerReference": {
+    "canonical_name": "json_field_customerreference",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "returnTotals": {
+    "canonical_name": "json_field_returntotals",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "refundTotal": {
+    "canonical_name": "json_field_refundtotal",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "prices": {
+    "canonical_name": "json_field_prices",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "docCount": {
+    "canonical_name": "json_field_doccount",
+    "kind": "data",
+    "description": "Captured JSON field name / resource type / literal, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: JSON field or literal token."
+  },
+  "/catalog-search?q=&page[limit]=${ipp.biggest}&page[offset]=${total_number_of_products_in_search}": {
+    "canonical_name": "endpoint_catalog_search_q_page_limit_ipp_biggest_page",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/catalog-search?q=soe&sort=price_desc&brand=${brand_1}&page[limit]=${ipp.middle}&page[offset]=1": {
+    "canonical_name": "endpoint_catalog_search_q_soe_sort_price_desc_brand",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/catalog-search?q=${abstract.alternative_products.product_1.sku}&include=abstract-products": {
+    "canonical_name": "endpoint_catalog_search_q_abstract_alternative_products_product_1",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/catalog-search-suggestions?q=${abstract.available_products.with_stock.sku}&include=abstract-products": {
+    "canonical_name": "endpoint_catalog_search_suggestions_q_abstract_available_products_with",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shopping-lists/shoppingListId/shopping-list-items": {
+    "canonical_name": "endpoint_shopping_lists_shoppinglistid_shopping_list_items",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shopping-lists/shopping-list-items": {
+    "canonical_name": "endpoint_shopping_lists_shopping_list_items",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shopping-lists//shopping-list-items/shoppingListItemId": {
+    "canonical_name": "endpoint_shopping_lists_shopping_list_items_shoppinglistitemid",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shopping-lists/shoppingListId/shopping-list-items/": {
+    "canonical_name": "endpoint_shopping_lists_shoppinglistid_shopping_list_items",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shopping-lists/": {
+    "canonical_name": "endpoint_shopping_lists",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "/shopping-lists/${shoppingListId}?include=shopping-list-items,concrete-products": {
+    "canonical_name": "endpoint_shopping_lists_shoppinglistid_include_shopping_list_items_concrete",
+    "kind": "api",
+    "description": "Captured Glue API URL path, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: API endpoint path; should not be in keyword inventory."
+  },
+  "HealthCheck endpoints are disabled for all applications.": {
+    "canonical_name": "message_text_healthcheck_endpoints_are_disabled",
+    "kind": "assert",
+    "description": "Captured human-readable response/message string, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: expected response body text."
+  },
+  "Get_a_measurement_unit_without_unit_code": {
+    "canonical_name": "get_measurement_unit_without_code",
+    "kind": "api",
+    "description": "Fetch a measurement unit lacking a unit code (edge case).",
+    "migration_note": "Edge-case API read."
+  },
+  "Then Make user a warehouse user/ not a warehouse user:": {
+    "canonical_name": "set_warehouse_user_flag",
+    "kind": "data",
+    "description": "Toggle whether a user is a warehouse user in the DB.",
+    "migration_note": "DB fixture. Gherkin-prefixed variant; same canonical."
+  },
+  "And Verify that url is present in the Database:": {
+    "canonical_name": "assert_url_in_database",
+    "kind": "assert",
+    "description": "Assert that a URL row exists in the DB.",
+    "migration_note": "DB-backed assertion. Gherkin-prefixed variant; same canonical."
+  },
+  "Create_product_abstract_collection_with_two_childs:": {
+    "canonical_name": "create_product_abstract_collection_two_children",
+    "kind": "api",
+    "description": "Create an abstract product collection with two concrete children.",
+    "migration_note": "Product collection fixture."
+  },
+  "Delete product_price by id_price_product in Database:": {
+    "canonical_name": "delete_product_price_by_id",
+    "kind": "data",
+    "description": "Delete a product price row by id_price_product.",
+    "migration_note": "DB fixture teardown."
+  },
+  "Update_product_abstract_collection_with_child:": {
+    "canonical_name": "update_product_abstract_collection_with_child",
+    "kind": "api",
+    "description": "Update an abstract product collection adding a child.",
+    "migration_note": "Product collection fixture."
+  },
+  "Add_a_configurable_product_to_the_cart_with_0_quantity": {
+    "canonical_name": "add_configurable_product_zero_quantity",
+    "kind": "api",
+    "description": "Add a configurable product to the cart with quantity 0 (negative case).",
+    "migration_note": "Negative API scenario."
+  },
+  "\"${return_result[0]}\" != \"PASS\"": {
+    "canonical_name": "expression_return_result_0_pass",
+    "kind": "data",
+    "description": "Captured expression/operator fragment, not a keyword.",
+    "migration_note": "EXTRACTOR NOISE: condition/operator argument."
+  },
+  "Configurable_Product_PDP_Wishlist_Availability": {
+    "canonical_name": "check_configurable_product_pdp_wishlist_availability",
+    "kind": "ui",
+    "description": "Check configurable product PDP wishlist availability.",
+    "migration_note": "Looks like a test-case name, not a keyword; review."
+  }
+}

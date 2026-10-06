@@ -1,0 +1,174 @@
+# Canonical test domains. Join key for all migration matrices.
+# Every framework-native folder name maps to exactly one canonical domain.
+domains:
+  - domain: cart
+    description: "Storefront and API carts: cart CRUD, cart items, guest carts, shared carts, cart codes, cart permission groups and cart comments."
+    aliases:
+      robot:       [cart, guest_carts]
+      cypress:     [cart, comments]
+      codeception: [cart]
+  - domain: checkout
+    description: "Checkout flow and checkout-data: addresses, shipment/payment selection, guest and registered checkout, order placement."
+    aliases:
+      robot:       [checkout]
+      cypress:     [checkout]
+  - domain: customer
+    description: "Customer accounts: registration, login, profile, addresses, passwords, confirmation, newsletter and account access restrictions."
+    aliases:
+      robot:       [customer, customers]
+      cypress:     [customer-account-management]
+      codeception: [customer-account-management]
+  - domain: authentication
+    description: "Token issuing and identity verification: OAuth access/refresh tokens and multi-factor authentication for all actor types."
+    aliases:
+      robot:       [access_token]
+      cypress:     [multi-factor-authentication]
+  - domain: agent-assist
+    description: "Assisted selling: agent login, agent dashboard, customer search, impersonation tokens and agent permissions."
+    aliases:
+      robot:       [agent]
+      cypress:     [marketplace-agent-assist]
+  - domain: company
+    description: "B2B company structures: companies, business units and their addresses, company roles, company users and company-user access."
+    aliases:
+      robot:       [company]
+      cypress:     [company-account]
+  - domain: purchasing-control
+    description: "B2B spend governance: cost centers, purchase budgets and budget enforcement during ordering."
+    aliases:
+      cypress:     [purchasing-control]
+  - domain: quote-request
+    description: "Request-for-quote lifecycle between buyer and seller: quote request creation, revision, approval and conversion."
+    aliases:
+      robot:       [quote_requests_endpoint]
+  - domain: merchant-contract-request
+    description: "Merchant B2B contract requests: buyer-side creation and merchant/back-office side management of contract requests."
+    aliases:
+      cypress:     [merchant-b2b-contract-requests]
+  - domain: shopping-list
+    description: "Shopping lists and shopping-list items, including sharing and list-to-cart flows."
+    aliases:
+      robot:       [shopping_list]
+  - domain: wishlist
+    description: "Wishlists and wishlist items on storefront and API."
+    aliases:
+      robot:       [wishlist]
+  - domain: product
+    description: "Core product data and its management UIs: abstract and concrete products, prices, image sets, alternatives, attributes, options, measurement/sales units, PDP and catalog browsing."
+    aliases:
+      robot:       [abstract_product, concrete_products, general_product, weight_unit, catalog]
+      cypress:     [product, product-management, product-attribute-visibility, product-comparison, product-measurement-unit, marketplace-product-attributes, marketplace-product-concretes]
+      codeception: [product-management, product-option]
+  - domain: merchandising
+    description: "Merchandising layer on top of products: product labels, product sets, product relations, up-selling, related products, product reviews and product tax sets."
+    aliases:
+      robot:       [merchandising]
+      codeception: [product-relation]
+  - domain: product-offer
+    description: "Marketplace product offers: offers, offer prices and offer availabilities."
+    aliases:
+      robot:       [product_offer]
+      cypress:     [product-offer]
+  - domain: product-bundle
+    description: "Bundled products, configurable-bundle templates and configured bundles (incl. guest configured bundles)."
+    aliases:
+      robot:       [bundle, configurable_bundle, configured_bundles]
+  - domain: availability
+    description: "Stock availability and availability/back-in-stock notifications, on storefront, API and back office."
+    aliases:
+      robot:       [availability]
+      codeception: [availability, availability-gui]
+  - domain: search
+    description: "Catalog search and search suggestions, plus back-office search/filter preferences."
+    aliases:
+      robot:       [search, dynamic_store]
+      cypress:     [catalog]
+      codeception: [product-search]
+  - domain: category
+    description: "Category trees and category nodes, category management and product-to-category assignment."
+    aliases:
+      robot:       [category]
+      cypress:     [category]
+      codeception: [category-gui, product-category]
+  - domain: navigation
+    description: "Storefront navigation trees and their back-office management, including navigation menu filtering."
+    aliases:
+      robot:       [navigation, navigations]
+      cypress:     [navigation]
+      codeception: [navigation-gui]
+  - domain: content
+    description: "Content management: CMS pages and blocks, content banners, content product-abstract lists and the file manager."
+    aliases:
+      robot:       [content]
+      cypress:     [cms]
+      codeception: [cms, file-manager-gui]
+  - domain: order
+    description: "Placed orders and their lifecycle: order retrieval, OMS state flows, order amendment, cancellation, reorder, shipments management, refunds and marketplace order creation."
+    aliases:
+      robot:       [order, orders, sales]
+      cypress:     [order-management, order-amendment, reorder, marketplace-order-management]
+      codeception: [order-management, refund]
+  - domain: return
+    description: "Customer return requests and return reasons. Back-office refunds live in `order`."
+    aliases:
+      robot:       [return, returns]
+      cypress:     [return-management]
+  - domain: shipment
+    description: "Shipment types and shipment-method configuration exposed over the backend API."
+    aliases:
+      robot:       [shipment_types]
+  - domain: service-point
+    description: "Service points, service-point addresses, service types and services (click & collect infrastructure)."
+    aliases:
+      robot:       [service_point, service_points]
+  - domain: merchant
+    description: "Merchants themselves: merchant profiles, addresses, opening hours, merchant users, merchant registration, merchant portal access and merchant commissions."
+    aliases:
+      robot:       [merchant, marketplace]
+      cypress:     [merchant-registration, merchant-portal, marketplace-merchant-commission]
+  - domain: self-service-portal
+    description: "Self-Service Portal: assets, models, files, services, inquiries and the SSP dashboard, on storefront and back office."
+    aliases:
+      cypress:     [ssp-asset, ssp-asset-management, ssp-model-management, ssp-file-management, ssp-inquiry, ssp-service, ssp-service-management, ssp-dashboard-management]
+  - domain: push-notification
+    description: "Push-notification providers and subscriptions over the backend API."
+    aliases:
+      robot:       [push_notification]
+  - domain: warehouse
+    description: "Warehouse and fulfillment: warehouse access tokens, warehouse user assignments and the fulfillment app / picking flow."
+    aliases:
+      robot:       [warehouse_tokens, warehouse_user_assignments, fulfillment_app]
+  - domain: discount
+    description: "Discounts and discount vouchers, storefront application and back-office management."
+    aliases:
+      robot:       [discount]
+      codeception: [discount]
+  - domain: dynamic-entity
+    description: "Dynamic Data API: dynamic-entity configuration, relations and generic CRUD over configured entities."
+    aliases:
+      robot:       [dynamic_entity]
+  - domain: tax
+    description: "Tax rates and tax sets management."
+    aliases:
+      codeception: [tax]
+  - domain: payment
+    description: "Payment methods and payment instruments: gift cards as a payment means and payment-method lifecycle messages arriving over the broker."
+    aliases:
+      cypress:     [gift-cards]
+      codeception: [message-broker]
+  - domain: administration
+    description: "Back-office administration: ACL roles and navigation access, users, store/system configuration, glossary and minimum order value."
+    aliases:
+      robot:       [administration, users]
+      cypress:     [acl, configuration]
+  - domain: store
+    description: "Stores and locales: dynamic multi-store, store-scoped content and offers, and storefront locale switching."
+    aliases:
+      robot:       [multistore]
+      cypress:     [core]
+  - domain: platform
+    description: "Cross-cutting platform capabilities with no single business owner: URL resolver, health checks, data exchange/import, app catalog and demo-data smoke sets."
+    aliases:
+      robot:       [utility, misc, data_exchange]
+      cypress:     [api, data-import]
+      codeception: [app-catalog]
