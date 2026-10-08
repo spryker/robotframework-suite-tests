@@ -13,7 +13,7 @@ Zed: assign product list to merchant relation:
     Zed: click Action Button(without search) in a table for row that contains:    ${merchant_relation}    Edit
     ${is_list_already_selected}=    Run Keyword And Ignore Error    Page Should Contain Element    xpath=//*[@id='merchant-relationship_productListIds']//option[contains(.,'${product_list}')][@selected]    timeout=0.5s
     IF    'FAIL' in $is_list_already_selected
-        Type Text    xpath=//select[@id="merchant-relationship_productListIds"]/following-sibling::*//input[contains(@class,'select2-search')]    ${product_list}    delay=50ms
+        Type Text    xpath=//select[@id="merchant-relationship_productListIds"]/following-sibling::*//*[self::input or self::textarea][contains(@class,'select2-search')]    ${product_list}    delay=50ms
         Wait Until Element Is Visible    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${product_list}')]
         Click    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${product_list}')]
         Wait Until Element Is Not Visible    xpath=//*[contains(@class,'select2-results')][contains(@class,'options')]//li[contains(text(),'${product_list}')]
@@ -33,7 +33,7 @@ Zed: unassign all product lists from merchant relation:
         FOR    ${index}    IN RANGE    1    ${iterations}+1
             Click    xpath=(//select[@id="merchant-relationship_productListIds"]/following-sibling::*//*[contains(@class,'remove')][contains(@class,'choice')])[${index}]
             Wait Until Element Is Not Visible    xpath=(//select[@id="merchant-relationship_productListIds"]/following-sibling::*//*[contains(@class,'remove')][contains(@class,'choice')])[${index}]
-            Click    xpath=//select[@id="merchant-relationship_productListIds"]/following-sibling::*//input[contains(@class,'select2-search')]
+            Click    xpath=//select[@id="merchant-relationship_productListIds"]/following-sibling::*//*[self::input or self::textarea][contains(@class,'select2-search')]
         END
         Sleep    1s
         Zed: submit the form

@@ -378,7 +378,7 @@ Zed: create new shipment inside the order:
         IF    '${key}'=='city' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_city_field}    ${value}
         IF    '${key}'=='zip code' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_zip_code_field}    ${value}
         IF    '${key}'=='shipment method' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_shipment_method}    ${value}
-        IF    '${key}'=='requested delivery date' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_requested_delivery_date}    ${value}
+        IF    '${key}'=='requested delivery date' and '${value}' != '${EMPTY}'    Type Text Into Date Picker Field    ${create_shipment_requested_delivery_date}    ${value}
         IF    '${key}'=='sku' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
         IF    '${key}'=='sku 2' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
         IF    '${key}'=='sku 3' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
@@ -406,7 +406,7 @@ Zed: edit xxx shipment inside the order:
         IF    '${key}'=='city' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_city_field}    ${value}
         IF    '${key}'=='zip code' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_zip_code_field}    ${value}
         IF    '${key}'=='shipment method' and '${value}' != '${EMPTY}'    Select From List By Label    ${create_shipment_shipment_method}    ${value}
-        IF    '${key}'=='requested delivery date' and '${value}' != '${EMPTY}'    Type Text    ${create_shipment_requested_delivery_date}    ${value}
+        IF    '${key}'=='requested delivery date' and '${value}' != '${EMPTY}'    Type Text Into Date Picker Field    ${create_shipment_requested_delivery_date}    ${value}
         IF    '${key}'=='sku' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
         IF    '${key}'=='sku 2' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
         IF    '${key}'=='sku 3' and '${value}' != '${EMPTY}'    Check Checkbox    xpath=//table[@data-qa='order-item-list']/tbody//td//div[@class='sku'][contains(.,'${value}')]/ancestor::tr/td[@class='item-checker']//input
