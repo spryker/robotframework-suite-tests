@@ -29,5 +29,5 @@ ${product_delete_price_row_button}    xpath=//li[contains(@class,'ant-dropdown-m
 ${product_price_deleted_popup}    xpath=//spy-notification-view//span[contains(@class,'success')]
 ${mp_use_abstract_price_checkbox}    xpath=//web-mp-content-toggle[@name='productConcreteEdit[useAbstractProductPrices]']//input[@type='checkbox'][contains(@class,'checkbox')]/parent::span
 ${mp_add_concrete_products_button}    xpath=//web-mp-edit-abstract-product-variants//web-spy-button-action[@type='button']//button
-${mp_product_name_field_de_tab}    xpath=//input[contains(@name,'name')]/ancestor::web-spy-tabs[1]//button[@role='tab'][contains(.,'de_DE')]
-${mp_product_name_field_en_tab}    xpath=//input[contains(@name,'name')]/ancestor::web-spy-tabs[1]//button[@role='tab'][contains(.,'en_US')]
+${mp_product_name_field_de_tab}    xpath=//input[contains(@name,'name')]/ancestor::web-spy-tabs[1]//*[@role='tab'][contains(.,'de_DE')]
+${mp_product_name_field_en_tab}    xpath=//input[contains(@name,'name')]/ancestor::web-spy-tabs[1]//*[@role='tab'][contains(.,'en_US')]
