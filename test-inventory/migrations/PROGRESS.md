@@ -11,7 +11,7 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | Matrix | Domains | Scenarios | left to port | in scope | ported | authored | target skipped | dropped | review | blocked | done % |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
 | robot-api-to-codeception | 27 | 1721 | 1285 | 1285 | 0 | 0 | 0 | 0 | 418 | 0 | 0% |
-| robot-ui-to-cypress | 12 | 105 | 0 | 86 | 86 | 0 | 0 | 0 | 0 | 1 | 0% |
+| robot-ui-to-cypress | 12 | 105 | 0 | 74 | 74 | 0 | 0 | 0 | 0 | 1 | 0% |
 
 ## robot-api-to-codeception by domain
 
@@ -50,15 +50,15 @@ Status is observed from **this branch's** working tree, so a branch that has not
 | Domain | Scenarios | left to port | in scope | ported | authored | target skipped | dropped | review | blocked | batches |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|---|
 | [administration](by-domain/robot-ui-to-cypress/administration.md) | 6 | 0 | 4 | 4 | 0 | 0 | 0 | 0 | 1 | 1 |
-| [checkout](by-domain/robot-ui-to-cypress/checkout.md) | 16 | 0 | 13 | 13 | 0 | 0 | 0 | 0 | 0 | 1 |
+| [checkout](by-domain/robot-ui-to-cypress/checkout.md) | 16 | 0 | 11 | 11 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [company](by-domain/robot-ui-to-cypress/company.md) | 2 | 0 | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [content](by-domain/robot-ui-to-cypress/content.md) | 1 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
-| [customer](by-domain/robot-ui-to-cypress/customer.md) | 14 | 0 | 10 | 10 | 0 | 0 | 0 | 0 | 0 | 1 |
-| [merchandising](by-domain/robot-ui-to-cypress/merchandising.md) | 6 | 0 | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 1 |
-| [merchant](by-domain/robot-ui-to-cypress/merchant.md) | 22 | 0 | 18 | 18 | 0 | 0 | 0 | 0 | 0 | 1 |
+| [customer](by-domain/robot-ui-to-cypress/customer.md) | 14 | 0 | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 1 |
+| [merchandising](by-domain/robot-ui-to-cypress/merchandising.md) | 6 | 0 | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 1 |
+| [merchant](by-domain/robot-ui-to-cypress/merchant.md) | 22 | 0 | 16 | 16 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [order](by-domain/robot-ui-to-cypress/order.md) | 6 | 0 | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 1 |
-| [platform](by-domain/robot-ui-to-cypress/platform.md) | 6 | 0 | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 1 |
-| [product](by-domain/robot-ui-to-cypress/product.md) | 21 | 0 | 18 | 18 | 0 | 0 | 0 | 0 | 0 | 1 |
+| [platform](by-domain/robot-ui-to-cypress/platform.md) | 6 | 0 | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 1 |
+| [product](by-domain/robot-ui-to-cypress/product.md) | 21 | 0 | 16 | 16 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [store](by-domain/robot-ui-to-cypress/store.md) | 4 | 0 | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [warehouse](by-domain/robot-ui-to-cypress/warehouse.md) | 1 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
 
