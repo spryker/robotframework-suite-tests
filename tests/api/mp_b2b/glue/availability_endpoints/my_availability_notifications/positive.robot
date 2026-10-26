@@ -9,8 +9,9 @@ Get_my_availability_notifications
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...  AND    I set Headers:    Authorization=${token}
     ...  AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete_product_with_discontinued.sku}","email": "${yves_user.email}"}}}
-    ...  AND    Save value to a variable:    [data][id]    availability_notification_id
-    ...  AND    Response status code should be:    201
+    ...  AND    Response status code should be:    202
+    ...  AND    I send a GET request:    /my-availability-notifications
+    ...  AND    Save value to a variable:    [data][0][id]    availability_notification_id
     When I send a GET request:    /my-availability-notifications
     Then Response status code should be:    200
     And Response reason should be:    OK

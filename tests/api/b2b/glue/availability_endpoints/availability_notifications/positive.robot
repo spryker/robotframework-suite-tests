@@ -14,8 +14,9 @@ Get_availability_notifications_for_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete.alternative_products.product_1.sku}","email": "${yves_user.email}"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    Save value to a variable:    [data][id]    availability_notification_id
+    ...    AND    Response status code should be:    202
+    ...    AND    I send a GET request:    /customers/${yves_user.reference}/availability-notifications
+    ...    AND    Save value to a variable:    [data][0][id]    availability_notification_id
     When I send a GET request:    /customers/${yves_user.reference}/availability-notifications
     Then Response status code should be:    200
     And Response reason should be:    OK
@@ -41,18 +42,20 @@ Get_empty_list_of_availability_notifications_for_customer
 #POST requests
 
 Subscribe_to_availability_notifications_for_customer
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
     When I send a POST request:
     ...    /availability-notifications
     ...    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete.alternative_products.product_1.sku}","email": "${yves_user.email}"}}}
-    And Save value to a variable:    [data][id]    availability_notification_id
-    Then Response status code should be:    201
-    And Response reason should be:    Created
-    And Response body parameter should be:    [data][type]    availability-notifications
-    And Response body parameter should be:    [data][id]    ${availability_notification_id}
-    And Response body parameter should not be EMPTY:    [data][attributes][localeName]
-    And Response body parameter should be:    [data][attributes][email]    ${yves_user.email}
-    And Response body parameter should be:    [data][attributes][sku]    ${concrete.alternative_products.product_1.sku}
-    And Response body has correct self link for created entity:    ${availability_notification_id}
+    Then Response status code should be:    202
+    And Response reason should be:    Accepted
+    When I send a GET request:    /customers/${yves_user.reference}/availability-notifications
+    Then Response status code should be:    200
+    And Save value to a variable:    [data][0][id]    availability_notification_id
+    And Response body parameter should be:    [data][0][type]    availability-notifications
+    And Response body parameter should not be EMPTY:    [data][0][attributes][localeName]
+    And Response body parameter should be:    [data][0][attributes][email]    ${yves_user.email}
+    And Response body parameter should be:    [data][0][attributes][sku]    ${concrete.alternative_products.product_1.sku}
     [Teardown]    Run Keywords    I send a DELETE request:    /availability-notifications/${availability_notification_id}
     ...    AND    Response status code should be:    204
 
@@ -60,15 +63,25 @@ Subscribe_to_availability_notifications_with_non_existing_email
     When I send a POST request:
     ...    /availability-notifications
     ...    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete.alternative_products.product_1.sku}","email": "sonia+${random}@spryker.com"}}}
-    And Save value to a variable:    [data][id]    availability_notification_id
-    Then Response status code should be:    201
-    And Response reason should be:    Created
-    And Response body parameter should be:    [data][type]    availability-notifications
-    And Response body parameter should be:    [data][id]    ${availability_notification_id}
-    And Response body parameter should not be EMPTY:    [data][attributes][localeName]
-    And Response body parameter should be:    [data][attributes][email]    sonia+${random}@spryker.com
-    And Response body parameter should be:    [data][attributes][sku]    ${concrete.alternative_products.product_1.sku}
-    And Response body has correct self link for created entity:    ${availability_notification_id}
+    Then Response status code should be:    202
+    And Response reason should be:    Accepted
+
+Subscribe_to_availability_notifications_with_existing_subscription
+    [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
+    ...    AND    I set Headers:    Authorization=${token}
+    ...    AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete.alternative_products.product_1.sku}","email": "${yves_user.email}"}}}
+    ...    AND    Response status code should be:    202
+    ...    AND    I send a GET request:    /customers/${yves_user.reference}/availability-notifications
+    ...    AND    Save value to a variable:    [data][0][id]    availability_notification_id
+    When I send a POST request:
+    ...    /availability-notifications
+    ...    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete.alternative_products.product_1.sku}","email": "${yves_user.email}"}}}
+    Then Response status code should be:    202
+    And Response reason should be:    Accepted
+    When I send a GET request:    /customers/${yves_user.reference}/availability-notifications
+    Then Response status code should be:    200
+    And Response should contain the array of a certain size:    [data]    1
+    And Response body parameter should be:    [data][0][id]    ${availability_notification_id}
     [Teardown]    Run Keywords    I send a DELETE request:    /availability-notifications/${availability_notification_id}
     ...    AND    Response status code should be:    204
 
@@ -78,8 +91,9 @@ Delete_availability_notifications_for_customer
     [Setup]    Run Keywords    I get access token for the customer:    ${yves_user.email}
     ...    AND    I set Headers:    Authorization=${token}
     ...    AND    I send a POST request:    /availability-notifications    {"data": {"type": "availability-notifications","attributes": {"sku": "${concrete.alternative_products.product_1.sku}","email": "${yves_user.email}"}}}
-    ...    AND    Response status code should be:    201
-    ...    AND    Save value to a variable:    [data][id]    availability_notification_id
+    ...    AND    Response status code should be:    202
+    ...    AND    I send a GET request:    /customers/${yves_user.reference}/availability-notifications
+    ...    AND    Save value to a variable:    [data][0][id]    availability_notification_id
     When I send a DELETE request:    /availability-notifications/${availability_notification_id}
     Then Response status code should be:    204
     And Response reason should be:    No Content
