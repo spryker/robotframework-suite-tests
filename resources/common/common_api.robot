@@ -253,7 +253,7 @@ I send a POST request:
     ${response}=    IF    ${headers_not_empty}    POST On Session    ${api_session}    ${current_url}${path}    json=${data}    headers=${headers}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=${expected_status}    verify=${verify_ssl}
     ...    ELSE    POST On Session    ${api_session}    ${current_url}${path}    json=${data}    timeout=${timeout}    allow_redirects=${allow_redirects}    auth=${auth}    expected_status=ANY    verify=${verify_ssl}
     ${response.status_code}=    Set Variable    ${response.status_code}
-    IF    ${response.status_code} != 204
+    IF    ${response.status_code} != 204 and $response.content
         TRY
             ${response_body}=    Set Variable    ${response.json()}
         EXCEPT
@@ -262,7 +262,7 @@ I send a POST request:
         END
     END
     ${response_headers}=    Set Variable    ${response.headers}
-    IF    ${response.status_code} == 204
+    IF    ${response.status_code} == 204 or not $response.content
         ${response_body}=    Set Variable    ${EMPTY}
     END
     Set Test Variable    ${response_headers}    ${response_headers}
