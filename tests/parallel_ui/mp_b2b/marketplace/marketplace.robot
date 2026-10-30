@@ -82,7 +82,7 @@ Merchant_Portal_My_Account
     ...    || e-mail                             | first name     | last name      ||
     ...    || sonia+editmu+${random}@spryker.com | FName${random} | LName${random} ||
     Zed: perform merchant user search by:     sonia+editmu+${random}@spryker.com
-    Zed: table should contain non-searchable value:    Deactivated
+    Zed: table should contain non-searchable value:    Inactive
     Zed: click Action Button in Merchant Users table for row that contains:    sonia+editmu+${random}@spryker.com    Activate
     Zed: table should contain non-searchable value:    Active
     Zed: update Zed user:
@@ -112,7 +112,7 @@ Merchant_Portal_Dashboard
     ...    || e-mail                               | first name      | last name       ||
     ...    || sonia+dahboard+${random}@spryker.com | DFName${random} | DLName${random} ||
     Zed: perform merchant user search by:     sonia+dahboard+${random}@spryker.com
-    Zed: table should contain non-searchable value:    Deactivated
+    Zed: table should contain non-searchable value:    Inactive
     Zed: click Action Button in Merchant Users table for row that contains:    sonia+dahboard+${random}@spryker.com    Activate
     Zed: table should contain non-searchable value:    Active
     Zed: update Zed user:
