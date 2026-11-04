@@ -92,7 +92,7 @@ Manage_Merchant_Users
     ...    || e-mail                         | first name     | last name      ||
     ...    || sonia+mu+${random}@spryker.com | FName${random} | LName${random} ||
     Zed: perform merchant user search by:     sonia+mu+${random}@spryker.com
-    Zed: table should contain non-searchable value:    Deactivated
+    Zed: table should contain non-searchable value:    Inactive
     Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Activate
     Zed: table should contain non-searchable value:    Active
     Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Edit
@@ -110,7 +110,7 @@ Manage_Merchant_Users
     Zed: click Action Button in a table for row that contains:     Office King     Edit
     Zed: go to tab by link href that contains:    merchant-user
     Zed: click Action Button in Merchant Users table for row that contains:    sonia+mu+${random}@spryker.com    Deactivate
-    Zed: table should contain non-searchable value:    Deactivated
+    Zed: table should contain non-searchable value:    Inactive
     MP: login on MP with provided credentials and expect error:    sonia+mu+${random}@spryker.com    ${default_secure_password}
     [Teardown]    Run Keywords     Zed: login on Zed with provided credentials:    ${dynamic_admin_user}
     ...    AND    Zed: go to second navigation item level:    Marketplace    Merchants
